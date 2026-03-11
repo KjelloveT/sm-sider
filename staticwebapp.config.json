@@ -1,4 +1,8 @@
 {
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+  },
   "routes": [
     {
       "route": "/gangespill/*",
@@ -15,35 +19,6 @@
     {
       "route": "/fotocolours/*",
       "serve": "/fotocolours/index.html"
-    },
-    {
-      "route": "/.github/workflows/fotocoloours/*",
-      "serve": "/.github/workflows/fotocoloours/index.html"
     }
-  ],
-  "globalHeaders": {
-    "X-Frame-Options": "SAMEORIGIN",
-    "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "strict-origin-when-cross-origin",
-    "X-XSS-Protection": "1; mode=block",
-    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
-  },
-  "mimeTypes": {
-    ".html": "text/html; charset=utf-8",
-    ".css": "text/css; charset=utf-8",
-    ".js": "application/javascript; charset=utf-8",
-    ".json": "application/json; charset=utf-8",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".gif": "image/gif",
-    ".svg": "image/svg+xml",
-    ".ico": "image/x-icon"
-  },
-  "responseOverrides": {
-    "404": {
-      "serve": "/index.html",
-      "statusCode": 200
-    }
-  }
+  ]
 }
