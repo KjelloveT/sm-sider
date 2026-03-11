@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Læringsverktøy - Spel og Verktøy for Skolen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .emoji-decoration {
+            font-size: 2rem;
+            margin: 0 10px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .category-card {
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .category-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .category-description {
+            color: #4a5568;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .category-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .category-items li {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            font-size: 0.95rem;
+            color: #2d3748;
+            transition: all 0.2s ease;
+        }
+
+        .category-items li:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+        }
+
+        .privacy-section {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8efff 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            position: relative;
+        }
+
+        .privacy-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .privacy-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+        }
+
+        .privacy-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .privacy-content {
+            color: #4a5568;
+            line-height: 1.7;
+        }
+
+        .privacy-content h3 {
+            color: #667eea;
+            margin: 20px 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .privacy-content ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .privacy-content li {
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .privacy-content strong {
+            color: #1a365d;
+        }
+
+        .privacy-highlight {
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #1a365d;
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        .back-button.show {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .category-card {
+                padding: 20px;
+            }
+
+            .privacy-section {
+                padding: 25px;
+            }
+
+            .privacy-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .back-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .emoji-decoration {
+                display: none;
+            }
+
+            .category-icon {
+                font-size: 2rem;
+            }
+
+            .category-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <span class="emoji-decoration">🎮</span>
+                Læringsverktøy
+                <span class="emoji-decoration">🛠️</span>
+            </h1>
+            <p class="subtitle">Spel og verktøy laga for grunnskolen - med personvern i fokus</p>
+        </header>
+
+        <section class="categories">
+            <div class="category-card" onclick="navigateToCategory('spill')">
+                <span class="category-icon">🎮</span>
+                <h2 class="category-title">Spel</h2>
+                <p class="category-description">Morsame og lærerike spel som trenar ulike ferdigheiter</p>
+                <ul class="category-items">
+                    <li>🦫 Capybara Gangespel - Øv på ganetabellar</li>
+                    <li>🧮 Fleire spel kjem snart...</li>
+                </ul>
+            </div>
+
+            <div class="category-card" onclick="navigateToCategory('verktøy')">
+                <span class="category-icon">🛠️</span>
+                <h2 class="category-title">Verktøy</h2>
+                <p class="category-description">Praktiske verktøy for kreativitet og læring</p>
+                <ul class="category-items">
+                    <li>📸 Fotocollage - Lag vakre bilete-collager</li>
+                    <li>🎨 Fleire verktøy kjem snart...</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="privacy-section">
+            <div class="privacy-header">
+                <span class="privacy-icon">🔒</span>
+                <h2 class="privacy-title">Personvern og datasikkerheit</h2>
+            </div>
+            
+            <div class="privacy-content">
+                <p>Vi tek personvern på alvor! Alle verktøya på denne sida er laga for å verna dine data og ditt personvern.</p>
+                
+                <h3>Dine data er 100% trygge</h3>
+                <ul>
+                    <li><strong>Alt skjer lokalt:</strong> Alle verktøy køyrer berre i nettlesaren din på din eining. Ingen data blir sende til nokon tenar.</li>
+                    <li><strong>Ingen lagring:</strong> Dine filer og data blir ikkje lagra noko stad. Når du lukkar nettlesaren, er alt borte.</li>
+                    <li><strong>Ingen internetttilknyting nødvendig:</strong> Etter at sida er lasta, kan du bruke alle verktøya heilt offline.</li>
+                    <li><strong>Ingen cookies eller sporing:</strong> Vi bruker ingen cookies, analytics eller sporingsverktøy.</li>
+                    <li><strong>Open kjeldekode:</strong> All kode er synleg i HTML-filene. Du kan inspisere henne sjølv.</li>
+                </ul>
+
+                <div class="privacy-highlight">
+                    💡 <strong>Konklusjon:</strong> Dine data forlèt aldri din eining. Du har full kontroll over dine data.
+                </div>
+
+                <h3>Korleis det fungerer teknisk</h3>
+                <p>Applikasjonane brukar moderne webteknologi som HTML5, CSS3 og JavaScript for å køyra direkte i nettlesaren din. Når du lastar opp filer (som bilete i fotocollage), blir dei lese inn i nettlesaren sitt minne med hjelp av FileReader API. Alle operasjonar blir utførte lokalt med JavaScript, og ingen informasjon blir sende ut frå nettlesaren.</p>
+
+                <h3>Bruk i skolen</h3>
+                <p>Desse verktøya er særskilt eigna for bruk i grunnskolen fordi:</p>
+                <ul>
+                    <li>Dei er GDPR-kompatible og følgjer norske personvernlover</li>
+                    <li>Ingen elevdata blir lagra eller delt</li>
+                    <li>Dei fungerer på skolen sitt nettverk utan ekstern tilgang</li>
+                    <li>Dei er gratis og krevjer ingen innlogging</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <button class="back-button" id="backButton" onclick="goHome()">🏠</button>
+
+    <script>
+        // Vis tilbakeknapp hvis vi ikke er på hovedsiden
+        window.addEventListener('popstate', function(event) {
+            updateBackButton();
+        });
+
+        window.addEventListener('load', function() {
+            updateBackButton();
+        });
+
+        function updateBackButton() {
+            const backButton = document.getElementById('backButton');
+            if (window.location.pathname.endsWith('/index.html') || window.location.pathname === '/') {
+                backButton.classList.remove('show');
+            } else {
+                backButton.classList.add('show');
+            }
+        }
+
+        function navigateToCategory(category) {
+            if (category === 'spill') {
+                window.location.href = 'gangespill/index.html';
+            } else if (category === 'verktøy') {
+                window.location.href = 'fotocollage/fotocollage.html';
+            }
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        // Legg til smooth scrolling og andre interaksjoner
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animasjon for category cards ved scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // Håndter tastaturnavigering
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                goHome();
+            }
+        });
+    </script>
+</body>
+</html>

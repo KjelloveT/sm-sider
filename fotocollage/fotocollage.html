@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotocollage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .privacy-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            padding: 10px 18px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .privacy-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            align-items: center;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .control-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .control-group input[type="radio"] {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            accent-color: #667eea;
+        }
+
+        select {
+            padding: 12px 16px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        select:hover {
+            border-color: rgba(102, 126, 234, 0.4);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(226, 232, 240, 0.9);
+            color: #4a5568;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(203, 213, 224, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(203, 213, 224, 0.9);
+            transform: translateY(-1px);
+        }
+
+        #canvas-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: auto;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        #collage-canvas {
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            cursor: crosshair;
+            max-width: 100%;
+            height: auto;
+            border: 2px solid rgba(102, 126, 234, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        #collage-canvas:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(102, 126, 234, 0.2);
+        }
+
+        .image-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: rgba(248, 250, 252, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            min-height: 100px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .image-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: grab;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            background: white;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .image-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-item .remove-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .image-item:hover .remove-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .image-item .remove-btn:hover {
+            background: rgba(220, 38, 38, 0.95);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .crop-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            margin-bottom: 20px;
+        }
+
+        #crop-canvas {
+            max-width: 100%;
+            max-height: 60vh;
+            cursor: crosshair;
+        }
+
+        .crop-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .privacy-content {
+            max-width: 600px;
+        }
+
+        .image-adjustment-controls {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .image-item:hover .image-adjustment-controls {
+            opacity: 1;
+        }
+
+        .adjust-btn {
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .adjust-btn:hover {
+            background: rgba(102, 126, 234, 1);
+        }
+
+        .zoom-controls {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .image-item:hover .zoom-controls {
+            opacity: 1;
+        }
+
+        .zoom-btn {
+            background: rgba(72, 187, 120, 0.9);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(72, 187, 120, 1);
+        }
+
+        .privacy-content h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .privacy-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .privacy-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .privacy-content li {
+            color: #555;
+        }
+
+        .privacy-content strong {
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .privacy-btn {
+                position: static;
+                margin-top: 10px;
+                justify-content: center;
+            }
+
+            header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .image-list {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 10px;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .controls,
+            .image-list,
+            header {
+                display: none;
+            }
+
+            #canvas-container {
+                padding: 0;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+<button class="back-button" onclick="window.location.href='../index.html'" style="position: fixed; top: 20px; left: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); transition: all 0.3s ease; z-index: 1000; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.transform='translateY(-2px) scale(1.1)'" onmouseout="this.style.transform='translateY(0) scale(1)'">🏠</button>
+    <div class="container">
+        <header>
+            <div>
+                <h1>📸 Fotocollage</h1>
+                <p class="subtitle">Lag vakre collager med dine bilete - alt skjer lokalt i nettlesaren</p>
+            </div>
+            <button class="privacy-btn" id="privacy-btn">
+                <span>🔒</span> Personvern
+            </button>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label>
+                    <input type="radio" name="mode" value="template" checked>
+                    <span>Mal-basert</span>
+                </label>
+                <label>
+                    <input type="radio" name="mode" value="freeform">
+                    <span>Fri plassering</span>
+                </label>
+            </div>
+
+            <div class="control-group">
+                <label>Orientering:</label>
+                <select id="orientation">
+                    <option value="portrait">Portrett (A4)</option>
+                    <option value="landscape">Landskap (A4)</option>
+                </select>
+            </div>
+
+            <div class="control-group" id="template-selector">
+                <label>Vel mal:</label>
+                <select id="template">
+                    <option value="grid-4">4 bilder (2x2)</option>
+                    <option value="grid-6">6 bilder (2x3)</option>
+                    <option value="collage-4">4 bilder (varierende)</option>
+                    <option value="collage-5">5 bilder (varierende)</option>
+                    <option value="collage-6">6 bilder (varierende)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <button id="add-images" class="btn btn-primary">
+                    <span>📁</span> Legg til bilete
+                </button>
+                <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
+            </div>
+
+            <div class="control-group">
+                <button id="download" class="btn btn-success">
+                    <span>💾</span> Last ned collage
+                </button>
+                <button id="clear" class="btn btn-secondary">
+                    <span>🗑️</span> Tøm
+                </button>
+            </div>
+        </div>
+
+        <div id="canvas-container">
+            <canvas id="collage-canvas"></canvas>
+        </div>
+
+        <div id="image-list" class="image-list"></div>
+    </div>
+
+    <div id="crop-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Skjer bilete</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="crop-container">
+                <canvas id="crop-canvas"></canvas>
+            </div>
+            <div class="crop-controls">
+                <button id="crop-apply" class="btn btn-primary">Bruk</button>
+                <button id="crop-cancel" class="btn btn-secondary">Avbryt</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="privacy-modal" class="modal">
+        <div class="modal-content privacy-content">
+            <div class="modal-header">
+                <h2>🔒 Personvern og datasikkerheit</h2>
+                <button class="close-modal" id="close-privacy">&times;</button>
+            </div>
+            <div>
+                <h3>Dine bilete er 100% trygge</h3>
+                <p>Denne nettsida er laga med ditt personvern i fokus. Her er korleis me vernar dine data:</p>
+                
+                <ul>
+                    <li><strong>Alt skjer lokalt:</strong> Alle bilete blir handsama berre i nettlesaren din på din eining. Ingen data blir sende til nokon tenar.</li>
+                    <li><strong>Ingen lagring:</strong> Bileta dine blir ikkje lagra noko stad. Når du lukkar nettlesaren, er alt borte.</li>
+                    <li><strong>Ingen internetttilknyting nødvendig:</strong> Etter at sida er lasta, kan du bruke henne heilt offline.</li>
+                    <li><strong>Ingen cookies eller sporing:</strong> Me bruker ingen cookies, analytics eller sporingsverktøy.</li>
+                    <li><strong>Open kjeldekode:</strong> All kode er synleg i denne fila. Du kan inspisere henne sjølv.</li>
+                </ul>
+
+                <h3>Teknisk forklaring</h3>
+                <p>Applikasjonen brukar HTML5 Canvas API for å handsama bilete direkte i nettlesaren din. Når du lastar opp bilete, blir dei lese inn i nettlesaren sitt minne med hjelp av FileReader API. Alle operasjonar (skjering, skalering, plassering) blir utførte lokalt med JavaScript.</p>
+
+                <p><strong>Konklusjon:</strong> Dine bilete forlèt aldri din eining. Du har full kontroll over dine data.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class PhotoCollage {
+            constructor() {
+                this.canvas = document.getElementById('collage-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.images = [];
+                this.mode = 'template';
+                this.orientation = 'portrait';
+                this.template = 'grid-4';
+                this.placedImages = [];
+                this.selectedImage = null;
+                this.isDragging = false;
+                this.isResizing = false;
+                this.dragStart = { x: 0, y: 0 };
+                this.resizeHandle = null;
+                
+                this.A4_RATIO = 297 / 210;
+                this.CANVAS_WIDTH = 794;
+                this.CANVAS_HEIGHT = 1123;
+                
+                this.cropModal = document.getElementById('crop-modal');
+                this.cropCanvas = document.getElementById('crop-canvas');
+                this.cropCtx = this.cropCanvas.getContext('2d');
+                this.currentCropImage = null;
+                this.cropSelection = null;
+                this.isCropping = false;
+                
+                this.templateAdjustments = {};
+                this.isAdjustingTemplate = false;
+                this.adjustingSlotIndex = -1;
+                this.adjustStart = { x: 0, y: 0 };
+                this.hoveredSlot = -1;
+                
+                this.init();
+            }
+            
+            init() {
+                this.setupCanvas();
+                this.setupEventListeners();
+                this.render();
+            }
+            
+            setupCanvas() {
+                if (this.orientation === 'portrait') {
+                    this.canvas.width = this.CANVAS_WIDTH;
+                    this.canvas.height = this.CANVAS_HEIGHT;
+                } else {
+                    this.canvas.width = this.CANVAS_HEIGHT;
+                    this.canvas.height = this.CANVAS_WIDTH;
+                }
+                this.render();
+            }
+            
+            setupEventListeners() {
+                document.getElementById('add-images').addEventListener('click', () => {
+                    document.getElementById('file-input').click();
+                });
+                
+                document.getElementById('file-input').addEventListener('change', (e) => {
+                    this.handleFileSelect(e);
+                });
+                
+                document.querySelectorAll('input[name="mode"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        this.mode = e.target.value;
+                        document.getElementById('template-selector').style.display = 
+                            this.mode === 'template' ? 'flex' : 'none';
+                        this.render();
+                    });
+                });
+                
+                document.getElementById('orientation').addEventListener('change', (e) => {
+                    this.orientation = e.target.value;
+                    this.setupCanvas();
+                });
+                
+                document.getElementById('template').addEventListener('change', (e) => {
+                    this.template = e.target.value;
+                    this.render();
+                });
+                
+                document.getElementById('download').addEventListener('click', () => {
+                    this.downloadCollage();
+                });
+                
+                document.getElementById('clear').addEventListener('click', () => {
+                    if (confirm('Er du sikker på at du vil tømma alle bilete?')) {
+                        this.images = [];
+                        this.placedImages = [];
+                        this.updateImageList();
+                        this.render();
+                    }
+                });
+                
+                this.canvas.addEventListener('mousedown', (e) => this.handleCanvasMouseDown(e));
+                this.canvas.addEventListener('mousemove', (e) => this.handleCanvasMouseMove(e));
+                this.canvas.addEventListener('mouseup', (e) => this.handleCanvasMouseUp(e));
+                this.canvas.addEventListener('touchstart', (e) => this.handleCanvasTouchStart(e));
+                this.canvas.addEventListener('touchmove', (e) => this.handleCanvasTouchMove(e));
+                this.canvas.addEventListener('touchend', (e) => this.handleCanvasTouchEnd(e));
+                
+                document.querySelector('#crop-modal .close-modal').addEventListener('click', () => {
+                    this.closeCropModal();
+                });
+                
+                document.getElementById('crop-apply').addEventListener('click', () => {
+                    this.applyCrop();
+                });
+                
+                document.getElementById('crop-cancel').addEventListener('click', () => {
+                    this.closeCropModal();
+                });
+                
+                this.cropCanvas.addEventListener('mousedown', (e) => this.startCrop(e));
+                this.cropCanvas.addEventListener('mousemove', (e) => this.updateCrop(e));
+                this.cropCanvas.addEventListener('mouseup', (e) => this.endCrop(e));
+
+                document.getElementById('privacy-btn').addEventListener('click', () => {
+                    document.getElementById('privacy-modal').classList.add('active');
+                });
+
+                document.getElementById('close-privacy').addEventListener('click', () => {
+                    document.getElementById('privacy-modal').classList.remove('active');
+                });
+            }
+            
+            handleFileSelect(e) {
+                const files = Array.from(e.target.files);
+                files.forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            const img = new Image();
+                            img.onload = () => {
+                                this.images.push({
+                                    img: img,
+                                    original: img,
+                                    id: Date.now() + Math.random()
+                                });
+                                this.updateImageList();
+                                if (this.mode === 'template') {
+                                    this.render();
+                                }
+                            };
+                            img.src = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                e.target.value = '';
+            }
+            
+            updateImageList() {
+                const imageList = document.getElementById('image-list');
+                imageList.innerHTML = '';
+                
+                this.images.forEach((imageData, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'image-item';
+                    div.draggable = true;
+                    
+                    const img = document.createElement('img');
+                    img.src = imageData.img.src;
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '&times;';
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.removeImage(index);
+                    });
+                    
+                    div.appendChild(img);
+                    div.appendChild(removeBtn);
+                    
+                    div.addEventListener('dragstart', (e) => {
+                        e.dataTransfer.setData('imageIndex', index);
+                    });
+                    
+                    div.addEventListener('dblclick', () => {
+                        this.openCropModal(imageData);
+                    });
+                    
+                    imageList.appendChild(div);
+                });
+            }
+            
+            removeImage(index) {
+                this.images.splice(index, 1);
+                this.placedImages = this.placedImages.filter(p => p.imageIndex !== index);
+                this.placedImages.forEach(p => {
+                    if (p.imageIndex > index) p.imageIndex--;
+                });
+                this.updateImageList();
+                this.render();
+            }
+            
+            openCropModal(imageData) {
+                this.currentCropImage = imageData;
+                this.cropSelection = null;
+                
+                const maxWidth = 800;
+                const maxHeight = 600;
+                let width = imageData.img.width;
+                let height = imageData.img.height;
+                
+                if (width > maxWidth || height > maxHeight) {
+                    const ratio = Math.min(maxWidth / width, maxHeight / height);
+                    width *= ratio;
+                    height *= ratio;
+                }
+                
+                this.cropCanvas.width = width;
+                this.cropCanvas.height = height;
+                this.cropCtx.drawImage(imageData.img, 0, 0, width, height);
+                
+                this.cropModal.classList.add('active');
+            }
+            
+            closeCropModal() {
+                this.cropModal.classList.remove('active');
+                this.currentCropImage = null;
+                this.cropSelection = null;
+            }
+            
+            startCrop(e) {
+                const rect = this.cropCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.isCropping = true;
+                this.cropSelection = { startX: x, startY: y, endX: x, endY: y };
+            }
+            
+            updateCrop(e) {
+                if (!this.isCropping) return;
+                
+                const rect = this.cropCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.cropSelection.endX = x;
+                this.cropSelection.endY = y;
+                
+                this.cropCtx.clearRect(0, 0, this.cropCanvas.width, this.cropCanvas.height);
+                this.cropCtx.drawImage(this.currentCropImage.img, 0, 0, this.cropCanvas.width, this.cropCanvas.height);
+                
+                const startX = Math.min(this.cropSelection.startX, this.cropSelection.endX);
+                const startY = Math.min(this.cropSelection.startY, this.cropSelection.endY);
+                const width = Math.abs(this.cropSelection.endX - this.cropSelection.startX);
+                const height = Math.abs(this.cropSelection.endY - this.cropSelection.startY);
+                
+                this.cropCtx.strokeStyle = '#667eea';
+                this.cropCtx.lineWidth = 2;
+                this.cropCtx.strokeRect(startX, startY, width, height);
+                
+                this.cropCtx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+                this.cropCtx.fillRect(0, 0, this.cropCanvas.width, startY);
+                this.cropCtx.fillRect(0, startY, startX, height);
+                this.cropCtx.fillRect(startX + width, startY, this.cropCanvas.width - startX - width, height);
+                this.cropCtx.fillRect(0, startY + height, this.cropCanvas.width, this.cropCanvas.height - startY - height);
+            }
+            
+            endCrop(e) {
+                this.isCropping = false;
+            }
+            
+            applyCrop() {
+                if (!this.cropSelection) {
+                    this.closeCropModal();
+                    return;
+                }
+                
+                const startX = Math.min(this.cropSelection.startX, this.cropSelection.endX);
+                const startY = Math.min(this.cropSelection.startY, this.cropSelection.endY);
+                const width = Math.abs(this.cropSelection.endX - this.cropSelection.startX);
+                const height = Math.abs(this.cropSelection.endY - this.cropSelection.startY);
+                
+                if (width < 10 || height < 10) {
+                    this.closeCropModal();
+                    return;
+                }
+                
+                const scaleX = this.currentCropImage.img.width / this.cropCanvas.width;
+                const scaleY = this.currentCropImage.img.height / this.cropCanvas.height;
+                
+                const cropCanvas = document.createElement('canvas');
+                cropCanvas.width = width * scaleX;
+                cropCanvas.height = height * scaleY;
+                const cropCtx = cropCanvas.getContext('2d');
+                
+                cropCtx.drawImage(
+                    this.currentCropImage.img,
+                    startX * scaleX, startY * scaleY, width * scaleX, height * scaleY,
+                    0, 0, cropCanvas.width, cropCanvas.height
+                );
+                
+                const croppedImg = new Image();
+                croppedImg.onload = () => {
+                    this.currentCropImage.img = croppedImg;
+                    this.updateImageList();
+                    this.render();
+                    this.closeCropModal();
+                };
+                croppedImg.src = cropCanvas.toDataURL();
+            }
+            
+            getTemplateLayout() {
+                const w = this.canvas.width;
+                const h = this.canvas.height;
+                const padding = 20;
+                
+                const layouts = {
+                    'grid-4': [
+                        { x: padding, y: padding, width: w/2 - padding*1.5, height: h/2 - padding*1.5 },
+                        { x: w/2 + padding/2, y: padding, width: w/2 - padding*1.5, height: h/2 - padding*1.5 },
+                        { x: padding, y: h/2 + padding/2, width: w/2 - padding*1.5, height: h/2 - padding*1.5 },
+                        { x: w/2 + padding/2, y: h/2 + padding/2, width: w/2 - padding*1.5, height: h/2 - padding*1.5 }
+                    ],
+                    'grid-6': [
+                        { x: padding, y: padding, width: w/2 - padding*1.5, height: h/3 - padding*1.33 },
+                        { x: w/2 + padding/2, y: padding, width: w/2 - padding*1.5, height: h/3 - padding*1.33 },
+                        { x: padding, y: h/3 + padding/3, width: w/2 - padding*1.5, height: h/3 - padding*1.33 },
+                        { x: w/2 + padding/2, y: h/3 + padding/3, width: w/2 - padding*1.5, height: h/3 - padding*1.33 },
+                        { x: padding, y: h*2/3 + padding*2/3, width: w/2 - padding*1.5, height: h/3 - padding*1.33 },
+                        { x: w/2 + padding/2, y: h*2/3 + padding*2/3, width: w/2 - padding*1.5, height: h/3 - padding*1.33 }
+                    ],
+                    'collage-4': [
+                        { x: padding, y: padding, width: w*0.6 - padding*1.5, height: h*0.6 - padding*1.5 },
+                        { x: w*0.6 + padding/2, y: padding, width: w*0.4 - padding*1.5, height: h*0.3 - padding },
+                        { x: w*0.6 + padding/2, y: h*0.3 + padding, width: w*0.4 - padding*1.5, height: h*0.3 - padding },
+                        { x: padding, y: h*0.6 + padding/2, width: w - padding*2, height: h*0.4 - padding*1.5 }
+                    ],
+                    'collage-5': [
+                        { x: padding, y: padding, width: w/2 - padding*1.5, height: h*0.5 - padding*1.5 },
+                        { x: w/2 + padding/2, y: padding, width: w/2 - padding*1.5, height: h*0.5 - padding*1.5 },
+                        { x: padding, y: h*0.5 + padding/2, width: w/3 - padding*1.33, height: h*0.5 - padding*1.5 },
+                        { x: w/3 + padding/3, y: h*0.5 + padding/2, width: w/3 - padding*1.33, height: h*0.5 - padding*1.5 },
+                        { x: w*2/3 + padding*2/3, y: h*0.5 + padding/2, width: w/3 - padding*1.33, height: h*0.5 - padding*1.5 }
+                    ],
+                    'collage-6': [
+                        { x: padding, y: padding, width: w*0.5 - padding*1.5, height: h*0.4 - padding*1.25 },
+                        { x: w*0.5 + padding/2, y: padding, width: w*0.5 - padding*1.5, height: h*0.4 - padding*1.25 },
+                        { x: padding, y: h*0.4 + padding/4, width: w*0.33 - padding*1.33, height: h*0.3 - padding*1.25 },
+                        { x: w*0.33 + padding/3, y: h*0.4 + padding/4, width: w*0.34 - padding*1.33, height: h*0.3 - padding*1.25 },
+                        { x: w*0.67 + padding*2/3, y: h*0.4 + padding/4, width: w*0.33 - padding*1.33, height: h*0.3 - padding*1.25 },
+                        { x: padding, y: h*0.7 + padding/2, width: w - padding*2, height: h*0.3 - padding*1.5 }
+                    ]
+                };
+                
+                return layouts[this.template] || layouts['grid-4'];
+            }
+            
+            render() {
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                if (this.mode === 'template') {
+                    this.renderTemplate();
+                } else {
+                    this.renderFreeform();
+                }
+            }
+            
+            renderTemplate() {
+                const layout = this.getTemplateLayout();
+                
+                // Draw images first
+                this.images.forEach((imageData, index) => {
+                    if (index < layout.length) {
+                        const slot = layout[index];
+                        const adjustment = this.templateAdjustments[index] || { offsetX: 0, offsetY: 0, zoom: 1 };
+                        this.drawImageInSlot(imageData.img, slot, adjustment);
+                    }
+                });
+                
+                // Draw slot borders
+                this.ctx.strokeStyle = '#e0e0e0';
+                this.ctx.lineWidth = 2;
+                layout.forEach((slot, index) => {
+                    this.ctx.strokeRect(slot.x, slot.y, slot.width, slot.height);
+                });
+                
+                // Draw controls on top
+                layout.forEach((slot, index) => {
+                    if (index === this.hoveredSlot && this.images[index]) {
+                        this.drawSlotControls(slot, index);
+                    }
+                });
+            }
+            
+            drawSlotControls(slot, imageIndex) {
+                const controlSize = 30;
+                const padding = 8;
+                
+                this.ctx.save();
+                
+                // Remove button (top-right)
+                this.ctx.fillStyle = 'rgba(239, 68, 68, 0.9)';
+                this.ctx.strokeStyle = 'white';
+                this.ctx.lineWidth = 2;
+                
+                const removeX = slot.x + slot.width - controlSize - padding;
+                const removeY = slot.y + padding;
+                this.ctx.beginPath();
+                this.ctx.arc(removeX + controlSize/2, removeY + controlSize/2, controlSize/2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+                
+                this.ctx.fillStyle = 'white';
+                this.ctx.font = 'bold 16px Arial';
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'middle';
+                this.ctx.fillText('×', removeX + controlSize/2, removeY + controlSize/2);
+                
+                // Rotate button (top-left)
+                this.ctx.fillStyle = 'rgba(102, 126, 234, 0.9)';
+                const rotateX = slot.x + padding;
+                const rotateY = slot.y + padding;
+                this.ctx.beginPath();
+                this.ctx.arc(rotateX + controlSize/2, rotateY + controlSize/2, controlSize/2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+                
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillText('↻', rotateX + controlSize/2, rotateY + controlSize/2);
+                
+                // Zoom controls (bottom-right)
+                this.ctx.fillStyle = 'rgba(72, 187, 120, 0.9)';
+                const zoomInX = slot.x + slot.width - controlSize - padding;
+                const zoomInY = slot.y + slot.height - controlSize - padding;
+                this.ctx.beginPath();
+                this.ctx.arc(zoomInX + controlSize/2, zoomInY + controlSize/2, controlSize/2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+                
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillText('+', zoomInX + controlSize/2, zoomInY + controlSize/2);
+                
+                const zoomOutX = slot.x + slot.width - controlSize*2 - padding*2;
+                const zoomOutY = slot.y + slot.height - controlSize - padding;
+                
+                // Reset fill style for zoom out button
+                this.ctx.fillStyle = 'rgba(72, 187, 120, 0.9)';
+                this.ctx.beginPath();
+                this.ctx.arc(zoomOutX + controlSize/2, zoomOutY + controlSize/2, controlSize/2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+                
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillText('-', zoomOutX + controlSize/2, zoomOutY + controlSize/2);
+                
+                this.ctx.restore();
+                
+                // Store control positions for click detection
+                this.slotControls = this.slotControls || {};
+                this.slotControls[imageIndex] = {
+                    remove: { x: removeX, y: removeY, width: controlSize, height: controlSize },
+                    rotate: { x: rotateX, y: rotateY, width: controlSize, height: controlSize },
+                    zoomIn: { x: zoomInX, y: zoomInY, width: controlSize, height: controlSize },
+                    zoomOut: { x: zoomOutX, y: zoomOutY, width: controlSize, height: controlSize }
+                };
+            }
+            
+            drawImageInSlot(img, slot, adjustment = { offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 }) {
+                const imgRatio = img.width / img.height;
+                const slotRatio = slot.width / slot.height;
+                
+                let drawWidth, drawHeight, offsetX, offsetY;
+                
+                if (imgRatio > slotRatio) {
+                    drawHeight = slot.height * adjustment.zoom;
+                    drawWidth = drawHeight * imgRatio;
+                    offsetX = (slot.width - drawWidth) / 2 + adjustment.offsetX;
+                    offsetY = (slot.height - drawHeight) / 2 + adjustment.offsetY;
+                } else {
+                    drawWidth = slot.width * adjustment.zoom;
+                    drawHeight = drawWidth / imgRatio;
+                    offsetX = (slot.width - drawWidth) / 2 + adjustment.offsetX;
+                    offsetY = (slot.height - drawHeight) / 2 + adjustment.offsetY;
+                }
+                
+                this.ctx.save();
+                this.ctx.beginPath();
+                this.ctx.rect(slot.x, slot.y, slot.width, slot.height);
+                this.ctx.clip();
+                
+                if (adjustment.rotation !== 0) {
+                    const centerX = slot.x + slot.width / 2;
+                    const centerY = slot.y + slot.height / 2;
+                    this.ctx.translate(centerX, centerY);
+                    this.ctx.rotate(adjustment.rotation * Math.PI / 180);
+                    this.ctx.translate(-centerX, -centerY);
+                }
+                
+                this.ctx.drawImage(img, slot.x + offsetX, slot.y + offsetY, drawWidth, drawHeight);
+                this.ctx.restore();
+            }
+            
+            rotateTemplateImage(imageIndex, angle) {
+                if (!this.templateAdjustments[imageIndex]) {
+                    this.templateAdjustments[imageIndex] = { offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 };
+                }
+                
+                this.templateAdjustments[imageIndex].rotation = (this.templateAdjustments[imageIndex].rotation || 0) + angle;
+                this.render();
+            }
+            
+            removeTemplateImage(imageIndex) {
+                this.images.splice(imageIndex, 1);
+                this.placedImages = this.placedImages.filter(p => p.imageIndex !== imageIndex);
+                this.placedImages.forEach(p => {
+                    if (p.imageIndex > imageIndex) p.imageIndex--;
+                });
+                
+                // Clean up adjustments for removed image and shift others
+                const newAdjustments = {};
+                Object.keys(this.templateAdjustments).forEach(key => {
+                    const idx = parseInt(key);
+                    if (idx < imageIndex) {
+                        newAdjustments[idx] = this.templateAdjustments[idx];
+                    } else if (idx > imageIndex) {
+                        newAdjustments[idx - 1] = this.templateAdjustments[idx];
+                    }
+                });
+                this.templateAdjustments = newAdjustments;
+                
+                this.updateImageList();
+                this.render();
+            }
+            
+            removeFreeformImage(index) {
+                this.placedImages.splice(index, 1);
+                this.selectedImage = null;
+                this.render();
+            }
+            
+            rotateFreeformImage(index, angle) {
+                if (!this.placedImages[index].rotation) {
+                    this.placedImages[index].rotation = 0;
+                }
+                this.placedImages[index].rotation += angle;
+                this.render();
+            }
+            
+            startTemplateAdjustment(imageIndex) {
+                this.isAdjustingTemplate = true;
+                this.adjustingSlotIndex = imageIndex;
+                this.canvas.style.cursor = 'move';
+                
+                const layout = this.getTemplateLayout();
+                const slot = layout[imageIndex];
+                const rect = this.canvas.getBoundingClientRect();
+                
+                this.adjustStart = {
+                    x: rect.left + slot.x + slot.width / 2,
+                    y: rect.top + slot.y + slot.height / 2
+                };
+            }
+            
+            zoomTemplateImage(imageIndex, factor) {
+                if (!this.templateAdjustments[imageIndex]) {
+                    this.templateAdjustments[imageIndex] = { offsetX: 0, offsetY: 0, zoom: 1 };
+                }
+                
+                const currentZoom = this.templateAdjustments[imageIndex].zoom;
+                const newZoom = Math.max(0.5, Math.min(3, currentZoom * factor));
+                this.templateAdjustments[imageIndex].zoom = newZoom;
+                
+                this.render();
+            }
+            
+            renderFreeform() {
+                this.placedImages.forEach((placed, index) => {
+                    if (this.images[placed.imageIndex]) {
+                        const img = this.images[placed.imageIndex].img;
+                        
+                        // Apply rotation if exists
+                        if (placed.rotation) {
+                            this.ctx.save();
+                            const centerX = placed.x + placed.width / 2;
+                            const centerY = placed.y + placed.height / 2;
+                            this.ctx.translate(centerX, centerY);
+                            this.ctx.rotate(placed.rotation * Math.PI / 180);
+                            this.ctx.translate(-centerX, -centerY);
+                            this.ctx.drawImage(img, placed.x, placed.y, placed.width, placed.height);
+                            this.ctx.restore();
+                        } else {
+                            this.ctx.drawImage(img, placed.x, placed.y, placed.width, placed.height);
+                        }
+                        
+                        if (this.selectedImage === index) {
+                            this.drawFreeformControls(placed, index);
+                        }
+                    }
+                });
+            }
+            
+            drawFreeformControls(placed, index) {
+                const controlSize = 24;
+                const padding = 5;
+                
+                this.ctx.save();
+                
+                // Apply rotation to controls if image is rotated
+                if (placed.rotation) {
+                    const centerX = placed.x + placed.width / 2;
+                    const centerY = placed.y + placed.height / 2;
+                    this.ctx.translate(centerX, centerY);
+                    this.ctx.rotate(placed.rotation * Math.PI / 180);
+                    this.ctx.translate(-centerX, -centerY);
+                }
+                
+                // Selection border
+                this.ctx.strokeStyle = '#667eea';
+                this.ctx.lineWidth = 3;
+                this.ctx.strokeRect(placed.x, placed.y, placed.width, placed.height);
+                
+                // Remove button (top-right)
+                this.ctx.fillStyle = 'rgba(239, 68, 68, 0.9)';
+                this.ctx.strokeStyle = 'white';
+                this.ctx.lineWidth = 2;
+                
+                const removeX = placed.x + placed.width - controlSize - padding;
+                const removeY = placed.y + padding;
+                this.ctx.beginPath();
+                this.ctx.arc(removeX + controlSize/2, removeY + controlSize/2, controlSize/2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+                
+                this.ctx.fillStyle = 'white';
+                this.ctx.font = 'bold 14px Arial';
+                this.ctx.textAlign = 'center';
+                this.ctx.textBaseline = 'middle';
+                this.ctx.fillText('×', removeX + controlSize/2, removeY + controlSize/2);
+                
+                // Rotate button (top-left)
+                this.ctx.fillStyle = 'rgba(102, 126, 234, 0.9)';
+                const rotateX = placed.x + padding;
+                const rotateY = placed.y + padding;
+                this.ctx.beginPath();
+                this.ctx.arc(rotateX + controlSize/2, rotateY + controlSize/2, controlSize/2, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+                
+                this.ctx.fillStyle = 'white';
+                this.ctx.fillText('↻', rotateX + controlSize/2, rotateY + controlSize/2);
+                
+                // Resize handle (bottom-right)
+                this.drawResizeHandle(placed.x + placed.width, placed.y + placed.height);
+                
+                this.ctx.restore();
+                
+                // Store control positions for click detection (adjusted for rotation)
+                this.freeformControls = this.freeformControls || {};
+                this.freeformControls[index] = this.calculateRotatedControlPositions(placed, controlSize, padding);
+            }
+            
+            calculateRotatedControlPositions(placed, controlSize, padding) {
+                const positions = {
+                    remove: { x: placed.x + placed.width - controlSize - padding, y: placed.y + padding, width: controlSize, height: controlSize },
+                    rotate: { x: placed.x + padding, y: placed.y + padding, width: controlSize, height: controlSize },
+                    resize: { x: placed.x + placed.width - 6, y: placed.y + placed.height - 6, width: 12, height: 12 }
+                };
+                
+                if (placed.rotation) {
+                    const centerX = placed.x + placed.width / 2;
+                    const centerY = placed.y + placed.height / 2;
+                    const angle = placed.rotation * Math.PI / 180;
+                    
+                    Object.keys(positions).forEach(key => {
+                        const pos = positions[key];
+                        const controlCenterX = pos.x + pos.width / 2;
+                        const controlCenterY = pos.y + pos.height / 2;
+                        
+                        // Rotate control center around image center
+                        const rotatedX = centerX + (controlCenterX - centerX) * Math.cos(angle) - (controlCenterY - centerY) * Math.sin(angle);
+                        const rotatedY = centerY + (controlCenterX - centerX) * Math.sin(angle) + (controlCenterY - centerY) * Math.cos(angle);
+                        
+                        // Update position to rotated center
+                        pos.x = rotatedX - pos.width / 2;
+                        pos.y = rotatedY - pos.height / 2;
+                    });
+                }
+                
+                return positions;
+            }
+            
+            drawResizeHandle(x, y) {
+                this.ctx.fillStyle = '#667eea';
+                this.ctx.strokeStyle = 'white';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, 6, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.stroke();
+            }
+            
+            handleCanvasMouseDown(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (this.mode === 'template') {
+                    // Check for control clicks first
+                    if (this.slotControls && this.hoveredSlot >= 0) {
+                        const controls = this.slotControls[this.hoveredSlot];
+                        if (controls) {
+                            if (this.isPointInRect(x, y, controls.remove)) {
+                                this.removeTemplateImage(this.hoveredSlot);
+                                return;
+                            }
+                            if (this.isPointInRect(x, y, controls.rotate)) {
+                                this.rotateTemplateImage(this.hoveredSlot, 15);
+                                return;
+                            }
+                            if (this.isPointInRect(x, y, controls.zoomIn)) {
+                                this.zoomTemplateImage(this.hoveredSlot, 1.1);
+                                return;
+                            }
+                            if (this.isPointInRect(x, y, controls.zoomOut)) {
+                                this.zoomTemplateImage(this.hoveredSlot, 0.9);
+                                return;
+                            }
+                        }
+                    }
+                    
+                    // Check if clicking on an image to start dragging
+                    const layout = this.getTemplateLayout();
+                    for (let i = 0; i < layout.length && i < this.images.length; i++) {
+                        const slot = layout[i];
+                        if (x >= slot.x && x <= slot.x + slot.width &&
+                            y >= slot.y && y <= slot.y + slot.height) {
+                            this.isAdjustingTemplate = true;
+                            this.adjustingSlotIndex = i;
+                            this.adjustStart = { x, y };
+                            this.canvas.style.cursor = 'move';
+                            return;
+                        }
+                    }
+                    return;
+                }
+                
+                // Freeform mode - check for control clicks first
+                if (this.freeformControls && this.selectedImage !== null) {
+                    const controls = this.freeformControls[this.selectedImage];
+                    if (controls) {
+                        if (this.isPointInRect(x, y, controls.remove)) {
+                            this.removeFreeformImage(this.selectedImage);
+                            return;
+                        }
+                        if (this.isPointInRect(x, y, controls.rotate)) {
+                            this.rotateFreeformImage(this.selectedImage, 15);
+                            return;
+                        }
+                        if (this.isPointInRect(x, y, controls.resize)) {
+                            this.isResizing = true;
+                            this.dragStart = { x, y };
+                            return;
+                        }
+                    }
+                }
+                
+                // Check for image selection in freeform mode
+                for (let i = this.placedImages.length - 1; i >= 0; i--) {
+                    const placed = this.placedImages[i];
+                    
+                    if (x >= placed.x && x <= placed.x + placed.width &&
+                        y >= placed.y && y <= placed.y + placed.height) {
+                        this.isDragging = true;
+                        this.selectedImage = i;
+                        this.dragStart = { x: x - placed.x, y: y - placed.y };
+                        this.render();
+                        return;
+                    }
+                }
+                
+                this.selectedImage = null;
+                this.render();
+            }
+            
+            handleCanvasMouseMove(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (this.mode === 'template') {
+                    // Update hover state
+                    const layout = this.getTemplateLayout();
+                    let newHoveredSlot = -1;
+                    
+                    for (let i = 0; i < layout.length && i < this.images.length; i++) {
+                        const slot = layout[i];
+                        if (x >= slot.x && x <= slot.x + slot.width &&
+                            y >= slot.y && y <= slot.y + slot.height) {
+                            newHoveredSlot = i;
+                            break;
+                        }
+                    }
+                    
+                    if (newHoveredSlot !== this.hoveredSlot) {
+                        this.hoveredSlot = newHoveredSlot;
+                        this.render();
+                    }
+                    
+                    // Update cursor based on hover
+                    if (this.hoveredSlot >= 0 && this.slotControls && this.slotControls[this.hoveredSlot]) {
+                        const controls = this.slotControls[this.hoveredSlot];
+                        if (this.isPointInRect(x, y, controls.rotate) || 
+                            this.isPointInRect(x, y, controls.zoomIn) || 
+                            this.isPointInRect(x, y, controls.zoomOut)) {
+                            this.canvas.style.cursor = 'pointer';
+                        } else {
+                            this.canvas.style.cursor = 'move';
+                        }
+                    } else if (this.hoveredSlot >= 0) {
+                        this.canvas.style.cursor = 'move';
+                    } else {
+                        this.canvas.style.cursor = 'default';
+                    }
+                    
+                    if (this.isAdjustingTemplate) {
+                        const deltaX = x - this.adjustStart.x;
+                        const deltaY = y - this.adjustStart.y;
+                        
+                        if (!this.templateAdjustments[this.adjustingSlotIndex]) {
+                            this.templateAdjustments[this.adjustingSlotIndex] = { offsetX: 0, offsetY: 0, zoom: 1, rotation: 0 };
+                        }
+                        
+                        this.templateAdjustments[this.adjustingSlotIndex].offsetX += deltaX;
+                        this.templateAdjustments[this.adjustingSlotIndex].offsetY += deltaY;
+                        
+                        this.adjustStart = { x, y };
+                        this.render();
+                        return;
+                    }
+                    return;
+                }
+                
+                if (this.mode !== 'freeform') return;
+                
+                if (this.isDragging && this.selectedImage !== null) {
+                    const placed = this.placedImages[this.selectedImage];
+                    placed.x = x - this.dragStart.x;
+                    placed.y = y - this.dragStart.y;
+                    this.render();
+                } else if (this.isResizing && this.selectedImage !== null) {
+                    const placed = this.placedImages[this.selectedImage];
+                    const newWidth = Math.max(50, x - placed.x);
+                    const newHeight = Math.max(50, y - placed.y);
+                    placed.width = newWidth;
+                    placed.height = newHeight;
+                    this.render();
+                }
+            }
+            
+            handleCanvasMouseUp(e) {
+                if (this.mode === 'template' && this.isAdjustingTemplate) {
+                    this.isAdjustingTemplate = false;
+                    this.adjustingSlotIndex = -1;
+                    this.canvas.style.cursor = 'default';
+                    return;
+                }
+                
+                this.isDragging = false;
+                this.isResizing = false;
+            }
+            
+            isPointInRect(x, y, rect) {
+                return x >= rect.x && x <= rect.x + rect.width &&
+                       y >= rect.y && y <= rect.y + rect.height;
+            }
+            
+            handleCanvasTouchStart(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                this.canvas.dispatchEvent(mouseEvent);
+            }
+            
+            handleCanvasTouchMove(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                this.canvas.dispatchEvent(mouseEvent);
+            }
+            
+            handleCanvasTouchEnd(e) {
+                e.preventDefault();
+                const mouseEvent = new MouseEvent('mouseup', {});
+                this.canvas.dispatchEvent(mouseEvent);
+            }
+            
+            downloadCollage() {
+                const link = document.createElement('a');
+                link.download = `collage-${Date.now()}.png`;
+                link.href = this.canvas.toDataURL('image/png');
+                link.click();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = new PhotoCollage();
+            
+            const imageList = document.getElementById('image-list');
+            imageList.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+            
+            imageList.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const files = Array.from(e.dataTransfer.files);
+                const fileInput = document.getElementById('file-input');
+                const dt = new DataTransfer();
+                files.forEach(file => dt.items.add(file));
+                fileInput.files = dt.files;
+                fileInput.dispatchEvent(new Event('change'));
+            });
+            
+            const canvas = document.getElementById('collage-canvas');
+            canvas.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+            
+            canvas.addEventListener('drop', (e) => {
+                e.preventDefault();
+                
+                if (app.mode === 'freeform') {
+                    const imageIndex = e.dataTransfer.getData('imageIndex');
+                    if (imageIndex !== '') {
+                        const rect = canvas.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        const img = app.images[parseInt(imageIndex)].img;
+                        const maxSize = 300;
+                        let width = img.width;
+                        let height = img.height;
+                        
+                        if (width > maxSize || height > maxSize) {
+                            const ratio = Math.min(maxSize / width, maxSize / height);
+                            width *= ratio;
+                            height *= ratio;
+                        }
+                        
+                        app.placedImages.push({
+                            imageIndex: parseInt(imageIndex),
+                            x: x - width / 2,
+                            y: y - height / 2,
+                            width: width,
+                            height: height
+                        });
+                        
+                        app.render();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
