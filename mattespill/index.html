@@ -530,6 +530,14 @@
         
         async function fetchAllPlayers() {
             try {
+                // MIDTERTIDIG DEAKTIVERT: TheSportsDB API forårsaker SSL-feil
+                // Bruker kun fallback spillere inntil videre
+                console.log('TheSportsDB API midlertidig deaktivert for å fikse SSL-problemer');
+                allPlayers = [];
+                return;
+                
+                // Original kode (kommentert ut):
+                /*
                 const topPlayers = [
                     'Lionel Messi', 'Cristiano Ronaldo', 'Neymar', 'Kylian Mbappe',
                     'Erling Haaland', 'Kevin De Bruyne', 'Mohamed Salah', 'Robert Lewandowski',
@@ -556,9 +564,11 @@
                 allPlayers = playerResults.filter(player => player !== null);
                 
                 console.log(`Henta ${allPlayers.length} fotballspillere`);
+                */
             } catch (error) {
                 console.error('Feil ved henting av alle spillere:', error);
-                throw error;
+                // Bruk fallback hvis API feiler
+                allPlayers = [];
             }
         }
         
