@@ -671,18 +671,23 @@
 
         function restartGame() {
             correctAnswers = 0;
-            collectedPlayers = [];
-            usedPlayerIndices = [];
             updateProgress();
             document.getElementById('completionContainer').classList.add('hidden');
             document.getElementById('setupContainer').classList.remove('hidden');
             document.getElementById('feedback').textContent = '';
-            document.getElementById('collectedCards').innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">⚽</div>
-                    <p>Løys oppgåver for å samle fotballkort!</p>
-                </div>
-            `;
+            
+            // BEVAR samla fotballkort - ikke tøm collectedPlayers eller usedPlayerIndices
+            // Vis eksisterande kort hvis vi har samla nokon
+            if (collectedPlayers.length > 0) {
+                updateCardsDisplay();
+            } else {
+                document.getElementById('collectedCards').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚽</div>
+                        <p>Løys oppgåver for å samle fotballkort!</p>
+                    </div>
+                `;
+            }
         }
 
         document.getElementById('answerInput').addEventListener('keypress', function(e) {

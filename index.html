@@ -245,6 +245,124 @@
             display: flex;
         }
 
+        .menu-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .menu-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-content h3 {
+            color: #667eea;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
+        }
+
+        .menu-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .menu-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .menu-desc {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #64748b;
+        }
+
+        .menu-close:hover {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -300,6 +418,28 @@
 
             .category-title {
                 font-size: 1.4rem;
+            }
+
+            .menu-content {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            .menu-item {
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .menu-icon {
+                font-size: 2rem;
+            }
+
+            .menu-title {
+                font-size: 1.1rem;
+            }
+
+            .menu-desc {
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -399,42 +539,73 @@
 
         function navigateToCategory(category) {
             if (category === 'spill') {
-                // Show submenu or navigate to first game
-                showGamesMenu();
+                showMenu('spill');
             } else if (category === 'verktøy') {
-                showToolsMenu();
+                showMenu('verktøy');
             }
         }
 
-        function showGamesMenu() {
-            // For now, create a simple selection
-            const games = [
-                { name: 'Capybara Gangespel', url: 'gangespill/index.html' },
-                { name: 'Mattespel (Fotballkort)', url: 'mattespill/index.html' }
-            ];
+        function showMenu(type) {
+            const modal = document.createElement('div');
+            modal.className = 'menu-modal';
+            modal.innerHTML = `
+                <div class="menu-content">
+                    <h3>Velg ${type === 'spill' ? 'eitt spel' : 'eitt verktøy'}</h3>
+                    <div class="menu-items">
+                        ${type === 'spill' ? `
+                            <button class="menu-item" onclick="navigateToApp('gangespill/index.html')">
+                                <span class="menu-icon">🦫</span>
+                                <div class="menu-text">
+                                    <div class="menu-title">Capybara Gangespel</div>
+                                    <div class="menu-desc">Øv på ganetabellar</div>
+                                </div>
+                            </button>
+                            <button class="menu-item" onclick="navigateToApp('mattespill/index.html')">
+                                <span class="menu-icon">⚽</span>
+                                <div class="menu-text">
+                                    <div class="menu-title">Mattespel</div>
+                                    <div class="menu-desc">Løys oppgåver og vinn fotballkort</div>
+                                </div>
+                            </button>
+                        ` : `
+                            <button class="menu-item" onclick="navigateToApp('fotocollage/fotocollage.html')">
+                                <span class="menu-icon">📸</span>
+                                <div class="menu-text">
+                                    <div class="menu-title">Fotocollage</div>
+                                    <div class="menu-desc">Lag vakre bilete-collager</div>
+                                </div>
+                            </button>
+                            <button class="menu-item" onclick="navigateToApp('fotocolours/index.html')">
+                                <span class="menu-icon">🎨</span>
+                                <div class="menu-text">
+                                    <div class="menu-title">Fotocolours</div>
+                                    <div class="menu-desc">Rediger bilete med fargetonetilpasning</div>
+                                </div>
+                            </button>
+                        `}
+                    </div>
+                    <button class="menu-close" onclick="closeMenu()">✕</button>
+                </div>
+            `;
             
-            const choice = confirm('Vel eit spel:\n\n1. Capybara Gangespel (OK)\n2. Mattespel - Fotballkort (Avbryt)');
+            document.body.appendChild(modal);
             
-            if (choice) {
-                window.location.href = games[0].url;
-            } else {
-                window.location.href = games[1].url;
-            }
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeMenu();
+                }
+            });
         }
 
-        function showToolsMenu() {
-            // For now, create a simple selection
-            const tools = [
-                { name: 'Fotocollage', url: 'fotocollage/fotocollage.html' },
-                { name: 'Fotocolours (Bilde-editor)', url: 'fotocolours/index.html' }
-            ];
-            
-            const choice = confirm('Vel eit verktøy:\n\n1. Fotocollage (OK)\n2. Fotocolours - Bilde-editor (Avbryt)');
-            
-            if (choice) {
-                window.location.href = tools[0].url;
-            } else {
-                window.location.href = tools[1].url;
+        function navigateToApp(url) {
+            window.location.href = url;
+        }
+
+        function closeMenu() {
+            const modal = document.querySelector('.menu-modal');
+            if (modal) {
+                modal.remove();
             }
         }
 
