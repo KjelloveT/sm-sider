@@ -157,7 +157,7 @@ select.neo-input { cursor: pointer; }
 .btn.c-blue { background: #87CEEB; color: #1a1a1a; }
 .btn.c-green { background: #BAFCA2; color: #1a1a1a; }
 .btn.c-red { background: #FFA07A; color: #1a1a1a; }
-.btn .icon { vertical-align: -3px; }
+.btn .lucide { vertical-align: -3px; }
 
 /* Tilgjenge */
 .btn:focus-visible, .pos-btn:focus-visible, .neo-input:focus-visible,

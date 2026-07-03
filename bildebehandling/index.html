@@ -23,7 +23,7 @@
 
             <!-- Opplastingssone -->
             <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Legg til bilete">
-                <span class="upload-icon" data-icon="image-plus" data-icon-size="44"></span>
+                <span class="upload-icon" data-icon="imagePlus" data-icon-size="44"></span>
                 <div class="upload-text">Dra og slepp bilete her</div>
                 <div class="upload-sub">eller klikk for å velje filer</div>
                 <input type="file" id="file-input" accept="image/*" multiple hidden>
@@ -62,18 +62,18 @@
 
                     <!-- Roter og spegle -->
                     <section class="ctrl">
-                        <div class="ctrl-label"><span data-icon="rotate-cw" data-icon-size="16"></span> Roter og spegle</div>
+                        <div class="ctrl-label"><span data-icon="rotateCw" data-icon-size="16"></span> Roter og spegle</div>
                         <div class="btn-row">
-                            <button class="btn mini" data-rotate="-90" aria-label="Roter mot klokka"><span data-icon="rotate-ccw"></span></button>
-                            <button class="btn mini" data-rotate="90" aria-label="Roter med klokka"><span data-icon="rotate-cw"></span></button>
-                            <button class="btn mini" data-flip="h" aria-label="Spegl vassrett"><span data-icon="flip-horizontal"></span></button>
-                            <button class="btn mini" data-flip="v" aria-label="Spegl loddrett"><span data-icon="flip-vertical"></span></button>
+                            <button class="btn mini" data-rotate="-90" aria-label="Roter mot klokka"><span data-icon="rotateCcw"></span></button>
+                            <button class="btn mini" data-rotate="90" aria-label="Roter med klokka"><span data-icon="rotateCw"></span></button>
+                            <button class="btn mini" data-flip="h" aria-label="Spegl vassrett"><span data-icon="flipHorizontal"></span></button>
+                            <button class="btn mini" data-flip="v" aria-label="Spegl loddrett"><span data-icon="flipVertical"></span></button>
                         </div>
                     </section>
 
                     <!-- Format og kvalitet -->
                     <section class="ctrl">
-                        <div class="ctrl-label"><span data-icon="file-down" data-icon-size="16"></span> Format og kvalitet</div>
+                        <div class="ctrl-label"><span data-icon="fileDown" data-icon-size="16"></span> Format og kvalitet</div>
                         <select id="format" class="neo-input">
                             <option value="jpeg">JPEG</option>
                             <option value="png">PNG (taps­fri)</option>
@@ -142,11 +142,11 @@
                             <span class="savings" id="savings"></span>
                         </div>
                         <div class="action-right">
-                            <button class="btn c-blue" id="btn-add-more"><span data-icon="image-plus"></span> Fleire</button>
+                            <button class="btn c-blue" id="btn-add-more"><span data-icon="imagePlus"></span> Fleire</button>
                             <button class="btn" id="btn-apply-all"><span data-icon="check"></span> Bruk på alle</button>
-                            <button class="btn" id="btn-reset"><span data-icon="rotate-ccw"></span> Nullstill</button>
+                            <button class="btn" id="btn-reset"><span data-icon="rotateCcw"></span> Nullstill</button>
                             <button class="btn c-green" id="btn-zip"><span data-icon="package"></span> Last ned alle (ZIP)</button>
-                            <button class="btn c-red" id="btn-clear"><span data-icon="trash-2"></span> Tøm</button>
+                            <button class="btn c-red" id="btn-clear"><span data-icon="trash2"></span> Tøm</button>
                         </div>
                     </div>
                     <div class="preview-grid" id="preview-grid"></div>
@@ -200,7 +200,7 @@
 
     <!-- Skript -->
     <script src="js/vendor/jszip.min.js"></script>
-    <script src="js/icons.js"></script>
+    <script src="../js/vyrdepil-icons.js"></script>
     <script src="js/processor.js"></script>
     <script src="js/app.js"></script>
     <script src="../js/neobrutalisme.js"></script>

@@ -17,7 +17,7 @@
     let els = {};
 
     document.addEventListener('DOMContentLoaded', () => {
-        Icons.inject();
+        hydrateIcons();
         els = {
             uploadZone: $('upload-zone'), fileInput: $('file-input'), logoInput: $('logo-input'),
             layout: $('app-layout'), grid: $('preview-grid'), count: $('count'), savings: $('savings'),
@@ -294,11 +294,11 @@
                 </div>
                 <div class="card-actions">
                     <button class="btn mini" data-act="crop"><span data-icon="crop"></span> Skjer</button>
-                    <button class="btn mini" data-act="rotate" aria-label="Roter"><span data-icon="rotate-cw"></span></button>
+                    <button class="btn mini" data-act="rotate" aria-label="Roter"><span data-icon="rotateCw"></span></button>
                     <button class="btn mini c-green" data-act="download" aria-label="Last ned"><span data-icon="download"></span></button>
-                    <button class="btn mini c-red" data-act="remove" aria-label="Fjern"><span data-icon="trash-2"></span></button>
+                    <button class="btn mini c-red" data-act="remove" aria-label="Fjern"><span data-icon="trash2"></span></button>
                 </div>`;
-            Icons.inject(card);
+            hydrateIcons(card);
             card.querySelector('[data-act="crop"]').addEventListener('click', () => openCrop(it));
             card.querySelector('[data-act="rotate"]').addEventListener('click', () => {
                 it.rotation = (it.rotation + 90) % 360; processItem(it);
