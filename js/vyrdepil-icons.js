@@ -171,10 +171,19 @@
   zoomOut: '<circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="8" x2="14" y1="11" y2="11"/>'
   };
 
-  /** Lag Lucide-SVG-markup for eit ikon-namn. */
+  /** Normaliser kebab-case til camelCase (kompat): "trash-2" -> "trash2". */
+  function _camel(name) {
+    return name.indexOf('-') === -1 ? name
+      : name.split('-').map((p, i) => i ? p.charAt(0).toUpperCase() + p.slice(1) : p).join('');
+  }
+
+  /** Lag Lucide-SVG-markup for eit ikon-namn (godtek òg kebab-case). */
   function ICON(name, size = 18, extraClass = '') {
-    const paths = ICON_PATHS[name] || '';
-    const cls = extraClass ? ` class="lucide ${extraClass}"` : ' class="lucide"';
+    let paths = ICON_PATHS[name];
+    if (paths == null && name) paths = ICON_PATHS[_camel(name)];
+    paths = paths || '';
+    // Klassane "lucide icon" gjer at både nye og gamle (.icon-baserte) stilar treffer.
+    const cls = extraClass ? ` class="lucide icon ${extraClass}"` : ' class="lucide icon"';
     return `<svg${cls} xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths}</svg>`;
   }
 
