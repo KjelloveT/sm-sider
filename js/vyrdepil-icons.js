@@ -191,6 +191,11 @@
   function hydrateIcons(root = document) {
     root.querySelectorAll('[data-icon]').forEach(el => {
       if (el.dataset.iconDone) return;
+      // Har elementet alt eit ikon, er det ferdig.
+      if (el.querySelector('svg')) { el.dataset.iconDone = '1'; return; }
+      // Ikkje overskriv element med eige tekstinnhald (t.d. knappar med label) —
+      // der set spelet sjølv ikonet inn framfor teksten.
+      if (el.textContent && el.textContent.trim()) return;
       const size = parseInt(el.getAttribute('data-icon-size') || '18', 10);
       el.innerHTML = ICON(el.getAttribute('data-icon'), size);
       el.dataset.iconDone = '1';
