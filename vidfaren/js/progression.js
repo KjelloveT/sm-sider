@@ -23,6 +23,8 @@ const Progression = (function () {
     { id: 'innsjokjennar',    name: 'Innsjøkjennar',    ico: 'waves',    color: 'b-blue',   hint: '50 rette innsjøar' },
     { id: 'silhuettsjaa',     name: 'Silhuett-sjåar',   ico: 'shapes',   color: 'b-pink',   hint: '50 rette omriss' },
     { id: 'kartlos',          name: 'Kartlos',          ico: 'mapPin',   color: 'b-purple', hint: '50 rette på kartet' },
+    { id: 'flaggkjennar',     name: 'Flaggkjennar',     ico: 'flag',     color: 'b-teal',   hint: '50 rette flagg' },
+    { id: 'flaggmeister',     name: 'Flaggmeister',     ico: 'flag',     color: 'b-yellow', hint: '150 rette flagg' },
     // Streak
     { id: 'streak10', name: '10 på rad', ico: 'flame', color: 'b-yellow', hint: 'Få 10 rette på rad' },
     { id: 'streak25', name: '25 på rad', ico: 'flame', color: 'b-pink',   hint: 'Få 25 rette på rad' },
@@ -55,6 +57,8 @@ const Progression = (function () {
     innsjokjennar:    s => s.stats.lakeCorrect >= 50,
     silhuettsjaa:     s => s.stats.outlineCorrect >= 50,
     kartlos:          s => s.stats.pinCorrect >= 50,
+    flaggkjennar:     s => s.stats.flagCorrect >= 50,
+    flaggmeister:     s => s.stats.flagCorrect >= 150,
     streak10: s => s.stats.bestStreak >= 10,
     streak25: s => s.stats.bestStreak >= 25,
     plettfri:   s => s.stats.perfectRounds >= 1,
@@ -86,6 +90,7 @@ const Progression = (function () {
         lakeCorrect: 0,
         outlineCorrect: 0,
         pinCorrect: 0,
+        flagCorrect: 0,
         bestStreak: 0,
         perfectRounds: 0,
         roundsPlayed: 0,
@@ -132,7 +137,7 @@ const Progression = (function () {
   // ---- Registrering ----
   const MODE_STAT = {
     hovudstad: 'capitalCorrect', fjell: 'peakCorrect', innsjo: 'lakeCorrect',
-    omriss: 'outlineCorrect', pin: 'pinCorrect'
+    omriss: 'outlineCorrect', pin: 'pinCorrect', flagg: 'flagCorrect'
   };
 
   /** Registrer eitt rett svar. Lagrar ikkje (vent til runde-slutt). */

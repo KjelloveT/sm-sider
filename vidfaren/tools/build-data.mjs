@@ -255,6 +255,23 @@ async function main() {
     console.warn('     Hoppar over hovudstadsbilete (Wikidata feila): ' + e.message);
   }
 
+  const flagByIso = new Map();
+  try {
+    // Flagg (P41 → Wikimedia Commons). Same kjelde som hovudstadsbileta.
+    const flags = await sparql(`
+      SELECT ?iso2 ?flag WHERE {
+        ?c wdt:P31 wd:Q6256 ; wdt:P297 ?iso2 ; wdt:P41 ?flag .
+      }`);
+    for (const b of flags) {
+      const iso = b.iso2?.value?.toUpperCase();
+      const flag = b.flag?.value;
+      if (iso && flag && !flagByIso.has(iso)) flagByIso.set(iso, flag);
+    }
+    console.log(`     ${flagByIso.size} flagg.`);
+  } catch (e) {
+    console.warn('     Hoppar over flagg (Wikidata feila): ' + e.message);
+  }
+
   // Valfri kuratert overstyring (namn vi vil sikre / fylle hol)
   let overrides = {};
   try { overrides = JSON.parse(await readFile(join(__dirname, 'overrides.json'), 'utf8')); } catch { /* valfri */ }
@@ -280,6 +297,7 @@ async function main() {
       name: ov.name || name,
       capital: ov.capital || capital,
       capitalImg: ov.capitalImg || capImgByIso.get(iso2) || null,
+      flag: ov.flag || flagByIso.get(iso2) || null,
       region,
       latlng,
       pop: popByA3.get(a3) || 0,
@@ -341,7 +359,8 @@ ${paths}
     'window.OrdaklokBuiltins = ' + JSON.stringify(builtins) + ';\n');
 
   const withImg = countries.filter(c => c.capitalImg).length;
-  console.log(`\nFerdig: ${countries.length} land  (hovudstad ${withCap}, bilete ${withImg}, fjell ${withPeak}, innsjø ${withLake}, geometri ${withGeo}).`);
+  const withFlag = countries.filter(c => c.flag).length;
+  console.log(`\nFerdig: ${countries.length} land  (hovudstad ${withCap}, bilete ${withImg}, flagg ${withFlag}, fjell ${withPeak}, innsjø ${withLake}, geometri ${withGeo}).`);
   console.log('  →', join(DATA_DIR, 'countries.json'));
   console.log('  →', join(ASSETS_DIR, 'world.svg'));
   console.log('  →', join(ordaklokDir, 'geografi.js'));

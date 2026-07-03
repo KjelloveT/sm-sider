@@ -96,6 +96,16 @@
       box.appendChild(GeoMap.outline(q.answer));
     } else if (m.id === 'pin') {
       box.appendChild(GeoMap.worldZoomable({ pin: GeoMap.pinFor(q.answer) }));
+    } else if (m.id === 'flagg') {
+      const fig = document.createElement('div');
+      fig.className = 'lk-flag';
+      const img = document.createElement('img');
+      img.src = q.answer.flag.replace(/^http:/, 'https:');
+      img.alt = '';
+      // Fallback: skjul biletramma stille om flagg-lenkja skulle bli broten.
+      img.onerror = () => { fig.classList.add('is-broken'); };
+      fig.appendChild(img);
+      box.appendChild(fig);
     } else {
       // Hovudstad-modus: vis biletet av hovudstaden om vi har eitt.
       if (m.id === 'hovudstad' && q.answer.capitalImg) {

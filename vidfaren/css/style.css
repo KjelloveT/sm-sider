@@ -99,6 +99,14 @@
 }
 .lk-cap-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+/* Flagg-modus */
+.lk-flag {
+  width: 100%; max-width: 340px; line-height: 0; overflow: hidden; background: #fff;
+  border: 3px solid var(--border); border-radius: 10px; box-shadow: 3px 3px 0 var(--shadow);
+}
+.lk-flag img { width: 100%; height: auto; display: block; }
+.lk-flag.is-broken { display: none; }
+
 /* Kartteikning */
 .outline-svg { width: 100%; max-width: 360px; height: 230px; }
 .outline-land { fill: var(--accent); stroke: var(--border); stroke-width: 0.6; stroke-linejoin: round; }

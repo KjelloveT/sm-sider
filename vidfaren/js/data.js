@@ -27,7 +27,10 @@ const GeoData = (function () {
       has: c => !!c.path, statKey: 'outlineCorrect' },
     pin: { id: 'pin', label: 'Pin på kartet', icon: 'mapPin',
       blurb: 'Kva land peikar pinnen på?', visual: true,
-      has: c => !!(c.path && c.latlng), statKey: 'pinCorrect' }
+      has: c => !!(c.path && c.latlng), statKey: 'pinCorrect' },
+    flagg: { id: 'flagg', label: 'Flagg', icon: 'flag',
+      blurb: 'Kva land har dette flagget?', visual: true,
+      has: c => !!c.flag, statKey: 'flagCorrect' }
   };
 
   const LEVELS = {
