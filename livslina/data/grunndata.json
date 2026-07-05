@@ -1,0 +1,441 @@
+{
+  "app": "livslina",
+  "version": 1,
+  "updated": "2026-07-05",
+  "currency": "NOK",
+  "priceLevelNote": "SIFO-tal frå referansebudsjettet 2025 (prisar innhenta februar 2025). Lånekassen-satsar for skuleåret 2025–2026. Frikortgrense for inntektsåret 2026. Anslag ('estimate') er representative tal sette av redaksjonen og skal reviderast årleg saman med resten.",
+  "sources": {
+    "sifo2025": {
+      "name": "SIFOs referansebudsjett for forbruksutgifter 2025 (SIFO-rapport 2-2025, OsloMet)",
+      "url": "https://www.oslomet.no/om/sifo/referansebudsjettet",
+      "year": 2025
+    },
+    "lanekassen2025": {
+      "name": "Lånekassen — satsar for vidaregåande opplæring 2025–2026",
+      "url": "https://lanekassen.no/nb-NO/stipend-og-lan/norge/videregaende-skole/",
+      "year": 2025
+    },
+    "skatteetaten2026": {
+      "name": "Skatteetaten — frikort og skattekort 2026",
+      "url": "https://www.skatteetaten.no/person/skatt/skattekort/frikort/",
+      "year": 2026
+    },
+    "tariff2025": {
+      "name": "Tariff-minstesatsar butikk/varehandel (YS/Butikkoverenskomsten), lønsoppgjeret 2025",
+      "url": "https://ys.no/",
+      "year": 2025
+    },
+    "politiet2025": {
+      "name": "Forskrift om forenkla forelegg i vegtrafikksaker (satsar per 2025)",
+      "url": "https://lovdata.no/forskrift/1990-06-29-492",
+      "year": 2025
+    },
+    "estimate": {
+      "name": "Representativt anslag frå Livslina-redaksjonen — basert på typiske marknadsprisar, skal reviderast årleg",
+      "year": 2026
+    }
+  },
+
+  "monthlyCosts": {
+    "food": {
+      "label": "Mat og drikke",
+      "unit": "krPerMonth",
+      "source": "sifo2025",
+      "kind": "official",
+      "values": { "boy14_17": 4470, "girl14_17": 3910, "man18_30": 5080, "woman18_30": 4280 },
+      "gameValue14_17": 4190,
+      "gameValue18_30": 4680,
+      "note": "Spelet brukar midtpunktet av SIFO-satsane for gutar og jenter, sidan figuren er kjønnsnøytral."
+    },
+    "clothing": {
+      "label": "Klede og sko",
+      "unit": "krPerMonth",
+      "source": "sifo2025",
+      "kind": "official",
+      "values": { "boy14_17": 990, "girl14_17": 1010, "man18plus": 1100, "woman18plus": 1070 },
+      "gameValue14_17": 1000,
+      "gameValue18plus": 1085
+    },
+    "personalCare": {
+      "label": "Personleg pleie",
+      "unit": "krPerMonth",
+      "source": "sifo2025",
+      "kind": "official",
+      "values": { "boy14_17": 490, "girl14_17": 610, "man18plus": 800, "woman18_50": 990 },
+      "gameValue14_17": 550,
+      "gameValue18plus": 895
+    },
+    "playAndMedia": {
+      "label": "Leik og mediebruk (individuelt: fritid, gåver, abonnement m.m.)",
+      "unit": "krPerMonth",
+      "source": "sifo2025",
+      "kind": "official",
+      "values": { "age14_17": 1650, "age18plus": 1060 },
+      "gameValue14_17": 1650,
+      "gameValue18plus": 1060
+    },
+    "publicTransportYouth": {
+      "label": "Kollektivtransport, ungdomsbillett 30 dagar (Ruter-pris; varierer mellom fylka)",
+      "unit": "krPerMonth",
+      "source": "sifo2025",
+      "kind": "official",
+      "values": { "age6_19": 327, "age20_66": 985, "student20_29": 591 },
+      "gameValue14_17": 327
+    },
+    "mobileSubscription": {
+      "label": "Mobilabonnement ungdom",
+      "unit": "krPerMonth",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 300
+    }
+  },
+
+  "householdCostsSinglePerson": {
+    "label": "Husholdsspesifikke utgifter for éin person — gjeld berre når spelaren bur på hybel",
+    "unit": "krPerMonth",
+    "source": "sifo2025",
+    "kind": "official",
+    "otherGroceries": 435,
+    "householdItems": 585,
+    "furniture": 565,
+    "mediaAndLeisure": 2520,
+    "note": "mediaAndLeisure dekkjer internett, straumetenester, avis m.m. for husstanden. Bur ein heime, ber foreldra desse kostnadene."
+  },
+
+  "housing": {
+    "hybelRent": {
+      "label": "Hybelleige for skuleelev, inkl. straum",
+      "unit": "krPerMonth",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 4500,
+      "range": [3500, 6500],
+      "note": "Varierer mykje med stad. SSB si leigemarknadsundersøking gjeld heile bustader og passar ikkje direkte for hybel."
+    },
+    "livingAtHome": {
+      "label": "Bu heime hos foreldra",
+      "unit": "krPerMonth",
+      "gameValue": 0
+    }
+  },
+
+  "grants": {
+    "equipmentGrantPerYear": {
+      "label": "Utstyrsstipend frå Lånekassen (alle elevar med ungdomsrett, per skuleår)",
+      "unit": "krPerYear",
+      "source": "lanekassen2025",
+      "kind": "official",
+      "rate1": 1398,
+      "rate2": 2630,
+      "rate3": 4242,
+      "rate4": 5762,
+      "rate5": 7202,
+      "examples": {
+        "rate1": "studiespesialisering",
+        "rate3": "idrettsfag, helse- og oppvekstfag",
+        "rate5": "elektro, bygg- og anleggsteknikk, naturbruk"
+      }
+    },
+    "housingGrantPerMonth": {
+      "label": "Bortebuarstipend (krev ≥ 40 km eller ≥ 3 t dagleg reisetid)",
+      "unit": "krPerMonth",
+      "source": "lanekassen2025",
+      "kind": "official",
+      "gameValue": 6871,
+      "monthsPerYear": 10
+    },
+    "incomeDependentGrantPerMonth": {
+      "label": "Inntektsavhengig stipend (etter foreldreøkonomi)",
+      "unit": "krPerMonth",
+      "source": "lanekassen2025",
+      "kind": "official",
+      "rateLow": 1328,
+      "rateMid": 2658,
+      "rateFull": 3987,
+      "thresholdNote": "Full sats ved husstandsinntekt under om lag 320 000 kr, lågaste sats under om lag 590 000 kr (anslått frå Lånekassens tabellar)."
+    }
+  },
+
+  "tax": {
+    "taxFreeCardLimit": {
+      "label": "Frikortgrensa",
+      "unit": "krPerYear",
+      "source": "skatteetaten2026",
+      "kind": "official",
+      "gameValue": 100000
+    },
+    "simplifiedRule": "Spelforenkling: Tener spelaren under frikortgrensa i året, blir det ikkje trekt skatt. Over grensa blir overskytande skattlagt med 25 % (forenkla flat sats — den verkelege satsen avheng av skattekort)."
+  },
+
+  "work": {
+    "hourlyWageUnder18": {
+      "label": "Timeløn deltid/sommarjobb under 18 år",
+      "unit": "krPerHour",
+      "source": "tariff2025",
+      "kind": "estimate",
+      "gameValue": 130,
+      "note": "Tariff-minstesats butikk for unge under 18 var 126,50 kr (2025); spelet brukar 130 kr."
+    },
+    "hourlyWage18plus": {
+      "label": "Timeløn deltid frå 18 år",
+      "unit": "krPerHour",
+      "source": "tariff2025",
+      "kind": "estimate",
+      "gameValue": 165
+    },
+    "saturdayJob": {
+      "label": "Laurdagsjobb/deltidsjobb ved sida av skulen",
+      "hoursPerWeekOptions": [0, 6, 12],
+      "note": "6 t/veke ≈ éin dag i helga. 12 t/veke ≈ helg + éin kveld."
+    },
+    "summerJob": {
+      "label": "Sommarjobb",
+      "weeksOptions": [0, 3, 6],
+      "hoursPerWeek": 37.5
+    }
+  },
+
+  "savings": {
+    "bsu": {
+      "label": "Bustadsparing for ungdom (BSU) — tilgjengeleg i spelet frå fylte 18 år",
+      "source": "estimate",
+      "kind": "estimate",
+      "maxPerYear": 27500,
+      "maxTotal": 300000,
+      "taxDeductionRate": 0.10,
+      "interestRate": 0.06,
+      "note": "Skattefrådraget på 10 % krev at ein faktisk betalar skatt — tener ein under frikortgrensa, gjev BSU berre god rente. Dette er eit poeng spelet skal lære bort."
+    },
+    "savingsAccount": {
+      "label": "Vanleg sparekonto",
+      "source": "estimate",
+      "kind": "estimate",
+      "interestRate": 0.035
+    }
+  },
+
+  "upgrades": {
+    "bed": {
+      "label": "Skikkeleg seng",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 4500,
+      "wellbeing": 6,
+      "note": "Betre søvn enn madrass på golvet."
+    },
+    "gamingDesk": {
+      "label": "Gaming-oppsett",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 9000,
+      "wellbeing": 8,
+      "note": "Skjermar, stol og maskin — stor glede, stor kostnad."
+    }
+  },
+
+  "transport": {
+    "usedMoped": {
+      "label": "Brukt moped (frå 16 år)",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 12000,
+      "range": [8000, 20000]
+    },
+    "mopedLicenseCourse": {
+      "label": "Førarbevis moped (klasse AM146), kurs og gebyr",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 8000
+    },
+    "helmetAndGear": {
+      "label": "Hjelm og køyreutstyr",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 2500
+    },
+    "mopedInsurancePerYear": {
+      "label": "Mopedforsikring (ansvar + delkasko, ung førar)",
+      "unit": "krPerYear",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 4500
+    },
+    "mopedFuelPerMonth": {
+      "label": "Bensin og vedlikehald, moped",
+      "unit": "krPerMonth",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 250
+    },
+    "driversLicenseB": {
+      "label": "Førarkort klasse B (køyreskule, prøver, gebyr) — aktuelt frå 18 år",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 38000,
+      "range": [30000, 45000]
+    }
+  },
+
+  "leisure": {
+    "gymYouthPerMonth": {
+      "label": "Treningssenter, ungdomsmedlemskap",
+      "unit": "krPerMonth",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 399
+    },
+    "sportsClubPerYear": {
+      "label": "Idrettslag (kontingent, treningsavgift, noko utstyr)",
+      "unit": "krPerYear",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 3500
+    },
+    "cultureSchoolPerYear": {
+      "label": "Kulturskule/korps/band (kontingent og utstyr)",
+      "unit": "krPerYear",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 3000
+    },
+    "gamingPerMonth": {
+      "label": "Gaming (spel, abonnement)",
+      "unit": "krPerMonth",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 200,
+      "note": "Kjem på toppen av SIFO-posten leik og mediebruk dersom spelaren vel gaming som aktiv fritidsinteresse."
+    },
+    "cinemaTicket": {
+      "label": "Kinobillett ungdom",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 150
+    },
+    "concertTicket": {
+      "label": "Konsertbillett",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 800
+    },
+    "russMinimal": {
+      "label": "Russetid, nøktern variant (dress/genser, dåp, litt utstyr)",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 6000
+    },
+    "russBus": {
+      "label": "Russetid med bussprosjekt (andel over VG2+VG3)",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 60000,
+      "range": [25000, 150000]
+    }
+  },
+
+  "events": {
+    "phoneScreenRepair": {
+      "label": "Byte av knust mobilskjerm",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 2400
+    },
+    "phoneReplacementUsed": {
+      "label": "Brukt erstatningsmobil",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 4500
+    },
+    "speedingFineMoped": {
+      "label": "Forenkla forelegg, låg fartsoverskriding (minste sats 2025)",
+      "unit": "krOneTime",
+      "source": "politiet2025",
+      "kind": "official",
+      "gameValue": 1250
+    },
+    "trimmedMopedFine": {
+      "label": "Køyring med trimma moped (forelegg + avskilting, samla speleverdi)",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 8000
+    },
+    "stolenBike": {
+      "label": "Sykkel stolen — ny brukt sykkel",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 3000
+    },
+    "classTripContribution": {
+      "label": "Eigendel klassetur/studietur",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 1500
+    },
+    "brokenLaptop": {
+      "label": "PC-reparasjon (skulen sin PC-ordning dekkjer ikkje uhell heime)",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 1800
+    },
+    "dentistYoungAdult": {
+      "label": "Tannlege — gratis til og med 18 år, sterkt rabattert 19–24 (spelverdi for eigendel ved 19+)",
+      "unit": "krOneTime",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 500
+    },
+    "phoneInsurancePerMonth": {
+      "label": "Skjerm-/mobilforsikring",
+      "unit": "krPerMonth",
+      "source": "estimate",
+      "kind": "estimate",
+      "gameValue": 79
+    }
+  },
+
+  "family": {
+    "label": "Familieøkonomi-profilar (vald ved spelstart, påverkar stipend, lommepengar og startkapital)",
+    "kind": "gameDesign",
+    "profiles": {
+      "tight": {
+        "label": "Trong økonomi",
+        "incomeDependentGrant": "rateFull",
+        "allowancePerMonth": 0,
+        "parentContributionHybelPerMonth": 1500,
+        "startCapital": 3000
+      },
+      "normal": {
+        "label": "Vanleg økonomi",
+        "incomeDependentGrant": "none",
+        "allowancePerMonth": 500,
+        "parentContributionHybelPerMonth": 3500,
+        "startCapital": 8000
+      },
+      "comfortable": {
+        "label": "Romsleg økonomi",
+        "incomeDependentGrant": "none",
+        "allowancePerMonth": 1000,
+        "parentContributionHybelPerMonth": 6000,
+        "startCapital": 15000
+      }
+    },
+    "note": "Lommepengar gjeld heimebuande; foreldrebidrag gjeld hybelbuande. Startkapital er typisk konfirmasjons- og bursdagssparing."
+  }
+}

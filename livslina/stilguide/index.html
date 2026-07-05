@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livslina — stilguide</title>
+<link rel="stylesheet" href="../../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+  <div class="box2 ll-intro">
+    <h1>Livslina — stilguide</h1>
+    <p>Visuell prøveproduksjon for spelet <strong>Livslina</strong>. Denne sida definerer den grafiske stilen og prøver ut teknikken bak tilpassbare figurar. Ho er ikkje lenka frå framsida og er ikkje ein del av noko ferdig spel.</p>
+  </div>
+
+  <!-- ══════════ STILREGLAR ══════════ -->
+  <section class="ll-section">
+    <h2 class="heading2"><span data-icon="palette"></span> Stilreglar</h2>
+    <div class="box4">
+      <div class="box-header">Slik teiknar vi Livslina</div>
+      <div class="box-body">
+        <ol class="ll-rules">
+          <li><strong>Kontur:</strong> All strek er i fast blekkfarge <code>#1a1a1a</code> med runde hjørne og endar (<code>stroke-linejoin/linecap: round</code>). Strekbreidda skal <em>sjå lik ut på skjermen</em> (~6&nbsp;px ved normal visning): 4 einingar ved viewBox-breidd 200–360, 5 ved 480. Mindre detaljar brukar ca. 70&nbsp;% av hovudstreken, fine detaljar ca. 50&nbsp;%.</li>
+          <li><strong>Flater:</strong> Heilt flate fyllfargar. Aldri gradientar, blur eller teksturar.</li>
+          <li><strong>Plate:</strong> Kvar illustrasjon står på ei fast, lys «papirplate» (<code>#faf7f0</code>) med hard skugge. Plata sikrar at motivet er lesbart i både lyse og mørke tema — fargane <em>inne i</em> illustrasjonane følgjer aldri temaet.</li>
+          <li><strong>Skugge:</strong> Hard og forskuva mot høgre og ned, i blekkfargen, slik at han ser lik ut på skjermen (~10&nbsp;px ved normal visning; 7 einingar ved viewBox 200–360, 9 ved 480). Ingen mjuke skuggar. Skuggen ligg berre på plata, ikkje på enkeltdelar.</li>
+          <li><strong>Proporsjonar (figurar):</strong> Hovudet er om lag 1/3 av total høgd. Store prikk-auge, enkel boge-munn, ingen nase.</li>
+          <li><strong>Strekfrie detaljar:</strong> Små fargeflekkar utan kontur er lov som rein dekor oppå ei konturert flate: kinnroser, rustflekkar, lyspunkt, skjerminnhald, knappar på tastatur. Aldri som sjølvstendige objekt.</li>
+          <li><strong>Lag:</strong> Alle figurar er bygde av namngjevne <code>&lt;g&gt;</code>-lag (hud, hår, overdel osb.) og CSS-variablar for fargar, slik at tilpassing er rein JS/CSS utan nye bilete.</li>
+        </ol>
+
+        <h3 class="heading4">Livsverd-paletten</h3>
+        <p>Fast palett som ikkje skiftar med tema. Hudtonar og hårfargar er reserverte for figurar.</p>
+        <div class="ll-palette" id="palette"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ KARAKTER ══════════ -->
+  <section class="ll-section">
+    <h2 class="heading2"><span data-icon="users"></span> Karakter — lagdelt «paper doll»</h2>
+    <div class="box1 ll-doll-wrap">
+      <div class="ll-doll-stage">
+        <svg id="dollSvg" class="ll-svg" viewBox="0 0 212 272" role="img" aria-label="Tilpassbar spelfigur"
+             style="--doll-skin:#e8b98a; --doll-hair:#26201c; --doll-top:#e63946;">
+          <rect class="ink" x="13" y="13" width="192" height="252" rx="14"/>
+          <rect class="plate" x="6" y="6" width="192" height="252" rx="14"/>
+
+          <g id="dollBase">
+            <rect class="ll-o" x="74" y="178" width="22" height="52" rx="9" fill="#2b3a55"/>
+            <rect class="ll-o" x="104" y="178" width="22" height="52" rx="9" fill="#2b3a55"/>
+            <rect class="ll-o" x="68" y="226" width="32" height="16" rx="8" fill="#3a352f"/>
+            <rect class="ll-o" x="100" y="226" width="32" height="16" rx="8" fill="#3a352f"/>
+            <rect class="ll-o skin" x="44" y="114" width="18" height="60" rx="9"/>
+            <rect class="ll-o skin" x="138" y="114" width="18" height="60" rx="9"/>
+            <circle class="ll-o skin" cx="53" cy="180" r="9"/>
+            <circle class="ll-o skin" cx="147" cy="180" r="9"/>
+            <rect class="ll-o skin" x="66" y="104" width="68" height="78" rx="12"/>
+            <rect class="ll-o skin" x="90" y="92" width="20" height="18"/>
+            <circle class="ll-o skin" cx="58" cy="64" r="8"/>
+            <circle class="ll-o skin" cx="142" cy="64" r="8"/>
+            <circle class="ll-o skin" cx="100" cy="60" r="42"/>
+            <circle fill="#1a1a1a" cx="85" cy="62" r="4.5"/>
+            <circle fill="#1a1a1a" cx="115" cy="62" r="4.5"/>
+            <circle fill="#f2a6a0" cx="76" cy="74" r="5"/>
+            <circle fill="#f2a6a0" cx="124" cy="74" r="5"/>
+            <path class="ll-l" d="M90 79 Q100 88 110 79"/>
+          </g>
+
+          <g class="doll-top" data-variant="tskjorte">
+            <rect class="ll-o top" x="42" y="110" width="22" height="32" rx="10"/>
+            <rect class="ll-o top" x="136" y="110" width="22" height="32" rx="10"/>
+            <rect class="ll-o top" x="64" y="102" width="72" height="78" rx="12"/>
+            <path class="ll-l" d="M88 102 Q100 112 112 102"/>
+          </g>
+          <g class="doll-top" data-variant="genser" hidden>
+            <rect class="ll-o top" x="42" y="108" width="22" height="64" rx="10"/>
+            <rect class="ll-o top" x="136" y="108" width="22" height="64" rx="10"/>
+            <rect class="ll-o top" x="42" y="162" width="22" height="10" rx="4"/>
+            <rect class="ll-o top" x="136" y="162" width="22" height="10" rx="4"/>
+            <rect class="ll-o top" x="62" y="100" width="76" height="82" rx="12"/>
+            <rect class="ll-o top" x="62" y="172" width="76" height="10" rx="4"/>
+            <path class="ll-l" d="M86 100 Q100 110 114 100"/>
+          </g>
+          <g class="doll-top" data-variant="hettegenser" hidden>
+            <rect class="ll-o top" x="42" y="108" width="22" height="64" rx="10"/>
+            <rect class="ll-o top" x="136" y="108" width="22" height="64" rx="10"/>
+            <rect class="ll-o top" x="62" y="100" width="76" height="82" rx="12"/>
+            <path class="ll-o top" d="M64 100 Q100 124 136 100 L141 116 Q100 140 59 116 Z"/>
+            <rect class="ll-o top" x="79" y="146" width="42" height="26" rx="9"/>
+            <path class="ll-l thin" d="M92 116 L90 138 M108 116 L110 138"/>
+            <circle fill="#1a1a1a" cx="90" cy="140" r="3"/>
+            <circle fill="#1a1a1a" cx="110" cy="140" r="3"/>
+          </g>
+
+          <g class="doll-hair" data-variant="kort">
+            <path class="ll-o hair" d="M58 60 A42 42 0 0 1 142 60 Q131 50 120 56 Q109 46 100 52 Q91 46 80 56 Q69 50 58 60 Z"/>
+          </g>
+          <g class="doll-hair" data-variant="langt" hidden>
+            <path class="ll-o hair" d="M58 60 A42 42 0 0 1 142 60 L146 116 Q147 128 135 127 L133 92 Q120 54 100 54 Q80 54 67 92 L65 127 Q53 128 54 116 Z"/>
+          </g>
+          <g class="doll-hair" data-variant="krollete" hidden>
+            <circle class="ll-o hair" cx="56" cy="62" r="11"/>
+            <circle class="ll-o hair" cx="144" cy="62" r="11"/>
+            <circle class="ll-o hair" cx="64" cy="46" r="13"/>
+            <circle class="ll-o hair" cx="136" cy="46" r="13"/>
+            <circle class="ll-o hair" cx="82" cy="32" r="13"/>
+            <circle class="ll-o hair" cx="118" cy="32" r="13"/>
+            <circle class="ll-o hair" cx="100" cy="26" r="13"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="ll-doll-controls">
+        <fieldset class="ll-ctrl">
+          <legend>Hudtone</legend>
+          <div class="ll-swatch-row" id="skinRow" role="group"></div>
+        </fieldset>
+        <fieldset class="ll-ctrl">
+          <legend>Frisyre</legend>
+          <div class="ll-btn-row" id="hairStyleRow" role="group"></div>
+        </fieldset>
+        <fieldset class="ll-ctrl">
+          <legend>Hårfarge</legend>
+          <div class="ll-swatch-row" id="hairRow" role="group"></div>
+        </fieldset>
+        <fieldset class="ll-ctrl">
+          <legend>Overdel</legend>
+          <div class="ll-btn-row" id="topStyleRow" role="group"></div>
+        </fieldset>
+        <fieldset class="ll-ctrl">
+          <legend>Farge på overdel</legend>
+          <div class="ll-swatch-row" id="topRow" role="group"></div>
+        </fieldset>
+        <p class="ll-note">Alt over er eitt einaste SVG-bilete: knappane byter berre synlege lag og CSS-variablar. Same teknikk skal brukast for aldring, familie og eigedelar i spelet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ BUSTAD ══════════ -->
+  <section class="ll-section">
+    <h2 class="heading2"><span data-icon="home"></span> Bustad — hybelen (diorama med val)</h2>
+    <div class="box1 ll-doll-wrap ll-scene-grid">
+      <div class="ll-scene-stage">
+        <svg id="roomSvg" class="ll-svg ll-svg-lg" viewBox="0 0 480 340" role="img" aria-label="Hybel med utbyttbare møblar">
+          <rect class="ink" x="17" y="17" width="452" height="310" rx="16"/>
+          <rect class="plate" x="8" y="8" width="452" height="310" rx="16"/>
+
+          <!-- rom -->
+          <rect class="ll-o" x="24" y="24" width="420" height="210" fill="#cfe0ea"/>
+          <rect class="ll-o" x="24" y="234" width="420" height="68" fill="#c99e66"/>
+          <path class="ll-l xthin" d="M24 268 H444 M94 234 V268 M164 234 V268 M234 234 V268 M304 234 V268 M374 234 V268 M59 268 V302 M129 268 V302 M199 268 V302 M269 268 V302 M339 268 V302 M409 268 V302"/>
+          <rect class="ll-o thin" x="24" y="224" width="420" height="10" fill="#e8e2d4"/>
+
+          <!-- vindauge med gardiner og kaktus -->
+          <rect class="ll-o" x="48" y="44" width="104" height="88" fill="#8a5a33"/>
+          <rect class="ll-o thin" x="58" y="54" width="84" height="68" fill="#bde3f2"/>
+          <path class="ll-l thin" d="M100 54 V122 M58 88 H142"/>
+          <circle cx="78" cy="70" r="8" fill="#f4b942"/>
+          <circle cx="118" cy="68" r="6" fill="#faf7f0"/>
+          <circle cx="127" cy="70" r="5" fill="#faf7f0"/>
+          <rect class="ll-o thin" x="44" y="132" width="112" height="10" rx="3" fill="#e8e2d4"/>
+          <path class="ll-o thin" d="M64 118 L80 118 L77 132 L67 132 Z" fill="#ef7d2f"/>
+          <rect class="ll-o thin" x="67" y="100" width="10" height="20" rx="5" fill="#2f9e63"/>
+          <circle cx="72" cy="100" r="3.5" fill="#e63946"/>
+          <path class="ll-l" d="M40 38 H164"/>
+          <circle cx="40" cy="38" r="4" fill="#1a1a1a"/>
+          <circle cx="164" cy="38" r="4" fill="#1a1a1a"/>
+          <path class="ll-o thin" d="M46 40 L62 40 L58 126 Q52 118 46 128 Z" fill="#e63946"/>
+          <path class="ll-o thin" d="M154 40 L138 40 L142 126 Q148 118 154 128 Z" fill="#e63946"/>
+
+          <!-- plakat, postkort, klokke -->
+          <rect class="ll-o" x="180" y="40" width="52" height="68" fill="#7c5cd6"/>
+          <rect class="ll-o thin" x="186" y="48" width="40" height="8" fill="#f4b942"/>
+          <circle cx="196" cy="92" r="4.5" fill="#faf7f0"/>
+          <circle cx="212" cy="88" r="4.5" fill="#faf7f0"/>
+          <path class="ll-l thin" d="M200 91 V68 L216 64 V87 M200 68 L216 64"/>
+          <rect class="ll-o thin" x="244" y="52" width="34" height="26" fill="#faf7f0"/>
+          <path class="ll-o xthin" d="M250 72 L259 58 L268 72 Z" fill="#f4b942"/>
+          <circle cx="270" cy="59" r="3" fill="#f4b942"/>
+          <rect class="ll-o xthin" x="252" y="48" width="18" height="7" fill="#d9d3c7"/>
+          <circle class="ll-o" cx="308" cy="58" r="16" fill="#faf7f0"/>
+          <path class="ll-l thin" d="M308 58 V47 M308 58 L316 61"/>
+          <circle cx="308" cy="58" r="2.5" fill="#1a1a1a"/>
+
+          <!-- hylle med bøker og pokal -->
+          <rect class="ll-o thin" x="352" y="86" width="86" height="9" fill="#8a5a33"/>
+          <path class="ll-o xthin" d="M360 95 L360 104 L369 95 Z" fill="#6d4526"/>
+          <path class="ll-o xthin" d="M424 95 L424 104 L433 95 Z" fill="#6d4526"/>
+          <rect class="ll-o thin" x="358" y="60" width="11" height="26" fill="#e63946"/>
+          <rect class="ll-o thin" x="371" y="64" width="10" height="22" fill="#2b6cb0"/>
+          <rect class="ll-o thin" x="383" y="58" width="11" height="28" fill="#2f9e63"/>
+          <rect class="ll-o thin" x="396" y="62" width="9" height="25" fill="#7c5cd6" transform="rotate(12 400 87)"/>
+          <path class="ll-o thin" d="M412 60 H432 L429 71 Q422 77 415 71 Z" fill="#f4b942"/>
+          <rect class="ll-o xthin" x="419" y="75" width="6" height="6" fill="#f4b942"/>
+          <rect class="ll-o xthin" x="414" y="81" width="16" height="5" rx="1" fill="#f4b942"/>
+
+          <!-- ljosslynge over senga -->
+          <path class="ll-l thin" d="M348 32 Q392 52 436 32"/>
+          <circle cx="355" cy="38" r="4" fill="#f4b942"/>
+          <circle cx="370" cy="44" r="4" fill="#e63946"/>
+          <circle cx="392" cy="47" r="4" fill="#8ecae6"/>
+          <circle cx="414" cy="44" r="4" fill="#2f9e63"/>
+          <circle cx="429" cy="38" r="4" fill="#f4b942"/>
+
+          <!-- golvteppe -->
+          <ellipse class="ll-o thin" cx="235" cy="288" rx="62" ry="12" fill="#f4b942"/>
+          <ellipse class="ll-l xthin" cx="235" cy="288" rx="44" ry="8"/>
+
+          <!-- SLOT: arbeidsplass -->
+          <g class="slot-desk" data-variant="enkel">
+            <rect class="ll-o thin" x="50" y="207" width="9" height="66" fill="#6d4526"/>
+            <rect class="ll-o thin" x="158" y="207" width="9" height="66" fill="#6d4526"/>
+            <rect class="ll-o xthin" x="59" y="246" width="99" height="6" fill="#6d4526"/>
+            <rect class="ll-o" x="44" y="196" width="132" height="11" rx="3" fill="#8a5a33"/>
+            <rect class="ll-o thin" x="54" y="189" width="18" height="7" rx="3" fill="#2b6cb0"/>
+            <path class="ll-l thin" d="M63 189 L57 170"/>
+            <path class="ll-o thin" d="M46 162 L68 156 L61 173 Z" fill="#2b6cb0"/>
+            <rect class="ll-o thin" x="88" y="158" width="46" height="32" rx="3" fill="#3a352f"/>
+            <rect x="92" y="162" width="38" height="24" fill="#8ecae6"/>
+            <rect x="95" y="166" width="14" height="3" fill="#2b6cb0"/>
+            <rect x="95" y="171" width="22" height="3" fill="#e63946"/>
+            <rect x="95" y="176" width="12" height="3" fill="#2f9e63"/>
+            <rect x="95" y="181" width="18" height="3" fill="#2b6cb0"/>
+            <rect class="ll-o thin" x="84" y="190" width="54" height="7" rx="2" fill="#57514a"/>
+            <rect class="ll-o thin" x="146" y="183" width="14" height="13" rx="2" fill="#e63946"/>
+            <path class="ll-l xthin" d="M160 186 Q166 189 160 193 M151 178 Q153 174 151 170 M156 178 Q158 174 156 170"/>
+            <rect class="ll-o" x="198" y="236" width="38" height="10" rx="4" fill="#2b6cb0"/>
+            <rect class="ll-o thin" x="202" y="246" width="7" height="28" fill="#6d4526"/>
+            <rect class="ll-o thin" x="225" y="246" width="7" height="28" fill="#6d4526"/>
+          </g>
+          <g class="slot-desk" data-variant="gaming" hidden>
+            <rect class="ll-o thin" x="50" y="207" width="9" height="66" fill="#57514a"/>
+            <rect class="ll-o thin" x="158" y="207" width="9" height="66" fill="#57514a"/>
+            <rect class="ll-o" x="44" y="196" width="132" height="11" rx="3" fill="#3a352f"/>
+            <rect class="ll-o xthin" x="86" y="186" width="8" height="10" fill="#57514a"/>
+            <rect class="ll-o xthin" x="78" y="193" width="24" height="5" rx="2" fill="#57514a"/>
+            <rect class="ll-o thin" x="62" y="148" width="56" height="38" rx="3" fill="#3a352f"/>
+            <rect x="66" y="152" width="48" height="30" fill="#8ecae6"/>
+            <rect x="66" y="174" width="48" height="8" fill="#2f9e63"/>
+            <rect x="84" y="167" width="5" height="7" fill="#e63946"/>
+            <rect x="101" y="169" width="4" height="5" fill="#7c5cd6"/>
+            <rect class="ll-o xthin" x="139" y="186" width="8" height="10" fill="#57514a"/>
+            <rect class="ll-o thin" x="124" y="158" width="38" height="28" rx="3" fill="#3a352f"/>
+            <rect x="128" y="162" width="30" height="20" fill="#26201c"/>
+            <rect x="131" y="165" width="16" height="2.5" fill="#2f9e63"/>
+            <rect x="131" y="170" width="22" height="2.5" fill="#2f9e63"/>
+            <rect x="131" y="175" width="12" height="2.5" fill="#2f9e63"/>
+            <rect class="ll-o thin" x="70" y="190" width="48" height="7" rx="2" fill="#26201c"/>
+            <rect x="74" y="192" width="4" height="3" fill="#e63946"/>
+            <rect x="80" y="192" width="4" height="3" fill="#f4b942"/>
+            <rect x="86" y="192" width="4" height="3" fill="#2f9e63"/>
+            <rect x="92" y="192" width="4" height="3" fill="#8ecae6"/>
+            <rect x="98" y="192" width="4" height="3" fill="#7c5cd6"/>
+            <ellipse class="ll-o xthin" cx="130" cy="193" rx="5" ry="4" fill="#e63946"/>
+            <path class="ll-l thin" d="M150 186 A10 10 0 0 1 170 186"/>
+            <rect class="ll-o xthin" x="147" y="184" width="7" height="10" rx="3" fill="#e63946"/>
+            <rect class="ll-o xthin" x="167" y="184" width="7" height="10" rx="3" fill="#e63946"/>
+            <rect class="ll-o" x="192" y="232" width="46" height="11" rx="4" fill="#3a352f"/>
+            <rect class="ll-o" x="228" y="186" width="13" height="52" rx="6" fill="#e63946"/>
+            <rect class="ll-o thin" x="210" y="243" width="7" height="20" fill="#57514a"/>
+            <rect class="ll-o thin" x="196" y="263" width="36" height="6" rx="3" fill="#57514a"/>
+            <circle class="ll-o xthin" cx="200" cy="273" r="5" fill="#3a352f"/>
+            <circle class="ll-o xthin" cx="228" cy="273" r="5" fill="#3a352f"/>
+          </g>
+
+          <!-- SLOT: hjørnet -->
+          <g class="slot-hobby" data-variant="plante">
+            <path class="ll-l thin" d="M272 252 Q262 234 256 220 M276 252 Q277 228 278 210 M280 252 Q290 236 296 222"/>
+            <ellipse class="ll-o thin" cx="254" cy="212" rx="9" ry="14" fill="#2f9e63" transform="rotate(-24 254 212)"/>
+            <ellipse class="ll-o thin" cx="278" cy="196" rx="10" ry="15" fill="#2f9e63"/>
+            <ellipse class="ll-o thin" cx="298" cy="214" rx="9" ry="14" fill="#2f9e63" transform="rotate(22 298 214)"/>
+            <path class="ll-l xthin" d="M258 202 L250 222 M278 186 V206 M294 204 L302 224"/>
+            <path class="ll-o" d="M260 262 L292 262 L287 292 L265 292 Z" fill="#ef7d2f"/>
+            <rect class="ll-o thin" x="256" y="252" width="40" height="10" rx="3" fill="#ef7d2f"/>
+          </g>
+          <g class="slot-hobby" data-variant="gitar" hidden>
+            <g transform="rotate(-10 276 250)">
+              <rect class="ll-o thin" x="270" y="158" width="11" height="66" fill="#8a5a33"/>
+              <rect class="ll-o thin" x="268" y="142" width="15" height="18" rx="3" fill="#3a352f"/>
+              <circle cx="266" cy="146" r="2.5" fill="#d9d3c7"/>
+              <circle cx="266" cy="152" r="2.5" fill="#d9d3c7"/>
+              <circle cx="285" cy="149" r="2.5" fill="#d9d3c7"/>
+              <circle class="ll-o" cx="276" cy="234" r="17" fill="#f4b942"/>
+              <circle class="ll-o" cx="276" cy="260" r="24" fill="#f4b942"/>
+              <circle class="ll-o thin" cx="276" cy="248" r="7" fill="#8a5a33"/>
+              <rect class="ll-o xthin" x="268" y="268" width="16" height="5" rx="2" fill="#3a352f"/>
+              <path class="ll-l xthin" d="M272 162 V266 M280 162 V266"/>
+            </g>
+          </g>
+          <g class="slot-hobby" data-variant="trening" hidden>
+            <rect class="ll-o thin" x="248" y="238" width="9" height="24" rx="3" fill="#3a352f"/>
+            <rect class="ll-o thin" x="285" y="238" width="9" height="24" rx="3" fill="#3a352f"/>
+            <rect class="ll-o xthin" x="257" y="246" width="28" height="8" rx="3" fill="#8a8378"/>
+            <rect class="ll-o" x="246" y="270" width="52" height="20" rx="10" fill="#7c5cd6"/>
+            <circle class="ll-o thin" cx="288" cy="280" r="10" fill="#7c5cd6"/>
+            <circle class="ll-o xthin" cx="288" cy="280" r="4" fill="#faf7f0"/>
+          </g>
+
+          <!-- SLOT: seng -->
+          <g class="slot-bed" data-variant="madrass">
+            <rect class="ll-o" x="316" y="264" width="120" height="24" rx="8" fill="#e8e2d4"/>
+            <rect class="ll-o" x="310" y="252" width="78" height="30" rx="10" fill="#e63946"/>
+            <path class="ll-l xthin" d="M310 266 H388"/>
+            <rect class="ll-o thin" x="398" y="250" width="34" height="18" rx="7" fill="#faf7f0"/>
+          </g>
+          <g class="slot-bed" data-variant="seng" hidden>
+            <rect class="ll-o" x="430" y="200" width="11" height="70" rx="4" fill="#8a5a33"/>
+            <rect class="ll-o thin" x="322" y="270" width="9" height="22" fill="#6d4526"/>
+            <rect class="ll-o thin" x="423" y="270" width="9" height="22" fill="#6d4526"/>
+            <rect class="ll-o" x="318" y="250" width="116" height="20" rx="4" fill="#8a5a33"/>
+            <rect class="ll-o" x="318" y="234" width="116" height="18" rx="6" fill="#e8e2d4"/>
+            <rect class="ll-o thin" x="398" y="220" width="32" height="18" rx="7" fill="#faf7f0"/>
+            <rect class="ll-o" x="312" y="228" width="80" height="30" rx="10" fill="#e63946"/>
+            <path class="ll-l xthin" d="M312 243 H392 M336 228 V258 M362 228 V258"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="ll-doll-controls">
+        <fieldset class="ll-ctrl">
+          <legend>Seng</legend>
+          <div class="ll-btn-row" id="bedRow" role="group"></div>
+        </fieldset>
+        <fieldset class="ll-ctrl">
+          <legend>Arbeidsplass</legend>
+          <div class="ll-btn-row" id="deskRow" role="group"></div>
+        </fieldset>
+        <fieldset class="ll-ctrl">
+          <legend>Hjørnet</legend>
+          <div class="ll-btn-row" id="hobbyRow" role="group"></div>
+        </fieldset>
+        <p class="ll-note">Dioramaet er bygd med same lag-teknikk som figuren: møblane ligg i namngjevne «slots» som blir bytte ut etter kva spelaren vel og har råd til. Faste detaljar (vindauge, gardiner, plakat, hylle, ljosslynge) gjev rommet karakter uansett innreiing.</p>
+      </div>
+    </div>
+    <p class="ll-caption">Hybel, 12 m². Kaldt om vinteren, men fritt for foreldrekontroll. Bustaden veks med spelaren: hybel → leilegheit → rekkjehus → einebustad.</p>
+  </section>
+
+  <!-- ══════════ KØYRETØY ══════════ -->
+  <section class="ll-section">
+    <h2 class="heading2"><span data-icon="trafficLight"></span> Køyretøy — bruktbilen</h2>
+    <div class="box1 ll-scene-wrap">
+      <svg class="ll-svg ll-svg-wide" viewBox="0 0 360 220" role="img" aria-label="Blå bruktbil med rustflekk og eksosrøyk">
+        <rect class="ink" x="15" y="15" width="338" height="198" rx="14"/>
+        <rect class="plate" x="8" y="8" width="338" height="198" rx="14"/>
+
+        <path class="ll-l" d="M26 176 H336"/>
+
+        <path class="ll-o" fill="#2b6cb0" d="M64 116 Q52 118 51 130 L51 146 Q51 152 58 152 L71 152 A29 29 0 0 1 129 152 L223 152 A29 29 0 0 1 281 152 L296 152 Q304 152 304 144 L304 130 Q303 118 288 115 L266 112 L242 84 Q238 78 230 78 L150 80 Q142 80 138 85 L118 112 Z"/>
+
+        <path class="ll-o thin" fill="#cfe8f2" d="M144 88 Q146 84 152 84 L186 83 L186 110 L128 113 Z"/>
+        <path class="ll-o thin" fill="#cfe8f2" d="M196 83 L228 82 Q233 82 236 86 L254 108 L196 110 Z"/>
+        <path class="ll-l" d="M196 83 L196 148 M128 113 L126 148"/>
+        <rect fill="#1a1a1a" x="202" y="120" width="16" height="5" rx="2"/>
+
+        <rect class="ll-o thin" x="52" y="122" width="12" height="10" rx="3" fill="#f4b942"/>
+        <rect class="ll-o thin" x="294" y="122" width="9" height="10" rx="3" fill="#e63946"/>
+        <ellipse cx="283" cy="142" rx="9" ry="6" fill="#c1502e"/>
+
+        <circle class="ll-o" cx="100" cy="152" r="24" fill="#3a352f"/>
+        <circle class="ll-o thin" cx="100" cy="152" r="10" fill="#d9d3c7"/>
+        <circle fill="#1a1a1a" cx="100" cy="152" r="3"/>
+        <circle class="ll-o" cx="252" cy="152" r="24" fill="#3a352f"/>
+        <circle class="ll-o thin" cx="252" cy="152" r="10" fill="#d9d3c7"/>
+        <circle fill="#1a1a1a" cx="252" cy="152" r="3"/>
+
+        <rect class="ll-o thin" x="304" y="146" width="10" height="6" fill="#57514a"/>
+        <circle class="ll-o thin" cx="322" cy="148" r="6" fill="#d9d3c7"/>
+        <circle class="ll-o thin" cx="333" cy="143" r="4" fill="#d9d3c7"/>
+      </svg>
+      <p class="ll-caption">2007-modell, 240&nbsp;000 km, «seld som han står». Billeg i innkjøp — men EU-kontrollen kjem kvart år, og rustflekken veks.</p>
+    </div>
+  </section>
+
+  <!-- ══════════ HENDINGSKORT ══════════ -->
+  <section class="ll-section">
+    <h2 class="heading2"><span data-icon="zap"></span> Hendingskort — døme</h2>
+    <div class="ll-event-row">
+      <div class="box3 ll-event-card">
+        <svg class="ll-svg" viewBox="0 0 240 200" role="img" aria-label="Mobiltelefon med knust skjerm">
+          <rect class="ink" x="13" y="13" width="218" height="178" rx="14"/>
+          <rect class="plate" x="6" y="6" width="218" height="178" rx="14"/>
+
+          <path class="ll-o" fill="#8a8378" d="M8 152 H232 V168 Q232 184 216 184 L22 184 Q8 184 8 168 Z"/>
+
+          <g transform="rotate(-10 120 110)">
+            <rect class="ll-o" x="88" y="52" width="64" height="112" rx="12" fill="#3a352f"/>
+            <rect class="ll-o thin" x="94" y="62" width="52" height="86" rx="4" fill="#8ecae6"/>
+            <circle class="ll-l thin" cx="120" cy="156" r="4" fill="none"/>
+            <path class="ll-l thin" d="M110 90 L100 102 L104 116 L96 130 M110 90 L122 100 L118 114 M110 90 L118 82 L128 76 M110 90 L100 80"/>
+            <circle fill="#1a1a1a" cx="110" cy="90" r="3"/>
+          </g>
+
+          <path class="ll-l" d="M70 42 L80 50 M100 30 L104 40 M132 28 L130 38"/>
+          <path class="ll-l thin" d="M172 46 V60 M165 53 H179 M194 78 V88 M189 83 H199"/>
+        </svg>
+        <div class="ll-event-body">
+          <h3>Uff då!</h3>
+          <p>Mobilen glapp ut av lomma på veg av bussen. Skjermen ser ut som eit edderkoppnett.</p>
+          <div class="ll-event-choices">
+            <button class="btn" type="button">Byt skjerm — 2 400 kr</button>
+            <button class="btn" type="button">Lev med sprekken — gratis, men −trivsel</button>
+          </div>
+          <p class="ll-note">Døme på korleis hendingskorta skal sjå ut i spelet: vignett på plate, kort tekst med glimt i auget, og val med synleg pris.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script src="../../js/neo-header.js"></script>
+<script src="../../js/vyrdepil-icons.js"></script>
+<script src="js/stilguide.js"></script>
+</body>
+</html>

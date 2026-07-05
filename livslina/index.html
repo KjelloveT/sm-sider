@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Livslina</title>
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+  <p id="bootError" class="box1" hidden style="color:var(--accent2);font-weight:700;">
+    Klarte ikkje laste speldata. Sjekk at du opnar sida via ein tenar (ikkje som fil).
+  </p>
+
+  <!-- ══════════ START ══════════ -->
+  <section id="screen-start" class="screen active">
+    <div class="box2 hero-box">
+      <div class="hero-text">
+        <h1>Livslina</h1>
+        <p>Eit økonomispel om vala du tek. Start etter ungdomsskulen, vel veg gjennom vidaregåande, og sjå kva vala gjer med økonomien, trivselen og framtida di. Realistiske norske tal — nøktern, men med glimt i auget.</p>
+      </div>
+    </div>
+
+    <div class="ll-start-actions">
+      <button class="btn btn-primary" id="btnNewGame" type="button">
+        <span data-icon="play"></span> Ny livslinje
+      </button>
+      <button class="btn" id="startContinue" type="button" hidden>
+        <span data-icon="rotateCcw"></span> Hald fram
+      </button>
+      <button class="btn" id="btnImport" type="button">
+        <span data-icon="fileUp"></span> Importer
+      </button>
+      <button class="btn" id="btnInfo" type="button">
+        <span data-icon="helpCircle"></span> Om tala
+      </button>
+      <input type="file" id="importFile" accept="application/json" hidden>
+    </div>
+
+    <p class="ll-sources">
+      Fase 1 av fleire: vidaregåande (16–19 år). Fleire livsfasar kjem seinare.
+    </p>
+  </section>
+
+  <!-- ══════════ OPPSTART (wizard) ══════════ -->
+  <section id="screen-setup" class="screen">
+    <div id="wizardSteps" class="ll-wizard-steps"></div>
+
+    <!-- Steg 1: karakter -->
+    <div id="wpanel-character" class="ll-wizard-panel box1">
+      <h2 class="heading3 no-mt">Lag figuren din</h2>
+      <div class="ll-doll-wrap">
+        <div class="ll-doll-stage" id="dollStage"></div>
+        <div>
+          <fieldset class="ll-ctrl"><legend>Hudtone</legend><div class="ll-swatch-row" id="skinRow" role="group"></div></fieldset>
+          <fieldset class="ll-ctrl"><legend>Frisyre</legend><div class="ll-btn-row" id="hairStyleRow" role="group"></div></fieldset>
+          <fieldset class="ll-ctrl"><legend>Hårfarge</legend><div class="ll-swatch-row" id="hairRow" role="group"></div></fieldset>
+          <fieldset class="ll-ctrl"><legend>Overdel</legend><div class="ll-btn-row" id="topStyleRow" role="group"></div></fieldset>
+          <fieldset class="ll-ctrl"><legend>Farge på overdel</legend><div class="ll-swatch-row" id="topRow" role="group"></div></fieldset>
+        </div>
+      </div>
+    </div>
+
+    <!-- Steg 2: familie -->
+    <div id="wpanel-family" class="ll-wizard-panel box1">
+      <h2 class="heading3 no-mt">Familieøkonomien din</h2>
+      <p>Kva slags heim du veks opp i, er ikkje noko du vel — det blir trekt. Det formar startpunktet, ikkje slutten.</p>
+      <div class="ll-family-reveal">
+        <div class="ll-family-card" id="familyCard"></div>
+        <div>
+          <button class="btn ll-reroll" id="familyReroll" type="button">
+            <span data-icon="shuffle"></span> Trekk på nytt
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Steg 3: linje -->
+    <div id="wpanel-line" class="ll-wizard-panel box1">
+      <h2 class="heading3 no-mt">Vel utdanningsprogram</h2>
+      <p>Alle 15 programma på vidaregåande. Linja formar utstyrsstipend, kvardag og kva du kan bli — men ingen av dei er «feil».</p>
+      <div class="ll-line-grid" id="lineGrid"></div>
+    </div>
+
+    <!-- Steg 4: busituasjon -->
+    <div id="wpanel-housing" class="ll-wizard-panel box1">
+      <h2 class="heading3 no-mt">Kvar skal du bu?</h2>
+      <div id="housingBody"></div>
+    </div>
+
+    <div class="ll-wizard-nav">
+      <button class="btn" id="wizBack" type="button"><span data-icon="arrowLeft"></span> Tilbake</button>
+      <button class="btn btn-primary" id="wizNext" type="button">Neste <span data-icon="arrowRight"></span></button>
+    </div>
+  </section>
+
+  <!-- ══════════ HEIMEN ══════════ -->
+  <section id="screen-home" class="screen">
+    <div id="homeTimeline" class="ll-timeline"></div>
+
+    <div class="box2">
+      <div class="ll-home-grid">
+        <div>
+          <h2 class="heading3 no-mt" id="homeRoundLabel">VG1 haust</h2>
+          <p id="homeProgram" class="ll-note"></p>
+          <div id="homeStats" class="ll-stats"></div>
+          <button class="btn btn-primary" id="btnPlan" type="button">Planlegg halvåret <span data-icon="arrowRight"></span></button>
+        </div>
+        <div class="ll-home-figure" id="homeFigure"></div>
+      </div>
+    </div>
+
+    <div class="box1 ll-diorama-box">
+      <h3 class="heading4 no-mt"><span data-icon="home"></span> Rommet ditt</h3>
+      <div id="homeDiorama"></div>
+    </div>
+
+    <div class="box1" id="homePurchasesBox">
+      <h3 class="heading4 no-mt"><span data-icon="coins"></span> Ting du kan skaffe deg</h3>
+      <div id="homePurchases" class="ll-purchases"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ BUDSJETTKORTET ══════════ -->
+  <section id="screen-budget" class="screen">
+    <h2 class="heading3 no-mt">Planlegg halvåret</h2>
+    <div class="ll-budget-grid">
+      <div class="box1">
+        <fieldset class="ll-ctrl"><legend>Jobb ved sida av skulen</legend><div class="ll-btn-row" id="budgetJob" role="group"></div></fieldset>
+        <fieldset class="ll-ctrl"><legend>Forbruksprofil</legend><div class="ll-btn-row" id="budgetProfile" role="group"></div></fieldset>
+        <fieldset class="ll-ctrl"><legend>Fritidsaktivitetar</legend><div class="ll-btn-row" id="budgetActivities" role="group"></div></fieldset>
+        <fieldset class="ll-ctrl"><legend>Fast sparing</legend><div class="ll-btn-row" id="budgetSavings" role="group"></div></fieldset>
+      </div>
+
+      <div class="box2">
+        <h3 class="heading4 no-mt">Månadsbudsjett</h3>
+        <div class="ll-budget-cols">
+          <div>
+            <p class="ll-stat-lbl"><span data-icon="arrowDown" data-icon-size="14"></span> Inn</p>
+            <div id="budgetIncome"></div>
+            <div class="ll-budget-row ll-budget-sum"><span>Sum inn</span><strong id="budgetIncomeTotal">0 kr</strong></div>
+          </div>
+          <div>
+            <p class="ll-stat-lbl"><span data-icon="arrowUp" data-icon-size="14"></span> Ut</p>
+            <div id="budgetExpense"></div>
+            <div class="ll-budget-row ll-budget-sum"><span>Sum ut</span><strong id="budgetExpenseTotal">0 kr</strong></div>
+          </div>
+        </div>
+        <div class="ll-stat" style="margin-top:0.75rem;">
+          <div class="ll-stat-lbl">Netto per månad</div>
+          <div class="ll-stat-val" id="budgetNet">0 kr/mnd</div>
+        </div>
+        <p class="ll-note" id="budgetSavingsLine"></p>
+        <p class="ll-note" id="budgetFrikort" hidden></p>
+      </div>
+    </div>
+
+    <div class="ll-wizard-nav">
+      <button class="btn" id="budgetBack" type="button"><span data-icon="arrowLeft"></span> Tilbake</button>
+      <button class="btn btn-primary" id="budgetRun" type="button">Køyr halvåret <span data-icon="play"></span></button>
+    </div>
+  </section>
+
+  <!-- ══════════ AVSPELING ══════════ -->
+  <section id="screen-playback" class="screen">
+    <div class="box2">
+      <h2 class="heading3 no-mt" id="pbRound">Halvår</h2>
+      <div class="ll-pb-grid">
+        <div>
+          <div class="ll-pb-month" id="pbMonth">—</div>
+          <div class="ll-pb-balance-lbl ll-stat-lbl"><span data-icon="coins" data-icon-size="15"></span> Konto</div>
+          <div class="ll-stat-val ll-pb-balance" id="pbBalance">0 kr</div>
+          <div class="ll-pb-ledger" id="pbLedger"></div>
+        </div>
+        <div class="ll-home-figure" id="pbFigure"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ HALVÅRSOPPGJER ══════════ -->
+  <section id="screen-halfyear" class="screen">
+    <div class="box2">
+      <h2 class="heading3 no-mt" id="hyRound">Oppgjer</h2>
+      <div id="hyStats" class="ll-stats"></div>
+      <div class="ll-budget-cols">
+        <div>
+          <p class="ll-stat-lbl"><span data-icon="arrowDown" data-icon-size="14"></span> Inntekter i halvåret</p>
+          <div id="hyIncome"></div>
+          <div class="ll-budget-row ll-budget-sum"><span>Sum</span><strong id="hyIncomeTotal">0 kr</strong></div>
+        </div>
+        <div>
+          <p class="ll-stat-lbl"><span data-icon="arrowUp" data-icon-size="14"></span> Utgifter i halvåret</p>
+          <div id="hyExpense"></div>
+          <div class="ll-budget-row ll-budget-sum"><span>Sum</span><strong id="hyExpenseTotal">0 kr</strong></div>
+        </div>
+      </div>
+      <div class="box3 ll-factoid"><span data-icon="sparkles"></span> <span id="hyFactoid"></span></div>
+      <div class="ll-center" style="margin-top:1rem;">
+        <button class="btn btn-primary" id="hyContinue" type="button">Hald fram <span data-icon="arrowRight"></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SLUTTRAPPORT ══════════ -->
+  <section id="screen-final" class="screen">
+    <div class="box2">
+      <h2 class="heading2 no-mt"><span data-icon="sparkles"></span> Livslina di</h2>
+      <p>Tre år på vidaregåande er over. Slik gjekk det — og slik kunne det gått annleis.</p>
+      <div id="finalStats" class="ll-stats"></div>
+      <div id="finalDiorama" class="ll-final-diorama"></div>
+    </div>
+
+    <div class="box1">
+      <h3 class="heading4 no-mt"><span data-icon="coins"></span> Formuen din gjennom tre år</h3>
+      <div id="finalChart"></div>
+    </div>
+
+    <div class="box1">
+      <h3 class="heading4 no-mt"><span data-icon="target"></span> Vendepunkta dine</h3>
+      <p class="ll-note">Dei vala som betydde mest for økonomien.</p>
+      <div id="finalTurning"></div>
+    </div>
+
+    <div class="box3 ll-factoid">
+      <span data-icon="compass"></span>
+      <div><strong>Vegen vidare:</strong> <span id="finalPath"></span></div>
+    </div>
+
+    <div class="box1">
+      <h3 class="heading4 no-mt"><span data-icon="award"></span> Merke</h3>
+      <div id="finalBadges" class="ll-badges"></div>
+    </div>
+
+    <div class="ll-wizard-nav">
+      <button class="btn" id="finalExport" type="button"><span data-icon="download"></span> Eksporter</button>
+      <button class="btn btn-primary" id="finalAgain" type="button"><span data-icon="rotateCcw"></span> Prøv ein annan veg</button>
+    </div>
+  </section>
+
+  <!-- ══════════ SOMMAR-MELLOMSPEL ══════════ -->
+  <section id="screen-summer" class="screen">
+    <div class="box2">
+      <h2 class="heading3 no-mt"><span data-icon="sun"></span> <span id="summerRound">Sommar</span></h2>
+      <p>Skulefri! Vil du jobbe og tene pengar, eller ta fri og lade batteria?</p>
+      <fieldset class="ll-ctrl"><legend>Sommarjobb</legend><div class="ll-btn-row" id="summerWeeks" role="group"></div></fieldset>
+      <p class="ll-note" id="summerPreview"></p>
+      <div class="ll-center" style="margin-top:1rem;">
+        <button class="btn btn-primary" id="summerRun" type="button">Køyr sommaren <span data-icon="arrowRight"></span></button>
+      </div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!-- ══════════ Moped-modal ══════════ -->
+<div class="modal-overlay" id="mopedModal" aria-hidden="true">
+  <div class="modal1" role="dialog" aria-modal="true" aria-labelledby="mopedTitle">
+    <button class="btn modal-close" data-close-modal="mopedModal" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="mopedTitle" class="heading3 no-mt">Kjøpe moped?</h2>
+    <p>Seljaren har to variantar. Den eine er trimma til å gå fortare — det er ulovleg, og kan gje forelegg og tap av førarbevis om du blir teken.</p>
+    <div class="ll-event-choices">
+      <button class="btn ll-event-choice" id="mopedBuyLegal" type="button">
+        <span class="ll-event-choice-lbl">Kjøp lovleg moped — <span id="mopedBundle"></span></span>
+        <span class="ll-event-choice-note">Trygt og lovleg.</span>
+      </button>
+      <button class="btn ll-event-choice" id="mopedBuyTrimmed" type="button">
+        <span class="ll-event-choice-lbl">Kjøp trimma moped — <span id="mopedTrimmed"></span></span>
+        <span class="ll-event-choice-note">Billegare, men ulovleg — og risikabelt.</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ 18-årsdag-modal ══════════ -->
+<div class="modal-overlay" id="birthdayModal" aria-hidden="true">
+  <div class="modal1" role="dialog" aria-modal="true" aria-labelledby="bdayTitle">
+    <h2 id="bdayTitle" class="heading3 no-mt">🎉 Du har fylt 18!</h2>
+    <p>No er du myndig. To ting endrar seg: du får høgare timeløn, og du kan spare i <strong>BSU</strong> (bustadsparing for ungdom) — betre rente enn vanleg sparekonto, og skattefrådrag når du tener nok til å betale skatt.</p>
+    <p class="ll-note">Vil du gjere om sparinga di til BSU no? (Du kan uansett ta førarkort under «Ting du kan skaffe deg».)</p>
+    <div class="ll-event-choices">
+      <button class="btn ll-event-choice" id="bsuYes" type="button"><span class="ll-event-choice-lbl">Ja, byt til BSU</span></button>
+      <button class="btn ll-event-choice" id="bsuNo" type="button"><span class="ll-event-choice-lbl">Nei, behald vanleg sparing</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ Hendingskort-modal ══════════ -->
+<div class="modal-overlay modal-locked" id="eventModal" aria-hidden="true">
+  <div class="modal1 ll-event-modal" role="dialog" aria-modal="true" aria-labelledby="eventTitle">
+    <div class="ll-event-vignette" id="eventVignette"></div>
+    <h2 id="eventTitle" class="heading3 no-mt"></h2>
+    <p id="eventText"></p>
+    <div class="ll-event-choices" id="eventChoices"></div>
+  </div>
+</div>
+
+<!-- ══════════ Info-modal ══════════ -->
+<div class="modal-overlay" id="infoModal" aria-hidden="true">
+  <div class="modal1" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+    <button class="btn modal-close" data-close-modal="infoModal" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="infoModalTitle" class="heading3 no-mt">Om tala i Livslina</h2>
+    <div id="infoModalBody"></div>
+  </div>
+</div>
+
+<div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+<script src="../js/neo-header.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="js/util.js"></script>
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/economy.js"></script>
+<script src="js/events.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/art-doll.js"></script>
+<script src="js/art-vignettes.js"></script>
+<script src="js/art-diorama.js"></script>
+<script src="js/ui-setup.js"></script>
+<script src="js/ui-home.js"></script>
+<script src="js/ui-budget.js"></script>
+<script src="js/ui-summer.js"></script>
+<script src="js/ui-playback.js"></script>
+<script src="js/ui-report.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

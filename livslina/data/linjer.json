@@ -1,0 +1,180 @@
+{
+  "app": "livslina",
+  "version": 1,
+  "updated": "2026-07-05",
+  "source": "https://www.vilbli.no/nb/no/a/utdanningsprogram-og-programomrader-6",
+  "sourceNote": "Namn på utdanningsprogram henta frå vilbli.no. Utstyrsstipend-satsane følgjer Lånekassens trinn (sjå grunndata.json grants.equipmentGrantPerYear); der trinnet ikkje er offisielt stadfesta for programmet er det sett skjønnsmessig og merkt rateEstimate:true.",
+  "programs": [
+    {
+      "id": "studiespes",
+      "name": "Studiespesialisering",
+      "type": "studieforberedande",
+      "equipmentGrantRate": "rate1",
+      "hybelChance": 0.15,
+      "phase2": "studium",
+      "phase2Note": "Gjev generell studiekompetanse — vidare til universitet eller høgskule.",
+      "careers": ["Lækjar", "Jurist", "Lærar", "Ingeniør", "Økonom"],
+      "blurb": "Mest teori. Held alle dører opne mot høgare utdanning, men du må velje retning seinare."
+    },
+    {
+      "id": "idrettsfag",
+      "name": "Idrettsfag",
+      "type": "studieforberedande",
+      "equipmentGrantRate": "rate3",
+      "hybelChance": 0.45,
+      "phase2": "studium",
+      "phase2Note": "Studiekompetanse med fordjuping i idrett og trening.",
+      "careers": ["Personleg trenar", "Fysioterapeut", "Idrettspedagog", "Politi"],
+      "blurb": "Studiekompetanse for deg som lever for trening og idrett. Ein del reiser bort for satsingsmiljø."
+    },
+    {
+      "id": "musikk-dans-drama",
+      "name": "Musikk, dans og drama",
+      "type": "studieforberedande",
+      "equipmentGrantRate": "rate3",
+      "hybelChance": 0.4,
+      "phase2": "studium",
+      "phase2Note": "Studiekompetanse med kunstnarleg fordjuping.",
+      "careers": ["Musikar", "Skodespelar", "Dansar", "Kulturskulelærar"],
+      "blurb": "For deg som vil på scena. Studiekompetanse, men mykje øving på fritida — og eige utstyr."
+    },
+    {
+      "id": "kunst-design-arkitektur",
+      "name": "Kunst, design og arkitektur",
+      "type": "studieforberedande",
+      "equipmentGrantRate": "rate3",
+      "hybelChance": 0.35,
+      "phase2": "studium",
+      "phase2Note": "Studiekompetanse retta mot kunst-, design- og arkitekturstudium.",
+      "careers": ["Arkitekt", "Grafisk designar", "Illustratør", "Interiørarkitekt"],
+      "blurb": "Teikning, form og farge. Studiekompetanse, men rekn med innkjøp av materiell."
+    },
+    {
+      "id": "medier-kommunikasjon",
+      "name": "Medier og kommunikasjon",
+      "type": "studieforberedande",
+      "equipmentGrantRate": "rate2",
+      "rateEstimate": true,
+      "hybelChance": 0.25,
+      "phase2": "studium",
+      "phase2Note": "Studiekompetanse retta mot medie- og kommunikasjonsfag.",
+      "careers": ["Journalist", "Innhaldsprodusent", "Kommunikasjonsrådgjevar", "Filmskapar"],
+      "blurb": "Film, foto, tekst og sosiale medium. Studiekompetanse med praktisk medieproduksjon."
+    },
+    {
+      "id": "bygg-anlegg",
+      "name": "Bygg- og anleggsteknikk",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate5",
+      "hybelChance": 0.4,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i bedrift med lærlingløn, fram mot fagbrev.",
+      "careers": ["Tømrar", "Murar", "Anleggsmaskinførar", "Røyrleggjar"],
+      "blurb": "Bygg landet. Fagbrev-veg med læreplass og løn i VG3. Dyrt utstyr, men høgt utstyrsstipend."
+    },
+    {
+      "id": "elektro",
+      "name": "Elektro og datateknologi",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate5",
+      "hybelChance": 0.4,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i bedrift med lærlingløn, fram mot fagbrev. Godt betalt fag.",
+      "careers": ["Elektrikar", "Energimontør", "Automatikar", "Dataelektronikar"],
+      "blurb": "Straum, styring og data. Populær fagbrev-veg med god løn — og kamp om læreplassane."
+    },
+    {
+      "id": "teknologi-industri",
+      "name": "Teknologi- og industrifag",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate5",
+      "hybelChance": 0.5,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i bedrift, ofte i industri eller på båt/plattform.",
+      "careers": ["Industrimekanikar", "CNC-operatør", "Sveisar", "Prosessoperatør"],
+      "blurb": "Maskinar, produksjon og prosess. Fagbrev-veg med mange læreplassar i industrien."
+    },
+    {
+      "id": "helse-oppvekst",
+      "name": "Helse- og oppvekstfag",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate3",
+      "hybelChance": 0.3,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i helse-/oppvekstsektoren fram mot fagbrev.",
+      "careers": ["Helsefagarbeidar", "Barne- og ungdomsarbeidar", "Ambulansearbeidar", "Tannhelsesekretær"],
+      "blurb": "Jobb med menneske. Trygg fagbrev-veg med mange læreplassar i kommunane."
+    },
+    {
+      "id": "restaurant-mat",
+      "name": "Restaurant- og matfag",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate4",
+      "rateEstimate": true,
+      "hybelChance": 0.35,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid på kjøkken, bakeri eller i matindustri.",
+      "careers": ["Kokk", "Konditor", "Servitør", "Slaktar"],
+      "blurb": "Lag mat folk hugsar. Fagbrev-veg med lange kveldar, men stor etterspurnad."
+    },
+    {
+      "id": "naturbruk",
+      "name": "Naturbruk",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate5",
+      "hybelChance": 0.7,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 kan vere læretid eller påbygg til studiekompetanse. Ofte internatskule.",
+      "careers": ["Agronom", "Fiskar", "Skogsoperatør", "Dyrepleiar"],
+      "blurb": "Jord, skog, hav og dyr. Mange skular har internat — difor bur mange på hybel eller internat."
+    },
+    {
+      "id": "salg-service-reiseliv",
+      "name": "Salg, service og reiseliv",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate2",
+      "rateEstimate": true,
+      "hybelChance": 0.2,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i butikk, resepsjon eller reiselivsbedrift.",
+      "careers": ["Salsmedarbeidar", "Resepsjonist", "Reiselivsmedarbeidar", "Logistikkoperatør"],
+      "blurb": "Handel, service og turisme. Fagbrev-veg med læreplassar i heile landet."
+    },
+    {
+      "id": "frisor-blomster-interior",
+      "name": "Frisør, blomster, interiør og eksponeringsdesign",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate4",
+      "rateEstimate": true,
+      "hybelChance": 0.25,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i salong eller butikk fram mot fagbrev/sveinebrev.",
+      "careers": ["Frisør", "Blomsterdekoratør", "Interiørkonsulent", "Eksponeringsdesignar"],
+      "blurb": "Kreative handverksfag med kundekontakt. Fagbrev-veg med ein del eige utstyr."
+    },
+    {
+      "id": "handverk-design",
+      "name": "Håndverk, design og produktutvikling",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate4",
+      "rateEstimate": true,
+      "hybelChance": 0.4,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i eit av mange små handverksfag.",
+      "careers": ["Gullsmed", "Møbelsnikkar", "Buntmakar", "Båtbyggjar"],
+      "blurb": "Dei små, spesialiserte handverksfaga. Fagbrev-veg — men læreplassane er få og spreidde."
+    },
+    {
+      "id": "it-medieproduksjon",
+      "name": "Informasjonsteknologi og medieproduksjon",
+      "type": "yrkesfag",
+      "equipmentGrantRate": "rate3",
+      "rateEstimate": true,
+      "hybelChance": 0.25,
+      "phase2": "laereplass",
+      "phase2Note": "VG3 er læretid i IT-drift eller medieproduksjon fram mot fagbrev.",
+      "careers": ["IT-driftsteknikar", "Utviklar", "Mediegrafikar", "Fotograf"],
+      "blurb": "Data, drift og medieproduksjon. Fagbrev-veg — eller påbygg vidare til studium."
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+/* Livslina — stilguide. Utvidar css/neobrutalisme.css. */
+
+.ll-intro p {
+  max-width: 62ch;
+  margin-top: 0.5rem;
+}
+
+.ll-section {
+  margin-block: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.ll-section .heading2 span[data-icon] {
+  vertical-align: -3px;
+  margin-right: 0.35em;
+}
+
+/* ── Felles SVG-reglar ─────────────────────────── */
+.ll-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ll-svg .ink   { fill: #1a1a1a; }
+.ll-svg .plate { fill: #faf7f0; stroke: #1a1a1a; stroke-width: 4; }
+
+/* Konturfyll: flate med blekk-strek */
+.ll-svg .ll-o {
+  stroke: #1a1a1a;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+/* Rein strek utan fyll */
+.ll-svg .ll-l {
+  fill: none;
+  stroke: #1a1a1a;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.ll-svg .thin { stroke-width: 3; }
+.ll-svg .xthin { stroke-width: 2.5; }
+
+/* Større viewBox (480) → grovare einingar for same synlege strek */
+.ll-svg-lg .ll-o, .ll-svg-lg .ll-l { stroke-width: 5; }
+.ll-svg-lg .thin { stroke-width: 3.5; }
+.ll-svg-lg .xthin { stroke-width: 2.5; }
+
+/* SVG-element har ikkje innebygd hidden-åtferd */
+.ll-svg [hidden] { display: none; }
+
+/* Paper doll-fargar via CSS-variablar sette på <svg> */
+.ll-svg .skin { fill: var(--doll-skin); }
+.ll-svg .hair { fill: var(--doll-hair); }
+.ll-svg .top  { fill: var(--doll-top); }
+
+/* ── Palett ────────────────────────────────────── */
+.ll-palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.ll-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 3px 3px 0 var(--shadow);
+  font-size: 0.8rem;
+  line-height: 1.25;
+}
+
+.ll-chip-dot {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  border: 3px solid #1a1a1a;
+  border-radius: 6px;
+}
+
+.ll-chip small {
+  display: block;
+  color: var(--muted);
+}
+
+/* ── Karakter ──────────────────────────────────── */
+.ll-doll-wrap {
+  display: grid;
+  grid-template-columns: minmax(200px, 320px) 1fr;
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.ll-doll-stage {
+  max-width: 320px;
+  margin-inline: auto;
+}
+
+.ll-ctrl {
+  border: 3px solid var(--border);
+  padding: 0.6rem 0.75rem 0.75rem;
+  margin-bottom: 0.85rem;
+  background: var(--surface);
+}
+
+.ll-ctrl legend {
+  font-weight: 700;
+  padding-inline: 0.4em;
+}
+
+.ll-swatch-row,
+.ll-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ll-swatch {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #1a1a1a;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer;
+  transition: transform 0.08s;
+}
+
+.ll-swatch:hover { transform: translate(-1px, -1px); }
+
+.ll-swatch[aria-pressed="true"] {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.ll-btn-row .btn { font-size: 0.85rem; }
+
+.ll-btn-row .btn[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.ll-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+/* ── Scener ────────────────────────────────────── */
+.ll-scene-wrap { max-width: 640px; }
+
+.ll-scene-grid {
+  grid-template-columns: minmax(280px, 580px) minmax(220px, 1fr);
+}
+
+.ll-scene-stage { width: 100%; }
+
+.ll-svg-wide { max-width: 560px; }
+
+.ll-caption {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  max-width: 55ch;
+}
+
+/* ── Hendingskort ──────────────────────────────── */
+.ll-event-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.ll-event-card {
+  max-width: 420px;
+}
+
+.ll-event-card .ll-svg { max-width: 300px; margin-inline: auto; }
+
+.ll-event-body h3 { margin-top: 0.75rem; }
+
+.ll-event-body p { margin-top: 0.35rem; }
+
+.ll-event-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.ll-event-choices .btn { text-align: left; }
+
+/* ── Responsivt ────────────────────────────────── */
+@media (max-width: 640px) {
+  .ll-doll-wrap,
+  .ll-scene-grid {
+    grid-template-columns: 1fr;
+  }
+  .ll-doll-stage { max-width: 260px; }
+}

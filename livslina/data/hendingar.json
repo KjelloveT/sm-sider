@@ -1,0 +1,275 @@
+{
+  "app": "livslina",
+  "version": 1,
+  "updated": "2026-07-05",
+  "_schema": {
+    "note": "Hendingskort for fase 1. Kvart kort: id, title, text, art (vignett-nøkkel), when (vilkår), weight, once, positive, forced, kind. Val: choices[] med label, effects og note.",
+    "when": "moped(bool), noMoped(bool), housing('hybel'), programType('yrkesfag'|'studieforberedande'), flag(str), notFlag(str), minAge(int), overFrikort(bool)",
+    "kind": "'term' (skulehalvår) eller 'summer' (sommar-mellomspel). Standard: term.",
+    "forced": "true = alltid vist når vilkåra er oppfylte (styrt kort). Utan forced: trekt tilfeldig etter weight.",
+    "effects": "cost/gain (direkte kr), costKey/gainKey (nøkkel i grunndata.json), wellbeing/energy/grades (delta), flags({k:v}), possessions({k:v}), wageHoursGain (timar × gjeldande timeløn), insuranceApplies(bool)"
+  },
+  "events": [
+    {
+      "id": "mobil-knust",
+      "title": "Uff då!",
+      "text": "Mobilen glapp ut av lomma på veg av bussen. Skjermen ser ut som eit edderkoppnett.",
+      "art": "phone",
+      "when": {},
+      "weight": 3,
+      "positive": false,
+      "choices": [
+        { "label": "Byt skjerm", "effects": { "costKey": "events.phoneScreenRepair", "insuranceApplies": true } },
+        { "label": "Kjøp brukt mobil", "effects": { "costKey": "events.phoneReplacementUsed", "insuranceApplies": true } },
+        { "label": "Lev med sprekken", "effects": { "wellbeing": -8 }, "note": "Gratis, men irriterande heile året." }
+      ]
+    },
+    {
+      "id": "mobilforsikring-tilbod",
+      "title": "Skjermforsikring?",
+      "text": "I butikken spør dei om du vil ha skjermforsikring på mobilen. Nokre kroner i månaden mot uhell.",
+      "art": "shield",
+      "when": { "rounds": ["vg1h", "vg1v"], "notFlag": "phoneInsurance" },
+      "weight": 2,
+      "positive": true,
+      "choices": [
+        { "label": "Teikn forsikring", "effects": { "flags": { "phoneInsurance": true }, "possessions": { "phoneInsurance": true } }, "note": "Fast utgift kvar månad, men eigenrisiko på berre 500 kr ved uhell." },
+        { "label": "Takk nei", "effects": {}, "note": "Sparar pengar no — men du ber all risikoen sjølv." }
+      ]
+    },
+    {
+      "id": "sykkel-stolen",
+      "title": "Sykkelen er borte",
+      "text": "Du kjem ut frå skulen og sykkelstativet er tomt. Låsen ligg klipt på bakken.",
+      "art": "warning",
+      "when": { "noMoped": true },
+      "weight": 2,
+      "positive": false,
+      "choices": [
+        { "label": "Kjøp brukt sykkel", "effects": { "costKey": "events.stolenBike" } },
+        { "label": "Gå og ta bussen", "effects": { "wellbeing": -3 }, "note": "Tek lengre tid kvar dag." }
+      ]
+    },
+    {
+      "id": "klassetur",
+      "title": "Klassetur",
+      "text": "Klassen skal på tur, og det er ein eigendel som må betalast innan fristen.",
+      "art": "bus",
+      "when": { "rounds": ["vg1v", "vg2h"] },
+      "weight": 2,
+      "once": true,
+      "positive": false,
+      "choices": [
+        { "label": "Betal og bli med", "effects": { "costKey": "events.classTripContribution", "wellbeing": 3 } },
+        { "label": "Stå over", "effects": { "wellbeing": -6 }, "note": "Sparar pengar, men går glipp av noko." }
+      ]
+    },
+    {
+      "id": "pc-uhell",
+      "title": "Kaffi i tastaturet",
+      "text": "Ein kopp velta rett over PC-en midt i ei innlevering. Han slår seg ikkje på.",
+      "art": "laptop",
+      "when": {},
+      "weight": 2,
+      "positive": false,
+      "choices": [
+        { "label": "Reparer PC-en", "effects": { "costKey": "events.brokenLaptop" } },
+        { "label": "Lån skulens reserve-PC", "effects": { "grades": -0.1 }, "note": "Tungvint — går litt ut over innleveringane." }
+      ]
+    },
+    {
+      "id": "fartsbot",
+      "title": "Kontroll ved skulen",
+      "text": "Politiet står med laser i 40-sona utanfor skulen. Du låg litt over.",
+      "art": "warning",
+      "when": { "moped": true },
+      "weight": 2,
+      "positive": false,
+      "choices": [
+        { "label": "Betal forelegget", "effects": { "costKey": "events.speedingFineMoped", "wellbeing": -2 } }
+      ]
+    },
+    {
+      "id": "trimma-avslort",
+      "title": "Trimminga avslørt",
+      "text": "Same kontrollen sjekkar mopeden på rulle. Han går altfor fort — og det er ulovleg.",
+      "art": "warning",
+      "when": { "flag": "mopedTrimmed" },
+      "weight": 3,
+      "once": true,
+      "positive": false,
+      "choices": [
+        { "label": "Ta konsekvensen", "effects": { "costKey": "events.trimmedMopedFine", "wellbeing": -6, "flags": { "mistaForarbevis": true } }, "note": "Forelegg + mister førarbeviset i tre månader." }
+      ]
+    },
+    {
+      "id": "ekstravakter-jul",
+      "title": "Julehjelp søkjast",
+      "text": "Butikken treng ekstrahjelp i julestria. Vil du ta nokre vakter ved sida av skulen?",
+      "art": "coins",
+      "when": { "rounds": ["vg1h", "vg2h", "vg3h"] },
+      "weight": 2,
+      "positive": true,
+      "choices": [
+        { "label": "Ta vaktene (25 t)", "effects": { "wageHoursGain": 25, "energy": -8 } },
+        { "label": "Nei, eg treng roa", "effects": { "wellbeing": 2 } }
+      ]
+    },
+    {
+      "id": "venegjeng-konsert",
+      "title": "Alle skal på konsert",
+      "text": "Heile gjengen skal på konsert i helga. Billettane er ikkje gratis.",
+      "art": "star",
+      "when": {},
+      "weight": 2,
+      "positive": true,
+      "choices": [
+        { "label": "Bli med", "effects": { "costKey": "events.concertTicket", "wellbeing": 6 } },
+        { "label": "Stå over denne gongen", "effects": { "wellbeing": -4 } }
+      ]
+    },
+    {
+      "id": "bestemor-bursdag",
+      "title": "Pengegåve",
+      "text": "Bestemor gav deg pengar til bursdagen med ei lapp: «Kjøp deg noko fint — eller spar!»",
+      "art": "gift",
+      "when": {},
+      "weight": 2,
+      "positive": true,
+      "choices": [
+        { "label": "Takk så mykje!", "effects": { "gain": 1000, "wellbeing": 2 } }
+      ]
+    },
+    {
+      "id": "skatt-att",
+      "title": "Skatteoppgjeret",
+      "text": "Du fekk skattemelding i posten. Du har betalt litt for mykje skatt i fjor og får att pengar.",
+      "art": "coins",
+      "when": { "overFrikort": true },
+      "weight": 2,
+      "once": true,
+      "positive": true,
+      "choices": [
+        { "label": "Fint!", "effects": { "gain": 1800 }, "note": "Difor lønner det seg å sjekke skattekortet." }
+      ]
+    },
+    {
+      "id": "hybel-depositum",
+      "title": "Depositum",
+      "text": "Utleigaren krev tre månaders husleige i depositum før du får nøklane.",
+      "art": "home",
+      "when": { "housing": "hybel" },
+      "weight": 5,
+      "once": true,
+      "forced": true,
+      "positive": false,
+      "choices": [
+        { "label": "Betal depositum", "effects": { "cost": 6000, "flags": { "depositumBetalt": true } }, "note": "Du får det att når du flyttar — men det er bunde no." }
+      ]
+    },
+    {
+      "id": "stipend-purring",
+      "title": "Søknadsfristen",
+      "text": "Du oppdagar at du var seint ute med stipendsøknaden. Første utbetaling blir forseinka ein månad.",
+      "art": "warning",
+      "when": { "housing": "hybel", "notFlag": "depositumBetalt" },
+      "weight": 1,
+      "once": true,
+      "positive": false,
+      "choices": [
+        { "label": "Å nei…", "effects": { "wellbeing": -3 }, "note": "Har du buffer, går det fint. Har du ikkje, blir det ein trong månad." }
+      ]
+    },
+    {
+      "id": "russebuss-paamelding",
+      "title": "Russebuss?",
+      "text": "Gjengen planlegg russebuss allereie no. Skal du bli med på prosjektet? Det kostar mykje, men blir bygd opp over lang tid.",
+      "art": "bus",
+      "when": { "rounds": ["vg2h"], "programType": "studieforberedande" },
+      "weight": 5,
+      "once": true,
+      "forced": true,
+      "positive": false,
+      "choices": [
+        { "label": "Bli med på bussen", "effects": { "flags": { "russBuss": true }, "wellbeing": 8 }, "note": "Stor kostnad fordelt over halvåra fram til russetida." },
+        { "label": "Heller rimeleg russetid", "effects": { "flags": { "russMinimal": true } }, "note": "Dress og litt utstyr til slutt — mykje billegare." },
+        { "label": "Droppe heile russetida", "effects": { "wellbeing": -5, "flags": { "russDropp": true } } }
+      ]
+    },
+    {
+      "id": "russebuss-sprekk",
+      "title": "Bussen sprekk på budsjett",
+      "text": "Russebussen kosta meir enn planlagt. Alle må ut med ein ekstra andel.",
+      "art": "bus",
+      "when": { "flag": "russBuss", "rounds": ["vg3h"] },
+      "weight": 5,
+      "once": true,
+      "forced": true,
+      "positive": false,
+      "choices": [
+        { "label": "Betal andelen", "effects": { "cost": 8000, "wellbeing": -2 }, "note": "Ei forplikting bind — det er ingen veg ut no." }
+      ]
+    },
+    {
+      "id": "laereplass-intervju",
+      "title": "Intervju til læreplass",
+      "text": "Du er kalla inn til intervju for ein læreplass. Slik sikrar du lærlingløn og fagbrev.",
+      "art": "star",
+      "when": { "programType": "yrkesfag", "rounds": ["vg3h"] },
+      "weight": 5,
+      "once": true,
+      "forced": true,
+      "positive": true,
+      "choices": [
+        { "label": "Førebu deg godt", "effects": { "energy": -5, "flags": { "laereplassBra": true } }, "note": "Kostar krefter, men aukar sjansen for god læreplass." },
+        { "label": "Ta det på sparket", "effects": {}, "note": "Kanskje det går bra likevel?" }
+      ]
+    },
+    {
+      "id": "eksamenstrekk",
+      "title": "Trekt ut i munnleg",
+      "text": "Du er trekt ut til munnleg eksamen. Kor mykje vil du satse på lesinga?",
+      "art": "book",
+      "when": { "rounds": ["vg3v"] },
+      "weight": 5,
+      "once": true,
+      "forced": true,
+      "positive": false,
+      "choices": [
+        { "label": "Les heile helga", "effects": { "energy": -8, "grades": 0.2 } },
+        { "label": "Satse på flaks", "effects": { "grades": -0.1 }, "note": "Kanskje du er heldig med tema — kanskje ikkje." }
+      ]
+    },
+    {
+      "id": "tannlege-19",
+      "title": "Første tannlegerekning",
+      "text": "Du fyller 19 og er ikkje lenger dekt av gratis tannhelse. Ein kontroll med eitt hòl må fiksast.",
+      "art": "warning",
+      "when": { "rounds": ["vg3v"], "minAge": 19 },
+      "weight": 4,
+      "once": true,
+      "forced": true,
+      "positive": false,
+      "choices": [
+        { "label": "Betal rekninga", "effects": { "costKey": "events.dentistYoungAdult" }, "note": "Gratis-ordninga tek slutt — no må du betale sjølv." }
+      ]
+    }
+  ],
+  "summerEvents": [
+    {
+      "id": "sommarjobb-tips",
+      "title": "Ekstravakter i sommar",
+      "text": "Naboen tipsar om at butikken treng folk til nokre ekstravakter denne sommaren.",
+      "art": "coins",
+      "kind": "summer",
+      "when": { "rounds": ["sum1"] },
+      "weight": 3,
+      "once": true,
+      "positive": true,
+      "choices": [
+        { "label": "Ta vaktene (40 t)", "effects": { "wageHoursGain": 40, "energy": -10 } },
+        { "label": "Nyt sommaren i staden", "effects": { "wellbeing": 4 } }
+      ]
+    }
+  ]
+}
