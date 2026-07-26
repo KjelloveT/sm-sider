@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ordkryss — kryssordbyggjar for Vyrdepil</title>
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+  <!-- Hero -->
+  <div class="box2 hero-box">
+    <img src="../_resources/ordkryss.png" alt="Ordkryss" class="hero-logo">
+    <div class="hero-text">
+      <h1>Ordkryss</h1>
+      <p>Skriv inn ord og forklaringar, så flettar Ordkryss dei saman til eit kryssord med flest mogleg kryss. Skriv ut med fasit — og gjerne eitt ferdig namngjeve ark til kvar elev.</p>
+    </div>
+  </div>
+
+  <!-- Steg 1: ord og forklaringar -->
+  <section class="box1" aria-labelledby="wordsHeading">
+    <h2 class="heading3 no-mt" id="wordsHeading">1. Ord og forklaringar</h2>
+
+    <form id="addForm" class="ok-add-row" autocomplete="off">
+      <div class="ok-field">
+        <label for="answerInput">Ord</label>
+        <input type="text" id="answerInput" class="ok-text-input" maxlength="30" placeholder="T.d. REV" required>
+      </div>
+      <div class="ok-field ok-field-wide">
+        <label for="clueInput">Forklaring</label>
+        <input type="text" id="clueInput" class="ok-text-input" maxlength="160" placeholder="T.d. Lurt dyr med raud pels">
+      </div>
+      <button class="btn" type="submit" id="addWordBtn"><span data-icon="plus"></span>Legg til</button>
+    </form>
+    <p class="ok-warn" id="addWarn" role="alert" hidden></p>
+
+    <div class="ok-word-head">
+      <span class="ok-muted" id="wordCount" aria-live="polite">Ingen ord enno</span>
+      <div class="ok-btn-row ok-btn-row-tight">
+        <button class="btn ok-btn-small" id="pasteBtn"><span data-icon="list"></span>Lim inn liste</button>
+        <button class="btn ok-btn-small" id="sampleBtn"><span data-icon="sparkles"></span>Prøv eit døme</button>
+        <button class="btn ok-btn-small ok-danger" id="clearWordsBtn"><span data-icon="trash2"></span>Tøm lista</button>
+      </div>
+    </div>
+
+    <div class="ok-word-list" id="wordList"></div>
+    <p class="ok-muted" id="wordEmpty">Legg til minst to ord som deler ein bokstav, så kan Ordkryss flette dei saman.</p>
+  </section>
+
+  <!-- Steg 2: kryssordet -->
+  <section class="box1" aria-labelledby="gridHeading">
+    <h2 class="heading3 no-mt" id="gridHeading">2. Kryssordet</h2>
+
+    <div class="ok-btn-row">
+      <button class="btn" id="generateBtn"><span data-icon="sparkles"></span>Lag kryssord</button>
+      <button class="btn" id="regenerateBtn"><span data-icon="refreshCw"></span>Prøv på nytt</button>
+      <button class="btn" id="toggleAnswersBtn" aria-pressed="false"><span data-icon="eye"></span>Vis fasit</button>
+    </div>
+
+    <p class="ok-stats ok-muted" id="gridStats" aria-live="polite"></p>
+
+    <div class="ok-unplaced" id="unplacedBox" hidden>
+      <p class="ok-unplaced-title"><span data-icon="alertTriangle"></span> Desse orda fekk ikkje plass i fletta</p>
+      <p class="ok-muted">Orda deler ingen bokstav med resten på ein måte som passar. Vel kva du vil gjere med kvart av dei.</p>
+      <div id="unplacedList"></div>
+    </div>
+
+    <div class="ok-grid-wrap" id="gridWrap">
+      <p class="ok-muted" id="gridEmpty">Ingen kryssord enno. Legg til ord og trykk «Lag kryssord».</p>
+    </div>
+
+    <div class="ok-clues" id="cluesPreview" hidden>
+      <div>
+        <h3 class="heading4">Vassrett</h3>
+        <ol class="ok-clue-list" id="cluesAcross"></ol>
+      </div>
+      <div>
+        <h3 class="heading4">Loddrett</h3>
+        <ol class="ok-clue-list" id="cluesDown"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Steg 3: ark og utskrift -->
+  <section class="box1" aria-labelledby="sheetHeading">
+    <h2 class="heading3 no-mt" id="sheetHeading">3. Ark og utskrift</h2>
+
+    <div class="ok-sheet-grid">
+      <div class="ok-field">
+        <label for="titleInput">Tittel på arket</label>
+        <input type="text" id="titleInput" class="ok-text-input" maxlength="80" placeholder="T.d. Dyr i skogen">
+      </div>
+      <div class="ok-field">
+        <span class="ok-field-label" id="sheetOptLabel">Val for arket</span>
+        <div role="group" aria-labelledby="sheetOptLabel">
+          <label class="ok-check-row" for="nameFieldCheck">
+            <input type="checkbox" id="nameFieldCheck" checked> Namnefelt øvst
+          </label>
+          <label class="ok-check-row" for="answerKeyCheck">
+            <input type="checkbox" id="answerKeyCheck" checked> Fasit på eiga side
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="ok-names">
+      <div class="ok-names-head">
+        <span class="ok-field-label">Eitt ark per elev</span>
+        <div class="ok-btn-row ok-btn-row-tight">
+          <button class="btn ok-btn-small" id="namesBtn"><span data-icon="users"></span>Hent namn</button>
+          <button class="btn ok-btn-small ok-danger" id="clearNamesBtn" hidden><span data-icon="x"></span>Fjern namna</button>
+        </div>
+      </div>
+      <p class="ok-muted" id="namesInfo">Utan namn blir det eitt ark med blank namnelinje. Hentar du namn, får kvar elev sitt eige ark med same kryssord.</p>
+      <div class="ok-name-chips" id="nameChips"></div>
+    </div>
+
+    <div class="ok-btn-row">
+      <button class="btn" id="printBtn"><span data-icon="printer"></span>Skriv ut</button>
+      <button class="btn" id="pngBtn"><span data-icon="image"></span>Last ned PNG</button>
+      <button class="btn" id="svgBtn"><span data-icon="download"></span>Last ned SVG</button>
+      <button class="btn" id="saveBtn"><span data-icon="save"></span>Lagre</button>
+      <button class="btn" id="exportBtn"><span data-icon="fileJson"></span>Eksporter JSON</button>
+      <button class="btn" id="importBtn"><span data-icon="upload"></span>Importer JSON</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+    </div>
+  </section>
+
+  <!-- Bibliotek -->
+  <section class="box4" aria-labelledby="libHeading">
+    <div class="box-header" id="libHeading">Lagra kryssord</div>
+    <div class="box-body">
+      <div id="libList"></div>
+      <p class="ok-muted" id="libEmpty">Ingen lagra kryssord enno. Trykk «Lagre» for å leggje eitt i biblioteket.</p>
+    </div>
+  </section>
+
+  <p class="ok-muted text-center ok-footnote">
+    Ordkryss — del av Vyrdepil. Orda, kryssorda og namna dine blir berre lagra lokalt i din eigen nettlesar.
+  </p>
+
+</main>
+</div>
+
+<!-- Modal: lim inn liste -->
+<div class="modal-overlay" id="pasteOverlay" role="dialog" aria-modal="true" aria-labelledby="pasteHeading">
+  <div class="modal1">
+    <button class="btn ok-icon-btn modal-close" id="pasteClose" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="pasteHeading">Lim inn liste</h2>
+    <p class="ok-muted">Ei linje per ord. Skil ord og forklaring med semikolon, kolon, tabulator eller tankestrek:<br>
+      <code>rev; lurt dyr med raud pels</code></p>
+    <label for="pasteText" class="ok-field-label">Liste</label>
+    <textarea id="pasteText" class="ok-textarea" aria-label="Liste med ord og forklaringar" placeholder="rev; lurt dyr med raud pels&#10;ekorn: klatrar i tre"></textarea>
+    <p class="ok-warn" id="pasteWarn" hidden></p>
+    <div class="ok-btn-row">
+      <button class="btn" id="pasteConfirm"><span data-icon="check"></span>Legg til</button>
+      <button class="btn" id="pasteCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: hent namn -->
+<div class="modal-overlay" id="namesOverlay" role="dialog" aria-modal="true" aria-labelledby="namesHeading">
+  <div class="modal1">
+    <button class="btn ok-icon-btn modal-close" id="namesClose" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="namesHeading">Hent elevnamn</h2>
+    <p class="ok-muted">Namna blir kopierte hit éin gong. Endrar du klasselista seinare, må du hente på nytt.</p>
+    <div id="namesSources"></div>
+    <label for="namesPaste" class="ok-field-label">Eller lim inn namn — eitt per linje</label>
+    <textarea id="namesPaste" class="ok-textarea ok-textarea-short" aria-label="Namn, eitt per linje" placeholder="Ola&#10;Kari"></textarea>
+    <div class="ok-btn-row">
+      <button class="btn" id="namesPasteConfirm"><span data-icon="check"></span>Bruk namna</button>
+      <button class="btn" id="namesCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: lagre -->
+<div class="modal-overlay" id="saveOverlay" role="dialog" aria-modal="true" aria-labelledby="saveHeading">
+  <div class="modal2">
+    <button class="btn ok-icon-btn modal-close" id="saveClose" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="saveHeading">Lagre kryssordet</h2>
+    <label for="saveNameInput" class="ok-field-label">Namn i biblioteket</label>
+    <input type="text" id="saveNameInput" class="ok-text-input" maxlength="80" placeholder="T.d. «Dyr i skogen, 4. klasse»">
+    <div class="ok-btn-row">
+      <button class="btn" id="saveConfirm"><span data-icon="check"></span>Lagre</button>
+      <button class="btn" id="saveCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Utskriftsområde (synleg berre ved utskrift) -->
+<div id="printArea" aria-hidden="true"></div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="js/util.js"></script>
+<script src="js/state.js"></script>
+<script src="js/generator.js"></script>
+<script src="js/render.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui-words.js"></script>
+<script src="js/ui-layout.js"></script>
+<script src="js/names.js"></script>
+<script src="js/print.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

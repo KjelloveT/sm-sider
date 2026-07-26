@@ -22,11 +22,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
   - Tilstandslaus (ingen `localStorage`); modalar lukkast med Escape og interaktive element har `:focus-visible` og `aria-label`.
 
 ### Fiksa
+- **Global header** — `neo-header.js` reknar no ut rett basissti for sider som ligg meir enn eitt mappenivå ned (t.d. `livslina/stilguide/`), slik at meny og lenkjer fungerer der òg.
 - **Framsida** — kategori-titlane byggjast no trygt med `textContent` i staden for `innerHTML` (ikon-SVG i eige `<span>`), i tråd med resten av `home.js`.
 - **Heimsank** — tilt-/foil-effekten på samlekort og i kort-modalen er `requestAnimationFrame`-throttla, så hovring ikkje lenger gjev unødig layout-arbeid kvar mus-piksel.
 - **Handsam bilete** — viser no ein kort notis når filer som ikkje er bilete (eller som ikkje lét seg lese) blir hoppa over ved opplasting, i staden for å avvise dei utan tilbakemelding.
 
 ### Lagt til
+- **Ordkryss** — nytt verktøy for å lage kryssord (`ordkryss/`, lenka frå framsida under Verktøy).
+  - Skriv inn ord og forklaringar i skjema, lim inn ei heil liste (`ord; forklaring`) eller importer ei JSON-fil. Validering fangar for korte ord, ugyldige teikn og duplikat.
+  - Flettealgoritme som køyrer mange randomiserte forsøk og vel oppsettet med flest kryss og minst areal. Reglane hindrar utilsikta ord ved sida av kvarandre. «Prøv på nytt» gjev eit nytt oppsett, og ord kan låsast så dei står stille medan resten blir flettet om.
+  - Ord som ikkje kryssar noko blir varsla om, med val om å fjerne dei eller ta dei med frittståande.
+  - Utskrift på A4 med tittel, namnefelt og nummererte forklaringar, fasit på eiga side, og eitt ferdig namngjeve ark per elev — namna kan hentast frå Flokkdeilar eller Klassekart (eingongskopi), limast inn, eller sløyfast.
+  - Nedlasting som PNG og SVG (teikna lokalt, ingen bibliotek), lokalt bibliotek via `VyrdepilStorage` og JSON-eksport/-import med `app`/`version`-felt. Personvernerklæringa er oppdatert med Ordkryss-rad.
+- **Livslina (under arbeid)** — økonomisk livssimulator, fase 1: vidaregåande (16–19 år). Spelbar på `livslina/index.html`, men enno ikkje lenka frå framsida.
+  - Full spelløkke: karakterskapar (paper doll), trekt familieøkonomi, val blant alle 15 utdanningsprogram (vilbli.no) i to fargekategoriar med ikon, busituasjon (heime/hybel), budsjettkort per halvår (jobb, forbruksprofil, aktivitetar, sparing), månadsvis avspeling, hendingskort (19 kort med vilkår og vekting), sommar-mellomspel, 18-årsdag (BSU + høgare timeløn), diorama som endrar seg etter kjøp (seng, gaming-oppsett, moped m/lovleg-eller-trimma-val, førarkort), og sluttrapport med formuekurve, vendepunkt med kontrafaktisk sum, vegen vidare og 8 merke.
+  - Lagring via `VyrdepilStorage` (éi aktiv gjennomspeling + historikk over fullførte løp) med JSON-eksport/-import. Personvernerklæringa er oppdatert med Livslina-rad.
+  - Stilguide i `livslina/stilguide/` (stilreglar, livsverd-palett, prøve-SVG-ar), fase 1-design i `livslina/docs/fase1-design.md`, datagrunnlag med ekte satsar (SIFO 2025, Lånekassen 2025–26, frikortgrensa 2026, tariff-timeløn, forenkla forelegg) i `livslina/data/grunndata.json` — kvar post merkt med kjelde og om han er offisiell sats eller anslag.
 - **Listesmia** (wikidata-tester) — bygd om frå rein SPARQL-tester til ein veivisar som finn kortlister til Heimsank utan at ein treng kunne SPARQL.
   - Steg-for-steg: søk etter emne med vanlege ord (Wikidata-søke-API på norsk), snøggval-chips (hunderasar, fjell, vulkanar m.fl.), krav (må ha bilete / Wikipedia-artikkel), filter (t.d. avgrens til eit land) og val av ekstra kolonnar.
   - Artikkel-lenkja vel beste tilgjengelege Wikipedia-utgåve: nynorsk → bokmål → engelsk.

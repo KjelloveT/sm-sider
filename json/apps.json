@@ -55,6 +55,8 @@
       "desc": ["Endre storleik, skjer, roter, speglar og vassmerk bilete — alt lokalt. Sikt mot ein filstorleik og last ned mange samstundes som ZIP."] },
     { "id": "ordskodde", "name": "Ordskodde", "href": "ordskodde/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/ordskodde.png",
       "desc": ["Lim inn ein tekst og lag ei ordsky av dei mest brukte orda. Vel form, fargar og skrifttype — last ned eller skriv ut."] },
+    { "id": "ordkryss", "name": "Ordkryss", "href": "ordkryss/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/ordkryss.png",
+      "desc": ["Skriv inn ord og forklaringar, så flettar Ordkryss dei saman til eit kryssord med flest mogleg kryss. Skriv ut med fasit — og gjerne eitt ferdig namngjeve ark til kvar elev."] },
     { "id": "_kjem-snart", "name": "Fleire verktøy", "cat": "verktoy", "disabled": true, "comingTag": "Kjem snart",
       "icon": "<path d=\"M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z\"/><path d=\"M7 7h.01\"/>",
       "desc": ["Nye verktøy er under utvikling og kjem snart!"] }

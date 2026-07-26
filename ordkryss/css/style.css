@@ -1,0 +1,289 @@
+/* Ordkryss — utvidar neobrutalisme.css.
+   Alle klassar er prefiksa .ok- så dei ikkje kolliderer med designsystemet. */
+
+/* ---- Skjemaelement ---- */
+.ok-text-input,
+.ok-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.ok-textarea {
+  min-height: clamp(140px, 24vh, 220px);
+  line-height: 1.5;
+  resize: vertical;
+}
+.ok-textarea-short { min-height: 90px; }
+
+.ok-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ok-field > label,
+.ok-field-label { font-weight: 800; display: block; }
+
+.ok-text-input:focus-visible,
+.ok-textarea:focus-visible,
+.btn:focus-visible,
+.ok-clue-clickable:focus-visible,
+.ok-cell:focus-visible,
+input[type="checkbox"]:focus-visible,
+input[type="file"]:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.ok-btn-row { display: flex; flex-wrap: wrap; gap: clamp(8px, 1.5vw, 12px); margin-top: 16px; }
+.ok-btn-row-tight { margin-top: 0; gap: 8px; }
+.ok-btn-small { font-size: 0.85rem; padding: 6px 10px; box-shadow: 3px 3px 0 var(--shadow); }
+.ok-icon-btn { width: 42px; height: 42px; padding: 0; flex-shrink: 0; }
+.ok-icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.ok-icon-btn:disabled:hover { transform: none; background: var(--surface); color: var(--text); }
+.ok-danger:hover { background: var(--accent2); color: var(--text-on-accent); }
+
+.ok-muted { color: var(--muted); font-size: 0.9rem; }
+.ok-warn { color: var(--accent2); font-weight: 700; margin-top: 10px; }
+.ok-footnote { margin: 24px 0; }
+
+.ok-check-row {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; cursor: pointer; margin-bottom: 6px;
+}
+.ok-check-row input { width: 20px; height: 20px; accent-color: var(--accent2); }
+
+/* ---- Steg 1: ordlista ---- */
+.ok-add-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(200px, 2fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+.ok-word-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px; margin: 20px 0 10px;
+}
+
+.ok-word-list { display: flex; flex-direction: column; gap: 8px; }
+.ok-word-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(110px, 1fr) minmax(160px, 2fr) auto auto;
+  gap: 8px;
+  align-items: center;
+}
+.ok-word-index { font-weight: 800; color: var(--muted); text-align: right; }
+.ok-word-answer { text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px; }
+
+@media (max-width: 720px) {
+  .ok-add-row { grid-template-columns: 1fr; }
+  .ok-word-row {
+    grid-template-columns: 2rem 1fr auto auto;
+  }
+  .ok-word-clue { grid-column: 2 / -1; }
+}
+
+/* ---- Steg 2: rutenettet ---- */
+.ok-stats { margin-top: 12px; font-weight: 700; }
+
+.ok-grid-wrap {
+  margin-top: 12px;
+  overflow-x: auto;
+  padding: 4px;
+}
+/* Rutene er 2px breiare enn spora sine, slik at kantlinjene til naboruter
+   fell nøyaktig saman i staden for å bli doble. */
+.ok-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--ok-cols, 10), calc(var(--ok-cell, 34px) - 2px));
+  grid-auto-rows: calc(var(--ok-cell, 34px) - 2px);
+  width: max-content;
+  padding: 0 2px 2px 0;
+  gap: 0;
+}
+.ok-cell {
+  position: relative;
+  width: var(--ok-cell, 34px);
+  height: var(--ok-cell, 34px);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.ok-cell-empty {
+  border: none;
+  background: transparent;
+  cursor: default;
+}
+.ok-cell.selected { background: var(--accent4); }
+.ok-cell-num {
+  position: absolute; top: 1px; left: 3px;
+  font-size: 0.6rem; font-weight: 800; line-height: 1;
+  color: var(--text);
+}
+.ok-cell-letter {
+  font-weight: 800;
+  font-size: calc(var(--ok-cell, 34px) * 0.55);
+  line-height: 1;
+  color: var(--text);
+}
+.ok-cell.selected .ok-cell-num,
+.ok-cell.selected .ok-cell-letter { color: var(--text-on-light-accent); }
+
+/* ---- Forklaringar ---- */
+.ok-clues {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(16px, 3vw, 28px);
+  margin-top: 24px;
+}
+.ok-clue-list { list-style: none; margin: 0; padding: 0; }
+.ok-clue {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 5px 6px;
+  border-bottom: 2px solid var(--border);
+}
+.ok-clue:last-child { border-bottom: none; }
+.ok-clue-clickable { cursor: pointer; }
+.ok-clue-clickable:hover { background: var(--bg); }
+.ok-clue.selected { background: var(--accent4); color: var(--text-on-light-accent); }
+.ok-clue.selected .ok-muted { color: var(--text-on-light-accent); }
+.ok-clue-num { font-weight: 800; min-width: 1.8em; }
+.ok-clue-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.ok-clue-answer {
+  font-weight: 800; text-transform: uppercase;
+  border: 2px solid var(--border); padding: 1px 6px;
+  background: var(--accent3); color: var(--text-on-light-accent);
+  font-size: 0.8rem;
+}
+.ok-clue-lock { display: inline-flex; color: var(--muted); }
+
+/* ---- Restord ---- */
+.ok-unplaced {
+  border: 3px solid var(--border);
+  background: var(--accent4);
+  color: var(--text-on-light-accent);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 12px 16px;
+  margin-top: 16px;
+}
+.ok-unplaced .ok-muted { color: var(--text-on-light-accent); }
+.ok-unplaced-title { display: flex; align-items: center; gap: 8px; font-weight: 800; }
+.ok-unplaced-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 8px 0;
+  border-top: 2px solid var(--border);
+}
+.ok-unplaced-word { min-width: 8em; text-transform: uppercase; }
+
+/* ---- Steg 3: ark ---- */
+.ok-sheet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+  align-items: start;
+}
+.ok-names { margin-top: 20px; }
+.ok-names-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 6px;
+}
+.ok-name-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.ok-chip {
+  border: 2px solid var(--border);
+  background: var(--accent3);
+  color: var(--text-on-light-accent);
+  padding: 2px 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.ok-source-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding: 8px 0;
+  border-bottom: 2px solid var(--border);
+}
+.ok-source-text { display: flex; flex-direction: column; min-width: 0; }
+
+/* ---- Bibliotek ---- */
+.ok-lib-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--border);
+}
+.ok-lib-row:last-child { border-bottom: none; }
+.ok-lib-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ok-lib-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ---- Melding ---- */
+.ok-toast {
+  position: fixed; left: 50%; bottom: 24px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--accent); color: var(--text-on-accent);
+  border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow);
+  padding: 10px 18px; font-weight: 800;
+  max-width: min(90vw, 460px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 3000;
+}
+.ok-toast.open { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---- Utskrift ---- */
+#printArea { display: none; }
+
+@media print {
+  neo-header,
+  .page-wrapper,
+  .modal-overlay,
+  .ok-toast { display: none !important; }
+
+  body { background: #ffffff; color: #1a1a1a; }
+
+  #printArea { display: block; }
+
+  .ok-sheet {
+    break-after: page;
+    page-break-after: always;
+    color: #1a1a1a;
+  }
+  .ok-sheet:last-child { break-after: auto; page-break-after: auto; }
+
+  .ok-sheet-title { font-size: 20pt; font-weight: 900; margin: 0 0 6pt; }
+  .ok-sheet-name { font-size: 12pt; font-weight: 700; margin: 0 0 14pt; }
+
+  .ok-sheet .ok-grid { break-inside: avoid; page-break-inside: avoid; margin-bottom: 16pt; }
+  .ok-sheet .ok-cell {
+    background: #ffffff;
+    border-color: #1a1a1a;
+    cursor: default;
+  }
+  .ok-sheet .ok-cell-empty { border: none; background: transparent; }
+  .ok-sheet .ok-cell-num,
+  .ok-sheet .ok-cell-letter { color: #1a1a1a; }
+
+  .ok-sheet-clues {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16pt;
+  }
+  .ok-sheet-clue-col { break-inside: avoid; page-break-inside: avoid; }
+  .ok-sheet-clue-head {
+    font-size: 12pt; font-weight: 900; text-transform: uppercase;
+    border-bottom: 2px solid #1a1a1a; margin: 0 0 6pt; padding-bottom: 3pt;
+  }
+  .ok-sheet .ok-clue {
+    border-bottom: none;
+    padding: 2pt 0;
+    font-size: 10pt;
+    break-inside: avoid;
+  }
+  .ok-sheet .ok-clue-answer {
+    background: #ffffff; color: #1a1a1a; border-color: #1a1a1a;
+  }
+  .ok-sheet .ok-clue-lock { display: none; }
+
+  @page { margin: 15mm; }
+}
