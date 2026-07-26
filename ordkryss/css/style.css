@@ -91,27 +91,31 @@ input[type="file"]:focus-visible {
   overflow-x: auto;
   padding: 4px;
 }
-/* Rutene er 2px breiare enn spora sine, slik at kantlinjene til naboruter
-   fell nøyaktig saman i staden for å bli doble. */
+/* Rutene fyller spora sine nøyaktig. Kvar rute teiknar berre høgre og nedre
+   kant; venstre og øvre kant kjem frå .ok-edge-*-klassane som render.js set
+   der det ikkje ligg ei rute frå før. Slik blir kvar linje teikna éin gong,
+   og rutenettet står beint uansett skjermskalering. */
 .ok-grid {
   display: grid;
-  grid-template-columns: repeat(var(--ok-cols, 10), calc(var(--ok-cell, 34px) - 2px));
-  grid-auto-rows: calc(var(--ok-cell, 34px) - 2px);
+  grid-template-columns: repeat(var(--ok-cols, 10), var(--ok-cell, 34px));
+  grid-auto-rows: var(--ok-cell, 34px);
   width: max-content;
-  padding: 0 2px 2px 0;
   gap: 0;
 }
 .ok-cell {
   position: relative;
   width: var(--ok-cell, 34px);
   height: var(--ok-cell, 34px);
-  border: 2px solid var(--border);
+  border: 0 solid var(--border);
+  border-right-width: 2px;
+  border-bottom-width: 2px;
   background: var(--surface);
-  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
 }
+.ok-cell.ok-edge-left { border-left-width: 2px; }
+.ok-cell.ok-edge-top { border-top-width: 2px; }
 .ok-cell-empty {
-  border: none;
+  border-width: 0;
   background: transparent;
   cursor: default;
 }
@@ -122,6 +126,11 @@ input[type="file"]:focus-visible {
   color: var(--text);
 }
 .ok-cell-letter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 800;
   font-size: calc(var(--ok-cell, 34px) * 0.55);
   line-height: 1;

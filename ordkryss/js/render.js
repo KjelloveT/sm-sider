@@ -30,6 +30,11 @@ OK.render = (function () {
           continue;
         }
         const node = el('div', 'ok-cell');
+        // Kvar rute teiknar berre høgre og nedre kant. Venstre og øvre kant
+        // kjem berre der det ikkje er ei rute frå før, så ingen linje blir
+        // teikna to gonger — det er det som gjer rutenettet beint.
+        if (!cells.has(OK.generator.key(r, c - 1))) node.classList.add('ok-edge-left');
+        if (!cells.has(OK.generator.key(r - 1, c))) node.classList.add('ok-edge-top');
         node.dataset.words = cell.wordIds.join(' ');
         if (cell.number != null) node.appendChild(el('span', 'ok-cell-num', String(cell.number)));
         if (options.showAnswers) node.appendChild(el('span', 'ok-cell-letter', cell.ch));
