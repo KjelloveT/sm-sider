@@ -28,6 +28,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **Handsam bilete** — viser no ein kort notis når filer som ikkje er bilete (eller som ikkje lét seg lese) blir hoppa over ved opplasting, i staden for å avvise dei utan tilbakemelding.
 
 ### Lagt til
+- **Leitekryss** — nytt verktøy for å lage leitekryss/ordjakt (`leitekryss/`, lenka frå framsida under Verktøy).
+  - Legg inn ord eitt for eitt, lim inn ei heil liste (linjeskift, komma eller semikolon) eller hent ei av åtte ferdige døme-ordlister (dyr, fargar, fylke, kroppen, månader, klasserommet, ver og årstider, matematikk). Æ, Ø og Å står som dei skal, medan andre aksentar blir jamna ut.
+  - Tre vanskegradar styrer retningane orda kan liggje i: vassrett/loddrett, på skrå, eller òg baklengs. Rutenettet kan vere auto-tilpassa eller fast frå 10×10 til 25×25, og orda kan dele bokstavar for eit tettare rutenett. Generatoren køyrer mange randomiserte forsøk med seed, veks automatisk om noko ikkje får plass, og varslar tydeleg om ord som ikkje kan gøymast.
+  - Overslag over nivå og tidsbruk ut frå tal ord, storleik, retningar og kor tett orda ligg.
+  - Utskrift på A4 med tittel, namnefelt og ei kort forklaring til eleven. Læraren vel om dei gøymde orda skal stå på arket som heil ordliste, berre som tal («Finn 12 gøymde ord»), eller ikkje i det heile. Fasit på eiga side viser orda utheva med retning og posisjon.
+  - Eitt ferdig namngjeve ark per elev — namna kan hentast frå Flokkdeilar eller Klassekart (eingongskopi), limast inn, eller sløyfast. Valfritt får kvar elev sitt eige rutenett med same ordliste, med matchande fasit per elev.
+  - Nedlasting som PNG og SVG (teikna lokalt, ingen bibliotek), lokalt bibliotek via `VyrdepilStorage` og JSON-eksport/-import med `app`/`version`-felt. Personvernerklæringa er oppdatert med Leitekryss-rad.
 - **Ordkryss** — nytt verktøy for å lage kryssord (`ordkryss/`, lenka frå framsida under Verktøy).
   - Skriv inn ord og forklaringar i skjema, lim inn ei heil liste (`ord; forklaring`) eller importer ei JSON-fil. Validering fangar for korte ord, ugyldige teikn og duplikat.
   - Flettealgoritme som køyrer mange randomiserte forsøk og vel oppsettet med flest kryss og minst areal. Reglane hindrar utilsikta ord ved sida av kvarandre. «Prøv på nytt» gjev eit nytt oppsett, og ord kan låsast så dei står stille medan resten blir flettet om.

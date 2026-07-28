@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitekryss — leitekryss-byggjar for Vyrdepil</title>
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+  <!-- Hero -->
+  <div class="box2 hero-box">
+    <img src="../_resources/leitekryss.png" alt="Leitekryss" class="hero-logo">
+    <div class="hero-text">
+      <h1>Leitekryss</h1>
+      <p>Legg inn ei ordliste, så gøymer Leitekryss orda i eit bokstavrutenett. Vel vanskegrad, skriv ut på A4 — med eller utan ordlista på arket, og gjerne eit heilt eige rutenett til kvar elev.</p>
+    </div>
+  </div>
+
+  <!-- Steg 1: orda -->
+  <section class="box1" aria-labelledby="wordsHeading">
+    <h2 class="heading3 no-mt" id="wordsHeading">1. Orda som skal gøymast</h2>
+
+    <form id="addForm" class="lk-add-row" autocomplete="off">
+      <div class="lk-field">
+        <label for="wordInput">Ord</label>
+        <input type="text" id="wordInput" class="lk-text-input" maxlength="30" placeholder="T.d. ekorn" required>
+      </div>
+      <button class="btn" type="submit" id="addWordBtn"><span data-icon="plus"></span>Legg til</button>
+    </form>
+    <p class="lk-warn" id="addWarn" role="alert" hidden></p>
+
+    <div class="lk-word-head">
+      <span class="lk-muted" id="wordCount" aria-live="polite">Ingen ord enno</span>
+      <div class="lk-btn-row lk-btn-row-tight">
+        <button class="btn lk-btn-small" id="pasteBtn"><span data-icon="list"></span>Lim inn liste</button>
+        <button class="btn lk-btn-small" id="sampleBtn"><span data-icon="sparkles"></span>Døme-ordlister</button>
+        <button class="btn lk-btn-small lk-danger" id="clearWordsBtn"><span data-icon="trash2"></span>Tøm lista</button>
+      </div>
+    </div>
+
+    <div class="lk-word-list" id="wordList"></div>
+    <p class="lk-muted" id="wordEmpty">Legg til minst to ord. Mellomrom og bindestrek fell bort i rutenettet — «blå ku» blir til BLÅKU.</p>
+  </section>
+
+  <!-- Steg 2: rutenettet -->
+  <section class="box1" aria-labelledby="gridHeading">
+    <h2 class="heading3 no-mt" id="gridHeading">2. Rutenettet</h2>
+
+    <div class="lk-opt-grid">
+      <div class="lk-field">
+        <label for="difficultySelect">Vanskegrad</label>
+        <select id="difficultySelect" class="lk-select">
+          <option value="lett">Lett — vassrett og loddrett</option>
+          <option value="middels" selected>Middels — òg på skrå</option>
+          <option value="vanskeleg">Vanskeleg — òg baklengs</option>
+        </select>
+      </div>
+      <div class="lk-field">
+        <label for="sizeSelect">Storleik på rutenettet</label>
+        <select id="sizeSelect" class="lk-select">
+          <option value="auto" selected>Auto — tilpassa orda</option>
+          <option value="10">10 × 10</option>
+          <option value="12">12 × 12</option>
+          <option value="14">14 × 14</option>
+          <option value="16">16 × 16</option>
+          <option value="18">18 × 18</option>
+          <option value="20">20 × 20</option>
+          <option value="22">22 × 22</option>
+          <option value="25">25 × 25</option>
+        </select>
+      </div>
+      <div class="lk-field">
+        <span class="lk-field-label" id="crossLabel">Kryssing</span>
+        <div role="group" aria-labelledby="crossLabel">
+          <label class="lk-check-row" for="crossCheck">
+            <input type="checkbox" id="crossCheck" checked> Lat orda dele bokstavar
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="lk-btn-row">
+      <button class="btn" id="generateBtn"><span data-icon="sparkles"></span>Lag leitekryss</button>
+      <button class="btn" id="regenerateBtn"><span data-icon="refreshCw"></span>Prøv på nytt</button>
+      <button class="btn" id="toggleAnswersBtn" aria-pressed="false"><span data-icon="eye"></span>Vis fasit</button>
+    </div>
+
+    <p class="lk-stats" id="gridStats" aria-live="polite"></p>
+
+    <div class="lk-unplaced" id="unplacedBox" hidden>
+      <p class="lk-unplaced-title"><span data-icon="alertTriangle"></span> Desse orda fekk ikkje plass</p>
+      <p class="lk-muted">Prøv eit større rutenett, eller fjern orda frå lista.</p>
+      <div id="unplacedList"></div>
+    </div>
+
+    <div class="lk-grid-wrap" id="gridWrap">
+      <p class="lk-muted" id="gridEmpty">Ingen leitekryss enno. Legg til ord og trykk «Lag leitekryss».</p>
+    </div>
+  </section>
+
+  <!-- Steg 3: ark og utskrift -->
+  <section class="box1" aria-labelledby="sheetHeading">
+    <h2 class="heading3 no-mt" id="sheetHeading">3. Ark og utskrift</h2>
+
+    <div class="lk-opt-grid">
+      <div class="lk-field">
+        <label for="titleInput">Tittel på arket</label>
+        <input type="text" id="titleInput" class="lk-text-input" maxlength="80" placeholder="T.d. Dyr i skogen">
+      </div>
+      <div class="lk-field">
+        <label for="wordListSelect">Dei gøymde orda på arket</label>
+        <select id="wordListSelect" class="lk-select">
+          <option value="liste" selected>Vis heile ordlista</option>
+          <option value="tal">Vis berre kor mange ord</option>
+          <option value="ingen">Vis ingenting</option>
+        </select>
+      </div>
+      <div class="lk-field">
+        <span class="lk-field-label" id="sheetOptLabel">Val for arket</span>
+        <div role="group" aria-labelledby="sheetOptLabel">
+          <label class="lk-check-row" for="nameFieldCheck">
+            <input type="checkbox" id="nameFieldCheck" checked> Namnefelt øvst
+          </label>
+          <label class="lk-check-row" for="answerKeyCheck">
+            <input type="checkbox" id="answerKeyCheck" checked> Fasit på eiga side
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="lk-names">
+      <div class="lk-names-head">
+        <span class="lk-field-label">Eitt ark per elev</span>
+        <div class="lk-btn-row lk-btn-row-tight">
+          <button class="btn lk-btn-small" id="namesBtn"><span data-icon="users"></span>Hent namn</button>
+          <button class="btn lk-btn-small lk-danger" id="clearNamesBtn" hidden><span data-icon="x"></span>Fjern namna</button>
+        </div>
+      </div>
+      <p class="lk-muted" id="namesInfo">Utan namn blir det eitt ark med blank namnelinje. Hentar du namn, får kvar elev sitt eige ark.</p>
+      <div class="lk-name-chips" id="nameChips"></div>
+      <label class="lk-check-row lk-unique-row" for="uniqueCheck">
+        <input type="checkbox" id="uniqueCheck"> Eige rutenett til kvar elev — same ord, ulikt oppsett
+      </label>
+      <p class="lk-muted" id="uniqueInfo" hidden>Kvar elev får sitt eige rutenett, så det nyttar ikkje å kikke på sidemannen. Fasiten kjem då med eitt ark per elev.</p>
+    </div>
+
+    <div class="lk-btn-row">
+      <button class="btn" id="printBtn"><span data-icon="printer"></span>Skriv ut</button>
+      <button class="btn" id="pngBtn"><span data-icon="image"></span>Last ned PNG</button>
+      <button class="btn" id="svgBtn"><span data-icon="download"></span>Last ned SVG</button>
+      <button class="btn" id="saveBtn"><span data-icon="save"></span>Lagre</button>
+      <button class="btn" id="exportBtn"><span data-icon="fileJson"></span>Eksporter JSON</button>
+      <button class="btn" id="importBtn"><span data-icon="upload"></span>Importer JSON</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+    </div>
+  </section>
+
+  <!-- Bibliotek -->
+  <section class="box4" aria-labelledby="libHeading">
+    <div class="box-header" id="libHeading">Lagra leitekryss</div>
+    <div class="box-body">
+      <div id="libList"></div>
+      <p class="lk-muted" id="libEmpty">Ingen lagra leitekryss enno. Trykk «Lagre» for å leggje eitt i biblioteket.</p>
+    </div>
+  </section>
+
+  <p class="lk-muted text-center lk-footnote">
+    Leitekryss — del av Vyrdepil. Orda, rutenetta og namna dine blir berre lagra lokalt i din eigen nettlesar.
+  </p>
+
+</main>
+</div>
+
+<!-- Modal: lim inn liste -->
+<div class="modal-overlay" id="pasteOverlay" role="dialog" aria-modal="true" aria-labelledby="pasteHeading">
+  <div class="modal1">
+    <button class="btn lk-icon-btn modal-close" id="pasteClose" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="pasteHeading">Lim inn liste</h2>
+    <p class="lk-muted">Eitt ord per linje. Du kan òg skilje med komma eller semikolon.</p>
+    <label for="pasteText" class="lk-field-label">Liste</label>
+    <textarea id="pasteText" class="lk-textarea" aria-label="Liste med ord" placeholder="rev&#10;ekorn&#10;elg"></textarea>
+    <p class="lk-warn" id="pasteWarn" hidden></p>
+    <div class="lk-btn-row">
+      <button class="btn" id="pasteConfirm"><span data-icon="check"></span>Legg til</button>
+      <button class="btn" id="pasteCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: døme-ordlister -->
+<div class="modal-overlay" id="sampleOverlay" role="dialog" aria-modal="true" aria-labelledby="sampleHeading">
+  <div class="modal1">
+    <button class="btn lk-icon-btn modal-close" id="sampleClose" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="sampleHeading">Døme-ordlister</h2>
+    <p class="lk-muted">Ferdige lister du kan bruke som dei er eller endre etterpå. Lista du har no blir bytt ut.</p>
+    <div id="sampleList"></div>
+    <div class="lk-btn-row">
+      <button class="btn" id="sampleCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: hent namn -->
+<div class="modal-overlay" id="namesOverlay" role="dialog" aria-modal="true" aria-labelledby="namesHeading">
+  <div class="modal1">
+    <button class="btn lk-icon-btn modal-close" id="namesClose" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="namesHeading">Hent elevnamn</h2>
+    <p class="lk-muted">Namna blir kopierte hit éin gong. Endrar du klasselista seinare, må du hente på nytt.</p>
+    <div id="namesSources"></div>
+    <label for="namesPaste" class="lk-field-label">Eller lim inn namn — eitt per linje</label>
+    <textarea id="namesPaste" class="lk-textarea lk-textarea-short" aria-label="Namn, eitt per linje" placeholder="Ola&#10;Kari"></textarea>
+    <div class="lk-btn-row">
+      <button class="btn" id="namesPasteConfirm"><span data-icon="check"></span>Bruk namna</button>
+      <button class="btn" id="namesCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: lagre -->
+<div class="modal-overlay" id="saveOverlay" role="dialog" aria-modal="true" aria-labelledby="saveHeading">
+  <div class="modal2">
+    <button class="btn lk-icon-btn modal-close" id="saveClose" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="saveHeading">Lagre leitekrysset</h2>
+    <label for="saveNameInput" class="lk-field-label">Namn i biblioteket</label>
+    <input type="text" id="saveNameInput" class="lk-text-input" maxlength="80" placeholder="T.d. «Dyr i skogen, 4. klasse»">
+    <div class="lk-btn-row">
+      <button class="btn" id="saveConfirm"><span data-icon="check"></span>Lagre</button>
+      <button class="btn" id="saveCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Utskriftsområde (synleg berre ved utskrift) -->
+<div id="printArea" aria-hidden="true"></div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="js/util.js"></script>
+<script src="js/state.js"></script>
+<script src="js/generator.js"></script>
+<script src="js/render.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/samples.js"></script>
+<script src="js/ui-words.js"></script>
+<script src="js/ui-grid.js"></script>
+<script src="js/ui-sheet.js"></script>
+<script src="js/names.js"></script>
+<script src="js/print.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

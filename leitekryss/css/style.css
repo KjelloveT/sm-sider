@@ -1,0 +1,287 @@
+/* Leitekryss — utvidar neobrutalisme.css.
+   Alle klassar er prefiksa .lk- så dei ikkje kolliderer med designsystemet. */
+
+/* ---- Skjemaelement ---- */
+.lk-text-input,
+.lk-textarea,
+.lk-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.lk-textarea {
+  min-height: clamp(140px, 24vh, 220px);
+  line-height: 1.5;
+  resize: vertical;
+}
+.lk-textarea-short { min-height: 90px; }
+
+.lk-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.lk-field > label,
+.lk-field-label { font-weight: 800; display: block; }
+
+.lk-text-input:focus-visible,
+.lk-textarea:focus-visible,
+.lk-select:focus-visible,
+.btn:focus-visible,
+input[type="checkbox"]:focus-visible,
+input[type="file"]:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.lk-btn-row { display: flex; flex-wrap: wrap; gap: clamp(8px, 1.5vw, 12px); margin-top: 16px; }
+.lk-btn-row-tight { margin-top: 0; gap: 8px; }
+.lk-btn-small { font-size: 0.85rem; padding: 6px 10px; box-shadow: 3px 3px 0 var(--shadow); }
+.lk-icon-btn { width: 42px; height: 42px; padding: 0; flex-shrink: 0; }
+.lk-icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.lk-icon-btn:disabled:hover { transform: none; background: var(--surface); color: var(--text); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.lk-danger:hover { background: var(--accent2); color: var(--text-on-accent); }
+
+.lk-muted { color: var(--muted); font-size: 0.9rem; }
+.lk-warn { color: var(--accent2); font-weight: 700; margin-top: 10px; }
+.lk-footnote { margin: 24px 0; }
+
+.lk-check-row {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; cursor: pointer; margin-bottom: 6px;
+}
+.lk-check-row input { width: 20px; height: 20px; accent-color: var(--accent2); flex-shrink: 0; }
+.lk-check-row:has(input:disabled) { opacity: 0.5; cursor: not-allowed; }
+
+/* ---- Steg 1: ordlista ---- */
+.lk-add-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+.lk-word-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px; margin: 20px 0 10px;
+}
+
+.lk-word-list { display: flex; flex-direction: column; gap: 8px; }
+.lk-word-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(120px, 1fr) minmax(80px, 0.8fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+.lk-word-index { font-weight: 800; color: var(--muted); text-align: right; }
+.lk-word-letters {
+  font-weight: 800; letter-spacing: 1px; color: var(--muted);
+  font-size: 0.85rem; overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .lk-add-row { grid-template-columns: 1fr; }
+  /* Bokstavane i rutenettet flyttar ned på eiga linje under sjølve ordet. */
+  .lk-word-row { grid-template-columns: 2rem 1fr auto; }
+  .lk-word-index { grid-area: 1 / 1; }
+  .lk-word-input { grid-area: 1 / 2; }
+  .lk-word-row .lk-icon-btn { grid-area: 1 / 3; }
+  .lk-word-letters { grid-area: 2 / 2 / 3 / 4; }
+}
+
+/* ---- Steg 2: rutenettet ---- */
+.lk-opt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(12px, 2vw, 20px);
+  align-items: start;
+}
+
+.lk-stats {
+  margin-top: 14px; font-weight: 700;
+  color: var(--text);
+}
+
+.lk-grid-wrap {
+  margin-top: 12px;
+  overflow-x: auto;
+  padding: 4px;
+}
+/* Kvar rute teiknar berre høgre og nedre kant; ytterkantane kjem frå
+   .lk-edge-*-klassane. Slik blir kvar linje teikna éin gong, og rutenettet
+   står beint uansett skjermskalering. */
+.lk-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--lk-cols, 12), var(--lk-cell, 34px));
+  grid-auto-rows: var(--lk-cell, 34px);
+  width: max-content;
+  gap: 0;
+}
+.lk-cell {
+  position: relative;
+  width: var(--lk-cell, 34px);
+  height: var(--lk-cell, 34px);
+  border: 0 solid var(--border);
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  background: var(--surface);
+}
+.lk-cell.lk-edge-left { border-left-width: 2px; }
+.lk-cell.lk-edge-top { border-top-width: 2px; }
+.lk-cell-letter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: calc(var(--lk-cell, 34px) * 0.55);
+  line-height: 1;
+  color: var(--text);
+  user-select: none;
+}
+.lk-cell-mark { background: var(--accent4); }
+.lk-cell-mark .lk-cell-letter { color: var(--text-on-light-accent); }
+.lk-cell-dim .lk-cell-letter { color: var(--muted); font-weight: 500; }
+
+/* ---- Ordlister ---- */
+.lk-word-columns {
+  list-style: none; margin: 12px 0 0; padding: 0;
+  columns: 3 180px;
+  column-gap: clamp(12px, 3vw, 28px);
+}
+.lk-word-item {
+  break-inside: avoid;
+  padding: 3px 0;
+  overflow-wrap: anywhere;
+}
+.lk-word-text { font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+.lk-word-missing .lk-word-text { text-decoration: line-through; color: var(--muted); }
+
+.lk-answer-list { margin-top: 20px; }
+
+/* ---- Restord ---- */
+.lk-unplaced {
+  border: 3px solid var(--border);
+  background: var(--accent4);
+  color: var(--text-on-light-accent);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 12px 16px;
+  margin-top: 16px;
+}
+.lk-unplaced .lk-muted { color: var(--text-on-light-accent); }
+.lk-unplaced-title { display: flex; align-items: center; gap: 8px; font-weight: 800; }
+.lk-unplaced-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 8px 0;
+  border-top: 2px solid var(--border);
+}
+.lk-unplaced-word { min-width: 8em; font-weight: 800; letter-spacing: 1px; }
+
+/* ---- Steg 3: ark ---- */
+.lk-names { margin-top: 20px; }
+.lk-names-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 6px;
+}
+.lk-name-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.lk-chip {
+  border: 2px solid var(--border);
+  background: var(--accent3);
+  color: var(--text-on-light-accent);
+  padding: 2px 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.lk-unique-row { margin-top: 14px; }
+
+.lk-source-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding: 8px 0;
+  border-bottom: 2px solid var(--border);
+}
+.lk-source-text { display: flex; flex-direction: column; min-width: 0; }
+
+/* ---- Bibliotek ---- */
+.lk-lib-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--border);
+}
+.lk-lib-row:last-child { border-bottom: none; }
+.lk-lib-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.lk-lib-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ---- Melding ---- */
+.lk-toast {
+  position: fixed; left: 50%; bottom: 24px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--accent); color: var(--text-on-accent);
+  border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow);
+  padding: 10px 18px; font-weight: 800;
+  max-width: min(90vw, 460px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 3000;
+}
+.lk-toast.open { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---- Utskrift ---- */
+#printArea { display: none; }
+
+@media print {
+  neo-header,
+  .page-wrapper,
+  .modal-overlay,
+  .lk-toast { display: none !important; }
+
+  body { background: #ffffff; color: #1a1a1a; }
+
+  #printArea { display: block; }
+
+  .lk-sheet {
+    break-after: page;
+    page-break-after: always;
+    color: #1a1a1a;
+  }
+  .lk-sheet:last-child { break-after: auto; page-break-after: auto; }
+
+  .lk-sheet-title { font-size: 20pt; font-weight: 900; margin: 0 0 6pt; }
+  .lk-sheet-name { font-size: 12pt; font-weight: 700; margin: 0 0 8pt; }
+  .lk-sheet-hint { font-size: 10pt; margin: 0 0 12pt; }
+
+  .lk-sheet .lk-grid {
+    break-inside: avoid; page-break-inside: avoid;
+    margin: 0 auto 16pt;
+  }
+  .lk-sheet .lk-cell {
+    background: #ffffff;
+    border-color: #1a1a1a;
+  }
+  .lk-sheet .lk-cell-letter { color: #1a1a1a; }
+
+  /* Fasiten: dei gøymde orda får grå bakgrunn, resten blir tona ned. */
+  .lk-sheet .lk-cell-mark {
+    background: #d8d8d8;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .lk-sheet .lk-cell-mark .lk-cell-letter { color: #1a1a1a; font-weight: 900; }
+  .lk-sheet .lk-cell-dim .lk-cell-letter { color: #8a8a8a; font-weight: 400; }
+
+  .lk-sheet-words { break-inside: avoid; page-break-inside: avoid; }
+  .lk-sheet-words-head {
+    font-size: 12pt; font-weight: 900; text-transform: uppercase;
+    border-bottom: 2px solid #1a1a1a; margin: 0 0 6pt; padding-bottom: 3pt;
+  }
+  .lk-sheet-count { font-size: 12pt; font-weight: 700; margin: 0; }
+  .lk-sheet .lk-word-columns { columns: 4 auto; font-size: 11pt; margin-top: 6pt; }
+  .lk-sheet .lk-word-item { padding: 1pt 0; }
+  .lk-sheet .lk-muted { color: #4a4a4a; }
+  .lk-sheet-answer .lk-word-columns { columns: 2 auto; font-size: 10pt; }
+
+  @page { margin: 15mm; }
+}
