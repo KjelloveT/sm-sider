@@ -5,8 +5,26 @@
 (function () {
   'use strict';
 
+  /* Kor lenge «Nytt»- og «Oppdatert»-merket heng ved før det fell av av seg sjølv. */
+  const BADGE_DAYS = 45;
+
   function svg(inner, size) {
     return `<svg width="${size}" height="${size}" style="vertical-align:-5px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+  }
+
+  /** Talet på dagar sidan ein ISO-dato. Ugyldig dato tel som uendeleg lenge sidan. */
+  function daysSince(iso) {
+    const then = Date.parse(String(iso) + 'T00:00:00');
+    if (isNaN(then)) return Infinity;
+    return (Date.now() - then) / 86400000;
+  }
+
+  /** «Nytt» vinn over «Oppdatert». Kjem-snart-korta får ikkje merke. */
+  function badgeFor(app) {
+    if (app.disabled) return null;
+    if (daysSince(app.added) <= BADGE_DAYS) return { text: 'Nytt', cls: 'card-flag card-flag-new' };
+    if (daysSince(app.updated) <= BADGE_DAYS) return { text: 'Oppdatert', cls: 'card-flag card-flag-updated' };
+    return null;
   }
 
   function card(app) {
@@ -24,6 +42,14 @@
       span.className = 'card-icon';
       span.innerHTML = svg(app.icon, 48).replace(' style="vertical-align:-5px;"', '');
       el.appendChild(span);
+    }
+
+    const badge = badgeFor(app);
+    if (badge) {
+      const flag = document.createElement('span');
+      flag.className = badge.cls;
+      flag.textContent = badge.text;
+      el.appendChild(flag);
     }
 
     const h = document.createElement('h2');

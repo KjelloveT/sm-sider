@@ -575,6 +575,7 @@ section { margin-bottom: clamp(40px, 6vw, 60px); }
 
 /* Game / Tool Cards */
 .card {
+  position: relative;
   background: var(--surface);
   border: 3px solid var(--border);
   box-shadow: 5px 5px 0 var(--shadow);
@@ -660,3 +661,25 @@ section { margin-bottom: clamp(40px, 6vw, 60px); }
   align-self: flex-start;
   margin-top: 8px;
 }
+
+/* Merke i hjørnet på kort som nyleg er lagde til eller oppdaterte.
+   js/home.js set det på ut frå datoane i json/apps.json. */
+.card-flag {
+  position: absolute;
+  top: -14px;
+  right: -8px;
+  transform: rotate(3deg);
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--shadow);
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  pointer-events: none;
+}
+/* «Nytt» er snudd på hovudet — kantfargen som botn og flatefargen som tekst.
+   Dei to følgjast alltid åt i temaa, så merket er godt lesbart i alle. */
+.card-flag-new { background: var(--border); color: var(--surface); }
+.card-flag-updated { background: var(--accent4); color: var(--text-on-light-accent); }

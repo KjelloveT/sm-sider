@@ -1,5 +1,6 @@
 {
   "_note": "Einaste kjelde for spel/verktøy-lista. Brukt av framsida (js/home.js) og toppmenyen (js/neo-header.js). icon = inner-SVG (Lucide-stil), btn = knappetekst, img = biletbane, desc = avsnitt.",
+  "_merke": "added = dato appen kom (gjev merket «Nytt»), updated = dato for siste merkbare oppdatering (gjev «Oppdatert»). Format ÅÅÅÅ-MM-DD. Merket viser seg berre i 45 dagar og forsvinn så av seg sjølv — sjå BADGE_DAYS i js/home.js. «Nytt» vinn over «Oppdatert».",
   "categories": [
     { "id": "spel", "label": "Spel", "menuLabel": "Spel",
       "icon": "<line x1=\"6\" x2=\"10\" y1=\"12\" y2=\"12\"/><line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\"/><line x1=\"15\" x2=\"15.01\" y1=\"13\" y2=\"13\"/><line x1=\"18\" x2=\"18.01\" y1=\"11\" y2=\"11\"/><rect width=\"20\" height=\"12\" x=\"2\" y=\"6\" rx=\"2\"/>" },
@@ -19,10 +20,10 @@
       "desc": ["Unngå aliens og lava i di jakt på riktig tal!"] },
     { "id": "baretevling", "name": "BåreTevling", "href": "baretevling/index.html", "cat": "spel", "btn": "Spel no →", "img": "_resources/baretevling.png",
       "desc": ["Krigsspel der du skal treffe motstandarane sine styrker."] },
-    { "id": "vidfaren", "name": "Vidfaren", "href": "vidfaren/index.html", "cat": "spel", "btn": "Spel no →", "img": "_resources/vidfaren.png",
+    { "id": "vidfaren", "name": "Vidfaren", "href": "vidfaren/index.html", "cat": "spel", "btn": "Spel no →", "img": "_resources/vidfaren.png", "updated": "2026-07-03",
       "desc": ["Kjenn att land på hovudstad, høgaste fjell, største innsjø, omriss og plassering på verdskartet."] },
 
-    { "id": "frodekapp", "name": "Frødekapp", "href": "frodekapp/index.html", "cat": "klasserom", "btn": "Opne →", "img": "_resources/frødekapp.png",
+    { "id": "frodekapp", "name": "Frødekapp", "href": "frodekapp/index.html", "cat": "klasserom", "btn": "Opne →", "img": "_resources/frødekapp.png", "updated": "2026-07-03",
       "desc": ["Kviss for klasserommet!"] },
     { "id": "frodebrett", "name": "Frødebrett", "href": "frodebrett/index.html", "cat": "klasserom", "btn": "Opne →", "img": "_resources/frødebrett.png",
       "desc": ["Lagbasert kviss til klasserommet - Kva lag får mest poeng?"] },
@@ -39,7 +40,7 @@
     { "id": "tidvis", "name": "Tidvis", "href": "tidvis/index.html", "cat": "klasserom", "btn": "Spel no →", "img": "_resources/tidvis.png",
       "desc": ["Tren på klokka — analog, digital og som tekst på nynorsk. Vel vanskegrad og samle poeng, streak og merke."] },
 
-    { "id": "biletflett", "name": "BiletFlett", "href": "biletflett/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/biletflett.png",
+    { "id": "biletflett", "name": "BiletFlett", "href": "biletflett/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/biletflett.png", "updated": "2026-07-03",
       "desc": ["Lag vakre biletcollagar direkte i nettlesaren — standard oppsett og 20 sprek tema-malar for tur, bursdag og skule. Ingen opplasting til server."] },
     { "id": "fotocolours", "name": "Reinskore bilete", "href": "fotocolours/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/reinskore bilete.png",
       "desc": ["Reduser bilete til reine monotone fargar."] },
@@ -55,9 +56,9 @@
       "desc": ["Endre storleik, skjer, roter, speglar og vassmerk bilete — alt lokalt. Sikt mot ein filstorleik og last ned mange samstundes som ZIP."] },
     { "id": "ordskodde", "name": "Ordskodde", "href": "ordskodde/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/ordskodde.png",
       "desc": ["Lim inn ein tekst og lag ei ordsky av dei mest brukte orda. Vel form, fargar og skrifttype — last ned eller skriv ut."] },
-    { "id": "ordkryss", "name": "Ordkryss", "href": "ordkryss/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/ordkryss.png",
+    { "id": "ordkryss", "name": "Ordkryss", "href": "ordkryss/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/ordkryss.png", "added": "2026-07-26",
       "desc": ["Skriv inn ord og forklaringar, så flettar Ordkryss dei saman til eit kryssord med flest mogleg kryss. Skriv ut med fasit — og gjerne eitt ferdig namngjeve ark til kvar elev."] },
-    { "id": "leitekryss", "name": "Leitekryss", "href": "leitekryss/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/leitekryss.png",
+    { "id": "leitekryss", "name": "Leitekryss", "href": "leitekryss/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/leitekryss.png", "added": "2026-07-28",
       "desc": ["Legg inn ei ordliste, så gøymer Leitekryss orda i eit bokstavrutenett. Vel vanskegrad, skriv ut på A4 med eller utan ordlista — og gjerne eit heilt eige rutenett til kvar elev."] },
     { "id": "_kjem-snart", "name": "Fleire verktøy", "cat": "verktoy", "disabled": true, "comingTag": "Kjem snart",
       "icon": "<path d=\"M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z\"/><path d=\"M7 7h.01\"/>",

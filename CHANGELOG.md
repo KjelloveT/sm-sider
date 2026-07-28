@@ -28,6 +28,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **Handsam bilete** — viser no ein kort notis når filer som ikkje er bilete (eller som ikkje lét seg lese) blir hoppa over ved opplasting, i staden for å avvise dei utan tilbakemelding.
 
 ### Lagt til
+- **Framsida** — kort for spel og verktøy kan no få eit merke i hjørnet: «Nytt» eller «Oppdatert». Merket blir styrt av felta `added` og `updated` i `json/apps.json` (dato på forma ÅÅÅÅ-MM-DD) og forsvinn av seg sjølv etter 45 dagar (`BADGE_DAYS` i `js/home.js`), så ingen merke blir hengande att.
 - **Leitekryss** — nytt verktøy for å lage leitekryss/ordjakt (`leitekryss/`, lenka frå framsida under Verktøy).
   - Legg inn ord eitt for eitt, lim inn ei heil liste (linjeskift, komma eller semikolon) eller hent ei av åtte ferdige døme-ordlister (dyr, fargar, fylke, kroppen, månader, klasserommet, ver og årstider, matematikk). Æ, Ø og Å står som dei skal, medan andre aksentar blir jamna ut.
   - Tre vanskegradar styrer retningane orda kan liggje i: vassrett/loddrett, på skrå, eller òg baklengs. Rutenettet kan vere auto-tilpassa eller fast frå 10×10 til 25×25, og orda kan dele bokstavar for eit tettare rutenett. Generatoren køyrer mange randomiserte forsøk med seed, veks automatisk om noko ikkje får plass, og varslar tydeleg om ord som ikkje kan gøymast.
