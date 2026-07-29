@@ -506,6 +506,57 @@ section { margin-bottom: clamp(40px, 6vw, 60px); }
 }
 
 /* ========================================
+   SEKSJONS-ACCORDION (framsida: ein per kategori)
+   <details class="accordion-box section-accordion accordion-box-accentN">
+   Overskrifta er alltid farga — kvar kategori sin eigen accent.
+   ======================================== */
+.section-accordion { margin-bottom: clamp(20px, 3vw, 28px); }
+
+.section-accordion > summary {
+  padding: 14px 20px;
+  gap: 14px;
+  background: var(--accent2);
+  color: var(--text-on-accent);
+}
+.section-accordion.accordion-box-accent  > summary { background: var(--accent);  color: var(--text-on-accent); }
+.section-accordion.accordion-box-accent3 > summary { background: var(--accent3); color: #000; }
+.section-accordion.accordion-box-accent4 > summary { background: var(--accent4); color: #000; }
+.section-accordion.accordion-box-accent5 > summary { background: var(--accent5); color: #000; }
+
+.section-accordion > summary:hover { filter: brightness(1.08); }
+.section-accordion > summary:focus-visible { outline: 3px solid var(--border); outline-offset: -6px; }
+
+.section-accordion-icon { display: flex; flex-shrink: 0; }
+
+.section-accordion-title {
+  font-size: clamp(1.15rem, 2.6vw, 1.7rem);
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0;
+  color: inherit;
+}
+
+.section-accordion-count {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 900;
+  padding: 2px 10px;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.section-accordion > summary::after { margin-left: 12px; font-size: 1.4rem; }
+
+.section-accordion .accordion-body { padding: clamp(18px, 3vw, 26px) clamp(14px, 2.5vw, 22px); }
+
+@media (max-width: 600px) {
+  .section-accordion > summary { padding: 12px 14px; gap: 10px; }
+  .section-accordion-icon svg { width: 22px; height: 22px; }
+}
+
+/* ========================================
    PRIVACY-HJELPARAR (brukt i index.html sin personvernseksjon)
    ======================================== */
 .privacy-header {
