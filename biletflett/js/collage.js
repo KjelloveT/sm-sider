@@ -297,7 +297,8 @@ const Collage = (() => {
         const boxX = t.x * W, boxW = t.w * W, fontPx = t.size * W;
         const lineH = fontPx * 1.18;
         ctx.save();
-        ctx.font = `${t.weight || 900} ${fontPx}px ${t.font || Templates.fonts.bold}`;
+        const face = t.font || Fonts.stack.bold;
+        ctx.font = `${t.weight || Fonts.weightFor(face)} ${fontPx}px ${face}`;
         ctx.textBaseline = 'top';
         ctx.textAlign = t.align || 'left';
         const lines = wrap(val, boxW);
@@ -319,7 +320,7 @@ const Collage = (() => {
             const pad = (t.bg.pad || 0.015) * W;
             let bx = anchorX - (t.align === 'center' ? maxW / 2 : t.align === 'right' ? maxW : 0) - pad;
             const bw = maxW + pad * 2, by = topY - pad, bh = blockH + pad * 2;
-            ctx.fillStyle = t.bg.color;
+            ctx.fillStyle = Palette.resolve(t.bg.color, template.palette, '#ffffff');
             ctx.save();
             ctx.shadowColor = 'rgba(0,0,0,0.25)'; ctx.shadowBlur = pad; ctx.shadowOffsetY = pad * 0.4;
             roundRect(bx, by, bw, bh, pad * 0.8); ctx.fill();
@@ -331,12 +332,12 @@ const Collage = (() => {
         lines.forEach((line, i) => {
             const ly = topY + i * lineH;
             if (t.stroke) {
-                ctx.strokeStyle = t.stroke;
+                ctx.strokeStyle = Palette.resolve(t.stroke, template.palette, '#ffffff');
                 ctx.lineWidth = (t.strokeW || 0.006) * W;
                 ctx.lineJoin = 'round';
                 ctx.strokeText(line, anchorX, ly);
             }
-            ctx.fillStyle = t.color || '#1a1a1a';
+            ctx.fillStyle = Palette.resolve(t.color, template.palette, '#1a1a1a');
             ctx.fillText(line, anchorX, ly);
         });
         ctx.restore();

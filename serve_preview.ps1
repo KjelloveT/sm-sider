@@ -10,6 +10,8 @@ $mimeTypes = @{
   '.json' = 'application/json; charset=utf-8'
   '.csv'  = 'text/csv; charset=utf-8'
   '.png'  = 'image/png'
+  '.woff2' = 'font/woff2'
+  '.woff'  = 'font/woff'
   '.xml'  = 'application/xml'
   '.ico'  = 'image/x-icon'
   '.mp3'  = 'audio/mpeg'

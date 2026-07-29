@@ -23,6 +23,10 @@
         bindCrop();
         bindModals();
 
+        // Canvas teiknar med reservefont om fontfilene ikkje er klare enno,
+        // så vi ventar på dei før første render — og teiknar på nytt etterpå
+        // i tilfelle noko kom seint.
+        Fonts.load().then(() => Collage.render());
         selectTemplate(Templates.all[0].id);
     });
 
@@ -32,7 +36,8 @@
         host.innerHTML = '';
         const groups = [
             { label: 'Standard', items: Templates.standard },
-            { label: 'Tema', items: Templates.tema }
+            { label: 'Tema', items: Templates.tema },
+            { label: 'Ungdomssteget', items: Templates.ungdom }
         ];
         groups.forEach(g => {
             const h = document.createElement('div');

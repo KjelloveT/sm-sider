@@ -2,6 +2,11 @@
    DECOR.JS — Canvas-teikna pynt-primitiv for BiletFlett
    Alt er teikna med Canvas 2D — ingen emoji, ingen eksterne bilete.
    Kvar funksjon teiknar på (ctx) med lerretsmål (W, H).
+
+   Fargar i ein pynt-post kan skrivast som paletnøkkel ('accent'),
+   Open Color-token ('blue.7') eller rå hex. Dei blir slegne opp mot
+   malpaletten i item()/background() før teiknefunksjonane får dei,
+   så kvar einskild funksjon slepp å bry seg om det.
    ══════════════════════════════════════ */
 
 const Decor = (() => {
@@ -46,9 +51,35 @@ const Decor = (() => {
         ctx.closePath();
     }
 
-    /* ──────────────── BAKGRUNN ──────────────── */
+    /* Slår opp alle fargefelta i ein post mot paletten. Returnerer ein
+       kopi, slik at maldefinisjonane sjølve aldri blir endra. */
+    const COLOR_KEYS = ['color', 'color2', 'from', 'to'];
+    function resolved(it, palette) {
+        const out = Object.assign({}, it);
+        COLOR_KEYS.forEach(k => {
+            if (out[k] != null) out[k] = Palette.resolve(out[k], palette);
+        });
+        if (Array.isArray(out.colors)) {
+            out.colors = out.colors.map(c => Palette.resolve(c, palette));
+        }
+        return out;
+    }
+
+    /* ──────────────── BAKGRUNN ────────────────
+       Ein bakgrunn er ein grunnfyll (solid/gradient/papir) pluss valfrie
+       botnlag frå backdrops.js — store former som gjev djupn. Lag-lista
+       blir teikna i rekkjefølgje oppå grunnfyllet, men under all pynt. */
     function background(ctx, W, H, bg, palette) {
-        bg = bg || { type: 'solid', color: palette.bg };
+        bg = bg ? resolved(bg, palette) : { type: 'solid', color: palette.bg };
+        fillBase(ctx, W, H, bg, palette);
+        (bg.layers || []).forEach(layer => {
+            if (typeof Backdrops !== 'undefined' && Backdrops.has(layer.type)) {
+                Backdrops.render(ctx, W, H, layer, palette);
+            }
+        });
+    }
+
+    function fillBase(ctx, W, H, bg, palette) {
         if (bg.type === 'gradient') {
             const g = ctx.createLinearGradient(0, 0, 0, H);
             g.addColorStop(0, bg.from || palette.bg);
@@ -394,6 +425,42 @@ const Decor = (() => {
             ctx.restore();
         },
 
+        /* Eitt Lucide-ikon plassert på ein bestemt stad.
+           { type:'glyph', name:'cake', x, y, size, color, rotation, weight, alpha } */
+        glyph(ctx, W, H, it) {
+            Glyphs.draw(ctx, it.name, it.x * W, it.y * H, (it.size || 0.12) * W, {
+                color: it.color || '#1a1a1a',
+                fill: it.fill,
+                alpha: it.alpha,
+                rotation: it.rotation,
+                weight: it.weight
+            });
+        },
+
+        /* Fleire ikon strødd utover, med same seeda tilfeldigheit som
+           resten av pynten så oppsettet er stabilt mellom re-render.
+           { type:'glyphScatter', names:[…], count, colors:[…], min, max } */
+        glyphScatter(ctx, W, H, it) {
+            const names = it.names || (it.name ? [it.name] : []);
+            if (!names.length) return;
+            const r = rng(hashItem(it));
+            const colors = it.colors || [it.color || '#1a1a1a'];
+            const count = it.count || 10;
+            const min = it.min || 0.05, max = it.max || 0.09;
+            const margin = it.margin != null ? it.margin : 0.06;
+            for (let i = 0; i < count; i++) {
+                const size = (min + r() * (max - min)) * W;
+                const x = (margin + r() * (1 - margin * 2)) * W;
+                const y = (margin + r() * (1 - margin * 2)) * H;
+                Glyphs.draw(ctx, names[i % names.length], x, y, size, {
+                    color: colors[i % colors.length],
+                    alpha: it.alpha,
+                    rotation: it.spin === false ? 0 : (r() * 40 - 20),
+                    weight: it.weight
+                });
+            }
+        },
+
         frame(ctx, W, H, it) {
             const col = it.color || '#1a1a1a';
             const lw = (it.width || 0.018) * W;
@@ -437,7 +504,7 @@ const Decor = (() => {
     /* Teikn ein pynt-post (kallast frå collage for valt lag) */
     function item(ctx, W, H, it, palette) {
         const fn = draw[it.type];
-        if (fn) fn(ctx, W, H, it, palette);
+        if (fn) fn(ctx, W, H, resolved(it, palette), palette);
     }
 
     return { background, item };
