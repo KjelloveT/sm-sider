@@ -6,6 +6,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 ## [Ikkje publisert]
 
 ### Endra
+- **Framsida** — spel- og verktøylista er delt opp i samanfaldbare seksjonar (`<details>`) i staden for éi lang liste. Kvar kategori har eiga temafarge, ikon og tal på appar i overskrifta, og alle står lukka ved lasting. Ny kategori **Bilete og media** (BiletFlett, Reinskore bilete, Handsam bilete) er skild ut frå Verktøy. Farge og opa/lukka startstilling styrast frå `json/apps.json` (`accent`, `open`), som framleis er einaste kjelde for både framsida og toppmenyen.
 - **Fontar** — fjerna all bruk av Google Fonts. Heimsank og Vidfaren brukar no system-font-stablar (Arial Black/Impact, system-ui, Courier New m.m.) i staden for Archivo Black, Space Grotesk, Caveat, Bangers og DM Mono, slik at ingen fontfiler blir lasta frå eksterne tenarar. Google Fonts-rada er fjerna frå personvernsida, og `AGENTS.md` slår fast at vi aldri skal bruke eksterne font-bibliotek.
 - **Frødekapp** — oppgradert til vyrdepil-designsystemet, det siste verktøyet som stod att.
   - Alle fem sidene (framside, vert, delta, solo, editor) brukar no `neobrutalisme.css`, global `<neo-header>` med temaveljar og standard `page-wrapper`/`main-content`-layout. Alle skjermane følgjer den same lys/mørk-tema-vekslaren.

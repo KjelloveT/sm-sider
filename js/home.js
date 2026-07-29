@@ -84,17 +84,38 @@
       (data.categories || []).forEach(cat => {
         const apps = (data.apps || []).filter(a => a.cat === cat.id);
         if (!apps.length) return;
-        const h2 = document.createElement('h2');
-        h2.className = 'heading2';
+
+        const sec = document.createElement('details');
+        sec.className = 'accordion-box section-accordion';
+        /* accent2 er standardfargen på accordion-boksen — dei andre treng ein modifikator. */
+        if (cat.accent && cat.accent !== 'accent2') sec.classList.add('accordion-box-' + cat.accent);
+        sec.open = cat.open === true;
+
+        const sum = document.createElement('summary');
         const ic = document.createElement('span');
-        ic.innerHTML = svg(cat.icon, 28);
-        h2.appendChild(ic);
-        h2.appendChild(document.createTextNode(' ' + cat.label));
-        host.appendChild(h2);
+        ic.className = 'section-accordion-icon';
+        ic.innerHTML = svg(cat.icon, 28).replace(' style="vertical-align:-5px;"', '');
+        sum.appendChild(ic);
+        const h2 = document.createElement('h2');
+        h2.className = 'section-accordion-title';
+        h2.textContent = cat.label;
+        sum.appendChild(h2);
+        const count = document.createElement('span');
+        count.className = 'section-accordion-count';
+        /* Kjem-snart-korta tel ikkje med i talet. */
+        count.textContent = apps.filter(a => !a.disabled).length;
+        sum.appendChild(count);
+        sec.appendChild(sum);
+
+        const body = document.createElement('div');
+        body.className = 'accordion-body';
         const grid = document.createElement('div');
         grid.className = 'card-grid';
         apps.forEach(a => grid.appendChild(card(a)));
-        host.appendChild(grid);
+        body.appendChild(grid);
+        sec.appendChild(body);
+
+        host.appendChild(sec);
       });
     })
     .catch(e => console.error('Klarte ikkje laste json/apps.json:', e));
