@@ -20,7 +20,7 @@
     <img src="../_resources/lydskurd.png" alt="Lydskurd" class="hero-logo">
     <div class="hero-text">
       <h1>Lydskurd</h1>
-      <p>Klipp og lim lyd på ei tidslinje med fleire spor. Dra inn filene dine, skjer dei til, still volum og lagra resultatet. Alt skjer i din eigen nettlesar — ingenting blir lasta opp.</p>
+      <p>Klipp og lim lyd på ei tidslinje med fleire spor. Dra inn filene dine eller ta opp frå mikrofon, skjer klippa til, still volum og lagra resultatet som WAV eller MP3. Alt skjer i din eigen nettlesar — ingenting blir lasta opp.</p>
     </div>
   </div>
 
@@ -31,6 +31,7 @@
     <div class="ls-toolbar" role="toolbar" aria-label="Verktøy for tidslinja">
       <div class="ls-btn-group">
         <button class="btn" id="importBtn" type="button"><span data-icon="upload"></span>Hent lyd</button>
+        <button class="btn" id="recordBtn" type="button"><span data-icon="mic"></span>Ta opp</button>
         <button class="btn" id="addTrackBtn" type="button"><span data-icon="plus"></span>Nytt spor</button>
         <button class="btn" id="splitBtn" type="button"><span data-icon="scissors"></span>Del her</button>
         <button class="btn ls-icon-btn ls-danger" id="deleteBtn" type="button" aria-label="Slett valde klipp"><span data-icon="trash2"></span></button>
@@ -146,6 +147,7 @@
     Ctrl + rullehjul zoomar. Klikk eller dra i tidslinjalen øvst for å flytte spelehovudet.
     Når du er ferdig, lagrar «Lagre lyd» heile tidslinja som WAV eller MP3. Vil du halde fram
     seinare, lagrar «Lagre prosjekt» heile oppsettet som ei fil du tek vare på sjølv.
+    «Ta opp» hentar lyd frå mikrofonen — han blir slått av att med ein gong du er ferdig.
     </p>
   </section>
 
@@ -201,6 +203,42 @@
     <div class="ls-btn-row">
       <button class="btn" id="exportStart" type="button"><span data-icon="download"></span>Lagre fila</button>
       <button class="btn" id="exportCancel" type="button">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: ta opp frå mikrofon -->
+<div class="modal-overlay" id="recordOverlay" role="dialog" aria-modal="true" aria-labelledby="recordHeading">
+  <div class="modal1">
+    <button class="btn ls-icon-btn modal-close" id="recordClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="recordHeading">Ta opp frå mikrofon</h2>
+    <p class="ls-muted">Lyden går rett frå mikrofonen inn i minnet på maskina di og blir eit klipp på tidslinja. Ingenting blir sendt nokon stad. Mikrofonen blir slått av att så snart du lukkar dette vindauget.</p>
+
+    <div class="ls-rec-fields">
+      <label class="ls-field">
+        <span class="ls-field-label">Legg opptaket på</span>
+        <select id="recordTrack" class="ls-text-input"></select>
+      </label>
+      <div class="ls-field ls-field-narrow">
+        <span class="ls-field-label">Startar ved</span>
+        <output class="ls-rec-startat" id="recordStartAt">0:00,0</output>
+      </div>
+    </div>
+
+    <div class="ls-rec-meter">
+      <span class="ls-slider-icon" aria-hidden="true" data-icon="mic" data-icon-size="16"></span>
+      <div class="ls-meter-track"><div class="ls-meter-fill" id="recordMeterFill"></div></div>
+      <output class="ls-rec-timer" id="recordTimer">0:00,0</output>
+    </div>
+
+    <div class="ls-rec-countdown" id="recordCountdown" aria-hidden="true" hidden></div>
+
+    <p class="ls-rec-status" id="recordStatus" role="status"></p>
+
+    <div class="ls-btn-row">
+      <button class="btn" id="recordMicBtn" type="button"><span data-icon="mic"></span>Slå på mikrofonen</button>
+      <button class="btn" id="recordToggleBtn" type="button" hidden><span data-icon="mic"></span>Start opptak</button>
+      <button class="btn" id="recordDone" type="button">Ferdig</button>
     </div>
   </div>
 </div>
@@ -273,6 +311,8 @@
 <script src="js/ui-export.js"></script>
 <script src="js/project.js"></script>
 <script src="js/ui-project.js"></script>
+<script src="js/record.js"></script>
+<script src="js/ui-record.js"></script>
 <script src="js/ui-toolbar.js"></script>
 <script src="js/main.js"></script>
 

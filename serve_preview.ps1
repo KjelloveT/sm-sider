@@ -16,6 +16,12 @@ $mimeTypes = @{
   '.ico'  = 'image/x-icon'
   '.mp3'  = 'audio/mpeg'
   '.svg'  = 'image/svg+xml'
+  '.wav'  = 'audio/wav'
+  '.ogg'  = 'audio/ogg'
+  '.m4a'  = 'audio/mp4'
+  '.flac' = 'audio/flac'
+  '.opus' = 'audio/ogg'
+  '.webm' = 'audio/webm'
 }
 while ($listener.IsListening) {
   $ctx = $listener.GetContext()

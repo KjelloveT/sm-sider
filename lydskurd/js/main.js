@@ -288,6 +288,7 @@
     LS.uiClip.setup();
     LS.uiExport.setup();
     LS.uiProject.setup();
+    LS.uiRecord.setup();
     LS.uiToolbar.setup({ onFollow: followPlayhead, onZoom: applyZoom });
 
     LS.interact.setup(canvas);

@@ -25,7 +25,7 @@
     "X-Frame-Options": "SAMEORIGIN",
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "strict-origin-when-cross-origin",
-    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "Permissions-Policy": "camera=(), microphone=(self), geolocation=(), payment=(), usb=()",
     "Content-Security-Policy": "default-src 'self'; img-src 'self' data: blob: https://commons.wikimedia.org https://upload.wikimedia.org; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://0.peerjs.com wss://0.peerjs.com https://upload.wikimedia.org; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
   }
 }

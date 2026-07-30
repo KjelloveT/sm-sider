@@ -431,6 +431,69 @@ input[type="file"]:focus-visible,
   text-align: right;
 }
 
+/* ---- Opptaksdialogen ---- */
+.ls-rec-fields { display: flex; flex-wrap: wrap; gap: 14px; align-items: end; margin-bottom: 14px; }
+.ls-rec-startat {
+  display: block;
+  padding: 6px 8px;
+  border: 3px solid var(--border);
+  background: var(--bg);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.ls-rec-meter { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.ls-rec-timer {
+  flex-shrink: 0;
+  min-width: 4.4em;
+  text-align: right;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.ls-rec-countdown {
+  text-align: center;
+  font-size: clamp(2.6rem, 12vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  padding: 6px 0;
+  color: var(--accent2);
+}
+.ls-rec-countdown[hidden] { display: none; }
+
+.ls-rec-status { font-weight: 700; margin: 10px 0; line-height: 1.45; }
+.ls-rec-status.ls-rec-error { color: var(--accent2); }
+.ls-rec-status.ls-rec-live,
+.ls-rec-status.ls-rec-done { color: var(--muted); }
+
+/* Under opptak skal det vere heilt tydeleg at mikrofonen står på. */
+.ls-rec-status.ls-rec-recording {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 12px;
+  border: 3px solid var(--border);
+  background: var(--accent2);
+  color: var(--text-on-accent);
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+.ls-rec-status.ls-rec-recording::before {
+  content: "";
+  width: 13px; height: 13px;
+  flex-shrink: 0;
+  border: 2px solid var(--text-on-accent);
+  border-radius: 50%;
+  background: var(--text-on-accent);
+  animation: ls-rec-blink 1.1s steps(1, end) infinite;
+}
+@keyframes ls-rec-blink { 50% { opacity: 0.15; } }
+
+.btn.ls-rec-active { background: var(--accent2); color: var(--text-on-accent); }
+.ls-recording .modal1 { border-color: var(--accent2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-rec-status.ls-rec-recording::before { animation: none; }
+}
+
 /* ---- Finn att lydfiler ---- */
 .ls-relink-row {
   display: flex;
