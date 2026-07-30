@@ -65,7 +65,7 @@
     { "id": "leitekryss", "name": "Leitekryss", "href": "leitekryss/index.html", "cat": "verktoy", "btn": "Opne →", "img": "_resources/leitekryss.png", "added": "2026-07-28",
       "desc": ["Legg inn ei ordliste, så gøymer Leitekryss orda i eit bokstavrutenett. Vel vanskegrad, skriv ut på A4 med eller utan ordlista — og gjerne eit heilt eige rutenett til kvar elev."] },
     { "id": "lydskurd", "name": "Lydskurd", "href": "lydskurd/index.html", "cat": "redigering", "btn": "Opne →", "img": "_resources/lydskurd.png", "added": "2026-07-30",
-      "desc": ["Klipp og lim lyd på ei tidslinje med fleire spor. Dra inn filene dine, flytt klippa dit du vil ha dei, del dei der spelehovudet står og skjer bort det du ikkje treng.", "OBS — under arbeid: du kan enno ikkje lagre eller eksportere resultatet. Lyden ligg berre i minnet, og forsvinn når du lukkar sida."] },
+      "desc": ["Klipp og lim lyd på ei tidslinje med fleire spor. Dra inn filene dine, flytt klippa dit du vil ha dei, del dei der spelehovudet står og fad dei inn og ut. Still volum og panorering per spor, normaliser miksen, og lagre resultatet som WAV eller MP3.", "Heile oppsettet kan lagrast som ei prosjektfil du tek vare på sjølv, så du kan halde fram seinare. Ingenting blir lagra i nettlesaren, og lyden forlèt aldri maskina di."] },
 
     { "id": "_kjem-snart", "name": "Fleire verktøy", "cat": "verktoy", "disabled": true, "comingTag": "Kjem snart",
       "icon": "<path d=\"M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z\"/><path d=\"M7 7h.01\"/>",

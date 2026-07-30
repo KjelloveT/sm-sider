@@ -78,7 +78,7 @@ input[type="file"]:focus-visible,
 .ls-editor {
   position: relative;
   display: grid;
-  grid-template-columns: clamp(120px, 22vw, 190px) minmax(0, 1fr);
+  grid-template-columns: clamp(168px, 26vw, 236px) minmax(0, 1fr);
   border: 3px solid var(--border);
   box-shadow: 6px 6px 0 var(--shadow);
   background: var(--bg);
@@ -115,7 +115,96 @@ input[type="file"]:focus-visible,
   gap: 4px;
   min-width: 0;
 }
-.ls-track-head-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ls-track-head-top { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.ls-track-bottom { display: flex; align-items: center; gap: 5px; min-width: 0; }
+.ls-track-bottom .ls-slider-row { flex: 1 1 auto; min-width: 0; }
+
+/* Spor som er dempa, eller som eit anna spor har sett i solo */
+.ls-track-silent { opacity: 0.55; }
+.ls-track-silent .ls-track-name { text-decoration: line-through; }
+
+/* ---- Skyveknappar ---- */
+.ls-slider-row { display: flex; align-items: center; gap: 5px; min-width: 0; }
+.ls-slider-icon { flex-shrink: 0; display: inline-flex; color: var(--muted); }
+.ls-slider-value {
+  flex-shrink: 0;
+  min-width: 3.4em;
+  text-align: right;
+  font-size: 0.7rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+/* Neobrutalistiske skyveknappar: firkanta greip med hard kant og skugge. */
+.ls-slider {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 18px;
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+.ls-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+}
+.ls-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 16px;
+  margin-top: -7px;
+  background: var(--accent);
+  border: 2px solid var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+.ls-slider::-moz-range-track {
+  height: 6px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+}
+.ls-slider::-moz-range-thumb {
+  width: 12px;
+  height: 16px;
+  border-radius: 0;
+  background: var(--accent);
+  border: 2px solid var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+.ls-slider:focus-visible { outline: 3px solid var(--accent2); outline-offset: 3px; }
+
+/* ---- Rekkjefølgje på spor ---- */
+.ls-track-order { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.ls-order-btn {
+  width: 18px;
+  height: 12px;
+  padding: 0;
+  box-shadow: 1px 1px 0 var(--shadow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ls-order-btn:disabled { opacity: 0.3; }
+.ls-order-btn:disabled:hover { transform: none; background: var(--surface); }
+
+/* ---- M- og S-knappane ---- */
+.ls-tag-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  box-shadow: 2px 2px 0 var(--shadow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ls-tag-btn.active { background: var(--accent2); color: var(--text-on-accent); }
 .ls-track-num {
   flex-shrink: 0;
   width: 22px; height: 22px;
@@ -126,15 +215,25 @@ input[type="file"]:focus-visible,
   font-size: 0.75rem;
   font-weight: 800;
 }
+/* Namnet er eit skrivefelt, men ser ut som tekst til du tek i det. */
 .ls-track-name {
-  font-weight: 800;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  flex: 1 1 auto;
   min-width: 0;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text);
+  background: transparent;
+  border: 2px solid transparent;
+  padding: 2px 4px;
 }
-.ls-track-info { color: var(--muted); font-size: 0.78rem; }
-.ls-track-actions { margin-top: auto; display: flex; gap: 6px; }
+.ls-track-name:hover { border-color: var(--muted); }
+.ls-track-name:focus {
+  background: var(--bg);
+  border-color: var(--border);
+  outline: none;
+}
+.ls-track-name:focus-visible { outline: 3px solid var(--accent2); outline-offset: 1px; }
 
 /* Banene. Canvasen er berre så brei som vindauget og blir teikna på nytt
    når ein skrollar — «spacer» er berre der for å gje rullefeltet lengd. */
@@ -154,7 +253,7 @@ input[type="file"]:focus-visible,
 /* Melding når det ikkje er lyd i prosjektet enno */
 .ls-empty {
   position: absolute;
-  left: clamp(120px, 22vw, 190px);
+  left: clamp(168px, 26vw, 236px);
   right: 0;
   top: var(--ls-ruler-h, 34px);
   margin: 0;
@@ -170,6 +269,182 @@ input[type="file"]:focus-visible,
   pointer-events: none;
 }
 .ls-empty[hidden] { display: none; }
+
+/* ---- Panelet for det valde klippet ---- */
+.ls-clip-panel {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+.ls-clip-panel[hidden] { display: none; }
+.ls-clip-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ls-clip-panel-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.ls-clip-panel-empty .ls-clip-fields { display: none; }
+
+.ls-clip-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: clamp(10px, 2vw, 16px);
+}
+.ls-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1 1 170px; }
+.ls-field-narrow { flex: 0 0 88px; }
+.ls-field-label { font-weight: 800; font-size: 0.8rem; }
+.ls-text-input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 3px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.ls-text-input:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
+
+/* ---- Masterbussen ---- */
+.ls-master {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(10px, 2vw, 18px);
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+.ls-master-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.ls-master-vol { flex: 1 1 180px; min-width: 150px; max-width: 320px; }
+
+.ls-meter { display: flex; align-items: center; gap: 8px; flex: 1 1 200px; min-width: 160px; }
+.ls-meter-track {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 16px;
+  border: 3px solid var(--border);
+  background: var(--bg);
+  overflow: hidden;
+}
+.ls-meter-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  /* Ingen mjuk overgang oppover — ein nivåmålar skal vere ærleg med det
+     same. Fallet nedover får derimot gli, så han ikkje flimrar. */
+  transition: width 0.12s linear;
+}
+.ls-meter-fill.ls-meter-hot { background: var(--accent2); }
+.ls-meter-label {
+  flex-shrink: 0;
+  min-width: 4.6em;
+  text-align: right;
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.ls-clip-warn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border: 3px solid var(--border);
+  background: var(--accent2);
+  color: var(--text-on-accent);
+  box-shadow: 4px 4px 0 var(--shadow);
+  font-weight: 700;
+}
+.ls-clip-warn[hidden] { display: none; }
+.ls-clip-warn > span:first-child { flex-shrink: 0; display: inline-flex; }
+.ls-clip-warn .ls-icon-btn-small { margin-left: auto; flex-shrink: 0; }
+
+/* ---- Eksportdialogen ---- */
+.ls-fieldset {
+  border: 3px solid var(--border);
+  padding: 10px 12px;
+  margin: 14px 0;
+  background: var(--bg);
+}
+.ls-fieldset legend { padding: 0 6px; }
+.ls-radio-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.ls-radio-row:last-of-type { margin-bottom: 0; }
+.ls-radio-row input {
+  width: 20px; height: 20px;
+  margin-top: 1px;
+  accent-color: var(--accent2);
+  flex-shrink: 0;
+}
+.ls-radio-row input:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
+.ls-radio-off { opacity: 0.45; cursor: not-allowed; }
+.ls-field-narrow-wide { flex: 1 1 100%; max-width: 300px; margin-bottom: 14px; }
+.modal1 .ls-field { margin-bottom: 14px; }
+
+.ls-progress { display: flex; align-items: center; gap: 10px; margin: 14px 0; }
+.ls-progress-track {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 18px;
+  border: 3px solid var(--border);
+  background: var(--bg);
+  overflow: hidden;
+}
+.ls-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.15s linear;
+}
+.ls-progress-label {
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 0.8rem;
+  min-width: 9em;
+  text-align: right;
+}
+
+/* ---- Finn att lydfiler ---- */
+.ls-relink-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border: 3px solid var(--border);
+  background: var(--bg);
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+.ls-relink-text { flex: 1 1 180px; min-width: 0; line-height: 1.4; }
+.ls-relink-text .ls-muted { font-size: 0.82rem; }
 
 /* ---- Kort melding nedst ---- */
 .ls-toast {
@@ -192,11 +467,19 @@ input[type="file"]:focus-visible,
 
 /* ---- Mindre skjermar ---- */
 @media (max-width: 640px) {
-  .ls-editor { grid-template-columns: 104px minmax(0, 1fr); }
-  .ls-empty { left: 104px; }
+  /* På mobil er det ikkje rom til panorering ved sida av alt anna. Volum,
+     mute og solo er dei ein faktisk treng på ein liten skjerm. */
+  .ls-editor { grid-template-columns: 132px minmax(0, 1fr); }
+  .ls-empty { left: 132px; }
   .ls-track-head { padding: 6px 7px; }
-  .ls-track-info { display: none; }
+  .ls-track-bottom .ls-slider-row { display: none; }
+  .ls-track-bottom { justify-content: flex-end; }
+  .ls-slider-value { min-width: 2.8em; }
   .ls-btn-group-end { margin-left: 0; }
+  .ls-master { gap: 10px; }
+  .ls-master-vol, .ls-meter { flex-basis: 100%; max-width: none; }
+  .ls-track-order { display: none; }
+  .ls-field, .ls-field-narrow { flex-basis: 100%; }
   .ls-transport { width: 100%; justify-content: center; padding: 6px; }
   .ls-time { padding-left: 0; margin-left: auto; }
 }

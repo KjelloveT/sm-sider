@@ -16,9 +16,11 @@ LS.render = (function () {
   'use strict';
 
   const RULER_H = 34;
-  const TRACK_H = 96;
+  const TRACK_H = 118;      // rom nok til namn, volum, panorering og M/S i hovudet
   const CLIP_HEAD_H = 18;
   const SHADOW = 4;
+  const FADE_BAND = 16;     // høgda på bandet der fade-greipa kan takast
+  const HANDLE = 7;         // halve breidda på eit greip
 
   /* Fire klippfargar som går på omgang etter spor, med den tekstfargen
      kvar av dei krev. Sjå AGENTS.md §3.2 — feil par gjev usynleg tekst.
@@ -95,6 +97,34 @@ LS.render = (function () {
     const hits = LS.state.clipsOnTrack(track.id)
       .filter(c => time >= c.timeStart && time <= LS.state.clipEnd(c));
     return hits.length ? hits[hits.length - 1] : null;
+  }
+
+  /**
+   * Ligg punktet på eit fade-greip? Greipa bur i eit smalt band under
+   * namnebandet, så resten av klippehøgda framleis er fri til å dra og
+   * trimme.
+   * @returns {'fadeIn'|'fadeOut'|null}
+   */
+  function fadeHandleAt(clip, x, y) {
+    const index = LS.state.trackIndex(clip.trackId);
+    if (index === -1) return null;
+
+    const bodyTop = trackTop(index) + 6 + CLIP_HEAD_H;
+    if (y < bodyTop || y > bodyTop + FADE_BAND) return null;
+
+    const pps = LS.state.data.view.pxPerSec;
+    const x0 = timeToX(clip.timeStart);
+    const x1 = x0 + clip.srcLen * pps;
+
+    const inX = x0 + Math.max(0, clip.fadeIn || 0) * pps;
+    const outX = x1 - Math.max(0, clip.fadeOut || 0) * pps;
+
+    // Ligg dei to oppå kvarandre, vinn den som er nærast peikaren.
+    const dIn = Math.abs(x - inX);
+    const dOut = Math.abs(x - outX);
+    if (dIn <= HANDLE && dIn <= dOut) return 'fadeIn';
+    if (dOut <= HANDLE) return 'fadeOut';
+    return null;
   }
 
   /* ──────────────── Fargar ──────────────── */
@@ -241,6 +271,72 @@ LS.render = (function () {
     c.stroke();
   }
 
+  /**
+   * Teiknar inn- og utfading som skraverte kilar over bølgjeforma, med eit
+   * firkanta greip på vippepunktet. Kilen dekkjer det som blir dempa bort,
+   * så det er lett å sjå kor mykje lyd fadinga faktisk et opp.
+   */
+  function drawFades(c, clip, palette, x, w, bodyTop, bodyBottom) {
+    const pps = LS.state.data.view.pxPerSec;
+    const fadeIn = Math.max(0, clip.fadeIn || 0);
+    const fadeOut = Math.max(0, clip.fadeOut || 0);
+    if (!fadeIn && !fadeOut) return;
+
+    c.save();
+    c.beginPath();
+    c.rect(x, bodyTop, w, bodyBottom - bodyTop);
+    c.clip();
+
+    c.fillStyle = colors.border;
+    c.globalAlpha = 0.42;
+    if (fadeIn > 0) {
+      const fw = fadeIn * pps;
+      c.beginPath();
+      c.moveTo(x, bodyTop);
+      c.lineTo(x + fw, bodyTop);
+      c.lineTo(x, bodyBottom);
+      c.closePath();
+      c.fill();
+    }
+    if (fadeOut > 0) {
+      const fw = fadeOut * pps;
+      c.beginPath();
+      c.moveTo(x + w, bodyTop);
+      c.lineTo(x + w - fw, bodyTop);
+      c.lineTo(x + w, bodyBottom);
+      c.closePath();
+      c.fill();
+    }
+    c.globalAlpha = 1;
+
+    // Sjølve konvolutt-linja
+    c.strokeStyle = palette.text;
+    c.lineWidth = 2;
+    c.beginPath();
+    if (fadeIn > 0) {
+      c.moveTo(x, bodyBottom);
+      c.lineTo(x + fadeIn * pps, bodyTop);
+    }
+    if (fadeOut > 0) {
+      c.moveTo(x + w - fadeOut * pps, bodyTop);
+      c.lineTo(x + w, bodyBottom);
+    }
+    c.stroke();
+    c.restore();
+
+    // Greipa — små firkantar, som resten av designspråket
+    const handles = [];
+    if (fadeIn > 0) handles.push(x + fadeIn * pps);
+    if (fadeOut > 0) handles.push(x + w - fadeOut * pps);
+    handles.forEach((hx) => {
+      c.fillStyle = palette.fill;
+      c.fillRect(hx - 4, bodyTop, 8, 8);
+      c.strokeStyle = colors.border;
+      c.lineWidth = 2;
+      c.strokeRect(hx - 4, bodyTop + 1, 8, 8);
+    });
+  }
+
   function drawClip(c, clip, trackIdx) {
     const source = LS.audio.getSource(clip.sourceId);
     const palette = colors.clips[trackIdx % colors.clips.length];
@@ -280,6 +376,9 @@ LS.render = (function () {
       drawWaveform(c, clip, source, x0, x1, top + CLIP_HEAD_H + 3, bottom - 3);
     }
     c.restore();
+
+    // Fade-konvolutt oppå bølgjeforma
+    drawFades(c, clip, palette, x, w, top + CLIP_HEAD_H, bottom);
 
     // Kantlinje
     c.strokeStyle = selected ? colors.accent2 : colors.border;
@@ -367,7 +466,7 @@ LS.render = (function () {
 
   return {
     setCanvas, resize, draw, schedule,
-    timeToX, xToTime, trackTop, trackAtY, clipAt,
+    timeToX, xToTime, trackTop, trackAtY, clipAt, fadeHandleAt,
     gridStep: () => tickStep(LS.state.data.view.pxPerSec),
     height, width, trackHeight, rulerHeight,
     RULER_H, TRACK_H

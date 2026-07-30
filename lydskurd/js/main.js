@@ -30,6 +30,7 @@
   function refresh() {
     LS.render.resize(scrollBox.clientWidth);
     LS.uiTracks.render();
+    LS.uiClip.refresh();
     syncScrollWidth();
     LS.render.schedule();
     updateNotes();
@@ -117,7 +118,14 @@
         let track = trackId ? LS.state.getTrack(trackId) : null;
         if (!track) track = LS.state.data.tracks[0];
 
-        const start = time == null ? LS.state.trackEnd(track.id) : time;
+        const wanted = time == null ? LS.state.trackEnd(track.id) : time;
+        // Slepp du fila oppå noko som alt ligg der, glir ho til næraste
+        // ledige plass i staden for å leggje seg over.
+        let start = LS.state.fitInTrack(track.id, wanted, source.duration, null);
+        if (start == null) {
+          // Ikkje plass på sporet — legg klippet etter alt som ligg der.
+          start = LS.state.trackEnd(track.id);
+        }
         const clip = LS.state.makeClip(source.id, track.id, start, 0, source.duration, source.name);
         LS.state.addClip(clip);
 
@@ -276,6 +284,10 @@
 
     LS.state.onChange(() => refresh());
 
+    LS.uiMix.setup();
+    LS.uiClip.setup();
+    LS.uiExport.setup();
+    LS.uiProject.setup();
     LS.uiToolbar.setup({ onFollow: followPlayhead, onZoom: applyZoom });
 
     LS.interact.setup(canvas);

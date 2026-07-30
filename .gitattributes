@@ -1,0 +1,21 @@
+# Sjølv-hosta tredjepartsbibliotek skal liggje BYTE FOR BYTE slik dei kom
+# frå kjelda. Med core.autocrlf=true ville Git elles skrive dei ut att med
+# CRLF, og då stemmer ikkje sjekksummane vi har dokumentert i
+# _libs/CREDITS.md — og minifisert kode med strenglitteral kan i verste
+# fall bli øydelagd.
+_libs/** -text
+
+# Lyd- og biletfiler er binære og skal aldri røyvast.
+*.mp3 binary
+*.wav binary
+*.ogg binary
+*.m4a binary
+*.flac binary
+*.opus binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary

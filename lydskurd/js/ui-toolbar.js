@@ -57,6 +57,7 @@ LS.uiToolbar = (function () {
     redoBtn.disabled = !LS.state.canRedo();
     setPlayIcon(LS.audio.isPlaying());
     updateTime();
+    LS.uiMix.refresh();
   }
 
   /* ──────────────── Løkka som flyttar spelehovudet ──────────────── */
@@ -80,6 +81,7 @@ LS.uiToolbar = (function () {
     LS.state.setPlayhead(now);
     if (onFollow) onFollow(now);
     updateTime();
+    LS.uiMix.updateMeter();
     LS.render.schedule();
     rafId = requestAnimationFrame(tick);
   }
@@ -105,6 +107,8 @@ LS.uiToolbar = (function () {
         LS.util.toast('Klarte ikkje starte avspelinga.');
         return;
       }
+      LS.uiMix.resetMeter();
+      LS.audio.meter();          // hektar analysenoden på den nye grafen
       updateButtons();
       startTicking();
     });
@@ -257,6 +261,7 @@ LS.uiToolbar = (function () {
     LS.state.pushUndo();
 
     const fresh = [];
+    let skipped = 0;
     clipboard.items.forEach((item) => {
       // Er sporet borte sidan kopieringa, hamnar klippet på det siste.
       const index = Math.min(item.trackIndex, LS.state.data.tracks.length - 1);
@@ -266,14 +271,26 @@ LS.uiToolbar = (function () {
       const copy = JSON.parse(JSON.stringify(item.clip));
       copy.id = LS.util.uuid();
       copy.trackId = track.id;
-      copy.timeStart = Math.max(0, at + (item.clip.timeStart - clipboard.baseTime));
+
+      const wanted = Math.max(0, at + (item.clip.timeStart - clipboard.baseTime));
+      // Ligg det alt noko der, glir kopien til næraste ledige plass.
+      const start = LS.state.fitInTrack(track.id, wanted, copy.srcLen, null);
+      if (start == null) { skipped++; return; }
+      copy.timeStart = start;
+
       LS.state.addClip(copy);
       fresh.push(copy.id);
     });
 
     LS.state.setSelection(fresh);
     LS.state.emit('clips');
-    LS.util.toast(fresh.length === 1 ? 'Klippet er limt inn.' : fresh.length + ' klipp er limte inn.');
+
+    if (!fresh.length) {
+      LS.util.toast('Ingen plass til klippet på sporet. Prøv eit anna spor, eller lag eit nytt.');
+      return;
+    }
+    LS.util.toast((fresh.length === 1 ? 'Klippet er limt inn.' : fresh.length + ' klipp er limte inn.')
+      + (skipped ? ' ' + skipped + ' fekk ikkje plass.' : ''));
   }
 
   /* ──────────────── Angre og gjer om ──────────────── */

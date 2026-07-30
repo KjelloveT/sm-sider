@@ -100,6 +100,21 @@ LS.state = (function () {
     return data.tracks.findIndex(t => t.id === id);
   }
 
+  /**
+   * Flyttar sporet opp eller ned i rekkjefølgja. Klippa følgjer med av seg
+   * sjølv — dei peikar på sporet med trackId, ikkje på ein plass i lista.
+   * @param {number} delta -1 for opp, 1 for ned
+   */
+  function moveTrack(id, delta) {
+    const from = trackIndex(id);
+    const to = from + delta;
+    if (from === -1 || to < 0 || to >= data.tracks.length) return false;
+    const track = data.tracks[from];
+    data.tracks.splice(from, 1);
+    data.tracks.splice(to, 0, track);
+    return true;
+  }
+
   /** Fjernar sporet og alle klippa som ligg på det. */
   function removeTrack(id) {
     data.tracks = data.tracks.filter(t => t.id !== id);
@@ -128,6 +143,25 @@ LS.state = (function () {
   }
 
   const MIN_CLIP_LEN = 0.02;
+
+  /**
+   * Held fadane innanfor klippet. Dei to kan møtast på midten, men aldri
+   * krysse kvarandre — då ville konvolutten gå nedover og oppover
+   * samstundes, og resultatet blitt uråd å lese både for auget og for
+   * automasjonen i lydgrafen.
+   */
+  function clampFades(clip) {
+    clip.fadeIn = LS.util.clamp(clip.fadeIn || 0, 0, clip.srcLen);
+    clip.fadeOut = LS.util.clamp(clip.fadeOut || 0, 0, clip.srcLen);
+    const sum = clip.fadeIn + clip.fadeOut;
+    if (sum > clip.srcLen) {
+      // Skaler begge ned i same forhold, så vippepunktet blir verande.
+      const scale = clip.srcLen / sum;
+      clip.fadeIn *= scale;
+      clip.fadeOut *= scale;
+    }
+    return clip;
+  }
 
   /**
    * Deler eit klipp i to ved ei tid på tidslinja.
@@ -173,6 +207,67 @@ LS.state = (function () {
     const at = data.clips.indexOf(clip);
     data.clips.splice(at + 1, 0, right);
     return right;
+  }
+
+  /* ──────────────── Ingen klipp oppå kvarandre ──────────────── */
+
+  /* Eit spor er ei einaste rad med lyd. To klipp som ligg oppå kvarandre
+     der ville summert seg til noko brukaren ikkje kan sjå, og som blir
+     umogleg å plukke frå kvarandre etterpå. Difor held vi sporet ryddig:
+     klipp kan liggje kant i kant, men aldri over kvarandre. Vil du ha to
+     lydar samtidig, legg du dei på kvar sitt spor. */
+
+  const EPS = 1e-6;   // slark, så kant-i-kant ikkje blir lese som overlapp
+
+  /** Ledige mellomrom på sporet, i rekkjefølgje. Siste gap er ope utover. */
+  function gapsOnTrack(trackId, exceptId) {
+    const others = clipsOnTrack(trackId)
+      .filter(c => c.id !== exceptId)
+      .sort((a, b) => a.timeStart - b.timeStart);
+
+    const gaps = [];
+    let cursor = 0;
+    others.forEach((c) => {
+      if (c.timeStart > cursor + EPS) gaps.push([cursor, c.timeStart]);
+      cursor = Math.max(cursor, clipEnd(c));
+    });
+    gaps.push([cursor, Infinity]);
+    return gaps;
+  }
+
+  /**
+   * Nærmaste starttid der eit klipp på `len` sekund får plass på sporet
+   * utan å hamne oppå noko anna.
+   *
+   * @returns {number|null} null når sporet ikkje har eit stort nok hol
+   */
+  function fitInTrack(trackId, desiredStart, len, exceptId) {
+    const wanted = Math.max(0, desiredStart);
+    let best = null;
+    let bestDist = Infinity;
+
+    gapsOnTrack(trackId, exceptId).forEach((gap) => {
+      if (gap[1] - gap[0] < len - EPS) return;      // holet er for lite
+      const at = LS.util.clamp(wanted, gap[0], gap[1] - len);
+      const dist = Math.abs(at - wanted);
+      if (dist < bestDist) { bestDist = dist; best = at; }
+    });
+    return best;
+  }
+
+  /** Holet som omgjev denne tida — grensene ein kant kan trimmast til. */
+  function gapAround(trackId, time, exceptId) {
+    const gaps = gapsOnTrack(trackId, exceptId);
+    for (let i = 0; i < gaps.length; i++) {
+      if (time >= gaps[i][0] - EPS && time <= gaps[i][1] + EPS) return gaps[i];
+    }
+    return gaps[gaps.length - 1];
+  }
+
+  /** Ligg dette spennet oppå eit anna klipp? Gjev klippet som er i vegen. */
+  function blockerAt(trackId, start, end, exceptId) {
+    return clipsOnTrack(trackId).find(c =>
+      c.id !== exceptId && start < clipEnd(c) - EPS && end > c.timeStart + EPS) || null;
   }
 
   /** Klipp som tida går tvers gjennom — altså dei som kan delast der. */
@@ -241,7 +336,17 @@ LS.state = (function () {
 
   /** Kall FØR ei endring som skal kunne angrast. */
   function pushUndo() {
-    undoStack.push(snapshot());
+    pushUndoSnapshot(snapshot());
+  }
+
+  /**
+   * Som pushUndo, men med eit snapshot du har teke sjølv på eit tidlegare
+   * tidspunkt. Draginga brukar dette: ho tek eit snapshot når peikaren går
+   * ned, men legg det ikkje på stakken før noko faktisk har flytta seg.
+   * Elles ville kvart uskuldige klikk fylt opp angre-historikken.
+   */
+  function pushUndoSnapshot(json) {
+    undoStack.push(json);
     if (undoStack.length > UNDO_LIMIT) undoStack.shift();
     redoStack.length = 0;
   }
@@ -296,11 +401,12 @@ LS.state = (function () {
   return {
     data, emit, onChange,
     makeTrack, makeClip,
-    addTrack, getTrack, trackIndex, removeTrack,
+    addTrack, getTrack, trackIndex, moveTrack, removeTrack,
     addClip, getClip, clipsOnTrack, removeClip, clipEnd, trackEnd, duration,
-    splitClip, clipsAcross, MIN_CLIP_LEN,
+    splitClip, clipsAcross, clampFades, MIN_CLIP_LEN,
+    gapsOnTrack, fitInTrack, gapAround, blockerAt,
     isSelected, setSelection, toggleSelection, clearSelection,
-    pushUndo, undo, redo, canUndo, canRedo,
+    pushUndo, pushUndoSnapshot, snapshot, undo, redo, canUndo, canRedo,
     setZoom, setScroll, setPlayhead, reset,
     MIN_PX_PER_SEC, MAX_PX_PER_SEC
   };

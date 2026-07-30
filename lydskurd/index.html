@@ -36,6 +36,10 @@
         <button class="btn ls-icon-btn ls-danger" id="deleteBtn" type="button" aria-label="Slett valde klipp"><span data-icon="trash2"></span></button>
         <button class="btn ls-icon-btn" id="undoBtn" type="button" aria-label="Angre"><span data-icon="undo"></span></button>
         <button class="btn ls-icon-btn" id="redoBtn" type="button" aria-label="Gjer om"><span data-icon="redo"></span></button>
+        <button class="btn" id="exportBtn" type="button"><span data-icon="download"></span>Lagre lyd</button>
+        <button class="btn" id="saveProjectBtn" type="button"><span data-icon="save"></span>Lagre prosjekt</button>
+        <button class="btn" id="openProjectBtn" type="button"><span data-icon="folderOpen"></span>Opne prosjekt</button>
+        <input type="file" id="openProjectFile" accept=".lydskurd,application/json" hidden>
         <input type="file" id="importFile" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac,.opus" multiple hidden>
       </div>
 
@@ -67,14 +71,81 @@
       </p>
     </div>
 
+    <!-- Panelet for det valde klippet -->
+    <div class="ls-clip-panel" id="clipPanel" role="group" aria-labelledby="clipPanelTitle" hidden>
+      <div class="ls-clip-panel-head">
+        <span class="ls-clip-panel-title" id="clipPanelTitle"><span data-icon="waves" data-icon-size="16"></span>Valt klipp</span>
+        <span class="ls-muted" id="clipPanelMeta"></span>
+      </div>
+
+      <div class="ls-clip-fields">
+        <label class="ls-field">
+          <span class="ls-field-label">Namn</span>
+          <input type="text" id="clipName" class="ls-text-input" maxlength="40">
+        </label>
+
+        <div class="ls-field">
+          <span class="ls-field-label" id="clipGainLabel">Volum på klippet</span>
+          <div class="ls-slider-row">
+            <span class="ls-slider-icon" aria-hidden="true" data-icon="volume" data-icon-size="14"></span>
+            <input type="range" class="ls-slider" id="clipGain" min="0" max="1.5" step="0.01" value="1" aria-labelledby="clipGainLabel">
+            <output class="ls-slider-value" id="clipGainValue">100%</output>
+          </div>
+        </div>
+
+        <label class="ls-field ls-field-narrow">
+          <span class="ls-field-label">Fad inn (s)</span>
+          <input type="number" id="clipFadeIn" class="ls-text-input" min="0" step="0.05" value="0">
+        </label>
+
+        <label class="ls-field ls-field-narrow">
+          <span class="ls-field-label">Fad ut (s)</span>
+          <input type="number" id="clipFadeOut" class="ls-text-input" min="0" step="0.05" value="0">
+        </label>
+
+        <button class="btn ls-btn-small" id="clipFadeClear" type="button"><span data-icon="x"></span>Utan fading</button>
+      </div>
+    </div>
+
+    <!-- Masterbussen -->
+    <div class="ls-master" role="group" aria-labelledby="masterLabel">
+      <span class="ls-master-title" id="masterLabel"><span data-icon="sliders" data-icon-size="16"></span>Master</span>
+
+      <div class="ls-slider-row ls-master-vol">
+        <span class="ls-slider-icon" aria-hidden="true" data-icon="volume" data-icon-size="14"></span>
+        <input type="range" class="ls-slider" id="masterSlider" min="0" max="2" step="0.01" value="1" aria-label="Samla volum på miksen">
+        <output class="ls-slider-value" id="masterValue">100%</output>
+      </div>
+
+      <div class="ls-meter" role="img" aria-label="Nivåmålar for miksen">
+        <div class="ls-meter-track"><div class="ls-meter-fill" id="meterFill"></div></div>
+        <output class="ls-meter-label" id="meterLabel">−∞ dB</output>
+      </div>
+
+      <button class="btn ls-btn-small" id="normalizeBtn" type="button" title="Set master slik at høgste toppen ligg på −1 dB">
+        <span data-icon="maximize"></span>Normaliser
+      </button>
+    </div>
+
+    <p class="ls-clip-warn" id="clipWarn" role="alert" hidden>
+      <span data-icon="alertTriangle" data-icon-size="18"></span>
+      <span>Miksen klipper — han går over 0 dB og blir forvrengt. Skru ned master eller volumet på eit spor, eller trykk «Normaliser».</span>
+      <button class="btn ls-icon-btn ls-icon-btn-small" id="clipWarnDismiss" type="button" aria-label="Lukk varselet"><span data-icon="x"></span></button>
+    </p>
+
     <p class="ls-muted ls-hint">
       Dra eit klipp for å flytte det langs tidslinja eller over på eit anna spor. Dra i kanten for å
     endre kor mykje av lyden som skal vere med — lyden sjølv blir ikkje røyrd, så du kan dra kanten
-    ut att seinare. Klippa hektar seg i rutenettet og i kvarandre — hald Alt nede om du vil plassere
-    heilt fritt. «Del her» eller tasten S set saksa ned der spelehovudet står.
+    ut att seinare. To klipp kan liggje kant i kant, men aldri oppå kvarandre; skal to lydar høyrast
+    samstundes, legg du dei på kvar sitt spor. Klippa hektar seg i rutenettet og i kvarandre — hald
+    Alt nede om du vil plassere heilt fritt. Øvst i eit valt klipp ligg to små greip du kan dra for å
+    fade lyden inn og ut — dei same verdiane kan settast nøyaktig i panelet under tidslinja.
+    «Del her» eller tasten S set saksa ned der spelehovudet står.
     Mellomrom spelar og pausar, Home går til starten og End til slutten. Delete slettar,
     Ctrl+C, Ctrl+X og Ctrl+V kopierer, klipper ut og limer inn, og Ctrl+Z angrar.
     Ctrl + rullehjul zoomar. Klikk eller dra i tidslinjalen øvst for å flytte spelehovudet.
+    Når du er ferdig, lagrar «Lagre lyd» heile tidslinja som WAV eller MP3. Vil du halde fram
+    seinare, lagrar «Lagre prosjekt» heile oppsettet som ei fil du tek vare på sjølv.
     </p>
   </section>
 
@@ -85,6 +156,108 @@
 </main>
 </div>
 
+<!-- Modal: lagre lyd -->
+<div class="modal-overlay" id="exportOverlay" role="dialog" aria-modal="true" aria-labelledby="exportHeading">
+  <div class="modal1">
+    <button class="btn ls-icon-btn modal-close" id="exportClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="exportHeading">Lagre lyd</h2>
+    <p class="ls-muted">Heile tidslinja blir miksa ned til éi fil. Fila blir laga i nettlesaren din og lasta rett ned — ingenting blir sendt nokon stad.</p>
+
+    <label class="ls-field">
+      <span class="ls-field-label">Filnamn</span>
+      <input type="text" id="exportName" class="ls-text-input" maxlength="60" placeholder="lydskurd-miks">
+    </label>
+
+    <fieldset class="ls-fieldset">
+      <legend class="ls-field-label">Format</legend>
+      <label class="ls-radio-row" for="exportFormatWav">
+        <input type="radio" name="exportFormat" id="exportFormatWav" value="wav" checked>
+        <span><strong>WAV</strong> — full kvalitet, ingenting kasta bort. Store filer.</span>
+      </label>
+      <label class="ls-radio-row" for="exportFormatMp3">
+        <input type="radio" name="exportFormat" id="exportFormatMp3" value="mp3">
+        <span><strong>MP3</strong> — mykje mindre fil, litt kvalitetstap. Passar til deling.</span>
+      </label>
+      <p class="ls-warn" id="exportMp3Note" hidden>MP3-enkodaren blei ikkje lasta, så berre WAV er tilgjengeleg no.</p>
+    </fieldset>
+
+    <label class="ls-field ls-field-narrow-wide" id="exportBitrateField" hidden>
+      <span class="ls-field-label">Kvalitet på MP3-en</span>
+      <select id="exportBitrate" class="ls-text-input">
+        <option value="128">128 kbit/s — minst fil</option>
+        <option value="192" selected>192 kbit/s — god balanse</option>
+        <option value="256">256 kbit/s</option>
+        <option value="320">320 kbit/s — best kvalitet</option>
+      </select>
+    </label>
+
+    <p class="ls-muted" id="exportInfo" aria-live="polite"></p>
+
+    <div class="ls-progress" id="exportProgress" hidden>
+      <div class="ls-progress-track"><div class="ls-progress-fill" id="exportProgressFill"></div></div>
+      <output class="ls-progress-label" id="exportProgressLabel" aria-live="polite"></output>
+    </div>
+
+    <div class="ls-btn-row">
+      <button class="btn" id="exportStart" type="button"><span data-icon="download"></span>Lagre fila</button>
+      <button class="btn" id="exportCancel" type="button">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: lagre prosjekt -->
+<div class="modal-overlay" id="saveOverlay" role="dialog" aria-modal="true" aria-labelledby="saveHeading">
+  <div class="modal2">
+    <button class="btn ls-icon-btn modal-close" id="saveClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="saveHeading">Lagre prosjektet</h2>
+    <p class="ls-muted">Prosjektfila blir lasta ned til maskina di. Ingenting blir lagra i nettlesaren, så du må ta vare på fila sjølv.</p>
+
+    <label class="ls-field">
+      <span class="ls-field-label">Namn på prosjektet</span>
+      <input type="text" id="saveName" class="ls-text-input" maxlength="60" placeholder="lydskurd-prosjekt">
+    </label>
+
+    <fieldset class="ls-fieldset">
+      <legend class="ls-field-label">Kva skal vere med i fila?</legend>
+      <label class="ls-radio-row" for="saveModeAudio">
+        <input type="radio" name="saveMode" id="saveModeAudio" value="audio" checked>
+        <span><strong>Med lyd</strong> — heile prosjektet i éi fil. Du kan opne det kvar som helst utan å ha originalfilene.</span>
+      </label>
+      <label class="ls-radio-row" for="saveModeMeta">
+        <input type="radio" name="saveMode" id="saveModeMeta" value="meta">
+        <span><strong>Berre oppsett</strong> — bittelita fil med klipp og innstillingar. Du må ha originalfilene når du opnar.</span>
+      </label>
+    </fieldset>
+
+    <p class="ls-muted" id="saveInfo" aria-live="polite"></p>
+
+    <div class="ls-progress" id="saveProgress" hidden>
+      <div class="ls-progress-track"><div class="ls-progress-fill" id="saveProgressFill"></div></div>
+      <output class="ls-progress-label" id="saveProgressLabel" aria-live="polite"></output>
+    </div>
+
+    <div class="ls-btn-row">
+      <button class="btn" id="saveStart" type="button"><span data-icon="save"></span>Lagre fila</button>
+      <button class="btn" id="saveCancel" type="button">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: finn att manglande lydfiler -->
+<div class="modal-overlay" id="relinkOverlay" role="dialog" aria-modal="true" aria-labelledby="relinkHeading">
+  <div class="modal1">
+    <button class="btn ls-icon-btn modal-close" id="relinkClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="relinkHeading">Finn att lydfilene</h2>
+    <p class="ls-muted">Dette prosjektet blei lagra utan lyd i fila. Peik ut kvar lydfil, så kjem klippa på plass med same oppsett som før.</p>
+    <div id="relinkList"></div>
+    <input type="file" id="relinkFile" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac,.opus" hidden>
+    <div class="ls-btn-row">
+      <button class="btn" id="relinkLater" type="button">Hald fram utan</button>
+    </div>
+  </div>
+</div>
+
+<script src="../_libs/lamejs.min.js"></script>
 <script src="../js/neobrutalisme.js"></script>
 <script src="../js/vyrdepil-icons.js"></script>
 <script src="js/util.js"></script>
@@ -94,6 +267,12 @@
 <script src="js/render.js"></script>
 <script src="js/interact.js"></script>
 <script src="js/ui-tracks.js"></script>
+<script src="js/ui-mix.js"></script>
+<script src="js/ui-clip.js"></script>
+<script src="js/export.js"></script>
+<script src="js/ui-export.js"></script>
+<script src="js/project.js"></script>
+<script src="js/ui-project.js"></script>
 <script src="js/ui-toolbar.js"></script>
 <script src="js/main.js"></script>
 
