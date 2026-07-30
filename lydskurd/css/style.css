@@ -1,0 +1,206 @@
+/* Lydskurd — utvidar neobrutalisme.css.
+   Alle klassar er prefiksa .ls- så dei ikkje kolliderer med designsystemet.
+
+   Tidslinja har element designsystemet ikkje kjenner frå før — spor-baner,
+   spelehovud og eit sporhovud-panel. Dei er bygde i same språk: tjukke
+   kantar, harde skuggar utan mjuking og flate flater, og alle fargar kjem
+   frå tema-variablane så alle temaa held fram med å verke. */
+
+/* ---- Felles smått ---- */
+.ls-muted { color: var(--muted); font-size: 0.9rem; }
+.ls-warn {
+  color: var(--text);
+  background: var(--accent4);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 10px 14px;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+.ls-hint { margin: 12px 0 0; }
+.ls-footnote { margin: 24px 0; }
+
+.btn:focus-visible,
+input[type="file"]:focus-visible,
+.ls-lanes-scroll:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn:disabled:hover { transform: none; }
+
+.ls-icon-btn {
+  width: 42px; height: 42px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ls-danger:hover:not(:disabled) { background: var(--accent2); color: var(--text-on-accent); }
+.ls-icon-btn-small {
+  width: 30px; height: 30px;
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+
+/* ---- Verktøyrad ---- */
+.ls-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(8px, 1.5vw, 14px);
+  margin-bottom: 16px;
+}
+.ls-btn-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.ls-btn-group-end { margin-left: auto; }
+
+/* Transporten er samla i ein eigen ramme, så auget finn spel-knappen
+   med ein gong sjølv når verktøyraden veks. */
+.ls-transport {
+  gap: 6px;
+  padding: 6px 10px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.ls-transport .btn.active {
+  background: var(--accent2);
+  color: var(--text-on-accent);
+}
+.ls-time {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding-left: 6px;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+/* ---- Redigeringsflata ---- */
+.ls-editor {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(120px, 22vw, 190px) minmax(0, 1fr);
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 var(--shadow);
+  background: var(--bg);
+  overflow: hidden;
+}
+.ls-editor.ls-drop-active {
+  outline: 4px dashed var(--accent2);
+  outline-offset: -8px;
+}
+
+/* Sporhovuda. --ls-ruler-h og --ls-track-h blir sette frå ui-tracks.js
+   så høgdene alltid held takt med canvas-teikninga. */
+/* align-self: start hindrar at hovudkolonna blir strekt ned forbi
+   canvasen. Bane-kolonna er nemleg litt høgare enn teikninga, av di
+   det vassrette rullefeltet legg seg nedst i henne. */
+.ls-track-heads {
+  align-self: start;
+  border-right: 3px solid var(--border);
+  background: var(--surface);
+  min-width: 0;
+}
+.ls-track-head-spacer {
+  height: var(--ls-ruler-h, 34px);
+  border-bottom: 3px solid var(--border);
+  background: var(--surface);
+}
+.ls-track-head {
+  height: var(--ls-track-h, 96px);
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--border);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.ls-track-head-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ls-track-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 2px solid var(--border);
+  background: var(--accent3);
+  color: var(--text-on-light-accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.ls-track-name {
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.ls-track-info { color: var(--muted); font-size: 0.78rem; }
+.ls-track-actions { margin-top: auto; display: flex; gap: 6px; }
+
+/* Banene. Canvasen er berre så brei som vindauget og blir teikna på nytt
+   når ein skrollar — «spacer» er berre der for å gje rullefeltet lengd. */
+.ls-lanes-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 0;
+}
+.ls-lanes-spacer { position: relative; min-width: 100%; }
+#lanesCanvas {
+  position: sticky;
+  left: 0;
+  display: block;
+  touch-action: pan-x;
+}
+
+/* Melding når det ikkje er lyd i prosjektet enno */
+.ls-empty {
+  position: absolute;
+  left: clamp(120px, 22vw, 190px);
+  right: 0;
+  top: var(--ls-ruler-h, 34px);
+  margin: 0;
+  padding: clamp(16px, 4vw, 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--muted);
+  pointer-events: none;
+}
+.ls-empty[hidden] { display: none; }
+
+/* ---- Kort melding nedst ---- */
+.ls-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 140%);
+  max-width: min(92vw, 460px);
+  padding: 12px 18px;
+  background: var(--surface);
+  color: var(--text);
+  border: 3px solid var(--border);
+  box-shadow: 5px 5px 0 var(--shadow);
+  font-weight: 700;
+  text-align: center;
+  z-index: 900;
+  transition: transform 0.18s ease-out;
+}
+.ls-toast.open { transform: translate(-50%, 0); }
+
+/* ---- Mindre skjermar ---- */
+@media (max-width: 640px) {
+  .ls-editor { grid-template-columns: 104px minmax(0, 1fr); }
+  .ls-empty { left: 104px; }
+  .ls-track-head { padding: 6px 7px; }
+  .ls-track-info { display: none; }
+  .ls-btn-group-end { margin-left: 0; }
+  .ls-transport { width: 100%; justify-content: center; padding: 6px; }
+  .ls-time { padding-left: 0; margin-left: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-toast { transition: none; }
+}

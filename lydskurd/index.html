@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lydskurd — lydredigering for Vyrdepil</title>
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+  <!-- Hero -->
+  <div class="box2 hero-box">
+    <img src="../_resources/lydskurd.png" alt="Lydskurd" class="hero-logo">
+    <div class="hero-text">
+      <h1>Lydskurd</h1>
+      <p>Klipp og lim lyd på ei tidslinje med fleire spor. Dra inn filene dine, skjer dei til, still volum og lagra resultatet. Alt skjer i din eigen nettlesar — ingenting blir lasta opp.</p>
+    </div>
+  </div>
+
+  <!-- Redigeringsflata -->
+  <section class="box1" aria-labelledby="editorHeading">
+    <h2 class="heading3 no-mt" id="editorHeading">Tidslinja</h2>
+
+    <div class="ls-toolbar" role="toolbar" aria-label="Verktøy for tidslinja">
+      <div class="ls-btn-group">
+        <button class="btn" id="importBtn" type="button"><span data-icon="upload"></span>Hent lyd</button>
+        <button class="btn" id="addTrackBtn" type="button"><span data-icon="plus"></span>Nytt spor</button>
+        <button class="btn" id="splitBtn" type="button"><span data-icon="scissors"></span>Del her</button>
+        <button class="btn ls-icon-btn ls-danger" id="deleteBtn" type="button" aria-label="Slett valde klipp"><span data-icon="trash2"></span></button>
+        <button class="btn ls-icon-btn" id="undoBtn" type="button" aria-label="Angre"><span data-icon="undo"></span></button>
+        <button class="btn ls-icon-btn" id="redoBtn" type="button" aria-label="Gjer om"><span data-icon="redo"></span></button>
+        <input type="file" id="importFile" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac,.opus" multiple hidden>
+      </div>
+
+      <div class="ls-btn-group ls-transport">
+        <button class="btn ls-icon-btn" id="homeBtn" type="button" aria-label="Til starten"><span data-icon="chevronsLeft"></span></button>
+        <button class="btn" id="playBtn" type="button" aria-label="Spel av"><span data-icon="play"></span>Spel</button>
+        <button class="btn ls-icon-btn" id="stopBtn" type="button" aria-label="Stopp"><span data-icon="stop"></span></button>
+        <output class="ls-time" id="timeLabel" aria-live="off">0:00,0 / 0:00,0</output>
+      </div>
+
+      <div class="ls-btn-group ls-btn-group-end">
+        <button class="btn ls-icon-btn" id="zoomOutBtn" type="button" aria-label="Zoom ut"><span data-icon="zoomOut"></span></button>
+        <button class="btn ls-icon-btn" id="zoomInBtn" type="button" aria-label="Zoom inn"><span data-icon="zoomIn"></span></button>
+      </div>
+    </div>
+
+    <p class="ls-warn" id="memoryNote" role="status" hidden></p>
+
+    <div class="ls-editor" id="editor">
+      <div class="ls-track-heads" id="trackHeads"></div>
+      <div class="ls-lanes-scroll" id="lanesScroll">
+        <div class="ls-lanes-spacer" id="lanesSpacer">
+          <canvas id="lanesCanvas" aria-label="Tidslinje med lydspor" role="img"></canvas>
+        </div>
+      </div>
+      <p class="ls-empty" id="emptyNote">
+        <span data-icon="waves" data-icon-size="28"></span>
+        Dra ei lydfil hit — eller trykk «Hent lyd». Slepp du fila rett på eit spor, legg klippet seg akkurat der.
+      </p>
+    </div>
+
+    <p class="ls-muted ls-hint">
+      Dra eit klipp for å flytte det langs tidslinja eller over på eit anna spor. Dra i kanten for å
+    endre kor mykje av lyden som skal vere med — lyden sjølv blir ikkje røyrd, så du kan dra kanten
+    ut att seinare. Klippa hektar seg i rutenettet og i kvarandre — hald Alt nede om du vil plassere
+    heilt fritt. «Del her» eller tasten S set saksa ned der spelehovudet står.
+    Mellomrom spelar og pausar, Home går til starten og End til slutten. Delete slettar,
+    Ctrl+C, Ctrl+X og Ctrl+V kopierer, klipper ut og limer inn, og Ctrl+Z angrar.
+    Ctrl + rullehjul zoomar. Klikk eller dra i tidslinjalen øvst for å flytte spelehovudet.
+    </p>
+  </section>
+
+  <p class="ls-muted text-center ls-footnote">
+    Lydskurd — del av Vyrdepil. Lyden din blir handsama i minnet i nettlesaren og forlèt aldri maskina di.
+  </p>
+
+</main>
+</div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="js/util.js"></script>
+<script src="js/state.js"></script>
+<script src="js/peaks.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/render.js"></script>
+<script src="js/interact.js"></script>
+<script src="js/ui-tracks.js"></script>
+<script src="js/ui-toolbar.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
