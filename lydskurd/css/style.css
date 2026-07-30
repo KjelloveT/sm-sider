@@ -68,27 +68,29 @@ input[type="file"]:focus-visible,
 
 /* Ei tynn skiljelinje mellom gruppene, så auget ser at knappane høyrer
    saman i bolkar sjølv om dei alle ser like ut. */
-.ls-btn-group + .ls-btn-group {
+/* Transporten har alt si eiga ramme, og den siste gruppa er skild ut av
+   mellomrommet — difor er begge haldne utanfor. Skiljet er lagt på
+   margin, ikkje padding, så gruppene sin eigen innerkant blir urørt. */
+.ls-btn-group + .ls-btn-group:not(.ls-transport):not(.ls-btn-group-end) {
+  margin-left: clamp(4px, 0.8vw, 8px);
   padding-left: clamp(8px, 1.4vw, 14px);
   border-left: 3px solid var(--border);
-}
-/* Transporten har alt si eiga ramme, og den siste gruppa er skild ut av
-   mellomrommet — begge ville fått ei dobbel strek av regelen over. */
-.ls-btn-group + .ls-transport,
-.ls-btn-group + .ls-btn-group-end {
-  padding-left: 0;
-  border-left: none;
 }
 .ls-btn-group-end { margin-left: auto; }
 
 /* Transporten er samla i ein eigen ramme, så auget finn spel-knappen
    med ein gong sjølv når verktøyraden veks. */
+/* Ramma har med vilje INGEN eigen skugge: knappane inni har alt kvar
+   sin harde skugge, og to lag med skuggar oppå kvarandre blir berre
+   rotete. Innerkanten må vere romsleg nok til at knappeskuggane (4 px)
+   får plass utan å leggje seg på ramma. */
 .ls-transport {
   gap: 6px;
-  padding: 6px 10px;
+  /* Botnen har 4 px meir enn toppen, av di knappeskuggane fell ned og
+     til høgre. Med lik padding ville dei lagt seg oppå rammekanten. */
+  padding: 8px 12px 12px;
   border: 3px solid var(--border);
-  background: var(--surface);
-  box-shadow: 4px 4px 0 var(--shadow);
+  background: var(--bg);
 }
 .ls-transport .btn.active {
   background: var(--accent2);
@@ -298,6 +300,22 @@ input[type="file"]:focus-visible,
   pointer-events: none;
 }
 .ls-empty[hidden] { display: none; }
+
+/* Eit ikon midt i ei setning, teikna som ein liten knapp så det er
+   tydeleg at det viser til noko ein kan trykkje på. */
+.ls-inline-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  vertical-align: -8px;
+  margin: 0 2px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  box-shadow: 2px 2px 0 var(--shadow);
+  color: var(--text);
+}
 
 /* ---- Panelet for det valde klippet ---- */
 .ls-clip-panel {
