@@ -26,34 +26,43 @@
 
   <!-- Redigeringsflata -->
   <section class="box1" aria-labelledby="editorHeading">
-    <h2 class="heading3 no-mt" id="editorHeading">Tidslinja</h2>
+    <div class="ls-section-head">
+      <h2 class="heading3 no-mt" id="editorHeading">Tidslinja</h2>
+      <button class="btn ls-btn-small" id="tipsBtn" type="button"><span data-icon="lightbulb"></span>Tips</button>
+    </div>
 
     <div class="ls-toolbar" role="toolbar" aria-label="Verktøy for tidslinja">
       <div class="ls-btn-group">
-        <button class="btn" id="importBtn" type="button"><span data-icon="upload"></span>Hent lyd</button>
-        <button class="btn" id="recordBtn" type="button"><span data-icon="mic"></span>Ta opp</button>
-        <button class="btn" id="addTrackBtn" type="button"><span data-icon="plus"></span>Nytt spor</button>
-        <button class="btn" id="splitBtn" type="button"><span data-icon="scissors"></span>Del her</button>
-        <button class="btn ls-icon-btn ls-danger" id="deleteBtn" type="button" aria-label="Slett valde klipp"><span data-icon="trash2"></span></button>
-        <button class="btn ls-icon-btn" id="undoBtn" type="button" aria-label="Angre"><span data-icon="undo"></span></button>
-        <button class="btn ls-icon-btn" id="redoBtn" type="button" aria-label="Gjer om"><span data-icon="redo"></span></button>
-        <button class="btn" id="exportBtn" type="button"><span data-icon="download"></span>Lagre lyd</button>
-        <button class="btn" id="saveProjectBtn" type="button"><span data-icon="save"></span>Lagre prosjekt</button>
-        <button class="btn" id="openProjectBtn" type="button"><span data-icon="folderOpen"></span>Opne prosjekt</button>
+        <button class="btn ls-icon-btn" id="importBtn" type="button" aria-label="Hent lyd" title="Hent lyd frå maskina"><span data-icon="upload"></span></button>
+        <button class="btn ls-icon-btn" id="recordBtn" type="button" aria-label="Ta opp frå mikrofon" title="Ta opp frå mikrofon"><span data-icon="mic"></span></button>
+        <button class="btn ls-icon-btn" id="addTrackBtn" type="button" aria-label="Nytt spor" title="Legg til eit nytt spor"><span data-icon="plus"></span></button>
         <input type="file" id="openProjectFile" accept=".lydskurd,application/json" hidden>
         <input type="file" id="importFile" accept="audio/*,.mp3,.wav,.ogg,.m4a,.flac,.opus" multiple hidden>
       </div>
 
+      <div class="ls-btn-group">
+        <button class="btn ls-icon-btn" id="splitBtn" type="button" aria-label="Del klippet her" title="Del klippet der spelehovudet står (S)"><span data-icon="scissors"></span></button>
+        <button class="btn ls-icon-btn ls-danger" id="deleteBtn" type="button" aria-label="Slett valde klipp" title="Slett dei valde klippa (Delete)"><span data-icon="trash2"></span></button>
+        <button class="btn ls-icon-btn" id="undoBtn" type="button" aria-label="Angre" title="Angre (Ctrl+Z)"><span data-icon="undo"></span></button>
+        <button class="btn ls-icon-btn" id="redoBtn" type="button" aria-label="Gjer om" title="Gjer om (Ctrl+Shift+Z)"><span data-icon="redo"></span></button>
+      </div>
+
       <div class="ls-btn-group ls-transport">
-        <button class="btn ls-icon-btn" id="homeBtn" type="button" aria-label="Til starten"><span data-icon="chevronsLeft"></span></button>
-        <button class="btn" id="playBtn" type="button" aria-label="Spel av"><span data-icon="play"></span>Spel</button>
-        <button class="btn ls-icon-btn" id="stopBtn" type="button" aria-label="Stopp"><span data-icon="stop"></span></button>
+        <button class="btn ls-icon-btn" id="homeBtn" type="button" aria-label="Til starten" title="Til starten (Home)"><span data-icon="chevronsLeft"></span></button>
+        <button class="btn ls-icon-btn" id="playBtn" type="button" aria-label="Spel av" title="Spel av (mellomrom)"><span data-icon="play"></span></button>
+        <button class="btn ls-icon-btn" id="stopBtn" type="button" aria-label="Stopp" title="Stopp"><span data-icon="stop"></span></button>
         <output class="ls-time" id="timeLabel" aria-live="off">0:00,0 / 0:00,0</output>
       </div>
 
+      <div class="ls-btn-group">
+        <button class="btn ls-icon-btn" id="zoomOutBtn" type="button" aria-label="Zoom ut" title="Zoom ut (Ctrl + rullehjul)"><span data-icon="zoomOut"></span></button>
+        <button class="btn ls-icon-btn" id="zoomInBtn" type="button" aria-label="Zoom inn" title="Zoom inn (Ctrl + rullehjul)"><span data-icon="zoomIn"></span></button>
+      </div>
+
       <div class="ls-btn-group ls-btn-group-end">
-        <button class="btn ls-icon-btn" id="zoomOutBtn" type="button" aria-label="Zoom ut"><span data-icon="zoomOut"></span></button>
-        <button class="btn ls-icon-btn" id="zoomInBtn" type="button" aria-label="Zoom inn"><span data-icon="zoomIn"></span></button>
+        <button class="btn ls-icon-btn" id="exportBtn" type="button" aria-label="Lagre lyd" title="Lagre miksen som WAV eller MP3"><span data-icon="download"></span></button>
+        <button class="btn ls-icon-btn" id="saveProjectBtn" type="button" aria-label="Lagre prosjekt" title="Lagre heile oppsettet som prosjektfil"><span data-icon="save"></span></button>
+        <button class="btn ls-icon-btn" id="openProjectBtn" type="button" aria-label="Opne prosjekt" title="Opne ei prosjektfil"><span data-icon="folderOpen"></span></button>
       </div>
     </div>
 
@@ -135,19 +144,7 @@
     </p>
 
     <p class="ls-muted ls-hint">
-      Dra eit klipp for å flytte det langs tidslinja eller over på eit anna spor. Dra i kanten for å
-    endre kor mykje av lyden som skal vere med — lyden sjølv blir ikkje røyrd, så du kan dra kanten
-    ut att seinare. To klipp kan liggje kant i kant, men aldri oppå kvarandre; skal to lydar høyrast
-    samstundes, legg du dei på kvar sitt spor. Klippa hektar seg i rutenettet og i kvarandre — hald
-    Alt nede om du vil plassere heilt fritt. Øvst i eit valt klipp ligg to små greip du kan dra for å
-    fade lyden inn og ut — dei same verdiane kan settast nøyaktig i panelet under tidslinja.
-    «Del her» eller tasten S set saksa ned der spelehovudet står.
-    Mellomrom spelar og pausar, Home går til starten og End til slutten. Delete slettar,
-    Ctrl+C, Ctrl+X og Ctrl+V kopierer, klipper ut og limer inn, og Ctrl+Z angrar.
-    Ctrl + rullehjul zoomar. Klikk eller dra i tidslinjalen øvst for å flytte spelehovudet.
-    Når du er ferdig, lagrar «Lagre lyd» heile tidslinja som WAV eller MP3. Vil du halde fram
-    seinare, lagrar «Lagre prosjekt» heile oppsettet som ei fil du tek vare på sjølv.
-    «Ta opp» hentar lyd frå mikrofonen — han blir slått av att med ein gong du er ferdig.
+      Peik på ein knapp for å sjå kva han gjer — eller trykk «Tips» øvst for heile oversikta.
     </p>
   </section>
 
@@ -203,6 +200,75 @@
     <div class="ls-btn-row">
       <button class="btn" id="exportStart" type="button"><span data-icon="download"></span>Lagre fila</button>
       <button class="btn" id="exportCancel" type="button">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: tips og teiknforklaring -->
+<div class="modal-overlay" id="tipsOverlay" role="dialog" aria-modal="true" aria-labelledby="tipsHeading">
+  <div class="modal1 ls-tips-modal">
+    <button class="btn ls-icon-btn modal-close" id="tipsClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="tipsHeading">Tips</h2>
+
+    <h3 class="ls-tips-head">Hente lyd inn</h3>
+    <dl class="ls-tips-list">
+      <dt><span data-icon="upload" data-icon-size="18"></span></dt>
+      <dd><strong>Hent lyd</strong> — hentar lydfiler frå maskina. Du kan òg dra filer rett inn på tidslinja; slepper du dei på eit spor, legg klippet seg akkurat der.</dd>
+      <dt><span data-icon="mic" data-icon-size="18"></span></dt>
+      <dd><strong>Ta opp</strong> — tek opp frå mikrofonen. Han blir slått på først når du sjølv ber om det, og av att med ein gong du er ferdig.</dd>
+      <dt><span data-icon="plus" data-icon-size="18"></span></dt>
+      <dd><strong>Nytt spor</strong> — legg til eit spor. To lydar som skal høyrast samstundes må liggje på kvar sitt spor.</dd>
+    </dl>
+
+    <h3 class="ls-tips-head">Redigere</h3>
+    <dl class="ls-tips-list">
+      <dt><span data-icon="scissors" data-icon-size="18"></span></dt>
+      <dd><strong>Del her</strong> <kbd>S</kbd> — set saksa ned der spelehovudet står. Har du valt klipp, blir berre dei delte; elles blir alt spelehovudet går gjennom delt.</dd>
+      <dt><span data-icon="trash2" data-icon-size="18"></span></dt>
+      <dd><strong>Slett</strong> <kbd>Delete</kbd> — slettar dei valde klippa.</dd>
+      <dt><span data-icon="undo" data-icon-size="18"></span></dt>
+      <dd><strong>Angre</strong> <kbd>Ctrl</kbd>+<kbd>Z</kbd></dd>
+      <dt><span data-icon="redo" data-icon-size="18"></span></dt>
+      <dd><strong>Gjer om</strong> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></dd>
+    </dl>
+
+    <h3 class="ls-tips-head">Spele av</h3>
+    <dl class="ls-tips-list">
+      <dt><span data-icon="chevronsLeft" data-icon-size="18"></span></dt>
+      <dd><strong>Til starten</strong> <kbd>Home</kbd></dd>
+      <dt><span data-icon="play" data-icon-size="18"></span></dt>
+      <dd><strong>Spel og pause</strong> <kbd>mellomrom</kbd>. <kbd>End</kbd> går til slutten.</dd>
+      <dt><span data-icon="stop" data-icon-size="18"></span></dt>
+      <dd><strong>Stopp</strong> — går tilbake dit avspelinga starta, så du lett kan høyre same passasjen om att. Trykk ein gong til for å gå heilt til start.</dd>
+      <dt><span data-icon="zoomIn" data-icon-size="18"></span></dt>
+      <dd><strong>Zoom inn</strong> — sjå kortare tid, men meir detalj.</dd>
+      <dt><span data-icon="zoomOut" data-icon-size="18"></span></dt>
+      <dd><strong>Zoom ut</strong> — sjå meir av tidslinja. <kbd>Ctrl</kbd> + rullehjul gjer det same, og held tida under peikaren i ro.</dd>
+    </dl>
+
+    <h3 class="ls-tips-head">Lagre</h3>
+    <dl class="ls-tips-list">
+      <dt><span data-icon="download" data-icon-size="18"></span></dt>
+      <dd><strong>Lagre lyd</strong> — miksar heile tidslinja ned til éi fil, WAV eller MP3. Dette er fila du deler med andre.</dd>
+      <dt><span data-icon="save" data-icon-size="18"></span></dt>
+      <dd><strong>Lagre prosjekt</strong> — lagrar heile oppsettet, med eller utan lyden, så du kan halde fram seinare. Fila blir lasta ned til deg; ingenting blir lagra i nettlesaren.</dd>
+      <dt><span data-icon="folderOpen" data-icon-size="18"></span></dt>
+      <dd><strong>Opne prosjekt</strong> — opnar ei prosjektfil du har lagra før.</dd>
+    </dl>
+
+    <h3 class="ls-tips-head">Å arbeide på tidslinja</h3>
+    <ul class="ls-tips-prose">
+      <li><strong>Flytte:</strong> dra eit klipp langs tidslinja eller over på eit anna spor.</li>
+      <li><strong>Skjere til:</strong> dra i kanten av klippet. Lyden sjølv blir aldri røyrd, så du kan dra kanten ut att seinare og få alt tilbake.</li>
+      <li><strong>Fade:</strong> øvst i klippet ligg to små greip du kan dra. Dei same verdiane kan settast nøyaktig i panelet under tidslinja.</li>
+      <li><strong>Ingen klipp oppå kvarandre:</strong> to klipp kan liggje kant i kant, men aldri over. Skal to lydar høyrast samstundes, legg du dei på kvar sitt spor.</li>
+      <li><strong>Snapping:</strong> klippa hektar seg i rutenettet, i spelehovudet og i kvarandre. Hald <kbd>Alt</kbd> nede om du vil plassere heilt fritt.</li>
+      <li><strong>Spelehovudet:</strong> klikk eller dra i tidslinjalen øvst.</li>
+      <li><strong>Kopiere:</strong> <kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Ctrl</kbd>+<kbd>X</kbd> og <kbd>Ctrl</kbd>+<kbd>V</kbd>.</li>
+    </ul>
+
+    <div class="ls-btn-row">
+      <button class="btn" id="tipsDone" type="button"><span data-icon="check"></span>Greitt</button>
     </div>
   </div>
 </div>

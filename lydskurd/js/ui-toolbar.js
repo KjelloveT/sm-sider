@@ -27,13 +27,16 @@ LS.uiToolbar = (function () {
 
   /* ──────────────── Knappeutsjånad ──────────────── */
 
+  /* Knappen er berre eit ikon, så merkinga må berast av aria-label og
+     title — elles ville han vore stum for skjermlesarar og gåtefull for
+     alle andre. */
   function setPlayIcon(isPlaying) {
     playBtn.textContent = '';
     const span = LS.util.el('span');
-    span.innerHTML = ICON(isPlaying ? 'pause' : 'play', 16);
+    span.innerHTML = ICON(isPlaying ? 'pause' : 'play', 18);
     playBtn.appendChild(span);
-    playBtn.appendChild(document.createTextNode(isPlaying ? 'Pause' : 'Spel'));
     playBtn.setAttribute('aria-label', isPlaying ? 'Pause' : 'Spel av');
+    playBtn.title = isPlaying ? 'Pause (mellomrom)' : 'Spel av (mellomrom)';
     playBtn.classList.toggle('active', isPlaying);
   }
 
@@ -387,6 +390,14 @@ LS.uiToolbar = (function () {
 
     // Sluttar lyden av andre grunnar, skal knappane følgje med.
     LS.audio.setOnEnded(() => { updateButtons(); LS.render.schedule(); });
+
+    // Tips-vindauget: rein forklaring, ingen tilstand å halde styr på.
+    const tipsOverlay = document.getElementById('tipsOverlay');
+    const closeTips = () => LS.util.closeModal(tipsOverlay);
+    document.getElementById('tipsBtn').addEventListener('click', () => LS.util.openModal(tipsOverlay));
+    document.getElementById('tipsClose').addEventListener('click', closeTips);
+    document.getElementById('tipsDone').addEventListener('click', closeTips);
+    LS.util.bindOverlayClose(tipsOverlay);
 
     bindKeys();
     updateButtons();
