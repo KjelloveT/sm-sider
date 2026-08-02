@@ -38,7 +38,11 @@
     return Math.max(0, Math.min(3, level | 0));
   }
 
-  function randomInt(n) { return Math.floor(Math.random() * n); }
+  // Tilfeldigheitskjelda kan bytast ut (sjå setRng) slik at arbeidsark-eksporten
+  // kan generere reproduserbare oppgåvesett frå eit seed. Spelet rører aldri dette.
+  let rand = Math.random;
+
+  function randomInt(n) { return Math.floor(rand() * n); }
 
   function randomTime(level) {
     level = clampLevel(level);
@@ -116,19 +120,19 @@
     while (out.length < n && guard < 200) {
       guard++;
       let cand;
-      const roll = Math.random();
+      const roll = rand();
       if (roll < 0.55) {
         // same time, anna minutt frå nivået
         let m;
         if (mins) m = mins[randomInt(mins.length)];
         else {
-          const delta = [1, 2, 3, 5, 5, 10][randomInt(6)] * (Math.random() < 0.5 ? -1 : 1);
+          const delta = [1, 2, 3, 5, 5, 10][randomInt(6)] * (rand() < 0.5 ? -1 : 1);
           m = ((correct.m + delta) % 60 + 60) % 60;
         }
         cand = { h: correct.h, m: m };
       } else if (roll < 0.8) {
         // nær time, same minutt — hald domenet (12t vs 24t)
-        const dh = Math.random() < 0.5 ? 1 : -1;
+        const dh = rand() < 0.5 ? 1 : -1;
         if (use24) {
           const h = (correct.h + dh + 24) % 24;
           cand = { h: h, m: correct.m };
@@ -172,6 +176,9 @@
     key: key,
     distractorTimes: distractorTimes,
     shuffle: shuffle,
+    // byt tilfeldigheitskjelde (t.d. ein seeda PRNG) — kall resetRng etterpå
+    setRng: function (fn) { rand = fn || Math.random; },
+    resetRng: function () { rand = Math.random; },
     snapStep: function (level) { return LEVEL_SNAP[clampLevel(level)]; },
     levelMinutes: function (level) { return LEVEL_MINUTES[clampLevel(level)]; },
     LEVEL_NAMES: ['Heile & halve', 'Kvart', 'Fem & ti', 'Alle minutt'],

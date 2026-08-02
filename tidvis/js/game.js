@@ -39,7 +39,9 @@
       return TidvisClock.analog({
         h: time.h, m: time.m,
         size: opts.size || 200,
-        accent: opts.accent || 'pink'
+        accent: opts.accent || 'pink',
+        print: !!opts.print,          // svart på kvitt for arbeidsark
+        hands: opts.hands !== false   // false = tom skive ('Teikn visarane')
       }).el;
     }
     if (kind === 'digital' || kind === 'digital24') {

@@ -201,8 +201,11 @@
       snoggBtn.addEventListener('click', function () { self.startSnogg(); });
       const badgeBtn = button('btn btn--ghost btn--lg', 'Sjå merke', 'trophy');
       badgeBtn.addEventListener('click', function () { self.showBadges(); });
+      const sheetBtn = button('btn btn--blue btn--lg', 'Lag arbeidsark', 'printer');
+      sheetBtn.addEventListener('click', function () { TidvisExport.open(); });
       heroCta.appendChild(snoggBtn);
       heroCta.appendChild(badgeBtn);
+      heroCta.appendChild(sheetBtn);
       heroCard.appendChild(heroCta);
 
       this.elMenu.appendChild(heroCard);

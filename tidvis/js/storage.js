@@ -26,7 +26,9 @@
       total: 10,
       stillTarget: 'text',
       paraReprs: ['analog', 'text']
-    }
+    },
+    // oppsett for arbeidsark-eksporten (sjå sheet.js) — elevnamn blir aldri lagra
+    exportSettings: null
   };
 
   function clone(obj) { return JSON.parse(JSON.stringify(obj)); }
