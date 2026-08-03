@@ -15,16 +15,27 @@ class PeerHost {
         this.connections = new Map(); // playerId → { conn, name }
         this.peer = null;
         this.destroyed = false;
+        this.serverIndex = 0;
+        this.opened = false;
+        this.openTimer = null;
 
         this._initPeer();
     }
 
     _initPeer() {
-        this.peer = new Peer(this.peerId, {
-            debug: 0
-        });
+        const options = FKPeerConfig.optionsFor(this.serverIndex);
+        console.log('[PeerHost] Koplar til signalvert:', options.host);
+        this.peer = new Peer(this.peerId, options);
+
+        // Ein hengande signalvert gjev inga error-hending — då må vi sjølve gje opp.
+        this.openTimer = setTimeout(() => {
+            console.warn('[PeerHost] Signalverten svarte ikkje innan tidsfristen:', options.host);
+            this._handleServerFailure('Kunne ikkje koble til signaltenesta. Sjekk internett-tilkoplinga.');
+        }, FKPeerConfig.OPEN_TIMEOUT_MS);
 
         this.peer.on('open', (id) => {
+            this._clearOpenTimer();
+            this.opened = true;
             console.log('[PeerHost] Opna med ID:', id);
             if (this.callbacks.onReady) this.callbacks.onReady(this.roomCode);
         });
@@ -36,10 +47,12 @@ class PeerHost {
         this.peer.on('error', (err) => {
             console.error('[PeerHost] Feil:', err.type, err.message);
             if (err.type === 'unavailable-id') {
+                this._clearOpenTimer();
                 if (this.callbacks.onError) this.callbacks.onError('Romkoden er allereie i bruk. Prøv ein annan.');
             } else if (err.type === 'network' || err.type === 'server-error') {
-                if (this.callbacks.onError) this.callbacks.onError('Kunne ikkje koble til signaltenesta. Sjekk internett-tilkoplinga.');
+                this._handleServerFailure('Kunne ikkje koble til signaltenesta. Sjekk internett-tilkoplinga.');
             } else {
+                this._clearOpenTimer();
                 if (this.callbacks.onError) this.callbacks.onError('Tilkoplingsfeil: ' + err.type);
             }
         });
@@ -54,6 +67,32 @@ class PeerHost {
                 }, 2000);
             }
         });
+    }
+
+    _clearOpenTimer() {
+        if (this.openTimer) {
+            clearTimeout(this.openTimer);
+            this.openTimer = null;
+        }
+    }
+
+    /**
+     * Signalverten svarar ikkje: prøv neste i lista, eller meld frå om lista er tom.
+     * Gjeld berre den første oppkoplinga — etter 'open' tek reconnect-logikken over.
+     * @param {string} message
+     */
+    _handleServerFailure(message) {
+        this._clearOpenTimer();
+        if (this.destroyed || this.opened) return;
+
+        if (!FKPeerConfig.hasFallbackAfter(this.serverIndex)) {
+            if (this.callbacks.onError) this.callbacks.onError(message);
+            return;
+        }
+
+        try { this.peer.destroy(); } catch (e) { /* ignorer */ }
+        this.serverIndex++;
+        this._initPeer();
     }
 
     _handleConnection(conn) {
@@ -168,6 +207,7 @@ class PeerHost {
      */
     destroy() {
         this.destroyed = true;
+        this._clearOpenTimer();
         this.connections.forEach(({ conn }) => {
             try { conn.close(); } catch (e) { /* ignorer */ }
         });

@@ -20,16 +20,27 @@ class PeerPlayer {
         this.destroyed = false;
         this.reconnectAttempts = 0;
         this.maxReconnectAttempts = 5;
+        this.serverIndex = 0;
+        this.opened = false;
+        this.openTimer = null;
 
         this._initPeer();
     }
 
     _initPeer() {
-        this.peer = new Peer(undefined, {
-            debug: 0
-        });
+        const options = FKPeerConfig.optionsFor(this.serverIndex);
+        console.log('[PeerPlayer] Koplar til signalvert:', options.host);
+        this.peer = new Peer(undefined, options);
+
+        // Ein hengande signalvert gjev inga error-hending — då må vi sjølve gje opp.
+        this.openTimer = setTimeout(() => {
+            console.warn('[PeerPlayer] Signalverten svarte ikkje innan tidsfristen:', options.host);
+            this._handleServerFailure();
+        }, FKPeerConfig.OPEN_TIMEOUT_MS);
 
         this.peer.on('open', () => {
+            this._clearOpenTimer();
+            this.opened = true;
             console.log('[PeerPlayer] Peer opna, koplar til vert:', this.hostPeerId);
             this._connectToHost();
         });
@@ -37,10 +48,12 @@ class PeerPlayer {
         this.peer.on('error', (err) => {
             console.error('[PeerPlayer] Feil:', err.type, err.message);
             if (err.type === 'peer-unavailable') {
+                this._clearOpenTimer();
                 if (this.callbacks.onError) this.callbacks.onError('Fann ikkje rommet. Sjekk at romkoden er rett og at verten er tilkopla.');
             } else if (err.type === 'network' || err.type === 'server-error') {
-                if (this.callbacks.onError) this.callbacks.onError('Kunne ikkje koble til signaltenesta. Sjekk internett-tilkoplinga.');
+                this._handleServerFailure();
             } else {
+                this._clearOpenTimer();
                 if (this.callbacks.onError) this.callbacks.onError('Tilkoplingsfeil: ' + err.type);
             }
         });
@@ -55,6 +68,33 @@ class PeerPlayer {
                 }, 2000);
             }
         });
+    }
+
+    _clearOpenTimer() {
+        if (this.openTimer) {
+            clearTimeout(this.openTimer);
+            this.openTimer = null;
+        }
+    }
+
+    /**
+     * Signalverten svarar ikkje: prøv neste i lista, eller meld frå om lista er tom.
+     * Gjeld berre den første oppkoplinga — etter 'open' tek reconnect-logikken over.
+     */
+    _handleServerFailure() {
+        this._clearOpenTimer();
+        if (this.destroyed || this.opened) return;
+
+        if (!FKPeerConfig.hasFallbackAfter(this.serverIndex)) {
+            if (this.callbacks.onError) {
+                this.callbacks.onError('Signaltenesta som koplar saman spelet svarar ikkje akkurat no. Vent litt og prøv igjen.');
+            }
+            return;
+        }
+
+        try { this.peer.destroy(); } catch (e) { /* ignorer */ }
+        this.serverIndex++;
+        this._initPeer();
     }
 
     _connectToHost() {
@@ -102,7 +142,9 @@ class PeerPlayer {
 
     _tryReconnect() {
         if (this.destroyed || this.reconnectAttempts >= this.maxReconnectAttempts) {
-            if (this.callbacks.onError) this.callbacks.onError('Mista tilkoplinga til verten. Prøv å laste sida på nytt.');
+            if (this.callbacks.onError) {
+                this.callbacks.onError('Mista tilkoplinga til verten. Sjekk at du er på same wifi som verten — nokre nett sperrar for direkte tilkopling mellom maskiner. Prøv så å laste sida på nytt.');
+            }
             return;
         }
 
@@ -136,6 +178,7 @@ class PeerPlayer {
      */
     destroy() {
         this.destroyed = true;
+        this._clearOpenTimer();
         if (this.conn) {
             try { this.conn.close(); } catch (e) { /* ignorer */ }
         }
