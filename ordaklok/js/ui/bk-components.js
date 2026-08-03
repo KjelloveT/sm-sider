@@ -150,17 +150,25 @@
     return el;
   }
 
-  /* ── Vyrde-maskoten (mellombels: vyrdepil.png) ─────────── */
-  /* mood: "wave" | "shout" | "cheer" | "think" | "default" */
+  /* ── Vyrde-maskoten ─────────────────────────────────────── */
+  /* Byggjer på den felles komponenten i js/vyrde.js, som klipper eitt
+     ansiktsuttrykk ut av sprite-arket _resources/vyrde.png.
+     mood: sjå Vyrde.MOODS — t.d. "wave", "happy", "think", "surprised",
+     "angry", "sad", "tired", "wink", "cool". */
   function vyrde(opts) {
     opts = opts || {};
-    const img = document.createElement('img');
-    img.src = opts.src || '../_resources/vyrdepil.png';
-    img.alt = 'Vyrde';
-    img.className = 'bk-vyrde';
-    if (opts.mood) img.classList.add('mood-' + opts.mood);
-    if (opts.size) img.style.width = (typeof opts.size === 'number' ? opts.size + 'px' : opts.size);
-    return img;
+    return root.Vyrde.create({
+      mood: opts.mood || 'wave',
+      size: opts.size,
+      alt: opts.alt || 'Vyrde',
+      src: opts.src,
+      className: 'bk-vyrde'
+    });
+  }
+
+  /** Byt ansiktsuttrykk på eit element laga med vyrde(). */
+  function setVyrdeMood(el, mood) {
+    root.Vyrde.setMood(el, mood);
   }
 
   function vyrdeWithBubble(opts) {
@@ -208,6 +216,7 @@
     stamp,
     bubble,
     vyrde,
+    setVyrdeMood,
     vyrdeWithBubble,
     openModal,
     closeModal,

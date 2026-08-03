@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordaklok — Omgrepsøving for klasserommet</title>
     <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="../css/vyrde.css">
     <link rel="stylesheet" href="css/boksekamp.css">
+    <script src="../js/vyrde.js" defer></script>
     <script src="../js/neo-header.js" defer></script>
 </head>
 <body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
@@ -90,6 +92,11 @@
         <div class="bk-share-layout">
             <div class="bk-share-qr-col">
                 <canvas id="shareLinkQR" aria-label="QR-kode for deling"></canvas>
+                <p class="bk-qr-fail" id="shareLinkQRFail" role="status" style="display:none;">
+                    <span class="bk-qr-fail-title">Lista er for lang for ein QR-kode</span>
+                    Lenkja ber med seg alle orda, og no er ho lengre enn ein QR-kode har plass til.
+                    Bruk <strong>Kopier lenkje</strong> i staden, eller del lista opp i to kortare lister.
+                </p>
                 <p class="bk-qr-warn" id="shareLinkQRWarn" style="display:none;">
                     Jo fleire ord, desto meir komplisert vert QR-koden.
                 </p>

@@ -61,10 +61,7 @@
 
       const vyrdeCol = document.createElement('div');
       vyrdeCol.className = 'bk-mc-vyrde';
-      const vyrdeImg = document.createElement('img');
-      vyrdeImg.src = '../_resources/vyrdepil.png';
-      vyrdeImg.alt = 'Vyrde';
-      vyrdeImg.className = 'bk-vyrde mood-shout';
+      const vyrdeImg = Vyrde.create({ mood: 'surprised', alt: 'Vyrde', className: 'bk-vyrde' });
       vyrdeCol.appendChild(vyrdeImg);
       const bub = document.createElement('div');
       bub.className = 'bk-bubble bk-bubble-down';

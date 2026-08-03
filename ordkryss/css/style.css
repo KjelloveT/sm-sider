@@ -92,15 +92,23 @@ input[type="file"]:focus-visible {
   padding: 4px;
 }
 /* Rutene fyller spora sine nøyaktig. Kvar rute teiknar berre høgre og nedre
-   kant; venstre og øvre kant kjem frå .ok-edge-*-klassane som render.js set
-   der det ikkje ligg ei rute frå før. Slik blir kvar linje teikna éin gong,
-   og rutenettet står beint uansett skjermskalering. */
+   kant, så delte linjer blir teikna éin gong.
+
+   Ytterkantane (venstre og øvre, der det ikkje ligg ei rute frå før) kan
+   ikkje teiknast som border: ein border ligg *inni* ruta, medan ei delt
+   linje ligg i dei to nedste pikslane av ruta *over*. Då hamnar dei to
+   linjestykka 2px frå kvarandre, og rutenettet ser skeivt ut. Difor
+   teiknar vi ytterkantane med box-shadow utanfor ruteboksen — same stad
+   som ei delt linje ville lege. Bonus: alle ruter får identisk
+   innhaldsboks, så tal og bokstavar står likt i kvar rute. */
 .ok-grid {
   display: grid;
   grid-template-columns: repeat(var(--ok-cols, 10), var(--ok-cell, 34px));
   grid-auto-rows: var(--ok-cell, 34px);
   width: max-content;
   gap: 0;
+  /* gjer plass til box-shadow-kantane på topp og venstre side */
+  padding: 2px 0 0 2px;
 }
 .ok-cell {
   position: relative;
@@ -112,10 +120,14 @@ input[type="file"]:focus-visible {
   background: var(--surface);
   cursor: pointer;
 }
-.ok-cell.ok-edge-left { border-left-width: 2px; }
-.ok-cell.ok-edge-top { border-top-width: 2px; }
+.ok-cell.ok-edge-left { box-shadow: -2px 0 0 0 var(--border); }
+.ok-cell.ok-edge-top { box-shadow: 0 -2px 0 0 var(--border); }
+.ok-cell.ok-edge-left.ok-edge-top {
+  box-shadow: -2px 0 0 0 var(--border), 0 -2px 0 0 var(--border), -2px -2px 0 0 var(--border);
+}
 .ok-cell-empty {
   border-width: 0;
+  box-shadow: none;
   background: transparent;
   cursor: default;
 }

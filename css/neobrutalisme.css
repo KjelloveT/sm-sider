@@ -330,6 +330,36 @@ main.main-wide {
   min-width: 0;
   color: var(--text-on-accent);
 }
+
+/* Gul lapp med litt slark i, til korte notat som ikkje skal stele
+   merksemda frå overskrifta. Ligg på lys pastellbakgrunn, så teksten
+   må vere mørk (sjå AGENTS.md §3.2 om kontrast). */
+.postit {
+  background: var(--accent4);
+  color: var(--text-on-light-accent);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 14px 16px;
+  transform: rotate(1.5deg);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  font-weight: 600;
+}
+.postit > * { color: inherit; }
+.postit > * + * { margin-top: 8px; }
+.postit-title {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 6px;
+}
+.postit-left { transform: rotate(-1.5deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .postit, .postit-left { transform: none; }
+}
 .hero-text h1 {
   font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
   letter-spacing: -1px; line-height: 1.1; margin-bottom: 8px;
@@ -398,18 +428,23 @@ main.main-wide {
 .modal2 { background: var(--surface); border: 3px solid var(--border); padding: clamp(28px, 5vw, 32px) clamp(20px, 4vw, 24px); box-shadow: 5px 5px 0 var(--shadow); transform: rotate(-1deg); position: relative; max-width: 480px; width: 100%; }
 .modal2::before { content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%) rotate(-1deg); width: 80px; height: 24px; background: var(--accent); border: 2px solid var(--border); z-index: 1; }
 .modal2 .modal-close { position: absolute; top: 12px; right: 12px; }
-.modal3 { background: var(--surface); border: 3px solid var(--border); padding: 0; overflow: hidden; box-shadow: 5px 5px 0 var(--shadow); max-width: 480px; width: 100%; }
-.modal3 .modal-header { background: var(--accent); color: var(--text-on-accent); padding: 14px 20px; font-weight: 800; border-bottom: 3px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.modal3 .modal-body { padding: 20px; }
-.modal3 .modal-footer { padding: 12px 20px; border-top: 3px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+/* modal3/modal5 klipper innhaldet (overflow: hidden) så headeren/tabbane held
+   seg innanfor ramma. Då kan ikkje sjølve modalen skrolle, og med max-height
+   90vh blir botnen av eit langt innhald utilgjengeleg. Løysinga er å la
+   modalen vere ein flex-kolonne der berre .modal-body skrollar — header og
+   footer står i ro. */
+.modal3 { background: var(--surface); border: 3px solid var(--border); padding: 0; overflow: hidden; box-shadow: 5px 5px 0 var(--shadow); max-width: 480px; width: 100%; display: flex; flex-direction: column; }
+.modal3 .modal-header { background: var(--accent); color: var(--text-on-accent); padding: 14px 20px; font-weight: 800; border-bottom: 3px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex: 0 0 auto; }
+.modal3 .modal-body { padding: 20px; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.modal3 .modal-footer { padding: 12px 20px; border-top: 3px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; flex: 0 0 auto; }
 .modal4 { background: var(--surface); border: 3px solid var(--border); padding: 20px; border-radius: 20px 0 20px 0; box-shadow: 5px 5px 0 var(--shadow); max-width: 960px; width: 100%; position: relative; }
 .modal4 .modal-close { position: absolute; top: 12px; right: 12px; }
-.modal5 { background: var(--surface); border: 3px solid var(--border); padding: 0; overflow: hidden; box-shadow: 5px 5px 0 var(--shadow); max-width: 960px; width: 100%; }
-.modal5 .modal-tabs { display: flex; border-bottom: 3px solid var(--border); }
+.modal5 { background: var(--surface); border: 3px solid var(--border); padding: 0; overflow: hidden; box-shadow: 5px 5px 0 var(--shadow); max-width: 960px; width: 100%; display: flex; flex-direction: column; }
+.modal5 .modal-tabs { display: flex; border-bottom: 3px solid var(--border); flex: 0 0 auto; }
 .modal5 .modal-tab { padding: 8px 16px; font-weight: 700; border-right: 2px solid var(--border); font-size: 12px; text-transform: uppercase; cursor: pointer; background: var(--surface); color: var(--text); font-family: inherit; }
 .modal5 .modal-tab:last-child { border-right: none; }
 .modal5 .modal-tab.active { background: var(--accent); color: var(--text-on-accent); }
-.modal5 .modal-body { padding: 16px; }
+.modal5 .modal-body { padding: 16px; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
 
 /* ========================================
    GRID & UTILITIES

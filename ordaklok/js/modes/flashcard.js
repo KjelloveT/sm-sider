@@ -46,10 +46,7 @@
       // Vyrde (skjult på mobil via CSS)
       const vyrdeWrap = document.createElement('div');
       vyrdeWrap.className = 'bk-flashcard-vyrde';
-      vyrdeEl = document.createElement('img');
-      vyrdeEl.src = '../_resources/vyrdepil.png';
-      vyrdeEl.alt = 'Vyrde';
-      vyrdeEl.className = 'bk-vyrde mood-think';
+      vyrdeEl = Vyrde.create({ mood: 'think', alt: 'Vyrde', className: 'bk-vyrde' });
       bubbleEl = document.createElement('div');
       bubbleEl.className = 'bk-bubble bk-bubble-right';
       bubbleEl.textContent = 'Hugsar du dette?';
@@ -146,10 +143,7 @@
       flipped = true;
       cardEl.classList.add('flipped');
       leitnerRow.classList.add('show');
-      if (vyrdeEl) {
-        vyrdeEl.classList.remove('mood-think');
-        vyrdeEl.classList.add('mood-cheer');
-      }
+      if (vyrdeEl) Vyrde.setMood(vyrdeEl, 'happy');
       if (bubbleEl) bubbleEl.textContent = 'Korleis gjekk det?';
     }
 

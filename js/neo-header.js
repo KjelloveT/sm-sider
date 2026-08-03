@@ -13,6 +13,30 @@ class NeoHeader extends HTMLElement {
     this.attachStyles();
     this.attachEventListeners();
     this.buildMenu();
+    this.startLogoCycle();
+  }
+
+  disconnectedCallback() {
+    if (this.logoTimer) clearInterval(this.logoTimer);
+  }
+
+  /* Logoen skiftar mellom dei fire uttrykka på fyrste lina i sprite-arket.
+     Held brukaren seg til «redusert rørsle», står han på det fyrste. */
+  startLogoCycle() {
+    const logo = this.shadowRoot.getElementById('siteLogoVyrde');
+    if (!logo) return;
+    const frames = [0, 1, 2, 3];
+    const show = (frame) => {
+      logo.style.setProperty('--vyrde-col', frame % 4);
+      logo.style.setProperty('--vyrde-row', Math.floor(frame / 4));
+    };
+    show(frames[0]);
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let i = 0;
+    this.logoTimer = setInterval(() => {
+      i = (i + 1) % frames.length;
+      show(frames[i]);
+    }, 30000);
   }
 
   render() {
@@ -25,7 +49,7 @@ class NeoHeader extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <header class="site-header">
         <div class="header-inner">
-          <a href="${basePath}index.html" class="site-logo"><img src="${basePath}_resources/vyrdepil.png" alt="Vyrdepil" class="site-logo-img"> Vyrdepil</a>
+          <a href="${basePath}index.html" class="site-logo"><span class="site-logo-img" id="siteLogoVyrde"><img src="${basePath}_resources/vyrde.png" alt="Vyrdepil"></span> Vyrdepil</a>
           
           <div class="header-actions">
             <div class="tools-dropdown">
@@ -133,10 +157,37 @@ class NeoHeader extends HTMLElement {
         font-size: clamp(24px, 5vw, 32px);
       }
 
+      /* Logoen er maskoten Vyrde, klipt ut av sprite-arket
+         _resources/vyrde.png (4 x 3 uttrykk, celle 440 x 300). Headeren ligg
+         i ein shadow root, så css/vyrde.css når ikkje inn hit — difor står
+         reglane her. Sjå js/vyrde.js for same komponent elles på nettstaden. */
       .site-logo-img {
-        height: clamp(32px, 5vw, 40px);
-        width: auto;
+        --vyrde-col: 0;
+        --vyrde-row: 0;
         display: block;
+        position: relative;
+        overflow: hidden;
+        height: clamp(32px, 5vw, 40px);
+        aspect-ratio: 440 / 300;
+        flex-shrink: 0;
+        transition: transform 0.18s ease-out;
+      }
+
+      .site-logo-img img {
+        position: absolute;
+        width: 400%;
+        height: 300%;
+        max-width: none;
+        left: calc(var(--vyrde-col) * -100%);
+        top: calc(var(--vyrde-row) * -100%);
+      }
+
+      /* Boksen veks, ikkje biletet — boksen klipper, så eit skalert bilete
+         ville fått toppen av hovudet kutta av kanten. */
+      .site-logo:hover .site-logo-img { transform: scale(1.06); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .site-logo-img { transition: none; }
       }
 
       .header-actions {

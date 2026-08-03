@@ -188,6 +188,16 @@ h1, h2, h3, h4 {
   outline: 3px solid var(--bk-gold);
   outline-offset: 2px;
 }
+.bk-btn:disabled,
+.bk-btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.bk-btn:disabled:hover,
+.bk-btn[disabled]:hover {
+  transform: none;
+  box-shadow: var(--bk-shadow-ink);
+}
 
 .bk-btn-primary {
   background: var(--bk-red);
@@ -400,18 +410,14 @@ h1, h2, h3, h4 {
   gap: 10px;
 }
 
+/* Maskoten er sprite-komponenten frå css/vyrde.css — her set vi berre
+   storleik og skugge. Sjølve ansiktsuttrykket kjem frå Vyrde.setMood(). */
 .bk-vyrde {
   width: clamp(72px, 8vw, 120px);
   height: auto;
   display: block;
   filter: drop-shadow(3px 3px 0 var(--bk-ink));
-  transition: transform 0.3s;
 }
-
-.bk-vyrde.mood-wave   { transform: rotate(-5deg); }
-.bk-vyrde.mood-shout  { transform: scale(1.08); }
-.bk-vyrde.mood-cheer  { transform: rotate(5deg) scale(1.05); }
-.bk-vyrde.mood-think  { filter: drop-shadow(3px 3px 0 var(--bk-ink)) grayscale(0.3); }
 
 .bk-vyrde-with-bubble {
   display: inline-flex;
@@ -1002,6 +1008,20 @@ h1, h2, h3, h4 {
   color: var(--bk-red-dark);
   font-weight: 600;
 }
+
+/* Vist i staden for QR-koden når lenkja er for lang til å kodast. */
+.bk-qr-fail {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  max-width: 220px;
+  padding: 12px 14px;
+  border: 3px solid var(--bk-ink);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0 var(--bk-ink);
+  background: var(--bk-paper);
+  color: var(--bk-ink);
+}
+.bk-qr-fail-title { display: block; font-weight: 800; color: var(--bk-red-dark); margin-bottom: 4px; }
 
 .bk-accordion {
   margin-top: 14px;
@@ -1689,15 +1709,23 @@ h1, h2, h3, h4 {
   pointer-events: none;
   opacity: 1;
 }
-.bk-ring-vyrde .bk-vyrde {
+/* Maskoten held sitt eige sideforhold (440:300), så det runde dommarmerket
+   må vere ei ramme rundt henne — ikkje sjølve maskoten. */
+.bk-ring-vyrde-badge {
   width: 110px;
   height: 110px;
   border-radius: 50%;
   background: var(--bk-cream);
   border: 4px solid var(--bk-ink);
   box-shadow: 4px 4px 0 var(--bk-ink);
-  padding: 6px;
-  object-fit: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.bk-ring-vyrde-badge .bk-vyrde {
+  width: 140px;
+  filter: none;
 }
 .bk-ring-vyrde .dommar-tag {
   background: var(--bk-ink);

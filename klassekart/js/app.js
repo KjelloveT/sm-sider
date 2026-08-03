@@ -39,7 +39,11 @@ const App = (() => {
         });
     }
 
-    /* Inject SVG icons into all [data-icon] placeholders */
+    /* Inject SVG icons into all [data-icon] placeholders.
+       Det felles ikon-laget (js/vyrdepil-icons.js) hydrerer òg [data-icon] på
+       DOMContentLoaded, men alltid i 18px. Vi vil ha kontekstavhengige
+       storleikar, så vi tømmer plassholdaren først og merkar han som ferdig —
+       elles hamnar det to SVG-ar i kvar knapp. */
     function injectIcons() {
         document.querySelectorAll('[data-icon]').forEach(el => {
             const name = el.dataset.icon;
@@ -48,7 +52,9 @@ const App = (() => {
                        : el.closest('.element-tools, .tool-btn') ? 14
                        : el.closest('.tb-btn, .sb-btn') ? 16
                        : 18;
+            el.textContent = '';
             el.appendChild(Icons.create(name, size));
+            el.dataset.iconDone = '1';
         });
         /* Logo */
         const logo = document.getElementById('logo-icon');

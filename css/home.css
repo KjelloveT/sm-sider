@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Framsida — utvidingar av neobrutalisme.css
+   ========================================================================== */
+
+/* Hero-boksen på framsida gjev logoen og overskrifta mesteparten av plassen,
+   og legg versjonsnotatet i ein liten gul lapp til høgre. */
+.hero-box-home {
+  gap: clamp(16px, 3vw, 28px);
+  align-items: center;
+}
+
+/* Vyrde er sjølve blikkfanget her, og får vere vesentleg større enn på
+   spelsidene. Overstyrer .vyrde.hero-logo, difor tre klassar. */
+.hero-box-home .vyrde.hero-logo {
+  height: clamp(120px, 18vw, 210px);
+}
+
+.hero-box-home .hero-text {
+  flex: 1 1 300px;
+  /* Gjer spalta til ein storleiks-container, så tittelen under kan måle seg
+     mot henne i staden for mot vindaugsbreidda. */
+  container-type: inline-size;
+}
+
+/* «Vyrdepil» skal fylle spalta si. cqw er prosent av containerbreidda, og
+   24,5cqw er tilpassa dei åtte teikna i ordet i ein tung sans — teksten
+   legg seg då tett opp mot begge kantane, same kor brei spalta er. Verdien
+   er sett med nokre få prosent å gå på, så ein litt breiare reservefont
+   ikkje renn ut av spalta og bort i lappen.
+   clamp()-linja over står att som reserve for nettlesarar utan
+   container-queries; då fell font-size tilbake til vindaugsbreidda. */
+.hero-box-home .hero-text h1 {
+  font-size: clamp(2.2rem, 7vw, 5rem);
+  font-size: 24.5cqw;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  /* Luft i em, ikkje px: tittelen varierer frå ~59px til ~165px, og ein fast
+     avstand blir anten trong under den store eller luftig under den vesle.
+     Verdien er raus fordi line-height: 0.95 gjer tekstboksen lågare enn
+     bokstavane: p-en heng ned under boksen og et opp mykje av margen. */
+  margin-bottom: 0.36em;
+  white-space: nowrap;
+}
+
+.hero-box-home .hero-text p {
+  margin-bottom: 0;
+  max-width: 52ch;
+}
+
+.hero-postit {
+  flex: 0 1 250px;
+  align-self: center;
+  text-align: left;
+}
+
+/* Under 900px har lappen for lite att å gå på ved sida av teksten, og
+   flyttar seg ned under han i staden. Boksen er framleis ei rad som brytar,
+   så flex-basis styrer breidda. */
+@media (max-width: 900px) {
+  .hero-box-home .hero-postit { flex-basis: 100%; }
+}
+
+/* Frå 768px og ned snur .hero-box seg til ei kolonne (neobrutalisme.css).
+   Då gjeld flex-basis høgda, ikkje breidda, og elementa blir sentrerte og
+   innhaldsstyrte i breidda. Det siste er kritisk for .hero-text: eit element
+   med container-type: inline-size *kan ikkje* la breidda avhenge av
+   innhaldet, så han fell til 0 — og tittelen, som er målt i cqw, forsvinn.
+   align-self: stretch gjev spalta ei breidd utanfrå og rettar begge delar. */
+@media (max-width: 768px) {
+  .hero-box-home .hero-text,
+  .hero-box-home .hero-postit {
+    flex-basis: auto;
+    align-self: stretch;
+  }
+}

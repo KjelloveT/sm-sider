@@ -190,10 +190,13 @@
 
   function footNode() {
     const foot = el('tv-sheet__foot');
-    const logo = document.createElement('img');
-    logo.src = '../_resources/vyrdepil.png';
-    logo.alt = '';
+    // Vyrde-merket: fyrste ruta i sprite-arket, klipt ut med overflow (sjå CSS).
+    const logo = document.createElement('span');
     logo.className = 'tv-sheet__logo';
+    const logoImg = document.createElement('img');
+    logoImg.src = '../_resources/vyrde.png';
+    logoImg.alt = '';
+    logo.appendChild(logoImg);
     foot.appendChild(logo);
     foot.appendChild(txt('span', 'tv-sheet__foottext', 'Tidvis · Vyrdepil'));
     return foot;

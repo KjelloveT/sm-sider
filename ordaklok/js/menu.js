@@ -247,12 +247,30 @@
   const shareLinkClose    = document.getElementById('shareLinkClose');
   const shareLinkQR       = document.getElementById('shareLinkQR');
   const shareLinkQRWarn   = document.getElementById('shareLinkQRWarn');
+  const shareLinkQRFail   = document.getElementById('shareLinkQRFail');
   const shareLinkCopyQR   = document.getElementById('shareLinkCopyQR');
   const shareLinkCopyURL  = document.getElementById('shareLinkCopyURL');
   const shareLinkOpen     = document.getElementById('shareLinkOpen');
 
   let currentShareUrl = '';
 
+  /** Nullstill QR-flata. Vist=false gøymer sjølve lerretet (så ramma ikkje
+      blir ståande att som ein liten prikk når det ikkje finst nokon kode). */
+  function resetQR(visible) {
+    shareLinkQR.width = 0;
+    shareLinkQR.height = 0;
+    shareLinkQR.style.display = visible ? '' : 'none';
+    shareLinkQRWarn.style.display = 'none';
+    shareLinkQRFail.style.display = 'none';
+    shareLinkCopyQR.disabled = true;
+  }
+
+  /**
+   * Teiknar QR-koden for lenkja. Ein QR-kode rommar berre eit visst tal teikn
+   * (~2 900 på nivå L), og lenkja veks med talet på ord i lista. Blir ho for
+   * lang, kastar qrcode() — då seier vi tydeleg frå i staden for å la brukaren
+   * stå att med ei tom rute.
+   */
   function renderQR(url) {
     try {
       var qr = qrcode(0, 'L');
@@ -271,18 +289,20 @@
           ctx.fillRect(c * scale, r * scale, scale, scale);
         }
       }
+      shareLinkQR.style.display = '';
+      shareLinkQRFail.style.display = 'none';
       shareLinkQRWarn.style.display = url.length > 900 ? '' : 'none';
+      shareLinkCopyQR.disabled = false;
     } catch (e) {
-      shareLinkQR.width = 0;
-      shareLinkQR.height = 0;
+      resetQR(false);
+      shareLinkQRFail.style.display = '';
     }
   }
 
   async function showShareLink(list) {
     shareLinkInput.value = 'Lagar lenkje…';
     shareLinkInfo.textContent = '';
-    shareLinkQR.width = 0;
-    shareLinkQR.height = 0;
+    resetQR(true);
     shareLinkOverlay.classList.add('open');
     try {
       const url = await OrdaklokShare.buildShareUrl(list);

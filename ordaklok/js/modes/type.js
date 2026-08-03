@@ -153,7 +153,7 @@
           feedbackEl.textContent = 'Svar: ' + answer;
           if (lbContainer) renderLetterBoxes(inputEl ? inputEl.value : '', answer, true);
           if (vyrdeEl) {
-            vyrdeEl.className = 'bk-vyrde mood-think';
+            Vyrde.setMood(vyrdeEl, 'think');
             if (bubbleEl) bubbleEl.textContent = 'Hmm…';
           }
         });
@@ -172,10 +172,7 @@
       // Vyrde nedre venstre
       const vyrdeWrap = document.createElement('div');
       vyrdeWrap.className = 'bk-type-vyrde';
-      vyrdeEl = document.createElement('img');
-      vyrdeEl.src = '../_resources/vyrdepil.png';
-      vyrdeEl.alt = 'Vyrde';
-      vyrdeEl.className = 'bk-vyrde mood-wave';
+      vyrdeEl = Vyrde.create({ mood: 'wave', alt: 'Vyrde', className: 'bk-vyrde' });
       bubbleEl = document.createElement('div');
       bubbleEl.className = 'bk-bubble bk-bubble-left';
       bubbleEl.textContent = 'Kva heiter dette?';
@@ -212,7 +209,7 @@
       showResultStamp(correct);
 
       if (vyrdeEl) {
-        vyrdeEl.className = 'bk-vyrde ' + (correct ? 'mood-cheer' : 'mood-think');
+        Vyrde.setMood(vyrdeEl, correct ? 'happy' : 'think');
         if (bubbleEl) bubbleEl.textContent = correct ? 'Bra!' : 'Ikkje stress.';
       }
 

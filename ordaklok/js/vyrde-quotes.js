@@ -131,10 +131,27 @@
     return QUOTES[i];
   }
 
+  /* Uttrykk som kler ein oppspelt replikk på oppsett-skjermen. Vyrde byter
+     andlet saman med replikken, så ho ikkje står med same mine kvar gong. */
+  const SETUP_MOODS = ['wave', 'happy', 'think', 'surprised', 'wink', 'cool'];
+  let lastMood = -1;
+
+  function refreshMood() {
+    const el = document.getElementById('setupVyrde');
+    if (!el || !window.Vyrde) return;
+    let i;
+    do {
+      i = Math.floor(Math.random() * SETUP_MOODS.length);
+    } while (i === lastMood && SETUP_MOODS.length > 1);
+    lastMood = i;
+    Vyrde.setMood(el, SETUP_MOODS[i]);
+  }
+
   function refreshBubble() {
     const bubble = document.getElementById('vyrdeBubble');
     if (!bubble) return;
     bubble.textContent = pickQuote();
+    refreshMood();
   }
 
   function init() {

@@ -7,7 +7,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
 ### Lagt til
 - **Vyrde — ny maskot og logo for heile nettstaden.** `_resources/vyrde.png` er eit sprite-ark med tolv ansiktsuttrykk (4 x 3 ruter), og den nye felleskomponenten `css/vyrde.css` + `js/vyrde.js` viser eitt uttrykk om gongen.
-  - **Logoen** i den globale headeren og på framsida er no Vyrde, og han syklar roleg gjennom dei fire uttrykka på fyrste lina i arket. Står brukaren i «redusert rørsle», blir han med det fyrste uttrykket.
+  - **Logoen** i den globale headeren og på framsida er no Vyrde, og han syklar roleg gjennom dei fire uttrykka på fyrste lina i arket — eitt skifte i minuttet er masete, så det går 30 sekund mellom kvart. Står brukaren i «redusert rørsle», blir han med det fyrste uttrykket.
+  - **Hero-boksen på framsida** er bygd om: Vyrde er blikkfanget og har vakse frå 120 til 210 px, versjonsnotatet er flytta ut i ein gul lapp til høgre, og «Vyrdepil»-tittelen fyller no spalta si. Tittelen er målt i `cqw` mot ein storleiks-container, ikkje i `vw`, så han held same fyllingsgrad (96 %) uansett kor brei spalta blir — frå 59 px på ein 320px-skjerm til 121 px på skrivebordet. Ny komponent `.postit` i `css/neobrutalisme.css` (kontrollert mot alle 20 tema — lågaste kontrast er 6,8:1 i «slate»), og ny `css/home.css` for framsidespesifikk layout.
+  - Den gamle logoen `_resources/vyrdepil.png` er sletta; ingen ting peikar på henne lenger.
   - **Ordaklok** brukar maskoten aktivt: ho tenkjer medan du grublar på eit hugsekort, gler seg når svaret er rett, og skiftar mine saman med replikken på oppsett-skjermen. Dommaren i Tevling har fått ei eiga rund ramme, sidan maskoten no held sitt eige sideforhold.
   - Kjeldefila var på 4,4 MB, og figurane låg ikkje på eit jamt rutenett — nokre armar kryssa cellegrensene. Arket er difor bygd på nytt: kvar figur er henta ut for seg, skalert likt og sett ned på eit jamt rutenett justert etter skaftet i pila, slik at kroppen står i ro når uttrykket skiftar. Resultatet er **224 KB — 95 % mindre**.
 - **Rissverk** — nytt vektorteikneprogram under Bilete og media (`rissverk/`). Fase 1 av tre.

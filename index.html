@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vyrdepil - Spel og Verktøy for skulen</title>
     <link rel="stylesheet" href="css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/vyrde.css">
+    <link rel="stylesheet" href="css/home.css">
+    <script src="js/vyrde.js" defer></script>
     <script src="js/neo-header.js" defer></script>
     <script src="js/home.js" defer></script>
     <script src="js/neobrutalisme.js"></script>
@@ -15,16 +18,17 @@
 <div class="page-wrapper">
     <main class="main-content">
 
-        <div class="box2 hero-box">
-            <img src="_resources/vyrdepil.png" alt="Logo for Vyrdepil - En pil med som går i sikksakk nedenfra og peker oppover" class="hero-logo">
+        <div class="box2 hero-box hero-box-home">
+            <span class="vyrde hero-logo" data-vyrde-cycle data-vyrde-alt="Vyrde, maskoten til Vyrdepil — ei pil med andlet"></span>
             <div class="hero-text">
                 <h1>Vyrdepil</h1>
                 <p>Spel og verktøy laga for grunnskulen — med personvern i fokus. Ingen sporing, ingen ekstern lagring. Alt skjer på di eiga maskin.</p>
-                <h3>VERSJON 0.4</h3>
-                <p>Versjon 0.4 medbringe ei stor intern oppgradering. Sikkerheitsstandarar, optimalisering og rammeverk har fått betydeleg oppgradering.</p>
-                <p>Vi har og lagt til geografi-spelet Vidfaren, der ein skal matche land med hovudstad, flagg eller korleis omrisset av landet er.</p>
-
             </div>
+            <aside class="postit hero-postit" aria-label="Om denne versjonen">
+                <p class="postit-title">Versjon 0.7</p>
+                <p>Nye verktøy er lagde til. Lag vektorteikningar med <strong>Rissverk</strong>, eller rediger lydklipp med <strong>Lydskurd</strong>.</p>
+                <p>Det er òg nye verktøy for kryssord og leitekryss.</p>
+            </aside>
         </div>
 
         <!-- Spel, aktivitetar og verktøy byggjast frå json/apps.json av js/home.js -->

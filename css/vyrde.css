@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Vyrde — maskoten til Vyrdepil
+   --------------------------------------------------------------------------
+   _resources/vyrde.png er eit sprite-ark på 4 x 3 ruter (1760 x 900 px,
+   celle 440 x 300). Kvar rute er eitt ansiktsuttrykk. Vi viser éi rute om
+   gongen ved å leggje biletet i ein boks med overflow: hidden og flytte det
+   ei heil boksbreidd/-høgd per kolonne/rad.
+
+   Markup (js/vyrde.js fyller inn <img> sjølv):
+     <span class="vyrde" data-vyrde="wave"></span>
+     <span class="vyrde" data-vyrde="wave" data-vyrde-cycle></span>   <- logo
+
+   Storleiken styrer du med width på .vyrde — høgda følgjer av aspect-ratio.
+   ========================================================================== */
+
+.vyrde {
+  --vyrde-col: 0;
+  --vyrde-row: 0;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  width: clamp(72px, 8vw, 120px);
+  aspect-ratio: 440 / 300;
+  line-height: 0;
+  flex-shrink: 0;
+  /* Eit lite hopp når uttrykket skiftar, så byttet ikkje kjem heilt brått.
+     Merk at det er *boksen* som veks, ikkje biletet inni: boksen klipper
+     (overflow: hidden), så skalerte vi biletet ville toppen av hovudet
+     bli kutta av kanten. Ein transform på boksen skjer etter klippinga. */
+  transition: transform 0.18s ease-out;
+}
+
+/* Same plass som .hero-logo på ei spelside — høgda styrer, breidda følgjer. */
+.vyrde.hero-logo {
+  height: clamp(80px, 12vw, 120px);
+  width: auto;
+}
+
+.vyrde-img {
+  position: absolute;
+  /* Arket er 4 ruter breitt og 3 høgt, så det fyller 400% x 300% av ruta. */
+  width: 400%;
+  height: 300%;
+  max-width: none;
+  left: calc(var(--vyrde-col) * -100%);
+  top: calc(var(--vyrde-row) * -100%);
+}
+
+/* Ein liten "pop" når js/vyrde.js set nytt uttrykk. */
+.vyrde.is-changing { transform: scale(1.06); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vyrde { transition: none; }
+  .vyrde.is-changing { transform: none; }
+}

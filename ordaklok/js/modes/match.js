@@ -59,11 +59,12 @@
       // Vyrde-dommar
       const vyrdeWrap = document.createElement('div');
       vyrdeWrap.className = 'bk-ring-vyrde';
-      const vImg = document.createElement('img');
-      vImg.src = '../_resources/vyrdepil.png';
-      vImg.alt = 'Vyrde dommar';
-      vImg.className = 'bk-vyrde mood-shout';
-      vyrdeWrap.appendChild(vImg);
+      // Dommaren sit i eit rundt merke, så maskoten får ei eiga ramme rundt seg.
+      const vBadge = document.createElement('div');
+      vBadge.className = 'bk-ring-vyrde-badge';
+      const vImg = Vyrde.create({ mood: 'surprised', alt: 'Vyrde dommar', className: 'bk-vyrde' });
+      vBadge.appendChild(vImg);
+      vyrdeWrap.appendChild(vBadge);
       const dommar = document.createElement('div');
       dommar.className = 'dommar-tag';
       dommar.textContent = 'DOMMAR';

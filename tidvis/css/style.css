@@ -962,7 +962,13 @@
   border-top: 0.6mm solid #1a1a1a;
   display: flex; align-items: center; gap: 2.5mm;
 }
-.tv-sheet__logo { width: 7mm; height: 7mm; object-fit: contain; }
+/* Vyrde-merket nedst på arket. _resources/vyrde.png er eit sprite-ark på
+   4 x 3 ansiktsuttrykk; her viser vi berre den fyrste ruta. */
+.tv-sheet__logo {
+  width: 8mm; aspect-ratio: 440 / 300; height: auto;
+  display: inline-block; position: relative; overflow: hidden; flex-shrink: 0;
+}
+.tv-sheet__logo img { position: absolute; left: 0; top: 0; width: 400%; height: 300%; max-width: none; }
 .tv-sheet__foottext { font-size: 9pt; font-weight: 700; letter-spacing: .5px; }
 
 /* representasjonane i arkdrakt — overstyrer spelet sine .tv-reglar */
