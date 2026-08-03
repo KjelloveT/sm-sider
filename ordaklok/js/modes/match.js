@@ -179,10 +179,18 @@
       first.chipEl.classList.remove('bk-selected');
       second.chipEl.classList.remove('bk-selected');
 
-      // Rekn ut --dx/--dy frå kvar chip si visuelle posisjon til ring-sentrum
+      // Kollisjonspunktet er midt mellom dei to chipsa — ikkje ring-sentrum.
+      // Ringen kan vere svært høg når runden har mange par, og då ville
+      // ring-sentrum ofte liggje utanfor synsfeltet.
       const ringRect = ringEl.getBoundingClientRect();
-      const cx = ringRect.left + ringRect.width / 2;
-      const cy = ringRect.top + ringRect.height / 2;
+      const r1 = first.chipEl.getBoundingClientRect();
+      const r2 = second.chipEl.getBoundingClientRect();
+      const cx = (r1.left + r1.width / 2 + r2.left + r2.width / 2) / 2;
+      const cy = (r1.top + r1.height / 2 + r2.top + r2.height / 2) / 2;
+
+      // Flytt TREFF/BOM-bursten til same punkt
+      burstEl.style.left = (cx - ringRect.left) + 'px';
+      burstEl.style.top  = (cy - ringRect.top) + 'px';
 
       for (const item of [first, second]) {
         const r = item.chipEl.getBoundingClientRect();

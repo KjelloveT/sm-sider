@@ -1643,7 +1643,14 @@ h1, h2, h3, h4 {
   border-radius: 18px;
   box-shadow: 6px 6px 0 var(--bk-ink);
   overflow: hidden;
+  /* Ringen veks med innhaldet: min-height er eit golv, ikkje eit tak, slik at
+     chips aldri hamnar utanfor og vert klipte av overflow:hidden. */
   min-height: clamp(400px, 56vh, 580px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  /* Plass til tau (14px) oppe og nede */
+  padding: 32px 16px;
 }
 
 .bk-ring-rope {
@@ -1740,24 +1747,22 @@ h1, h2, h3, h4 {
 }
 
 .bk-ring-area {
-  position: absolute;
-  top: 22px;
-  bottom: 22px;
+  position: relative;
   z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  /* Inga scrollbar her — .bk-ring har overflow:hidden, og bob/scale-animasjonar
-     skal ikkje trigge layout-tikking. Ved svært mange chips vil dei verte klippa
-     av ringen sin border, men det er svært sjeldan i praksis. */
+  /* Chips ligg i normal flyt, så mange eller lange chips skyv ringen høgare
+     i staden for å hamne utanfor han. */
   overflow: visible;
+  min-width: 0;
   min-height: 0;
 }
 /* Inset mot midten så chips ikkje hamnar på Vyrde-sirkelen */
-.bk-ring-area.left  { left: 16px; right: 50%; padding: 8px 70px 8px 8px; }
-.bk-ring-area.right { left: 50%;  right: 16px; padding: 8px 8px 8px 70px; }
+.bk-ring-area.left  { padding: 8px 62px 8px 8px; }
+.bk-ring-area.right { padding: 8px 8px 8px 62px; }
 
 /* Chip — stables i flex-column, kvar chip får litt rotasjon (--rot) */
 .bk-chip {
@@ -1857,10 +1862,12 @@ h1, h2, h3, h4 {
 
 /* Responsiv: <900px = grid-layout der Vyrde-skiljet er borte */
 @media (max-width: 900px) {
-  .bk-ring { display: grid; grid-template-columns: 1fr 1fr; padding: 36px 12px 36px; gap: 6px; }
-  .bk-ring-area { position: relative; top: auto; bottom: auto; left: auto; right: auto;
-    flex-wrap: wrap; align-content: flex-start; justify-content: center;
-    padding: 6px; gap: 6px; flex-direction: row; }
+  .bk-ring { padding: 32px 12px; }
+  .bk-ring-area { flex-wrap: wrap; align-content: flex-start; justify-content: center;
+    gap: 6px; flex-direction: row; }
+  /* Vyrde er skjult her, så chips treng ikkje halde avstand til midten */
+  .bk-ring-area.left,
+  .bk-ring-area.right { padding: 6px; }
   .bk-ring-vyrde { display: none; }
   .bk-ring::before { display: none; }
 }
