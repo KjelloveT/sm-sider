@@ -11,7 +11,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 /* dvh følgjer det synlege området — vh gjer det ikkje, og då blir spelet
    kutta av URL-feltet på mobil. Fyrste linja er fallback for gamle nettlesarar. */
-body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);height:100vh;height:100dvh;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;touch-action:none;display:flex;flex-direction:column}
+body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);height:100vh;height:100dvh;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;touch-action:manipulation;display:flex;flex-direction:column}
 .page-wrapper{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
 /* .main-content har inga eiga breidd-regel, og krympa til 0 som flex-element —
    då fekk #gameWrapper (width:100%) òg breidda 0 og spelet vart usynleg. */
@@ -25,8 +25,13 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);height:100vh;hei
 @media(max-width:768px){#gameWrapper{width:100%;width:min(100%,calc(100cqh * 16 / 9));max-width:100%;border-radius:0}}
 /* Låg, liggjande skjerm: gi spelflata all plassen som ramma elles brukar på luft. */
 @media(max-height:500px){.page-wrapper>.main-content{padding:6px 10px}}
-#gameCanvas{display:block;image-rendering:pixelated}
-.screen{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center}
+/* touch-action høyrer heime her, ikkje på <body>: der blokkerte han rulling i
+   meny- og statistikkskjermane, som må kunne rullast på ein låg mobilskjerm. */
+#gameCanvas{display:block;image-rendering:pixelated;touch-action:none}
+/* "safe center" sentrerer når det er plass, men fell tilbake til start når
+   innhaldet er høgare enn flata. Med rein "center" hamnar toppen av kortet
+   utanfor og kan ikkje rullast fram. Nettlesarar utan støtte forkastar linja. */
+.screen{position:absolute;inset:0;z-index:10;display:flex;align-items:center;align-items:safe center;justify-content:center;justify-content:safe center;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #menuScreen{background:url('resources/background.png') center/cover no-repeat}
 #statsScreen{background:rgba(0,10,25,0.96);display:none}
 .menu-card{background:rgba(0,20,60,0.88);backdrop-filter:blur(12px);border:2px solid rgba(100,200,255,0.4);border-radius:20px;padding:24px 28px;max-width:400px;width:92%;color:#fff;text-align:center;animation:menuFadeIn 0.5s ease 1.5s both}

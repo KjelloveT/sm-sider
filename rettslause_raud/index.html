@@ -9,8 +9,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            touch-action: none; /* Forhindrer zoom og scroll på mobil */
         }
+
+        /* touch-action høyrer heime på lerretet og kontrollane, ikkje på "*":
+           der blokkerte han fingerrulling i startskjermen, som må kunne rullast
+           på låge liggjande skjermar (t.d. 568x320). "manipulation" på body
+           held framleis dobbeltrykk-zoom unna. */
+        body { touch-action: manipulation; }
+        canvas, #touch-controls, .touch-btn { touch-action: none; }
 
         body {
             font-family: 'Calibri', 'Inter', sans-serif;
