@@ -17,24 +17,53 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            /* dvh følgjer det synlege området — vh gjer det ikkje, og då blir
+               spelet kutta av URL-feltet på mobil. Fyrste linja er fallback. */
+            height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
-        
+
         .page-wrapper {
             flex: 1;
+            min-height: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
         }
 
+        /* align-self:stretch gjer høgda definitt, slik at max-height:100% på
+           #gameContainer faktisk bit og spelet held seg innanfor skjermen. */
+        .page-wrapper > .main-content {
+            flex: 1;
+            min-width: 0;
+            min-height: 0;
+            align-self: stretch;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Gjer høgda målbar for barna via cqh — sjå #gameContainer. */
+            container-type: size;
+        }
+
+        @media (max-height: 500px) {
+            .page-wrapper > .main-content { padding: 6px 10px; }
+        }
+
         #gameContainer {
             position: relative;
             width: 100%;
+            max-height: 100%;
             max-width: min(1600px, calc(90vh * 2 / 1));
+            max-width: min(1600px, calc(90dvh * 2 / 1));
+            /* Canvaset er fast 1200×600 og blir strekt til containeren, så
+               forholdet 2:1 må haldast. cqh = den faktiske ledige høgda, slik at
+               breidda krympar i staden for at boksa blir klipt. Nettlesarar utan
+               storleiks-container-queries forkastar linja og brukar 90dvh over. */
+            width: min(100%, calc(100cqh * 2));
             aspect-ratio: 2/1;
             background: #87CEEB;
             border-radius: 20px;
@@ -545,7 +574,9 @@
 
         @media (max-width: 768px) {
             #gameContainer {
-                height: 400px;
+                /* Fast 400px vart høgare enn ein liggjande mobilskjerm og skar
+                   av spelet. La aspect-ratio styre høgda innanfor det synlege. */
+                height: auto;
                 border-radius: 0;
             }
             .screen-title { font-size: 32px; }
@@ -848,7 +879,12 @@
     </div>
 
     <script src="../js/vyrdepil-storage.js"></script>
+    <script src="../js/vyrdepil-fullscreen.js"></script>
     <script src="game.js"></script>
+    <script>
+        // Fullskjerm-knapp på touch-einingar (spelet krev liggjande format).
+        VyrdepilFullscreen.mount({ position: 'bottom-right' });
+    </script>
     </main>
 </div>
 </body>

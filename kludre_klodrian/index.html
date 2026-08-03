@@ -9,10 +9,22 @@
 <script src="../js/neobrutalisme.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;touch-action:none;display:flex;flex-direction:column}
-.page-wrapper{flex:1;display:flex;align-items:center;justify-content:center;width:100%}
-#gameWrapper{position:relative;width:100%;max-width:min(1600px,calc(90vh * 16 / 9));aspect-ratio:16/9;background:#000;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center}
-@media(max-width:768px){#gameWrapper{width:100%;max-width:100%;border-radius:0}}
+/* dvh følgjer det synlege området — vh gjer det ikkje, og då blir spelet
+   kutta av URL-feltet på mobil. Fyrste linja er fallback for gamle nettlesarar. */
+body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);height:100vh;height:100dvh;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;touch-action:none;display:flex;flex-direction:column}
+.page-wrapper{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;width:100%}
+/* .main-content har inga eiga breidd-regel, og krympa til 0 som flex-element —
+   då fekk #gameWrapper (width:100%) òg breidda 0 og spelet vart usynleg. */
+/* align-self:stretch gjer høgda definitt, slik at max-height:100% på
+   #gameWrapper faktisk bit og spelet held seg innanfor skjermen. */
+.page-wrapper>.main-content{flex:1;min-width:0;min-height:0;align-self:stretch;display:flex;align-items:center;justify-content:center;container-type:size}
+/* cqh = den faktiske ledige høgda, slik at breidda krympar i staden for at
+   boksa blir klipt. Nettlesarar utan storleiks-container-queries forkastar
+   width-linja og fell tilbake på 90dvh-varianten over. */
+#gameWrapper{position:relative;width:100%;max-height:100%;max-width:min(1600px,calc(90vh * 16 / 9));max-width:min(1600px,calc(90dvh * 16 / 9));width:min(100%,calc(100cqh * 16 / 9));aspect-ratio:16/9;background:#000;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center}
+@media(max-width:768px){#gameWrapper{width:100%;width:min(100%,calc(100cqh * 16 / 9));max-width:100%;border-radius:0}}
+/* Låg, liggjande skjerm: gi spelflata all plassen som ramma elles brukar på luft. */
+@media(max-height:500px){.page-wrapper>.main-content{padding:6px 10px}}
 #gameCanvas{display:block;image-rendering:pixelated}
 .screen{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center}
 #menuScreen{background:url('resources/background.png') center/cover no-repeat}
@@ -103,9 +115,13 @@ body{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh
 <div id="dpad"><div class="dpbtn" id="dUp">▲</div><div class="dpbtn" id="dDown">▼</div></div>
 </div>
 <script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-fullscreen.js"></script>
 <script>
 // Migrate old localStorage keys to new structure
 VyrdepilStorage.migrateAll();
+
+// Fullskjerm-knapp på touch-einingar (spelet krev liggjande format).
+VyrdepilFullscreen.mount({ position: 'top-right' });
 
 // ── CONSTANTS ──────────────────────────────────────────────
 const W=800,H=450,HUD_H=72,FLOOR_H=52,LANE_COUNT=4;

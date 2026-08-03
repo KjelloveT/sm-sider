@@ -16,7 +16,10 @@
             font-family: 'Calibri', 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
-            min-height: 100vh;
+            /* dvh følgjer det synlege området — vh gjer det ikkje, og då blir
+               spelet kutta av URL-feltet på mobil. Fyrste linja er fallback. */
+            height: 100vh;
+            height: 100dvh;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -28,6 +31,7 @@
             width: 100%;
             max-width: 1200px;
             height: 675px;
+            height: min(675px, 100dvh);
             overflow: hidden;
             background: #87CEEB url('resources/background.png') no-repeat center center;
             background-size: cover;
@@ -35,7 +39,9 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
         @media (max-width: 768px) {
-            #game-container { height: 400px; border-radius: 0; }
+            /* Fyll heile det synlege området på mobil i staden for ei fast høgd
+               som kan bli høgare enn skjermen når URL-feltet er framme. */
+            #game-container { height: 400px; height: 100dvh; border-radius: 0; }
         }
 
         canvas {
@@ -82,6 +88,7 @@
             width: 90%;
             max-width: 600px;
             max-height: 90vh;
+            max-height: 90dvh;
             overflow-y: auto;
             pointer-events: auto;
         }
@@ -339,6 +346,7 @@
                 padding: 15px;
                 width: 95%;
                 max-height: 85vh;
+                max-height: 85dvh;
             }
             #start-screen h1 {
                 font-size: clamp(2rem, 6vw, 2.5rem);
@@ -390,6 +398,7 @@
             #start-screen {
                 padding: 8px;
                 max-height: 75vh;
+                max-height: 75dvh;
                 overflow-y: auto; /* Sikre scroll */
                 -webkit-overflow-scrolling: touch; /* bedre scroll på iOS */
             }
@@ -433,6 +442,7 @@
             #start-screen {
                 padding: 5px;
                 max-height: 70vh;
+                max-height: 70dvh;
             }
             #start-screen h1 {
                 font-size: clamp(1rem, 3vw, 1.5rem);
@@ -603,5 +613,11 @@
     };
 </script>
 <script src="game.js"></script>
+<script src="../js/vyrdepil-fullscreen.js"></script>
+<script>
+    // Fullskjerm-knapp på touch-einingar (spelet krev liggjande format).
+    // Toppen til høgre, sidan alle fire hjørna nedst er opptekne av kontrollane.
+    VyrdepilFullscreen.mount({ position: 'top-right' });
+</script>
 </body>
 </html>
