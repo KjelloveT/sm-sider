@@ -134,7 +134,27 @@ Nye avhengnader (bibliotek, CDN-script, fontar, ikon-pakkar) krev **eksplisitt g
 
 **Hugs CSP-allowlista:** all ekstern ressurs (script, bilete, fontar, API/WebSocket) blir blokkert i produksjon om han ikkje står i `Content-Security-Policy` under `globalHeaders` i `staticwebapp.config.json`. Legg origin-en i rett direktiv (`script-src`, `img-src`, `connect-src` osv.). Vér særleg merksam på **redirect-kjeder**: Wikimedia-bilete går t.d. via `commons.wikimedia.org/wiki/Special:FilePath/…` som redirectar til `upload.wikimedia.org`, og **begge** origin-ane må stå i `img-src` fordi nettlesaren sjekkar CSP på kvart ledd. NB: ein `Content-Security-Policy-Report-Only`-header *rapporterer* berre brot — han *blokkerer* ikkje, så ei side kan sjå ut til å fungere i report-only og likevel knuse når CSP-en blir handheva. Test difor alltid mot den handheva headeren før du konkluderer.
 
-### 5.7 Compliance-pass
+### 5.7 Logoar og bilete
+Ein logo blir vist lite. Kortet på framsida er 160px høgt, hero-boksen på ei spelside 120px, og oppføringa i toppmenyen 30px. Ei fil på 512px dekkjer alt dette med god margin på ein 2×-skjerm — men eksportar frå teikneprogram kjem gjerne på 2400px og fleire hundre kilobyte, og då dreg vi på oss megabyte som ingen får sjå. Difor:
+
+- **Komprimer alltid ein ny logo før han blir teken i bruk.** Maks **384px** på lengste side, og lagra som PNG med **paletten redusert til 128 fargar**. Det gjev typisk 10–30 kB per logo mot 100–650 kB rått. I Pillow:
+
+  ```python
+  im = Image.open(src).convert("RGBA")
+  r = 384 / max(im.size)
+  if r < 1:
+      im = im.resize((round(im.width * r), round(im.height * r)), Image.LANCZOS)
+  # FASTOCTREE er den einaste kvantiseringa i Pillow som tek vare på alfakanalen
+  im.quantize(colors=128, method=Image.FASTOCTREE, dither=Image.FLOYDSTEINBERG).save(dst, optimize=True)
+  ```
+
+- **Legg originalen i `_kjelder/logoar/`.** Mappa er `.gitignore`-a, så originalane blir korkje publiserte eller drege med i repoet — dei ligg lokalt så vi kan lage større utgåver seinare om eit bruksområde krev det. Mappa finst difor ikkje på ein frisk klone; det er meint slik, og ingenting i koden skal peike på henne.
+
+- **Éin storleik per logo.** Vi lagar ikkje eigne miniatyrar til menyen. Eit sett på 64px ville spart kring 390 kB på første opning av menyen, men kosta 26 ekstra filer som må haldast i takt for hand i eit prosjekt utan byggesteg. Gevinsten er ikkje verdt vedlikehaldet.
+
+- Sprite-ark (t.d. `_resources/vyrde.png`) følgjer same tanken: skaler ned til det største visingsbehovet og kvantiser.
+
+### 5.8 Compliance-pass
 Ved endringar i denne fila (`AGENTS.md`) skal det gjerast eit kontroll-pass gjennom alle eksisterande spel og verktøy for å sikre at dei framleis følgjer reglane. Spel som ikkje gjer det skal merkast for oppgradering (t.d. i `CHANGELOG.md` eller som GitHub-issue).
 
 ## 6. Workflow

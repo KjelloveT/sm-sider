@@ -24,3 +24,7 @@ Thumbs.db
 # Lokal AI-verktøy-config og arbeidsmapper
 .claude/
 .claire/
+
+# Originalfiler (uklipte logoar o.l.). Ligg lokalt, blir ikkje publiserte.
+# Sjå AGENTS.md §5.8.
+_kjelder/
