@@ -635,6 +635,27 @@ main.main-wide {
   font-weight: 600;
 }
 
+/* KI-merking (transparensymbol i tråd med EU sitt framlegg) */
+.ai-marks {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin: 18px 0;
+}
+.ai-mark {
+  flex: 1 1 190px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.ai-mark-icon {
+  flex-shrink: 0; color: var(--text);
+  display: flex; align-items: center; justify-content: center;
+}
+.ai-mark-text { font-size: 0.9rem; line-height: 1.35; }
+.ai-mark-text strong { display: block; font-weight: 900; }
+.ai-mark-text span { color: var(--muted); font-size: 0.82rem; }
+
 .accordion-note {
   margin-top: 12px;
   padding: 10px 14px;
