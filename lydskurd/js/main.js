@@ -291,7 +291,7 @@
     LS.uiRecord.setup();
     LS.uiToolbar.setup({ onFollow: followPlayhead, onZoom: applyZoom });
 
-    LS.interact.setup(canvas);
+    LS.interact.setup(canvas, scrollBox);
 
     bindToolbar();
     bindDrop();

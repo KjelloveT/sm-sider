@@ -19,8 +19,28 @@ LS.render = (function () {
   const TRACK_H = 118;      // rom nok til namn, volum, panorering og M/S i hovudet
   const CLIP_HEAD_H = 18;
   const SHADOW = 4;
-  const FADE_BAND = 16;     // høgda på bandet der fade-greipa kan takast
-  const HANDLE = 7;         // halve breidda på eit greip
+
+  /* ──────────────── Måla på gripepunkta ──────────────── */
+
+  /* Ein fingertupp dekkjer kring 9 mm — mange gonger meir enn spissen på
+     ein musepeikar. Difor veks alle gripepunkta på einingar med grov
+     peikar. Vi spør om peikaren, ikkje om skjermbreidda: eit nettbrett i
+     landskap er brei, men fingeren er like grov for det.
+
+     Måla bur her, saman med teikninga, og interact.js hentar dei herifrå.
+     Elles ville treffsona og det auget ser før eller seinare gå frå
+     kvarandre — og det er akkurat den feilen som gjer eit grensesnitt
+     frustrerande utan at ein skjønar kvifor. */
+  const COARSE = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+
+  const METRICS = {
+    edge: COARSE ? 22 : 12,        // breidda på trimme-sona i kvar ende
+    grip: COARSE ? 16 : 10,        // synleg breidd på trimme-greipet
+    handle: COARSE ? 15 : 10,      // halve breidda på treffsona til eit fade-greip
+    handleBox: COARSE ? 18 : 12,   // synleg storleik på fade-greipet
+    fadeBand: COARSE ? 30 : 22     // høgda på bandet der fade-greipa bur
+  };
+
 
   /* Fire klippfargar som går på omgang etter spor, med den tekstfargen
      kvar av dei krev. Sjå AGENTS.md §3.2 — feil par gjev usynleg tekst.
@@ -110,21 +130,37 @@ LS.render = (function () {
     if (index === -1) return null;
 
     const bodyTop = trackTop(index) + 6 + CLIP_HEAD_H;
-    if (y < bodyTop || y > bodyTop + FADE_BAND) return null;
+    if (y < bodyTop || y > bodyTop + METRICS.fadeBand) return null;
 
     const pps = LS.state.data.view.pxPerSec;
     const x0 = timeToX(clip.timeStart);
-    const x1 = x0 + clip.srcLen * pps;
+    const w = clip.srcLen * pps;
+    const x1 = x0 + w;
 
-    const inX = x0 + Math.max(0, clip.fadeIn || 0) * pps;
-    const outX = x1 - Math.max(0, clip.fadeOut || 0) * pps;
+    // Greipa er berre teikna på det valde klippet når fadinga er null,
+    // så treffsona må følgje same regel. Elles ville eit usynleg greip
+    // stele trykk frå trimminga under.
+    const selected = LS.state.isSelected(clip.id);
+    const fadeIn = Math.max(0, clip.fadeIn || 0);
+    const fadeOut = Math.max(0, clip.fadeOut || 0);
 
-    // Ligg dei to oppå kvarandre, vinn den som er nærast peikaren.
-    const dIn = Math.abs(x - inX);
-    const dOut = Math.abs(x - outX);
-    if (dIn <= HANDLE && dIn <= dOut) return 'fadeIn';
-    if (dOut <= HANDLE) return 'fadeOut';
-    return null;
+    // Same klemming som i teikninga, elles peikar sona ein annan stad
+    // enn firkanten auget ser.
+    const half = METRICS.handleBox / 2;
+    const clampX = (v) => LS.util.clamp(v, x0 + half, x1 - half);
+
+    let best = null;
+    let bestDist = METRICS.handle;
+
+    if (fadeIn > 0 || selected) {
+      const d = Math.abs(x - clampX(x0 + fadeIn * pps));
+      if (d <= bestDist) { bestDist = d; best = 'fadeIn'; }
+    }
+    if (fadeOut > 0 || selected) {
+      const d = Math.abs(x - clampX(x1 - fadeOut * pps));
+      if (d < bestDist) { best = 'fadeOut'; }
+    }
+    return best;
   }
 
   /* ──────────────── Fargar ──────────────── */
@@ -276,11 +312,11 @@ LS.render = (function () {
    * firkanta greip på vippepunktet. Kilen dekkjer det som blir dempa bort,
    * så det er lett å sjå kor mykje lyd fadinga faktisk et opp.
    */
-  function drawFades(c, clip, palette, x, w, bodyTop, bodyBottom) {
+  function drawFades(c, clip, palette, x, w, bodyTop, bodyBottom, selected) {
     const pps = LS.state.data.view.pxPerSec;
     const fadeIn = Math.max(0, clip.fadeIn || 0);
     const fadeOut = Math.max(0, clip.fadeOut || 0);
-    if (!fadeIn && !fadeOut) return;
+    if (!fadeIn && !fadeOut && !selected) return;
 
     c.save();
     c.beginPath();
@@ -324,17 +360,80 @@ LS.render = (function () {
     c.stroke();
     c.restore();
 
-    // Greipa — små firkantar, som resten av designspråket
+    /* Greipa blir teikna på DET VALDE klippet sjølv om fadinga er null.
+       Elles ville det ikkje finnast noko å sikte på for den som vil
+       leggje på ei fading — ein måtte vite at det gjekk an. */
+    const size = METRICS.handleBox;
     const handles = [];
-    if (fadeIn > 0) handles.push(x + fadeIn * pps);
-    if (fadeOut > 0) handles.push(x + w - fadeOut * pps);
-    handles.forEach((hx) => {
+    if (fadeIn > 0 || selected) handles.push({ hx: x + fadeIn * pps, inn: true });
+    if (fadeOut > 0 || selected) handles.push({ hx: x + w - fadeOut * pps, inn: false });
+
+    handles.forEach((h) => {
+      // Greipet blir halde innanfor klippet, så det aldri stikk utanfor.
+      const hx = LS.util.clamp(h.hx, x + size / 2, x + w - size / 2);
+      const gy = bodyTop + 2;
+
       c.fillStyle = palette.fill;
-      c.fillRect(hx - 4, bodyTop, 8, 8);
+      c.fillRect(hx - size / 2, gy, size, size);
       c.strokeStyle = colors.border;
+      c.lineWidth = 3;
+      c.strokeRect(hx - size / 2 + 1.5, gy + 1.5, size - 3, size - 3);
+
+      // Ein liten skråstrek som viser kva veg fadinga går
+      c.strokeStyle = palette.text;
       c.lineWidth = 2;
-      c.strokeRect(hx - 4, bodyTop + 1, 8, 8);
+      c.beginPath();
+      const pad = 4;
+      if (h.inn) {
+        c.moveTo(hx - size / 2 + pad, gy + size - pad);
+        c.lineTo(hx + size / 2 - pad, gy + pad);
+      } else {
+        c.moveTo(hx - size / 2 + pad, gy + pad);
+        c.lineTo(hx + size / 2 - pad, gy + size - pad);
+      }
+      c.stroke();
     });
+  }
+
+  /**
+   * Trimme-greipa i kvar ende av klippet. Dei var usynlege før — ein
+   * måtte vite at kanten kunne dragast. No er dei ei tydeleg flate å
+   * sikte på, og på touch er ho breiare.
+   *
+   * Greipa startar under fade-bandet, så dei to aldri ligg oppå
+   * kvarandre verken for auget eller for fingeren.
+   */
+  function drawTrimGrips(c, palette, x, w, bodyTop, bodyBottom, selected) {
+    const gw = METRICS.grip;
+    // På eit smalt klipp ville greipa ete opp heile flata.
+    if (w < gw * 2 + 14) return;
+
+    const top = bodyTop + METRICS.fadeBand;
+    const h = bodyBottom - top;
+    if (h < 10) return;
+
+    c.save();
+    c.globalAlpha = selected ? 1 : 0.45;
+
+    [x, x + w - gw].forEach((gx) => {
+      c.fillStyle = colors.border;
+      c.fillRect(gx, top, gw, h);
+
+      // To korte riller, som på eit fysisk grep
+      c.strokeStyle = palette.fill;
+      c.lineWidth = 2;
+      c.beginPath();
+      const midY = top + h / 2;
+      const len = Math.min(14, h - 6) / 2;
+      [-3, 3].forEach((off) => {
+        const lx = Math.round(gx + gw / 2 + off) + 0.5;
+        c.moveTo(lx, midY - len);
+        c.lineTo(lx, midY + len);
+      });
+      c.stroke();
+    });
+
+    c.restore();
   }
 
   function drawClip(c, clip, trackIdx) {
@@ -377,8 +476,15 @@ LS.render = (function () {
     }
     c.restore();
 
-    // Fade-konvolutt oppå bølgjeforma
-    drawFades(c, clip, palette, x, w, top + CLIP_HEAD_H, bottom);
+    // Trimme-greipa i endane, og fade-konvolutten oppå bølgjeforma.
+    // Begge blir klipte til klippet så dei ikkje renn utanfor.
+    c.save();
+    c.beginPath();
+    c.rect(x, top, w, h);
+    c.clip();
+    drawTrimGrips(c, palette, x, w, top + CLIP_HEAD_H, bottom, selected);
+    drawFades(c, clip, palette, x, w, top + CLIP_HEAD_H, bottom, selected);
+    c.restore();
 
     // Kantlinje
     c.strokeStyle = selected ? colors.accent2 : colors.border;
@@ -467,6 +573,7 @@ LS.render = (function () {
   return {
     setCanvas, resize, draw, schedule,
     timeToX, xToTime, trackTop, trackAtY, clipAt, fadeHandleAt,
+    metrics: () => METRICS, isCoarsePointer: () => COARSE,
     gridStep: () => tickStep(LS.state.data.view.pxPerSec),
     height, width, trackHeight, rulerHeight,
     RULER_H, TRACK_H

@@ -14,11 +14,18 @@ window.LS = window.LS || {};
 LS.interact = (function () {
   'use strict';
 
-  const EDGE = 8;          // kor brei trimme-sona i kvar kant er, i pikslar
+  /* Breidda på trimme-sona kjem frå render.js, saman med resten av måla
+     på gripepunkta. Låg dei to stadene, ville treffsona og det brukaren
+     ser gli frå kvarandre — og då blir det umogleg å forstå kvifor eit
+     trykk av og til bommar. */
+  function edgeWidth() { return LS.render.metrics().edge; }
+
   const MIN_LEN = 0.02;    // eit klipp kan ikkje bli kortare enn dette
 
   let canvas = null;
+  let scrollBox = null;
   let drag = null;
+  let pan = null;
 
   /* ──────────────── Kvar er peikaren? ──────────────── */
 
@@ -54,11 +61,13 @@ LS.interact = (function () {
 
     const x0 = LS.render.timeToX(clip.timeStart);
     const x1 = LS.render.timeToX(clip.timeStart + clip.srcLen);
+    const edge = edgeWidth();
 
-    // Er klippet svært smalt, ville trimme-sonene ete opp heile flata.
-    if (x1 - x0 > EDGE * 3) {
-      if (p.x <= x0 + EDGE) return { clip: clip, mode: 'trimStart' };
-      if (p.x >= x1 - EDGE) return { clip: clip, mode: 'trimEnd' };
+    // Er klippet svært smalt, ville trimme-sonene ete opp heile flata og
+    // gjere det umogleg å flytte det.
+    if (x1 - x0 > edge * 2.5) {
+      if (p.x <= x0 + edge) return { clip: clip, mode: 'trimStart' };
+      if (p.x >= x1 - edge) return { clip: clip, mode: 'trimEnd' };
     }
     return { clip: clip, mode: 'move' };
   }
@@ -136,10 +145,35 @@ LS.interact = (function () {
 
   /* ──────────────── Draging ──────────────── */
 
+  /* ──────────────── Panorering med fingeren ──────────────── */
+
+  /* Sidan canvasen har touch-action: none, må vi sjølve syte for at eit
+     drag i tom bane skrollar tidslinja. Det er slik ein ventar at det
+     skal virke på nettbrett: ta i eit klipp for å flytte det, ta i lufta
+     for å dra biletet. */
+  function beginPan(e) {
+    pan = { startX: e.clientX, startScroll: scrollBox.scrollLeft, id: e.pointerId };
+    capture(e);
+    canvas.style.cursor = 'grabbing';
+  }
+
+  function movePan(e) {
+    scrollBox.scrollLeft = pan.startScroll - (e.clientX - pan.startX);
+  }
+
   function begin(e) {
     const p = pointAt(e);
     const target = targetAt(p);
-    if (!target) return;
+
+    if (!target) {
+      // Berre finger og penn panorerer. Med mus er rullehjulet og
+      // rullefeltet betre, og eit klikk i tom bane skal ikkje flytte noko.
+      if (e.pointerType !== 'mouse' && p.y > LS.render.RULER_H && scrollBox) {
+        e.preventDefault();
+        beginPan(e);
+      }
+      return;
+    }
 
     e.preventDefault();
     capture(e);
@@ -245,6 +279,8 @@ LS.interact = (function () {
   }
 
   function move(e) {
+    if (pan) { movePan(e); return; }
+
     if (!drag) {
       // Ingen draging på gang — vis kva eit trykk ville gjort.
       const target = targetAt(pointAt(e));
@@ -273,6 +309,12 @@ LS.interact = (function () {
   }
 
   function end(e) {
+    if (pan) {
+      pan = null;
+      release(e);
+      canvas.style.cursor = '';
+      return;
+    }
     if (!drag) return;
     release(e);
 
@@ -297,6 +339,12 @@ LS.interact = (function () {
   }
 
   function cancel(e) {
+    if (pan) {
+      pan = null;
+      canvas.style.cursor = '';
+      if (e) release(e);
+      return;
+    }
     if (!drag) return;
     // Avbrote av nettlesaren: legg klippet tilbake der det låg.
     const clip = drag.clip;
@@ -316,14 +364,15 @@ LS.interact = (function () {
 
   /* ──────────────── Oppstart ──────────────── */
 
-  function setup(node) {
+  function setup(node, scroller) {
     canvas = node;
+    scrollBox = scroller || null;
     canvas.addEventListener('pointerdown', begin);
     canvas.addEventListener('pointermove', move);
     canvas.addEventListener('pointerup', end);
     canvas.addEventListener('pointercancel', cancel);
-    canvas.addEventListener('pointerleave', () => { if (!drag) canvas.style.cursor = ''; });
+    canvas.addEventListener('pointerleave', () => { if (!drag && !pan) canvas.style.cursor = ''; });
   }
 
-  return { setup, targetAt, EDGE, MIN_LEN };
+  return { setup, targetAt, edgeWidth, MIN_LEN };
 })();

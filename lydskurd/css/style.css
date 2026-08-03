@@ -278,7 +278,12 @@ input[type="file"]:focus-visible,
   position: sticky;
   left: 0;
   display: block;
-  touch-action: pan-x;
+  /* Med pan-x tek nettlesaren sjølv hand om alle vassrette fingerdrag,
+     og då kjem dei aldri fram til oss — det ville gjort det umogleg å
+     dra eit klipp med fingeren. Vi tek difor over heile gesten og
+     panorerer sjølve når draget startar utanfor eit klipp
+     (sjå LS.interact). */
+  touch-action: none;
 }
 
 /* Melding når det ikkje er lyd i prosjektet enno */
