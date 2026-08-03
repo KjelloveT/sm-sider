@@ -254,6 +254,20 @@ body {
 main { max-width: 1200px; margin: 0 auto; padding: clamp(20px, 5vw, 40px) 20px; overflow-x: hidden; }
 section { margin-bottom: clamp(40px, 6vw, 60px); }
 
+/* Full skjermbreidd for redigeringsverktøy.
+   Breiddegrensa på 1200px finst for lesbar linjelengd, men i eit
+   redigeringsverktøy ER arbeidsflata innhaldet: ei tidslinje, eit lerret
+   eller ei biletflate blir berre betre av meir plass, og brukaren har
+   som regel opna programmet nettopp for å sjå meir om gongen.
+   Legg .main-wide på <main>. Vanlege innhaldssider skal IKKJE bruke han.
+   Hugs å halde reine tekstblokker (ingress, hjelpetekst, botntekst)
+   innanfor ei lesbar breidd sjølv om flata rundt er brei. */
+main.main-wide {
+  max-width: none;
+  padding-left: clamp(12px, 2vw, 32px);
+  padding-right: clamp(12px, 2vw, 32px);
+}
+
 /* ========================================
    HEADINGS (4 types)
    Standard top-margin gjev luft mot innhald som kjem før.

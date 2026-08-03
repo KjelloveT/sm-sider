@@ -17,8 +17,13 @@
   font-weight: 700;
   margin: 0 0 16px;
 }
-.ls-hint { margin: 12px 0 0; }
-.ls-footnote { margin: 24px 0; }
+/* Flata går i full skjermbreidd (main-wide), men rein tekst skal ikkje
+   det: ei linje på to tusen pikslar er tung å lese, og auget mistar
+   staden når det skal tilbake til venstre. Tidslinja får all plassen —
+   ingressen og hjelpetekstane held seg på lesbar breidd. */
+.hero-box { max-width: 1200px; }
+.ls-hint { margin: 12px 0 0; max-width: 78ch; }
+.ls-footnote { margin: 24px auto; max-width: 78ch; }
 
 .btn:focus-visible,
 input[type="file"]:focus-visible,

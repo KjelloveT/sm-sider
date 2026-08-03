@@ -21,8 +21,25 @@ Dette er den sentrale retningslinjen for koding, design og arkitektur for alle p
 ### 3.1 Responsivitet
 - **Alt MÅ vere responsivt:** Vyrdepil blir brukt på alt frå små smarttelefonar til nettbrett og store prosjektorskjermar i klasserommet. Bruk `clamp()`-funksjonar (allereie implementert i typografien), `vw`/`vh`, og auto-grids (`minmax()`) framfor faste pixel-storleikar. Gi varsel dersom element er vanskelege å tilpasse til fleire skjermstorleikar og spør om avklaring på korleis problem skal løysast.
 
+### 3.1.1 Full skjermbreidd for redigeringsverktøy
+`<main>` har som standard `max-width: 1200px`. Det er rett for innhaldssider: lange tekstlinjer er tunge å lese, og auget mistar staden når det skal tilbake til venstre marg.
+
+**Men i eit redigeringsverktøy er arbeidsflata sjølve innhaldet.** Ei tidslinje, eit lerret eller ei biletflate blir berre betre av meir plass — brukaren har som regel opna programmet nettopp for å sjå meir om gongen. Der breidda gjev reell nytte, skal verktøyet difor bruke heile skjermen:
+
+```html
+<main class="main-content main-wide">
+```
+
+`.main-wide` (definert i `css/neobrutalisme.css`) fjernar breiddegrensa og strammar inn sidemargane litt, så flata får mest mogleg plass òg på små skjermar.
+
+Retningslinjer:
+- **Bruk han** når flata er ei arbeidsflate: lydredigering (Lydskurd), teikning (Rissverk), biletbehandling, klassekart, tidslinjer og liknande.
+- **Bruk han ikkje** på vanlege innhaldssider, framsida, personvernsida, kviss-skjermar eller skjemabaserte verktøy. Der er 1200px rett.
+- **Hald tekstblokker lesbare uansett.** Sjølv om flata er brei, skal ingress, hjelpetekst og botntekst ha si eiga breiddegrense (t.d. `max-width: 78ch`). Ei tekstlinje på to tusen pikslar er ikkje betre enn ei på tusen — han er verre.
+- Sjekk framleis at det ikkje kjem vassrett skrolling på mobil. `.main-wide` gjer sidemargane mindre, ikkje større, så små skjermar tener òg på han.
+
 ### 3.2 Oversikt over komponentar
-- **Layout:** Alle hovudsider skal pakkast inn i ein `<div class="page-wrapper">` og deretter `<main class="main-content">`.
+- **Layout:** Alle hovudsider skal pakkast inn i ein `<div class="page-wrapper">` og deretter `<main class="main-content">`. Redigeringsverktøy legg i tillegg til `.main-wide` — sjå §3.1.1.
 - **Global header:** Bruk `<neo-header></neo-header>` øvst på alle sider. Scriptet `js/neo-header.js` tek seg av rendring av den globale menyen med temavelgaren.
 - **Headings:** Bruk `.heading1` til `.heading4` for overskrifter. Fargane kan overstyrast med modifikatorar som `.heading1-accent2`. Legg til `.no-mt` for å fjerne top-margin viss overskrifta er det første elementet. (Hugs: Bruk aldri desse klassane inni ferdigfarga element som `.box2-accent` eller `.banner-full` — bruk rene `<h1>` osv. der.)
 - **Game hero-header:** Spel og minispel skal bruke ein hero-boks på menyskjermen sin slik at han forsvinn når spelet startar. Struktur:
