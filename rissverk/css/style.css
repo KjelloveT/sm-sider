@@ -1,0 +1,884 @@
+/* ══════════════════════════════════════════════
+   RISSVERK — stil oppå neobrutalisme.css
+
+   Alle klassar har prefikset rv-. Fargane blir henta frå CSS-variablane
+   i temaet, aldri skrivne som faste verdiar — med eitt unntak: sjølve
+   teikneflata og rutemønsteret bak henne. Dei må vere lyse i alle tema,
+   for det er PAPIRET brukaren teiknar på, og det skal ikkje skifte farge
+   når han byter tema midt i arbeidet.
+   ══════════════════════════════════════════════ */
+
+/* ──────────────── Full breidd ──────────────── */
+
+/* Sjølve breidda kjem frå `.main-wide` i neobrutalisme.css (sjå
+   AGENTS.md §3.1.1) — Rissverk er eit redigeringsverktøy, og
+   teikneflata er sjølve innhaldet.
+
+   Men brødtekst skal ikkje bli tre tusen pikslar brei. Auget mistar
+   linja når ho blir for lang, uansett kor stor skjermen er, og
+   retningslinja seier uttrykkeleg at reine tekstblokker skal halde si
+   eiga lesbare breidd. */
+.rv-about p { max-width: 78ch; }
+
+/* ──────────────── Overskrift og verktøyrad ──────────────── */
+
+.rv-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.rv-section-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rv-btn-small {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.rv-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.rv-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-right: 0.75rem;
+  border-right: 2px solid var(--border);
+}
+
+.rv-btn-group:last-child,
+.rv-btn-group-end {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* Skyv fil-knappane heilt ut til høgre når det er plass. */
+.rv-btn-group-end { margin-left: auto; }
+
+.rv-icon-btn {
+  padding: 0.4rem;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  min-height: 2.1rem;
+}
+
+.rv-icon-btn-tiny {
+  min-width: 1.6rem;
+  min-height: 1.6rem;
+  padding: 0.2rem;
+}
+
+.rv-icon-btn[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.rv-tool-btn.active,
+.rv-icon-btn.active,
+.rv-btn-small.active {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.rv-danger:not([disabled]):hover {
+  background: var(--accent2);
+  color: var(--text-on-accent);
+}
+
+.rv-zoom-label {
+  min-width: 4rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ──────────────── Arbeidsflate ──────────────── */
+
+/* Panelet har ei fast, roleg breidd; all plass som blir til overs går
+   til teikneflata. Det er flata som veks når skjermen veks, ikkje
+   skjemafelta — dei blir ikkje betre av å vere breie. */
+.rv-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(230px, 20vw, 330px);
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.rv-stage {
+  position: relative;
+  min-height: clamp(340px, 64vh, 920px);
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  touch-action: none;      /* peikaren styrer flata, ikkje rullinga */
+  /* Sjakkbrettet bak teikninga viser kva som er gjennomsiktig. */
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(45deg, #e8e8e8 25%, transparent 25%),
+    linear-gradient(-45deg, #e8e8e8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e8e8e8 75%),
+    linear-gradient(-45deg, transparent 75%, #e8e8e8 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+/* Tydeleg kant medan ei fil blir dregen over flata. */
+.rv-stage-drop {
+  outline: 4px dashed var(--accent2);
+  outline-offset: -6px;
+}
+
+.rv-stage:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: -3px;
+}
+
+.rv-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Treffdeteksjonen går på geometrien, ikkje via nettlesaren. */
+#viewport, #gridLayer, #overlayLayer, #rulerLayer { pointer-events: none; }
+
+#artboard {
+  stroke: #b0b0b0;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.rv-artboard-clear { fill: none; }
+
+.rv-grid-line {
+  stroke: #c9d2da;
+  stroke-width: 1;
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+/* ──────────────── Linjalar ──────────────── */
+
+.rv-ruler-bg {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1;
+  opacity: 0.94;
+}
+
+.rv-ruler-tick {
+  stroke: var(--text);
+  stroke-width: 1;
+  fill: none;
+  shape-rendering: crispEdges;
+}
+
+.rv-ruler-text {
+  fill: var(--text);
+  font-size: 9px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  dominant-baseline: auto;
+}
+
+/* ──────────────── Markering og handtak ──────────────── */
+
+/* Handtaka har faste fargar med vilje: dei ligg OPPÅ teikninga, og eit
+   tema med lys aksent ville gjort dei usynlege mot ei lys form. */
+.rv-frame {
+  fill: none;
+  stroke: #2f6fed;
+  stroke-width: 1.5;
+}
+
+.rv-select-outline {
+  fill: none;
+  stroke: #2f6fed;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.8;
+}
+
+.rv-hover-outline {
+  fill: none;
+  stroke: #2f6fed;
+  stroke-width: 1.5;
+  opacity: 0.45;
+}
+
+.rv-handle {
+  fill: #ffffff;
+  stroke: #2f6fed;
+  stroke-width: 1.5;
+}
+
+/* ──────────────── Penn og punktredigering ──────────────── */
+
+/* Same blåfargen som markeringsramma, av same grunn: desse ligg oppå
+   teikninga og må vere synlege mot kva farge som helst under. */
+.rv-pen-preview {
+  fill: none;
+  stroke: #2f6fed;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  opacity: 0.85;
+}
+
+.rv-node-path {
+  fill: none;
+  stroke: #2f6fed;
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.rv-node {
+  fill: #ffffff;
+  stroke: #2f6fed;
+  stroke-width: 1.5;
+}
+
+/* Eit valt punkt er fylt, eit uvalt er tomt. Forma skil hjørne (firkant)
+   frå mjuke punkt (sirkel), så begge opplysningane les seg på ein gong. */
+.rv-node-selected {
+  fill: #2f6fed;
+  stroke: #ffffff;
+}
+
+.rv-node-close {
+  fill: #ffb703;
+  stroke: #1a1a1a;
+}
+
+.rv-node-insert {
+  fill: none;
+  stroke: #2f6fed;
+  stroke-width: 1.5;
+  stroke-dasharray: 2 2;
+}
+
+.rv-handle-arm {
+  stroke: #2f6fed;
+  stroke-width: 1;
+  opacity: 0.7;
+}
+
+.rv-handle-dot {
+  fill: #2f6fed;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+}
+
+/* ──────────────── Hjelpelinjer frå snappinga ──────────────── */
+
+/* Ein annan farge enn markeringa med vilje: hjelpelinja er noko som
+   skjer NO og forsvinn att, ikkje ein tilstand ved teikninga. */
+.rv-guide {
+  stroke: #d90429;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+  opacity: 0.9;
+}
+
+.rv-marquee {
+  fill: #2f6fed;
+  fill-opacity: 0.12;
+  stroke: #2f6fed;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+
+/* ──────────────── Meldingar på flata ──────────────── */
+
+.rv-empty {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  max-width: min(30rem, 88%);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.rv-coords {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.rv-coords:empty { display: none; }
+
+/* ──────────────── Sidepanel ──────────────── */
+
+.rv-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.rv-panel {
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.rv-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0.45rem 0.6rem;
+  border-bottom: 3px solid var(--border);
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.rv-panel-head-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.rv-panel-head-actions .btn {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.rv-panel-body {
+  padding: 0.6rem;
+  overflow-y: auto;
+}
+
+.rv-panel-empty {
+  padding: 0.6rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+#layersPanel { flex: 1 1 auto; }
+.rv-layers { max-height: clamp(140px, 26vh, 320px); position: relative; }
+
+/* ──────────────── Eigenskapar ──────────────── */
+
+.rv-prop-group + .rv-prop-group {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 2px dashed var(--border);
+}
+
+.rv-prop-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.rv-prop-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  min-width: 0;
+}
+
+.rv-prop-label {
+  flex: 0 0 5.2rem;
+  font-size: 0.82rem;
+}
+
+.rv-prop-row > :not(.rv-prop-label) { flex: 1 1 auto; min-width: 0; }
+.rv-prop-row-wide .rv-prop-label { flex-basis: 100%; }
+.rv-prop-row-wide { flex-wrap: wrap; }
+
+/* To kolonnar med tal — X/Y over B/H. */
+.rv-prop-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem 0.5rem;
+}
+
+.rv-prop-grid .rv-prop-row { margin-bottom: 0; }
+.rv-prop-grid .rv-prop-label { flex-basis: 2.6rem; }
+
+/* ──────────────── Skjemaelement ──────────────── */
+
+.rv-text-input,
+.rv-select {
+  width: 100%;
+  padding: 0.3rem 0.45rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+
+.rv-num-input { font-variant-numeric: tabular-nums; }
+
+.rv-text-input:focus-visible,
+.rv-select:focus-visible,
+.rv-slider:focus-visible,
+.rv-swatch:focus-visible,
+.rv-layer-btn:focus-visible,
+.rv-layer-twist:focus-visible,
+.rv-color-area:focus-visible,
+.rv-color-hue:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 1px;
+}
+
+.rv-slider {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.rv-check {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  margin-top: 0.35rem;
+  cursor: pointer;
+}
+
+.rv-check input { accent-color: var(--accent); }
+
+.rv-field { display: block; margin-bottom: 0.7rem; }
+
+.rv-field-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.rv-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.rv-radio-row { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.rv-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.rv-radio input { accent-color: var(--accent); }
+
+.rv-preset-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+.rv-preset-btn {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.rv-muted {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* ──────────────── Fargeruter ──────────────── */
+
+.rv-paint { display: flex; align-items: center; gap: 0.35rem; }
+
+.rv-swatch {
+  width: 2rem;
+  height: 1.7rem;
+  flex: 0 0 auto;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0;
+  /* Rutene bak viser gjennom når fargen er delvis gjennomsiktig. */
+  background-image:
+    linear-gradient(45deg, #ccc 25%, transparent 25%),
+    linear-gradient(-45deg, #ccc 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ccc 75%),
+    linear-gradient(-45deg, transparent 75%, #ccc 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+}
+
+/* Ein raud skråstrek er den innarbeidde måten å vise «ingen farge». */
+.rv-swatch-none {
+  background:
+    linear-gradient(to top left,
+      transparent calc(50% - 1px), #d90429 calc(50% - 1px),
+      #d90429 calc(50% + 1px), transparent calc(50% + 1px)),
+    #ffffff;
+}
+
+.rv-swatch-tiny {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-width: 2px;
+}
+
+/* ──────────────── Lagpanelet ──────────────── */
+
+.rv-layer {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.3rem 0.2rem 0.35rem;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.85rem;
+  min-height: 1.9rem;
+}
+
+.rv-layer:hover { background: var(--accent3); color: var(--text-on-light-accent); }
+
+.rv-layer-selected {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.rv-layer-hidden .rv-layer-name { opacity: 0.5; text-decoration: line-through; }
+
+.rv-layer-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rv-layer-rename {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.1rem 0.25rem;
+  font-size: 0.85rem;
+}
+
+.rv-layer-icon,
+.rv-layer-twist,
+.rv-layer-twist-space,
+.rv-layer-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.rv-layer-twist,
+.rv-layer-twist-space { width: 1.1rem; height: 1.1rem; }
+
+.rv-layer-twist,
+.rv-layer-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.15rem;
+  border-radius: 4px;
+}
+
+.rv-layer-btn:hover { background: rgba(128, 128, 128, 0.28); }
+.rv-layer-btn-off { opacity: 0.4; }
+.rv-layer-selected .rv-layer-btn-off { opacity: 0.6; }
+
+.rv-layers-dragging .rv-layer { cursor: grabbing; }
+
+.rv-layer-drop-line {
+  position: absolute;
+  left: 0.3rem;
+  right: 0.3rem;
+  height: 3px;
+  background: var(--accent2);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.rv-layer-drop-into {
+  outline: 2px dashed var(--accent2);
+  outline-offset: -2px;
+}
+
+/* ──────────────── Fargeveljar ──────────────── */
+
+.rv-color-pop {
+  position: fixed;
+  z-index: 900;
+  width: 15rem;
+  padding: 0.7rem;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+
+.rv-color-area {
+  position: relative;
+  height: 8rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.rv-color-hue {
+  position: relative;
+  height: 1.1rem;
+  margin-top: 0.5rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  cursor: pointer;
+  touch-action: none;
+  background: linear-gradient(to right,
+    #ff0000 0%, #ffff00 17%, #00ff00 33%,
+    #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+}
+
+.rv-color-cursor,
+.rv-color-hue-cursor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #000000;
+  pointer-events: none;
+}
+
+.rv-color-hue-cursor { top: 50%; }
+
+.rv-color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.55rem 0;
+}
+
+.rv-color-preview {
+  width: 1.8rem;
+  height: 1.6rem;
+  flex: 0 0 auto;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+}
+
+.rv-color-hex { text-transform: lowercase; }
+
+.rv-color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 2px dashed var(--border);
+}
+
+/* ──────────────── Modalar ──────────────── */
+
+.rv-modal { max-width: min(30rem, 92vw); }
+.rv-modal-wide { max-width: min(44rem, 94vw); }
+
+.rv-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.rv-align-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.rv-align-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: flex-start;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.6rem;
+}
+
+.rv-align-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+
+/* ──────────────── Tips ──────────────── */
+
+.rv-tips { max-height: 62vh; overflow-y: auto; padding-right: 0.4rem; }
+
+.rv-tips-head {
+  margin: 1rem 0 0.4rem;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.rv-tips-head:first-child { margin-top: 0; }
+
+.rv-tips-list {
+  display: grid;
+  grid-template-columns: minmax(9rem, auto) 1fr;
+  gap: 0.3rem 0.8rem;
+  align-items: baseline;
+  margin: 0;
+}
+
+.rv-tips-term {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.rv-tips-icon { line-height: 0; }
+
+.rv-tips-badge {
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  background: var(--accent4);
+  color: var(--text-on-light-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.rv-tips-def { margin: 0; font-size: 0.86rem; color: var(--muted); }
+
+.rv-tips-notes { margin: 0.3rem 0 0 1.1rem; font-size: 0.88rem; }
+.rv-tips-notes li { margin-bottom: 0.35rem; }
+
+kbd {
+  display: inline-block;
+  padding: 0.05rem 0.35rem;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* ──────────────── Kort melding ──────────────── */
+
+.rv-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%) translateY(1rem);
+  z-index: 950;
+  max-width: min(26rem, 90vw);
+  padding: 0.55rem 1rem;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  box-shadow: 4px 4px 0 var(--shadow);
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.rv-toast.open {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ──────────────── Mindre skjermar ──────────────── */
+
+@media (max-width: 980px) {
+  .rv-workspace { grid-template-columns: minmax(0, 1fr); }
+
+  /* Panela ved sida av kvarandre når dei fell under flata — elles blir
+     sida uendeleg lang på eit nettbrett. */
+  .rv-side {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .rv-side > .rv-panel { flex: 1 1 0; min-width: 0; }
+  .rv-layers { max-height: 16rem; }
+  .rv-btn-group-end { margin-left: 0; }
+}
+
+@media (max-width: 640px) {
+  .rv-side { flex-direction: column; }
+  .rv-stage { min-height: 60vh; }
+
+  /* Ei rad som rullar, ikkje seks rader som brytar. Med berøringsvennlege
+     knappar ville ein brytande verktøyrad teke ein tredjedel av skjermen
+     og skuve sjølve teikneflata ut av synet. */
+  .rv-toolbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    gap: 0.4rem 0.5rem;
+    padding: 0.4rem;
+  }
+
+  .rv-btn-group { padding-right: 0.5rem; flex: 0 0 auto; }
+  .rv-btn-group-end { margin-left: 0; }
+  .rv-zoom-label { min-width: 3.4rem; }
+
+  .rv-icon-btn { min-width: 2.4rem; min-height: 2.4rem; }
+  .rv-empty { font-size: 0.82rem; bottom: 0.75rem; }
+  .rv-prop-label { flex-basis: 4.4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-toast { transition: none; }
+}

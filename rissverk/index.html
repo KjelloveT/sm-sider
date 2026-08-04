@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rissverk — vektorteikning for Vyrdepil</title>
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content main-wide">
+
+  <!-- Hero -->
+  <div class="box2 hero-box">
+    <img src="../_resources/rissverk.png" alt="Rissverk" class="hero-logo">
+    <div class="hero-text">
+      <h1>Rissverk</h1>
+      <p>Teikn logoar, ikon, figurar og diagram med ekte vektorformer. Legg dei i lag, still farge og strek, og lagra som SVG eller PNG. Alt skjer i din eigen nettlesar — ingenting blir lasta opp.</p>
+    </div>
+  </div>
+
+  <!-- Teikneflata -->
+  <section class="box1" aria-labelledby="editorHeading">
+    <div class="rv-section-head">
+      <h2 class="heading3 no-mt" id="editorHeading">Teikneflata</h2>
+      <div class="rv-section-actions">
+        <button class="btn rv-btn-small" id="advancedBtn" type="button" aria-pressed="false"><span data-icon="sliders"></span>Avansert</button>
+        <button class="btn rv-btn-small" id="tipsBtn" type="button"><span data-icon="lightbulb"></span>Tips</button>
+      </div>
+    </div>
+
+    <div class="rv-toolbar" role="toolbar" aria-label="Verktøy for teikneflata">
+      <!-- Verktøy -->
+      <div class="rv-btn-group" id="toolGroup" role="group" aria-label="Teikneverktøy"></div>
+
+      <!-- Rediger -->
+      <div class="rv-btn-group">
+        <button class="btn rv-icon-btn" id="undoBtn" type="button" aria-label="Angre" title="Angre (Ctrl+Z)"><span data-icon="undo"></span></button>
+        <button class="btn rv-icon-btn" id="redoBtn" type="button" aria-label="Gjer om" title="Gjer om (Ctrl+Shift+Z)"><span data-icon="redo"></span></button>
+        <button class="btn rv-icon-btn" id="duplicateBtn" type="button" aria-label="Dupliser" title="Dupliser (Ctrl+D)"><span data-icon="copy"></span></button>
+        <button class="btn rv-icon-btn rv-danger" id="deleteBtn" type="button" aria-label="Slett" title="Slett det valde (Delete)"><span data-icon="trash2"></span></button>
+      </div>
+
+      <!-- Grupper og rekkjefølgje -->
+      <div class="rv-btn-group">
+        <button class="btn rv-icon-btn" id="groupBtn" type="button" aria-label="Grupper" title="Grupper det valde (Ctrl+G)"><span data-icon="package"></span></button>
+        <button class="btn rv-icon-btn" id="ungroupBtn" type="button" aria-label="Løys opp gruppa" title="Løys opp gruppa (Ctrl+Shift+G)"><span data-icon="shapes"></span></button>
+        <button class="btn rv-icon-btn" id="raiseBtn" type="button" aria-label="Flytt fram" title="Flytt eitt hakk fram"><span data-icon="chevronUp"></span></button>
+        <button class="btn rv-icon-btn" id="lowerBtn" type="button" aria-label="Flytt bak" title="Flytt eitt hakk bak"><span data-icon="chevronDown"></span></button>
+      </div>
+
+      <!-- Justering (avansert) -->
+      <div class="rv-btn-group" data-level="advanced">
+        <button class="btn rv-icon-btn" id="flipHBtn" type="button" aria-label="Spegle vassrett" title="Spegle vassrett"><span data-icon="flipHorizontal"></span></button>
+        <button class="btn rv-icon-btn" id="flipVBtn" type="button" aria-label="Spegle loddrett" title="Spegle loddrett"><span data-icon="flipVertical"></span></button>
+        <button class="btn rv-icon-btn" id="alignBtn" type="button" aria-label="Juster" title="Juster og fordel"><span data-icon="arrowLeftRight"></span></button>
+      </div>
+
+      <!-- Visning -->
+      <div class="rv-btn-group">
+        <button class="btn rv-icon-btn" id="zoomOutBtn" type="button" aria-label="Zoom ut" title="Zoom ut (Ctrl + rullehjul)"><span data-icon="zoomOut"></span></button>
+        <output class="rv-zoom-label" id="zoomLabel" aria-live="off">100&nbsp;%</output>
+        <button class="btn rv-icon-btn" id="zoomInBtn" type="button" aria-label="Zoom inn" title="Zoom inn (Ctrl + rullehjul)"><span data-icon="zoomIn"></span></button>
+        <button class="btn rv-icon-btn" id="zoomFitBtn" type="button" aria-label="Tilpass til vindauget" title="Tilpass til vindauget (Ctrl+0)"><span data-icon="maximize"></span></button>
+        <button class="btn rv-icon-btn" id="gridBtn" type="button" aria-pressed="false" aria-label="Rutenett" title="Vis rutenett"><span data-icon="grid3x3"></span></button>
+      </div>
+
+      <!-- Filer -->
+      <div class="rv-btn-group rv-btn-group-end">
+        <button class="btn rv-icon-btn" id="docBtn" type="button" aria-label="Storleik på teikninga" title="Storleik på teikninga"><span data-icon="crop"></span></button>
+        <button class="btn rv-icon-btn" id="exportBtn" type="button" aria-label="Lagre bilete" title="Lagre som SVG eller PNG"><span data-icon="download"></span></button>
+        <button class="btn rv-icon-btn" id="saveProjectBtn" type="button" aria-label="Lagre prosjekt" title="Lagre heile teikninga som prosjektfil"><span data-icon="save"></span></button>
+        <button class="btn rv-icon-btn" id="openProjectBtn" type="button" aria-label="Opne prosjekt" title="Opne ei prosjektfil"><span data-icon="folderOpen"></span></button>
+        <button class="btn rv-icon-btn" id="importBtn" type="button" aria-label="Hent inn fil" title="Hent inn ein SVG eller eit referansebilete"><span data-icon="upload"></span></button>
+        <input type="file" id="openProjectFile" accept=".rissverk,application/json" hidden>
+        <input type="file" id="importFile" accept=".svg,image/svg+xml,image/png,image/jpeg,image/webp" hidden>
+      </div>
+    </div>
+
+    <!-- Arbeidsflate -->
+    <div class="rv-workspace">
+      <div class="rv-stage" id="stage" tabindex="0" role="application"
+           aria-label="Teikneflate. Bruk verktøyraden over til å velje verktøy.">
+        <svg class="rv-canvas" id="canvas" xmlns="http://www.w3.org/2000/svg">
+          <defs id="canvasDefs"></defs>
+          <g id="gridLayer" aria-hidden="true"></g>
+          <g id="viewport">
+            <rect id="artboard" x="0" y="0" width="512" height="512"></rect>
+            <g id="scene"></g>
+          </g>
+          <g id="overlayLayer" aria-hidden="true"></g>
+          <g id="rulerLayer" aria-hidden="true"></g>
+        </svg>
+        <p class="rv-empty" id="emptyNote">
+          <span data-icon="shapes" data-icon-size="28"></span>
+          <span>Vel eit verktøy i raden over og dra på flata for å teikne. Held du <kbd>Skift</kbd> nede, blir forma proporsjonal.</span>
+        </p>
+        <output class="rv-coords" id="coordsLabel" aria-live="off"></output>
+      </div>
+
+      <aside class="rv-side" aria-label="Panel">
+        <!-- Eigenskapar -->
+        <div class="rv-panel" id="propsPanel">
+          <h3 class="rv-panel-head"><span data-icon="palette" data-icon-size="16"></span>Utsjånad</h3>
+          <div class="rv-panel-body" id="propsBody">
+            <p class="rv-panel-empty" id="propsEmpty">Vel noko på flata for å endre utsjånaden.</p>
+          </div>
+        </div>
+
+        <!-- Lag -->
+        <div class="rv-panel" id="layersPanel">
+          <h3 class="rv-panel-head">
+            <span data-icon="layers" data-icon-size="16"></span>Lag
+            <span class="rv-panel-head-actions">
+              <button class="btn rv-icon-btn rv-icon-btn-tiny" id="layerUpBtn" type="button" aria-label="Flytt fram" title="Flytt fram"><span data-icon="chevronUp" data-icon-size="14"></span></button>
+              <button class="btn rv-icon-btn rv-icon-btn-tiny" id="layerDownBtn" type="button" aria-label="Flytt bak" title="Flytt bak"><span data-icon="chevronDown" data-icon-size="14"></span></button>
+            </span>
+          </h3>
+          <div class="rv-panel-body rv-layers" id="layerList" role="tree" aria-label="Lag i teikninga"></div>
+          <p class="rv-panel-empty" id="layersEmpty">Teikninga er tom.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="box3 rv-about">
+    <h2 class="heading4 no-mt">Om Rissverk</h2>
+    <p>Rissverk er eit vektorteikneprogram: formene blir lagra som kurver og punkt, ikkje som pikslar. Difor kan du forstørre ein logo så mykje du vil utan at han blir uskarp, og du kan alltid gå tilbake og endre ei form du teikna i går.</p>
+    <p>Trykk <strong>Avansert</strong> oppe til høgre for å få fram fleire verktøy. Teikninga blir lagra i nettlesaren din medan du arbeider, men vil du ta vare på henne, bør du lagre ho som prosjektfil.</p>
+  </section>
+
+</main>
+</div>
+
+<!-- ══════════ Modal: storleik på teikninga ══════════ -->
+<div class="modal-overlay" id="docOverlay">
+  <div class="modal1 rv-modal">
+    <h2 class="heading3 no-mt">Storleik på teikninga</h2>
+    <p class="rv-muted">Dette er flata som blir lagra når du eksporterer. Formene kan gå utanfor, men då blir dei skorne bort.</p>
+
+    <div class="rv-field-row">
+      <label class="rv-field">
+        <span class="rv-field-label">Breidd (px)</span>
+        <input type="number" id="docWidth" class="rv-text-input" min="16" max="8000" step="1" value="512">
+      </label>
+      <label class="rv-field">
+        <span class="rv-field-label">Høgd (px)</span>
+        <input type="number" id="docHeight" class="rv-text-input" min="16" max="8000" step="1" value="512">
+      </label>
+    </div>
+
+    <div class="rv-field">
+      <span class="rv-field-label">Ferdige storleikar</span>
+      <div class="rv-preset-row" id="docPresets"></div>
+    </div>
+
+    <label class="rv-check">
+      <input type="checkbox" id="docTransparent" checked>
+      <span>Gjennomsiktig bakgrunn</span>
+    </label>
+
+    <div class="rv-field" id="docBgField" hidden>
+      <span class="rv-field-label">Bakgrunnsfarge</span>
+      <button class="rv-swatch" id="docBgSwatch" type="button" aria-label="Vel bakgrunnsfarge"></button>
+    </div>
+
+    <div class="rv-modal-actions">
+      <button class="btn" id="docCancelBtn" type="button"><span data-icon="x"></span>Avbryt</button>
+      <button class="btn btn-accent" id="docSaveBtn" type="button"><span data-icon="check"></span>Bruk</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ Modal: lagre bilete ══════════ -->
+<div class="modal-overlay" id="exportOverlay">
+  <div class="modal1 rv-modal">
+    <h2 class="heading3 no-mt">Lagre bilete</h2>
+
+    <label class="rv-field">
+      <span class="rv-field-label">Filnamn</span>
+      <input type="text" id="exportName" class="rv-text-input" maxlength="60" placeholder="teikning">
+    </label>
+
+    <div class="rv-field">
+      <span class="rv-field-label">Format</span>
+      <div class="rv-radio-row">
+        <label class="rv-radio"><input type="radio" name="exportFormat" value="svg" checked><span>SVG — vektor, kan endrast seinare</span></label>
+        <label class="rv-radio"><input type="radio" name="exportFormat" value="png"><span>PNG — bilete med gjennomsikt</span></label>
+      </div>
+    </div>
+
+    <div class="rv-field" id="exportScaleField" hidden>
+      <span class="rv-field-label">Storleik</span>
+      <div class="rv-preset-row" id="exportScales"></div>
+      <p class="rv-muted" id="exportSizeNote"></p>
+    </div>
+
+    <div class="rv-modal-actions">
+      <button class="btn" id="exportCancelBtn" type="button"><span data-icon="x"></span>Avbryt</button>
+      <button class="btn btn-accent" id="exportGoBtn" type="button"><span data-icon="download"></span>Lagre</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ Modal: juster og fordel ══════════ -->
+<div class="modal-overlay" id="alignOverlay">
+  <div class="modal1 rv-modal">
+    <h2 class="heading3 no-mt">Juster og fordel</h2>
+    <p class="rv-muted" id="alignNote">Vel to eller fleire former for å justere dei mot kvarandre.</p>
+    <div class="rv-align-grid" id="alignGrid"></div>
+    <div class="rv-modal-actions">
+      <button class="btn" id="alignCloseBtn" type="button"><span data-icon="x"></span>Lukk</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ Modal: tips ══════════ -->
+<div class="modal-overlay" id="tipsOverlay">
+  <div class="modal1 rv-modal rv-modal-wide">
+    <h2 class="heading3 no-mt">Tips til Rissverk</h2>
+    <div class="rv-tips" id="tipsBody"></div>
+    <div class="rv-modal-actions">
+      <button class="btn btn-accent" id="tipsCloseBtn" type="button"><span data-icon="check"></span>Greitt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ Fargeveljar ══════════ -->
+<div class="rv-color-pop" id="colorPop" hidden role="dialog" aria-label="Vel farge">
+  <div class="rv-color-area" id="colorArea" tabindex="0" role="slider"
+       aria-label="Metting og lysstyrke" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="rv-color-cursor" id="colorCursor"></div>
+  </div>
+  <div class="rv-color-hue" id="colorHue" tabindex="0" role="slider"
+       aria-label="Fargetone" aria-valuemin="0" aria-valuemax="360" aria-valuenow="0">
+    <div class="rv-color-hue-cursor" id="colorHueCursor"></div>
+  </div>
+  <div class="rv-color-row">
+    <span class="rv-color-preview" id="colorPreview"></span>
+    <input type="text" class="rv-text-input rv-color-hex" id="colorHex" maxlength="7" spellcheck="false" aria-label="Fargekode">
+  </div>
+  <div class="rv-field">
+    <span class="rv-field-label" id="colorAlphaLabel">Gjennomsikt</span>
+    <input type="range" class="rv-slider" id="colorAlpha" min="0" max="1" step="0.01" value="1" aria-labelledby="colorAlphaLabel">
+  </div>
+  <div class="rv-color-swatches" id="colorSwatches" role="group" aria-label="Fargar frå temaet"></div>
+</div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+
+<script src="js/util.js"></script>
+<script src="js/matrix.js"></script>
+<script src="js/geom.js"></script>
+<script src="js/state.js"></script>
+<script src="js/view.js"></script>
+<script src="js/render.js"></script>
+<script src="js/hit.js"></script>
+<script src="js/overlay.js"></script>
+<script src="js/snap.js"></script>
+<script src="js/tool-manager.js"></script>
+<script src="js/tools/select.js"></script>
+<script src="js/tools/shape.js"></script>
+<script src="js/tools/freehand.js"></script>
+<script src="js/tools/pen.js"></script>
+<script src="js/tools/node.js"></script>
+<script src="js/ui-color.js"></script>
+<script src="js/ui-props.js"></script>
+<script src="js/ui-layers.js"></script>
+<script src="js/ui-align.js"></script>
+<script src="js/ui-toolbar.js"></script>
+<script src="js/svg-io.js"></script>
+<script src="js/svg-import.js"></script>
+<script src="js/import.js"></script>
+<script src="js/export.js"></script>
+<script src="js/ui-export.js"></script>
+<script src="js/project.js"></script>
+<script src="js/ui-project.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
