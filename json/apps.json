@@ -13,6 +13,8 @@
       "icon": "<path d=\"M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z\"/>" }
   ],
   "apps": [
+    { "id": "duldord", "name": "Duldord", "href": "duldord/index.html", "cat": "spel", "btn": "Spel no →", "img": "_resources/duldord.png", "added": "2026-08-04",
+      "desc": ["Eitt dult ord på fem bokstavar kvar dag, og seks freistnader på å finne det. Grøn rute tyder rett bokstav på rett plass, gul tyder rett bokstav på feil plass — resten er ute. Alle orda er nynorske, og eit nytt kjem ved midnatt.", "Har du spelt ferdig dagens ord, opnar arkivet seg, og du kan gå attende og prøve deg på alle dagane som har vore. Rekkja og statistikken din blir lagra lokalt, så du kan følgje med på korleis det går over tid."] },
     { "id": "kludre_klodrian", "name": "Kludre Klodrian", "href": "kludre_klodrian/index.html", "cat": "spel", "btn": "Spel no →", "img": "_resources/kludre klodrian.png",
       "desc": ["Hjelp pufferfisken Kludre gjennom havet ved å symje inn i den porten som har rett svar. Rekneartane kjem i eit jamt driv, og eit feil val kostar — så her må eleven både rekne fort og halde hovudet kaldt.", "Eit lite, lettbeint mattespel som passar til dei siste minutta av timen, til stasjonsarbeid eller som pusterom mellom to oppgåveark."] },
     { "id": "heimsank", "name": "Heimsank", "href": "heimsank/index.html", "cat": "spel", "btn": "Spel no →", "img": "heimsank/Logo - no text.png",

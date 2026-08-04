@@ -1,0 +1,294 @@
+/* ══════════════════════════════════════════════
+   DULDORD — spel-spesifikk stil, byggjer på neobrutalisme.css
+   ══════════════════════════════════════════════ */
+
+/* Rutefargane er faste, ikkje tema-styrte: grøn/gul/grå må tyde det same i alle
+   dei 21 temaa. Alle tre er mørke nok til at kvit tekst held WCAG AA på vanleg
+   tekststorleik — 4.9, 4.9 og 7.6 mot kvitt — difor fast #ffffff og aldri
+   var(--text), som ville blitt usynleg i eit mørkt tema. */
+:root {
+  --dd-correct: #2a803a;
+  --dd-present: #a16207;
+  --dd-absent: #4b5563;
+  --dd-gap: clamp(4px, 1.2vw, 8px);
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+/* Heroen står der når sida opnar, men vik unna med ein gong spelaren skriv,
+   så brett og tastatur får plass på ein mobilskjerm. */
+#hero {
+  transition: max-height .45s ease, opacity .3s ease, margin-bottom .45s ease,
+              padding .45s ease, border-width .45s ease;
+  max-height: 400px;
+  overflow: hidden;
+}
+#hero.dd-hero-gone {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+}
+
+/* ── Topprad ─────────────────────────────────────────────────────────────── */
+.dd-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.dd-daylabel { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.dd-daynum {
+  font-weight: 900;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  background: var(--accent);
+  color: var(--text-on-accent);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 4px 14px;
+}
+.dd-daynum-archive { background: var(--accent2); }
+.dd-daydate { font-weight: 700; color: var(--muted); }
+
+.dd-actions { display: flex; gap: 8px; }
+.dd-iconbtn { padding: 8px 10px; display: inline-flex; align-items: center; justify-content: center; }
+.btn > svg { vertical-align: middle; }
+.btn > span[data-icon] { display: inline-flex; margin-right: 6px; vertical-align: middle; }
+
+/* ── Meldingslinje ───────────────────────────────────────────────────────── */
+/* Ho held på høgda si heile tida, så brettet ikkje hoppar når ei melding kjem. */
+.dd-message {
+  min-height: 2.4em;
+  margin: 0 0 8px;
+  text-align: center;
+  font-weight: 800;
+  opacity: 0;
+  transition: opacity .18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dd-message.dd-message-on {
+  opacity: 1;
+  background: var(--accent3);
+  color: var(--text-on-light-accent);
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 6px 16px;
+  width: fit-content;
+  margin: 0 auto 8px;
+}
+
+/* ── Brettet ─────────────────────────────────────────────────────────────── */
+.dd-board {
+  display: grid;
+  gap: var(--dd-gap);
+  justify-content: center;
+  margin-bottom: clamp(14px, 3vw, 24px);
+}
+.dd-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--dd-gap); }
+
+/* Ruta er kvadratisk og skalerer med skjermen. min() gjer at fem ruter aldri
+   blir breiare enn skjermen, uansett kor smal han er. */
+.dd-tile {
+  --dd-size: min(58px, calc((100vw - 40px - 4 * var(--dd-gap)) / 5));
+  width: var(--dd-size);
+  height: var(--dd-size);
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--dd-size) * 0.5);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1;
+  transform-style: preserve-3d;
+}
+.dd-tile-face { display: block; }
+.dd-tile.dd-filled { box-shadow: inset 0 0 0 3px var(--accent3); }
+
+.dd-tile.dd-correct, .dd-key.dd-correct { background: var(--dd-correct); color: #ffffff; }
+.dd-tile.dd-present, .dd-key.dd-present { background: var(--dd-present); color: #ffffff; }
+.dd-tile.dd-absent,  .dd-key.dd-absent  { background: var(--dd-absent);  color: #ffffff; }
+
+/* ── Animasjonar ─────────────────────────────────────────────────────────── */
+.dd-tile.dd-flip { animation: dd-flip 520ms ease forwards; }
+@keyframes dd-flip {
+  0%   { transform: rotateX(0deg); }
+  50%  { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
+.dd-row.dd-shake { animation: dd-shake 500ms ease; }
+@keyframes dd-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+.dd-tile.dd-bounce { animation: dd-bounce 640ms ease; }
+@keyframes dd-bounce {
+  0%, 100% { transform: translateY(0); }
+  35% { transform: translateY(-16px); }
+  60% { transform: translateY(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dd-tile.dd-flip, .dd-row.dd-shake, .dd-tile.dd-bounce { animation: none; }
+  #hero { transition: none; }
+}
+
+/* ── Tastatur ────────────────────────────────────────────────────────────── */
+/* Radene må få full breidd før tastane fordeler han mellom seg. Med grid og
+   justify-content: center blir spora innhaldsstyrte, og tastane krympar til
+   nokre få pikslar på mobil — difor flex her. */
+.dd-keyboard { display: flex; flex-direction: column; align-items: center; gap: var(--dd-gap); }
+.dd-keyrow {
+  display: flex;
+  gap: var(--dd-gap);
+  justify-content: center;
+  width: 100%;
+  max-width: 520px;
+}
+.dd-key {
+  font-family: inherit;
+  font-weight: 800;
+  font-size: clamp(0.8rem, 2.2vw, 1rem);
+  text-transform: uppercase;
+  background: var(--surface);
+  color: var(--text);
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer;
+  padding: 0;
+  height: clamp(42px, 8vw, 54px);
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+.dd-key-wide { flex: 1.7 1 0; max-width: 82px; font-size: clamp(0.65rem, 1.8vw, 0.85rem); }
+.dd-key:hover { background: var(--accent3); color: var(--text-on-light-accent); }
+.dd-key.dd-correct:hover, .dd-key.dd-present:hover, .dd-key.dd-absent:hover { color: #ffffff; }
+.dd-key:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--shadow); }
+
+.dd-footnote {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 20px;
+  max-width: 78ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dd-notice { max-width: 62ch; margin: 0 auto; }
+.dd-muted { color: var(--muted); }
+.dd-credit { font-size: 0.82rem; margin-bottom: 0; }
+
+/* ── Hjelp ───────────────────────────────────────────────────────────────── */
+.dd-help-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.dd-help-row .dd-tile { --dd-size: 40px; flex: 0 0 auto; }
+
+/* ── Statistikk ──────────────────────────────────────────────────────────── */
+.dd-statgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.dd-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 3px 3px 0 var(--shadow);
+  padding: 10px 6px;
+}
+.dd-stat-value { font-size: clamp(1.3rem, 4vw, 1.8rem); font-weight: 900; line-height: 1; }
+.dd-stat-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); margin-top: 6px; }
+
+.dd-disttitle { margin-bottom: 10px; }
+.dd-dist { display: grid; gap: 6px; }
+.dd-distrow { display: flex; align-items: center; gap: 10px; }
+.dd-distnum { font-weight: 900; width: 1.2em; flex: 0 0 auto; }
+.dd-distbar {
+  background: var(--dd-absent);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 3px 8px;
+  border: 2px solid var(--border);
+  text-align: right;
+  min-width: 2.2em;
+}
+.dd-distbar-current { background: var(--dd-correct); }
+.dd-share { margin-top: 18px; text-align: center; }
+
+/* ── Arkiv ───────────────────────────────────────────────────────────────── */
+.dd-archive-intro { margin-top: 0; }
+.dd-archive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+  gap: 8px;
+}
+.dd-archive-day {
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--text);
+  border: 3px solid var(--border);
+  box-shadow: 3px 3px 0 var(--shadow);
+  padding: 8px 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+.dd-archive-day:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--shadow); }
+.dd-archive-day:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--shadow); }
+.dd-archive-num { font-weight: 900; font-size: 1.05rem; line-height: 1; }
+.dd-archive-date { font-size: 0.68rem; font-weight: 700; opacity: .75; }
+.dd-archive-won  { background: var(--dd-correct); color: #ffffff; }
+.dd-archive-lost { background: var(--dd-present); color: #ffffff; }
+.dd-archive-open { background: var(--accent3); color: var(--text-on-light-accent); }
+
+/* ── Fokus ───────────────────────────────────────────────────────────────── */
+.dd-key:focus-visible,
+.dd-archive-day:focus-visible,
+.dd-iconbtn:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 3px;
+}
+
+@media (max-width: 420px) {
+  /* Dagnummer over datoen, knappane ved sida av — elles bryt raden i tre
+     liner og skyv brettet langt ned. */
+  .dd-topbar { gap: 8px; flex-wrap: nowrap; }
+  .dd-daylabel { flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
+  .dd-daydate { font-size: 0.85rem; }
+  .dd-actions { flex: 0 0 auto; }
+  /* Elleve tastar på ei linje er trongt; litt mindre luft gjev merkbart
+     breiare tastar utan at dei renn saman. */
+  .dd-keyrow { gap: 3px; }
+}
+
+/* På ein mobilskjerm må brett og tastatur vere synlege med ein gong. Heroen
+   får difor berre logo og namn her — skildringa ligg uansett på framsida. */
+@media (max-width: 560px), (max-height: 700px) {
+  #hero { padding: 10px 14px; gap: 12px; }
+  #hero .hero-logo { width: 46px; height: 46px; min-width: 46px; }
+  #hero .hero-text p { display: none; }
+  #hero .hero-text h1 { font-size: 1.5rem; margin: 0; }
+  .dd-message { min-height: 2em; }
+  .dd-footnote { margin-top: 12px; font-size: 0.8rem; }
+}

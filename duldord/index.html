@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duldord — dagleg ordgåte på nynorsk</title>
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css?v=1">
+<script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+  <!-- Hero. Gøymer seg når spelaren byrjar å skrive, så brett og tastatur får plass -->
+  <div class="box2 hero-box" id="hero">
+    <img src="../_resources/duldord.png" alt="Duldord" class="hero-logo">
+    <div class="hero-text">
+      <h1>Duldord</h1>
+      <p>Eitt dult ord på fem bokstavar kvar dag, og seks freistnader på å finne det. Grøn rute tyder rett bokstav på rett plass, gul tyder rett bokstav på feil plass.</p>
+    </div>
+  </div>
+
+  <div class="dd-topbar">
+    <div class="dd-daylabel">
+      <span class="dd-daynum" id="dayNum"></span>
+      <span class="dd-daydate" id="dayDate"></span>
+    </div>
+    <div class="dd-actions">
+      <button class="btn dd-iconbtn" id="archiveBtn" data-icon="calendar" aria-label="Opne arkivet" title="Arkiv" hidden></button>
+      <button class="btn dd-iconbtn" id="statsBtn" data-icon="award" aria-label="Vis statistikk" title="Statistikk"></button>
+      <button class="btn dd-iconbtn" id="helpBtn" data-icon="help" aria-label="Korleis spele" title="Korleis spele"></button>
+    </div>
+  </div>
+
+  <p class="dd-message" id="message" role="status" aria-live="polite"></p>
+
+  <div class="dd-board" id="board" role="group" aria-label="Gjettebrett"></div>
+
+  <div class="dd-keyboard" id="keyboard" role="group" aria-label="Tastatur"></div>
+
+  <p class="dd-footnote" id="footnote"></p>
+
+</main>
+</div>
+
+<!-- Hjelp -->
+<div class="modal-overlay" id="helpOverlay">
+  <div class="modal3" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="modal-header">
+      <span id="helpTitle">Korleis spele</span>
+      <button class="btn dd-iconbtn" data-close data-icon="x" aria-label="Lukk"></button>
+    </div>
+    <div class="modal-body">
+      <p>Finn det dulde ordet på fem bokstavar. Du har seks freistnader. Kvart gjett må vere eit ord som finst.</p>
+      <p>Etter kvart gjett viser fargane kor nær du er:</p>
+      <div class="dd-help-row"><span class="dd-tile dd-correct">v</span><span>Bokstaven finst i ordet og står på rett plass.</span></div>
+      <div class="dd-help-row"><span class="dd-tile dd-present">a</span><span>Bokstaven finst i ordet, men står på feil plass.</span></div>
+      <div class="dd-help-row"><span class="dd-tile dd-absent">r</span><span>Bokstaven finst ikkje i ordet.</span></div>
+      <p>Eit nytt ord kjem kvar dag ved midnatt. Har du spelt ferdig dagens ord, opnar arkivet seg, og du kan prøve deg på dagane som har vore.</p>
+      <p class="dd-muted">Alt du gjer blir lagra berre i din eigen nettlesar. Ingenting blir sendt nokon stad.</p>
+      <p class="dd-muted dd-credit">Ordlista som avgjer kva som er eit gyldig gjett byggjer på <a href="https://www.nb.no/sprakbanken/ressurskatalog/oai-nb-no-sbr-41/" target="_blank" rel="noopener">Norsk Ordbank – nynorsk 2012</a> frå Språkbanken ved Nasjonalbiblioteket, brukt under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Statistikk -->
+<div class="modal-overlay" id="statsOverlay">
+  <div class="modal3" role="dialog" aria-modal="true" aria-labelledby="statsTitle">
+    <div class="modal-header">
+      <span id="statsTitle">Statistikk</span>
+      <button class="btn dd-iconbtn" data-close data-icon="x" aria-label="Lukk"></button>
+    </div>
+    <div class="modal-body">
+      <div class="dd-statgrid" id="statGrid"></div>
+      <h3 class="heading4 dd-disttitle">Fordeling</h3>
+      <div class="dd-dist" id="statDist"></div>
+      <div class="dd-share" id="shareWrap" hidden>
+        <button class="btn" id="shareBtn"><span data-icon="copy"></span><span id="shareLabel">Kopier resultatet</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Arkiv -->
+<div class="modal-overlay" id="archiveOverlay">
+  <div class="modal5" role="dialog" aria-modal="true" aria-labelledby="archiveTitle">
+    <div class="modal-header">
+      <span id="archiveTitle">Arkiv</span>
+      <button class="btn dd-iconbtn" data-close data-icon="x" aria-label="Lukk"></button>
+    </div>
+    <div class="modal-body">
+      <p class="dd-muted dd-archive-intro">Alle dagar som har vore. Grøn tyder løyst, raud tyder at freistnadene tok slutt.</p>
+      <div class="dd-archive" id="archiveGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="data/ord.js?v=1"></script>
+<script src="js/state.js?v=1"></script>
+<script src="js/storage.js?v=1"></script>
+<script src="js/dictionary.js?v=1"></script>
+<script src="js/board.js?v=1"></script>
+<script src="js/keyboard.js?v=1"></script>
+<script src="js/stats.js?v=1"></script>
+<script src="js/archive.js?v=1"></script>
+<script src="js/game.js?v=1"></script>
+
+</body>
+</html>
