@@ -376,3 +376,21 @@ select.form-input { cursor: pointer; }
     .stat-grid-3, .stat-grid-2 { grid-template-columns: 1fr 1fr; }
     .q-footer { flex-direction: column; gap: 10px; }
 }
+
+/* ── Nettsjekk ───────────────────────────────── */
+.nettsjekk-forklaring {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 4px 0 10px;
+}
+
+.nettsjekk-status {
+    font-weight: 700;
+    margin: 0;
+}
+
+.nettsjekk-status[data-tilstand="ok"]     { color: var(--accent5); }
+.nettsjekk-status[data-tilstand="feil"]   { color: var(--accent2); }
+.nettsjekk-status[data-tilstand="ventar"] { color: var(--muted); }
+
+#btn-copy[data-kopiert] { background: var(--accent5); color: var(--text-on-light-accent); }

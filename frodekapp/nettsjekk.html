@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Nettsjekk — Frødekapp</title>
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+    <div class="page-wrapper">
+        <neo-header></neo-header>
+        <main class="main-content">
+
+            <h1 class="heading1">Nettsjekk</h1>
+            <p>Dette verktøyet finn ut kva nettet du sit på slepp gjennom, slik at vi veit kvifor live-quizen eventuelt ikkje koplar seg opp. Køyr det frå den maskina og det nettet som ikkje verkar.</p>
+
+            <div class="box1 mt-24">
+                <p class="no-mt" style="margin-bottom:0;"><strong>Ingenting blir sendt til oss.</strong> Testen snakkar berre med dei tenestene som står i lista under, og resultatet blir verande i nettlesaren din til du sjølv kopierer det.</p>
+            </div>
+
+            <div class="fk-actions mt-24">
+                <button class="btn" id="btn-run"><span data-icon="play" data-icon-size="20"></span> Køyr testen</button>
+                <button class="btn" id="btn-copy" disabled><span data-icon="copy" data-icon-size="20"></span> Kopier resultat</button>
+            </div>
+
+            <div id="summary" class="mt-24" hidden></div>
+
+            <h2 class="heading2">Testar</h2>
+            <div id="results"></div>
+
+            <div class="box1 mt-24">
+                <h2 class="heading3 no-mt">Kva testane tyder</h2>
+                <p><strong>Signalteneste</strong> er tenaren som let læraren si maskin og elevmaskinene finne kvarandre. Kjem vi ikkje fram hit, blir det ikkje noko rom i det heile.</p>
+                <p><strong>STUN</strong> fortel maskina di kva offentleg IP-adresse ho har. Utan svar her er utgåande UDP-trafikk stengd.</p>
+                <p><strong>TURN</strong> er ein hjelpetenar som sender trafikken vidare når maskinene ikkje får snakke direkte. Testen brukar ei open testteneste (Open Relay) berre for å sjå kva portar som er opne — vi har ikkje valt leverandør enno.</p>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="../js/vyrdepil-storage.js"></script>
+    <script src="../js/vyrdepil-icons.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="lib/peerjs.min.js"></script>
+    <script src="js/peer-config.js"></script>
+    <script src="js/nettsjekk.js"></script>
+    <script src="../js/neobrutalisme.js"></script>
+    <script src="../js/neo-header.js"></script>
+</body>
+</html>
