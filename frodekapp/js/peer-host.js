@@ -18,6 +18,8 @@ class PeerHost {
         this.serverIndex = 0;
         this.opened = false;
         this.openTimer = null;
+        this.reconnectAttempts = 0;
+        this.maxReconnectAttempts = 5;
 
         this._initPeer();
     }
@@ -25,7 +27,13 @@ class PeerHost {
     _initPeer() {
         const options = FKPeerConfig.optionsFor(this.serverIndex);
         console.log('[PeerHost] Koplar til signalvert:', options.host);
-        this.peer = new Peer(this.peerId, options);
+        const peer = new Peer(this.peerId, options);
+        this.peer = peer;
+
+        // Ein utgått peer held fram med å sende hendingar etter at vi har gått
+        // vidare til neste vert. Utan denne sjekken ville dei handterast som om
+        // dei kom frå den peer-en vi faktisk brukar no.
+        const utgått = () => this.destroyed || this.peer !== peer;
 
         // Ein hengande signalvert gjev inga error-hending — då må vi sjølve gje opp.
         this.openTimer = setTimeout(() => {
@@ -33,18 +41,22 @@ class PeerHost {
             this._handleServerFailure('Kunne ikkje koble til signaltenesta. Sjekk internett-tilkoplinga.');
         }, FKPeerConfig.OPEN_TIMEOUT_MS);
 
-        this.peer.on('open', (id) => {
+        peer.on('open', (id) => {
+            if (utgått()) return;
             this._clearOpenTimer();
             this.opened = true;
+            this.reconnectAttempts = 0;
             console.log('[PeerHost] Opna med ID:', id);
             if (this.callbacks.onReady) this.callbacks.onReady(this.roomCode);
         });
 
-        this.peer.on('connection', (conn) => {
+        peer.on('connection', (conn) => {
+            if (utgått()) return;
             this._handleConnection(conn);
         });
 
-        this.peer.on('error', (err) => {
+        peer.on('error', (err) => {
+            if (utgått()) return;
             console.error('[PeerHost] Feil:', err.type, err.message);
             if (err.type === 'unavailable-id') {
                 this._clearOpenTimer();
@@ -57,15 +69,30 @@ class PeerHost {
             }
         });
 
-        this.peer.on('disconnected', () => {
-            console.log('[PeerHost] Fråkopla frå signalserver. Prøver å koble til igjen...');
-            if (!this.destroyed) {
-                setTimeout(() => {
-                    if (!this.destroyed && this.peer && !this.peer.destroyed) {
-                        this.peer.reconnect();
-                    }
-                }, 2000);
+        peer.on('disconnected', () => {
+            if (utgått()) return;
+
+            // Har vi aldri vore oppe, er dette ein vert som ikkje svarar — då eig
+            // failover-logikken situasjonen, ikkje reconnect. Elles ville vi hamra
+            // laus på ein daud vert i det uendelege.
+            if (!this.opened) return;
+
+            if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+                console.warn('[PeerHost] Gav opp å kople til signalserveren att.');
+                if (this.callbacks.onError) {
+                    this.callbacks.onError('Mista kontakten med signaltenesta. Spelarar som alt er inne held fram, men nye kjem ikkje inn. Last sida på nytt for eit nytt rom.');
+                }
+                return;
             }
+
+            this.reconnectAttempts++;
+            const delay = Math.min(2000 * this.reconnectAttempts, 10000);
+            console.log(`[PeerHost] Fråkopla frå signalserver. Prøver igjen (${this.reconnectAttempts}/${this.maxReconnectAttempts}) om ${delay}ms`);
+            setTimeout(() => {
+                if (!utgått() && !peer.destroyed) {
+                    peer.reconnect();
+                }
+            }, delay);
         });
     }
 
