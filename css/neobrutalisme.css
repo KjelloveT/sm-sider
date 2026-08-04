@@ -370,7 +370,12 @@ main.main-wide {
   line-height: 1.5; margin-bottom: 12px; color: var(--text-on-accent);
 }
 @media (max-width: 768px) {
-  .hero-box { flex-direction: column; text-align: center; }
+  /* flex-wrap: wrap må av når retninga blir kolonne. Med wrap prøver
+     nettlesaren å bryte innhaldet i fleire kolonnar, og sidan boksen ikkje har
+     nokon fastsett høgd å bryte mot, blæs elementa seg opp i staden — på ein
+     375px-skjerm blei .hero-text 475px høg med berre 160px innhald, og
+     framsida fekk eit stort tomrom midt i hero-banneret. */
+  .hero-box { flex-direction: column; flex-wrap: nowrap; text-align: center; }
   .hero-text { flex-basis: auto; max-width: 100%; }
 }
 .box4 .box-header { background: var(--accent); color: var(--text-on-accent); padding: 10px 16px; font-weight: 800; border-bottom: 3px solid var(--border); }
@@ -804,3 +809,15 @@ main.main-wide {
    Dei to følgjast alltid åt i temaa, så merket er godt lesbart i alle. */
 .card-flag-new { background: var(--border); color: var(--surface); }
 .card-flag-updated { background: var(--accent4); color: var(--text-on-light-accent); }
+/* «I ustand» må vere godt lesbart i alle 20 temaa, og då er accent2 — den
+   fargen ein helst ville brukt til ei åtvaring — utelukka: med kvit tekst
+   fell han under 4,5:1 i sju tema (verst 2,41:1 i «dracula»), og merket er
+   12px halvfeit, altså ikkje stor tekst. Vi held difor på den snudde
+   border/surface-paringa som «Nytt» brukar (lågast 8,59:1), og skil merket
+   frå dei andre på ramma og på at det heller andre vegen. */
+.card-flag-broken {
+  background: var(--border);
+  color: var(--surface);
+  border-color: var(--accent2);
+  transform: rotate(-3deg);
+}

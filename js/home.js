@@ -19,8 +19,12 @@
     return (Date.now() - then) / 86400000;
   }
 
-  /** «Nytt» vinn over «Oppdatert». Kjem-snart-korta får ikkje merke. */
+  /** «I ustand» vinn over alt, så vinn «Nytt» over «Oppdatert».
+      Kjem-snart-korta får elles ikkje merke. */
   function badgeFor(app) {
+    if (app.broken) {
+      return { text: typeof app.broken === 'string' ? app.broken : 'I ustand', cls: 'card-flag card-flag-broken' };
+    }
     if (app.disabled) return null;
     if (daysSince(app.added) <= BADGE_DAYS) return { text: 'Nytt', cls: 'card-flag card-flag-new' };
     if (daysSince(app.updated) <= BADGE_DAYS) return { text: 'Oppdatert', cls: 'card-flag card-flag-updated' };
