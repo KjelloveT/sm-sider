@@ -83,6 +83,10 @@ RV.svgio = (function () {
     el.removeAttribute('class');
 
     Array.from(el.childNodes).forEach((child) => {
+      // Tekstinnhaldet inni <tspan> er ikkje eit element, men det er
+      // sjølve poenget med noden. Berre ELEMENT blir vurderte for
+      // fjerning; alt anna får stå.
+      if (child.nodeType !== 1) return;
       if (!clean(child) && child.parentNode) child.parentNode.removeChild(child);
     });
     return true;

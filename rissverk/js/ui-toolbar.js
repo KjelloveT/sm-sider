@@ -26,6 +26,9 @@ RV.toolbar = (function () {
                            'raiseBtn', 'lowerBtn', 'flipHBtn', 'flipVBtn',
                            'layerUpBtn', 'layerDownBtn'];
 
+  /* Å slå saman former krev minst to å slå saman. */
+  const NEEDS_TWO = ['unionBtn', 'subtractBtn', 'intersectBtn', 'excludeBtn'];
+
   /* ──────────────── Oppsett ──────────────── */
 
   function attach() {
@@ -107,8 +110,31 @@ RV.toolbar = (function () {
     });
 
     const sel = RV.state.selectedNodes();
+    const fleire = RV.state.topSelection().length >= 2;
+    NEEDS_TWO.forEach((id) => {
+      const btn = document.getElementById(id);
+      if (btn) btn.disabled = !fleire;
+    });
+
     const groupBtn = document.getElementById('groupBtn');
-    if (groupBtn) groupBtn.disabled = RV.state.topSelection().length < 2;
+    if (groupBtn) groupBtn.disabled = !fleire;
+
+    const connectBtn = document.getElementById('connectBtn');
+    if (connectBtn) connectBtn.disabled = RV.state.topSelection().length !== 2;
+
+    const symbolBtn = document.getElementById('symbolBtn');
+    if (symbolBtn) symbolBtn.disabled = !has;
+
+    /* Maske-knappen byter meining etter kva som er valt. */
+    const clipBtn = document.getElementById('clipBtn');
+    if (clipBtn) {
+      const harMaske = RV.clip.hasClip();
+      clipBtn.disabled = !harMaske && !fleire;
+      clipBtn.classList.toggle('active', harMaske);
+      const tekst = harMaske ? 'Ta bort maska' : 'Skjer det under til den øvste forma';
+      clipBtn.title = tekst;
+      clipBtn.setAttribute('aria-label', harMaske ? 'Ta bort maska' : 'Maske');
+    }
     const ungroupBtn = document.getElementById('ungroupBtn');
     if (ungroupBtn) ungroupBtn.disabled = !sel.some(n => n.type === 'group');
 
@@ -184,6 +210,11 @@ RV.toolbar = (function () {
       'SVG er vektor og kan endrast seinare. PNG er eit bilete og kan ikkje det — men det kan opnast overalt.',
       'Trykk «Avansert» for å få fram fleire verktøy og fleire innstillingar i panelet.',
       'Du kan dra ei SVG-fil rett inn på flata. Ho kjem inn som former du kan redigere punkt for punkt — fint til å ta opp att ein gammal logo eller eit ikon.',
+      'Med to former valde kan du slå dei saman, skjere den eine bort frå den andre, eller behalde berre overlappet. Merk at kurver blir til rette linjer i same slengen — det er slik reknemåten verkar.',
+      'Ein overgang (gradient) får to handtak rett på forma. Dra i dei for å styre retninga, og klikk på stripa i panelet for fleire fargar undervegs.',
+      'Vel to former og trykk lenkje-knappen for å kople dei med ei pil. Pila følgjer med når du flyttar formene — nyttig i diagram.',
+      'Eit symbol er ei form du kan bruke mange stader og endre éin gong. Løys opp éin instans, endre han, og trykk «Oppdater symbolet» — så følgjer alle dei andre etter.',
+      'Trykk «Lær» oppe til høgre for å sjå kva ei bézier-kurve eigentleg er. Du kan dra i han sjølv.',
       'Dreg du inn eit PNG- eller JPG-bilete, blir det liggjande låst og nedtona som eit kalkerark. Det blir aldri med i det du lagrar — teikn oppå det.',
       'Formene legg seg etter kantane og midten på det som alt står på flata. Hald Ctrl nede medan du dreg om du vil plassere heilt fritt.',
       'Ingenting blir sendt til nokon tenar. Alt skjer på maskina di.'

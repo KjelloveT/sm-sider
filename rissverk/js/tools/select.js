@@ -25,6 +25,7 @@ window.RV = window.RV || {};
   let origin = null;         // opphavlege matriser og strekbreidder
   let handle = null;         // handtaket som blir drege
   let frame0 = null;         // ramma slik ho var då draget tok til
+  let gradient = null;       // gradient-handtaket som blir drege
   let undoSnapshot = null;
   let moved = false;
 
@@ -92,6 +93,15 @@ window.RV = window.RV || {};
     moved = false;
     start = { x: ctx.x, y: ctx.y, stageX: ctx.stageX, stageY: ctx.stageY };
     undoSnapshot = RV.state.snapshot();
+
+    // 0. Gradient-handtaka ligg oppå alt anna og har difor første stikk.
+    const gradientGrab = RV.gradient.handleAt(ctx.stageX, ctx.stageY);
+    if (gradientGrab) {
+      undoSnapshot = RV.state.snapshot();
+      gradient = gradientGrab;
+      mode = 'gradient';
+      return;
+    }
 
     // 1. Eit handtak på ramma har alltid forkjørsrett.
     const grabbed = RV.overlay.handleAt(ctx.stageX, ctx.stageY);
@@ -167,6 +177,13 @@ window.RV = window.RV || {};
     else if (mode === 'scale') doScale(ctx);
     else if (mode === 'rotate') doRotate(ctx);
     else if (mode === 'marquee') doMarquee(ctx);
+    else if (mode === 'gradient') doGradient(ctx);
+  }
+
+  function doGradient(ctx) {
+    RV.gradient.moveHandle(gradient.found, gradient.key, ctx.x, ctx.y);
+    moved = true;
+    RV.state.emit('nodes');
   }
 
   /** Peikarform og lett omriss under peikaren når ingenting er i gang. */
@@ -312,6 +329,7 @@ window.RV = window.RV || {};
     handle = null;
     origin = null;
     frame0 = null;
+    gradient = null;
     undoSnapshot = null;
     moved = false;
     RV.snap.end();

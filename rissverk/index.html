@@ -29,6 +29,7 @@
     <div class="rv-section-head">
       <h2 class="heading3 no-mt" id="editorHeading">Teikneflata</h2>
       <div class="rv-section-actions">
+        <button class="btn rv-btn-small" id="learnBtn" type="button"><span data-icon="graduationCap"></span>Lær</button>
         <button class="btn rv-btn-small" id="advancedBtn" type="button" aria-pressed="false"><span data-icon="sliders"></span>Avansert</button>
         <button class="btn rv-btn-small" id="tipsBtn" type="button"><span data-icon="lightbulb"></span>Tips</button>
       </div>
@@ -54,6 +55,21 @@
         <button class="btn rv-icon-btn" id="lowerBtn" type="button" aria-label="Flytt bak" title="Flytt eitt hakk bak"><span data-icon="chevronDown"></span></button>
       </div>
 
+      <!-- Slå saman former (avansert) -->
+      <div class="rv-btn-group" data-level="advanced">
+        <button class="btn rv-icon-btn" id="unionBtn" type="button" aria-label="Slå saman" title="Slå saman formene til éi"><span data-icon="plusCircle"></span></button>
+        <button class="btn rv-icon-btn" id="subtractBtn" type="button" aria-label="Skjer bort" title="Skjer det øvste bort frå det nedste"><span data-icon="minusCircle"></span></button>
+        <button class="btn rv-icon-btn" id="intersectBtn" type="button" aria-label="Behald overlappet" title="Behald berre der formene overlappar"><span data-icon="crosshair"></span></button>
+        <button class="btn rv-icon-btn" id="excludeBtn" type="button" aria-label="Fjern overlappet" title="Behald alt utanom der formene overlappar"><span data-icon="shuffle"></span></button>
+      </div>
+
+      <!-- Diagram, maske og symbol (avansert) -->
+      <div class="rv-btn-group" data-level="advanced">
+        <button class="btn rv-icon-btn" id="connectBtn" type="button" aria-label="Kople saman" title="Kople dei to valde formene med ei pil som følgjer dei"><span data-icon="link"></span></button>
+        <button class="btn rv-icon-btn" id="clipBtn" type="button" aria-label="Maske" title="Skjer det under til den øvste forma"><span data-icon="scissors"></span></button>
+        <button class="btn rv-icon-btn" id="symbolBtn" type="button" aria-label="Lag symbol" title="Lag eit symbol du kan bruke fleire stader"><span data-icon="stamp"></span></button>
+      </div>
+
       <!-- Justering (avansert) -->
       <div class="rv-btn-group" data-level="advanced">
         <button class="btn rv-icon-btn" id="flipHBtn" type="button" aria-label="Spegle vassrett" title="Spegle vassrett"><span data-icon="flipHorizontal"></span></button>
@@ -68,6 +84,7 @@
         <button class="btn rv-icon-btn" id="zoomInBtn" type="button" aria-label="Zoom inn" title="Zoom inn (Ctrl + rullehjul)"><span data-icon="zoomIn"></span></button>
         <button class="btn rv-icon-btn" id="zoomFitBtn" type="button" aria-label="Tilpass til vindauget" title="Tilpass til vindauget (Ctrl+0)"><span data-icon="maximize"></span></button>
         <button class="btn rv-icon-btn" id="gridBtn" type="button" aria-pressed="false" aria-label="Rutenett" title="Vis rutenett"><span data-icon="grid3x3"></span></button>
+        <button class="btn rv-icon-btn" id="learnLabelsBtn" type="button" aria-pressed="false" aria-label="Vis namn på punkt og handtak" title="Vis namn på punkt og handtak medan du redigerer"><span data-icon="helpCircle"></span></button>
       </div>
 
       <!-- Filer -->
@@ -219,6 +236,17 @@
   </div>
 </div>
 
+<!-- ══════════ Modal: lær vektorteikning ══════════ -->
+<div class="modal-overlay" id="learnOverlay">
+  <div class="modal1 rv-modal rv-modal-wide">
+    <h2 class="heading3 no-mt">Kva er ei vektorteikning?</h2>
+    <div class="rv-tips" id="learnBody"></div>
+    <div class="rv-modal-actions">
+      <button class="btn btn-accent" id="learnCloseBtn" type="button"><span data-icon="check"></span>Greitt</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════ Modal: tips ══════════ -->
 <div class="modal-overlay" id="tipsOverlay">
   <div class="modal1 rv-modal rv-modal-wide">
@@ -264,17 +292,24 @@
 <script src="js/hit.js"></script>
 <script src="js/overlay.js"></script>
 <script src="js/snap.js"></script>
+<script src="js/gradient.js"></script>
+<script src="js/connect.js"></script>
+<script src="js/symbol.js"></script>
+<script src="js/clip.js"></script>
 <script src="js/tool-manager.js"></script>
 <script src="js/tools/select.js"></script>
 <script src="js/tools/shape.js"></script>
 <script src="js/tools/freehand.js"></script>
 <script src="js/tools/pen.js"></script>
 <script src="js/tools/node.js"></script>
+<script src="js/tools/text.js"></script>
 <script src="js/ui-color.js"></script>
 <script src="js/ui-props.js"></script>
 <script src="js/ui-layers.js"></script>
 <script src="js/ui-align.js"></script>
+<script src="js/learn.js"></script>
 <script src="js/ui-toolbar.js"></script>
+<script src="js/boolean.js"></script>
 <script src="js/svg-io.js"></script>
 <script src="js/svg-import.js"></script>
 <script src="js/import.js"></script>

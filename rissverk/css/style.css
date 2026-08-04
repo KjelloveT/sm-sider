@@ -289,6 +289,56 @@
   stroke-width: 1.5;
 }
 
+/* ──────────────── Gradient ──────────────── */
+
+.rv-gradient-line {
+  stroke: #ffffff;
+  stroke-width: 3;
+  opacity: 0.9;
+}
+
+.rv-gradient-ring {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  opacity: 0.8;
+}
+
+.rv-gradient-handle {
+  stroke: #ffffff;
+  stroke-width: 2.5;
+  paint-order: stroke;
+}
+
+/* Stripa med stoppunkta i panelet. */
+.rv-grad-bar {
+  position: relative;
+  height: 1.9rem;
+  margin-bottom: 0.9rem;
+  border: 2px solid var(--border);
+  border-radius: 5px;
+  cursor: copy;
+}
+
+.rv-grad-stop {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  padding: 0;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #1a1a1a;
+  cursor: grab;
+}
+
+.rv-grad-stop:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+
 /* ──────────────── Hjelpelinjer frå snappinga ──────────────── */
 
 /* Ein annan farge enn markeringa med vilje: hjelpelinja er noko som
@@ -343,6 +393,30 @@
 }
 
 .rv-coords:empty { display: none; }
+
+/* ──────────────── Tekstredigering på flata ──────────────── */
+
+/* Feltet ligg oppå teksten og etterliknar han. Ingen kant og ingen
+   bakgrunn, så det ser ut som om ein skriv rett på teikninga — berre
+   ein tynn markering av kva område som er i spel. */
+.rv-text-editor {
+  position: absolute;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: 1px dashed #2f6fed;
+  background: rgba(255, 255, 255, 0.72);
+  color: inherit;
+  resize: none;
+  overflow: hidden;
+  white-space: pre;
+  transform-origin: left top;
+}
+
+.rv-text-editor:focus-visible { outline: 2px dashed #2f6fed; }
+
+.rv-prop-button { width: 100%; margin-top: 0.5rem; justify-content: center; }
 
 /* ──────────────── Sidepanel ──────────────── */
 
@@ -809,6 +883,67 @@ kbd {
   font-family: inherit;
   font-size: 0.8rem;
   font-weight: 700;
+}
+
+/* ──────────────── Lær vektorteikning ──────────────── */
+
+.rv-demo {
+  margin: 0.9rem 0;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.rv-demo-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: grab;
+}
+
+.rv-demo-curve {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.rv-demo-arm {
+  stroke: var(--muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.rv-demo-anchor {
+  fill: var(--surface);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.rv-demo-handle {
+  fill: var(--accent2);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.rv-demo-label {
+  fill: var(--muted);
+  font-size: 11px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Etikettane på sjølve teikneflata. Kvit kant rundt teksten så han
+   er lesbar mot kva farge som helst under. */
+.rv-learn-label {
+  fill: #2f6fed;
+  stroke: #ffffff;
+  stroke-width: 3;
+  paint-order: stroke;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 /* ──────────────── Kort melding ──────────────── */

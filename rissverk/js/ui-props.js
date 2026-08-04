@@ -134,37 +134,175 @@ RV.props = (function () {
    * gjennom når fargen er delvis gjennomsiktig, så «lys farge» og
    * «gjennomsiktig farge» ikkje ser like ut.
    */
-  function paintSwatch(paint, onChange) {
+  const PAINT_KINDS = [
+    { value: 'solid',  label: 'Farge' },
+    { value: 'linear', label: 'Overgang' },
+    { value: 'radial', label: 'Stråleovergang' },
+    { value: 'none',   label: 'Ingen' }
+  ];
+
+  function kindOf(paint) {
+    if (!paint || paint.type === 'none') return 'none';
+    if (paint.type !== 'gradient') return 'solid';
+    const g = RV.gradient.get(paint.id);
+    return g && g.kind === 'radial' ? 'radial' : 'linear';
+  }
+
+  function paintSwatch(paint, onChange, nodes) {
     const wrap = RV.util.el('div', 'rv-paint');
+    const kind = kindOf(paint);
 
-    const btn = RV.util.el('button', 'rv-swatch');
-    btn.type = 'button';
-    const none = !paint || paint.type === 'none';
-    btn.classList.toggle('rv-swatch-none', none);
-    if (!none) {
-      btn.style.background = paint.color;
-      btn.style.opacity = paint.opacity;
-    }
-    btn.setAttribute('aria-label', none ? 'Ingen farge — trykk for å velje' : 'Farge ' + paint.color);
-    btn.title = none ? 'Ingen farge' : paint.color;
-
-    btn.addEventListener('click', () => {
-      RV.color.open(btn, none ? { color: '#8ecae6', opacity: 1 } : paint, (hex, alpha) => {
-        onChange({ type: 'solid', color: hex, opacity: alpha });
+    /* Kva SLAG fyll — farge, overgang eller ingenting. Ein veljar i
+       staden for tre knappar: dei fire vala utelukkar kvarandre, og ein
+       veljar seier det tydelegare enn tre knappar der éin er trykt inn. */
+    wrap.appendChild(select(PAINT_KINDS, kind, (v) => {
+      if (v === 'none') { RV.color.close(); onChange({ type: 'none' }); return; }
+      if (v === 'solid') {
+        onChange({ type: 'solid', color: solidColorOf(paint), opacity: 1 });
+        return;
+      }
+      // Overgang: kvar form får sin eigen, så to former ikkje endrar seg
+      // saman utan at brukaren har bede om det.
+      if (!nodes) { RV.util.toast('Vel ei form for å leggje på ein overgang.'); return; }
+      RV.state.pushUndo();
+      nodes.forEach((n) => {
+        const part = paint === n.stroke ? 'stroke' : 'fill';
+        n[part] = { type: 'gradient', id: RV.gradient.create(n, v, n[part]) };
       });
-    });
+      RV.gradient.collectGarbage();
+      RV.hit.invalidate();
+      RV.state.emit('nodes');
+      build();
+    }));
 
-    const off = RV.util.iconButton('x', null, 'btn rv-icon-btn rv-icon-btn-tiny', 'Ingen farge');
-    off.classList.toggle('active', none);
-    off.setAttribute('aria-pressed', String(none));
-    off.addEventListener('click', () => {
-      RV.color.close();
-      onChange({ type: 'none' });
-    });
+    if (kind !== 'none') {
+      const btn = RV.util.el('button', 'rv-swatch');
+      btn.type = 'button';
 
-    wrap.appendChild(btn);
-    wrap.appendChild(off);
+      if (kind === 'solid') {
+        btn.style.background = paint.color;
+        btn.style.opacity = paint.opacity;
+        btn.title = paint.color;
+        btn.setAttribute('aria-label', 'Farge ' + paint.color);
+        btn.addEventListener('click', () => {
+          RV.color.open(btn, paint, (hex, alpha) => {
+            onChange({ type: 'solid', color: hex, opacity: alpha });
+          });
+        });
+      } else {
+        const g = RV.gradient.get(paint.id);
+        btn.style.background = g ? RV.gradient.toCss(g) : '#888';
+        btn.title = 'Overgang';
+        btn.setAttribute('aria-label', 'Rediger overgangen');
+        btn.addEventListener('click', () => build());
+      }
+
+      wrap.appendChild(btn);
+    }
+
     return wrap;
+  }
+
+  /** Ein rimeleg heilfarge å falle tilbake på når ein forlèt ein overgang. */
+  function solidColorOf(paint) {
+    if (paint && paint.type === 'solid') return paint.color;
+    if (paint && paint.type === 'gradient') {
+      const g = RV.gradient.get(paint.id);
+      if (g && g.stops.length) return g.stops[0].color;
+    }
+    return '#8ecae6';
+  }
+
+  /* ──────────────── Stoppunkt i ein overgang ──────────────── */
+
+  /**
+   * Stripa med stoppunkta. Klikk på stripa legg til eit nytt der ein
+   * peika, med den fargen overgangen alt har på den plassen — så
+   * ingenting endrar utsjånad før brukaren sjølv vel ein annan farge.
+   */
+  function gradientEditor(found) {
+    const box = group('Overgang');
+    const g = found.gradient;
+
+    const bar = RV.util.el('div', 'rv-grad-bar');
+    bar.style.background = RV.gradient.toCss(
+      Object.assign({}, g, { kind: 'linear' }));   // stripa er alltid rett fram
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', 'Stoppunkt i overgangen');
+
+    g.stops.forEach((stop, i) => {
+      const dot = RV.util.el('button', 'rv-grad-stop');
+      dot.type = 'button';
+      dot.style.left = (stop.offset * 100) + '%';
+      dot.style.background = stop.color;
+      dot.title = Math.round(stop.offset * 100) + ' % — ' + stop.color;
+      dot.setAttribute('aria-label', 'Stoppunkt ' + (i + 1) + ' på ' +
+        Math.round(stop.offset * 100) + ' prosent');
+
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        RV.color.open(dot, stop, (hex, alpha) => {
+          stop.color = hex;
+          stop.opacity = alpha;
+          dot.style.background = hex;
+          bar.style.background = RV.gradient.toCss(Object.assign({}, g, { kind: 'linear' }));
+          RV.state.emit('nodes');
+        });
+      });
+
+      // Dra stoppunktet langs stripa.
+      dot.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        const rect = bar.getBoundingClientRect();
+        let moved = false;
+        const snapshot = RV.state.snapshot();
+
+        const move = (ev) => {
+          moved = true;
+          stop.offset = RV.util.clamp((ev.clientX - rect.left) / rect.width, 0, 1);
+          RV.gradient.sortStops(g);
+          dot.style.left = (stop.offset * 100) + '%';
+          bar.style.background = RV.gradient.toCss(Object.assign({}, g, { kind: 'linear' }));
+          RV.state.emit('nodes');
+        };
+        const up = () => {
+          document.removeEventListener('pointermove', move);
+          document.removeEventListener('pointerup', up);
+          if (moved) { RV.state.pushUndoSnapshot(snapshot); build(); }
+        };
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', up);
+      });
+
+      bar.appendChild(dot);
+    });
+
+    bar.addEventListener('click', (e) => {
+      const rect = bar.getBoundingClientRect();
+      RV.state.pushUndo();
+      RV.gradient.addStop(g, (e.clientX - rect.left) / rect.width);
+      RV.state.emit('nodes');
+      build();
+    });
+
+    box.appendChild(bar);
+    box.appendChild(RV.util.el('p', 'rv-muted',
+      'Klikk på stripa for eit nytt stoppunkt, og dra i det for å flytte det. Handtaka på sjølve forma styrer retninga.'));
+
+    if (g.stops.length > 2) {
+      const rens = RV.util.el('button', 'btn rv-btn-small rv-prop-button');
+      rens.type = 'button';
+      rens.textContent = 'Fjern det siste stoppunktet';
+      rens.addEventListener('click', () => {
+        RV.state.pushUndo();
+        RV.gradient.removeStop(g, g.stops.length - 1);
+        RV.state.emit('nodes');
+        build();
+      });
+      box.appendChild(rens);
+    }
+
+    return box;
   }
 
   /* ──────────────── Endringar ──────────────── */
@@ -206,6 +344,12 @@ RV.props = (function () {
 
     emptyEl.hidden = true;
     buildPaint(bodyEl, nodes, advanced);
+
+    const grad = RV.gradient.active();
+    if (grad) bodyEl.appendChild(gradientEditor(grad));
+
+    buildPendingSymbol(bodyEl);
+
     buildShape(bodyEl, nodes);
     buildPlacement(bodyEl, nodes, advanced);
   }
@@ -223,7 +367,7 @@ RV.props = (function () {
     g.appendChild(row('Fyll', paintSwatch(fill, (paint) => {
       if (nodes) edit(n => { n.fill = paint; }, true);
       else editDefault(s => { s.fill = paint; });
-    })));
+    }, nodes)));
 
     g.appendChild(row('Strek', paintSwatch(stroke, (paint) => {
       const next = paint.type === 'none'
@@ -232,7 +376,7 @@ RV.props = (function () {
                         stroke && stroke.type !== 'none' ? stroke : {}, paint);
       if (nodes) edit(n => { n.stroke = next; }, true);
       else editDefault(s => { s.stroke = next; });
-    })));
+    }, nodes)));
 
     const hasStroke = stroke && stroke.type !== 'none';
     if (hasStroke || !stroke) {
@@ -260,6 +404,19 @@ RV.props = (function () {
           if (nodes) edit(n => { if (n.stroke && n.stroke.type !== 'none') n.stroke.join = v; });
           else editDefault(s => { s.stroke.join = v; });
         })));
+
+        // Pilspissar gjev berre meining på noko med to endar.
+        if (nodes && nodes.some(n => n.type === 'line' || n.type === 'path')) {
+          const start = shared(nodes, n => (n.stroke && n.stroke.markerStart) || '');
+          g.appendChild(row('Start', select(RV.connect.CHOICES, start, (v) => {
+            edit(n => { if (n.stroke && n.stroke.type !== 'none') n.stroke.markerStart = v; });
+          })));
+
+          const end = shared(nodes, n => (n.stroke && n.stroke.markerEnd) || '');
+          g.appendChild(row('Slutt', select(RV.connect.CHOICES, end, (v) => {
+            edit(n => { if (n.stroke && n.stroke.type !== 'none') n.stroke.markerEnd = v; });
+          })));
+        }
       }
     }
 
@@ -282,6 +439,45 @@ RV.props = (function () {
     parent.appendChild(g);
   }
 
+  /**
+   * Etter at ein instans er løyst opp, står vi att med vanlege former og
+   * eit symbol som ventar på nytt innhald. Knappen dukkar opp her, i
+   * staden for i verktøyraden — han gjeld berre akkurat no, og ein
+   * knapp som er meiningslaus nitten av tjue gonger høyrer ikkje heime
+   * i raden.
+   */
+  function buildPendingSymbol(parent) {
+    const symId = RV.state.data.pendingSymbol;
+    if (!symId || !RV.symbol.get(symId)) return;
+
+    const box = group('Symbol under endring');
+    box.appendChild(RV.util.el('p', 'rv-muted',
+      'Marker formene som skal bli det nye innhaldet, og trykk under. Alle instansane blir oppdaterte.'));
+
+    const oppdater = RV.util.el('button', 'btn btn-accent rv-btn-small rv-prop-button');
+    oppdater.type = 'button';
+    oppdater.textContent = 'Oppdater symbolet';
+    oppdater.addEventListener('click', () => {
+      const error = RV.symbol.update(symId);
+      if (error) { RV.util.toast(error); return; }
+      delete RV.state.data.pendingSymbol;
+      RV.util.toast('Symbolet er oppdatert overalt.');
+      build();
+    });
+    box.appendChild(oppdater);
+
+    const avbryt = RV.util.el('button', 'btn rv-btn-small rv-prop-button');
+    avbryt.type = 'button';
+    avbryt.textContent = 'Avbryt';
+    avbryt.addEventListener('click', () => {
+      delete RV.state.data.pendingSymbol;
+      build();
+    });
+    box.appendChild(avbryt);
+
+    parent.appendChild(box);
+  }
+
   /* ---- Formspesifikke felt ---- */
 
   function buildShape(parent, nodes) {
@@ -298,6 +494,89 @@ RV.props = (function () {
         });
       })));
       parent.appendChild(g);
+      return;
+    }
+
+    if (node.type === 'use') {
+      const symId = node.geom.symbol;
+      const box = group('Symbol');
+      const antal = RV.symbol.countInstances(symId);
+
+      box.appendChild(RV.util.el('p', 'rv-muted', antal === 1
+        ? 'Dette symbolet er brukt éin stad.'
+        : 'Dette symbolet er brukt ' + antal + ' stader. Endrar du det, endrar alle seg.'));
+
+      const loys = RV.util.el('button', 'btn rv-btn-small rv-prop-button');
+      loys.type = 'button';
+      loys.textContent = 'Løys opp denne instansen';
+      loys.title = 'Gjer instansen om til vanlege former du kan endre';
+      loys.addEventListener('click', () => {
+        const error = RV.symbol.detach();
+        if (error) { RV.util.toast(error); return; }
+        RV.util.toast('Løyst opp. Endre formene, marker dei, og trykk «Oppdater symbolet» for å endre alle instansane.');
+        RV.state.data.pendingSymbol = symId;
+        build();
+      });
+      box.appendChild(loys);
+
+      parent.appendChild(box);
+      return;
+    }
+
+    if (RV.connect.isLink(node)) {
+      const box = group('Kopling');
+      box.appendChild(RV.util.el('p', 'rv-muted',
+        'Denne linja følgjer dei to formene ho er festa til. Flytt ei av dei, så følgjer pila etter.'));
+
+      const loys = RV.util.el('button', 'btn rv-btn-small rv-prop-button');
+      loys.type = 'button';
+      loys.textContent = 'Løys frå formene';
+      loys.addEventListener('click', () => {
+        RV.state.pushUndo();
+        delete node.geom.from;
+        delete node.geom.to;
+        RV.state.emit('nodes');
+        build();
+      });
+      box.appendChild(loys);
+      parent.appendChild(box);
+    }
+
+    if (node.type === 'text') {
+      const g = node.geom;
+      const box = group('Tekst');
+
+      box.appendChild(row('Skrift', select(
+        RV.text.FONTS.map(f => ({ value: f.id, label: f.name })), g.font,
+        (v) => edit(n => { n.geom.font = v; }))));
+
+      box.appendChild(row('Storleik', numberInput(g.size, { min: 4, max: 800, step: 1 },
+        (v) => edit(n => { n.geom.size = RV.util.clamp(v, 4, 800); }))));
+
+      box.appendChild(row('Tjukn', select([
+        { value: '300', label: 'Tynn' }, { value: '400', label: 'Vanleg' },
+        { value: '600', label: 'Halvfeit' }, { value: '700', label: 'Feit' },
+        { value: '900', label: 'Ekstra feit' }
+      ], String(g.weight), (v) => edit(n => { n.geom.weight = Number(v); }))));
+
+      box.appendChild(row('Justering', select(RV.text.ALIGN, g.align,
+        (v) => edit(n => { n.geom.align = v; }))));
+
+      box.appendChild(row('Linjeavstand', numberInput(g.lineHeight, { min: 0.6, max: 4, step: 0.05 },
+        (v) => edit(n => { n.geom.lineHeight = RV.util.clamp(v, 0.6, 4); }))));
+
+      box.appendChild(checkbox('Kursiv', g.italic, (on) => edit(n => { n.geom.italic = on; })));
+
+      const editBtn = RV.util.el('button', 'btn rv-btn-small rv-prop-button');
+      editBtn.type = 'button';
+      editBtn.textContent = 'Endre teksten';
+      editBtn.addEventListener('click', () => {
+        RV.tools.setActive('text');
+        RV.text.beginEdit(node.id);
+      });
+      box.appendChild(editBtn);
+
+      parent.appendChild(box);
       return;
     }
 

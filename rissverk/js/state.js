@@ -238,6 +238,8 @@ RV.state = (function () {
 
   /** Ramma til noden i sine eigne koordinatar, utan transformasjon. */
   function localBounds(node) {
+    if (node.type === 'use') return RV.symbol.bounds(node.geom.symbol);
+
     if (node.type === 'group') {
       let box = null;
       (data.children[node.id] || []).forEach((cid) => {
@@ -246,14 +248,65 @@ RV.state = (function () {
         const cb = localBounds(child);
         if (cb) box = RV.geom.unionRect(box, RV.matrix.transformRect(child.transform, cb));
       });
+      // Ei maske gjer at berre det som ligg innanfor henne er synleg.
+      // Ramma må følgje det ein SER, ikkje det som er gøymt bak kanten.
+      if (box && node.clip) {
+        const limit = RV.clip.clipBounds(node);
+        if (limit) box = intersectRect(box, limit);
+      }
       return box;
     }
     if (node.type === 'image') {
       const g = node.geom;
       return { x: g.x, y: g.y, w: g.w, h: g.h };
     }
+
+    if (node.type === 'text') return textBounds(node);
     const subpaths = RV.geom.toSubpaths(node);
     return subpaths.length ? RV.geom.boundsOfSubpaths(subpaths) : null;
+  }
+
+  /** Den felles delen av to rammer. Tom ramme når dei ikkje møtest. */
+  function intersectRect(a, b) {
+    const x = Math.max(a.x, b.x);
+    const y = Math.max(a.y, b.y);
+    const w = Math.min(a.x + a.w, b.x + b.w) - x;
+    const h = Math.min(a.y + a.h, b.y + b.h) - y;
+    return w > 0 && h > 0 ? { x: x, y: y, w: w, h: h } : a;
+  }
+
+  /**
+   * Ramma om ein tekst.
+   *
+   * Vi spør SJØLVE ELEMENTET gjennom getBBox(). Det er den einaste
+   * måten å få eksakte tal: breidda på ein tekst kjem an på fonten som
+   * faktisk er installert, på kerning og på ligaturar, og alt det veit
+   * berre nettlesaren. getBBox gjev ramma i nodens eige koordinatsystem,
+   * altså nøyaktig det localBounds skal gje.
+   *
+   * Er elementet ikkje teikna — skjult lag, eller like etter innlasting
+   * før første opptegning — fell vi tilbake på eit overslag. Det er
+   * grovt, men det held forma på plass til ho blir teikna og målt.
+   */
+  function textBounds(node) {
+    const el = RV.render && RV.render.elementOf ? RV.render.elementOf(node.id) : null;
+    if (el && el.getBBox && el.isConnected) {
+      try {
+        const box = el.getBBox();
+        if (box.width || box.height) {
+          return { x: box.x, y: box.y, w: box.width, h: box.height };
+        }
+      } catch (e) { /* ikkje teikna enno */ }
+    }
+
+    const g = node.geom;
+    const lines = String(g.text || '').split('\n');
+    const longest = lines.reduce((m, l) => Math.max(m, l.length), 1);
+    // ~0,55 em per teikn er eit brukbart snitt for proporsjonale fontar.
+    const w = longest * g.size * 0.55;
+    const h = lines.length * g.size * (g.lineHeight || 1.25);
+    const x = g.align === 'middle' ? g.x - w / 2 : (g.align === 'end' ? g.x - w : g.x);
+    return { x: x, y: g.y - g.size * 0.8, w: w, h: h };
   }
 
   /** Ramma i dokumentkoordinatar, akseparallell. */

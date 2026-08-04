@@ -124,6 +124,54 @@ window.RV = window.RV || {};
     if (any) onChange('nodes');
   }
 
+  const COMBINE_NAMES = {
+    union: 'Formene er slegne saman.',
+    subtract: 'Skore bort.',
+    intersect: 'Overlappet er behalde.',
+    exclude: 'Overlappet er fjerna.'
+  };
+
+  /**
+   * Slår saman former. Resultatet blir linjesegment — kurvene finst
+   * ikkje lenger, og det er ikkje råd å rekne dei fram att. Brukaren
+   * skal vite det, men berre når det faktisk går tapt noko: var alle
+   * formene rette frå før, er det ingenting å seie frå om.
+   */
+  function combineShapes(op) {
+    const hadCurves = RV.state.topSelection().some(hasCurves);
+    const error = RV.boolean.apply(op);
+    if (error) {
+      RV.util.toast(error);
+      return;
+    }
+    onChange('nodes');
+    onChange('selection');
+    RV.util.toast(COMBINE_NAMES[op] +
+      (hadCurves ? ' Kurvene blei til rette linjer — det er slik denne reknemåten verkar.' : ''));
+  }
+
+  /** Køyrer ei handling som gjev feilmelding eller null. */
+  function run(error, success) {
+    if (error) { RV.util.toast(error); return false; }
+    RV.gradient.collectGarbage();
+    RV.symbol.collectGarbage();
+    onChange('nodes');
+    onChange('selection');
+    if (success) RV.util.toast(success);
+    return true;
+  }
+
+  function hasCurves(id) {
+    const node = RV.state.get(id);
+    if (!node) return false;
+    if (node.type === 'group') return RV.state.listOf(id).some(hasCurves);
+    if (node.type === 'ellipse' || node.type === 'poly') return node.type === 'ellipse';
+    if (node.type === 'rect') return !!node.geom.rx;
+    if (node.type !== 'path') return false;
+    return (node.geom.subpaths || []).some(sp =>
+      RV.geom.segments(sp).some(seg => !RV.geom.isStraight(seg[0], seg[1])));
+  }
+
   function nudge(dx, dy) {
     const ids = RV.state.topSelection();
     if (!ids.length) return;
@@ -291,6 +339,22 @@ window.RV = window.RV || {};
     on('lowerBtn', () => reorderSelected('down'));
     on('layerUpBtn', () => reorderSelected('up'));
     on('layerDownBtn', () => reorderSelected('down'));
+    ['union', 'subtract', 'intersect', 'exclude'].forEach((op) => {
+      on(op + 'Btn', () => combineShapes(op));
+    });
+
+    on('connectBtn', () => run(RV.connect.connectSelection(), 'Kopla saman.'));
+    on('symbolBtn', () => run(RV.symbol.create(), 'Symbolet er laga. Kopier instansen for å bruke det fleire stader.'));
+
+    /* Éin knapp for maske: har det valde ei maske frå før, tek han henne
+       bort. To knappar for eit par som utelukkar kvarandre er ein knapp
+       for mykje. */
+    on('clipBtn', () => {
+      const has = RV.clip.hasClip();
+      run(has ? RV.clip.release() : RV.clip.apply(),
+          has ? 'Maska er teken bort.' : 'Maska er lagd på.');
+    });
+
     on('flipHBtn', () => RV.align.flip('x'));
     on('flipVBtn', () => RV.align.flip('y'));
     on('alignBtn', () => RV.align.open());
@@ -355,6 +419,7 @@ window.RV = window.RV || {};
     RV.uiExport.attach();
     RV.uiProject.attach();
     RV.import.attach();
+    RV.learn.attach();
     RV.toolbar.attach();
 
     RV.tools.attach(stageEl);

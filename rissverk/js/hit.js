@@ -73,13 +73,18 @@ RV.hit = (function () {
   function hitsNode(node, x, y, slop) {
     if (node.type === 'group') return false;
 
-    if (node.type === 'image') {
-      const g = node.geom;
+    /* Bilete og tekst har inga sti-geometri å treffe på. Dei blir tekne
+       på RAMMA si — for tekst er det dessutan det brukaren ventar: ein
+       vil kunne klikke i mellomrommet mellom to bokstavar og treffe
+       teksten, ikkje bomme mellom dei. */
+    if (node.type === 'image' || node.type === 'text' || node.type === 'use') {
+      const box = RV.state.localBounds(node);
+      if (!box) return false;
       const inv = RV.matrix.invert(RV.state.worldMatrix(node.id));
       if (!inv) return false;
       const p = RV.matrix.apply(inv, x, y);
-      return p.x >= g.x - slop && p.x <= g.x + g.w + slop &&
-             p.y >= g.y - slop && p.y <= g.y + g.h + slop;
+      return p.x >= box.x - slop && p.x <= box.x + box.w + slop &&
+             p.y >= box.y - slop && p.y <= box.y + box.h + slop;
     }
 
     const shape = shapeOf(node);
@@ -113,6 +118,10 @@ RV.hit = (function () {
         const node = RV.state.get(ids[i]);
         if (!node || !node.visible) continue;
         if (node.type === 'group') {
+          // Ei maskert gruppe kan berre treffast innanfor maska — det
+          // som ligg utanfor er ikkje synleg, og skal heller ikkje
+          // kunne plukkast opp av eit klikk.
+          if (node.clip && !insideClip(node, x, y)) continue;
           scan(RV.state.listOf(node.id));
         } else if (hitsNode(node, x, y, slop)) {
           found = node;
@@ -122,6 +131,16 @@ RV.hit = (function () {
 
     scan(RV.state.data.root);
     return found && pickable(found) ? found : null;
+  }
+
+  function insideClip(node, x, y) {
+    const inv = RV.matrix.invert(RV.state.worldMatrix(node.id));
+    if (!inv) return true;
+    const p = RV.matrix.apply(inv, x, y);
+    const subpaths = RV.geom.transformSubpaths(
+      RV.geom.toSubpaths(node.clip), node.clip.transform);
+    if (!subpaths.length) return true;
+    return RV.geom.pointInPolygons(RV.geom.flattenSubpaths(subpaths, 0.5), p.x, p.y);
   }
 
   /**
@@ -207,7 +226,7 @@ RV.hit = (function () {
     // Ramma omsluttar forma heilt — då rører ho sjølvsagt.
     if (RV.geom.rectContains(rect, bounds)) return true;
 
-    if (node.type === 'image') return RV.geom.rectsOverlap(rect, bounds);
+    if (node.type === 'image' || node.type === 'text') return RV.geom.rectsOverlap(rect, bounds);
 
     const shape = shapeOf(node);
     if (!shape) return false;

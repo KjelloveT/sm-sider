@@ -39,7 +39,7 @@ RV.render = (function () {
   const TAG_FOR = {
     rect: 'rect', ellipse: 'ellipse', line: 'line',
     poly: 'polygon', path: 'path', group: 'g',
-    image: 'image', text: 'text'
+    image: 'image', text: 'text', use: 'use'
   };
 
   function tagFor(node) {
@@ -94,6 +94,54 @@ RV.render = (function () {
         if (el.getAttribute('href') !== g.href) el.setAttribute('href', g.href || '');
         break;
 
+      case 'use':
+        el.setAttribute('href', '#sym-' + g.symbol);
+        break;
+
+      /*
+       * Teksten blir bygd opp på nytt for kvar opptegning. Det er meir
+       * arbeid enn å endre attributt, men linjene er <tspan>-element, og
+       * å halde eit varierande tal på dei i takt med innhaldet krev meir
+       * kode enn det sparer. Tekstnodar er få.
+       *
+       * Innhaldet går gjennom textContent, aldri innerHTML — dette er
+       * det einaste staden i programmet der brukaren sin eigen tekst
+       * hamnar i dokumentet.
+       */
+      case 'text': {
+        const lines = String(g.text || '').split('\n');
+
+        /* Valfrie attributt blir fjerna før dei blir sette på nytt.
+           Utan det hamnar dei bakarst i den rekkjefølgja brukaren
+           tilfeldigvis endra dei, og då gjev to like teikningar to ulike
+           filer. Eksporterte SVG-ar bør vere like på byten når innhaldet
+           er likt — elles blir dei uleselege å samanlikne i versjonskontroll. */
+        ['font-weight', 'font-style', 'text-anchor', 'xml:space']
+          .forEach(a => el.removeAttribute(a));
+
+        RV.util.setAttrs(el, {
+          x: r(g.x), y: r(g.y),
+          'font-family': RV.text.fontStack(g.font),
+          'font-size': r(g.size),
+          'font-weight': g.weight !== 400 ? g.weight : null,
+          'font-style': g.italic ? 'italic' : null,
+          'text-anchor': g.align !== 'start' ? g.align : null,
+          'xml:space': 'preserve'
+        });
+
+        RV.util.clear(el);
+        lines.forEach((line, i) => {
+          const span = RV.util.svg('tspan', {
+            x: r(g.x),
+            dy: i === 0 ? null : r(g.size * (g.lineHeight || 1.25))
+          });
+          // Ei heilt tom linje kollapsar i SVG. Eit mellomrom held ho open.
+          span.textContent = line.length ? line : ' ';
+          el.appendChild(span);
+        });
+        break;
+      }
+
       case 'group':
         break;
     }
@@ -122,8 +170,16 @@ RV.render = (function () {
       'stroke-dasharray': hasStroke && stroke.dash ? stroke.dash : null,
       'stroke-linecap': hasStroke && stroke.cap && stroke.cap !== 'butt' ? stroke.cap : null,
       'stroke-linejoin': hasStroke && stroke.join && stroke.join !== 'miter' ? stroke.join : null,
+      'marker-start': markerRef(stroke, 'markerStart', true),
+      'marker-end': markerRef(stroke, 'markerEnd', false),
       opacity: node.opacity < 1 ? RV.matrix.round(node.opacity) : null
     });
+  }
+
+  function markerRef(stroke, field, atStart) {
+    if (!stroke || stroke.type !== 'solid' || !stroke[field]) return null;
+    if (!RV.connect.MARKERS[stroke[field]]) return null;
+    return 'url(#' + RV.connect.markerId(stroke[field], stroke.color, atStart) + ')';
   }
 
   function applyCommon(el, node) {
@@ -142,6 +198,9 @@ RV.render = (function () {
     // teikninga. Merket følgjer med til serialiseringa, som luker dei ut.
     if (node.reference) el.setAttribute('data-ref', '1');
     else el.removeAttribute('data-ref');
+
+    if (node.clip) el.setAttribute('clip-path', 'url(#clip-' + node.id + ')');
+    else el.removeAttribute('clip-path');
   }
 
   /* ──────────────── Diffing ──────────────── */
@@ -228,6 +287,10 @@ RV.render = (function () {
       });
       defsEl.appendChild(el);
     });
+
+    RV.connect.buildMarkers(defsEl);
+    RV.symbol.buildSymbols(defsEl);
+    RV.clip.buildClips(defsEl);
   }
 
   /* ──────────────── Teikneflata ──────────────── */
@@ -245,6 +308,8 @@ RV.render = (function () {
   /* ──────────────── Utsida ──────────────── */
 
   function refresh() {
+    // Koplingslinjene må vite kvar boksane står FØR vi teiknar dei.
+    RV.connect.refresh();
     renderArtboard();
     renderDefs();
     renderList(sceneEl, RV.state.data.root);
@@ -255,11 +320,38 @@ RV.render = (function () {
     return elements.get(id) || null;
   }
 
+  /**
+   * Byggjer eit element utan buffer, frå ei vilkårleg kjelde.
+   *
+   * Symbol-definisjonane i defs er sitt eige vesle dokument, med sine
+   * eigne nodar og sitt eige tre. Dei kan ikkje gå gjennom den diffande
+   * vegen, for han er knytt til éin buffer med node-id som nøkkel, og
+   * eit symbol og teikninga kan ha same id. Difor denne: same
+   * attributt-logikk, men alt blir bygd nytt kvar gong.
+   *
+   * @param {object} src { get(id), listOf(id) }
+   */
+  function buildFresh(node, src) {
+    const el = RV.util.svg(tagFor(node));
+    applyCommon(el, node);
+    applyStyle(el, node);
+    applyGeometry(el, node);
+    el.removeAttribute('data-id');
+
+    if (node.type === 'group') {
+      src.listOf(node.id).forEach((cid) => {
+        const child = src.get(cid);
+        if (child) el.appendChild(buildFresh(child, src));
+      });
+    }
+    return el;
+  }
+
   /** Kastar heile bufferet. Kall etter at ei ny teikning er lasta inn. */
   function invalidate() {
     elements.clear();
     RV.util.clear(sceneEl);
   }
 
-  return { attach, refresh, elementOf, invalidate, paintValue };
+  return { attach, refresh, elementOf, invalidate, paintValue, buildFresh };
 })();
