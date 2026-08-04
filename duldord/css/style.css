@@ -234,12 +234,18 @@
 .dd-share { margin-top: 18px; text-align: center; }
 
 /* ── Arkiv ───────────────────────────────────────────────────────────────── */
-.dd-archive-intro { margin-top: 0; }
+/* Tittelen må halde seg klar av lukkeknappen oppe i høgre hjørne. */
+.dd-modal-title { margin-right: 56px; }
+.modal-close { padding: 6px 8px; }
+.dd-archive-intro { margin-top: 12px; max-width: 78ch; }
 .dd-archive {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
   gap: 8px;
 }
+/* Meldinga om at arkivet er tomt er sjølv eit rutenett-element, og må
+   difor strekkje seg over heile rada i staden for å stå i éin 74px-kolonne. */
+.dd-archive-empty { grid-column: 1 / -1; margin: 0; }
 .dd-archive-day {
   font-family: inherit;
   background: var(--surface);

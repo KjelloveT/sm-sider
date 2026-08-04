@@ -14,7 +14,9 @@
 
     if (todayIndex <= 0) {
       const p = document.createElement('p');
-      p.className = 'dd-muted';
+      // Tomteksten er sjølv eit rutenett-element og ville elles fått breidda
+      // til éi dagrute — altså eitt ord per linje.
+      p.className = 'dd-muted dd-archive-empty';
       p.textContent = 'Det er ingen tidlegare dagar enno. Kom att i morgon.';
       container.appendChild(p);
       return;
