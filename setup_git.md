@@ -19,7 +19,7 @@ Repoet er allereie sett opp og kopla til GitHub og Azure. Denne fila skildrar op
 Deployen er automatisk og treng ingen handpåleggjing:
 
 - **Push til `main`** → produksjon blir oppdatert (typisk 1–2 minutt).
-- **Pull request mot `main`** → Azure lagar eit eige preview-miljø på `https://icy-water-0487ac303-<PR-nummer>.2.azurestaticapps.net/` og legg URL-en som kommentar i PR-en. Der skal endringar testast før merge.
+- **Pull request mot `main`** → Azure lagar eit eige preview-miljø på `https://icy-water-0487ac303-<PR-nummer>.westeurope.2.azurestaticapps.net/`. URL-en står i loggen til deploy-jobben («Visit your site at: …»). Der skal endringar testast før merge.
 - **PR merga eller lukka** → preview-miljøet blir automatisk sletta av `close_pull_request_job`.
 
 Deploy-nøkkelen ligg som repo-hemmelegheit `AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_WATER_0487AC303` på GitHub.
