@@ -186,3 +186,28 @@ Verifiser i **Chrome** før merge til `main`. Sjekk:
 - Hovudfunksjonalitet fungerer (start spel, lagre, navigere)
 - Lyst og mørkt tema viser lesbar tekst overalt
 - Responsivt på mobilbreidde (devtools)
+
+Sjekklista skal køyrast på **preview-URL-en** frå pull requesten (§6.4), ikkje berre på `localhost`. Det er berre der `staticwebapp.config.json` — rutar, tryggingsheadarar og CSP — faktisk er i spel.
+
+### 6.4 Branch- og deploy-flyt
+Vyrdepil blir brukt i klasserom i skuletida. Ein utesta endring på `main` går rett i produksjon og kan velte ei undervisningsøkt. Difor:
+
+**Ingen commits direkte på `main`.** Branchen er verna på GitHub, så direkte push blir avvist. Alt går gjennom pull request.
+
+Branch-namn: `feat/<app>-<kort-skildring>` eller `fix/<app>-<kort-skildring>`, til dømes `feat/ordaklok-nye-lydar`.
+
+```
+lokalt (serve.ps1)  →  branch + PR  →  Azure preview-URL  →  merge  →  produksjon
+```
+
+1. **Lokalt:** `git checkout main; git pull; git checkout -b feat/…`, og køyr `serve.ps1` på `http://localhost:8081` medan du jobbar.
+2. **Opne PR:** `git push -u origin HEAD` og `gh pr create --fill`.
+3. **Preview:** Azure byggjer PR-en og legg URL-en som kommentar (`gh pr view --comments`). Formatet er `https://icy-water-0487ac303-<PR-nummer>.2.azurestaticapps.net/`. Køyr sjekklista i §6.3 der, og opne URL-en på telefon eller nettbrett.
+4. **Merge:** `gh pr merge --squash --delete-branch`. Produksjon (`https://icy-water-0487ac303.2.azurestaticapps.net/`) oppdaterer seg på eit par minutt, og preview-miljøet blir automatisk rydda bort.
+
+CHANGELOG-oppdateringa (§6.2) høyrer heime i **same PR** som endringa ho skildrar.
+
+**Vit dette om preview-miljøa:**
+- `localStorage` er per origin. Preview har eit anna domene enn produksjon, så du startar alltid med blanke ark. Det er bra for å teste førstegongsopplevinga, men det tyder at endringar i datastrukturen (`version`-feltet, §5.2) **ikkje** kan migreringstestast der — det må gjerast lokalt med kopiert `localStorage`.
+- Preview-URL-ar er opne for den som har lenka. Uproblematisk her, men ikkje del dei som om dei var private.
+- Gratisplanen tillèt tre samtidige preview-miljø. Den fjerde opne PR-en får ikkje eige miljø.
