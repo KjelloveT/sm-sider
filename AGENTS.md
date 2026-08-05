@@ -203,12 +203,23 @@ lokalt (serve.ps1)  →  branch + PR  →  Azure preview-URL  →  merge  →  p
 1. **Lokalt:** `git checkout main; git pull; git checkout -b feat/…`, og køyr `serve.ps1` på `http://localhost:8081` medan du jobbar.
 2. **Opne PR:** `git push -u origin HEAD` og `gh pr create --fill`.
 3. **Preview:** Azure byggjer PR-en. URL-en står i loggen til deploy-jobben («Visit your site at: …») og har formatet `https://icy-water-0487ac303-<PR-nummer>.westeurope.2.azurestaticapps.net/`. Køyr sjekklista i §6.3 der, og opne URL-en på telefon eller nettbrett.
-4. **Merge:** `gh pr merge --squash --delete-branch`. Produksjon (`https://icy-water-0487ac303.2.azurestaticapps.net/`) oppdaterer seg på eit par minutt, og preview-miljøet blir automatisk rydda bort.
+4. **Merge:** `gh pr merge --squash`. Produksjon (`https://icy-water-0487ac303.2.azurestaticapps.net/`) oppdaterer seg på eit par minutt, og preview-miljøet blir rydda bort av `close_pull_request_job`.
+5. **Slett branchen etterpå:** `git push origin --delete <branch>`, når oppryddingsjobben har gått grønt. Ikkje bruk `--delete-branch` på merge-kommandoen — sjå under.
 
 CHANGELOG-oppdateringa (§6.2) høyrer heime i **same PR** som endringa ho skildrar.
 
 **Vit dette om preview-miljøa:**
 - `localStorage` er per origin. Preview har eit anna domene enn produksjon, så du startar alltid med blanke ark. Det er bra for å teste førstegongsopplevinga, men det tyder at endringar i datastrukturen (`version`-feltet, §5.2) **ikkje** kan migreringstestast der — det må gjerast lokalt med kopiert `localStorage`.
 - Preview-URL-ar er opne for den som har lenka. Uproblematisk her, men ikkje del dei som om dei var private.
-- Gratisplanen tillèt tre samtidige preview-miljø. Blir kvota full, feilar deployen med «maximum number of staging environments» og PR-en får ingen URL. Gamle miljø blir rydda automatisk når PR-ar blir lukka, men står dei att, må dei slettast i Azure-portalen under **Environments**.
+- Gratisplanen tillèt tre samtidige preview-miljø. Blir kvota full, feilar deployen med «maximum number of staging environments» og PR-en får ingen URL.
+- **Ikkje slett branchen i same operasjon som mergen.** `gh pr merge --delete-branch` fjernar branchen med det same, og då feilar `close_pull_request_job` med eit nake «BadRequest» frå Azure — miljøet blir liggjande att og et opp kvota. Merge først, sjekk at oppryddingsjobben er grøn, slett branchen etterpå.
 - Eit ferskt preview-miljø gir sporadiske 404-ar dei første minutta før CDN-en er varm. Får du 404 på ei side du veit finst, last på nytt før du feilsøkjer.
+
+**Rydde miljø for hand.** Ressursen heiter `Kjellovetestside` i ressursgruppa `Tetsressurser` — `icy-water-0487ac303` er berre det autogenererte vertsnamnet. Med Azure CLI (`az login`):
+
+```bash
+az staticwebapp environment list --name Kjellovetestside --resource-group Tetsressurser --output table
+az staticwebapp environment delete --name Kjellovetestside --resource-group Tetsressurser --environment-name <PR-nummer> --yes
+```
+
+Miljøet `default` er produksjon og skal aldri slettast.
