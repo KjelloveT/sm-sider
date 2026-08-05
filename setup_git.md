@@ -1,48 +1,60 @@
-# Git Setup Commands
+# Git- og deploy-oppsett
 
-Etter at du har installert Git, køyr desse kommandoane i terminalen:
+Repoet er allereie sett opp og kopla til GitHub og Azure. Denne fila skildrar oppsettet og kva som må gjerast på ei ny maskin.
 
-## 1. Konfigurer Git (første gong)
+## Oversikt
+
+| | |
+|---|---|
+| GitHub | `https://github.com/KjelloveT/smasider` |
+| Produksjon | `https://icy-water-0487ac303.2.azurestaticapps.net/` |
+| Hosting | Azure Static Web Apps (gratisplan), rein filopplasting utan byggsteg |
+| Workflow | `.github/workflows/azure-static-web-apps-icy-water-0487ac303.yml` |
+| Hosting-config | `staticwebapp.config.json` (rutar, tryggingsheadarar, CSP) |
+
+`main` er verna: direkte push blir avvist, alt går via pull request. Sjølve arbeidsflyten er dokumentert i **`AGENTS.md` §6.4** — den er fasit, ikkje denne fila.
+
+## Deploy
+
+Deployen er automatisk og treng ingen handpåleggjing:
+
+- **Push til `main`** → produksjon blir oppdatert (typisk 1–2 minutt).
+- **Pull request mot `main`** → Azure lagar eit eige preview-miljø på `https://icy-water-0487ac303-<PR-nummer>.westeurope.2.azurestaticapps.net/`. URL-en står i loggen til deploy-jobben («Visit your site at: …»). Der skal endringar testast før merge.
+- **PR merga eller lukka** → preview-miljøet blir automatisk sletta av `close_pull_request_job`.
+
+Deploy-nøkkelen ligg som repo-hemmelegheit `AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_WATER_0487AC303` på GitHub.
+
+## Oppsett på ei ny maskin
+
 ```bash
-git config --global user.name "Ditt Navn"
-git config --global user.email "din.email@example.com"
+git clone https://github.com/KjelloveT/smasider.git
+cd smasider
+git config user.name "Ditt Namn"
+git config user.email "din.epost@example.com"
 ```
 
-## 2. Initialiser repoet
+GitHub CLI trengst for PR-flyten:
+
 ```bash
-cd c:\Users\88kjebjo\_projects
-git init
+winget install --id GitHub.cli -e
 ```
 
-## 3. Legg til filer og første commit
+Opne ein **ny** terminal etterpå (installasjonen oppdaterer PATH, men ikkje vindauge som allereie er opne), og logg inn:
+
 ```bash
-git add .
-git commit -m "Første versjon - landingsside med spel og verktøy"
+gh auth login
 ```
 
-## 4. Koplar til GitHub (erstatt med din URL)
+Vel GitHub.com → HTTPS → Login with a web browser.
+
+## Lokal utvikling
+
+Repoet har ingen `package.json` og ingen byggsteg — det er rein statisk HTML, CSS og vanilla JS. Start ein lokal filservar med:
+
 ```bash
-git remote add origin https://github.com/BRUKARNAVN/REPO-NAMN.git
+powershell -File serve.ps1
 ```
 
-## 5. Push til GitHub
-```bash
-git branch -M main
-git push -u origin main
-```
+Sida ligg då på `http://localhost:8081`. `serve_alt.ps1` og `serve_preview.ps1` gjer det same på andre portar når du vil køyre fleire samtidig.
 
-## For seinare endringar:
-```bash
-git add .
-git commit -m "Beskriv endring"
-git push
-```
-
-## Viktige merknader:
-- Bytt ut "BRUKARNAVN" med ditt GitHub-brukarnamn
-- Bytt ut "REPO-NAMN" med namnet på GitHub-repoet ditt
-- Du må laga repoet på GitHub først (på github.com → "New repository")
-
-## Azure Deploy
-- Endringar blir automatisk deploya til Azure Static Web Apps
-- URL: https://white-beach-0993e0e10.6.azurestaticapps.net/
+Merk at den lokale servaren **ikkje** brukar `staticwebapp.config.json`. Rutar, tryggingsheadarar og CSP blir difor berre testa på preview-URL-en frå ein pull request.

@@ -5,20 +5,8 @@
   },
   "routes": [
     {
-      "route": "/gangespill/*",
-      "serve": "/gangespill/index.html"
-    },
-    {
-      "route": "/mattespill/*",
-      "serve": "/mattespill/index.html"
-    },
-    {
       "route": "/fotocolours/*",
       "serve": "/fotocolours/index.html"
-    },
-    {
-      "route": "/rundash/*",
-      "serve": "/rundash/index.html"
     }
   ],
   "globalHeaders": {
