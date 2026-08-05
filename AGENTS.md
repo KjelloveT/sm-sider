@@ -203,8 +203,8 @@ lokalt (serve.ps1)  →  branch + PR  →  Azure preview-URL  →  merge  →  p
 1. **Lokalt:** `git checkout main; git pull; git checkout -b feat/…`, og køyr `serve.ps1` på `http://localhost:8081` medan du jobbar.
 2. **Opne PR:** `git push -u origin HEAD` og `gh pr create --fill`.
 3. **Preview:** Azure byggjer PR-en. URL-en står i loggen til deploy-jobben («Visit your site at: …») og har formatet `https://icy-water-0487ac303-<PR-nummer>.westeurope.2.azurestaticapps.net/`. Køyr sjekklista i §6.3 der, og opne URL-en på telefon eller nettbrett.
-4. **Merge:** `gh pr merge --squash`. Produksjon (`https://icy-water-0487ac303.2.azurestaticapps.net/`) oppdaterer seg på eit par minutt, og preview-miljøet blir rydda bort av `close_pull_request_job`.
-5. **Slett branchen etterpå:** `git push origin --delete <branch>`, når oppryddingsjobben har gått grønt. Ikkje bruk `--delete-branch` på merge-kommandoen — sjå under.
+4. **Merge:** `gh pr merge --squash --delete-branch`. Produksjon (`https://icy-water-0487ac303.2.azurestaticapps.net/`) oppdaterer seg på eit par minutt.
+5. **Slett preview-miljøet:** `az staticwebapp environment delete --name Kjellovetestside --resource-group Tetsressurser --environment-name <PR-nummer> --yes`. Dette må gjerast for hand — sjå under.
 
 CHANGELOG-oppdateringa (§6.2) høyrer heime i **same PR** som endringa ho skildrar.
 
@@ -212,14 +212,15 @@ CHANGELOG-oppdateringa (§6.2) høyrer heime i **same PR** som endringa ho skild
 - `localStorage` er per origin. Preview har eit anna domene enn produksjon, så du startar alltid med blanke ark. Det er bra for å teste førstegongsopplevinga, men det tyder at endringar i datastrukturen (`version`-feltet, §5.2) **ikkje** kan migreringstestast der — det må gjerast lokalt med kopiert `localStorage`.
 - Preview-URL-ar er opne for den som har lenka. Uproblematisk her, men ikkje del dei som om dei var private.
 - Gratisplanen tillèt tre samtidige preview-miljø. Blir kvota full, feilar deployen med «maximum number of staging environments» og PR-en får ingen URL.
-- **Ikkje slett branchen i same operasjon som mergen.** `gh pr merge --delete-branch` fjernar branchen med det same, og då feilar `close_pull_request_job` med eit nake «BadRequest» frå Azure — miljøet blir liggjande att og et opp kvota. Merge først, sjekk at oppryddingsjobben er grøn, slett branchen etterpå.
 - Eit ferskt preview-miljø gir sporadiske 404-ar dei første minutta før CDN-en er varm. Får du 404 på ei side du veit finst, last på nytt før du feilsøkjer.
 
-**Rydde miljø for hand.** Ressursen heiter `Kjellovetestside` i ressursgruppa `Tetsressurser` — `icy-water-0487ac303` er berre det autogenererte vertsnamnet. Med Azure CLI (`az login`):
+**Oppryddinga må gjerast for hand.** `close_pull_request_job` i workflowen skal slette miljøet automatisk, men Azure avviser kallet med «BadRequest — No matching static site found», sjølv om jobben har rett deploy-token og ressursen er kopla til rett repo og branch. Same token fungerer for opplasting i deploy-jobben. Feilen ligg på Azure-sida; jobben er lat stå fordi han er harmlaus når han feilar.
+
+I praksis tyder det at **du må rydde miljøet sjølv etter kvar tredje PR**, elles stoppar den fjerde. Ressursen heiter `Kjellovetestside` i ressursgruppa `Tetsressurser` — `icy-water-0487ac303` er berre det autogenererte vertsnamnet. Med Azure CLI (`az login` først):
 
 ```bash
 az staticwebapp environment list --name Kjellovetestside --resource-group Tetsressurser --output table
 az staticwebapp environment delete --name Kjellovetestside --resource-group Tetsressurser --environment-name <PR-nummer> --yes
 ```
 
-Miljøet `default` er produksjon og skal aldri slettast.
+Miljøet `default` er produksjon og skal aldri slettast. Det same kan gjerast i Azure-portalen under **Environments**.
