@@ -56,4 +56,8 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
+          # Utan token feilar jobben med «deployment_token was not provided»,
+          # og preview-miljøet til PR-en blir liggjande att og et opp kvota
+          # på tre staging-miljø. Malen frå Azure utelet denne linja.
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_WATER_0487AC303 }}
           action: "close"
