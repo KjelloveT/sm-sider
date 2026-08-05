@@ -599,3 +599,97 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ══════════════════════════════════════
+   UTSKRIFT — «Skriv ut / lagre som PDF»
+   Berre gruppekorta skal på papiret.
+   ══════════════════════════════════════ */
+@media print {
+    neo-header,
+    .site-footer,
+    #setupBox,
+    #warningBox,
+    .btn-row,
+    .export-row,
+    .group-card-lock {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+    }
+
+    .page-wrapper,
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: none !important;
+        width: auto !important;
+    }
+
+    #printTittel {
+        display: block !important;
+        font-size: 20pt;
+        margin: 0 0 4mm;
+    }
+
+    #printDato {
+        display: block !important;
+        font-size: 10pt;
+        color: #444;
+        margin: 0 0 6mm;
+    }
+
+    #resultArea {
+        display: block !important;
+    }
+
+    .groups-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6mm;
+        margin-top: 0;
+    }
+
+    .group-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none;
+        border: 2px solid #1a1a1a;
+        padding: 6mm 4mm;
+        /* Behald pastellfargen om brukaren har slått på bakgrunnsgrafikk */
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .group-card-name {
+        font-size: 14pt;
+    }
+
+    .group-card-members li {
+        font-size: 12pt;
+    }
+
+    .group-card-icon svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    @page {
+        margin: 12mm;
+    }
+}
+
+/* Utskriftstittel er berre synleg på papir */
+#printTittel,
+#printDato {
+    display: none;
+}
+
+/* ── Eksportknappar ── */
+.export-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 8px;
+}

@@ -64,11 +64,19 @@
 
     <!-- Resultat -->
     <div id="resultArea" style="display:none">
-        <div class="btn-row" style="margin: 16px 0 8px;">
+        <div class="export-row">
             <button class="btn btn-primary" id="btnNyttTrekk">
                 <span id="icon-refresh"></span> Trekk på nytt
             </button>
+            <button class="btn" id="btnSkrivUt">
+                <span id="icon-printer"></span> Skriv ut / PDF
+            </button>
+            <button class="btn" id="btnLagrePng">
+                <span id="icon-image"></span> Last ned PNG
+            </button>
         </div>
+        <h2 class="heading3" id="printTittel"></h2>
+        <p id="printDato"></p>
         <div id="groupsGrid" class="groups-grid" aria-live="polite"></div>
     </div>
 
@@ -85,6 +93,7 @@
 <script src="js/names.js"></script>
 <script src="js/storage.js"></script>
 <script src="js/generator.js"></script>
+<script src="js/export.js"></script>
 <script src="js/ui-trekk.js"></script>
 </body>
 </html>

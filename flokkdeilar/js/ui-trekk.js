@@ -32,12 +32,18 @@
     const groupsGrid   = document.getElementById('groupsGrid');
     const warningBox   = document.getElementById('warningBox');
     const warningText  = document.getElementById('warningText');
+    const btnSkrivUt   = document.getElementById('btnSkrivUt');
+    const btnLagrePng  = document.getElementById('btnLagrePng');
+    const printTittel  = document.getElementById('printTittel');
+    const printDato    = document.getElementById('printDato');
 
     /* ── Ikon ── */
     document.getElementById('icon-back').appendChild(Icons.create('arrow-left', 16));
     document.getElementById('icon-shuffle').appendChild(Icons.create('shuffle', 18));
     document.getElementById('icon-refresh').appendChild(Icons.create('refresh-cw', 16));
     document.getElementById('icon-warning').appendChild(Icons.create('alert-triangle', 18));
+    document.getElementById('icon-printer').appendChild(Icons.create('printer', 16));
+    document.getElementById('icon-image').appendChild(Icons.create('image', 16));
 
     /* ── Tittel ── */
     listeTittel.textContent = liste.name;
@@ -129,6 +135,10 @@
         }
 
         renderGroups(result.groups, prefersReduced);
+        printTittel.textContent = liste.name;
+        printDato.textContent = new Date().toLocaleDateString('nn-NO', {
+            day: 'numeric', month: 'long', year: 'numeric'
+        });
         resultArea.style.display = '';
     }
 
@@ -138,6 +148,19 @@
     });
 
     btnNyttTrekk.addEventListener('click', () => doTrekk(true));
+
+    /* ── Eksport ── */
+    btnSkrivUt.addEventListener('click', () => FlokkExport.printGroups());
+
+    btnLagrePng.addEventListener('click', async () => {
+        if (lastGroups.length === 0) return;
+        btnLagrePng.disabled = true;
+        try {
+            await FlokkExport.toPNG(lastGroups, liste.name);
+        } finally {
+            btnLagrePng.disabled = false;
+        }
+    });
 
     /* ── Render gruppekort ── */
     function renderGroups(groups, noAnim) {

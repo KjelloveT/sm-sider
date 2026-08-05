@@ -114,6 +114,8 @@ const Generator = (() => {
         let colorIdx = 0;
 
         const names = Names.pickNames(nameCategory, best.length);
+        /* Unike ikon — og aldri same ikon som ei låst gruppe alt har */
+        const icons = Icons.pickGroupIcons(best.length, lockedGroups.map(g => g.icon));
 
         const newGroups = best.map((members, i) => {
             let color;
@@ -126,7 +128,7 @@ const Generator = (() => {
             return {
                 name: names[i],
                 color,
-                icon: Icons.randomGroupIcon(),
+                icon: icons[i],
                 members
             };
         });
