@@ -151,6 +151,10 @@
   document.getElementById('labelBInput').addEventListener('input', syncTableHeaders);
 
   // ---- Lagre ----
+  // Sett før vi sjølve navigerer bort (lagra eller sletta). Utan dette trur
+  // beforeunload-vakta lenger nede at brukaren forlèt ulagra arbeid.
+  let leaving = false;
+
   function collectFromForm() {
     currentList.title = document.getElementById('titleInput').value.trim() || 'Namnlaus liste';
     currentList.description = document.getElementById('descriptionInput').value.trim();
@@ -177,17 +181,20 @@
     return true;
   }
 
-  document.getElementById('saveBtn').addEventListener('click', () => {
-    if (save()) location.href = 'index.html';
-  });
-  document.getElementById('saveBtn2').addEventListener('click', () => {
-    if (save()) location.href = 'index.html';
-  });
+  function saveAndLeave() {
+    if (!save()) return;
+    leaving = true;
+    location.href = 'index.html';
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', saveAndLeave);
+  document.getElementById('saveBtn2').addEventListener('click', saveAndLeave);
 
   document.getElementById('deleteBtn').addEventListener('click', () => {
     if (!currentList.id) return;
     if (confirm(`Slett lista «${currentList.title}»? Dette kan ikkje angrast.`)) {
       Storage.deleteList(currentList.id);
+      leaving = true;
       location.href = 'index.html';
     }
   });
@@ -343,6 +350,7 @@
     });
   }
   window.addEventListener('beforeunload', (e) => {
+    if (leaving) return;
     if (snapshot() !== savedSnapshot) {
       e.preventDefault();
       e.returnValue = '';
@@ -350,7 +358,6 @@
   });
   // Etter init, ta snapshot
   setTimeout(() => { savedSnapshot = snapshot(); }, 100);
-  // Etter lagring, oppdater snapshot via knapp-handler? Vi sender brukaren tilbake til index, så ok.
 
   // Start
   init();
