@@ -149,7 +149,8 @@ class NeoHeader extends HTMLElement {
     fetch(base + 'json/apps.json')
       .then(r => r.json())
       .then(data => {
-        const apps = (data.apps || []).filter(a => !a.disabled && a.href);
+        /* hidden = appen finst framleis, men skal berre nåast med direktelenkje. */
+        const apps = (data.apps || []).filter(a => !a.disabled && !a.hidden && a.href);
         const frag = document.createDocumentFragment();
 
         (data.categories || []).forEach(cat => {

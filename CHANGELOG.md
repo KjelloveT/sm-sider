@@ -45,6 +45,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
 ### Endra
 - **Ny rekkjefølgje på spel og verktøy på framsida** (`json/apps.json`). Duldord og Vidfaren står no først under Spel, Frødebrett først under Aktivitetar i klasserommet, og Dagsvegen sist under Verktøy. Plasshaldaren «Fleire verktøy — kjem snart» er teken bort, og omtalen av Rissverk er korta ned til to avsnitt som dei andre.
+- **Etikktesten er teken ut av framsida og toppmenyen.** Forteljingane med etiske dilemma kan vere sterk kost for dei yngste, og testen bør veljast bevisst av ein lærar framfor å liggje open i oversikta. Sjølve verktøyet er ikkje fjerna: `etikk-test/index.html` verkar som før for den som har lenkja. Nytt felt `hidden: true` i `json/apps.json` gjer det same for andre appar seinare — både `js/home.js` og `js/neo-header.js` filtrerer på det.
 - **Kortare KI-tekst.** Setninga om EU-kommisjonen sitt KI-symbol på framsida og avsnittet om KI-merka i personvernerklæringa er tekne bort. Sjølve merka står som før.
 - **AGENTS.md §6.4:** AI-assistenten skal alltid oppgje preview-URL-en når han har oppretta ein pull request.
 - **Endringar går no gjennom pull request med eige testmiljø, ikkje rett på `main`.** Fram til no har kvar commit på `main` gått rett i produksjon. Det gjekk greitt gjennom sommaren, men når skulane er i gang blir sidene brukte i klasserom i skuletida, og ein utesta endring kan velte ei undervisningsøkt. `main` er difor verna på GitHub: direkte push blir avvist, og alt må gjennom ein pull request.
