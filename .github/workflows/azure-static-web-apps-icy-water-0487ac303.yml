@@ -15,12 +15,28 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     permissions:
+       id-token: write
        contents: read
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
+      # OIDC-tokenet er naudsynt sjølv om runneren melder «Unexpected input(s)
+      # 'github_id_token'». Åtvaringa kjem av at inputen ikkje er deklarert i
+      # action.yml, men actionen køyrer i Docker og les INPUT_GITHUB_ID_TOKEN
+      # frå miljøet likevel. Utan han feilar deployen med «No matching Static
+      # Web App was found or the api key was invalid».
+      - name: Install OIDC Client from Core Package
+        run: npm install @actions/core@1.6.0 @actions/http-client
+      - name: Get Id Token
+        uses: actions/github-script@v6
+        id: idtoken
+        with:
+           script: |
+               const coredemo = require('@actions/core')
+               return await coredemo.getIDToken()
+           result-encoding: string
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -33,23 +49,34 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "." # Built app content directory - optional
           skip_app_build: true # Skip build for static HTML
+          github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
+    # Malen frå Azure gav denne jobben korkje deploy-token eller OIDC-token,
+    # og han har difor aldri klart å slette preview-miljøet. Han treng det
+    # same oppsettet som deploy-jobben over.
+    permissions:
+       id-token: write
+       contents: read
     steps:
+      - name: Install OIDC Client from Core Package
+        run: npm install @actions/core@1.6.0 @actions/http-client
+      - name: Get Id Token
+        uses: actions/github-script@v6
+        id: idtoken
+        with:
+           script: |
+               const coredemo = require('@actions/core')
+               return await coredemo.getIDToken()
+           result-encoding: string
       - name: Close Pull Request
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          # Malen frå Azure utelet tokenlinja her, og då feilar jobben med
-          # «deployment_token was not provided». Med tokenet på plass feilar
-          # han i staden med «BadRequest — No matching static site found»,
-          # trass i at ressursen er kopla til rett repo og branch og same
-          # token fungerer for opplasting over. Feilen ligg på Azure-sida.
-          # Jobben står att fordi han er harmlaus når han feilar, men
-          # preview-miljøa må ryddast for hand — sjå AGENTS.md §6.4.
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_WATER_0487AC303 }}
           action: "close"
+          github_id_token: ${{ steps.idtoken.outputs.result }}
