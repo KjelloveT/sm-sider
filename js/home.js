@@ -86,7 +86,8 @@
       const host = document.getElementById('appSections');
       if (!host) return;
       (data.categories || []).forEach(cat => {
-        const apps = (data.apps || []).filter(a => a.cat === cat.id);
+        /* hidden = appen finst framleis, men skal berre nåast med direktelenkje. */
+        const apps = (data.apps || []).filter(a => a.cat === cat.id && !a.hidden);
         if (!apps.length) return;
 
         const sec = document.createElement('details');
