@@ -22,6 +22,11 @@ jobs:
         with:
           submodules: true
           lfs: false
+      # OIDC-tokenet er naudsynt sjølv om runneren melder «Unexpected input(s)
+      # 'github_id_token'». Åtvaringa kjem av at inputen ikkje er deklarert i
+      # action.yml, men actionen køyrer i Docker og les INPUT_GITHUB_ID_TOKEN
+      # frå miljøet likevel. Utan han feilar deployen med «No matching Static
+      # Web App was found or the api key was invalid».
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
@@ -51,13 +56,27 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
+    # Malen frå Azure gav denne jobben korkje deploy-token eller OIDC-token,
+    # og han har difor aldri klart å slette preview-miljøet. Han treng det
+    # same oppsettet som deploy-jobben over.
+    permissions:
+       id-token: write
+       contents: read
     steps:
+      - name: Install OIDC Client from Core Package
+        run: npm install @actions/core@1.6.0 @actions/http-client
+      - name: Get Id Token
+        uses: actions/github-script@v6
+        id: idtoken
+        with:
+           script: |
+               const coredemo = require('@actions/core')
+               return await coredemo.getIDToken()
+           result-encoding: string
       - name: Close Pull Request
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          # Utan token feilar jobben med «deployment_token was not provided»,
-          # og preview-miljøet til PR-en blir liggjande att og et opp kvota
-          # på tre staging-miljø. Malen frå Azure utelet denne linja.
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_WATER_0487AC303 }}
           action: "close"
+          github_id_token: ${{ steps.idtoken.outputs.result }}
