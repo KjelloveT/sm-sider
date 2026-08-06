@@ -594,6 +594,13 @@
 
   // ===== TASTATUR I SPEL =====
 
+  // Skriv brukaren i eit tekstfelt, skal snarvegane liggje unna
+  function isTyping(target) {
+    if (!target) return false;
+    const tag = target.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable;
+  }
+
   Board.handleGameKeyboard = function (e) {
     const modalOpen = FB.isOverlayOpen('question-modal');
 
@@ -602,6 +609,8 @@
       else if (!FB.el('final-round').classList.contains('hidden')) Board.endGame();
       return;
     }
+
+    if (isTyping(e.target)) return;
 
     if (modalOpen) {
       if (e.key === 'Enter') {

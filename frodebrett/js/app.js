@@ -47,6 +47,10 @@
 
   // ===== STANDARDFRØDER =====
 
+  // Auk denne når innhaldet i json/-filene er endra, så alle får oppdaterte
+  // standardfrøder — utan han ville berre heilt nye brukarar sett endringane.
+  const SEED_VERSION = 2;
+
   App.loadSampleQuizzes = function () {
     const legacyTitles = ['Norsk geografi', 'Matte 5. trinn', 'Naturfag'];
     const defaultTitles = ['Blanda drops', 'Småtrinn'];
@@ -55,8 +59,9 @@
       .filter(q => legacyTitles.includes(q.title))
       .forEach(q => Store.deleteQuiz(q.id));
 
+    const outdated = Store.getSeedVersion() < SEED_VERSION;
     const existing = new Set(Store.getQuizzes().map(q => q.title));
-    if (defaultTitles.every(t => existing.has(t))) return;
+    if (!outdated && defaultTitles.every(t => existing.has(t))) return;
 
     Promise.all([
       fetch('json/frodebrett_Blanda_drops.json').then(r => r.json()),
@@ -65,9 +70,12 @@
       files.forEach(fileData => {
         if (!fileData || !fileData.quiz) return;
         const quiz = fileData.quiz;
+        // Standardfrødene har faste id-ar, så saveQuiz oppdaterer den lagra
+        // kopien i staden for å lage ein duplikat.
         const titles = new Set(Store.getQuizzes().map(q => q.title));
-        if (!titles.has(quiz.title)) Store.saveQuiz(quiz);
+        if (outdated || !titles.has(quiz.title)) Store.saveQuiz(quiz);
       });
+      Store.setSeedVersion(SEED_VERSION);
       if (S.currentScreen === 'game') FB.Board.loadQuizList();
     }).catch(err => console.error('Klarte ikkje laste standardfrøder:', err));
   };

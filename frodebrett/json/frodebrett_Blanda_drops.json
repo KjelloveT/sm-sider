@@ -1,5 +1,5 @@
 {
-  "frodebrett": true,
+  "app": "frodebrett",
   "version": 1,
   "quiz": {
     "id": "quiz_1775584820677_kcjoxdpit",
@@ -56,7 +56,7 @@
           {
             "points": 300,
             "question": "Kva et Capybara helst til frokost, lunsj og middag.",
-            "answer": "Gress og grønne planter"
+            "answer": "Gress og grøne plantar"
           },
           {
             "points": 400,
@@ -76,37 +76,37 @@
         ]
       },
       {
-        "name": "Eidet skule",
+        "name": "Supre heltar",
         "questions": [
           {
             "points": 100,
-            "question": "Kor mange trinn er det på Eidet skule?",
-            "answer": "10"
+            "question": "Kva superhelt skjuler seg bak namnet \"Peter Parker\"?",
+            "answer": "Spider Man / Edderkoppen"
           },
           {
             "points": 200,
-            "question": "Kor mange klasser er det på Eidet skule?",
-            "answer": "20"
+            "question": "Kva heiter den spøkefulle skurken i Batman-universet?",
+            "answer": "Joker"
           },
           {
             "points": 300,
-            "question": "Kva heiter rektor på Eidet skule?",
-            "answer": "Ole Andre Lukkedal"
+            "question": "Kva heiter planeten som Thor er frå i Marvel-universet?",
+            "answer": "Asgard"
           },
           {
             "points": 400,
-            "question": "Kva måned og år åpna Eidet skule?",
-            "answer": "August 2025"
+            "question": "Kva er det eigentlege namnet til Hulken?",
+            "answer": "Bruce Banner"
           },
           {
             "points": 500,
-            "question": "Kva slags postnummer ligger Eidet skule i?",
-            "answer": "6265"
+            "question": "Kor mange krystallar har Thanos plass til på hansken sin?",
+            "answer": "6"
           },
           {
             "points": 1000,
-            "question": "Kva er på taket av Eidet skule?",
-            "answer": "Solcellepanel"
+            "question": "Kva slags rase er eigentleg Loke?",
+            "answer": "Jotne / Frost Giant"
           }
         ]
       },
@@ -187,6 +187,6 @@
       "question": "Kva heiter sushi-retten der man får servert tynne skiver av rå fisk, men utan ris?",
       "answer": "Sashimi"
     },
-    "created": "2026-04-07T19:32:44.450Z"
+    "created": "2026-08-06T11:11:24.526Z"
   }
 }

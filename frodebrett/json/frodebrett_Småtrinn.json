@@ -1,5 +1,5 @@
 {
-  "frodebrett": true,
+  "app": "frodebrett",
   "version": 1,
   "quiz": {
     "id": "quiz_1775591268761_cdzw99bu8",
@@ -72,41 +72,6 @@
             "points": 1000,
             "question": "Kva er Noregs nasjonalfugl?",
             "answer": "Fossekallen"
-          }
-        ]
-      },
-      {
-        "name": "Eidet skule",
-        "questions": [
-          {
-            "points": 100,
-            "question": "Kor mange trinn er det på Eidet skule?",
-            "answer": "10"
-          },
-          {
-            "points": 200,
-            "question": "Kor mange klasse er det på Eidet skule?",
-            "answer": "20"
-          },
-          {
-            "points": 300,
-            "question": "Kva år åpna Eidet skule?",
-            "answer": "2025"
-          },
-          {
-            "points": 400,
-            "question": "Kven er rektor på Eidet skule?",
-            "answer": "Ole Andre Lukkedal"
-          },
-          {
-            "points": 500,
-            "question": "Kva heiter gymsalen som ligg ved sidan av Eidet skule?",
-            "answer": "Eidet kulturhall"
-          },
-          {
-            "points": 1000,
-            "question": "Kor mange born er det på Eidet skule?",
-            "answer": "Omlag 400"
           }
         ]
       },
@@ -187,6 +152,6 @@
       "question": "Kva heitar den nyaste filmen om den italienske rørleggaren Mario?",
       "answer": "The Super Mario Galaxy Movie"
     },
-    "created": "2026-04-07T19:58:32.791Z"
+    "created": "2026-08-06T11:11:50.884Z"
   }
 }

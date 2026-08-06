@@ -10,7 +10,7 @@
   const GAME = 'frodebrett';
 
   function defaultState() {
-    return { quizzes: [], teams: [] };
+    return { quizzes: [], teams: [], seedVersion: 0 };
   }
 
   function readState() {
@@ -18,7 +18,8 @@
     if (!s || typeof s !== 'object') return defaultState();
     return {
       quizzes: Array.isArray(s.quizzes) ? s.quizzes : [],
-      teams: Array.isArray(s.teams) ? s.teams : []
+      teams: Array.isArray(s.teams) ? s.teams : [],
+      seedVersion: typeof s.seedVersion === 'number' ? s.seedVersion : 0
     };
   }
 
@@ -53,6 +54,19 @@
   function deleteQuiz(quizId) {
     const state = readState();
     state.quizzes = state.quizzes.filter(q => q.id !== quizId);
+    writeState(state);
+    return true;
+  }
+
+  // ---- Standardfrøder ----
+
+  function getSeedVersion() {
+    return readState().seedVersion;
+  }
+
+  function setSeedVersion(v) {
+    const state = readState();
+    state.seedVersion = v;
     writeState(state);
     return true;
   }
@@ -104,6 +118,8 @@
     getQuizzes,
     saveQuiz,
     deleteQuiz,
+    getSeedVersion,
+    setSeedVersion,
     getTeams,
     saveTeams,
     exportData,
