@@ -15,20 +15,19 @@
         credential: 'openrelayproject'
     };
 
+    /* Testar éin WebSocket per vert i FKPeerConfig.SERVERS, i same rekkjefølgje som
+       appen sjølv prøver dei. Då slepp vi å halde to lister i synk. */
+    const VERTSTESTAR = FKPeerConfig.SERVERS.map((s, i) => ({
+        id: 'ws-' + i,
+        namn: 'Signalteneste — ' + (i === 0 ? 'vår eigen' : s.host),
+        forklaring: i === 0
+            ? 'WebSocket til vår eigen PeerServer. Denne er den viktige — feilar ho, kjem ingen inn i rommet.'
+            : 'Naudløysing frå den offentlege PeerJS-skya. Feil her er venta og ikkje kritisk.',
+        køyr: () => testWebSocket('wss://' + s.host + '/peerjs?key=peerjs&id=' + tilfeldigId() + '&token=t&version=1.5.4')
+    }));
+
     const TESTAR = [
-        {
-            id: 'ws-1',
-            namn: 'Signalteneste — 1.peerjs.com',
-            forklaring: 'WebSocket til den verten Frødekapp brukar først.',
-            køyr: () => testWebSocket('wss://1.peerjs.com/peerjs?key=peerjs&id=' + tilfeldigId() + '&token=t&version=1.5.4')
-        },
-        {
-            id: 'ws-0',
-            namn: 'Signalteneste — 0.peerjs.com',
-            forklaring: 'Reserveverten. Han har vore nede, så feil her er venta.',
-            valfri: true,
-            køyr: () => testWebSocket('wss://0.peerjs.com/peerjs?key=peerjs&id=' + tilfeldigId() + '&token=t&version=1.5.4')
-        },
+        ...VERTSTESTAR,
         {
             id: 'peer',
             namn: 'Opprette eit rom',
@@ -275,7 +274,8 @@
         const boks = document.getElementById('summary');
         const finn = (id) => resultat.find(r => r.id === id) || { ok: false };
 
-        const signal = finn('ws-1').ok && finn('peer').ok;
+        /* Vår eigen vert er den som avgjer. Naudløysingane tel ikkje med. */
+        const signal = finn('ws-0').ok && finn('peer').ok;
         const udp = finn('stun').ok;
         const turnTcp = finn('turn-tcp').ok;
         const relay = finn('relay-kanal').ok;

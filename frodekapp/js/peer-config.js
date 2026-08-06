@@ -6,13 +6,11 @@
 /*
    VIKTIG — to ting må haldast i synk:
 
-   1. Kvar vert i SERVERS må stå i `connect-src`taranswer/staticwebapp.config.json
-      (både https:// og wss://) i staticwebapp.config.json i rota, elles blir han
-      blokkert av CSP i produksjon.
+   1. Kvar vert i SERVERS må stå i `connect-src` i staticwebapp.config.json i rota,
+      både med https:// og wss://, elles blir han blokkert av CSP i produksjon.
       Den lokale serve.ps1 sender ingen CSP-header, så feilen syner seg først live.
 
-   2. Får vi ein eigen sjølvhosta PeerServer, legg han berre fremst i SERVERS og i CSP-en.
-      Ingen andre filer treng endrast.
+   2. Same lista blir testa av nettsjekk.js. Legg du til ein vert her, legg han til der.
 */
 
 const FKPeerConfig = {
@@ -20,15 +18,23 @@ const FKPeerConfig = {
     /**
      * Signalvertar, prøvde i tur og orden. Fell vidare til neste om ein ikkje svarar.
      *
+     * Først vår eigen PeerServer: eit `peerjs/peerjs-server`-bilete på Azure Container
+     * Apps i Norway East, ressursgruppa `frodekapp-signal-rg`. Den er sett til nøyaktig
+     * éi replika — PeerServer held registeret over tilkopla peer-ar i minnet, så med to
+     * replikaer kunne læraren hamne på den eine og elevane på den andre og aldri finne
+     * kvarandre. Skal tenesta skalerast, må ho få eit delt register først.
+     *
+     * `1.peerjs.com` står att som naudløysing. Den offentlege PeerJS-skya er grunnen til
+     * at vi bygde vår eigen: ho avviste WebSocket-tilkoplingane våre på ~150 ms medan
+     * vanleg HTTPS mot same vert svarte 200, truleg ei grense på tilkoplingar per IP —
+     * som er nettopp det ein klasse bak éi skule-IP løyser ut.
+     *
      * Merk: `path: '/'` — PeerJS legg sjølv på '/peerjs'-prefikset, så '/peerjs' her
      * ville gjeve '/peerjs/peerjs'.
-     *
-     * 0.peerjs.com ligg sist som reserve: han var standardverten i biblioteket, men
-     * slutta å svare (TCP opnar, HTTP heng). Han står att i tilfelle han kjem tilbake.
      */
     SERVERS: [
-        { host: '1.peerjs.com', port: 443, path: '/', secure: true },
-        { host: '0.peerjs.com', port: 443, path: '/', secure: true }
+        { host: 'frodekapp-signal.wittyhill-3f1036a7.norwayeast.azurecontainerapps.io', port: 443, path: '/', secure: true },
+        { host: '1.peerjs.com', port: 443, path: '/', secure: true }
     ],
 
     /**

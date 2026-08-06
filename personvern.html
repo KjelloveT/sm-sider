@@ -77,7 +77,7 @@
             <table class="data-table" style="margin:16px 0">
                 <tr><th>Teneste</th><th>Brukt av</th><th>Kva som skjer</th></tr>
                 <tr><td><strong>Wikimedia Commons</strong><br>(upload.wikimedia.org)</td><td>Heimsank, Vidfaren</td><td>Hentar kort-, hovudstads- og flaggbilete. Wikimedia ser IP-adressa i loggane sine. Ingen speldata blir sendt.</td></tr>
-                <tr><td><strong>PeerJS</strong><br>(0/1.peerjs.com)</td><td>Frødekapp (live-quiz)</td><td>Signalserver som koplar nettlesarar saman i ~2 sekund. Ser berre IP — aldri quiz-innhald, namn eller svar. Sjølve spelet går direkte (P2P) mellom nettlesarane.</td></tr>
+                <tr><td><strong>Vår eigen signalserver</strong><br>(Azure, Norway East)</td><td>Frødekapp (live-quiz)</td><td>Koplar nettlesarane saman i ~2 sekund. Ser berre IP — aldri quiz-innhald, namn eller svar. Sjølve spelet går direkte (P2P) mellom nettlesarane. Serveren er vår eigen, så i normal drift går ingenting til tredjepart. Svarar han ikkje, prøver appen den offentlege PeerJS-skya (1.peerjs.com) som naudløysing.</td></tr>
                 <tr><td><strong>Cloudflare cdnjs</strong><br>(cdnjs.cloudflare.com)</td><td>Handsam bilete</td><td>Lastar JSZip-biblioteket for ZIP-nedlasting. Ingen bilete eller data blir sendt.</td></tr>
             </table>
             <p class="bk-muted" style="font-size:0.9rem;">Geografidataen i Vidfaren (hovudstader, fjell, innsjøar, kart) er bygd på førehand og ligg lokalt — det blir ikkje gjort oppslag mot Wikidata medan du spelar. Berre sjølve hovudstadsbileta blir henta frå Wikimedia.</p>
@@ -144,7 +144,7 @@
 
                     <h4><img src="_resources/frødekapp.png" alt="" style="height:20px;width:auto;margin-right:4px;vertical-align:-4px"> Frødekapp</h4>
                     <table class="data-table"><tr><th>Kva</th><th>Kvifor</th></tr><tr><td>Lokalt quiz-bibliotek (quiz-ar du lagar)</td><td>For å ta vare på eigne quiz-ar mellom økter</td></tr><tr><td>Quiz-editor-utkast</td><td>For å lagre utkast du jobbar med</td></tr><tr><td>Sist brukte kallenamn</td><td>For å sleppe å skrive namn kvar gong (valfritt)</td></tr></table>
-                    <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> Live-quiz brukar <strong>PeerJS</strong> for direkte kommunikasjon mellom nettlesarar (WebRTC). Signalserveren ser berre IP-adresser i ~2 sekund under tilkopling — aldri quiz-innhald, namn eller svar. All quiz-data går direkte mellom nettlesarane (P2P).</p>
+                    <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> Live-quiz brukar <strong>WebRTC</strong> for direkte kommunikasjon mellom nettlesarar. For at maskinene skal finne kvarandre, går det først ei kort melding via ein <strong>signalserver vi driftar sjølve</strong> (Azure, Norway East). Han ser berre IP-adresser i ~2 sekund under tilkopling — aldri quiz-innhald, namn eller svar. All quiz-data går direkte mellom nettlesarane (P2P). Svarar vår eigen server ikkje, fell appen tilbake på den offentlege PeerJS-skya.</p>
 
                     <h4><img src="_resources/frødebrett.png" alt="" style="height:20px;width:auto;margin-right:4px;vertical-align:-4px"> Frødebrett</h4>
                     <table class="data-table"><tr><th>Kva</th><th>Kvifor</th></tr><tr><td>Quiz-ar (kategoriar, spørsmål, svar, finalerunde)</td><td>For å lagre og hente frøder du lagar</td></tr><tr><td>Lag (siste lagnamn)</td><td>For å hugse lagoppsettet mellom speløkter</td></tr></table>
