@@ -203,6 +203,15 @@ lokalt (serve.ps1)  →  branch + PR  →  Azure preview-URL  →  merge  →  p
 1. **Lokalt:** `git checkout main; git pull; git checkout -b feat/…`, og køyr `serve.ps1` på `http://localhost:8081` medan du jobbar.
 2. **Opne PR:** `git push -u origin HEAD` og `gh pr create --fill`.
 3. **Preview:** Azure byggjer PR-en. URL-en står i loggen til deploy-jobben («Visit your site at: …») og har formatet `https://icy-water-0487ac303-<PR-nummer>.westeurope.2.azurestaticapps.net/`. Køyr sjekklista i §6.3 der, og opne URL-en på telefon eller nettbrett.
+
+   **For AI-assistenten:** Når du har oppretta ein PR, skal du **alltid** oppgje preview-URL-en i svaret til brukaren, saman med lenkja til PR-en — utan at brukaren treng å spørje. Vent til deploy-jobben er ferdig og hent URL-en frå loggen:
+
+   ```bash
+   gh run list --branch <branch> --limit 1
+   gh run view <run-id> --log | grep -o "https://[a-z0-9.-]*azurestaticapps.net[^ \"]*"
+   ```
+
+   Feilar eller manglar deployen (t.d. full kvote på preview-miljø, §6.4), sei det tydeleg framfor å utelate URL-en.
 4. **Merge:** `gh pr merge --squash --delete-branch`. Produksjon (`https://icy-water-0487ac303.2.azurestaticapps.net/`) oppdaterer seg på eit par minutt, og `close_pull_request_job` slettar preview-miljøet.
 
 CHANGELOG-oppdateringa (§6.2) høyrer heime i **same PR** som endringa ho skildrar.
