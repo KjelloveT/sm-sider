@@ -70,7 +70,11 @@ const OrmUI = (function () {
 
     /* ---- input-modal --------------------------------------------------- */
 
-    function spor(ledetekst, svar) {
+    /* Modalen blir vist med klassa .open, ikkje med hidden-attributtet:
+     * .modal-overlay er display:none i neobrutalisme.css, og eit hidden-attributt
+     * gjer ingenting mot ein eksplisitt display-regel. Set du berre hidden=false,
+     * blir modalen ståande usynleg medan Python ventar i det uendelege. */
+    function spor(ledetekst, svar, avbryt) {
         const overlay = document.getElementById('inputOverlay');
         const felt = document.getElementById('inputFelt');
         const merke = document.getElementById('inputLedetekst');
@@ -81,21 +85,36 @@ const OrmUI = (function () {
             ? ledetekst
             : 'Programmet ventar på at du skriv noko:';
         felt.value = '';
-        overlay.hidden = false;
+        overlay.classList.add('open');
         felt.focus();
+
+        function lukk() {
+            skjema.removeEventListener('submit', ferdig);
+            document.removeEventListener('keydown', paaTast);
+            overlay.classList.remove('open');
+        }
 
         function ferdig(e) {
             e.preventDefault();
             const verdi = felt.value;
-            skjema.removeEventListener('submit', ferdig);
-            overlay.hidden = true;
+            lukk();
             // Ekko både ledetekst og svar inn i utskrifta, slik at samtalen
             // heng saman etterpå — som i eit vanleg terminalvindauge.
             if (harLedetekst) skriv(ledetekst, false);
             skriv(verdi + '\n', false);
             svar(verdi);
         }
+
+        /* Escape skal lukke modalar (AGENTS.md §5.4). Her kan vi ikkje berre
+         * lukke: Python står og ventar, så vi stoppar programmet i staden. */
+        function paaTast(e) {
+            if (e.key !== 'Escape') return;
+            lukk();
+            avbryt?.();
+        }
+
         skjema.addEventListener('submit', ferdig);
+        document.addEventListener('keydown', paaTast);
     }
 
     /* ---- fanar (mobil) -------------------------------------------------- */

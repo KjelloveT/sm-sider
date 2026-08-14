@@ -2,7 +2,7 @@
 (function () {
 
     const STARTKODE = `# Velkomen til Ormritaren!
-# Trykk "Kjøyr" eller Ctrl+Enter for å starte programmet.
+# Trykk "Køyr" eller Ctrl+Enter for å starte programmet.
 
 namn = input("Kva heiter du? ")
 print("Hei,", namn + "!")
@@ -68,7 +68,7 @@ for i in range(1, 6):
                 el.stoppKnapp.disabled = false;
             },
             onUtskrift: (tekst, erFeil) => OrmUI.skriv(tekst, erFeil),
-            onInput: (ledetekst, svar) => OrmUI.spor(ledetekst, svar),
+            onInput: (ledetekst, svar) => OrmUI.spor(ledetekst, svar, () => OrmRunner.stopp()),
             onTreg: (treg) => OrmUI.visTreg(treg),
             onFerdig: (feil) => {
                 el.koyrKnapp.disabled = false;
