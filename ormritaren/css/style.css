@@ -418,12 +418,22 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
     border: 2px solid var(--border);
 }
 
+/* Teikneflata står skjult til turtle faktisk teiknar. Køyrer eleven berre
+ * matplotlib, skal figuren stå åleine — ikkje under ei tom rute på 500px.
+ *
+ * Regelen må skrivast ut: `display: block` over slår hidden-attributtet,
+ * som berre er `display: none` frå nettlesaren sitt eige stilark. */
+.orm-lerret[hidden] { display: none; }
+
 .orm-biletboks {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-top: 10px;
 }
+
+/* Utan denne står margen att som ei tom stripe under teikneflata. */
+.orm-biletboks:empty { display: none; }
 
 .orm-plott {
     display: block;

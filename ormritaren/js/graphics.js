@@ -80,12 +80,17 @@ const OrmGrafikk = (function () {
         skilpadde = null;
         harInnhald = false;
         if (ctx) ctx.clearRect(0, 0, lerret.width, lerret.height);
+        if (lerret) lerret.hidden = true;
         if (biletboks) biletboks.textContent = '';
     }
 
     /* ---- turtle ---------------------------------------------------- */
 
     function leggTil(kommandoar) {
+        // Teikneflata kjem fyrst fram når turtle faktisk teiknar — eit program
+        // som berre lagar eit matplotlib-plott skal ikkje få ei tom rute over
+        // figuren.
+        lerret.hidden = false;
         kø.push(...kommandoar);
         vis();
         driv();
