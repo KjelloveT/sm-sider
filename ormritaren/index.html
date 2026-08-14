@@ -23,6 +23,8 @@
 <script src="js/storage.js" defer></script>
 <script src="js/runner.js" defer></script>
 <script src="js/editor.js" defer></script>
+<script src="js/graphics.js" defer></script>
+<script src="js/packages.js" defer></script>
 <script src="js/ui.js" defer></script>
 <script src="js/app.js" defer></script>
 </head>
@@ -83,6 +85,7 @@
       <div class="orm-fanerad" id="fanerad" role="tablist" aria-label="Vel visning">
         <button class="box-tab active" data-fane="kode" role="tab" aria-selected="true" type="button">Kode</button>
         <button class="box-tab" data-fane="ut" role="tab" aria-selected="false" type="button">Utskrift</button>
+        <button class="box-tab" data-fane="grafikk" role="tab" aria-selected="false" type="button">Grafikk</button>
       </div>
 
       <!-- Editor -->
@@ -134,8 +137,36 @@
         </div>
       </section>
 
+      <!-- Grafikk -->
+      <section class="box4 orm-panel" id="panelGrafikk" aria-labelledby="grafikkTittel">
+        <div class="box-header orm-panel-topp">
+          <span id="grafikkTittel">Grafikk</span>
+          <button class="btn orm-btn-liten" id="tomGrafikkKnapp" type="button">
+            <span data-icon="eraser"></span>Tøm
+          </button>
+        </div>
+        <div class="box-body orm-grafikkkropp">
+          <p class="orm-grafikk-tom" id="grafikkTom">
+            Her kjem teikningar frå <code>turtle</code> og figurar frå <code>matplotlib</code>.
+          </p>
+          <canvas id="lerret" class="orm-lerret" aria-label="Teikneflate for turtle"></canvas>
+          <div id="biletboks" class="orm-biletboks"></div>
+        </div>
+      </section>
+
     </div>
   </div>
+
+  <!-- Bibliotek -->
+  <section class="box1 orm-bibliotek" aria-labelledby="bibTittel">
+    <h2 class="heading4 no-mt" id="bibTittel">Bibliotek du kan bruke</h2>
+    <p class="orm-bibingress">
+      Du treng ikkje installere noko. Skriv <code>import numpy</code> i koden,
+      så blir biblioteket henta automatisk — frå vår eigen tenar, ikkje frå nettet.
+      Fyrste gongen tek det nokre sekund; etterpå ligg det i nettlesaren.
+    </p>
+    <div id="bibliotekliste" class="orm-bibliotekliste"></div>
+  </section>
 
   <p class="orm-botntekst">
     Python køyrer som WebAssembly i din eigen nettlesar gjennom

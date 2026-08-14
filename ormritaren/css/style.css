@@ -319,6 +319,125 @@
     color: var(--text);
 }
 
+/* ---- grafikk --------------------------------------------------------- */
+
+.orm-grafikkkropp { position: relative; }
+
+.orm-lerret {
+    display: block;
+    width: 100%;
+    height: clamp(240px, 40vh, 460px);
+    background: var(--surface);
+    border: 2px solid var(--border);
+}
+
+.orm-grafikk-tom {
+    position: absolute;
+    inset: 12px;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    margin: 0;
+    padding: 0 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    pointer-events: none;
+}
+
+.orm-biletboks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.orm-plott {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid var(--border);
+    background: #ffffff;   /* matplotlib teiknar på kvitt uansett tema */
+}
+
+/* Fane med noko nytt eleven ikkje har sett enno. */
+.box-tab.orm-fane-nytt::after {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background: var(--accent2);
+    vertical-align: middle;
+}
+
+/* ---- bibliotek ------------------------------------------------------- */
+
+.orm-bibliotek { margin-top: 4px; }
+
+.orm-bibingress {
+    max-width: 78ch;
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.orm-bibliotekliste {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 12px;
+}
+
+.orm-bibkort {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+    background: var(--surface);
+    border: 3px solid var(--border);
+}
+
+.orm-bibkort.klar { background: var(--accent3); }
+
+.orm-bibtopp {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+}
+
+.orm-bibnamn {
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.orm-bibkort.klar .orm-bibnamn,
+.orm-bibkort.klar .orm-bibtekst { color: var(--text-on-light-accent); }
+
+.orm-bibmerke {
+    flex: 0 0 auto;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--accent4);
+    color: var(--text-on-light-accent);
+    border: 2px solid var(--border);
+}
+
+.orm-bibtekst {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text);
+}
+
 /* ---- varsel ---------------------------------------------------------- */
 
 .orm-varsel {
@@ -378,10 +497,14 @@
 
     .orm-symbolrad { display: flex; }
 
-    /* Éin panel om gongen. Køyreraden står att i begge fanane, så eleven
+    /* Éin panel om gongen. Køyreraden står att i alle fanane, så eleven
      * kan starte og stoppe uansett kva han ser på. */
     .orm-arbeid[data-fane="kode"] #panelUt,
-    .orm-arbeid[data-fane="ut"] #panelKode { display: none; }
+    .orm-arbeid[data-fane="kode"] #panelGrafikk,
+    .orm-arbeid[data-fane="ut"] #panelKode,
+    .orm-arbeid[data-fane="ut"] #panelGrafikk,
+    .orm-arbeid[data-fane="grafikk"] #panelKode,
+    .orm-arbeid[data-fane="grafikk"] #panelUt { display: none; }
 
     .CodeMirror { height: clamp(220px, 38vh, 420px); }
 

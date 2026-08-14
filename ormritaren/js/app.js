@@ -22,19 +22,30 @@ for i in range(1, 6):
             'utskrift', 'status', 'tregVarsel', 'koyrKnapp', 'stoppKnapp', 'tomKnapp',
             'filliste', 'nyKnapp', 'lagreKnapp', 'lastNedKnapp', 'lastOppFelt',
             'filnamn', 'symbolrad', 'kodefelt', 'skriftMindre', 'skriftMeir',
-            'fanerad', 'arbeidsflate', 'isolasjonsVarsel', 'lagringsVarsel'
+            'fanerad', 'arbeidsflate', 'isolasjonsVarsel', 'lagringsVarsel',
+            'lerret', 'biletboks', 'grafikkTom', 'tomGrafikkKnapp', 'bibliotekliste'
         ].forEach(id => { el[id] = document.getElementById(id); });
 
         OrmUI.init({ utskrift: el.utskrift, status: el.status, treg: el.tregVarsel });
+
+        OrmGrafikk.init(
+            { lerret: el.lerret, bilete: el.biletboks, tomtekst: el.grafikkTom },
+            // På mobil ligg grafikken i ei anna fane — vis at det kom noko.
+            () => merkFane('grafikk')
+        );
+        OrmPakkar.init(el.bibliotekliste, settInnDoeme);
         OrmEditor.lag(el.kodefelt, el.symbolrad, koyr);
         OrmEditor.cm().on('change', () => { ulagraEndringar = true; oppdaterLagreknapp(); });
 
         if (window.hydrateIcons) hydrateIcons(document);
 
         koplKnappar();
-        // CodeMirror måler feil om han blir vist att etter display:none.
+        // CodeMirror og canvas måler begge feil om dei blir viste att etter
+        // display:none, så begge må få beskjed når fana byter.
         OrmUI.koplFanar(el.fanerad, el.arbeidsflate, (fane) => {
             if (fane === 'kode') OrmEditor.cm().refresh();
+            if (fane === 'grafikk') OrmGrafikk.tilpassStorleik();
+            el.fanerad.querySelector(`.box-tab[data-fane="${fane}"]`)?.classList.remove('orm-fane-nytt');
         });
 
         if (!OrmRunner.harStdin()) el.isolasjonsVarsel.hidden = false;
@@ -62,12 +73,16 @@ for i in range(1, 6):
             },
             onStart: () => {
                 OrmUI.tomUtskrift();
+                OrmGrafikk.tom();
                 OrmEditor.reinsk();
                 OrmUI.status('Køyrer …', 'koyrer');
                 el.koyrKnapp.disabled = true;
                 el.stoppKnapp.disabled = false;
             },
             onUtskrift: (tekst, erFeil) => OrmUI.skriv(tekst, erFeil),
+            onTeikn: (kommandoar) => OrmGrafikk.leggTil(kommandoar),
+            onBilete: (base64) => OrmGrafikk.visBilete(base64),
+            onPakkeliste: (pakkar) => OrmPakkar.settLasta(pakkar),
             onInput: (ledetekst, svar) => OrmUI.spor(ledetekst, svar, () => OrmRunner.stopp()),
             onTreg: (treg) => OrmUI.visTreg(treg),
             onFerdig: (feil) => {
@@ -102,6 +117,7 @@ for i in range(1, 6):
         el.koyrKnapp.addEventListener('click', koyr);
         el.stoppKnapp.addEventListener('click', () => OrmRunner.stopp());
         el.tomKnapp.addEventListener('click', () => OrmUI.tomUtskrift());
+        el.tomGrafikkKnapp.addEventListener('click', () => OrmGrafikk.tom());
 
         el.nyKnapp.addEventListener('click', nyFil);
         el.lagreKnapp.addEventListener('click', lagreFil);
@@ -130,6 +146,23 @@ for i in range(1, 6):
     function visFane(namn) {
         const knapp = el.fanerad.querySelector(`.box-tab[data-fane="${namn}"]`);
         if (knapp) knapp.click();
+    }
+
+    /* Marker at det kom noko nytt i ei fane eleven ikkje ser på.
+     * Vi byter ikkje fane av oss sjølv her: eit program kan skrive både
+     * tekst og teikne, og då ville skjermen hoppa fram og tilbake. */
+    function merkFane(namn) {
+        if (el.arbeidsflate.dataset.fane === namn) return;
+        el.fanerad.querySelector(`.box-tab[data-fane="${namn}"]`)?.classList.add('orm-fane-nytt');
+    }
+
+    function settInnDoeme(kode) {
+        if (ulagraEndringar && !confirm('Du har endringar som ikkje er lagra. Byte ut koden med dømet?')) return;
+        OrmEditor.set(kode);
+        ulagraEndringar = true;
+        oppdaterLagreknapp();
+        visFane('kode');
+        OrmEditor.cm().focus();
     }
 
     function oppdaterLagreknapp() {
