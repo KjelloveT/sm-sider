@@ -12,6 +12,7 @@ const OrmEditor = (function () {
     const SYMBOL = ['    ', ':', '(', ')', '[', ']', '{', '}', '"', "'", '=', '<', '>', '+', '-', '*', '/', '#', '_', '.', ','];
 
     let cm = null;
+    let visForslag = null;
 
     function lag(textarea, symbolrad, veKoyr) {
         cm = CodeMirror.fromTextArea(textarea, {
@@ -27,6 +28,8 @@ const OrmEditor = (function () {
             extraKeys: {
                 'Ctrl-Enter': veKoyr,
                 'Cmd-Enter': veKoyr,
+                'Ctrl-Space': () => visForslag && visForslag(),
+                'Alt-Space': () => visForslag && visForslag(),
                 'Ctrl-/': (c) => c.toggleComment(),
                 'Cmd-/': (c) => c.toggleComment(),
                 // Tab skal rykkje inn, ikkje hoppe ut av editoren — men berre
@@ -42,6 +45,10 @@ const OrmEditor = (function () {
         });
 
         byggSymbolrad(symbolrad);
+        // typeof, ikkje window.OrmForslag: modulane her er deklarerte med
+        // const, og då hamnar dei i det globale leksikalske skopet — ikkje
+        // som ein eigenskap på window.
+        if (typeof OrmForslag !== 'undefined') visForslag = OrmForslag.kople(cm);
         return cm;
     }
 

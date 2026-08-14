@@ -44,7 +44,10 @@ class Turtle:
         self._farge = "black"
         self._fyllfarge = "black"
         self._tjukn = 2
-        self._fart = 6
+        # CPython har 6 som standard, men i eit klasserom går det for fort til
+        # at elevane rekk å følgje med på kva koden gjer. 2 er farten som er
+        # prøvd ut og fungerer på tavla; skriv du speed() sjølv, gjeld ditt val.
+        self._fart = 2
         self._synleg = True
         self._fyller = False
         self._fyllpunkt = []
