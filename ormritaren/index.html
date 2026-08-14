@@ -23,6 +23,8 @@
 <script src="js/storage.js" defer></script>
 <script src="js/runner.js" defer></script>
 <script src="js/editor.js" defer></script>
+<script src="js/graphics.js" defer></script>
+<script src="js/packages.js" defer></script>
 <script src="js/ui.js" defer></script>
 <script src="js/app.js" defer></script>
 </head>
@@ -47,62 +49,84 @@
     Alt anna fungerer som normalt. (På ein lokal tenar er dette venta — sjå <code>serve_ormritaren.ps1</code>.)
   </p>
 
+  <!-- Verktøyrad: filnamn, filer og lagring -->
+  <div class="box1 orm-toppverktoy">
+    <input type="text" id="filnamn" class="orm-filnamnfelt" aria-label="Filnamn" spellcheck="false">
+
+    <button class="btn orm-btn-liten" id="lagreKnapp" type="button">
+      <span data-icon="save"></span>Lagre
+    </button>
+
+    <div class="orm-filmeny">
+      <button class="btn orm-btn-liten" id="filerKnapp" type="button"
+              aria-expanded="false" aria-controls="filpanel">
+        <span data-icon="folder"></span>Filene dine <span id="filTal" class="orm-filtal"></span>
+      </button>
+      <div class="orm-filpanel" id="filpanel" hidden>
+        <div id="filliste" class="orm-filliste"></div>
+        <p class="orm-sidenote">
+          Filene ligg lagra i nettlesaren din — ikkje på nokon tenar. Tømmer du
+          nettlesardata, forsvinn dei. Last ned det du vil ta vare på.
+        </p>
+      </div>
+    </div>
+
+    <button class="btn orm-btn-liten" id="nyKnapp" type="button">
+      <span data-icon="plus"></span>Ny
+    </button>
+    <button class="btn orm-btn-liten" id="lastNedKnapp" type="button">
+      <span data-icon="download"></span>Last ned
+    </button>
+    <label class="btn orm-btn-liten orm-btn-fil">
+      <span data-icon="upload"></span>Hent inn
+      <input type="file" id="lastOppFelt" accept=".py,text/x-python,text/plain" hidden>
+    </label>
+
+    <span class="orm-verktoy-spacer"></span>
+
+    <button class="btn orm-btn-liten orm-btn-ikon" id="skriftMindre" type="button" aria-label="Mindre skrift">A−</button>
+    <button class="btn orm-btn-liten orm-btn-ikon" id="skriftMeir" type="button" aria-label="Større skrift">A+</button>
+  </div>
+
+  <p class="orm-varsel orm-varsel-aatvaring" id="lagringsVarsel" hidden></p>
+
   <div class="orm-flate">
 
-    <!-- Venstre: filer -->
-    <aside class="box1 orm-sidepanel" aria-labelledby="filerTittel">
-      <h2 class="heading4 no-mt" id="filerTittel">Filene dine</h2>
-
-      <div class="orm-filknappar">
-        <button class="btn orm-btn-liten" id="nyKnapp" type="button">
-          <span data-icon="plus"></span>Ny
-        </button>
-        <button class="btn orm-btn-liten" id="lastNedKnapp" type="button">
-          <span data-icon="download"></span>Last ned
-        </button>
-        <label class="btn orm-btn-liten orm-btn-fil">
-          <span data-icon="upload"></span>Hent inn
-          <input type="file" id="lastOppFelt" accept=".py,text/x-python,text/plain" hidden>
-        </label>
-      </div>
-
-      <div id="filliste" class="orm-filliste"></div>
-
-      <p class="orm-varsel orm-varsel-aatvaring" id="lagringsVarsel" hidden></p>
-
-      <p class="orm-sidenote">
-        Filene ligg lagra i nettlesaren din — ikkje på nokon tenar. Tømmer du
-        nettlesardata, forsvinn dei. Last ned det du vil ta vare på.
-      </p>
-    </aside>
-
-    <!-- Høgre: arbeidsflata -->
     <div class="orm-arbeid" id="arbeidsflate" data-fane="kode">
 
       <!-- Fanar (berre mobil) -->
       <div class="orm-fanerad" id="fanerad" role="tablist" aria-label="Vel visning">
         <button class="box-tab active" data-fane="kode" role="tab" aria-selected="true" type="button">Kode</button>
         <button class="box-tab" data-fane="ut" role="tab" aria-selected="false" type="button">Utskrift</button>
+        <button class="box-tab" data-fane="grafikk" role="tab" aria-selected="false" type="button" id="grafikkFane" hidden>Grafikk</button>
       </div>
 
-      <!-- Editor -->
-      <section class="box4 orm-panel" id="panelKode" aria-labelledby="kodeTittel">
-        <div class="box-header orm-panel-topp">
-          <span id="kodeTittel">Kode</span>
-          <div class="orm-verktoyrad">
-            <input type="text" id="filnamn" class="orm-filnamnfelt" aria-label="Filnamn" spellcheck="false">
-            <button class="btn orm-btn-liten" id="lagreKnapp" type="button">
-              <span data-icon="save"></span>Lagre
-            </button>
-            <button class="btn orm-btn-liten orm-btn-ikon" id="skriftMindre" type="button" aria-label="Mindre skrift">A−</button>
-            <button class="btn orm-btn-liten orm-btn-ikon" id="skriftMeir" type="button" aria-label="Større skrift">A+</button>
+      <!-- Kode til venstre, utskrift til høgre -->
+      <div class="orm-rad">
+
+        <section class="box4 orm-panel" id="panelKode" aria-labelledby="kodeTittel">
+          <div class="box-header orm-panel-topp">
+            <span id="kodeTittel">Kode</span>
           </div>
-        </div>
-        <div class="box-body orm-panel-kropp">
-          <textarea id="kodefelt" aria-label="Kodefelt"></textarea>
-          <div class="orm-symbolrad" id="symbolrad" role="toolbar" aria-label="Teikn som er vanskelege å nå på nettbrett"></div>
-        </div>
-      </section>
+          <div class="box-body orm-panel-kropp">
+            <textarea id="kodefelt" aria-label="Kodefelt"></textarea>
+            <div class="orm-symbolrad" id="symbolrad" role="toolbar" aria-label="Teikn som er vanskelege å nå på nettbrett"></div>
+          </div>
+        </section>
+
+        <section class="box4 orm-panel" id="panelUt" aria-labelledby="utTittel">
+          <div class="box-header orm-panel-topp">
+            <span id="utTittel">Utskrift</span>
+            <button class="btn orm-btn-liten" id="tomKnapp" type="button">
+              <span data-icon="eraser"></span>Tøm
+            </button>
+          </div>
+          <div class="box-body">
+            <pre id="utskrift" class="orm-utskrift" aria-live="polite" aria-label="Utskrift frå programmet"></pre>
+          </div>
+        </section>
+
+      </div>
 
       <!-- Køyrerad -->
       <div class="orm-koyrerad">
@@ -121,21 +145,33 @@
         Trykk <strong>Stopp</strong> — koden din blir verande.
       </p>
 
-      <!-- Utskrift -->
-      <section class="box4 orm-panel" id="panelUt" aria-labelledby="utTittel">
+      <!-- Grafikk. Skjult til programmet lagar noko som skal hit. -->
+      <section class="box4 orm-panel" id="panelGrafikk" aria-labelledby="grafikkTittel" hidden>
         <div class="box-header orm-panel-topp">
-          <span id="utTittel">Utskrift</span>
-          <button class="btn orm-btn-liten" id="tomKnapp" type="button">
+          <span id="grafikkTittel">Grafikk</span>
+          <button class="btn orm-btn-liten" id="tomGrafikkKnapp" type="button">
             <span data-icon="eraser"></span>Tøm
           </button>
         </div>
-        <div class="box-body">
-          <pre id="utskrift" class="orm-utskrift" aria-live="polite" aria-label="Utskrift frå programmet"></pre>
+        <div class="box-body orm-grafikkkropp">
+          <canvas id="lerret" class="orm-lerret" aria-label="Teikneflate for turtle"></canvas>
+          <div id="biletboks" class="orm-biletboks"></div>
         </div>
       </section>
 
     </div>
   </div>
+
+  <!-- Bibliotek -->
+  <section class="box1 orm-bibliotek" aria-labelledby="bibTittel">
+    <h2 class="heading4 no-mt" id="bibTittel">Bibliotek du kan bruke</h2>
+    <p class="orm-bibingress">
+      Du treng ikkje installere noko. Skriv <code>import numpy</code> i koden,
+      så blir biblioteket henta automatisk — frå vår eigen tenar, ikkje frå nettet.
+      Fyrste gongen tek det nokre sekund; etterpå ligg det i nettlesaren.
+    </p>
+    <div id="bibliotekliste" class="orm-bibliotekliste"></div>
+  </section>
 
   <p class="orm-botntekst">
     Python køyrer som WebAssembly i din eigen nettlesar gjennom

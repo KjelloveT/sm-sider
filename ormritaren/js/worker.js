@@ -13,9 +13,12 @@ import { loadPyodide } from '../../_libs/pyodide/pyodide.mjs';
 
 const PYODIDE_URL = new URL('../../_libs/pyodide/', import.meta.url).href;
 const BOOT_URL = new URL('../py/_vyrdepil_boot.py', import.meta.url).href;
+const TURTLE_URL = new URL('../py/turtle.py', import.meta.url).href;
+const MPL_URL = new URL('../py/_mpl_bru.py', import.meta.url).href;
 
 let pyodide = null;
 let runUserCode = null;
+let mplKopla = false;
 
 /* Delt minne for stdin. Oppsett frå hovudtråden ved kvar køyring:
  *   kontroll[0] = 0 medan vi ventar, 1 når svaret ligg klart
@@ -64,7 +67,14 @@ async function start() {
     });
 
     // input() går gjennom denne brua i staden for stdin — sjå _vyrdepil_boot.py.
-    pyodide.registerJsModule('_ormbru', { les_linje: lesLinje });
+    // turtle og matplotlib sender teikninga si same vegen.
+    pyodide.registerJsModule('_ormbru', {
+        les_linje: lesLinje,
+        teikn: (kommandoar) => meld('teikn', { kommandoar: kommandoar.toJs
+            ? kommandoar.toJs({ dict_converter: Object.fromEntries })
+            : kommandoar }),
+        vis_bilete: (base64) => meld('bilete', { base64 })
+    });
 
     // sys.stdin.readline() o.l. skal òg verke. Emscripten vil ha linjeskiftet med.
     pyodide.setStdin({ stdin: () => lesLinje('') + '\n', isatty: false });
@@ -75,7 +85,46 @@ async function start() {
     pyodide.runPython(boot, { globals: pyodide.globals });
     runUserCode = pyodide.globals.get('run_user_code');
 
+    // turtle finst ikkje i Pyodide (stdlib-versjonen krev tkinter), så vi
+    // legg vår eiga utgåve i arbeidsmappa, som ligg på sys.path.
+    const turtle = await (await fetch(TURTLE_URL)).text();
+    pyodide.FS.writeFile('/home/pyodide/turtle.py', turtle);
+
     meld('klar', { versjon: pyodide.version });
+}
+
+/* ---- bibliotek --------------------------------------------------------- */
+
+/** Hentar hjul frå _libs/pyodide/ og koplar opp det som treng ei bru. */
+async function lastPakkar(pakkar) {
+    if (!pakkar || !pakkar.length) return;
+    meld('framdrift', { steg: `Hentar ${pakkar.join(', ')} …` });
+    await pyodide.loadPackage(pakkar, {
+        messageCallback: () => {},   // Pyodide er pratsam; framdrifta vår held
+        errorCallback: (t) => meld('feilut', { tekst: t + '\n' })
+    });
+    await etterLasting();
+}
+
+/** Les importane i koden og hent det som manglar. */
+async function lastFraaImportar(kode) {
+    const foer = new Set(Object.keys(pyodide.loadedPackages));
+    await pyodide.loadPackagesFromImports(kode, {
+        messageCallback: () => {},
+        errorCallback: () => {}
+    });
+    const nye = Object.keys(pyodide.loadedPackages).filter(p => !foer.has(p));
+    if (nye.length) await etterLasting();
+}
+
+/** Køyrer brukoden for dei biblioteka som nettopp vart tilgjengelege. */
+async function etterLasting() {
+    if (!mplKopla && pyodide.loadedPackages.matplotlib) {
+        const kode = await (await fetch(MPL_URL)).text();
+        await pyodide.runPythonAsync(kode);
+        mplKopla = true;
+    }
+    meld('pakkeliste', { pakkar: Object.keys(pyodide.loadedPackages) });
 }
 
 /* ---- meldingar frå hovudtråden ---------------------------------------- */
@@ -92,13 +141,41 @@ self.onmessage = async (e) => {
         return;
     }
 
+    if (m.type === 'lastPakke') {
+        try {
+            await lastPakkar(m.pakkar);
+            meld('pakkarKlare', { pakkar: m.pakkar });
+        } catch (feil) {
+            meld('pakkefeil', { melding: String(feil && feil.message || feil) });
+        }
+        return;
+    }
+
     if (m.type === 'koyr') {
         if (m.sab) {
             kontroll = new Int32Array(m.sab, 0, 2);
             data = new Uint8Array(m.sab, 8);
         }
         try {
+            // Eleven skal berre skrive «import numpy» og ha det til å verke.
+            // Pyodide les importane i koden og hentar dei hjula som trengst —
+            // frå vår eigen tenar, aldri frå PyPI.
+            await lastFraaImportar(m.kode);
+
+            // Skilpadda skal stå i midten når eleven køyrer på nytt. sys.modules
+            // held på modulen mellom køyringane, så vi tek han ut og lèt
+            // importen i elevkoden byggje han opp att.
+            pyodide.runPython("import sys\nsys.modules.pop('turtle', None)");
+
             const resultat = await runUserCode(m.kode);
+
+            // Dei siste strekane kan liggje att i bufferen når programmet sluttar.
+            pyodide.runPython(
+                "import sys\n"
+                + "_t = sys.modules.get('turtle')\n"
+                + "if _t is not None: _t.tøm()\n"
+            );
+
             meld('ferdig', { feil: resultat ? JSON.parse(resultat) : null });
         } catch (feil) {
             // Feil som slepp forbi Python-sida (t.d. input() utan SAB).

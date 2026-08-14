@@ -58,6 +58,15 @@ const OrmRunner = (function () {
             case 'input':
                 cb.onInput?.(m.ledetekst, svarPaaInput);
                 break;
+            case 'teikn':
+                cb.onTeikn?.(m.kommandoar);
+                break;
+            case 'bilete':
+                cb.onBilete?.(m.base64);
+                break;
+            case 'pakkeliste':
+                cb.onPakkeliste?.(m.pakkar);
+                break;
             case 'ferdig':
                 avsluttKoyring();
                 cb.onFerdig?.(m.feil);

@@ -22,19 +22,30 @@ for i in range(1, 6):
             'utskrift', 'status', 'tregVarsel', 'koyrKnapp', 'stoppKnapp', 'tomKnapp',
             'filliste', 'nyKnapp', 'lagreKnapp', 'lastNedKnapp', 'lastOppFelt',
             'filnamn', 'symbolrad', 'kodefelt', 'skriftMindre', 'skriftMeir',
-            'fanerad', 'arbeidsflate', 'isolasjonsVarsel', 'lagringsVarsel'
+            'fanerad', 'arbeidsflate', 'isolasjonsVarsel', 'lagringsVarsel',
+            'lerret', 'biletboks', 'tomGrafikkKnapp', 'bibliotekliste',
+            'panelGrafikk', 'grafikkFane', 'filerKnapp', 'filpanel', 'filTal'
         ].forEach(id => { el[id] = document.getElementById(id); });
 
         OrmUI.init({ utskrift: el.utskrift, status: el.status, treg: el.tregVarsel });
+
+        OrmGrafikk.init(
+            { lerret: el.lerret, bilete: el.biletboks },
+            visGrafikkPanel
+        );
+        OrmPakkar.init(el.bibliotekliste, settInnDoeme);
         OrmEditor.lag(el.kodefelt, el.symbolrad, koyr);
         OrmEditor.cm().on('change', () => { ulagraEndringar = true; oppdaterLagreknapp(); });
 
         if (window.hydrateIcons) hydrateIcons(document);
 
         koplKnappar();
-        // CodeMirror måler feil om han blir vist att etter display:none.
+        // CodeMirror og canvas måler begge feil om dei blir viste att etter
+        // display:none, så begge må få beskjed når fana byter.
         OrmUI.koplFanar(el.fanerad, el.arbeidsflate, (fane) => {
             if (fane === 'kode') OrmEditor.cm().refresh();
+            if (fane === 'grafikk') OrmGrafikk.tilpassStorleik();
+            el.fanerad.querySelector(`.box-tab[data-fane="${fane}"]`)?.classList.remove('orm-fane-nytt');
         });
 
         if (!OrmRunner.harStdin()) el.isolasjonsVarsel.hidden = false;
@@ -62,12 +73,16 @@ for i in range(1, 6):
             },
             onStart: () => {
                 OrmUI.tomUtskrift();
+                OrmGrafikk.tom();
                 OrmEditor.reinsk();
                 OrmUI.status('Køyrer …', 'koyrer');
                 el.koyrKnapp.disabled = true;
                 el.stoppKnapp.disabled = false;
             },
             onUtskrift: (tekst, erFeil) => OrmUI.skriv(tekst, erFeil),
+            onTeikn: (kommandoar) => OrmGrafikk.leggTil(kommandoar),
+            onBilete: (base64) => OrmGrafikk.visBilete(base64),
+            onPakkeliste: (pakkar) => OrmPakkar.settLasta(pakkar),
             onInput: (ledetekst, svar) => OrmUI.spor(ledetekst, svar, () => OrmRunner.stopp()),
             onTreg: (treg) => OrmUI.visTreg(treg),
             onFerdig: (feil) => {
@@ -102,6 +117,14 @@ for i in range(1, 6):
         el.koyrKnapp.addEventListener('click', koyr);
         el.stoppKnapp.addEventListener('click', () => OrmRunner.stopp());
         el.tomKnapp.addEventListener('click', () => OrmUI.tomUtskrift());
+        el.tomGrafikkKnapp.addEventListener('click', () => {
+            OrmGrafikk.tom();
+            el.panelGrafikk.hidden = true;
+            el.grafikkFane.hidden = true;
+            if (el.arbeidsflate.dataset.fane === 'grafikk') visFane('kode');
+        });
+
+        koplFilmeny();
 
         el.nyKnapp.addEventListener('click', nyFil);
         el.lagreKnapp.addEventListener('click', lagreFil);
@@ -127,9 +150,64 @@ for i in range(1, 6):
         });
     }
 
+    /* ---- filmenyen ------------------------------------------------------ */
+
+    function koplFilmeny() {
+        el.filerKnapp.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setFilmeny(el.filpanel.hidden);
+        });
+
+        // Klikk utanfor og Escape lukkar, slik ein ventar av ein nedtrekksmeny.
+        document.addEventListener('click', (e) => {
+            if (!el.filpanel.hidden && !el.filpanel.contains(e.target)) setFilmeny(false);
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !el.filpanel.hidden) {
+                setFilmeny(false);
+                el.filerKnapp.focus();
+            }
+        });
+    }
+
+    function setFilmeny(open) {
+        el.filpanel.hidden = !open;
+        el.filerKnapp.setAttribute('aria-expanded', String(open));
+    }
+
     function visFane(namn) {
         const knapp = el.fanerad.querySelector(`.box-tab[data-fane="${namn}"]`);
         if (knapp) knapp.click();
+    }
+
+    /* Grafikkruta står skjult til programmet faktisk lagar noko som skal dit.
+     * Ei tom teikneflate under kvar einaste køyring er berre rot for dei
+     * fleste programma, som ikkje teiknar i det heile. */
+    function visGrafikkPanel() {
+        if (!el.panelGrafikk.hidden) return;
+        el.panelGrafikk.hidden = false;
+        el.grafikkFane.hidden = false;
+        // Lerretet hadde ingen storleik medan det var skjult — mål på nytt
+        // no som det er i layouten.
+        OrmGrafikk.tilpassStorleik();
+        merkFane('grafikk');
+    }
+
+    /* Marker at det kom noko nytt i ei fane eleven ikkje ser på.
+     * Vi byter ikkje fane av oss sjølv her: eit program kan skrive både
+     * tekst og teikne, og då ville skjermen hoppa fram og tilbake. */
+    function merkFane(namn) {
+        if (el.arbeidsflate.dataset.fane === namn) return;
+        el.fanerad.querySelector(`.box-tab[data-fane="${namn}"]`)?.classList.add('orm-fane-nytt');
+    }
+
+    function settInnDoeme(kode) {
+        if (ulagraEndringar && !confirm('Du har endringar som ikkje er lagra. Byte ut koden med dømet?')) return;
+        OrmEditor.set(kode);
+        ulagraEndringar = true;
+        oppdaterLagreknapp();
+        visFane('kode');
+        OrmEditor.cm().focus();
     }
 
     function oppdaterLagreknapp() {
@@ -141,6 +219,7 @@ for i in range(1, 6):
     function lastFiler() {
         const filer = OrmLager.filer();
         el.filliste.textContent = '';
+        el.filTal.textContent = filer.length ? `(${filer.length})` : '';
 
         if (!filer.length) {
             const tom = document.createElement('p');
@@ -192,6 +271,7 @@ for i in range(1, 6):
         oppdaterLagreknapp();
         OrmLager.setTilstand({ aktivFil: fil.id });
         lastFiler();
+        setFilmeny(false);
         visFane('kode');
     }
 

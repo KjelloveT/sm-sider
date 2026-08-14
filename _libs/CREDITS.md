@@ -51,6 +51,41 @@ nokon stad.
 | `python_stdlib.zip` | 2 545 198 | `b5ca2308e9fa72eda319889a1ddf086389e9f1234ced279cc71267fe9ba56e54` |
 | `pyodide-lock.json` | 113 804 | `c963d22858f6bcb8f41586a2142f03905ab370c88ea22a86a2736e95fac2a8f3` |
 
+### Ferdigbygde hjul i same mappa
+
+Ormritaren lèt eleven bruke eit **kuratert** sett bibliotek. Hjula ligg her,
+og Pyodide hentar dei frå vår eigen tenar når koden importerer dei. Vi kallar
+aldri PyPI, og eleven kan ikkje skrive inn eit vilkårleg pakkenamn — skal eit
+nytt bibliotek inn, må hjulet leggjast her og førast opp i
+`ormritaren/js/packages.js`, altså gjennom ein pull request.
+
+Hjula er henta frå same distribusjonen som kjernen og har lisensane sine frå
+oppstraums (BSD-3-Clause for numpy, matplotlib, contourpy, cycler, kiwisolver,
+python-dateutil, six og pytz; MIT for fonttools, pyparsing og packaging;
+MIT-CMU for pillow).
+
+| Pakke | Versjon | Storleik |
+|---|---|---|
+| numpy | 2.4.3 | 2,92 MB |
+| matplotlib | 3.10.8 | 6,97 MB |
+| fonttools | 4.62.1 | 1,15 MB |
+| pillow | 12.2.0 | 1,04 MB |
+| pytz | 2026.1.post1 | 0,51 MB |
+| python-dateutil | 2.9.0.post0 | 0,23 MB |
+| contourpy | 1.3.3 | 0,12 MB |
+| pyparsing | 3.3.2 | 0,12 MB |
+| packaging | 26.1 | 0,10 MB |
+| kiwisolver | 1.5.0 | 0,04 MB |
+| cycler | 0.12.1 | 0,01 MB |
+| six | 1.17.0 | 0,01 MB |
+
+Samla 13,2 MB. Alt utanom numpy er der fordi matplotlib treng det —
+avhengnadene er løyste ut frå `pyodide-lock.json`, som Pyodide bruker til å
+hente rett sett når eleven skriv `import matplotlib`.
+
+`turtle` står ikkje her: Pyodide har han ikkje (stdlib-versjonen krev tkinter),
+så han er skriven av oss i `ormritaren/py/turtle.py`.
+
 **Versjonen er pinna med vilje.** Repoet har ikkje Git LFS, så kvar
 oppgradering legg ~13 MB nye blobbar i historikka for alltid. Oppgrader
 berre når det er ein reell grunn — ikkje for å liggje på siste versjon.
