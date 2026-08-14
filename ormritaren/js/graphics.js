@@ -9,7 +9,7 @@
  */
 const OrmGrafikk = (function () {
 
-    let lerret, ctx, biletboks, tomtekst;
+    let lerret, ctx, biletboks;
     let kø = [];               // kommandoar som ventar på å bli teikna
     let spelar = false;
     let fart = 6;              // 0 = teikn alt med ein gong (turtle sin «fastest»)
@@ -25,7 +25,6 @@ const OrmGrafikk = (function () {
     function init(el, callback) {
         lerret = el.lerret;
         biletboks = el.bilete;
-        tomtekst = el.tomtekst;
         onEndra = callback;
         ctx = lerret.getContext('2d');
         tilpassStorleik();
@@ -76,12 +75,12 @@ const OrmGrafikk = (function () {
         kø = [];
         historikk = [];
         markorLag = null;
+        aktivLinje = null;
         spelar = false;
         skilpadde = null;
         harInnhald = false;
         if (ctx) ctx.clearRect(0, 0, lerret.width, lerret.height);
         if (biletboks) biletboks.textContent = '';
-        if (tomtekst) tomtekst.hidden = false;
     }
 
     /* ---- turtle ---------------------------------------------------- */
@@ -126,34 +125,74 @@ const OrmGrafikk = (function () {
 
     document.addEventListener('visibilitychange', () => { if (!document.hidden) driv(); });
 
-    function steg() {
-        if (!kø.length) { spelar = false; teiknSkilpadde(); return; }
+    /* Strek som er under teikning. Ein forward() kjem som éin kommando, men
+     * blir teikna bit for bit slik at eleven ser pennen gå. Utan dette dukkar
+     * heile figuren opp på ein gong, og då er det ingenting å sjå på — som er
+     * heile grunnen til at turtle blir brukt i skulen. */
+    let aktivLinje = null;
 
-        // fart 0 tyder «så fort som råd» i turtle. Elles skalerer vi opp
-        // talet på kommandoar per bilete, så fart 10 blir merkbart raskare
-        // enn fart 1 utan at det tek eit sekund per strek.
-        const perBilete = fart === 0 ? kø.length : Math.max(1, fart * fart);
+    function steg() {
+        if (!kø.length && !aktivLinje) { spelar = false; teiknSkilpadde(); return; }
+
+        // Pikslar per bilete. fart 0 tyder «så fort som råd» i turtle;
+        // elles går det frå rolege 3 px/bilete på fart 1 til raske 100 på fart 10.
+        let budsjett = fart === 0 ? Infinity : fart * fart + 2;
 
         ctx.save();
-        for (let i = 0; i < perBilete && kø.length; i++) kjoer(kø.shift());
+        while (budsjett > 0) {
+            if (!aktivLinje) {
+                if (!kø.length) break;
+                const k = kø.shift();
+                if (k.k !== 'linje') { kjoer(k); continue; }
+
+                historikk.push(k);           // historikka held heile streken
+                const lengd = Math.hypot(k.x2 - k.x1, k.y2 - k.y1);
+                if (lengd < 0.01) continue;  // penn opp og ned på same punkt
+                aktivLinje = { k, lengd, gjort: 0, x: k.x1, y: k.y1 };
+            }
+
+            const bit = Math.min(aktivLinje.lengd - aktivLinje.gjort, budsjett);
+            budsjett -= bit;
+            aktivLinje.gjort += bit;
+
+            const t = aktivLinje.gjort / aktivLinje.lengd;
+            const nx = aktivLinje.k.x1 + (aktivLinje.k.x2 - aktivLinje.k.x1) * t;
+            const ny = aktivLinje.k.y1 + (aktivLinje.k.y2 - aktivLinje.k.y1) * t;
+
+            strek(aktivLinje.x, aktivLinje.y, nx, ny, aktivLinje.k.farge, aktivLinje.k.tjukn);
+            aktivLinje.x = nx;
+            aktivLinje.y = ny;
+
+            // Flytt markøren med pennen, elles står skilpadda stille medan
+            // streken veks ut under henne.
+            if (skilpadde) { skilpadde.x = nx; skilpadde.y = ny; }
+            else skilpadde = { x: nx, y: ny, v: 0, synleg: true };
+
+            if (aktivLinje.gjort >= aktivLinje.lengd - 1e-9) aktivLinje = null;
+        }
         ctx.restore();
 
         teiknSkilpadde();
         requestAnimationFrame(steg);
     }
 
+    function strek(x1, y1, x2, y2, farge, tjukn) {
+        harInnhald = true;
+        ctx.beginPath();
+        ctx.moveTo(px(x1), py(y1));
+        ctx.lineTo(px(x2), py(y2));
+        ctx.strokeStyle = farge;
+        ctx.lineWidth = tjukn;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+    }
+
     function utfoer(k) {
         switch (k.k) {
             case 'linje':
-                harInnhald = true;
-                ctx.beginPath();
-                ctx.moveTo(px(k.x1), py(k.y1));
-                ctx.lineTo(px(k.x2), py(k.y2));
-                ctx.strokeStyle = k.farge;
-                ctx.lineWidth = k.tjukn;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-                skilpadde = { x: k.x2, y: k.y2, v: skilpadde ? skilpadde.v : 0, synleg: true };
+                strek(k.x1, k.y1, k.x2, k.y2, k.farge, k.tjukn);
+                skilpadde = { x: k.x2, y: k.y2, v: skilpadde ? skilpadde.v : 0,
+                              synleg: skilpadde ? skilpadde.synleg : true };
                 break;
 
             case 'prikk':
@@ -250,8 +289,9 @@ const OrmGrafikk = (function () {
         vis();
     }
 
+    /* Seier frå til appen om at panelet må visast — det står skjult til
+     * programmet faktisk lagar noko som skal dit. */
     function vis() {
-        if (tomtekst) tomtekst.hidden = true;
         onEndra?.();
     }
 

@@ -6,15 +6,50 @@
 
 /* ---- layout ---------------------------------------------------------- */
 
-.orm-flate {
-    display: grid;
-    grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
-    gap: 20px;
-    align-items: start;
-}
+.orm-flate { display: block; }
 
 .orm-arbeid {
     min-width: 0;   /* utan denne sprengjer lange kodelinjer grid-cella */
+}
+
+/* Kode og utskrift side om side. Utskrifta får ein tredjedel: nok til å
+ * lese det programmet skriv, utan å ta plass frå sjølve koden. */
+.orm-rad {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+/* ---- toppverktøy ----------------------------------------------------- */
+
+.orm-toppverktoy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.orm-verktoy-spacer { flex: 1 1 auto; }
+
+.orm-filmeny { position: relative; }
+
+.orm-filtal {
+    font-variant-numeric: tabular-nums;
+    opacity: .75;
+}
+
+.orm-filpanel {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 50;
+    width: min(320px, 80vw);
+    padding: 12px;
+    background: var(--surface);
+    border: 3px solid var(--border);
+    box-shadow: 5px 5px 0 var(--shadow);
 }
 
 .orm-panel { margin-bottom: 16px; }
@@ -36,16 +71,7 @@
 
 .orm-panel-kropp { padding: 0; }
 
-/* ---- sidepanel ------------------------------------------------------- */
-
-.orm-sidepanel { position: sticky; top: 16px; }
-
-.orm-filknappar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 12px;
-}
+/* ---- filliste -------------------------------------------------------- */
 
 .orm-btn-fil { cursor: pointer; }
 
@@ -53,7 +79,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    max-height: 40vh;
+    max-height: 46vh;
     overflow-y: auto;
 }
 
@@ -326,23 +352,9 @@
 .orm-lerret {
     display: block;
     width: 100%;
-    height: clamp(240px, 40vh, 460px);
+    height: clamp(240px, 44vh, 520px);
     background: var(--surface);
     border: 2px solid var(--border);
-}
-
-.orm-grafikk-tom {
-    position: absolute;
-    inset: 12px;
-    display: grid;
-    place-content: center;
-    text-align: center;
-    margin: 0;
-    padding: 0 16px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--muted);
-    pointer-events: none;
 }
 
 .orm-biletboks {
@@ -482,10 +494,14 @@
 
 .orm-fanerad { display: none; }
 
-@media (max-width: 860px) {
-    .orm-flate { grid-template-columns: 1fr; }
+/* Under denne breidda blir utskrifta for smal til å lese, og kode og
+ * utskrift legg seg under kvarandre i staden. */
+@media (max-width: 1100px) and (min-width: 861px) {
+    .orm-rad { grid-template-columns: minmax(0, 1fr); }
+}
 
-    .orm-sidepanel { position: static; }
+@media (max-width: 860px) {
+    .orm-rad { grid-template-columns: minmax(0, 1fr); }
 
     .orm-fanerad {
         display: flex;
