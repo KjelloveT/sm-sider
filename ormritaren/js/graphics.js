@@ -80,12 +80,17 @@ const OrmGrafikk = (function () {
         skilpadde = null;
         harInnhald = false;
         if (ctx) ctx.clearRect(0, 0, lerret.width, lerret.height);
+        if (lerret) lerret.hidden = true;
         if (biletboks) biletboks.textContent = '';
     }
 
     /* ---- turtle ---------------------------------------------------- */
 
     function leggTil(kommandoar) {
+        // Teikneflata kjem fyrst fram når turtle faktisk teiknar — eit program
+        // som berre lagar eit matplotlib-plott skal ikkje få ei tom rute over
+        // figuren.
+        lerret.hidden = false;
         kø.push(...kommandoar);
         vis();
         driv();
@@ -117,6 +122,7 @@ const OrmGrafikk = (function () {
     }
 
     function tømKøen() {
+        fjernMarkor();
         ctx.save();
         while (kø.length) kjoer(kø.shift());
         ctx.restore();
@@ -138,6 +144,7 @@ const OrmGrafikk = (function () {
         // elles går det frå rolege 3 px/bilete på fart 1 til raske 100 på fart 10.
         let budsjett = fart === 0 ? Infinity : fart * fart + 2;
 
+        fjernMarkor();   // før vi teiknar, ikkje etter — sjå fjernMarkor()
         ctx.save();
         while (budsjett > 0) {
             if (!aktivLinje) {
@@ -243,11 +250,21 @@ const OrmGrafikk = (function () {
      * ikkje blir liggjande att som eit spor i sjølve teikninga. */
     let markorLag = null;
 
+    /* Legg tilbake pikslane som låg under markøren.
+     *
+     * Dette MÅ gjerast før det blir teikna noko nytt. Gjer ein det etterpå,
+     * viskar tilbakelegginga ut strekar som er teikna innanfor det same vesle
+     * området — og ved låg fart flyttar pennen seg berre nokre få pikslar per
+     * bilete, altså midt inni der markøren stod. Resultatet er ei skilpadde
+     * som går rundt utan å leggje att spor. */
+    function fjernMarkor() {
+        if (!markorLag) return;
+        ctx.putImageData(markorLag.data, markorLag.x, markorLag.y);
+        markorLag = null;
+    }
+
     function teiknSkilpadde() {
-        if (markorLag) {
-            ctx.putImageData(markorLag.data, markorLag.x, markorLag.y);
-            markorLag = null;
-        }
+        fjernMarkor();
         if (!skilpadde || !skilpadde.synleg) return;
 
         const dpr = window.devicePixelRatio || 1;
