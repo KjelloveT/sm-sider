@@ -132,6 +132,15 @@ Nye avhengnader (bibliotek, CDN-script, fontar, ikon-pakkar) krev **eksplisitt g
 - **Sjølv-hostast** i `_libs/` på rot (foretrekt for ekte offline-støtte), eller
 - **Dokumenterast** i personvernseksjonen på framsida med kjelde og kva data som kan synast (t.d. IP-adresse i CDN-loggar).
 
+**Store binærfiler skal versjonspinnast, ikkje haldast oppdaterte.** Repoet
+har ikkje Git LFS, så ei avhengnad på fleire megabyte blir liggjande i
+historikka for alltid — og ein gong til for kvar oppgradering. Pyodide i
+`_libs/pyodide/` (~13 MB) er pinna til éin versjon med vilje. Oppgrader berre
+når det er ein reell grunn, og legg då den nye utgåva i ei **ny mappe**
+(`_libs/pyodide-315/`) framfor å byte innhaldet i den gamle: filnamna er dei
+same, og `Cache-Control: immutable` gjer at elevmaskiner elles kan sitje att
+med gammal wasm og ny JS. Sjå `_libs/CREDITS.md` for versjonar og sjekksummar.
+
 **Hugs CSP-allowlista:** all ekstern ressurs (script, bilete, fontar, API/WebSocket) blir blokkert i produksjon om han ikkje står i `Content-Security-Policy` under `globalHeaders` i `staticwebapp.config.json`. Legg origin-en i rett direktiv (`script-src`, `img-src`, `connect-src` osv.). Vér særleg merksam på **redirect-kjeder**: Wikimedia-bilete går t.d. via `commons.wikimedia.org/wiki/Special:FilePath/…` som redirectar til `upload.wikimedia.org`, og **begge** origin-ane må stå i `img-src` fordi nettlesaren sjekkar CSP på kvart ledd. NB: ein `Content-Security-Policy-Report-Only`-header *rapporterer* berre brot — han *blokkerer* ikkje, så ei side kan sjå ut til å fungere i report-only og likevel knuse når CSP-en blir handheva. Test difor alltid mot den handheva headeren før du konkluderer.
 
 ### 5.7 Logoar og bilete
