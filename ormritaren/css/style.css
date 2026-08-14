@@ -198,6 +198,61 @@
 
 .orm-feillinje { background: color-mix(in srgb, var(--accent2) 22%, transparent); }
 
+/* ---- forslag medan ein skriv ----------------------------------------- */
+
+.CodeMirror-hints {
+    z-index: 60;
+    padding: 0;
+    margin: 2px 0 0;
+    max-height: 17em;
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 13px;
+    background: var(--surface);
+    border: 3px solid var(--border);
+    border-radius: 0;
+    box-shadow: 5px 5px 0 var(--shadow);
+}
+
+.CodeMirror-hint {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 5px 10px;
+    color: var(--text);
+    border-radius: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 20%, transparent);
+}
+
+.CodeMirror-hint:last-child { border-bottom: none; }
+
+/* Vald rad blir invertert i staden for å bruke ein accent-farge. --accent er
+ * ein lys neonfarge i fleire av dei mørke temaa, og kvit tekst på han falt til
+ * 2,54:1 i «hacker». --text og --surface er derimot definerte som motsetnader
+ * i kvart einaste tema, så inverteringa held kontrasten uansett. */
+li.CodeMirror-hint-active {
+    background: var(--text);
+    color: var(--surface);
+}
+
+.orm-hint-namn { font-weight: 800; }
+
+.orm-hint-skildring {
+    margin-left: auto;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 11.5px;
+    color: var(--muted);
+    text-align: right;
+}
+
+li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
+
+/* Ein tynn fargestripe som skil kva slag forslag det er. */
+.orm-hint-nokkelord { border-left: 4px solid var(--accent2); }
+.orm-hint-innebygd  { border-left: 4px solid var(--accent); }
+.orm-hint-medlem    { border-left: 4px solid var(--accent4); }
+.orm-hint-modul     { border-left: 4px solid var(--accent5); }
+.orm-hint-ord       { border-left: 4px solid transparent; }
+
 /* ---- symbolrad ------------------------------------------------------- */
 
 .orm-symbolrad {

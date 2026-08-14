@@ -122,5 +122,11 @@ Versjon 5 er éi UMD-fil som kan lenkast inn direkte.
 | `addon/edit/closebrackets.js` | 7 123 | `143c3014c29254f3531cc30be6d90205084bcfc36cffa6f9b2a46fd42a40be20` |
 | `addon/comment/comment.js` | 9 230 | `a65c038258c6541658a0e9f24c56c78255e0e20d4cf06aa9ad83342069a589be` |
 | `addon/selection/active-line.js` | 2 509 | `3afbcf78835c9bdc342e3992c53d9b74286722613bb1a8adc9d140edc8737ee8` |
+| `addon/hint/show-hint.js` | 19 792 | `6d940e45a07c13abd1e872802ba20f91f809d4b583afcd58a8058e25c7f0cfce` |
+| `addon/hint/show-hint.css` | 649 | `9058c1c14fcdae199b490bb6214f36a216b9ce84d7df2084830ebb6a60337651` |
+
+`show-hint` er berre sjølve nedtrekkslista. CodeMirror 5 har ingen
+Python-hjelpar, så forslaga kjem frå vår eigen `ormritaren/js/autocomplete.js`
+— ei kuratert liste med forklaringar på nynorsk.
 
 Godkjend av brukaren under planlegginga av Ormritaren.
