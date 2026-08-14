@@ -104,77 +104,83 @@
         <button class="box-tab" data-fane="grafikk" role="tab" aria-selected="false" type="button" id="grafikkFane" hidden>Grafikk</button>
       </div>
 
-      <!-- Kode til venstre, utskrift til høgre -->
+      <!-- Kode og grafikk i den breie kolonna, utskrift og bibliotek i den smale -->
       <div class="orm-rad">
 
-        <section class="box4 orm-panel" id="panelKode" aria-labelledby="kodeTittel">
-          <div class="box-header orm-panel-topp">
-            <span id="kodeTittel">Kode</span>
-          </div>
-          <div class="box-body orm-panel-kropp">
-            <textarea id="kodefelt" aria-label="Kodefelt"></textarea>
-            <div class="orm-symbolrad" id="symbolrad" role="toolbar" aria-label="Teikn som er vanskelege å nå på nettbrett"></div>
-          </div>
-        </section>
+        <div class="orm-kolonne orm-kolonne-brei">
 
-        <section class="box4 orm-panel" id="panelUt" aria-labelledby="utTittel">
-          <div class="box-header orm-panel-topp">
-            <span id="utTittel">Utskrift</span>
-            <button class="btn orm-btn-liten" id="tomKnapp" type="button">
-              <span data-icon="eraser"></span>Tøm
+          <section class="box4 orm-panel" id="panelKode" aria-labelledby="kodeTittel">
+            <div class="box-header orm-panel-topp">
+              <span id="kodeTittel">Kode</span>
+            </div>
+            <div class="box-body orm-panel-kropp">
+              <textarea id="kodefelt" aria-label="Kodefelt"></textarea>
+              <div class="orm-symbolrad" id="symbolrad" role="toolbar" aria-label="Teikn som er vanskelege å nå på nettbrett"></div>
+            </div>
+          </section>
+
+          <div class="orm-koyrerad">
+            <button class="btn orm-btn-koyr" id="koyrKnapp" type="button">
+              <span data-icon="play"></span>Køyr
             </button>
+            <button class="btn orm-btn-stopp" id="stoppKnapp" type="button" disabled>
+              <span data-icon="stop"></span>Stopp
+            </button>
+            <span class="orm-status" id="status" role="status" aria-live="polite">Startar …</span>
+            <span class="orm-snarveg">Ctrl + Enter</span>
           </div>
-          <div class="box-body">
-            <pre id="utskrift" class="orm-utskrift" aria-live="polite" aria-label="Utskrift frå programmet"></pre>
-          </div>
-        </section>
+
+          <p class="orm-varsel orm-varsel-treg" id="tregVarsel" hidden>
+            Programmet har køyrt ei stund. Er det ei løkke som aldri sluttar?
+            Trykk <strong>Stopp</strong> — koden din blir verande.
+          </p>
+
+          <!-- Grafikk. Skjult til programmet lagar noko som skal hit. -->
+          <section class="box4 orm-panel" id="panelGrafikk" aria-labelledby="grafikkTittel" hidden>
+            <div class="box-header orm-panel-topp">
+              <span id="grafikkTittel">Grafikk</span>
+              <button class="btn orm-btn-liten" id="tomGrafikkKnapp" type="button">
+                <span data-icon="eraser"></span>Tøm
+              </button>
+            </div>
+            <div class="box-body orm-grafikkkropp">
+              <canvas id="lerret" class="orm-lerret" aria-label="Teikneflate for turtle"></canvas>
+              <div id="biletboks" class="orm-biletboks"></div>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="orm-kolonne orm-kolonne-smal">
+
+          <section class="box4 orm-panel" id="panelUt" aria-labelledby="utTittel">
+            <div class="box-header orm-panel-topp">
+              <span id="utTittel">Utskrift</span>
+              <button class="btn orm-btn-liten" id="tomKnapp" type="button">
+                <span data-icon="eraser"></span>Tøm
+              </button>
+            </div>
+            <div class="box-body">
+              <pre id="utskrift" class="orm-utskrift" aria-live="polite" aria-label="Utskrift frå programmet"></pre>
+            </div>
+          </section>
+
+          <section class="box1 orm-bibliotek" aria-labelledby="bibTittel">
+            <h2 class="heading4 no-mt" id="bibTittel">Bibliotek du kan bruke</h2>
+            <p class="orm-bibingress">
+              Du treng ikkje installere noko. Skriv <code>import numpy</code> i koden,
+              så blir biblioteket henta automatisk — frå vår eigen tenar, ikkje frå nettet.
+              Fyrste gongen tek det nokre sekund; etterpå ligg det i nettlesaren.
+            </p>
+            <div id="bibliotekliste" class="orm-bibliotekliste"></div>
+          </section>
+
+        </div>
 
       </div>
-
-      <!-- Køyrerad -->
-      <div class="orm-koyrerad">
-        <button class="btn orm-btn-koyr" id="koyrKnapp" type="button">
-          <span data-icon="play"></span>Køyr
-        </button>
-        <button class="btn orm-btn-stopp" id="stoppKnapp" type="button" disabled>
-          <span data-icon="stop"></span>Stopp
-        </button>
-        <span class="orm-status" id="status" role="status" aria-live="polite">Startar …</span>
-        <span class="orm-snarveg">Ctrl + Enter</span>
-      </div>
-
-      <p class="orm-varsel orm-varsel-treg" id="tregVarsel" hidden>
-        Programmet har køyrt ei stund. Er det ei løkke som aldri sluttar?
-        Trykk <strong>Stopp</strong> — koden din blir verande.
-      </p>
-
-      <!-- Grafikk. Skjult til programmet lagar noko som skal hit. -->
-      <section class="box4 orm-panel" id="panelGrafikk" aria-labelledby="grafikkTittel" hidden>
-        <div class="box-header orm-panel-topp">
-          <span id="grafikkTittel">Grafikk</span>
-          <button class="btn orm-btn-liten" id="tomGrafikkKnapp" type="button">
-            <span data-icon="eraser"></span>Tøm
-          </button>
-        </div>
-        <div class="box-body orm-grafikkkropp">
-          <canvas id="lerret" class="orm-lerret" aria-label="Teikneflate for turtle"></canvas>
-          <div id="biletboks" class="orm-biletboks"></div>
-        </div>
-      </section>
 
     </div>
   </div>
-
-  <!-- Bibliotek -->
-  <section class="box1 orm-bibliotek" aria-labelledby="bibTittel">
-    <h2 class="heading4 no-mt" id="bibTittel">Bibliotek du kan bruke</h2>
-    <p class="orm-bibingress">
-      Du treng ikkje installere noko. Skriv <code>import numpy</code> i koden,
-      så blir biblioteket henta automatisk — frå vår eigen tenar, ikkje frå nettet.
-      Fyrste gongen tek det nokre sekund; etterpå ligg det i nettlesaren.
-    </p>
-    <div id="bibliotekliste" class="orm-bibliotekliste"></div>
-  </section>
 
   <p class="orm-botntekst">
     Python køyrer som WebAssembly i din eigen nettlesar gjennom

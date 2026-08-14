@@ -12,14 +12,18 @@
     min-width: 0;   /* utan denne sprengjer lange kodelinjer grid-cella */
 }
 
-/* Kode og utskrift side om side. Utskrifta får ein tredjedel: nok til å
- * lese det programmet skriv, utan å ta plass frå sjølve koden. */
+/* To kolonner: kode og grafikk i den breie, utskrift og bibliotek i den
+ * smale. Grafikken får då same breidd som koden, og biblioteket same breidd
+ * som utskrifta. Utskrifta får ein tredjedel: nok til å lese det programmet
+ * skriv, utan å ta plass frå sjølve koden. */
 .orm-rad {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: 16px;
     align-items: start;
 }
+
+.orm-kolonne { min-width: 0; }
 
 /* ---- toppverktøy ----------------------------------------------------- */
 
@@ -407,7 +411,9 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
 .orm-lerret {
     display: block;
     width: 100%;
-    height: clamp(240px, 44vh, 520px);
+    /* 100px høgare enn utgangspunktet — teikningane treng plass, og flata
+     * ligg no i den breie kolonna der ho har rom til det. */
+    height: clamp(340px, calc(44vh + 100px), 620px);
     background: var(--surface);
     border: 2px solid var(--border);
 }
@@ -441,7 +447,9 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
 
 /* ---- bibliotek ------------------------------------------------------- */
 
-.orm-bibliotek { margin-top: 4px; }
+/* Ligg i den smale kolonna under utskrifta, så korta legg seg under
+ * kvarandre i staden for på rad. */
+.orm-bibliotek { margin-top: 0; }
 
 .orm-bibingress {
     max-width: 78ch;
