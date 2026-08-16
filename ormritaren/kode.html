@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ormritaren — Python i nettlesaren for Vyrdepil</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="../_libs/codemirror/codemirror.css">
+<link rel="stylesheet" href="../_libs/codemirror/addon/hint/show-hint.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="../js/neo-header.js" defer></script>
+<script src="../js/vyrdepil-icons.js" defer></script>
+<script src="../js/vyrdepil-storage.js" defer></script>
+<script src="../_libs/codemirror/codemirror.js" defer></script>
+<script src="../_libs/codemirror/mode/python/python.js" defer></script>
+<script src="../_libs/codemirror/addon/edit/matchbrackets.js" defer></script>
+<script src="../_libs/codemirror/addon/edit/closebrackets.js" defer></script>
+<script src="../_libs/codemirror/addon/comment/comment.js" defer></script>
+<script src="../_libs/codemirror/addon/selection/active-line.js" defer></script>
+<script src="../_libs/codemirror/addon/hint/show-hint.js" defer></script>
+<script src="js/autocomplete.js" defer></script>
+<script src="js/errors.js" defer></script>
+<script src="js/storage.js" defer></script>
+<script src="js/runner.js" defer></script>
+<script src="js/editor.js" defer></script>
+<script src="js/graphics.js" defer></script>
+<script src="js/packages.js" defer></script>
+<script src="js/ui.js" defer></script>
+<script src="js/app.js" defer></script>
+</head>
+<body data-light-theme="forest" data-dark-theme="space" data-theme="forest">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content main-wide">
+
+  <!-- Hero -->
+  <div class="box2 hero-box">
+    <img src="../_resources/ormritaren.png" alt="Ormritaren" class="hero-logo">
+    <div class="hero-text">
+      <h1>Ormritaren</h1>
+      <p>Skriv og køyr ekte Python rett i nettlesaren. Ingen innlogging, ingen installasjon — og koden din blir verande på di eiga maskin.</p>
+    </div>
+  </div>
+
+  <p class="orm-varsel orm-varsel-aatvaring" id="isolasjonsVarsel" hidden>
+    Denne sida køyrer utan delt minne, så <code>input()</code> vil ikkje verke her.
+    Alt anna fungerer som normalt. (På ein lokal tenar er dette venta — sjå <code>serve_ormritaren.js</code>.)
+  </p>
+
+  <!-- Verktøyrad: filnamn, filer og lagring -->
+  <div class="box1 orm-toppverktoy">
+    <input type="text" id="filnamn" class="orm-filnamnfelt" aria-label="Filnamn" spellcheck="false">
+
+    <button class="btn orm-btn-liten" id="lagreKnapp" type="button">
+      <span data-icon="save"></span>Lagre
+    </button>
+
+    <div class="orm-filmeny">
+      <button class="btn orm-btn-liten" id="filerKnapp" type="button"
+              aria-expanded="false" aria-controls="filpanel">
+        <span data-icon="folder"></span>Filene dine <span id="filTal" class="orm-filtal"></span>
+      </button>
+      <div class="orm-filpanel" id="filpanel" hidden>
+        <div id="filliste" class="orm-filliste"></div>
+        <p class="orm-sidenote">
+          Filene ligg lagra i nettlesaren din — ikkje på nokon tenar. Tømmer du
+          nettlesardata, forsvinn dei. Last ned det du vil ta vare på.
+        </p>
+      </div>
+    </div>
+
+    <button class="btn orm-btn-liten" id="nyKnapp" type="button">
+      <span data-icon="plus"></span>Ny
+    </button>
+    <button class="btn orm-btn-liten" id="lastNedKnapp" type="button">
+      <span data-icon="download"></span>Last ned
+    </button>
+    <label class="btn orm-btn-liten orm-btn-fil">
+      <span data-icon="upload"></span>Hent inn
+      <input type="file" id="lastOppFelt" accept=".py,text/x-python,text/plain" hidden>
+    </label>
+
+    <span class="orm-verktoy-spacer"></span>
+
+    <button class="btn orm-btn-liten orm-btn-ikon" id="skriftMindre" type="button" aria-label="Mindre skrift">A−</button>
+    <button class="btn orm-btn-liten orm-btn-ikon" id="skriftMeir" type="button" aria-label="Større skrift">A+</button>
+  </div>
+
+  <p class="orm-varsel orm-varsel-aatvaring" id="lagringsVarsel" hidden></p>
+
+  <div class="orm-flate">
+
+    <div class="orm-arbeid" id="arbeidsflate" data-fane="kode">
+
+      <!-- Fanar (berre mobil) -->
+      <div class="orm-fanerad" id="fanerad" role="tablist" aria-label="Vel visning">
+        <button class="box-tab active" data-fane="kode" role="tab" aria-selected="true" type="button">Kode</button>
+        <button class="box-tab" data-fane="ut" role="tab" aria-selected="false" type="button">Utskrift</button>
+        <button class="box-tab" data-fane="grafikk" role="tab" aria-selected="false" type="button" id="grafikkFane" hidden>Grafikk</button>
+      </div>
+
+      <!-- Kode og grafikk i den breie kolonna, utskrift og bibliotek i den smale -->
+      <div class="orm-rad">
+
+        <div class="orm-kolonne orm-kolonne-brei">
+
+          <section class="box4 orm-panel" id="panelKode" aria-labelledby="kodeTittel">
+            <div class="box-header orm-panel-topp">
+              <span id="kodeTittel">Kode</span>
+            </div>
+            <div class="box-body orm-panel-kropp">
+              <textarea id="kodefelt" aria-label="Kodefelt"></textarea>
+              <div class="orm-symbolrad" id="symbolrad" role="toolbar" aria-label="Teikn som er vanskelege å nå på nettbrett"></div>
+            </div>
+          </section>
+
+          <div class="orm-koyrerad">
+            <button class="btn orm-btn-koyr" id="koyrKnapp" type="button">
+              <span data-icon="play"></span>Køyr
+            </button>
+            <button class="btn orm-btn-stopp" id="stoppKnapp" type="button" disabled>
+              <span data-icon="stop"></span>Stopp
+            </button>
+            <span class="orm-status" id="status" role="status" aria-live="polite">Startar …</span>
+            <span class="orm-snarveg">Ctrl + Enter</span>
+          </div>
+
+          <p class="orm-varsel orm-varsel-treg" id="tregVarsel" hidden>
+            Programmet har køyrt ei stund. Er det ei løkke som aldri sluttar?
+            Trykk <strong>Stopp</strong> — koden din blir verande.
+          </p>
+
+          <!-- Grafikk. Skjult til programmet lagar noko som skal hit. -->
+          <section class="box4 orm-panel" id="panelGrafikk" aria-labelledby="grafikkTittel" hidden>
+            <div class="box-header orm-panel-topp">
+              <span id="grafikkTittel">Grafikk</span>
+              <button class="btn orm-btn-liten" id="tomGrafikkKnapp" type="button">
+                <span data-icon="eraser"></span>Tøm
+              </button>
+            </div>
+            <div class="box-body orm-grafikkkropp">
+              <canvas id="lerret" class="orm-lerret" aria-label="Teikneflate for turtle" hidden></canvas>
+              <div id="biletboks" class="orm-biletboks"></div>
+            </div>
+          </section>
+
+        </div>
+
+        <div class="orm-kolonne orm-kolonne-smal">
+
+          <section class="box4 orm-panel" id="panelUt" aria-labelledby="utTittel">
+            <div class="box-header orm-panel-topp">
+              <span id="utTittel">Utskrift</span>
+              <button class="btn orm-btn-liten" id="tomKnapp" type="button">
+                <span data-icon="eraser"></span>Tøm
+              </button>
+            </div>
+            <div class="box-body">
+              <pre id="utskrift" class="orm-utskrift" aria-live="polite" aria-label="Utskrift frå programmet"></pre>
+            </div>
+          </section>
+
+          <section class="box1 orm-bibliotek" aria-labelledby="bibTittel">
+            <h2 class="heading4 no-mt" id="bibTittel">Bibliotek du kan bruke</h2>
+            <p class="orm-bibingress">
+              Du treng ikkje installere noko. Skriv <code>import numpy</code> i koden,
+              så blir biblioteket henta automatisk — frå vår eigen tenar, ikkje frå nettet.
+              Fyrste gongen tek det nokre sekund; etterpå ligg det i nettlesaren.
+            </p>
+            <div id="bibliotekliste" class="orm-bibliotekliste"></div>
+          </section>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <p class="orm-botntekst">
+    Python køyrer som WebAssembly i din eigen nettlesar gjennom
+    <a href="https://pyodide.org/" target="_blank" rel="noopener">Pyodide</a>.
+    Koden du skriv blir aldri send nokon stad. Sjå
+    <a href="../personvern.html">personvernerklæringa</a> for detaljar.
+  </p>
+
+</main>
+</div>
+
+<!-- Modal for input() -->
+<div class="modal-overlay" id="inputOverlay">
+  <div class="modal2" role="dialog" aria-modal="true" aria-labelledby="inputLedetekst">
+    <h3 class="no-mt" id="inputLedetekst">Programmet ventar på noko</h3>
+    <form id="inputSkjema">
+      <input type="text" id="inputFelt" class="orm-inputfelt" autocomplete="off" spellcheck="false">
+      <button class="btn" type="submit">Send inn</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
