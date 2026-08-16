@@ -44,7 +44,7 @@
         "kode": "import random\n\nterning = random.randint(1, 6)\nprint(\"Du kasta\", terning)",
         "oppmoding": "Køyr fem gonger. Fekk du same tal to gonger på rad? Det er heilt vanleg."
       },
-      "turne": {
+      "loype": {
         "tittel": "Kast to terningar",
         "steg": [
           {
@@ -60,7 +60,8 @@
             "kode": "import random\n\nterning1 = random.randint(1, 6)\nterning2 = random.randint(1, 6)\nsum = terning1 + terning2\nprint(terning1, \"+\", terning2, \"=\", sum)",
             "proev": "Køyr ti gonger. Kva er det minste du kan få, og kva er det største?"
           }
-        ]
+        ],
+        "maal": "eit program som kastar to terningar og legg saman"
       },
       "oppgaver": [
         {
@@ -159,7 +160,7 @@
         "kode": "import random\n\nseksarar = 0\nfor i in range(100):\n    if random.randint(1, 6) == 6:\n        seksarar = seksarar + 1\n\nprint(\"Seksarar av 100:\", seksarar)\nprint(\"Venta:\", 100 / 6)",
         "oppmoding": "Køyr fem gonger og skriv ned tala. Kor mykje spriker dei?"
       },
-      "turne": {
+      "loype": {
         "tittel": "Tel opp alle seks utfalla",
         "steg": [
           {
@@ -179,7 +180,8 @@
             "kode": "import random\n\ntal = [0, 0, 0, 0, 0, 0]\nfor i in range(100):\n    kast = random.randint(1, 6)\n    tal[kast - 1] = tal[kast - 1] + 1\n\nfor side in range(1, 7):\n    print(side, \"kom\", tal[side - 1], \"gonger\")",
             "proev": "Byt 100 med 6000. Kor nær 1000 kjem kvart utfall då?"
           }
-        ]
+        ],
+        "maal": "ei oppteljing av kor mange gonger kvar terningside kjem på hundre kast"
       },
       "oppgaver": [
         {
@@ -284,7 +286,7 @@
         "kode": "import random\n\nfor kast in [10, 100, 1000, 10000, 100000]:\n    treff = 0\n    for i in range(kast):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    print(kast, \"kast gav\", round(treff / kast, 4))\n\nprint(\"Teoretisk:\", round(1 / 6, 4))",
         "oppmoding": "Køyr fleire gonger. Kva linje varierer mest, og kva linje er nesten lik kvar gong?"
       },
-      "turne": {
+      "loype": {
         "tittel": "Sjå frekvensen falle på plass",
         "steg": [
           {
@@ -304,7 +306,8 @@
             "kode": "import random\n\nfor kast in [100, 1000, 10000, 100000]:\n    treff = 0\n    for i in range(kast):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    print(kast, round(treff / kast, 4))\n\nprint(\"Teoretisk:\", round(1 / 6, 4))",
             "proev": "Kor mange kast må til før dei to fyrste desimalane stemmer kvar gong du køyrer?"
           }
-        ]
+        ],
+        "maal": "eit program som viser den relative frekvensen nærme seg 1/6"
       },
       "oppgaver": [
         {
@@ -396,7 +399,7 @@
         "kode": "import random\n\ntal = [0] * 13\nfor i in range(10000):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\n\nfor sum in range(2, 13):\n    print(sum, \"kom\", tal[sum], \"gonger\")",
         "oppmoding": "`[0] * 13` lagar ei liste med tretten nullar. Kvifor treng vi 13 og ikkje 11?"
       },
-      "turne": {
+      "loype": {
         "tittel": "Teikn fordelinga",
         "steg": [
           {
@@ -413,7 +416,8 @@
             "kode": "import random\nimport matplotlib.pyplot as plt\n\ntal = [0] * 13\nfor i in range(10000):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\n\nplt.bar(range(2, 13), tal[2:13])\nplt.xlabel(\"Sum\")\nplt.ylabel(\"Talet på gonger\")\nplt.show()",
             "proev": "Fyrste gongen tek det nokre sekund å hente matplotlib. Etterpå går det fort."
           }
-        ]
+        ],
+        "maal": "eit søylediagram over summen av to terningar"
       },
       "oppgaver": [
         {
@@ -512,7 +516,7 @@
         "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nraude = 0\nfor i in range(10000):\n    if random.choice(eske) == \"raud\":\n        raude = raude + 1\n\nprint(\"Simulert:\", raude / 10000)\nprint(\"Teoretisk:\", 3 / 5)",
         "oppmoding": "Legg til ei blå kule i esken. Kva blir det teoretiske sannsynet då, og stemmer simuleringa?"
       },
-      "turne": {
+      "loype": {
         "tittel": "To raude på rad",
         "steg": [
           {
@@ -532,7 +536,8 @@
             "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\ntreff = 0\nfor i in range(10000):\n    if random.choice(eske) == \"raud\" and random.choice(eske) == \"raud\":\n        treff = treff + 1\n\nprint(\"Simulert:\", treff / 10000)\nprint(\"Teoretisk:\", 0.6 * 0.6)",
             "proev": "0,6 gonger 0,6 er 0,36. Stemmer simuleringa? Kvifor gongar vi?"
           }
-        ]
+        ],
+        "maal": "ei simulering av sannsynet for to raude kuler på rad"
       },
       "oppgaver": [
         {
@@ -629,7 +634,7 @@
         "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nbegge_raude = 0\nfor i in range(10000):\n    trekk = random.sample(eske, 2)\n    if trekk[0] == \"raud\" and trekk[1] == \"raud\":\n        begge_raude = begge_raude + 1\n\nprint(\"Utan tilbakelegging:\", begge_raude / 10000)\nprint(\"Teoretisk:\", (3/5) * (2/4))",
         "oppmoding": "Samanlikn med talet frå førre leksjon, der vi la kula tilbake (0,36). Kvifor er dette lågare?"
       },
-      "turne": {
+      "loype": {
         "tittel": "Jamfør med og utan tilbakelegging",
         "steg": [
           {
@@ -645,7 +650,8 @@
             "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nmed = 0\nutan = 0\nfor i in range(10000):\n    if random.choice(eske) == \"raud\" and random.choice(eske) == \"raud\":\n        med = med + 1\n    trekk = random.sample(eske, 2)\n    if trekk[0] == \"raud\" and trekk[1] == \"raud\":\n        utan = utan + 1\n\nprint(\"Med tilbakelegging: \", med / 10000, \"  teoretisk\", 0.6 * 0.6)\nprint(\"Utan tilbakelegging:\", utan / 10000, \"  teoretisk\", (3/5) * (2/4))",
             "proev": "Kva skjer med skilnaden om esken har hundre kuler i staden for fem?"
           }
-        ]
+        ],
+        "maal": "ei samanlikning av trekk med og utan tilbakelegging"
       },
       "oppgaver": [
         {
@@ -751,7 +757,7 @@
         "kode": "import random\n\nvinn_ved_byte = 0\nfor i in range(10000):\n    bil = random.randint(1, 3)\n    valt = random.randint(1, 3)\n    # Byter du, vinn du nettopp når fyrstevalet var feil\n    if valt != bil:\n        vinn_ved_byte = vinn_ved_byte + 1\n\nprint(\"Vinn ved byte:\", vinn_ved_byte / 10000)\nprint(\"Vinn ved å halde:\", 1 - vinn_ved_byte / 10000)",
         "oppmoding": "Køyr fleire gonger. Svaret ligg kring 0,667 — to tredelar."
       },
-      "turne": {
+      "loype": {
         "tittel": "Bygg opp Monty Hall steg for steg",
         "steg": [
           {
@@ -772,7 +778,8 @@
             "kode": "import random\n\nbyte = 0\nhalde = 0\nfor i in range(10000):\n    bil = random.randint(1, 3)\n    valt = random.randint(1, 3)\n    if valt != bil:\n        byte = byte + 1\n    else:\n        halde = halde + 1\n\nprint(\"Vinn ved byte: \", byte / 10000)\nprint(\"Vinn ved halde:\", halde / 10000)",
             "proev": "Sannsynet for å velje rett fyrste gong er 1/3. Ser du kvifor byte gjev 2/3?"
           }
-        ]
+        ],
+        "maal": "ei simulering som avgjer om det lønner seg å byte dør"
       },
       "oppgaver": [
         {
@@ -870,7 +877,7 @@
         "kode": "import random\n\n# Sannsynet for minst éin seksar i tre kast\ntreff = 0\nfor i in range(100000):\n    if random.randint(1,6) == 6 or random.randint(1,6) == 6 or random.randint(1,6) == 6:\n        treff = treff + 1\n\nprint(\"Simulert: \", round(treff / 100000, 4))\nprint(\"Teoretisk:\", round(1 - (5/6) ** 3, 4))",
         "oppmoding": "Teoretisk reknar vi ut sannsynet for **ingen** seksarar, og trekkjer frå 1. Stemmer dei to tala?"
       },
-      "turne": {
+      "loype": {
         "tittel": "Sjekk ei utrekning med ei simulering",
         "steg": [
           {
@@ -890,7 +897,8 @@
             "kode": "import random\n\ntreff = 0\nfor i in range(10000):\n    kron = 0\n    for kast in range(4):\n        if random.choice([\"kron\", \"mynt\"]) == \"kron\":\n            kron = kron + 1\n    if kron == 2:\n        treff = treff + 1\n\nprint(\"Simulert: \", round(treff / 10000, 4))\nprint(\"Teoretisk:\", round(6 / 16, 4))",
             "proev": "Ei løkke inni ei anna løkke: den indre går fire gonger for kvar runde i den ytre. Kor mange myntkast blir det til saman?"
           }
-        ]
+        ],
+        "maal": "ei simulering som sjekkar ei utrekning du har gjort på papiret"
       },
       "oppgaver": [
         {

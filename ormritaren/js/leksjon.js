@@ -1,6 +1,6 @@
-/* Ormritaren — leksjonsvising og kodeturné.
+/* Ormritaren — leksjonsvising og kodeløype.
  *
- * Ei leksjon har fire delar: læretekst med eit køyrbart døme, ein kodeturné
+ * Ei leksjon har fire delar: læretekst med eit køyrbart døme, ein kodeløype
  * der programmet blir bygd opp steg for steg, oppgåver, og ei oppsummering.
  *
  * Læreteksten kjem som blokker i JSON og blir bygd med textContent og
@@ -15,7 +15,7 @@ const OrmLeksjon = (function () {
     let leksjon = null;       // den aktive leksjonen
     let indeks = 0;
     let vert = {};            // callbacks inn i app.js
-    let turnesteg = 0;
+    let loypesteg = 0;
 
     function init(verten) { vert = verten; }
 
@@ -43,13 +43,13 @@ const OrmLeksjon = (function () {
 
     function teikn(panel) {
         panel.textContent = '';
-        turnesteg = 0;
+        loypesteg = 0;
 
         panel.appendChild(topptekst());
         panel.appendChild(blokker(leksjon.tekst || []));
 
         if (leksjon.doeme) panel.appendChild(doeme(leksjon.doeme));
-        if (leksjon.turne) panel.appendChild(turne(leksjon.turne));
+        if (leksjon.loype) panel.appendChild(loype(leksjon.loype));
         if (leksjon.oppgaver?.length) panel.appendChild(oppgaver(leksjon.oppgaver));
         if (leksjon.oppsummering) panel.appendChild(oppsummering());
 
@@ -165,16 +165,28 @@ const OrmLeksjon = (function () {
         return seksjon;
     }
 
-    /* ---- kodeturné ------------------------------------------------------ */
+    /* ---- kodeløype ------------------------------------------------------ */
 
-    function turne(t) {
+    function loype(t) {
         const seksjon = document.createElement('section');
-        seksjon.className = 'orm-leksjonsdel orm-turne';
+        seksjon.className = 'orm-leksjonsdel orm-loype';
 
         seksjon.appendChild(deltittel(t.tittel || 'Bygg programmet steg for steg', 'footprints'));
 
+        /* Ein fast notis om kva ei løype er. Utan han er det ikkje opplagt at
+         * stega heng saman til eitt program — mange trur kvart steg er ei ny,
+         * lausriven oppgåve, og går glipp av at koden veks. */
+        const notis = document.createElement('p');
+        notis.className = 'orm-loype-notis';
+        OrmTekst.set(notis,
+            '**Dette er ei løype.** Du byggjer eitt ferdig program steg for steg. ' +
+            'Kvart steg legg til nokre linjer — dei nye blir markerte i editoren — ' +
+            'og du køyrer undervegs for å sjå kva som endra seg.' +
+            (t.maal ? ` I denne løypa lagar du **${t.maal}**.` : ''));
+        seksjon.appendChild(notis);
+
         const tekst = document.createElement('p');
-        tekst.className = 'orm-turnetekst';
+        tekst.className = 'orm-loypetekst';
         seksjon.appendChild(tekst);
 
         const proev = document.createElement('p');
@@ -182,7 +194,7 @@ const OrmLeksjon = (function () {
         seksjon.appendChild(proev);
 
         const rad = document.createElement('div');
-        rad.className = 'orm-turnerad';
+        rad.className = 'orm-loyperad';
 
         const foerre = document.createElement('button');
         foerre.type = 'button';
@@ -191,7 +203,7 @@ const OrmLeksjon = (function () {
         rad.appendChild(foerre);
 
         const teljar = document.createElement('span');
-        teljar.className = 'orm-turneteljar';
+        teljar.className = 'orm-loypeteljar';
         rad.appendChild(teljar);
 
         const neste = document.createElement('button');
@@ -203,27 +215,27 @@ const OrmLeksjon = (function () {
         seksjon.appendChild(rad);
 
         const vis = (n, skrivKode) => {
-            turnesteg = Math.max(0, Math.min(n, t.steg.length - 1));
-            const steg = t.steg[turnesteg];
+            loypesteg = Math.max(0, Math.min(n, t.steg.length - 1));
+            const steg = t.steg[loypesteg];
             OrmTekst.set(tekst, steg.tekst);
             OrmTekst.set(proev, steg.proev || '');
             proev.hidden = !steg.proev;
-            teljar.textContent = `Steg ${turnesteg + 1} av ${t.steg.length}`;
-            foerre.disabled = turnesteg === 0;
-            neste.disabled = turnesteg === t.steg.length - 1;
+            teljar.textContent = `Steg ${loypesteg + 1} av ${t.steg.length}`;
+            foerre.disabled = loypesteg === 0;
+            neste.disabled = loypesteg === t.steg.length - 1;
             if (skrivKode) {
-                const foerreKode = turnesteg > 0 ? t.steg[turnesteg - 1].kode : '';
-                vert.opneTurnesteg(steg.kode, nyeLinjer(foerreKode, steg.kode));
+                const foerreKode = loypesteg > 0 ? t.steg[loypesteg - 1].kode : '';
+                vert.opneLoypesteg(steg.kode, nyeLinjer(foerreKode, steg.kode));
             }
         };
 
-        foerre.addEventListener('click', () => vis(turnesteg - 1, true));
-        neste.addEventListener('click', () => vis(turnesteg + 1, true));
+        foerre.addEventListener('click', () => vis(loypesteg - 1, true));
+        neste.addEventListener('click', () => vis(loypesteg + 1, true));
 
         const start = document.createElement('button');
         start.type = 'button';
         start.className = 'btn orm-btn-liten';
-        start.textContent = 'Start turneen';
+        start.textContent = 'Start løypa';
         start.addEventListener('click', () => vis(0, true));
         rad.insertBefore(start, foerre);
 

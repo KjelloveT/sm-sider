@@ -9,7 +9,7 @@
  *
  * Temaet gjev fem aksentar, og dei er brukte til andre ting frå før. Her
  * treng vi fire som skal vere lette å skilje frå kvarandre og frå resten:
- * kodeturné, skriv, les og rett feilen.
+ * kodeløype, skriv, les og rett feilen.
  *
  * Fargane er faste, ikkje henta frå temaet, nettopp fordi dei skal tyde det
  * same uansett kva tema eleven har valt. Til gjengjeld må dei settast for
@@ -18,7 +18,7 @@
  *
  * Fargen står aldri åleine — kvar type har òg eit eige ikon og eit ord. */
 :root {
-    --orm-turne-farge: #6d28d9;  --orm-turne-paa: #ffffff;  --orm-turne-skugge: #3b0f7a;
+    --orm-loype-farge: #6d28d9;  --orm-loype-paa: #ffffff;  --orm-loype-skugge: #3b0f7a;
     --orm-skriv-farge: #1d4ed8;  --orm-skriv-paa: #ffffff;  --orm-skriv-skugge: #16307d;
     --orm-les-farge:   #92400e;  --orm-les-paa:   #ffffff;  --orm-les-skugge:   #451a03;
     --orm-rett-farge:  #be123c;  --orm-rett-paa:  #ffffff;  --orm-rett-skugge:  #750b25;
@@ -31,7 +31,7 @@
 [data-theme="space"], [data-theme="midnight"], [data-theme="dracula"],
 [data-theme="cyberpunk"], [data-theme="neon"], [data-theme="slate"],
 [data-theme="hacker"] {
-    --orm-turne-farge: #c4b5fd;  --orm-turne-paa: #1a1a1a;  --orm-turne-skugge: #7c3aed;
+    --orm-loype-farge: #c4b5fd;  --orm-loype-paa: #1a1a1a;  --orm-loype-skugge: #7c3aed;
     --orm-skriv-farge: #93c5fd;  --orm-skriv-paa: #1a1a1a;  --orm-skriv-skugge: #2563eb;
     --orm-les-farge:   #fcd34d;  --orm-les-paa:   #1a1a1a;  --orm-les-skugge:   #b45309;
     --orm-rett-farge:  #fda4af;  --orm-rett-paa:  #1a1a1a;  --orm-rett-skugge:  #e11d48;
@@ -164,30 +164,42 @@
     color: var(--muted);
 }
 
-/* ---- kodeturné -------------------------------------------------------- */
+/* ---- kodeløype -------------------------------------------------------- */
 
-/* Turneen har si eiga rute, så det er tydeleg at ho er noko anna enn både
+/* Løypa har si eiga rute, så det er tydeleg at ho er noko anna enn både
  * læreteksten over og oppgåvene under.
  *
- * Bakgrunnen er --surface, ikkje ein tone av turné-fargen. Ein tone målte
+ * Bakgrunnen er --surface, ikkje ein tone av løype-fargen. Ein tone målte
  * 1,06:1 mot brødteksten i «space» og «midnight»: i mørke tema er
- * turné-fargen lys, og ein lys tone under lys tekst blir uleseleg. Den tjukke
+ * løype-fargen lys, og ein lys tone under lys tekst blir uleseleg. Den tjukke
  * ramma og den farga overskrifta ber identiteten i staden, og då er teksten
  * alltid på ei flate han er laga for. */
-.orm-turne {
+.orm-loype {
     margin-top: 24px;
     padding: 15px 17px;
-    border: 3px solid var(--orm-turne-farge);
+    border: 3px solid var(--orm-loype-farge);
     border-top-width: 9px;
     background: var(--surface);
-    box-shadow: 5px 5px 0 var(--orm-turne-skugge);
+    box-shadow: 5px 5px 0 var(--orm-loype-skugge);
 }
 
-.orm-turne .orm-deltittel { color: var(--orm-turne-farge); }
+.orm-loype .orm-deltittel { color: var(--orm-loype-farge); }
 
-.orm-turnetekst { font-weight: 600; }
+/* Notisen som forklarer kva ei løype er. Dempa mot brødteksten, men med
+ * ei stripe i løypefargen så han høyrer tydeleg til ruta. */
+.orm-loype-notis {
+    margin: 0 0 14px;
+    padding: 9px 12px;
+    border-left: 5px solid var(--orm-loype-farge);
+    background: var(--bg);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+}
 
-.orm-turnerad {
+.orm-loypetekst { font-weight: 600; }
+
+.orm-loyperad {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -195,7 +207,7 @@
     margin-top: 12px;
 }
 
-.orm-turneteljar {
+.orm-loypeteljar {
     font-size: 12px;
     font-weight: 700;
     color: var(--muted);
@@ -205,7 +217,7 @@
 .orm-btn-neste:disabled { opacity: .45; cursor: not-allowed; }
 
 /* Linjene som kom til i dette steget. Gul, ikkje grøn: grønt tyder «rett»
- * andre stader i appen, og eit turnesteg er ikkje ei vurdering. */
+ * andre stader i appen, og eit loypesteg er ikkje ei vurdering. */
 .orm-nylinje { background: color-mix(in srgb, var(--accent4) 45%, transparent); }
 
 /* ---- oppgåver --------------------------------------------------------- */

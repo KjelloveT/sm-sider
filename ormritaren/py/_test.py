@@ -77,6 +77,11 @@ def _ein_test(src, test):
                 "fekk": fekk, "vente": vente}
 
     if typ == "kall":
+        # Merk: `vent` kjem frå JSON, og der er nøklane i eit objekt alltid
+        # tekst. Ei venta ordbok med talnøklar kan difor aldri bli lik det
+        # elevkoden returnerer. Skal ei oppgåve sjekke ei ordbok med tal som
+        # nøklar, må ho heller returnere eit tal eller ei liste — eller
+        # samanliknast som utskrift.
         fn, feil = _hent_funksjon(modul, test["fn"])
         if feil:
             return {"ok": False, "melding": feil}

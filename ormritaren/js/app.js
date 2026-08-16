@@ -81,7 +81,7 @@ for i in range(1, 6):
 
         OrmLeksjon.init({
             opneKode: (kode) => opneKode(kode),
-            opneTurnesteg: (kode, nye) => {
+            opneLoypesteg: (kode, nye) => {
                 opneKode(kode);
                 OrmEditor.markerNyeLinjer(nye);
             }

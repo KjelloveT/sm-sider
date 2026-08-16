@@ -58,7 +58,7 @@
       "accent": "accent4",
       "trinn": "9. trinn",
       "talLeksjonar": 7,
-      "klar": false,
+      "klar": true,
       "skildring": "Rekn ut sentralmål og spreiingsmål på eit datasett klassen din har samla sjølv, teikn diagram — og sjå korleis dei same tala kan framstillast for å fremje kvart sitt syn.",
       "kompetansemaal": [
         "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene",
