@@ -3,7 +3,6 @@
   "version": 1,
   "_note": "Katalog over opplæringsmodular. Same mønster som frodekapp/quizzes/index.json. Modular med klar:false blir viste som «kjem snart» — det er med vilje, så ein lærar ser kva som er på veg.",
   "_kompetansemaal": "Henta frå udir.no/lk20/mat01-06, august 2026. Blir viste på modulkortet og i leksjonen, slik at læraren ser kva mål opplegget svarar på.",
-
   "grupper": [
     {
       "id": "grunnkurs",
@@ -16,7 +15,6 @@
       "skildring": "Fire emne der programmering er verktøyet, ikkje målet. Du kan ta dei i den rekkjefølgja som passar timen — men grunnkurset bør sitje fyrst."
     }
   ],
-
   "modular": [
     {
       "id": "grunnkurs",
@@ -35,7 +33,6 @@
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ]
     },
-
     {
       "id": "sannsyn",
       "gruppe": "tema",
@@ -45,7 +42,7 @@
       "accent": "accent2",
       "trinn": "9. trinn",
       "talLeksjonar": 8,
-      "klar": false,
+      "klar": true,
       "skildring": "Kast tusen terningar på eit sekund. Du simulerer tilfeldige forsøk, ser at den relative frekvensen nærmar seg det du reknar ut, og møter Monty Hall-problemet.",
       "kompetansemaal": [
         "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",

@@ -18,20 +18,23 @@
  *
  * Fargen står aldri åleine — kvar type har òg eit eige ikon og eit ord. */
 :root {
-    --orm-turne-farge: #6d28d9;  --orm-turne-paa: #ffffff;   /* fiolett */
-    --orm-skriv-farge: #1d4ed8;  --orm-skriv-paa: #ffffff;   /* blå */
-    --orm-les-farge:   #92400e;  --orm-les-paa:   #ffffff;   /* brun */
-    --orm-rett-farge:  #be123c;  --orm-rett-paa:  #ffffff;   /* raud */
+    --orm-turne-farge: #6d28d9;  --orm-turne-paa: #ffffff;  --orm-turne-skugge: #3b0f7a;
+    --orm-skriv-farge: #1d4ed8;  --orm-skriv-paa: #ffffff;  --orm-skriv-skugge: #16307d;
+    --orm-les-farge:   #92400e;  --orm-les-paa:   #ffffff;  --orm-les-skugge:   #451a03;
+    --orm-rett-farge:  #be123c;  --orm-rett-paa:  #ffffff;  --orm-rett-skugge:  #750b25;
     --orm-tint: 10%;
 }
 
+/* I dei mørke temaa er sjølve fargane lyse. Ein mørk skugge ville forsvunne
+ * mot den mørke flata, så skuggen er her ein djupare, metta variant av same
+ * kuløren — framleis tydeleg mørkare enn boksen, men lys nok til å synast. */
 [data-theme="space"], [data-theme="midnight"], [data-theme="dracula"],
 [data-theme="cyberpunk"], [data-theme="neon"], [data-theme="slate"],
 [data-theme="hacker"] {
-    --orm-turne-farge: #c4b5fd;  --orm-turne-paa: #1a1a1a;
-    --orm-skriv-farge: #93c5fd;  --orm-skriv-paa: #1a1a1a;
-    --orm-les-farge:   #fcd34d;  --orm-les-paa:   #1a1a1a;
-    --orm-rett-farge:  #fda4af;  --orm-rett-paa:  #1a1a1a;
+    --orm-turne-farge: #c4b5fd;  --orm-turne-paa: #1a1a1a;  --orm-turne-skugge: #7c3aed;
+    --orm-skriv-farge: #93c5fd;  --orm-skriv-paa: #1a1a1a;  --orm-skriv-skugge: #2563eb;
+    --orm-les-farge:   #fcd34d;  --orm-les-paa:   #1a1a1a;  --orm-les-skugge:   #b45309;
+    --orm-rett-farge:  #fda4af;  --orm-rett-paa:  #1a1a1a;  --orm-rett-skugge:  #e11d48;
     --orm-tint: 16%;
 }
 
@@ -52,15 +55,43 @@
     }
 }
 
-/* Under 1300px blir tre kolonner for trongt for koden, og leksjonen legg
- * seg over arbeidsflata i staden. */
-@media (max-width: 1300px) {
+/* Nettbrett: leksjonen tek ein tredjedel til venstre, og arbeidsflata to
+ * tredjedelar til høgre — med utskrifta under koden i same kolonna.
+ *
+ * Tre kolonner blir for trongt for koden her, men å leggje leksjonen i full
+ * breidd over alt saman kastar bort halve skjermen på ein iPad i liggjande
+ * format. */
+@media (min-width: 701px) and (max-width: 1300px) {
+    .orm-arbeid[data-modus="leksjon"] .orm-rad {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        align-items: start;
+    }
+    .orm-arbeid[data-modus="leksjon"] .orm-leksjon {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+    .orm-arbeid[data-modus="leksjon"] .orm-kolonne-brei {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .orm-arbeid[data-modus="leksjon"] .orm-kolonne-smal {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+
+/* Berre på mobil legg alt seg under kvarandre og fanane tek over. */
+@media (max-width: 700px) {
     .orm-arbeid[data-modus="leksjon"] .orm-leksjon {
         grid-column: 1 / -1;
         position: static;
         max-height: none;
     }
 }
+
+/* Biblioteklista høyrer til fri koding. I ein leksjon fortel vi sjølve kva
+ * bibliotek som er i bruk, der dei faktisk blir brukte. */
+.orm-arbeid[data-modus="leksjon"] .orm-bibliotek { display: none; }
 
 /* ---- topp ------------------------------------------------------------- */
 
@@ -149,6 +180,7 @@
     border: 3px solid var(--orm-turne-farge);
     border-top-width: 9px;
     background: var(--surface);
+    box-shadow: 5px 5px 0 var(--orm-turne-skugge);
 }
 
 .orm-turne .orm-deltittel { color: var(--orm-turne-farge); }
@@ -180,10 +212,20 @@
 
 .orm-oppgave { margin-bottom: 14px; }
 
-/* Kvar type har eiga farge på ramma og i hovudet. */
-.orm-oppgave[data-type="skriv"] { border-color: var(--orm-skriv-farge); }
-.orm-oppgave[data-type="les"]   { border-color: var(--orm-les-farge); }
-.orm-oppgave[data-type="rett"]  { border-color: var(--orm-rett-farge); }
+/* Kvar type har eiga farge på ramma og i hovudet — og på skuggen, som elles
+ * blir ståande i temafargen og bryt med resten av kortet. */
+.orm-oppgave[data-type="skriv"] {
+    border-color: var(--orm-skriv-farge);
+    box-shadow: 5px 5px 0 var(--orm-skriv-skugge);
+}
+.orm-oppgave[data-type="les"] {
+    border-color: var(--orm-les-farge);
+    box-shadow: 5px 5px 0 var(--orm-les-skugge);
+}
+.orm-oppgave[data-type="rett"] {
+    border-color: var(--orm-rett-farge);
+    box-shadow: 5px 5px 0 var(--orm-rett-skugge);
+}
 
 .orm-oppgave-rett { border-color: var(--accent); }
 
@@ -380,7 +422,7 @@
 
 /* ---- mobil ------------------------------------------------------------ */
 
-@media (max-width: 860px) {
+@media (max-width: 700px) {
     .orm-arbeid[data-modus="leksjon"][data-fane="kode"] .orm-leksjon,
     .orm-arbeid[data-modus="leksjon"][data-fane="ut"] .orm-leksjon,
     .orm-arbeid[data-modus="leksjon"][data-fane="grafikk"] .orm-leksjon { display: none; }

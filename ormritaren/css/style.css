@@ -619,11 +619,13 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
 
 /* Under denne breidda blir utskrifta for smal til å lese, og kode og
  * utskrift legg seg under kvarandre i staden. */
-@media (max-width: 1100px) and (min-width: 861px) {
+@media (max-width: 1100px) and (min-width: 701px) {
     .orm-rad { grid-template-columns: minmax(0, 1fr); }
 }
 
-@media (max-width: 860px) {
+/* Fanane er berre for mobil. Eit nettbrett har plass til fleire panel ved
+ * sida av kvarandre, og då er det betre å sjå dei enn å byte mellom dei. */
+@media (max-width: 700px) {
     .orm-rad { grid-template-columns: minmax(0, 1fr); }
 
     .orm-fanerad {

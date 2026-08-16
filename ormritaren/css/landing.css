@@ -147,6 +147,77 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     color: var(--muted);
 }
 
+/* ---- leksjonsliste ---------------------------------------------------- */
+
+.orm-leksjonsliste {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    counter-reset: leksjon;
+}
+
+.orm-leksjonspost { margin-bottom: 2px; }
+
+.orm-leksjonslenkje {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 8px;
+    text-decoration: none;
+    color: var(--text);
+    border: 2px solid transparent;
+    font-size: 13.5px;
+    line-height: 1.35;
+}
+
+.orm-leksjonslenkje:hover {
+    background: var(--accent3);
+    color: var(--text-on-light-accent);
+    border-color: var(--border);
+}
+
+.orm-leksjonsmerke {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    font-weight: 800;
+    background: var(--surface);
+    color: var(--muted);
+    border: 2px solid var(--border);
+}
+
+.orm-leksjonstittel { flex: 1; min-width: 0; }
+
+/* Ferdig: hake i aksentfargen, og tittelen dempa så det uferdige står fram. */
+.er-ferdig .orm-leksjonsmerke {
+    background: var(--accent);
+    color: var(--text-on-accent);
+}
+
+.er-ferdig .orm-leksjonstittel { color: var(--muted); }
+
+/* Der eleven skal halde fram. Både ramme, feit skrift og ordet «held fram
+ * her» — status skal ikkje kvile på farge åleine. */
+.er-neste .orm-leksjonslenkje {
+    border-color: var(--border);
+    background: var(--surface);
+    font-weight: 700;
+}
+
+.orm-leksjonsher {
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: var(--accent);
+}
+
+.orm-leksjonslenkje:hover .orm-leksjonsher { color: var(--text-on-light-accent); }
+
 /* ---- kompetansemål ---------------------------------------------------- */
 
 .orm-maal { font-size: 12.5px; }
