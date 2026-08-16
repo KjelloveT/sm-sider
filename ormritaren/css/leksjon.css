@@ -1,0 +1,292 @@
+/* Ormritaren — leksjonspanelet. Utvidar css/style.css.
+ *
+ * Fri koding er heilt uendra av denne fila: alt heng på
+ * .orm-arbeid[data-modus="leksjon"], som berre blir sett når sida er opna
+ * med ?modul= i adressa.
+ */
+
+.orm-leksjon { display: none; }
+
+.orm-arbeid[data-modus="leksjon"] .orm-leksjon {
+    display: block;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    position: sticky;
+    top: 12px;
+}
+
+/* Tre kolonner: leksjon | kode og grafikk | utskrift. */
+@media (min-width: 1301px) {
+    .orm-arbeid[data-modus="leksjon"] .orm-rad {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 1fr);
+    }
+}
+
+/* Under 1300px blir tre kolonner for trongt for koden, og leksjonen legg
+ * seg over arbeidsflata i staden. */
+@media (max-width: 1300px) {
+    .orm-arbeid[data-modus="leksjon"] .orm-leksjon {
+        grid-column: 1 / -1;
+        position: static;
+        max-height: none;
+    }
+}
+
+/* ---- topp ------------------------------------------------------------- */
+
+.orm-leksjonstopp { margin-bottom: 16px; }
+
+.orm-leksjonssti {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.orm-leksjonsteljar {
+    margin: 0 0 2px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+}
+
+/* ---- læretekst -------------------------------------------------------- */
+
+.orm-leksjonstekst p,
+.orm-leksjonsdel p {
+    max-width: 70ch;   /* AGENTS.md §3.1.1 — tekst held si eiga breidd */
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.orm-punktliste {
+    max-width: 70ch;
+    padding-left: 20px;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.orm-punktliste li { margin-bottom: 6px; }
+
+.orm-merk {
+    padding: 10px 13px;
+    background: var(--accent3);
+    color: var(--text-on-light-accent);
+    border-left: 6px solid var(--accent);
+}
+
+.orm-leskode {
+    margin: 12px 0;
+    padding: 11px 13px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 13.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text);
+    overflow-x: auto;
+}
+
+.orm-leksjonsdel {
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 3px solid var(--border);
+}
+
+.orm-oppmoding {
+    font-style: italic;
+    color: var(--muted);
+}
+
+/* ---- kodeturné -------------------------------------------------------- */
+
+.orm-turnetekst { font-weight: 600; }
+
+.orm-turnerad {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.orm-turneteljar {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.orm-btn-neste { background: var(--accent); color: var(--text-on-accent); }
+.orm-btn-neste:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Linjene som kom til i dette steget. Gul, ikkje grøn: grønt tyder «rett»
+ * andre stader i appen, og eit turnesteg er ikkje ei vurdering. */
+.orm-nylinje { background: color-mix(in srgb, var(--accent4) 45%, transparent); }
+
+/* ---- oppgåver --------------------------------------------------------- */
+
+.orm-oppgave { margin-bottom: 14px; }
+
+.orm-oppgave-rett { border-color: var(--accent); }
+
+.orm-oppgavetopp {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.orm-oppgavemerke {
+    padding: 2px 7px;
+    font-size: 10.5px;
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--border);
+}
+
+.orm-oppgavekropp { padding: 13px 15px; }
+
+.orm-oppgavetekst { margin-top: 0; }
+
+.orm-oppgaveknappar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 12px;
+}
+
+.orm-btn-sjekk { background: var(--accent); color: var(--text-on-accent); }
+.orm-btn-sjekk:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---- les-oppgåver ----------------------------------------------------- */
+
+.orm-lessporsmal { font-weight: 700; margin-bottom: 8px; }
+
+.orm-alternativ {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.orm-alternativ-val {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 10px;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    cursor: pointer;
+}
+
+.orm-alternativ-val:hover { background: var(--accent3); }
+.orm-alternativ-val:hover code { color: var(--text-on-light-accent); }
+
+.orm-alternativ-val code {
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    color: var(--text);
+}
+
+/* ---- svar ------------------------------------------------------------- */
+
+.orm-svar {
+    margin-top: 12px;
+    padding: 11px 13px;
+    border: 3px solid var(--border);
+}
+
+/* Rett og feil skil seg med både farge, ramme og ord — ikkje farge åleine. */
+.orm-svar-rett { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); }
+.orm-svar-feil { background: color-mix(in srgb, var(--accent2) 10%, var(--surface)); }
+
+.orm-svartittel {
+    margin: 0 0 6px;
+    font-weight: 800;
+}
+
+.orm-svar-rett .orm-svartittel { color: var(--accent); }
+.orm-svar-feil .orm-svartittel { color: var(--accent2); }
+
+.orm-svarliste {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.orm-svarliste li { margin-bottom: 8px; }
+
+.orm-svarforklaring { margin: 0 0 10px; font-size: 14px; }
+
+.orm-svarjamfoer {
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+.orm-jamfoer-merke {
+    display: inline-block;
+    min-width: 62px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.orm-jamfoer-verdi {
+    font-family: 'Courier New', ui-monospace, monospace;
+    padding: 1px 5px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    white-space: pre-wrap;
+}
+
+/* ---- hint ------------------------------------------------------------- */
+
+.orm-hintboks { margin-top: 12px; }
+
+.orm-hint-tekst {
+    margin: 0 0 8px;
+    padding: 8px 11px;
+    background: var(--accent4);
+    color: var(--text-on-light-accent);
+    border: 2px solid var(--border);
+    font-size: 14px;
+}
+
+/* ---- navigasjon ------------------------------------------------------- */
+
+.orm-leksjonsnav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 3px solid var(--border);
+}
+
+.orm-btn-ferdig {
+    background: var(--accent);
+    color: var(--text-on-accent);
+    font-size: 13px;
+    padding: 7px 12px;
+}
+
+.orm-btn-ferdig:disabled { opacity: .55; cursor: default; }
+
+/* ---- mobil ------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+    .orm-arbeid[data-modus="leksjon"][data-fane="kode"] .orm-leksjon,
+    .orm-arbeid[data-modus="leksjon"][data-fane="ut"] .orm-leksjon,
+    .orm-arbeid[data-modus="leksjon"][data-fane="grafikk"] .orm-leksjon { display: none; }
+
+    .orm-arbeid[data-modus="leksjon"][data-fane="leksjon"] #panelKode,
+    .orm-arbeid[data-modus="leksjon"][data-fane="leksjon"] #panelUt,
+    .orm-arbeid[data-modus="leksjon"][data-fane="leksjon"] #panelGrafikk,
+    .orm-arbeid[data-modus="leksjon"][data-fane="leksjon"] #panelVariablar,
+    .orm-arbeid[data-modus="leksjon"][data-fane="leksjon"] .orm-bibliotek { display: none; }
+}

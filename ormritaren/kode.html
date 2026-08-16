@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../_libs/codemirror/codemirror.css">
 <link rel="stylesheet" href="../_libs/codemirror/addon/hint/show-hint.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/leksjon.css">
 <script src="../js/neo-header.js" defer></script>
 <script src="../js/vyrdepil-icons.js" defer></script>
 <script src="../js/vyrdepil-storage.js" defer></script>
@@ -29,6 +30,9 @@
 <script src="js/graphics.js" defer></script>
 <script src="js/packages.js" defer></script>
 <script src="js/ui.js" defer></script>
+<script src="js/framgang.js" defer></script>
+<script src="js/oppgaver.js" defer></script>
+<script src="js/leksjon.js" defer></script>
 <script src="js/app.js" defer></script>
 </head>
 <body data-light-theme="forest" data-dark-theme="space" data-theme="forest">
@@ -99,13 +103,17 @@
 
       <!-- Fanar (berre mobil) -->
       <div class="orm-fanerad" id="fanerad" role="tablist" aria-label="Vel visning">
+        <button class="box-tab" data-fane="leksjon" role="tab" aria-selected="false" type="button" id="leksjonFane" hidden>Leksjon</button>
         <button class="box-tab active" data-fane="kode" role="tab" aria-selected="true" type="button">Kode</button>
         <button class="box-tab" data-fane="ut" role="tab" aria-selected="false" type="button">Utskrift</button>
         <button class="box-tab" data-fane="grafikk" role="tab" aria-selected="false" type="button" id="grafikkFane" hidden>Grafikk</button>
       </div>
 
-      <!-- Kode og grafikk i den breie kolonna, utskrift og bibliotek i den smale -->
+      <!-- Kode og grafikk i den breie kolonna, utskrift og bibliotek i den smale.
+           I leksjonsmodus kjem leksjonspanelet til venstre for begge. -->
       <div class="orm-rad">
+
+        <aside class="box1 orm-leksjon" id="panelLeksjon" hidden></aside>
 
         <div class="orm-kolonne orm-kolonne-brei">
 

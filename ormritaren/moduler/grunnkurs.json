@@ -1,0 +1,224 @@
+{
+  "app": "ormritaren",
+  "version": 1,
+  "id": "grunnkurs",
+  "tittel": "Fyrste stega",
+
+  "leksjonar": [
+    {
+      "id": "print",
+      "tittel": "Dei fyrste instruksjonane",
+      "kompetansemaal": [
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+      ],
+      "tekst": [
+        { "type": "avsnitt", "tekst": "Eit program er ei liste med instruksjonar. Maskina gjer nøyaktig det du skriv — verken meir eller mindre — og ho gjer det i den rekkjefølgja du skriv det. Det er både det fine og det irriterande med programmering." },
+        { "type": "avsnitt", "tekst": "Den fyrste instruksjonen du treng, er den som skriv noko ut på skjermen. Han heiter print." },
+        { "type": "kode", "kode": "print(\"Hei, verda!\")" },
+        { "type": "avsnitt", "tekst": "Parentesane seier kva print skal skrive. Hermeteikna seier at det er tekst. Tek du bort hermeteikna, trur Python at du meiner noko heilt anna — og seier frå." },
+        { "type": "merk", "tekst": "Ei linje som byrjar med # er ein kommentar. Python hoppar over henne. Kommentarar er til for menneske som skal lese koden seinare — ofte deg sjølv." }
+      ],
+      "doeme": {
+        "kode": "# Alt som står bak # er ein kommentar\nprint(\"Hei, verda!\")\nprint(\"Eg lærer Python\")",
+        "oppmoding": "Trykk Køyr. Byt så ut teksten med ditt eige namn, og køyr på nytt."
+      },
+      "turne": {
+        "tittel": "Bygg ditt fyrste program",
+        "steg": [
+          { "tekst": "Vi startar med éi linje som skriv ut ei helsing.", "kode": "print(\"Hei!\")" },
+          { "tekst": "Legg til ei linje til. Python køyrer dei ovanfrå og ned.", "kode": "print(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")", "proev": "Byt om på dei to linjene og køyr. Kva skjer med rekkjefølgja i utskrifta?" },
+          { "tekst": "print kan òg skrive fleire ting på same linja. Skil dei med komma, så set Python inn eit mellomrom.", "kode": "print(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")\nprint(\"Eg er\", 1, \"år gammal\")", "proev": "Byt 1 med kor gammal du er." },
+          { "tekst": "Til slutt legg vi på ein kommentar, så den som les koden skjøner kva han gjer.", "kode": "# Eit lite presentasjonsprogram\nprint(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")\nprint(\"Eg er\", 1, \"år gammal\")" }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "print-1",
+          "type": "skriv",
+          "tekst": "Skriv eit program som skriv ut nøyaktig desse to linjene:\n\nGod morgon\nI dag skal vi programmere",
+          "startkode": "# Skriv koden din her\n",
+          "hint": [
+            "Du treng to print-linjer.",
+            "Hugs hermeteikn rundt teksten: print(\"God morgon\")"
+          ],
+          "testar": [
+            { "type": "utskrift", "vent": "God morgon\nI dag skal vi programmere" }
+          ],
+          "loeysing": "print(\"God morgon\")\nprint(\"I dag skal vi programmere\")"
+        },
+        {
+          "id": "print-2",
+          "type": "les",
+          "kode": "print(\"ein\")\nprint(\"to\")\nprint(\"tre\")",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "ein to tre",
+            "ein\nto\ntre",
+            "tre\nto\nein"
+          ],
+          "rett": 1,
+          "forklaring": "Kvar print lagar si eiga linje, og Python køyrer linjene ovanfrå og ned. Difor kjem orda under kvarandre, i same rekkjefølgje som i koden."
+        },
+        {
+          "id": "print-3",
+          "type": "rett",
+          "tekst": "Dette programmet skal skrive ut «Hei på deg», men det verkar ikkje. Finn feilen og rett han.",
+          "startkode": "print(Hei på deg)",
+          "hint": [
+            "Python trur «Hei» er namnet på ein variabel. Korleis seier du at det er tekst?",
+            "Tekst må stå mellom hermeteikn."
+          ],
+          "testar": [
+            { "type": "utskrift", "vent": "Hei på deg" }
+          ],
+          "loeysing": "print(\"Hei på deg\")"
+        }
+      ],
+      "oppsummering": "print skriv ut på skjermen. Tekst må stå mellom hermeteikn, og Python køyrer linjene ovanfrå og ned. Alt bak # er ein kommentar som Python hoppar over."
+    },
+
+    {
+      "id": "variablar",
+      "tittel": "Variablar — å lagre ein verdi",
+      "kompetansemaal": [
+        "8. trinn: lage og forklare regneuttrykk med tall, variabler og konstanter knyttet til praktiske situasjoner"
+      ],
+      "tekst": [
+        { "type": "avsnitt", "tekst": "Ein variabel er eit namn som held på ein verdi. Du lagar han med eit likskapsteikn: namnet til venstre, verdien til høgre." },
+        { "type": "kode", "kode": "alder = 13" },
+        { "type": "avsnitt", "tekst": "No hugsar Python at alder er 13. Du kan bruke namnet i staden for talet, og du kan rekne med det." },
+        { "type": "kode", "kode": "alder = 13\nprint(alder + 1)" },
+        { "type": "merk", "tekst": "Likskapsteiknet i Python tyder ikkje «er lik» slik som i matematikken. Det tyder «lagre denne verdien under dette namnet». Difor gjev alder = alder + 1 god meining her, sjølv om det ville vore tull i ei likning." },
+        { "type": "avsnitt", "tekst": "Ein variabel kan halde på tekst òg. Då må teksten stå mellom hermeteikn, akkurat som i print." },
+        { "type": "punkt", "punkt": [
+          "Namnet må byrje med ein bokstav, og kan ikkje ha mellomrom.",
+          "Store og små bokstavar er ulike: Alder og alder er to variablar.",
+          "Vel namn som seier kva verdien er. talet er betre enn t."
+        ] }
+      ],
+      "doeme": {
+        "kode": "namn = \"Åse\"\nalder = 13\nprint(namn, \"er\", alder, \"år\")",
+        "oppmoding": "Køyr, og sjå etter i Variablar-ruta kva som ligg lagra. Byt så namn og alder til dine eigne."
+      },
+      "turne": {
+        "tittel": "Rekn ut prisen på ein handletur",
+        "steg": [
+          { "tekst": "Vi lagrar prisen på éin ting.", "kode": "pris = 25" },
+          { "tekst": "Så lagrar vi kor mange vi kjøper.", "kode": "pris = 25\ntal = 4" },
+          { "tekst": "No kan vi rekne ut totalen og lagre han i ein tredje variabel.", "kode": "pris = 25\ntal = 4\ntotal = pris * tal" },
+          { "tekst": "Til slutt skriv vi ut svaret. Legg merke til at vi aldri skreiv 100 nokon stad — Python rekna det ut.", "kode": "pris = 25\ntal = 4\ntotal = pris * tal\nprint(\"Du må betale\", total, \"kroner\")", "proev": "Byt tal til 7 og køyr på nytt. Du treng berre endre éin stad." }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "var-1",
+          "type": "skriv",
+          "tekst": "Lag ein variabel som heiter sider og set han til 12. Lag så ein variabel som heiter bokstavar og set han til 300. Skriv til slutt ut kor mange bokstavar det er til saman i boka (sider gonger bokstavar).",
+          "startkode": "sider = \nbokstavar = \n",
+          "hint": [
+            "Gonging skriv du med *",
+            "print(sider * bokstavar)"
+          ],
+          "testar": [
+            { "type": "utskrift", "vent": "3600" }
+          ],
+          "loeysing": "sider = 12\nbokstavar = 300\nprint(sider * bokstavar)"
+        },
+        {
+          "id": "var-2",
+          "type": "les",
+          "kode": "tal = 5\ntal = tal + 3\ntal = tal * 2\nprint(tal)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": ["16", "13", "11", "5"],
+          "rett": 0,
+          "forklaring": "Linjene blir køyrde ovanfrå og ned. Fyrst er tal 5, så blir det 5 + 3 = 8, og til slutt 8 * 2 = 16. Kvar linje bruker verdien slik han var akkurat då."
+        },
+        {
+          "id": "var-3",
+          "type": "rett",
+          "tekst": "Programmet skal skrive ut kor mykje tre eple kostar til saman, men det skriv ut noko rart. Finn feilen.",
+          "startkode": "pris = 8\ntal = 3\nprint(\"pris * tal\")",
+          "hint": [
+            "Sjå nøye på siste linja. Kva er skilnaden på pris * tal og \"pris * tal\"?",
+            "Alt som står mellom hermeteikn blir skrive ut som tekst, ikkje rekna ut."
+          ],
+          "testar": [
+            { "type": "utskrift", "vent": "24" }
+          ],
+          "loeysing": "pris = 8\ntal = 3\nprint(pris * tal)"
+        }
+      ],
+      "oppsummering": "Ein variabel er eit namn som held på ein verdi. Du lagar han med =, og du kan rekne med han. Hermeteikn gjer noko til tekst — utan dei reknar Python det ut."
+    },
+
+    {
+      "id": "input",
+      "tittel": "Spørje brukaren",
+      "kompetansemaal": [
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+      ],
+      "tekst": [
+        { "type": "avsnitt", "tekst": "Til no har programma dine gjort det same kvar gong. Med input kan du spørje den som køyrer programmet om noko, og bruke svaret." },
+        { "type": "kode", "kode": "namn = input(\"Kva heiter du? \")\nprint(\"Hei,\", namn)" },
+        { "type": "avsnitt", "tekst": "Teksten i parentesen er spørsmålet. Svaret brukaren skriv, blir lagra i variabelen." },
+        { "type": "merk", "tekst": "input gjev deg alltid tekst — aldri tal. Skriv brukaren 7, får du teksten \"7\", ikkje talet 7. Skal du rekne med svaret, må du gjere det om fyrst." },
+        { "type": "avsnitt", "tekst": "Det gjer du med int, som lagar eit heiltal av teksten:" },
+        { "type": "kode", "kode": "alder = int(input(\"Kor gamal er du? \"))\nprint(\"Neste år blir du\", alder + 1)" },
+        { "type": "avsnitt", "tekst": "Skal du ha eit desimaltal, bruker du float i staden for int." }
+      ],
+      "doeme": {
+        "kode": "namn = input(\"Kva heiter du? \")\nalder = int(input(\"Kor gamal er du? \"))\nprint(\"Hei,\", namn + \"! Om ti år er du\", alder + 10)",
+        "oppmoding": "Køyr og svar på spørsmåla. Prøv så å ta bort int rundt det andre spørsmålet — kva skjer då?"
+      },
+      "turne": {
+        "tittel": "Lag ein liten kalkulator",
+        "steg": [
+          { "tekst": "Vi spør om det fyrste talet. Hugs at input gjev tekst, så vi pakkar det i int med ein gong.", "kode": "a = int(input(\"Fyrste talet: \"))" },
+          { "tekst": "Så spør vi om det andre.", "kode": "a = int(input(\"Fyrste talet: \"))\nb = int(input(\"Andre talet: \"))" },
+          { "tekst": "No kan vi leggje dei saman.", "kode": "a = int(input(\"Fyrste talet: \"))\nb = int(input(\"Andre talet: \"))\nprint(a, \"+\", b, \"=\", a + b)", "proev": "Legg til ei linje som òg viser a gonger b." }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "input-1",
+          "type": "skriv",
+          "tekst": "Skriv eit program som spør «Kor mange kroner? », og skriv ut kor mange femtiøringar det blir (kroner gonger 2). Skriv berre ut talet.",
+          "startkode": "kroner = \n",
+          "hint": [
+            "Du må gjere svaret om til eit tal: int(input(\"Kor mange kroner? \"))",
+            "print(kroner * 2)"
+          ],
+          "testar": [
+            { "type": "utskrift", "stdin": ["12"], "vent": "24" },
+            { "type": "utskrift", "stdin": ["5"], "vent": "10" }
+          ],
+          "loeysing": "kroner = int(input(\"Kor mange kroner? \"))\nprint(kroner * 2)"
+        },
+        {
+          "id": "input-2",
+          "type": "les",
+          "kode": "tal = input(\"Skriv eit tal: \")\nprint(tal + tal)",
+          "sporsmal": "Brukaren skriv 3. Kva skriv programmet ut?",
+          "alternativ": ["6", "33", "3 3", "Det blir feilmelding"],
+          "rett": 1,
+          "forklaring": "input gjev tekst, ikkje tal. For tekst tyder + å setje saman, ikkje å leggje saman — så \"3\" + \"3\" blir \"33\". Hadde det stått int(input(...)), ville svaret vore 6."
+        },
+        {
+          "id": "input-3",
+          "type": "rett",
+          "tekst": "Programmet skal spørje om eit tal og skrive ut det dobbelte, men det ryk med ein feilmelding. Rett det.",
+          "startkode": "tal = input(\"Skriv eit tal: \")\nprint(tal * 2 + 1)",
+          "hint": [
+            "Les feilmeldinga. Kva type er tal?",
+            "input gjev tekst. Pakk det i int() for å få eit tal."
+          ],
+          "testar": [
+            { "type": "utskrift", "stdin": ["5"], "vent": "11" }
+          ],
+          "loeysing": "tal = int(input(\"Skriv eit tal: \"))\nprint(tal * 2 + 1)"
+        }
+      ],
+      "oppsummering": "input spør brukaren og gjev deg alltid tekst. Skal du rekne med svaret, pakkar du det i int for heiltal eller float for desimaltal."
+    }
+  ]
+}
