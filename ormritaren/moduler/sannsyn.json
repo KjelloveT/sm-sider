@@ -1,0 +1,958 @@
+{
+  "app": "ormritaren",
+  "version": 1,
+  "id": "sannsyn",
+  "tittel": "Sannsyn",
+  "leksjonar": [
+    {
+      "id": "tilfeldig",
+      "tittel": "Tilfeldige tal",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ein terning gjev eit tilfeldig tal frå 1 til 6. Python kan gjere det same — og han kan gjere det tusen gonger i sekundet."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vi hentar inn biblioteket `random` og bruker `randint`:"
+        },
+        {
+          "type": "kode",
+          "kode": "import random\n\nprint(random.randint(1, 6))"
+        },
+        {
+          "type": "merk",
+          "tekst": "`randint(1, 6)` tek med **begge** endane — både 1 og 6 kan kome. Det er ikkje som `range`, som sluttar før det siste talet. Dette er lett å blande."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Køyrer du programmet fleire gonger, får du ulikt svar kvar gong. Det er heile poenget: dette er ein **simulering** av eit tilfeldig forsøk."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`random.randint(1, 6)` — heiltal frå og med 1 til og med 6",
+            "`random.random()` — desimaltal mellom 0 og 1",
+            "`random.choice(liste)` — plukkar eitt element frå ei liste"
+          ]
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\nterning = random.randint(1, 6)\nprint(\"Du kasta\", terning)",
+        "oppmoding": "Køyr fem gonger. Fekk du same tal to gonger på rad? Det er heilt vanleg."
+      },
+      "turne": {
+        "tittel": "Kast to terningar",
+        "steg": [
+          {
+            "tekst": "Vi hentar inn biblioteket og kastar éin terning.",
+            "kode": "import random\n\nterning1 = random.randint(1, 6)\nprint(terning1)"
+          },
+          {
+            "tekst": "Så kastar vi ein til. Kvart kall til `randint` er eit nytt, uavhengig kast.",
+            "kode": "import random\n\nterning1 = random.randint(1, 6)\nterning2 = random.randint(1, 6)\nprint(terning1, terning2)"
+          },
+          {
+            "tekst": "Og legg saman.",
+            "kode": "import random\n\nterning1 = random.randint(1, 6)\nterning2 = random.randint(1, 6)\nsum = terning1 + terning2\nprint(terning1, \"+\", terning2, \"=\", sum)",
+            "proev": "Køyr ti gonger. Kva er det minste du kan få, og kva er det største?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "tilf-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `kast` som kastar éin terning og returnerer talet. Han skal aldri gje under 1 eller over 6.",
+          "startkode": "import random\n\ndef kast():\n    # skriv koden her\n",
+          "hint": [
+            "`return random.randint(1, 6)`"
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "kast",
+              "vent": 3.5,
+              "slingring": 2.5
+            },
+            {
+              "type": "inneheld",
+              "vent": "random",
+              "grunn": "Oppgåva ber om at du bruker random"
+            }
+          ],
+          "loeysing": "import random\n\ndef kast():\n    return random.randint(1, 6)"
+        },
+        {
+          "id": "tilf-2",
+          "type": "les",
+          "kode": "import random\nrandom.seed(1)\ntal = random.randint(1, 6)\nprint(tal >= 1 and tal <= 6)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "True",
+            "False",
+            "Eit tal mellom 1 og 6",
+            "Det varierer"
+          ],
+          "rett": 0,
+          "forklaring": "Uansett kva `randint(1, 6)` gjev, ligg talet mellom 1 og 6. Difor er samanlikninga alltid sann, og programmet skriv **True** kvar einaste gong."
+        },
+        {
+          "id": "tilf-3",
+          "type": "rett",
+          "tekst": "Programmet skal kaste ein vanleg terning, men det kan aldri gje 6. Rett feilen.",
+          "startkode": "import random\n\ndef kast():\n    return random.randrange(1, 6)",
+          "hint": [
+            "`randrange` sluttar **før** det siste talet, akkurat som `range`.",
+            "Kva funksjon tek med begge endane?"
+          ],
+          "testar": [
+            {
+              "type": "inneheld",
+              "vent": "randint",
+              "grunn": "Bruk randint, som tek med begge endane"
+            },
+            {
+              "type": "naer",
+              "fn": "kast",
+              "vent": 3.5,
+              "slingring": 2.5
+            }
+          ],
+          "loeysing": "import random\n\ndef kast():\n    return random.randint(1, 6)"
+        }
+      ],
+      "oppsummering": "`random.randint(a, b)` gjev eit tilfeldig heiltal og tek med **begge** endane. Kvart kall er eit nytt, uavhengig forsøk."
+    },
+    {
+      "id": "hundre-kast",
+      "tittel": "Simulere hundre kast",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Éin terningkast seier lite. Hundre kast byrjar å seie noko. Med ei løkke kan du gjere det på eit augeblink."
+        },
+        {
+          "type": "kode",
+          "kode": "import random\n\nseksarar = 0\nfor i in range(100):\n    if random.randint(1, 6) == 6:\n        seksarar = seksarar + 1\n\nprint(\"Seksarar:\", seksarar)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vi tel med ein variabel som startar på 0 og aukar kvar gong vi får ein seksar. Dette mønsteret — **tel opp kor mange gonger noko skjer** — kjem att i heile dette emnet."
+        },
+        {
+          "type": "merk",
+          "tekst": "Køyr programmet fleire gonger. Du får ikkje same tal kvar gong, men svaret ligg som regel rundt 16 eller 17. Det er ikkje tilfeldig at det er akkurat der."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Sannsynet for ein seksar er 1 av 6. Av hundre kast ventar vi difor omtrent `100 / 6`, altså kring 16,7 seksarar."
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\nseksarar = 0\nfor i in range(100):\n    if random.randint(1, 6) == 6:\n        seksarar = seksarar + 1\n\nprint(\"Seksarar av 100:\", seksarar)\nprint(\"Venta:\", 100 / 6)",
+        "oppmoding": "Køyr fem gonger og skriv ned tala. Kor mykje spriker dei?"
+      },
+      "turne": {
+        "tittel": "Tel opp alle seks utfalla",
+        "steg": [
+          {
+            "tekst": "Vi treng ein teljar for kvart utfall. Ei **liste** med seks nullar er enklare enn seks variablar.",
+            "kode": "tal = [0, 0, 0, 0, 0, 0]\nprint(tal)"
+          },
+          {
+            "tekst": "Lista har plassar frå 0 til 5. Ein terning som viser 1 høyrer til plass 0, så vi trekkjer frå 1.",
+            "kode": "import random\n\ntal = [0, 0, 0, 0, 0, 0]\nkast = random.randint(1, 6)\ntal[kast - 1] = tal[kast - 1] + 1\nprint(tal)"
+          },
+          {
+            "tekst": "No gjentek vi hundre gonger.",
+            "kode": "import random\n\ntal = [0, 0, 0, 0, 0, 0]\nfor i in range(100):\n    kast = random.randint(1, 6)\n    tal[kast - 1] = tal[kast - 1] + 1\nprint(tal)"
+          },
+          {
+            "tekst": "Og skriv det ut så det er til å lese.",
+            "kode": "import random\n\ntal = [0, 0, 0, 0, 0, 0]\nfor i in range(100):\n    kast = random.randint(1, 6)\n    tal[kast - 1] = tal[kast - 1] + 1\n\nfor side in range(1, 7):\n    print(side, \"kom\", tal[side - 1], \"gonger\")",
+            "proev": "Byt 100 med 6000. Kor nær 1000 kjem kvart utfall då?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "hundre-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `tel_seksarar` som tek imot eit tal `n`, kastar terningen `n` gonger og returnerer kor mange seksarar det vart.",
+          "startkode": "import random\n\ndef tel_seksarar(n):\n    treff = 0\n    # skriv løkka her\n    return treff\n",
+          "hint": [
+            "`for i in range(n):` og så ein `if` inni",
+            "`if random.randint(1, 6) == 6:` og då `treff = treff + 1`"
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "tel_seksarar",
+              "args": [
+                6000
+              ],
+              "vent": 1000,
+              "slingring": 120
+            },
+            {
+              "type": "kall",
+              "fn": "tel_seksarar",
+              "args": [
+                0
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "import random\n\ndef tel_seksarar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff"
+        },
+        {
+          "id": "hundre-2",
+          "type": "les",
+          "kode": "tal = [0, 0, 0]\ntal[1] = tal[1] + 5\nprint(tal)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "[5, 0, 0]",
+            "[0, 5, 0]",
+            "[0, 0, 5]",
+            "[5, 5, 5]"
+          ],
+          "rett": 1,
+          "forklaring": "Plassane i ei liste tel frå **0**. `tal[1]` er difor den **andre** plassen, ikkje den fyrste. Dette er same tellemåten som `range` bruker."
+        },
+        {
+          "id": "hundre-3",
+          "type": "rett",
+          "tekst": "Programmet skal telje seksarar, men svaret blir alltid 0 eller 1. Finn feilen.",
+          "startkode": "import random\n\ndef tel_seksarar(n):\n    for i in range(n):\n        treff = 0\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff",
+          "hint": [
+            "Sjå kvar `treff = 0` står. Kor mange gonger blir den linja køyrd?",
+            "Teljaren må settast til 0 **før** løkka, ikkje inni."
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "tel_seksarar",
+              "args": [
+                6000
+              ],
+              "vent": 1000,
+              "slingring": 120
+            }
+          ],
+          "loeysing": "import random\n\ndef tel_seksarar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff"
+        }
+      ],
+      "oppsummering": "Med ei løkke kan du gjenta eit tilfeldig forsøk så mange gonger du vil, og telje opp utfalla. Teljaren må settast til 0 **før** løkka."
+    },
+    {
+      "id": "store-tal",
+      "tittel": "Frå hundre til hundre tusen",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
+        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Med hundre kast spriker svaret ein god del. Med hundre tusen gjer det ikkje det. Dette er noko av det viktigaste i heile sannsynsrekninga, og det er vanskeleg å vise på tavla — men lett å vise her."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Den **relative frekvensen** er kor stor del av kasta som gav treff: talet på treff delt på talet på kast."
+        },
+        {
+          "type": "kode",
+          "kode": "relativ = treff / kast"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "For ein terning er det teoretiske sannsynet for seksar `1 / 6`, altså kring 0,1667. Di fleire kast, di nærare kjem den relative frekvensen dette talet."
+        },
+        {
+          "type": "merk",
+          "tekst": "Legg merke til kva som **ikkje** skjer: talet på seksarar kjem ikkje nærare det venta talet — det avviket blir større. Det er **delen** som blir stabil, ikkje differansen."
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\nfor kast in [10, 100, 1000, 10000, 100000]:\n    treff = 0\n    for i in range(kast):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    print(kast, \"kast gav\", round(treff / kast, 4))\n\nprint(\"Teoretisk:\", round(1 / 6, 4))",
+        "oppmoding": "Køyr fleire gonger. Kva linje varierer mest, og kva linje er nesten lik kvar gong?"
+      },
+      "turne": {
+        "tittel": "Sjå frekvensen falle på plass",
+        "steg": [
+          {
+            "tekst": "Vi startar med å kaste tusen gonger og telje treff.",
+            "kode": "import random\n\ntreff = 0\nfor i in range(1000):\n    if random.randint(1, 6) == 6:\n        treff = treff + 1\nprint(treff)"
+          },
+          {
+            "tekst": "Så reknar vi ut den relative frekvensen i staden for talet.",
+            "kode": "import random\n\ntreff = 0\nfor i in range(1000):\n    if random.randint(1, 6) == 6:\n        treff = treff + 1\nprint(treff / 1000)"
+          },
+          {
+            "tekst": "Vi rundar av, og samanliknar med det teoretiske sannsynet.",
+            "kode": "import random\n\ntreff = 0\nfor i in range(1000):\n    if random.randint(1, 6) == 6:\n        treff = treff + 1\n\nprint(\"Simulert: \", round(treff / 1000, 4))\nprint(\"Teoretisk:\", round(1 / 6, 4))"
+          },
+          {
+            "tekst": "Og til slutt gjer vi det for fleire storleikar på ein gong.",
+            "kode": "import random\n\nfor kast in [100, 1000, 10000, 100000]:\n    treff = 0\n    for i in range(kast):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    print(kast, round(treff / kast, 4))\n\nprint(\"Teoretisk:\", round(1 / 6, 4))",
+            "proev": "Kor mange kast må til før dei to fyrste desimalane stemmer kvar gong du køyrer?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "store-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `andel_seksarar` som tek imot `n`, kastar terningen `n` gonger, og returnerer **delen** som vart seksarar — altså eit tal mellom 0 og 1.",
+          "startkode": "import random\n\ndef andel_seksarar(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "hint": [
+            "Same løkka som før — det er berre siste linja som er annleis.",
+            "`return treff / n` gjev delen i staden for talet."
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "andel_seksarar",
+              "args": [
+                30000
+              ],
+              "vent": 0.1667,
+              "slingring": 0.015
+            }
+          ],
+          "loeysing": "import random\n\ndef andel_seksarar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff / n"
+        },
+        {
+          "id": "store-2",
+          "type": "les",
+          "kode": "treff = 170\nkast = 1000\nprint(round(treff / kast, 2))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "0.17",
+            "17.0",
+            "0.2",
+            "170"
+          ],
+          "rett": 0,
+          "forklaring": "170 delt på 1000 er 0,17. `round(..., 2)` rundar av til to desimalar. Dette ligg svært nær det teoretiske sannsynet på 0,1667 for ein seksar."
+        },
+        {
+          "id": "store-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal gje **delen** seksarar, men han gjev talet på seksarar. Rett det.",
+          "startkode": "import random\n\ndef andel_seksarar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff",
+          "hint": [
+            "Kva må du dele på for å få ein del mellom 0 og 1?"
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "andel_seksarar",
+              "args": [
+                30000
+              ],
+              "vent": 0.1667,
+              "slingring": 0.015
+            }
+          ],
+          "loeysing": "import random\n\ndef andel_seksarar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff / n"
+        }
+      ],
+      "oppsummering": "Den relative frekvensen er treff delt på forsøk. Di fleire forsøk, di nærare kjem han det teoretiske sannsynet. **Delen** blir stabil — ikkje differansen."
+    },
+    {
+      "id": "to-terningar",
+      "tittel": "To terningar — kvifor 7 kjem oftast",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
+        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Kastar du to terningar og legg saman, kan du få frå 2 til 12. Mange trur alle summane er like sannsynlege. Det er dei ikkje — og du kan vise kvifor med nokre få linjer kode."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det finst berre **éin** måte å få 2 på: 1 og 1. Men 7 kan du få på seks måtar: 1+6, 2+5, 3+4, 4+3, 5+2 og 6+1."
+        },
+        {
+          "type": "merk",
+          "tekst": "Til saman finst det 6 gonger 6, altså **36** kombinasjonar. Sannsynet for 7 er difor 6 av 36, medan sannsynet for 2 berre er 1 av 36."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ei simulering viser det same utan at du treng rekne det ut på førehand — og det er nettopp poenget: du kan **prøve deg fram** til svaret, og så sjekke det mot utrekninga."
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\ntal = [0] * 13\nfor i in range(10000):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\n\nfor sum in range(2, 13):\n    print(sum, \"kom\", tal[sum], \"gonger\")",
+        "oppmoding": "`[0] * 13` lagar ei liste med tretten nullar. Kvifor treng vi 13 og ikkje 11?"
+      },
+      "turne": {
+        "tittel": "Teikn fordelinga",
+        "steg": [
+          {
+            "tekst": "Vi tel opp summane som før.",
+            "kode": "import random\n\ntal = [0] * 13\nfor i in range(10000):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\nprint(tal)"
+          },
+          {
+            "tekst": "I staden for tal kan vi teikne stjerner — éi for kvar femtiande gong.",
+            "kode": "import random\n\ntal = [0] * 13\nfor i in range(10000):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\n\nfor sum in range(2, 13):\n    print(sum, \"*\" * (tal[sum] // 50))",
+            "proev": "Kva form får figuren? Kvar er han høgast?"
+          },
+          {
+            "tekst": "Vi kan òg teikne det som eit ekte søylediagram med matplotlib.",
+            "kode": "import random\nimport matplotlib.pyplot as plt\n\ntal = [0] * 13\nfor i in range(10000):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\n\nplt.bar(range(2, 13), tal[2:13])\nplt.xlabel(\"Sum\")\nplt.ylabel(\"Talet på gonger\")\nplt.show()",
+            "proev": "Fyrste gongen tek det nokre sekund å hente matplotlib. Etterpå går det fort."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "to-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `andel_sju` som kastar to terningar `n` gonger og returnerer delen som gav summen 7.",
+          "startkode": "import random\n\ndef andel_sju(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "hint": [
+            "Du treng to kall til `randint` inni løkka.",
+            "`if random.randint(1, 6) + random.randint(1, 6) == 7:`"
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "andel_sju",
+              "args": [
+                30000
+              ],
+              "vent": 0.1667,
+              "slingring": 0.015
+            }
+          ],
+          "loeysing": "import random\n\ndef andel_sju(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) + random.randint(1, 6) == 7:\n            treff = treff + 1\n    return treff / n"
+        },
+        {
+          "id": "to-2",
+          "type": "les",
+          "kode": "tal = [0] * 5\nprint(len(tal))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "0",
+            "5",
+            "[0, 0, 0, 0, 0]",
+            "1"
+          ],
+          "rett": 1,
+          "forklaring": "`[0] * 5` lagar ei liste med fem nullar, og `len` gjev **lengda** på lista — altså 5, ikkje innhaldet."
+        },
+        {
+          "id": "to-3",
+          "type": "rett",
+          "tekst": "Programmet skal telje summar av to terningar, men det ryk med ein `IndexError`. Rett feilen.",
+          "startkode": "import random\n\ntal = [0] * 11\nfor i in range(100):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\nprint(tal[7])",
+          "hint": [
+            "Kva er den største summen du kan få med to terningar?",
+            "Lista må ha ein plass med det nummeret. Plass nummer 12 finst berre om lista har minst 13 plassar."
+          ],
+          "testar": [
+            {
+              "type": "inneheld",
+              "vent": "[0] * 13",
+              "grunn": "Lista må ha plass til indeks 12"
+            },
+            {
+              "type": "naer",
+              "variabel": "sum",
+              "vent": 7,
+              "slingring": 5
+            }
+          ],
+          "loeysing": "import random\n\ntal = [0] * 13\nfor i in range(100):\n    sum = random.randint(1, 6) + random.randint(1, 6)\n    tal[sum] = tal[sum] + 1\nprint(tal[7])"
+        }
+      ],
+      "oppsummering": "Summen av to terningar er ikkje jamt fordelt. 7 kjem oftast fordi han har flest kombinasjonar — 6 av 36. Simuleringa viser den same forma som utrekninga gjev."
+    },
+    {
+      "id": "med-tilbakelegging",
+      "tittel": "Kuler i ei eske",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
+        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "I ei eske ligg det tre raude og to blå kuler. Du trekkjer éi, ser på farga, og **legg henne tilbake**. Kva er sannsynet for raud?"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Tre av fem kuler er raude, så sannsynet er `3 / 5`, altså 0,6. Sidan du legg kula tilbake, er esken den same før kvart trekk — sannsynet endrar seg aldri."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "I Python kan vi la ei **liste** vere esken, og bruke `random.choice` til å trekkje:"
+        },
+        {
+          "type": "kode",
+          "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nprint(random.choice(eske))"
+        },
+        {
+          "type": "merk",
+          "tekst": "`random.choice` tek berre **eitt** element og lèt lista vere som ho er. Det er nettopp trekk **med** tilbakelegging."
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nraude = 0\nfor i in range(10000):\n    if random.choice(eske) == \"raud\":\n        raude = raude + 1\n\nprint(\"Simulert:\", raude / 10000)\nprint(\"Teoretisk:\", 3 / 5)",
+        "oppmoding": "Legg til ei blå kule i esken. Kva blir det teoretiske sannsynet då, og stemmer simuleringa?"
+      },
+      "turne": {
+        "tittel": "To raude på rad",
+        "steg": [
+          {
+            "tekst": "Vi lagar esken og trekkjer éi kule.",
+            "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nprint(random.choice(eske))"
+          },
+          {
+            "tekst": "No trekkjer vi to gonger, med tilbakelegging.",
+            "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nfyrste = random.choice(eske)\nandre = random.choice(eske)\nprint(fyrste, andre)"
+          },
+          {
+            "tekst": "Vi sjekkar om begge vart raude.",
+            "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nfyrste = random.choice(eske)\nandre = random.choice(eske)\nif fyrste == \"raud\" and andre == \"raud\":\n    print(\"To raude!\")"
+          },
+          {
+            "tekst": "Og gjentek ti tusen gonger for å finne sannsynet.",
+            "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\ntreff = 0\nfor i in range(10000):\n    if random.choice(eske) == \"raud\" and random.choice(eske) == \"raud\":\n        treff = treff + 1\n\nprint(\"Simulert:\", treff / 10000)\nprint(\"Teoretisk:\", 0.6 * 0.6)",
+            "proev": "0,6 gonger 0,6 er 0,36. Stemmer simuleringa? Kvifor gongar vi?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "med-1",
+          "type": "skriv",
+          "tekst": "Ei eske har fire raude og éi blå kule. Lag ein funksjon `andel_blaa` som trekkjer `n` gonger **med** tilbakelegging og returnerer delen blå.",
+          "startkode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"raud\", \"blaa\"]\n\ndef andel_blaa(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "hint": [
+            "`random.choice(eske)` trekkjer éi kule.",
+            "Éi av fem kuler er blå, så svaret skal liggje kring 0,2."
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "andel_blaa",
+              "args": [
+                30000
+              ],
+              "vent": 0.2,
+              "slingring": 0.02
+            }
+          ],
+          "loeysing": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"raud\", \"blaa\"]\n\ndef andel_blaa(n):\n    treff = 0\n    for i in range(n):\n        if random.choice(eske) == \"blaa\":\n            treff = treff + 1\n    return treff / n"
+        },
+        {
+          "id": "med-2",
+          "type": "les",
+          "kode": "eske = [\"a\", \"b\", \"c\"]\nfor i in range(3):\n    eske.append(\"d\")\nprint(len(eske))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "3",
+            "4",
+            "6",
+            "9"
+          ],
+          "rett": 2,
+          "forklaring": "Lista startar med tre element. `append` legg til eitt for kvar runde i løkka, og løkka går tre gonger. Til slutt er det 3 pluss 3, altså **6**."
+        },
+        {
+          "id": "med-3",
+          "type": "rett",
+          "tekst": "Esken skal ha tre raude og to blå, og funksjonen skal gje kring 0,6 for raud. Han gjev noko heilt anna. Finn feilen i esken.",
+          "startkode": "import random\n\neske = [\"raud\", \"blaa\"]\n\ndef andel_raud(n):\n    treff = 0\n    for i in range(n):\n        if random.choice(eske) == \"raud\":\n            treff = treff + 1\n    return treff / n",
+          "hint": [
+            "Tel kulene i esken. Kor mange raude og kor mange blå er det?",
+            "Esken må innehalde like mange kuler av kvar farge som oppgåva seier."
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "andel_raud",
+              "args": [
+                30000
+              ],
+              "vent": 0.6,
+              "slingring": 0.02
+            }
+          ],
+          "loeysing": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\n\ndef andel_raud(n):\n    treff = 0\n    for i in range(n):\n        if random.choice(eske) == \"raud\":\n            treff = treff + 1\n    return treff / n"
+        }
+      ],
+      "oppsummering": "Ei liste kan vere ei eske, og `random.choice` trekkjer éi kule **med** tilbakelegging. Då er sannsynet det same for kvart trekk."
+    },
+    {
+      "id": "utan-tilbakelegging",
+      "tittel": "Utan tilbakelegging",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
+        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Legg du **ikkje** kula tilbake, endrar esken seg for kvart trekk. Då er ikkje trekka uavhengige lenger, og utrekninga blir vanskelegare — men simuleringa blir nesten like enkel."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Med tre raude og to blå: sannsynet for raud fyrst er `3/5`. Får du raud, ligg det att to raude og to blå, så sannsynet for raud igjen er `2/4`. Til saman `3/5 * 2/4 = 0,3`."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "I Python bruker vi `random.sample`, som trekkjer fleire **ulike** element:"
+        },
+        {
+          "type": "kode",
+          "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\ntrekk = random.sample(eske, 2)\nprint(trekk)"
+        },
+        {
+          "type": "merk",
+          "tekst": "`random.sample(eske, 2)` tek to kuler som ikkje kan vere den **same** kula. To ulike raude kuler kan godt kome saman — det er plassane som er ulike, ikkje fargane."
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nbegge_raude = 0\nfor i in range(10000):\n    trekk = random.sample(eske, 2)\n    if trekk[0] == \"raud\" and trekk[1] == \"raud\":\n        begge_raude = begge_raude + 1\n\nprint(\"Utan tilbakelegging:\", begge_raude / 10000)\nprint(\"Teoretisk:\", (3/5) * (2/4))",
+        "oppmoding": "Samanlikn med talet frå førre leksjon, der vi la kula tilbake (0,36). Kvifor er dette lågare?"
+      },
+      "turne": {
+        "tittel": "Jamfør med og utan tilbakelegging",
+        "steg": [
+          {
+            "tekst": "Fyrst med tilbakelegging, som i førre leksjon.",
+            "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nmed = 0\nfor i in range(10000):\n    if random.choice(eske) == \"raud\" and random.choice(eske) == \"raud\":\n        med = med + 1\nprint(\"Med tilbakelegging:\", med / 10000)"
+          },
+          {
+            "tekst": "Så utan, med `sample`.",
+            "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nutan = 0\nfor i in range(10000):\n    trekk = random.sample(eske, 2)\n    if trekk[0] == \"raud\" and trekk[1] == \"raud\":\n        utan = utan + 1\nprint(\"Utan tilbakelegging:\", utan / 10000)"
+          },
+          {
+            "tekst": "Og til slutt begge i same program, så skilnaden er lett å sjå.",
+            "kode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\nmed = 0\nutan = 0\nfor i in range(10000):\n    if random.choice(eske) == \"raud\" and random.choice(eske) == \"raud\":\n        med = med + 1\n    trekk = random.sample(eske, 2)\n    if trekk[0] == \"raud\" and trekk[1] == \"raud\":\n        utan = utan + 1\n\nprint(\"Med tilbakelegging: \", med / 10000, \"  teoretisk\", 0.6 * 0.6)\nprint(\"Utan tilbakelegging:\", utan / 10000, \"  teoretisk\", (3/5) * (2/4))",
+            "proev": "Kva skjer med skilnaden om esken har hundre kuler i staden for fem?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "utan-1",
+          "type": "skriv",
+          "tekst": "Esken har tre raude og to blå. Lag ein funksjon `to_blaa` som trekkjer to kuler **utan** tilbakelegging `n` gonger, og returnerer delen der begge vart blå.",
+          "startkode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\n\ndef to_blaa(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "hint": [
+            "`trekk = random.sample(eske, 2)` gjev ei liste med to kuler.",
+            "Sjekk `trekk[0]` og `trekk[1]`. Teoretisk er svaret 2/5 gonger 1/4, altså 0,1."
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "to_blaa",
+              "args": [
+                30000
+              ],
+              "vent": 0.1,
+              "slingring": 0.015
+            }
+          ],
+          "loeysing": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\n\ndef to_blaa(n):\n    treff = 0\n    for i in range(n):\n        trekk = random.sample(eske, 2)\n        if trekk[0] == \"blaa\" and trekk[1] == \"blaa\":\n            treff = treff + 1\n    return treff / n"
+        },
+        {
+          "id": "utan-2",
+          "type": "les",
+          "kode": "import random\nkort = [1, 2, 3, 4]\ntrekk = random.sample(kort, 4)\nprint(len(trekk), len(kort))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "4 0",
+            "4 4",
+            "0 4",
+            "4 1"
+          ],
+          "rett": 1,
+          "forklaring": "`sample` lagar ei **ny** liste med dei trekte elementa, og rører ikkje den opphavlege. Difor har begge listene framleis fire element."
+        },
+        {
+          "id": "utan-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal trekkje **utan** tilbakelegging, men han trekkjer med. Difor blir svaret for høgt. Rett det.",
+          "startkode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\n\ndef to_raude(n):\n    treff = 0\n    for i in range(n):\n        if random.choice(eske) == \"raud\" and random.choice(eske) == \"raud\":\n            treff = treff + 1\n    return treff / n",
+          "hint": [
+            "`random.choice` trekkjer éi kule og legg henne tilbake.",
+            "Bruk `random.sample(eske, 2)` og sjekk dei to elementa."
+          ],
+          "testar": [
+            {
+              "type": "inneheld",
+              "vent": "sample",
+              "grunn": "Bruk random.sample for trekk utan tilbakelegging"
+            },
+            {
+              "type": "naer",
+              "fn": "to_raude",
+              "args": [
+                30000
+              ],
+              "vent": 0.3,
+              "slingring": 0.02
+            }
+          ],
+          "loeysing": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\n\ndef to_raude(n):\n    treff = 0\n    for i in range(n):\n        trekk = random.sample(eske, 2)\n        if trekk[0] == \"raud\" and trekk[1] == \"raud\":\n            treff = treff + 1\n    return treff / n"
+        }
+      ],
+      "oppsummering": "Utan tilbakelegging endrar esken seg for kvart trekk, og sannsynet blir lågare enn med. `random.sample` gjer jobben, og lèt den opphavlege lista vere i fred."
+    },
+    {
+      "id": "monty-hall",
+      "tittel": "To geiter og ein bil",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
+        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "I eit gammalt tv-program fekk deltakaren velje mellom tre dører. Bak éi står ein bil, bak dei to andre står ei geit."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "Du vel ei dør, men ho blir ikkje opna enno.",
+            "Programleiaren, som **veit** kvar bilen står, opnar ei av dei to andre — alltid ei med geit.",
+            "Du får velje: halde på døra di, eller byte til den siste lukka døra."
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Bør du byte? Dei aller fleste svarar at det ikkje spelar noka rolle — det står jo att to dører, så det må vere 50-50."
+        },
+        {
+          "type": "merk",
+          "tekst": "Det er feil. Du vinn **dobbelt så ofte** om du byter. Dette er eitt av dei mest omstridde svara i matematikken; då det stod på trykk i 1990, sende tusenvis av folk — mange med doktorgrad — inn brev om at det var gale."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Du treng ikkje tru på det. Du kan simulere det, og la tala svare."
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\nvinn_ved_byte = 0\nfor i in range(10000):\n    bil = random.randint(1, 3)\n    valt = random.randint(1, 3)\n    # Byter du, vinn du nettopp når fyrstevalet var feil\n    if valt != bil:\n        vinn_ved_byte = vinn_ved_byte + 1\n\nprint(\"Vinn ved byte:\", vinn_ved_byte / 10000)\nprint(\"Vinn ved å halde:\", 1 - vinn_ved_byte / 10000)",
+        "oppmoding": "Køyr fleire gonger. Svaret ligg kring 0,667 — to tredelar."
+      },
+      "turne": {
+        "tittel": "Bygg opp Monty Hall steg for steg",
+        "steg": [
+          {
+            "tekst": "Fyrst plasserer vi bilen tilfeldig bak ei av tre dører.",
+            "kode": "import random\n\nbil = random.randint(1, 3)\nprint(\"Bilen står bak dør\", bil)"
+          },
+          {
+            "tekst": "Så vel deltakaren ei dør, òg tilfeldig.",
+            "kode": "import random\n\nbil = random.randint(1, 3)\nvalt = random.randint(1, 3)\nprint(\"Bilen:\", bil, \" Valt:\", valt)"
+          },
+          {
+            "tekst": "Tenk gjennom dette: byter du, vinn du **nettopp når** fyrstevalet ditt var feil. Var det rett, taper du på å byte.",
+            "kode": "import random\n\nbil = random.randint(1, 3)\nvalt = random.randint(1, 3)\n\nif valt != bil:\n    print(\"Byte hadde vunne\")\nelse:\n    print(\"Byte hadde tapt\")",
+            "proev": "Køyr nokre gonger. Kor ofte var fyrstevalet rett?"
+          },
+          {
+            "tekst": "Og no gjentek vi ti tusen gonger og tel opp.",
+            "kode": "import random\n\nbyte = 0\nhalde = 0\nfor i in range(10000):\n    bil = random.randint(1, 3)\n    valt = random.randint(1, 3)\n    if valt != bil:\n        byte = byte + 1\n    else:\n        halde = halde + 1\n\nprint(\"Vinn ved byte: \", byte / 10000)\nprint(\"Vinn ved halde:\", halde / 10000)",
+            "proev": "Sannsynet for å velje rett fyrste gong er 1/3. Ser du kvifor byte gjev 2/3?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "monty-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `vinn_ved_byte` som simulerer `n` rundar av Monty Hall og returnerer delen som blir vunnen dersom deltakaren **alltid byter**.",
+          "startkode": "import random\n\ndef vinn_ved_byte(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "hint": [
+            "Plasser bilen og gjer fyrstevalet med kvar sin `random.randint(1, 3)`.",
+            "Byter du, vinn du når `valt != bil`."
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "vinn_ved_byte",
+              "args": [
+                30000
+              ],
+              "vent": 0.6667,
+              "slingring": 0.02
+            }
+          ],
+          "loeysing": "import random\n\ndef vinn_ved_byte(n):\n    treff = 0\n    for i in range(n):\n        bil = random.randint(1, 3)\n        valt = random.randint(1, 3)\n        if valt != bil:\n            treff = treff + 1\n    return treff / n"
+        },
+        {
+          "id": "monty-2",
+          "type": "les",
+          "kode": "bil = 2\nvalt = 2\nif valt != bil:\n    print(\"byte vinn\")\nelse:\n    print(\"halde vinn\")",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "byte vinn",
+            "halde vinn",
+            "begge",
+            "ingenting"
+          ],
+          "rett": 1,
+          "forklaring": "Her valde deltakaren rett dør med ein gong. Då **taper** han på å byte, og programmet skriv «halde vinn». Dette skjer i ein tredel av rundane."
+        },
+        {
+          "id": "monty-3",
+          "type": "rett",
+          "tekst": "Simuleringa skal gje delen som vinn **ved byte**, men ho gjev delen som vinn ved å halde. Rett samanlikninga.",
+          "startkode": "import random\n\ndef vinn_ved_byte(n):\n    treff = 0\n    for i in range(n):\n        bil = random.randint(1, 3)\n        valt = random.randint(1, 3)\n        if valt == bil:\n            treff = treff + 1\n    return treff / n",
+          "hint": [
+            "Når vinn du på å byte — når fyrstevalet var rett, eller feil?",
+            "`==` betyr lik. Kva teikn betyr **ikkje** lik?"
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "vinn_ved_byte",
+              "args": [
+                30000
+              ],
+              "vent": 0.6667,
+              "slingring": 0.02
+            }
+          ],
+          "loeysing": "import random\n\ndef vinn_ved_byte(n):\n    treff = 0\n    for i in range(n):\n        bil = random.randint(1, 3)\n        valt = random.randint(1, 3)\n        if valt != bil:\n            treff = treff + 1\n    return treff / n"
+        }
+      ],
+      "oppsummering": "Du vinn to av tre gonger om du byter dør. Simuleringa avgjer spørsmålet utan at du treng overtyde nokon — tala står der."
+    },
+    {
+      "id": "teoretisk-mot-simulert",
+      "tittel": "Rekne ut eller prøve seg fram?",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
+        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill",
+        "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Du har no to måtar å finne eit sannsyn på. Du kan **rekne det ut** med brøkar, eller du kan **simulere** og telje opp. Begge svarar på det same spørsmålet."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "Utrekning gjev eit **eksakt** svar, men blir fort vanskeleg.",
+            "Simulering gjev eit **omtrentleg** svar, men er like enkel same kor innfløkt problemet er.",
+            "Får dei to same svar, er det god grunn til å tru at begge er rette."
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det siste punktet er det mest nyttige. Har du rekna ut noko og er usikker, kan du **sjekke deg sjølv** med ei simulering. Og går simuleringa mot eit anna tal enn utrekninga, har du gjort ein feil ein stad — og då har du lært noko."
+        },
+        {
+          "type": "merk",
+          "tekst": "Ei simulering blir aldri heilt eksakt. Køyrer du 1000 forsøk, er dei to fyrste desimalane ofte rette. Vil du ha fleire riktige desimalar, må du auke talet på forsøk kraftig — ti gonger fleire forsøk gjev berre kring éin desimal til."
+        }
+      ],
+      "doeme": {
+        "kode": "import random\n\n# Sannsynet for minst éin seksar i tre kast\ntreff = 0\nfor i in range(100000):\n    if random.randint(1,6) == 6 or random.randint(1,6) == 6 or random.randint(1,6) == 6:\n        treff = treff + 1\n\nprint(\"Simulert: \", round(treff / 100000, 4))\nprint(\"Teoretisk:\", round(1 - (5/6) ** 3, 4))",
+        "oppmoding": "Teoretisk reknar vi ut sannsynet for **ingen** seksarar, og trekkjer frå 1. Stemmer dei to tala?"
+      },
+      "turne": {
+        "tittel": "Sjekk ei utrekning med ei simulering",
+        "steg": [
+          {
+            "tekst": "Spørsmålet: kastar du ein mynt fire gonger, kva er sannsynet for **nøyaktig** to kron? Teoretisk er svaret 6 av 16.",
+            "kode": "print(6 / 16)"
+          },
+          {
+            "tekst": "Vi simulerer eitt forsøk: fire myntkast, og tel kron.",
+            "kode": "import random\n\nkron = 0\nfor kast in range(4):\n    if random.choice([\"kron\", \"mynt\"]) == \"kron\":\n        kron = kron + 1\nprint(kron)"
+          },
+          {
+            "tekst": "Så pakkar vi det inn i ei ytre løkke og tel kor ofte det vart nøyaktig to.",
+            "kode": "import random\n\ntreff = 0\nfor i in range(10000):\n    kron = 0\n    for kast in range(4):\n        if random.choice([\"kron\", \"mynt\"]) == \"kron\":\n            kron = kron + 1\n    if kron == 2:\n        treff = treff + 1\n\nprint(treff / 10000)"
+          },
+          {
+            "tekst": "Og samanliknar med utrekninga.",
+            "kode": "import random\n\ntreff = 0\nfor i in range(10000):\n    kron = 0\n    for kast in range(4):\n        if random.choice([\"kron\", \"mynt\"]) == \"kron\":\n            kron = kron + 1\n    if kron == 2:\n        treff = treff + 1\n\nprint(\"Simulert: \", round(treff / 10000, 4))\nprint(\"Teoretisk:\", round(6 / 16, 4))",
+            "proev": "Ei løkke inni ei anna løkke: den indre går fire gonger for kvar runde i den ytre. Kor mange myntkast blir det til saman?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "teo-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `minst_ein_seksar` som kastar **to** terningar `n` gonger og returnerer delen der minst éin av dei vart seksar. Teoretisk er svaret `1 - (5/6)**2`, altså kring 0,306.",
+          "startkode": "import random\n\ndef minst_ein_seksar(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "hint": [
+            "Kast to terningar og bruk `or` mellom dei to samanlikningane.",
+            "`if random.randint(1,6) == 6 or random.randint(1,6) == 6:`"
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "minst_ein_seksar",
+              "args": [
+                30000
+              ],
+              "vent": 0.3056,
+              "slingring": 0.02
+            }
+          ],
+          "loeysing": "import random\n\ndef minst_ein_seksar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6 or random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff / n"
+        },
+        {
+          "id": "teo-2",
+          "type": "les",
+          "kode": "print(round(1 - (5/6) ** 2, 4))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "0.3056",
+            "0.6944",
+            "0.1667",
+            "0.0278"
+          ],
+          "rett": 0,
+          "forklaring": "`(5/6) ** 2` er sannsynet for **ingen** seksar i to kast, altså kring 0,6944. Trekkjer du det frå 1, får du sannsynet for **minst éin** seksar: 0,3056."
+        },
+        {
+          "id": "teo-3",
+          "type": "rett",
+          "tekst": "Programmet skal telje rundar der **begge** terningane vart seksar, men det tel rundar der minst éin vart det. Rett feilen.",
+          "startkode": "import random\n\ndef begge_seksar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6 or random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff / n",
+          "hint": [
+            "`or` er sann når **minst éin** side er sann.",
+            "Kva ord bruker du når **begge** må vere sanne? Teoretisk svar er 1/36, altså kring 0,028."
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "begge_seksar",
+              "args": [
+                40000
+              ],
+              "vent": 0.0278,
+              "slingring": 0.012
+            }
+          ],
+          "loeysing": "import random\n\ndef begge_seksar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6 and random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff / n"
+        }
+      ],
+      "oppsummering": "Utrekning gjev eksakte svar, simulering gjev omtrentlege. Brukar du begge og får same svar, kan du stole på det — og er dei ulike, har du funne ein feil verdt å finne."
+    }
+  ]
+}
