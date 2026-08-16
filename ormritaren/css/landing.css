@@ -4,49 +4,15 @@
  * .main-wide (AGENTS.md §3.1.1).
  */
 
-/* ---- fri programmering ------------------------------------------------ */
+/* ---- fri programmering ------------------------------------------------
+ * Same kortform som modulane under, så framsida har éin type boks. */
 
-.orm-frikort {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 28px;
-    padding: 18px 20px;
-    text-decoration: none;
-    color: var(--text);
+.orm-frikort-pil {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
 }
-
-.orm-frikort:hover { transform: translate(-2px, -2px); }
-
-.orm-frikort-ikon {
-    flex: 0 0 auto;
-    display: grid;
-    place-items: center;
-    width: 54px;
-    height: 54px;
-    background: var(--accent);
-    color: var(--text-on-accent);
-    border: 3px solid var(--border);
-}
-
-.orm-frikort-tekst { flex: 1; min-width: 0; }
-
-.orm-frikort-tittel {
-    display: block;
-    font-size: clamp(1.1rem, 2.4vw, 1.35rem);
-    font-weight: 800;
-    margin-bottom: 3px;
-}
-
-.orm-frikort-skildring {
-    display: block;
-    max-width: 70ch;
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-}
-
-.orm-frikort-pil { flex: 0 0 auto; color: var(--accent); }
 
 /* ---- modulgrupper ----------------------------------------------------- */
 

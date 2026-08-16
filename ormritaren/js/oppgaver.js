@@ -16,8 +16,19 @@ const OrmOppgaver = (function () {
 
     function init(verten) { vert = verten; }
 
+    /* Kvar oppgåvetype har eiga farge og eige ikon. Fargen åleine ville ikkje
+     * halde — han er vanskeleg å skilje for mange, og forsvinn i utskrift —
+     * så typen står alltid med ord i tillegg. */
+    const TYPAR = {
+        skriv: { merke: 'Skriv',       ikon: 'pencil' },
+        les:   { merke: 'Les koden',   ikon: 'eye' },
+        rett:  { merke: 'Rett feilen', ikon: 'search' }
+    };
+
     /** @returns {HTMLElement} kortet for éi oppgåve */
     function kort(oppgave, nr) {
+        const type = TYPAR[oppgave.type] || { merke: 'Oppgåve', ikon: 'helpCircle' };
+
         const boks = document.createElement('section');
         boks.className = 'box4 orm-oppgave';
         boks.dataset.type = oppgave.type;
@@ -25,11 +36,20 @@ const OrmOppgaver = (function () {
 
         const topp = document.createElement('div');
         topp.className = 'box-header orm-oppgavetopp';
+
         const merke = document.createElement('span');
         merke.className = 'orm-oppgavemerke';
-        merke.textContent = { skriv: 'Skriv', les: 'Les', rett: 'Rett feilen' }[oppgave.type] || 'Oppgåve';
+        const ikon = document.createElement('span');
+        ikon.dataset.icon = type.ikon;
+        ikon.dataset.iconSize = '15';
+        merke.appendChild(ikon);
+        const merketekst = document.createElement('span');
+        merketekst.textContent = type.merke;
+        merke.appendChild(merketekst);
         topp.appendChild(merke);
+
         const tittel = document.createElement('span');
+        tittel.className = 'orm-oppgavenummer';
         tittel.textContent = `Oppgåve ${nr}`;
         topp.appendChild(tittel);
         boks.appendChild(topp);
@@ -41,7 +61,7 @@ const OrmOppgaver = (function () {
         if (oppgave.tekst) {
             const p = document.createElement('p');
             p.className = 'orm-oppgavetekst';
-            p.textContent = oppgave.tekst;
+            OrmTekst.set(p, oppgave.tekst);
             kropp.appendChild(p);
         }
 
@@ -220,7 +240,7 @@ const OrmOppgaver = (function () {
             if (oppgave.forklaring) {
                 const f = document.createElement('p');
                 f.className = 'orm-svarforklaring';
-                f.textContent = oppgave.forklaring;
+                OrmTekst.set(f, oppgave.forklaring);
                 svarboks.appendChild(f);
             }
 
@@ -266,7 +286,7 @@ const OrmOppgaver = (function () {
             if (vist < hint.length) {
                 const p = document.createElement('p');
                 p.className = 'orm-hint-tekst';
-                p.textContent = hint[vist];
+                OrmTekst.set(p, hint[vist]);
                 liste.appendChild(p);
                 vist++;
                 if (vist < hint.length) knapp.textContent = 'Vis eit hint til';

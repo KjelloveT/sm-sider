@@ -5,6 +5,36 @@
  * med ?modul= i adressa.
  */
 
+/* ---- eigne fargar for opplæringsdelen ---------------------------------
+ *
+ * Temaet gjev fem aksentar, og dei er brukte til andre ting frå før. Her
+ * treng vi fire som skal vere lette å skilje frå kvarandre og frå resten:
+ * kodeturné, skriv, les og rett feilen.
+ *
+ * Fargane er faste, ikkje henta frå temaet, nettopp fordi dei skal tyde det
+ * same uansett kva tema eleven har valt. Til gjengjeld må dei settast for
+ * hand i dei mørke temaa: dei mørke variantane under blir uleselege på ein
+ * mørk flate, så der byter vi til lyse med mørk tekst.
+ *
+ * Fargen står aldri åleine — kvar type har òg eit eige ikon og eit ord. */
+:root {
+    --orm-turne-farge: #6d28d9;  --orm-turne-paa: #ffffff;   /* fiolett */
+    --orm-skriv-farge: #1d4ed8;  --orm-skriv-paa: #ffffff;   /* blå */
+    --orm-les-farge:   #92400e;  --orm-les-paa:   #ffffff;   /* brun */
+    --orm-rett-farge:  #be123c;  --orm-rett-paa:  #ffffff;   /* raud */
+    --orm-tint: 10%;
+}
+
+[data-theme="space"], [data-theme="midnight"], [data-theme="dracula"],
+[data-theme="cyberpunk"], [data-theme="neon"], [data-theme="slate"],
+[data-theme="hacker"] {
+    --orm-turne-farge: #c4b5fd;  --orm-turne-paa: #1a1a1a;
+    --orm-skriv-farge: #93c5fd;  --orm-skriv-paa: #1a1a1a;
+    --orm-les-farge:   #fcd34d;  --orm-les-paa:   #1a1a1a;
+    --orm-rett-farge:  #fda4af;  --orm-rett-paa:  #1a1a1a;
+    --orm-tint: 16%;
+}
+
 .orm-leksjon { display: none; }
 
 .orm-arbeid[data-modus="leksjon"] .orm-leksjon {
@@ -105,6 +135,24 @@
 
 /* ---- kodeturné -------------------------------------------------------- */
 
+/* Turneen har si eiga rute, så det er tydeleg at ho er noko anna enn både
+ * læreteksten over og oppgåvene under.
+ *
+ * Bakgrunnen er --surface, ikkje ein tone av turné-fargen. Ein tone målte
+ * 1,06:1 mot brødteksten i «space» og «midnight»: i mørke tema er
+ * turné-fargen lys, og ein lys tone under lys tekst blir uleseleg. Den tjukke
+ * ramma og den farga overskrifta ber identiteten i staden, og då er teksten
+ * alltid på ei flate han er laga for. */
+.orm-turne {
+    margin-top: 24px;
+    padding: 15px 17px;
+    border: 3px solid var(--orm-turne-farge);
+    border-top-width: 9px;
+    background: var(--surface);
+}
+
+.orm-turne .orm-deltittel { color: var(--orm-turne-farge); }
+
 .orm-turnetekst { font-weight: 600; }
 
 .orm-turnerad {
@@ -132,20 +180,73 @@
 
 .orm-oppgave { margin-bottom: 14px; }
 
+/* Kvar type har eiga farge på ramma og i hovudet. */
+.orm-oppgave[data-type="skriv"] { border-color: var(--orm-skriv-farge); }
+.orm-oppgave[data-type="les"]   { border-color: var(--orm-les-farge); }
+.orm-oppgave[data-type="rett"]  { border-color: var(--orm-rett-farge); }
+
 .orm-oppgave-rett { border-color: var(--accent); }
 
-.orm-oppgavetopp {
+/* Hovudet må overstyre .box4 .box-header, som set aksentfargen med to
+ * klassar. Ein enkeltklasse taper den kampen. */
+.orm-oppgave .orm-oppgavetopp {
     display: flex;
     align-items: center;
     gap: 9px;
-}
-
-.orm-oppgavemerke {
-    padding: 2px 7px;
-    font-size: 10.5px;
     background: var(--surface);
     color: var(--text);
+}
+
+.orm-oppgave[data-type="skriv"] .orm-oppgavetopp { border-bottom-color: var(--orm-skriv-farge); }
+.orm-oppgave[data-type="les"]   .orm-oppgavetopp { border-bottom-color: var(--orm-les-farge); }
+.orm-oppgave[data-type="rett"]  .orm-oppgavetopp { border-bottom-color: var(--orm-rett-farge); }
+
+.orm-oppgavemerke {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    font-size: 10.5px;
     border: 2px solid var(--border);
+}
+
+.orm-oppgave[data-type="skriv"] .orm-oppgavemerke {
+    background: var(--orm-skriv-farge); color: var(--orm-skriv-paa);
+}
+.orm-oppgave[data-type="les"] .orm-oppgavemerke {
+    background: var(--orm-les-farge); color: var(--orm-les-paa);
+}
+.orm-oppgave[data-type="rett"] .orm-oppgavemerke {
+    background: var(--orm-rett-farge); color: var(--orm-rett-paa);
+}
+
+.orm-oppgavenummer {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.orm-deltittel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Kodeord midt i ei setning. Utan eiga skrift er det vanskeleg å sjå kva
+ * som er Python og kva som er norsk. */
+.orm-kodeord {
+    padding: 1px 5px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: .92em;
+    white-space: pre-wrap;
+    color: var(--text);
+}
+
+.orm-merk .orm-kodeord,
+.orm-hint-tekst .orm-kodeord {
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    color: var(--text-on-light-accent);
 }
 
 .orm-oppgavekropp { padding: 13px 15px; }

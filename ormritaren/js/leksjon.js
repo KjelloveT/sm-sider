@@ -105,7 +105,7 @@ const OrmLeksjon = (function () {
         liste.forEach(b => {
             if (b.type === 'avsnitt') {
                 const p = document.createElement('p');
-                p.textContent = b.tekst;
+                OrmTekst.set(p, b.tekst);
                 boks.appendChild(p);
 
             } else if (b.type === 'kode') {
@@ -117,7 +117,7 @@ const OrmLeksjon = (function () {
             } else if (b.type === 'merk') {
                 const p = document.createElement('p');
                 p.className = 'orm-merk';
-                p.textContent = b.tekst;
+                OrmTekst.set(p, b.tekst);
                 boks.appendChild(p);
 
             } else if (b.type === 'punkt') {
@@ -125,7 +125,7 @@ const OrmLeksjon = (function () {
                 ul.className = 'orm-punktliste';
                 (b.punkt || []).forEach(t => {
                     const li = document.createElement('li');
-                    li.textContent = t;
+                    OrmTekst.set(li, t);
                     ul.appendChild(li);
                 });
                 boks.appendChild(ul);
@@ -141,7 +141,7 @@ const OrmLeksjon = (function () {
         const seksjon = document.createElement('section');
         seksjon.className = 'orm-leksjonsdel';
 
-        seksjon.appendChild(deltittel('Prøv sjølv'));
+        seksjon.appendChild(deltittel('Prøv sjølv', 'play'));
 
         const pre = document.createElement('pre');
         pre.className = 'orm-leskode';
@@ -151,7 +151,7 @@ const OrmLeksjon = (function () {
         if (d.oppmoding) {
             const p = document.createElement('p');
             p.className = 'orm-oppmoding';
-            p.textContent = d.oppmoding;
+            OrmTekst.set(p, d.oppmoding);
             seksjon.appendChild(p);
         }
 
@@ -171,7 +171,7 @@ const OrmLeksjon = (function () {
         const seksjon = document.createElement('section');
         seksjon.className = 'orm-leksjonsdel orm-turne';
 
-        seksjon.appendChild(deltittel(t.tittel || 'Bygg programmet steg for steg'));
+        seksjon.appendChild(deltittel(t.tittel || 'Bygg programmet steg for steg', 'footprints'));
 
         const tekst = document.createElement('p');
         tekst.className = 'orm-turnetekst';
@@ -205,8 +205,8 @@ const OrmLeksjon = (function () {
         const vis = (n, skrivKode) => {
             turnesteg = Math.max(0, Math.min(n, t.steg.length - 1));
             const steg = t.steg[turnesteg];
-            tekst.textContent = steg.tekst;
-            proev.textContent = steg.proev || '';
+            OrmTekst.set(tekst, steg.tekst);
+            OrmTekst.set(proev, steg.proev || '');
             proev.hidden = !steg.proev;
             teljar.textContent = `Steg ${turnesteg + 1} av ${t.steg.length}`;
             foerre.disabled = turnesteg === 0;
@@ -266,7 +266,7 @@ const OrmLeksjon = (function () {
         seksjon.className = 'orm-leksjonsdel orm-oppsummering';
         seksjon.appendChild(deltittel('Kort oppsummert'));
         const p = document.createElement('p');
-        p.textContent = leksjon.oppsummering;
+        OrmTekst.set(p, leksjon.oppsummering);
         seksjon.appendChild(p);
         return seksjon;
     }
@@ -305,10 +305,18 @@ const OrmLeksjon = (function () {
         return a;
     }
 
-    function deltittel(tekst) {
+    function deltittel(tekst, ikon) {
         const h = document.createElement('h2');
-        h.className = 'heading4';
-        h.textContent = tekst;
+        h.className = 'heading4 orm-deltittel';
+        if (ikon) {
+            const i = document.createElement('span');
+            i.dataset.icon = ikon;
+            i.dataset.iconSize = '18';
+            h.appendChild(i);
+        }
+        const t = document.createElement('span');
+        t.textContent = tekst;
+        h.appendChild(t);
         return h;
     }
 
