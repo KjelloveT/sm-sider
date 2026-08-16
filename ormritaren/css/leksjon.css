@@ -55,15 +55,43 @@
     }
 }
 
-/* Under 1300px blir tre kolonner for trongt for koden, og leksjonen legg
- * seg over arbeidsflata i staden. */
-@media (max-width: 1300px) {
+/* Nettbrett: leksjonen tek ein tredjedel til venstre, og arbeidsflata to
+ * tredjedelar til høgre — med utskrifta under koden i same kolonna.
+ *
+ * Tre kolonner blir for trongt for koden her, men å leggje leksjonen i full
+ * breidd over alt saman kastar bort halve skjermen på ein iPad i liggjande
+ * format. */
+@media (min-width: 701px) and (max-width: 1300px) {
+    .orm-arbeid[data-modus="leksjon"] .orm-rad {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        align-items: start;
+    }
+    .orm-arbeid[data-modus="leksjon"] .orm-leksjon {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+    }
+    .orm-arbeid[data-modus="leksjon"] .orm-kolonne-brei {
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .orm-arbeid[data-modus="leksjon"] .orm-kolonne-smal {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+
+/* Berre på mobil legg alt seg under kvarandre og fanane tek over. */
+@media (max-width: 700px) {
     .orm-arbeid[data-modus="leksjon"] .orm-leksjon {
         grid-column: 1 / -1;
         position: static;
         max-height: none;
     }
 }
+
+/* Biblioteklista høyrer til fri koding. I ein leksjon fortel vi sjølve kva
+ * bibliotek som er i bruk, der dei faktisk blir brukte. */
+.orm-arbeid[data-modus="leksjon"] .orm-bibliotek { display: none; }
 
 /* ---- topp ------------------------------------------------------------- */
 
@@ -394,7 +422,7 @@
 
 /* ---- mobil ------------------------------------------------------------ */
 
-@media (max-width: 860px) {
+@media (max-width: 700px) {
     .orm-arbeid[data-modus="leksjon"][data-fane="kode"] .orm-leksjon,
     .orm-arbeid[data-modus="leksjon"][data-fane="ut"] .orm-leksjon,
     .orm-arbeid[data-modus="leksjon"][data-fane="grafikk"] .orm-leksjon { display: none; }

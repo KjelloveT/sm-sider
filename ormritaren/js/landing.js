@@ -30,6 +30,23 @@
         });
 
         if (window.hydrateIcons) hydrateIcons(document);
+
+        // Leksjonslistene kjem etterpå, i parallell. Modulfilene er små —
+        // nokre titals kilobyte kvar — og sida er allereie teikna, så dette
+        // rører ikkje ved poenget med at landingssida skal opne fort.
+        hentLeksjonar((katalog.modular || []).filter(m => m.klar !== false));
+    }
+
+    async function hentLeksjonar(modular) {
+        await Promise.all(modular.map(async m => {
+            try {
+                const fil = await (await fetch('moduler/' + m.fil)).json();
+                teiknLeksjonsliste(m, fil.leksjonar || []);
+            } catch (feil) {
+                // Kortet står fint utan lista; ho er ei snarveg, ikkje sjølve inngangen.
+            }
+        }));
+        if (window.hydrateIcons) hydrateIcons(document);
     }
 
     function teiknGruppe(gruppe, modular) {
@@ -59,16 +76,17 @@
     function teiknModul(modul) {
         const klar = modul.klar !== false;
 
-        // Ein modul som ikkje er skriven enno skal ikkje vere ei lenkje —
-        // men han skal synast, så læraren ser kva som er på veg.
-        const kort = document.createElement(klar ? 'a' : 'div');
+        /* Kortet er ikkje sjølv ei lenkje: det inneheld lenkjer til kvar
+         * einskild leksjon, og lenkje inni lenkje er ugyldig. I staden er
+         * overskrifta lenkja som tek deg til modulen. */
+        const kort = document.createElement('div');
         kort.className = 'box4 orm-modulkort' + (klar ? '' : ' orm-modulkort-kjem');
-        if (klar) kort.href = `kode.html?modul=${encodeURIComponent(modul.id)}`;
 
         /* --- topp --- */
-        const topp = document.createElement('div');
+        const topp = document.createElement(klar ? 'a' : 'div');
         topp.className = 'box-header orm-modultopp';
         topp.dataset.accent = modul.accent || 'accent';
+        if (klar) topp.href = `kode.html?modul=${encodeURIComponent(modul.id)}`;
 
         const brikke = document.createElement('span');
         brikke.className = 'orm-modulbrikke';
@@ -102,6 +120,10 @@
 
         if (klar) {
             kropp.appendChild(framgangslinje(modul));
+            const liste = document.createElement('ol');
+            liste.className = 'orm-leksjonsliste';
+            liste.id = 'leksjonar-' + modul.id;
+            kropp.appendChild(liste);
         } else {
             const kjem = document.createElement('p');
             kjem.className = 'orm-modulkjem';
@@ -115,6 +137,57 @@
 
         kort.appendChild(kropp);
         return kort;
+    }
+
+    /* Alle leksjonane i modulen, med kva som er gjort og kvar ein skal
+     * halde fram. Kvar er ei lenkje, så eleven kan hoppe rett dit. */
+    function teiknLeksjonsliste(modul, leksjonar) {
+        const liste = document.getElementById('leksjonar-' + modul.id);
+        if (!liste || !leksjonar.length) return;
+
+        const nesteId = OrmFramgang.neste(modul.id, leksjonar.map(l => l.id));
+
+        leksjonar.forEach((l, i) => {
+            const ferdig = OrmFramgang.erFerdig(modul.id, l.id);
+            const erNeste = l.id === nesteId;
+
+            const li = document.createElement('li');
+            li.className = 'orm-leksjonspost'
+                + (ferdig ? ' er-ferdig' : '')
+                + (erNeste ? ' er-neste' : '');
+
+            const lenkje = document.createElement('a');
+            lenkje.className = 'orm-leksjonslenkje';
+            lenkje.href = `kode.html?modul=${encodeURIComponent(modul.id)}&leksjon=${encodeURIComponent(l.id)}`;
+
+            const merke = document.createElement('span');
+            merke.className = 'orm-leksjonsmerke';
+            if (ferdig) {
+                merke.dataset.icon = 'check';
+                merke.dataset.iconSize = '14';
+                merke.setAttribute('aria-label', 'Ferdig');
+            } else {
+                merke.textContent = String(i + 1);
+            }
+            lenkje.appendChild(merke);
+
+            const tittel = document.createElement('span');
+            tittel.className = 'orm-leksjonstittel';
+            tittel.textContent = l.tittel;
+            lenkje.appendChild(tittel);
+
+            // Statusen står med ord i tillegg til farge og hake, slik at han
+            // ikkje fell bort for den som ikkje skil fargane.
+            if (erNeste) {
+                const her = document.createElement('span');
+                her.className = 'orm-leksjonsher';
+                her.textContent = ferdig ? '' : 'held fram her';
+                lenkje.appendChild(her);
+            }
+
+            li.appendChild(lenkje);
+            liste.appendChild(li);
+        });
     }
 
     function framgangslinje(modul) {
