@@ -85,9 +85,10 @@ for i in range(1, 6):
             onPakkeliste: (pakkar) => OrmPakkar.settLasta(pakkar),
             onInput: (ledetekst, svar) => OrmUI.spor(ledetekst, svar, () => OrmRunner.stopp()),
             onTreg: (treg) => OrmUI.visTreg(treg),
-            onFerdig: (feil) => {
+            onFerdig: (feil, variablar) => {
                 el.koyrKnapp.disabled = false;
                 el.stoppKnapp.disabled = true;
+                OrmUI.visVariablar(variablar);
                 if (feil) {
                     OrmUI.skrivFeil(feil);
                     OrmEditor.markerFeillinje(feil.linje);

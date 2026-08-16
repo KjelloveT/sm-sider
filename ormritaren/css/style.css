@@ -523,6 +523,56 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
     color: var(--text);
 }
 
+/* ---- variabelrute ---------------------------------------------------- */
+
+.orm-varkropp { padding: 0; }
+
+.orm-vartabell {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 13px;
+}
+
+.orm-vartabell th,
+.orm-vartabell td {
+    padding: 6px 10px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 2px solid color-mix(in srgb, var(--border) 22%, transparent);
+}
+
+.orm-vartabell thead th {
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: var(--muted);
+    background: var(--bg);
+}
+
+.orm-vartabell tbody tr:last-child th,
+.orm-vartabell tbody tr:last-child td { border-bottom: none; }
+
+.orm-varnamn {
+    font-weight: 800;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.orm-varverdi {
+    color: var(--text);
+    word-break: break-word;
+}
+
+.orm-vartype {
+    display: block;
+    margin-top: 2px;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+}
+
 /* ---- varsel ---------------------------------------------------------- */
 
 .orm-varsel {

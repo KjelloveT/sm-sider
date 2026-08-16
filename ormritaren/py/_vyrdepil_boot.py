@@ -66,6 +66,38 @@ def _syntaksfeil(exc):
     }
 
 
+_SKJUL = {"__name__", "__file__", "__builtins__", "__doc__",
+          "__package__", "__loader__", "__spec__"}
+
+
+def variablar():
+    """Verdiane eleven sat att med då programmet var ferdig.
+
+    Modular og funksjonar er utelatne — dei er ikkje det eleven lurer på når
+    noko ikkje stemmer, og ei liste med `math` og `print` ville drukna dei tre
+    variablane som faktisk betyr noko.
+    """
+    modul = sys.modules.get("__main__")
+    if modul is None:
+        return "[]"
+
+    ut = []
+    for namn, verdi in modul.__dict__.items():
+        if namn.startswith("_") or namn in _SKJUL:
+            continue
+        if isinstance(verdi, types.ModuleType) or callable(verdi):
+            continue
+        try:
+            tekst = repr(verdi)
+        except BaseException:  # noqa: BLE001 — eit __repr__ kan kaste kva som helst
+            tekst = "<klarte ikkje vise verdien>"
+        if len(tekst) > 300:
+            tekst = tekst[:300] + " …"
+        ut.append({"namn": namn, "type": type(verdi).__name__, "verdi": tekst})
+
+    return json.dumps(ut)
+
+
 def run_user_code(src):
     """Køyr elevkode i eit ferskt __main__. Returnerer JSON, eller None ved suksess."""
     modul = types.ModuleType("__main__")

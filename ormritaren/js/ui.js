@@ -57,6 +57,42 @@ const OrmUI = (function () {
         ut.scrollTop = ut.scrollHeight;
     }
 
+    /* ---- variablar ----------------------------------------------------- */
+
+    /** Viser kva eleven sat att med. Panelet står skjult når det er tomt. */
+    function visVariablar(liste) {
+        const panel = document.getElementById('panelVariablar');
+        const kropp = document.getElementById('varliste');
+        if (!panel || !kropp) return;
+
+        kropp.textContent = '';
+        if (!liste || !liste.length) { panel.hidden = true; return; }
+
+        liste.forEach(v => {
+            const rad = document.createElement('tr');
+
+            const namn = document.createElement('th');
+            namn.scope = 'row';
+            namn.className = 'orm-varnamn';
+            namn.textContent = v.namn;
+            rad.appendChild(namn);
+
+            const verdi = document.createElement('td');
+            verdi.className = 'orm-varverdi';
+            verdi.textContent = v.verdi;
+            // Typen er nyttig når 12 og "12" ser like ut, men skal ikkje
+            // stele merksemda frå verdien.
+            const type = document.createElement('span');
+            type.className = 'orm-vartype';
+            type.textContent = v.type;
+            verdi.appendChild(type);
+            rad.appendChild(verdi);
+
+            kropp.appendChild(rad);
+        });
+        panel.hidden = false;
+    }
+
     /* ---- status -------------------------------------------------------- */
 
     function status(tekst, tilstand) {
@@ -137,5 +173,5 @@ const OrmUI = (function () {
         });
     }
 
-    return { init, skriv, tomUtskrift, skrivFeil, status, visTreg, spor, koplFanar };
+    return { init, skriv, tomUtskrift, skrivFeil, status, visTreg, spor, koplFanar, visVariablar };
 })();
