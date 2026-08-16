@@ -69,8 +69,13 @@ const OrmRunner = (function () {
                 break;
             case 'ferdig':
                 avsluttKoyring();
-                cb.onFerdig?.(m.feil);
+                cb.onFerdig?.(m.feil, m.variablar || []);
                 break;
+            case 'testsvar': {
+                const svar = ventandeTestar.get(m.id);
+                if (svar) { ventandeTestar.delete(m.id); svar(m.resultat); }
+                break;
+            }
         }
     }
 
@@ -113,12 +118,37 @@ const OrmRunner = (function () {
         if (!worker) return;
         worker.terminate();
         avsluttKoyring();
+        // Ein test som var undervegs får aldri svar frå ein daud worker.
+        ventandeTestar.forEach(svar => svar([{ ok: false, melding: 'Køyringa vart stoppa.' }]));
+        ventandeTestar.clear();
         cb.onStoppa?.();
         lagWorker();
     }
 
+    /* ---- retting -------------------------------------------------------- */
+
+    let testTeljar = 0;
+    const ventandeTestar = new Map();
+
+    /**
+     * Køyrer testane mot koden og gjev eitt resultat per test.
+     * Testane køyrer kvar for seg i eit ferskt __main__ på Python-sida, så
+     * dei kan ikkje smitte over på kvarandre eller på eleven si eiga køyring.
+     * @returns {Promise<Array<{ok:boolean, melding?:string, fekk?:string, vente?:string}>>}
+     */
+    function test(kode, testar) {
+        if (!klar) {
+            return Promise.resolve([{ ok: false, melding: 'Python er ikkje klar enno.' }]);
+        }
+        return new Promise((svar) => {
+            const id = ++testTeljar;
+            ventandeTestar.set(id, svar);
+            worker.postMessage({ type: 'test', id, kode, testar });
+        });
+    }
+
     return {
-        init, koyr, stopp,
+        init, koyr, stopp, test,
         erKlar: () => klar,
         koyrer: () => koyrer,
         harStdin: () => harSAB

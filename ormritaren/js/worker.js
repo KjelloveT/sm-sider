@@ -15,9 +15,12 @@ const PYODIDE_URL = new URL('../../_libs/pyodide/', import.meta.url).href;
 const BOOT_URL = new URL('../py/_vyrdepil_boot.py', import.meta.url).href;
 const TURTLE_URL = new URL('../py/turtle.py', import.meta.url).href;
 const MPL_URL = new URL('../py/_mpl_bru.py', import.meta.url).href;
+const TEST_URL = new URL('../py/_test.py', import.meta.url).href;
 
 let pyodide = null;
 let runUserCode = null;
+let hentVariablar = null;
+let koyrTestar = null;
 let mplKopla = false;
 
 /* Delt minne for stdin. Oppsett frå hovudtråden ved kvar køyring:
@@ -84,6 +87,7 @@ async function start() {
     const boot = await (await fetch(BOOT_URL)).text();
     pyodide.runPython(boot, { globals: pyodide.globals });
     runUserCode = pyodide.globals.get('run_user_code');
+    hentVariablar = pyodide.globals.get('variablar');
 
     // turtle finst ikkje i Pyodide (stdlib-versjonen krev tkinter), så vi
     // legg vår eiga utgåve i arbeidsmappa, som ligg på sys.path.
@@ -151,6 +155,28 @@ self.onmessage = async (e) => {
         return;
     }
 
+    if (m.type === 'test') {
+        try {
+            // Testkoden blir lasta fyrst når nokon faktisk rettar ei oppgåve.
+            if (!koyrTestar) {
+                const kode = await (await fetch(TEST_URL)).text();
+                pyodide.runPython(kode, { globals: pyodide.globals });
+                koyrTestar = pyodide.globals.get('koyr_testar');
+            }
+            // Oppgåva kan bruke bibliotek eleven ikkje har henta enno.
+            await lastFraaImportar(m.kode);
+
+            const svar = koyrTestar(m.kode, JSON.stringify(m.testar));
+            meld('testsvar', { id: m.id, resultat: JSON.parse(svar) });
+        } catch (feil) {
+            meld('testsvar', {
+                id: m.id,
+                resultat: [{ ok: false, melding: String(feil && feil.message || feil) }]
+            });
+        }
+        return;
+    }
+
     if (m.type === 'koyr') {
         if (m.sab) {
             kontroll = new Int32Array(m.sab, 0, 2);
@@ -176,7 +202,10 @@ self.onmessage = async (e) => {
                 + "if _t is not None: _t.tøm()\n"
             );
 
-            meld('ferdig', { feil: resultat ? JSON.parse(resultat) : null });
+            meld('ferdig', {
+                feil: resultat ? JSON.parse(resultat) : null,
+                variablar: JSON.parse(hentVariablar())
+            });
         } catch (feil) {
             // Feil som slepp forbi Python-sida (t.d. input() utan SAB).
             meld('ferdig', {

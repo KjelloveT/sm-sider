@@ -87,7 +87,18 @@ const OrmEditor = (function () {
         if (!cm) return;
         for (let i = 0; i < cm.lineCount(); i++) {
             cm.removeLineClass(i, 'background', 'orm-feillinje');
+            cm.removeLineClass(i, 'background', 'orm-nylinje');
         }
+    }
+
+    /** Markerer linjene som kom til i dette steget av ein kodeturné. */
+    function markerNyeLinjer(linjer) {
+        if (!cm || !linjer?.length) return;
+        reinsk();
+        linjer.forEach(i => {
+            if (i >= 0 && i < cm.lineCount()) cm.addLineClass(i, 'background', 'orm-nylinje');
+        });
+        cm.scrollIntoView({ line: linjer[0], ch: 0 }, 80);
     }
 
     function setSkrift(px) {
@@ -95,5 +106,5 @@ const OrmEditor = (function () {
         if (flate) { flate.style.fontSize = px + 'px'; cm.refresh(); }
     }
 
-    return { lag, hent, set, markerFeillinje, reinsk, setSkrift, cm: () => cm };
+    return { lag, hent, set, markerFeillinje, markerNyeLinjer, reinsk, setSkrift, cm: () => cm };
 })();

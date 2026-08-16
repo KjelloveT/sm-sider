@@ -24,7 +24,8 @@ for i in range(1, 6):
             'filnamn', 'symbolrad', 'kodefelt', 'skriftMindre', 'skriftMeir',
             'fanerad', 'arbeidsflate', 'isolasjonsVarsel', 'lagringsVarsel',
             'lerret', 'biletboks', 'tomGrafikkKnapp', 'bibliotekliste',
-            'panelGrafikk', 'grafikkFane', 'filerKnapp', 'filpanel', 'filTal'
+            'panelGrafikk', 'grafikkFane', 'filerKnapp', 'filpanel', 'filTal',
+            'panelLeksjon', 'leksjonFane'
         ].forEach(id => { el[id] = document.getElementById(id); });
 
         OrmUI.init({ utskrift: el.utskrift, status: el.status, treg: el.tregVarsel });
@@ -51,8 +52,78 @@ for i in range(1, 6):
         if (!OrmRunner.harStdin()) el.isolasjonsVarsel.hidden = false;
 
         lastFiler();
-        gjenopprett();
         startMotor();
+        startLeksjonEllerFri();
+    }
+
+    /* ---- leksjonsmodus --------------------------------------------------- */
+
+    const loeyste = new Set();
+
+    /** Utan ?modul= er dette den frie arbeidsflata, akkurat som før. */
+    async function startLeksjonEllerFri() {
+        const url = new URLSearchParams(location.search);
+        const modulId = url.get('modul');
+        if (!modulId) { gjenopprett(); return; }
+
+        OrmOppgaver.init({
+            opneKode: (kode, oppgaveId) => opneKode(kode, oppgaveId),
+            sjekk: (oppgave) => OrmRunner.test(OrmEditor.hent(), oppgave.testar || []),
+            loest: (id) => {
+                loeyste.add(id);
+                const modul = OrmLeksjon.modul();
+                const leksjon = OrmLeksjon.leksjon();
+                if (!modul || !leksjon) return;
+                OrmFramgang.merk(modul.id, leksjon.id,
+                    OrmLeksjon.alleLoeyste(loeyste) ? { status: 'ferdig' } : {});
+            }
+        });
+
+        OrmLeksjon.init({
+            opneKode: (kode) => opneKode(kode),
+            opneTurnesteg: (kode, nye) => {
+                opneKode(kode);
+                OrmEditor.markerNyeLinjer(nye);
+            }
+        });
+
+        try {
+            await OrmLeksjon.last(modulId, url.get('leksjon'));
+        } catch (feil) {
+            el.panelLeksjon.hidden = false;
+            el.arbeidsflate.dataset.modus = 'leksjon';
+            const p = document.createElement('p');
+            p.className = 'orm-varsel orm-varsel-aatvaring';
+            p.textContent = String(feil.message || feil) +
+                ' Du kan framleis bruke arbeidsflata som fri programmering.';
+            el.panelLeksjon.appendChild(p);
+            gjenopprett();
+            return;
+        }
+
+        el.arbeidsflate.dataset.modus = 'leksjon';
+        el.panelLeksjon.hidden = false;
+        el.leksjonFane.hidden = false;
+        OrmLeksjon.teikn(el.panelLeksjon);
+
+        // Leksjonar treng ikkje fillista i vegen, men ho skal framleis finnast.
+        el.filnamn.value = OrmLeksjon.leksjon().tittel + '.py';
+        OrmEditor.set(OrmLeksjon.leksjon().doeme?.kode || '# Skriv koden din her\n');
+        ulagraEndringar = false;
+        oppdaterLagreknapp();
+    }
+
+    /** Legg kode i editoren. Spør fyrst om eleven har endra noko sjølv —
+     *  utforsking skal ikkje straffast med tap av arbeid. */
+    function opneKode(kode, oppgaveId) {
+        if (ulagraEndringar &&
+            !confirm('Du har endra koden. Hente inn den nye koden likevel?')) return;
+        OrmEditor.set(kode);
+        OrmEditor.reinsk();
+        ulagraEndringar = false;
+        oppdaterLagreknapp();
+        visFane('kode');
+        if (oppgaveId) el.arbeidsflate.dataset.oppgave = oppgaveId;
     }
 
     /* ---- motoren ------------------------------------------------------- */
@@ -85,9 +156,10 @@ for i in range(1, 6):
             onPakkeliste: (pakkar) => OrmPakkar.settLasta(pakkar),
             onInput: (ledetekst, svar) => OrmUI.spor(ledetekst, svar, () => OrmRunner.stopp()),
             onTreg: (treg) => OrmUI.visTreg(treg),
-            onFerdig: (feil) => {
+            onFerdig: (feil, variablar) => {
                 el.koyrKnapp.disabled = false;
                 el.stoppKnapp.disabled = true;
+                OrmUI.visVariablar(variablar);
                 if (feil) {
                     OrmUI.skrivFeil(feil);
                     OrmEditor.markerFeillinje(feil.linje);

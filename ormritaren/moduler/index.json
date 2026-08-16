@@ -1,0 +1,106 @@
+{
+  "app": "ormritaren",
+  "version": 1,
+  "_note": "Katalog over opplæringsmodular. Same mønster som frodekapp/quizzes/index.json. Modular med klar:false blir viste som «kjem snart» — det er med vilje, så ein lærar ser kva som er på veg.",
+  "_kompetansemaal": "Henta frå udir.no/lk20/mat01-06, august 2026. Blir viste på modulkortet og i leksjonen, slik at læraren ser kva mål opplegget svarar på.",
+
+  "grupper": [
+    {
+      "id": "grunnkurs",
+      "tittel": "Grunnkurs",
+      "skildring": "Start her om du ikkje har programmert før. Ni leksjonar som tek deg frå den fyrste linja til å skrive dine eigne funksjonar."
+    },
+    {
+      "id": "tema",
+      "tittel": "Matematikk med programmering",
+      "skildring": "Fire emne der programmering er verktøyet, ikkje målet. Du kan ta dei i den rekkjefølgja som passar timen — men grunnkurset bør sitje fyrst."
+    }
+  ],
+
+  "modular": [
+    {
+      "id": "grunnkurs",
+      "gruppe": "grunnkurs",
+      "fil": "grunnkurs.json",
+      "tittel": "Fyrste stega",
+      "ikon": "rocket",
+      "accent": "accent",
+      "trinn": "8.–10. trinn",
+      "talLeksjonar": 9,
+      "klar": true,
+      "skildring": "Frå print til funksjonar. Du lærer å lagre verdiar, gjenta ting, velje mellom alternativ og lage dine eigne kommandoar — og å lese ei feilmelding utan å bli skremd.",
+      "kompetansemaal": [
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
+        "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk",
+        "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ]
+    },
+
+    {
+      "id": "sannsyn",
+      "gruppe": "tema",
+      "fil": "sannsyn.json",
+      "tittel": "Sannsyn",
+      "ikon": "diamond",
+      "accent": "accent2",
+      "trinn": "9. trinn",
+      "talLeksjonar": 8,
+      "klar": false,
+      "skildring": "Kast tusen terningar på eit sekund. Du simulerer tilfeldige forsøk, ser at den relative frekvensen nærmar seg det du reknar ut, og møter Monty Hall-problemet.",
+      "kompetansemaal": [
+        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
+        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+      ]
+    },
+    {
+      "id": "statistikk",
+      "gruppe": "tema",
+      "fil": "statistikk.json",
+      "tittel": "Statistikk",
+      "ikon": "presentation",
+      "accent": "accent4",
+      "trinn": "9. trinn",
+      "talLeksjonar": 7,
+      "klar": false,
+      "skildring": "Rekn ut sentralmål og spreiingsmål på eit datasett klassen din har samla sjølv, teikn diagram — og sjå korleis dei same tala kan framstillast for å fremje kvart sitt syn.",
+      "kompetansemaal": [
+        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene",
+        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet",
+        "9. trinn: sammenligne og argumentere for hvordan framstillinger av tall og data kan brukes for å fremme ulike synspunkter"
+      ]
+    },
+    {
+      "id": "okonomi",
+      "gruppe": "tema",
+      "fil": "okonomi.json",
+      "tittel": "Rente og økonomi",
+      "ikon": "coins",
+      "accent": "accent5",
+      "trinn": "10. trinn",
+      "talLeksjonar": 7,
+      "klar": false,
+      "skildring": "Kva kostar eit kredittkjøp eigentleg? Du reknar på vekstfaktor, sparing med renters rente, lån og nedbetaling — og samanliknar tilbod som ser like ut.",
+      "kompetansemaal": [
+        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp"
+      ]
+    },
+    {
+      "id": "funksjonar",
+      "gruppe": "tema",
+      "fil": "funksjonar.json",
+      "tittel": "Graf og funksjonar",
+      "ikon": "target",
+      "accent": "accent3",
+      "trinn": "8. og 10. trinn",
+      "talLeksjonar": 8,
+      "klar": false,
+      "skildring": "Teikn koordinatsystemet sjølv med skilpadda, og gå frå situasjon til tabell til graf til uttrykk. Til slutt samanliknar du lineære, andregrads- og eksponentialfunksjonar.",
+      "kompetansemaal": [
+        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
+        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene",
+        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy"
+      ]
+    }
+  ]
+}
