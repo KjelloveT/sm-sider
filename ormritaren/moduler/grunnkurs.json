@@ -3,7 +3,6 @@
   "version": 1,
   "id": "grunnkurs",
   "tittel": "Fyrste stega",
-
   "leksjonar": [
     {
       "id": "print",
@@ -12,11 +11,26 @@
         "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
       ],
       "tekst": [
-        { "type": "avsnitt", "tekst": "Eit program er ei liste med instruksjonar. Maskina gjer nøyaktig det du skriv — verken meir eller mindre — og ho gjer det i den rekkjefølgja du skriv det. Det er både det fine og det irriterande med programmering." },
-        { "type": "avsnitt", "tekst": "Den fyrste instruksjonen du treng, er den som skriv noko ut på skjermen. Han heiter `print`." },
-        { "type": "kode", "kode": "print(\"Hei, verda!\")" },
-        { "type": "avsnitt", "tekst": "Parentesane seier kva `print` skal skrive. Hermeteikna seier at det er tekst. Tek du bort hermeteikna, trur Python at du meiner noko heilt anna — og seier frå." },
-        { "type": "merk", "tekst": "Ei linje som byrjar med `#` er ein **kommentar**. Python hoppar over henne. Kommentarar er til for menneske som skal lese koden seinare — ofte deg sjølv." }
+        {
+          "type": "avsnitt",
+          "tekst": "Eit program er ei liste med instruksjonar. Maskina gjer nøyaktig det du skriv — verken meir eller mindre — og ho gjer det i den rekkjefølgja du skriv det. Det er både det fine og det irriterande med programmering."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Den fyrste instruksjonen du treng, er den som skriv noko ut på skjermen. Han heiter `print`."
+        },
+        {
+          "type": "kode",
+          "kode": "print(\"Hei, verda!\")"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Parentesane seier kva `print` skal skrive. Hermeteikna seier at det er tekst. Tek du bort hermeteikna, trur Python at du meiner noko heilt anna — og seier frå."
+        },
+        {
+          "type": "merk",
+          "tekst": "Ei linje som byrjar med `#` er ein **kommentar**. Python hoppar over henne. Kommentarar er til for menneske som skal lese koden seinare — ofte deg sjølv."
+        }
       ],
       "doeme": {
         "kode": "# Alt som står bak # er ein kommentar\nprint(\"Hei, verda!\")\nprint(\"Eg lærer Python\")",
@@ -25,10 +39,24 @@
       "turne": {
         "tittel": "Bygg ditt fyrste program",
         "steg": [
-          { "tekst": "Vi startar med éi linje som skriv ut ei helsing.", "kode": "print(\"Hei!\")" },
-          { "tekst": "Legg til ei linje til. Python køyrer dei ovanfrå og ned.", "kode": "print(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")", "proev": "Byt om på dei to linjene og køyr. Kva skjer med rekkjefølgja i utskrifta?" },
-          { "tekst": "`print` kan òg skrive fleire ting på same linja. Skil dei med komma, så set Python inn eit mellomrom.", "kode": "print(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")\nprint(\"Eg er\", 1, \"år gammal\")", "proev": "Byt 1 med kor gammal du er." },
-          { "tekst": "Til slutt legg vi på ein kommentar, så den som les koden skjøner kva han gjer.", "kode": "# Eit lite presentasjonsprogram\nprint(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")\nprint(\"Eg er\", 1, \"år gammal\")" }
+          {
+            "tekst": "Vi startar med éi linje som skriv ut ei helsing.",
+            "kode": "print(\"Hei!\")"
+          },
+          {
+            "tekst": "Legg til ei linje til. Python køyrer dei ovanfrå og ned.",
+            "kode": "print(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")",
+            "proev": "Byt om på dei to linjene og køyr. Kva skjer med rekkjefølgja i utskrifta?"
+          },
+          {
+            "tekst": "`print` kan òg skrive fleire ting på same linja. Skil dei med komma, så set Python inn eit mellomrom.",
+            "kode": "print(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")\nprint(\"Eg er\", 1, \"år gammal\")",
+            "proev": "Byt 1 med kor gammal du er."
+          },
+          {
+            "tekst": "Til slutt legg vi på ein kommentar, så den som les koden skjøner kva han gjer.",
+            "kode": "# Eit lite presentasjonsprogram\nprint(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")\nprint(\"Eg er\", 1, \"år gammal\")"
+          }
         ]
       },
       "oppgaver": [
@@ -42,7 +70,10 @@
             "Hugs hermeteikn rundt teksten: `print(\"God morgon\")`"
           ],
           "testar": [
-            { "type": "utskrift", "vent": "God morgon\nI dag skal vi programmere" }
+            {
+              "type": "utskrift",
+              "vent": "God morgon\nI dag skal vi programmere"
+            }
           ],
           "loeysing": "print(\"God morgon\")\nprint(\"I dag skal vi programmere\")"
         },
@@ -69,14 +100,16 @@
             "Tekst må stå mellom hermeteikn."
           ],
           "testar": [
-            { "type": "utskrift", "vent": "Hei på deg" }
+            {
+              "type": "utskrift",
+              "vent": "Hei på deg"
+            }
           ],
           "loeysing": "print(\"Hei på deg\")"
         }
       ],
       "oppsummering": "`print` skriv ut på skjermen. **Tekst må stå mellom hermeteikn**, og Python køyrer linjene ovanfrå og ned. Alt bak `#` er ein kommentar som Python hoppar over."
     },
-
     {
       "id": "variablar",
       "tittel": "Variablar — å lagre ein verdi",
@@ -84,17 +117,38 @@
         "8. trinn: lage og forklare regneuttrykk med tall, variabler og konstanter knyttet til praktiske situasjoner"
       ],
       "tekst": [
-        { "type": "avsnitt", "tekst": "Ein variabel er eit namn som held på ein verdi. Du lagar han med eit likskapsteikn: namnet til venstre, verdien til høgre." },
-        { "type": "kode", "kode": "alder = 13" },
-        { "type": "avsnitt", "tekst": "No hugsar Python at `alder` er **13**. Du kan bruke namnet i staden for talet, og du kan rekne med det." },
-        { "type": "kode", "kode": "alder = 13\nprint(alder + 1)" },
-        { "type": "merk", "tekst": "Likskapsteiknet i Python tyder **ikkje** «er lik» slik som i matematikken. Det tyder «**lagre denne verdien under dette namnet**». Difor gjev `alder = alder + 1` god meining her, sjølv om det ville vore tull i ei likning." },
-        { "type": "avsnitt", "tekst": "Ein variabel kan halde på tekst òg. Då må teksten stå mellom hermeteikn, akkurat som i `print`." },
-        { "type": "punkt", "punkt": [
-          "Namnet må byrje med ein bokstav, og kan ikkje ha mellomrom.",
-          "Store og små bokstavar er ulike: `Alder` og `alder` er **to** variablar.",
-          "Vel namn som seier kva verdien er. `talet` er betre enn `t`."
-        ] }
+        {
+          "type": "avsnitt",
+          "tekst": "Ein variabel er eit namn som held på ein verdi. Du lagar han med eit likskapsteikn: namnet til venstre, verdien til høgre."
+        },
+        {
+          "type": "kode",
+          "kode": "alder = 13"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "No hugsar Python at `alder` er **13**. Du kan bruke namnet i staden for talet, og du kan rekne med det."
+        },
+        {
+          "type": "kode",
+          "kode": "alder = 13\nprint(alder + 1)"
+        },
+        {
+          "type": "merk",
+          "tekst": "Likskapsteiknet i Python tyder **ikkje** «er lik» slik som i matematikken. Det tyder «**lagre denne verdien under dette namnet**». Difor gjev `alder = alder + 1` god meining her, sjølv om det ville vore tull i ei likning."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein variabel kan halde på tekst òg. Då må teksten stå mellom hermeteikn, akkurat som i `print`."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "Namnet må byrje med ein bokstav, og kan ikkje ha mellomrom.",
+            "Store og små bokstavar er ulike: `Alder` og `alder` er **to** variablar.",
+            "Vel namn som seier kva verdien er. `talet` er betre enn `t`."
+          ]
+        }
       ],
       "doeme": {
         "kode": "namn = \"Åse\"\nalder = 13\nprint(namn, \"er\", alder, \"år\")",
@@ -103,10 +157,23 @@
       "turne": {
         "tittel": "Rekn ut prisen på ein handletur",
         "steg": [
-          { "tekst": "Vi lagrar prisen på éin ting.", "kode": "pris = 25" },
-          { "tekst": "Så lagrar vi kor mange vi kjøper.", "kode": "pris = 25\ntal = 4" },
-          { "tekst": "No kan vi rekne ut totalen og lagre han i ein tredje variabel.", "kode": "pris = 25\ntal = 4\ntotal = pris * tal" },
-          { "tekst": "Til slutt skriv vi ut svaret. Legg merke til at vi aldri skreiv 100 nokon stad — Python rekna det ut.", "kode": "pris = 25\ntal = 4\ntotal = pris * tal\nprint(\"Du må betale\", total, \"kroner\")", "proev": "Byt tal til 7 og køyr på nytt. Du treng berre endre éin stad." }
+          {
+            "tekst": "Vi lagrar prisen på éin ting.",
+            "kode": "pris = 25"
+          },
+          {
+            "tekst": "Så lagrar vi kor mange vi kjøper.",
+            "kode": "pris = 25\ntal = 4"
+          },
+          {
+            "tekst": "No kan vi rekne ut totalen og lagre han i ein tredje variabel.",
+            "kode": "pris = 25\ntal = 4\ntotal = pris * tal"
+          },
+          {
+            "tekst": "Til slutt skriv vi ut svaret. Legg merke til at vi aldri skreiv 100 nokon stad — Python rekna det ut.",
+            "kode": "pris = 25\ntal = 4\ntotal = pris * tal\nprint(\"Du må betale\", total, \"kroner\")",
+            "proev": "Byt tal til 7 og køyr på nytt. Du treng berre endre éin stad."
+          }
         ]
       },
       "oppgaver": [
@@ -120,7 +187,10 @@
             "`print(sider * bokstavar)`"
           ],
           "testar": [
-            { "type": "utskrift", "vent": "3600" }
+            {
+              "type": "utskrift",
+              "vent": "3600"
+            }
           ],
           "loeysing": "sider = 12\nbokstavar = 300\nprint(sider * bokstavar)"
         },
@@ -129,7 +199,12 @@
           "type": "les",
           "kode": "tal = 5\ntal = tal + 3\ntal = tal * 2\nprint(tal)",
           "sporsmal": "Kva skriv programmet ut?",
-          "alternativ": ["16", "13", "11", "5"],
+          "alternativ": [
+            "16",
+            "13",
+            "11",
+            "5"
+          ],
           "rett": 0,
           "forklaring": "Linjene blir køyrde ovanfrå og ned. Fyrst er `tal` **5**, så blir det 5 + 3 = **8**, og til slutt 8 * 2 = **16**. Kvar linje bruker verdien slik han var akkurat då."
         },
@@ -143,14 +218,16 @@
             "Alt som står mellom hermeteikn blir skrive ut som **tekst**, ikkje rekna ut."
           ],
           "testar": [
-            { "type": "utskrift", "vent": "24" }
+            {
+              "type": "utskrift",
+              "vent": "24"
+            }
           ],
           "loeysing": "pris = 8\ntal = 3\nprint(pris * tal)"
         }
       ],
       "oppsummering": "Ein variabel er eit namn som held på ein verdi. Du lagar han med `=`, og du kan rekne med han. **Hermeteikn gjer noko til tekst** — utan dei reknar Python det ut."
     },
-
     {
       "id": "input",
       "tittel": "Spørje brukaren",
@@ -158,13 +235,34 @@
         "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
       ],
       "tekst": [
-        { "type": "avsnitt", "tekst": "Til no har programma dine gjort det same kvar gong. Med `input` kan du spørje den som køyrer programmet om noko, og bruke svaret." },
-        { "type": "kode", "kode": "namn = input(\"Kva heiter du? \")\nprint(\"Hei,\", namn)" },
-        { "type": "avsnitt", "tekst": "Teksten i parentesen er spørsmålet. Svaret brukaren skriv, blir lagra i **variabelen**." },
-        { "type": "merk", "tekst": "`input` gjev deg **alltid tekst** — aldri tal. Skriv brukaren 7, får du teksten `\"7\"`, ikkje talet `7`. Skal du rekne med svaret, må du gjere det om fyrst." },
-        { "type": "avsnitt", "tekst": "Det gjer du med `int`, som lagar eit heiltal av teksten:" },
-        { "type": "kode", "kode": "alder = int(input(\"Kor gamal er du? \"))\nprint(\"Neste år blir du\", alder + 1)" },
-        { "type": "avsnitt", "tekst": "Skal du ha eit desimaltal, bruker du `float` i staden for `int`." }
+        {
+          "type": "avsnitt",
+          "tekst": "Til no har programma dine gjort det same kvar gong. Med `input` kan du spørje den som køyrer programmet om noko, og bruke svaret."
+        },
+        {
+          "type": "kode",
+          "kode": "namn = input(\"Kva heiter du? \")\nprint(\"Hei,\", namn)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Teksten i parentesen er spørsmålet. Svaret brukaren skriv, blir lagra i **variabelen**."
+        },
+        {
+          "type": "merk",
+          "tekst": "`input` gjev deg **alltid tekst** — aldri tal. Skriv brukaren 7, får du teksten `\"7\"`, ikkje talet `7`. Skal du rekne med svaret, må du gjere det om fyrst."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det gjer du med `int`, som lagar eit heiltal av teksten:"
+        },
+        {
+          "type": "kode",
+          "kode": "alder = int(input(\"Kor gamal er du? \"))\nprint(\"Neste år blir du\", alder + 1)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Skal du ha eit desimaltal, bruker du `float` i staden for `int`."
+        }
       ],
       "doeme": {
         "kode": "namn = input(\"Kva heiter du? \")\nalder = int(input(\"Kor gamal er du? \"))\nprint(\"Hei,\", namn + \"! Om ti år er du\", alder + 10)",
@@ -173,9 +271,19 @@
       "turne": {
         "tittel": "Lag ein liten kalkulator",
         "steg": [
-          { "tekst": "Vi spør om det fyrste talet. Hugs at `input` gjev tekst, så vi pakkar det i `int` med ein gong.", "kode": "a = int(input(\"Fyrste talet: \"))" },
-          { "tekst": "Så spør vi om det andre.", "kode": "a = int(input(\"Fyrste talet: \"))\nb = int(input(\"Andre talet: \"))" },
-          { "tekst": "No kan vi leggje dei saman.", "kode": "a = int(input(\"Fyrste talet: \"))\nb = int(input(\"Andre talet: \"))\nprint(a, \"+\", b, \"=\", a + b)", "proev": "Legg til ei linje som òg viser `a` gonger `b`." }
+          {
+            "tekst": "Vi spør om det fyrste talet. Hugs at `input` gjev tekst, så vi pakkar det i `int` med ein gong.",
+            "kode": "a = int(input(\"Fyrste talet: \"))"
+          },
+          {
+            "tekst": "Så spør vi om det andre.",
+            "kode": "a = int(input(\"Fyrste talet: \"))\nb = int(input(\"Andre talet: \"))"
+          },
+          {
+            "tekst": "No kan vi leggje dei saman.",
+            "kode": "a = int(input(\"Fyrste talet: \"))\nb = int(input(\"Andre talet: \"))\nprint(a, \"+\", b, \"=\", a + b)",
+            "proev": "Legg til ei linje som òg viser `a` gonger `b`."
+          }
         ]
       },
       "oppgaver": [
@@ -189,8 +297,20 @@
             "`print(kroner * 2)`"
           ],
           "testar": [
-            { "type": "utskrift", "stdin": ["12"], "vent": "24" },
-            { "type": "utskrift", "stdin": ["5"], "vent": "10" }
+            {
+              "type": "utskrift",
+              "stdin": [
+                "12"
+              ],
+              "vent": "24"
+            },
+            {
+              "type": "utskrift",
+              "stdin": [
+                "5"
+              ],
+              "vent": "10"
+            }
           ],
           "loeysing": "kroner = int(input(\"Kor mange kroner? \"))\nprint(kroner * 2)"
         },
@@ -199,7 +319,12 @@
           "type": "les",
           "kode": "tal = input(\"Skriv eit tal: \")\nprint(tal + tal)",
           "sporsmal": "Brukaren skriv 3. Kva skriv programmet ut?",
-          "alternativ": ["6", "33", "3 3", "Det blir feilmelding"],
+          "alternativ": [
+            "6",
+            "33",
+            "3 3",
+            "Det blir feilmelding"
+          ],
           "rett": 1,
           "forklaring": "`input` gjev tekst, ikkje tal. For tekst tyder `+` å **setje saman**, ikkje å leggje saman — så `\"3\" + \"3\"` blir `\"33\"`. Hadde det stått `int(input(...))`, ville svaret vore 6."
         },
@@ -213,12 +338,820 @@
             "`input` gjev tekst. Pakk det i `int()` for å få eit tal."
           ],
           "testar": [
-            { "type": "utskrift", "stdin": ["5"], "vent": "11" }
+            {
+              "type": "utskrift",
+              "stdin": [
+                "5"
+              ],
+              "vent": "11"
+            }
           ],
           "loeysing": "tal = int(input(\"Skriv eit tal: \"))\nprint(tal * 2 + 1)"
         }
       ],
       "oppsummering": "`input` spør brukaren og gjev deg **alltid tekst**. Skal du rekne med svaret, pakkar du det i `int` for heiltal eller `float` for desimaltal."
+    },
+    {
+      "id": "loekker",
+      "tittel": "Gjentaking med løkker",
+      "kompetansemaal": [
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
+        "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Skal du skrive ut tala frå 1 til 100, vil du ikkje skrive hundre `print`-linjer. Ei **løkke** gjentek dei same instruksjonane så mange gonger du vil."
+        },
+        {
+          "type": "kode",
+          "kode": "for i in range(5):\n    print(i)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "`range(5)` gjev fem tal: **0, 1, 2, 3 og 4**. Legg merke til at han startar på 0 og sluttar **før** 5. Det er slik Python tel, og det er den vanlegaste kjelda til feil for nye programmerarar."
+        },
+        {
+          "type": "merk",
+          "tekst": "Alt som skal gjentakast må rykkjast inn under `for`-linja. Innrykket er ikkje pynt — det er slik Python ser kva som høyrer til løkka. Bruk fire mellomrom."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vil du starte ein annan stad, gjev du `range` to tal: `range(1, 6)` gjev 1, 2, 3, 4, 5. Med eit tredje tal styrer du kor langt han hoppar."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`range(5)` gjev 0, 1, 2, 3, 4",
+            "`range(1, 6)` gjev 1, 2, 3, 4, 5",
+            "`range(0, 11, 2)` gjev 0, 2, 4, 6, 8, 10"
+          ]
+        }
+      ],
+      "doeme": {
+        "kode": "# 7-gangen\nfor i in range(1, 11):\n    print(i, \"gonger 7 er\", i * 7)",
+        "oppmoding": "Køyr, og byt så 7 med eit anna tal. Prøv òg å endre `range(1, 11)` til `range(1, 5)`."
+      },
+      "turne": {
+        "tittel": "Legg saman tala frå 1 til 100",
+        "steg": [
+          {
+            "tekst": "Vi treng ein stad å samle summen. Han startar på 0.",
+            "kode": "sum = 0"
+          },
+          {
+            "tekst": "Så lagar vi ei løkke som går gjennom alle tala frå 1 til 100.",
+            "kode": "sum = 0\nfor tal in range(1, 101):\n    print(tal)"
+          },
+          {
+            "tekst": "I staden for å skrive ut kvart tal, legg vi det til summen. Linja inni løkka blir køyrd hundre gonger.",
+            "kode": "sum = 0\nfor tal in range(1, 101):\n    sum = sum + tal"
+          },
+          {
+            "tekst": "Til slutt skriv vi ut svaret — utanfor løkka, så det berre skjer éin gong.",
+            "kode": "sum = 0\nfor tal in range(1, 101):\n    sum = sum + tal\nprint(\"Summen er\", sum)",
+            "proev": "Flytt `print`-linja inn i løkka ved å rykkje henne inn. Kva skjer då, og kvifor?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "loekke-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon som heiter `sum_til` og tek imot eit tal `n`. Han skal leggje saman alle heiltala frå 1 til og med `n`, og **returnere** summen.",
+          "startkode": "def sum_til(n):\n    sum = 0\n    # skriv løkka her\n    return sum\n",
+          "hint": [
+            "Løkka skal gå `for tal in range(1, n + 1)` — hugs at `range` sluttar før det siste talet.",
+            "Inni løkka: `sum = sum + tal`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "sum_til",
+              "args": [
+                10
+              ],
+              "vent": 55
+            },
+            {
+              "type": "kall",
+              "fn": "sum_til",
+              "args": [
+                100
+              ],
+              "vent": 5050
+            },
+            {
+              "type": "kall",
+              "fn": "sum_til",
+              "args": [
+                1
+              ],
+              "vent": 1
+            }
+          ],
+          "loeysing": "def sum_til(n):\n    sum = 0\n    for tal in range(1, n + 1):\n        sum = sum + tal\n    return sum"
+        },
+        {
+          "id": "loekke-2",
+          "type": "les",
+          "kode": "for i in range(3):\n    print(i)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "1\n2\n3",
+            "0\n1\n2",
+            "0\n1\n2\n3",
+            "3"
+          ],
+          "rett": 1,
+          "forklaring": "`range(3)` startar på **0** og sluttar **før** 3. Difor blir det 0, 1 og 2 — tre tal, men ikkje dei du kanskje venta."
+        },
+        {
+          "id": "loekke-3",
+          "type": "rett",
+          "tekst": "Programmet skal skrive ut tala **1 til 5**, men det skriv ut noko anna. Rett det.",
+          "startkode": "for i in range(5):\n    print(i)",
+          "hint": [
+            "`range(5)` gjev 0, 1, 2, 3, 4 — ikkje 1 til 5.",
+            "Gjev `range` to tal: kvar skal han starte, og kvar skal han slutte?"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "1\n2\n3\n4\n5"
+            }
+          ],
+          "loeysing": "for i in range(1, 6):\n    print(i)"
+        }
+      ],
+      "oppsummering": "Ei `for`-løkke gjentek det som står innrykt under henne. `range(n)` startar på **0** og sluttar **før** n. Innrykket avgjer kva som er inni løkka og kva som er utanfor."
+    },
+    {
+      "id": "val",
+      "tittel": "Val — if, elif og else",
+      "kompetansemaal": [
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Til no har programma gjort det same uansett. Med `if` kan dei velje: gjer dette **dersom** noko stemmer."
+        },
+        {
+          "type": "kode",
+          "kode": "alder = 13\nif alder >= 12:\n    print(\"Du kan sjå filmen\")"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vil du gjere noko anna når det **ikkje** stemmer, bruker du `else`. Skal du sjekke fleire moglegheiter etter kvarandre, set du `elif` mellom."
+        },
+        {
+          "type": "kode",
+          "kode": "poeng = 34\nif poeng >= 40:\n    print(\"Godt jobba\")\nelif poeng >= 20:\n    print(\"Bra\")\nelse:\n    print(\"Prøv igjen\")"
+        },
+        {
+          "type": "merk",
+          "tekst": "To likskapsteikn `==` spør **er dette likt?**. Eitt likskapsteikn `=` **lagrar** ein verdi. Dette er den vanlegaste skrivefeilen i heile Python."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`==` er lik, `!=` er ikkje lik",
+            "`<` mindre enn, `>` større enn",
+            "`<=` mindre eller lik, `>=` større eller lik"
+          ]
+        }
+      ],
+      "doeme": {
+        "kode": "tal = int(input(\"Skriv eit tal: \"))\nif tal % 2 == 0:\n    print(tal, \"er eit partal\")\nelse:\n    print(tal, \"er eit oddetal\")",
+        "oppmoding": "Køyr og prøv fleire tal. `%` gjev resten etter deling — du møter han igjen i leksjonen om matematikk."
+      },
+      "turne": {
+        "tittel": "Gjer om poeng til karakter",
+        "steg": [
+          {
+            "tekst": "Vi startar med poengsummen.",
+            "kode": "poeng = 34"
+          },
+          {
+            "tekst": "Så sjekkar vi det høgaste steget fyrst. Rekkjefølgja betyr noko: Python stoppar ved det fyrste som stemmer.",
+            "kode": "poeng = 34\nif poeng >= 40:\n    print(\"Karakter 6\")"
+          },
+          {
+            "tekst": "Vi legg til fleire steg med `elif`.",
+            "kode": "poeng = 34\nif poeng >= 40:\n    print(\"Karakter 6\")\nelif poeng >= 30:\n    print(\"Karakter 5\")\nelif poeng >= 20:\n    print(\"Karakter 4\")"
+          },
+          {
+            "tekst": "Og til slutt `else` for alt som er att.",
+            "kode": "poeng = 34\nif poeng >= 40:\n    print(\"Karakter 6\")\nelif poeng >= 30:\n    print(\"Karakter 5\")\nelif poeng >= 20:\n    print(\"Karakter 4\")\nelse:\n    print(\"Under 20 poeng\")",
+            "proev": "Snu rekkjefølgja så `poeng >= 20` kjem fyrst. Kva skjer med 34 poeng då — og kvifor?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "val-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `storst` som tek imot to tal og **returnerer** det største av dei. Er dei like store, kan du returnere kva som helst av dei.",
+          "startkode": "def storst(a, b):\n    # skriv koden her\n",
+          "hint": [
+            "Bruk `if a > b:` og `return a`",
+            "Hugs `else:` med `return b`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "storst",
+              "args": [
+                3,
+                7
+              ],
+              "vent": 7
+            },
+            {
+              "type": "kall",
+              "fn": "storst",
+              "args": [
+                10,
+                2
+              ],
+              "vent": 10
+            },
+            {
+              "type": "kall",
+              "fn": "storst",
+              "args": [
+                5,
+                5
+              ],
+              "vent": 5
+            }
+          ],
+          "loeysing": "def storst(a, b):\n    if a > b:\n        return a\n    else:\n        return b"
+        },
+        {
+          "id": "val-2",
+          "type": "les",
+          "kode": "tal = 15\nif tal > 20:\n    print(\"stor\")\nelif tal > 10:\n    print(\"middels\")\nelif tal > 5:\n    print(\"liten\")\nelse:\n    print(\"bitteliten\")",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "stor",
+            "middels",
+            "liten",
+            "middels\nliten"
+          ],
+          "rett": 1,
+          "forklaring": "15 er ikkje større enn 20, så fyrste testen feilar. 15 **er** større enn 10, så «middels» blir skrive ut — og då **stoppar** Python. Resten av `elif`-ane blir ikkje sjekka i det heile, sjølv om 15 òg er større enn 5."
+        },
+        {
+          "id": "val-3",
+          "type": "rett",
+          "tekst": "Programmet skal sjekke om passordet er rett, men det ryk med ein feilmelding. Finn og rett feilen.",
+          "startkode": "passord = \"orm123\"\nif passord = \"orm123\":\n    print(\"Rett passord\")\nelse:\n    print(\"Feil passord\")",
+          "hint": [
+            "Les feilmeldinga — ho peikar på `if`-linja.",
+            "Eitt `=` lagrar ein verdi. Kva bruker du for å **samanlikne**?"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "Rett passord"
+            }
+          ],
+          "loeysing": "passord = \"orm123\"\nif passord == \"orm123\":\n    print(\"Rett passord\")\nelse:\n    print(\"Feil passord\")"
+        }
+      ],
+      "oppsummering": "`if` vel kva som skal skje. `elif` gjev fleire moglegheiter, `else` tek resten. Python stoppar ved det **fyrste** som stemmer, så rekkjefølgja betyr noko. Hugs `==` for samanlikning."
+    },
+    {
+      "id": "while",
+      "tittel": "Løkker som ikkje veit kor lenge",
+      "kompetansemaal": [
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei `for`-løkke veit på førehand kor mange gonger ho skal gå. Men av og til veit du ikkje det — du vil halde fram **så lenge** noko stemmer. Då bruker du `while`."
+        },
+        {
+          "type": "kode",
+          "kode": "tal = 1\nwhile tal < 100:\n    tal = tal * 2\nprint(tal)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Løkka held fram så lenge `tal` er mindre enn 100. Kvar runde doblar vi, og når `tal` passerer 100 stoppar ho."
+        },
+        {
+          "type": "merk",
+          "tekst": "Noko inni løkka **må** endre det som blir sjekka. Gløymer du det, blir vilkåret sant for alltid, og programmet stoppar aldri. Då trykkjer du **Stopp** — koden din blir verande, og du kan rette feilen."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ei løkke som aldri stoppar er ikkje farleg her. Python køyrer i sin eigen tråd, så sida svarar framleis, og Stopp-knappen avbryt henne."
+        }
+      ],
+      "doeme": {
+        "kode": "# Nedteljing\ntal = 5\nwhile tal > 0:\n    print(tal)\n    tal = tal - 1\nprint(\"Start!\")",
+        "oppmoding": "Køyr fyrst som han står. Ta så bort linja `tal = tal - 1` og køyr igjen — og trykk **Stopp** når du har sett kva som skjer."
+      },
+      "turne": {
+        "tittel": "Kor mange gonger må vi doble?",
+        "steg": [
+          {
+            "tekst": "Vi startar med 1 krone, og tel kor mange gonger vi doblar.",
+            "kode": "kroner = 1\ngonger = 0"
+          },
+          {
+            "tekst": "Så lagar vi løkka. Ho skal gå så lenge vi har under 1000 kroner.",
+            "kode": "kroner = 1\ngonger = 0\nwhile kroner < 1000:\n    kroner = kroner * 2"
+          },
+          {
+            "tekst": "Vi må òg telje rundane, elles veit vi ikkje svaret.",
+            "kode": "kroner = 1\ngonger = 0\nwhile kroner < 1000:\n    kroner = kroner * 2\n    gonger = gonger + 1"
+          },
+          {
+            "tekst": "Og skriv ut resultatet når løkka er ferdig.",
+            "kode": "kroner = 1\ngonger = 0\nwhile kroner < 1000:\n    kroner = kroner * 2\n    gonger = gonger + 1\nprint(\"Etter\", gonger, \"doblingar har du\", kroner, \"kroner\")",
+            "proev": "Byt 1000 med 1000000. Kor mange doblingar trengst då? Gjett fyrst, køyr etterpå."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "while-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `doblingar` som tek imot eit tal `maal`. Start på 1 og dobl heilt til du er **større eller lik** `maal`. Returner kor mange doblingar det tok.",
+          "startkode": "def doblingar(maal):\n    tal = 1\n    gonger = 0\n    # skriv løkka her\n    return gonger\n",
+          "hint": [
+            "Vilkåret er `while tal < maal:`",
+            "Inni løkka må både `tal` og `gonger` endre seg."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "doblingar",
+              "args": [
+                1000
+              ],
+              "vent": 10
+            },
+            {
+              "type": "kall",
+              "fn": "doblingar",
+              "args": [
+                8
+              ],
+              "vent": 3
+            },
+            {
+              "type": "kall",
+              "fn": "doblingar",
+              "args": [
+                1
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def doblingar(maal):\n    tal = 1\n    gonger = 0\n    while tal < maal:\n        tal = tal * 2\n        gonger = gonger + 1\n    return gonger"
+        },
+        {
+          "id": "while-2",
+          "type": "les",
+          "kode": "tal = 10\nwhile tal > 6:\n    print(tal)\n    tal = tal - 2",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "10\n8",
+            "10\n8\n6",
+            "8\n6",
+            "10\n8\n6\n4"
+          ],
+          "rett": 0,
+          "forklaring": "Fyrst er `tal` 10 (skriv ut, blir 8), så 8 (skriv ut, blir 6). No er 6 **ikkje** større enn 6, så løkka stoppar før 6 rekk å bli skrive ut."
+        },
+        {
+          "id": "while-3",
+          "type": "rett",
+          "tekst": "Programmet skal skrive ut tala **3, 2 og 1**, men det skriv ut eitt tal for lite. Rett vilkåret.",
+          "startkode": "tal = 3\nwhile tal > 1:\n    print(tal)\n    tal = tal - 1",
+          "hint": [
+            "Sjå på vilkåret. Skal 1 vere med?",
+            "`>` tek ikkje med grensa. Kva teikn gjer det?"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "3\n2\n1"
+            }
+          ],
+          "loeysing": "tal = 3\nwhile tal >= 1:\n    print(tal)\n    tal = tal - 1"
+        }
+      ],
+      "oppsummering": "`while` gjentek så lenge vilkåret er sant. Noko inni løkka må endre det som blir sjekka, elles stoppar ho aldri — og då bruker du **Stopp**-knappen."
+    },
+    {
+      "id": "funksjonar",
+      "tittel": "Dine eigne kommandoar",
+      "kompetansemaal": [
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Du har brukt `print`, `input` og `range`. No skal du lage dine eigne. Ein **funksjon** er ein bit kode du gjev eit namn, og som du kan bruke om att så mange gonger du vil."
+        },
+        {
+          "type": "kode",
+          "kode": "def helsing():\n    print(\"Hei på deg!\")\n\nhelsing()\nhelsing()"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "`def` lagar funksjonen. Ingenting skjer før du **kallar** han med namnet og parentesar."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Funksjonar blir langt nyttigare når dei tek imot noko. Det du set i parentesen kallar vi ein **parameter**."
+        },
+        {
+          "type": "kode",
+          "kode": "def helsing(namn):\n    print(\"Hei,\", namn)\n\nhelsing(\"Åse\")\nhelsing(\"Ola\")"
+        },
+        {
+          "type": "merk",
+          "tekst": "`print` **viser** noko på skjermen. `return` **sender ein verdi tilbake** så resten av programmet kan rekne vidare med han. Dette er ikkje det same, og forskjellen er verdt å bruke tid på."
+        },
+        {
+          "type": "kode",
+          "kode": "def dobbelt(tal):\n    return tal * 2\n\nsvar = dobbelt(21)\nprint(svar + 1)"
+        }
+      ],
+      "doeme": {
+        "kode": "def areal(lengd, breidd):\n    return lengd * breidd\n\nprint(\"Rommet er\", areal(4, 3), \"kvadratmeter\")\nprint(\"Bordet er\", areal(2, 1), \"kvadratmeter\")",
+        "oppmoding": "Byt `return` med `print` inni funksjonen og køyr. Kvifor blir det `None` i utskrifta?"
+      },
+      "turne": {
+        "tittel": "Lag ein funksjon som reknar ut omkrinsen",
+        "steg": [
+          {
+            "tekst": "Vi startar med sjølve funksjonen. Han tek imot lengd og breidd.",
+            "kode": "def omkrins(lengd, breidd):\n    pass"
+          },
+          {
+            "tekst": "Inni reknar vi ut svaret og lagrar det.",
+            "kode": "def omkrins(lengd, breidd):\n    svar = 2 * lengd + 2 * breidd"
+          },
+          {
+            "tekst": "Så sender vi svaret tilbake med `return`.",
+            "kode": "def omkrins(lengd, breidd):\n    svar = 2 * lengd + 2 * breidd\n    return svar"
+          },
+          {
+            "tekst": "No kan vi bruke funksjonen så mange gonger vi vil.",
+            "kode": "def omkrins(lengd, breidd):\n    svar = 2 * lengd + 2 * breidd\n    return svar\n\nprint(omkrins(4, 3))\nprint(omkrins(10, 2))",
+            "proev": "Lag ein funksjon `areal` under, og skriv ut både areal og omkrins for same rektangelet."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "fn-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `gjennomsnitt` som tek imot **tre** tal og returnerer gjennomsnittet av dei.",
+          "startkode": "def gjennomsnitt(a, b, c):\n    # skriv koden her\n",
+          "hint": [
+            "Legg saman alle tre og del på 3.",
+            "Hugs `return` — ikkje `print`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "gjennomsnitt",
+              "args": [
+                3,
+                4,
+                5
+              ],
+              "vent": 4
+            },
+            {
+              "type": "kall",
+              "fn": "gjennomsnitt",
+              "args": [
+                10,
+                20,
+                30
+              ],
+              "vent": 20
+            },
+            {
+              "type": "kall",
+              "fn": "gjennomsnitt",
+              "args": [
+                1,
+                1,
+                1
+              ],
+              "vent": 1
+            }
+          ],
+          "loeysing": "def gjennomsnitt(a, b, c):\n    return (a + b + c) / 3"
+        },
+        {
+          "id": "fn-2",
+          "type": "les",
+          "kode": "def dobbelt(tal):\n    print(tal * 2)\n\nsvar = dobbelt(5)\nprint(svar)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "10\n10",
+            "10\nNone",
+            "10",
+            "None"
+          ],
+          "rett": 1,
+          "forklaring": "Funksjonen **skriv ut** 10, men han **returnerer** ingenting. Ein funksjon utan `return` gjev tilbake `None`, så `svar` blir `None` — og den andre `print`-en viser det."
+        },
+        {
+          "id": "fn-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal returnere kvadratet av eit tal, men han gjev `None` tilbake. Rett feilen.",
+          "startkode": "def kvadrat(tal):\n    print(tal * tal)\n\nprint(kvadrat(5))",
+          "hint": [
+            "Sjå på kva funksjonen gjer med svaret sitt.",
+            "`print` viser noko. `return` sender det tilbake."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                5
+              ],
+              "vent": 25
+            },
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                3
+              ],
+              "vent": 9
+            }
+          ],
+          "loeysing": "def kvadrat(tal):\n    return tal * tal\n\nprint(kvadrat(5))"
+        }
+      ],
+      "oppsummering": "`def` lagar ein funksjon, parentesen tek imot parameterar, og `return` sender eit svar tilbake. Ein funksjon utan `return` gjev `None`."
+    },
+    {
+      "id": "matematikk",
+      "tittel": "Matematikk i Python",
+      "kompetansemaal": [
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering",
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Python reknar med dei same reglane som matematikken — parentesar fyrst, så gonging og deling, så pluss og minus."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`+` og `-` som du er van med",
+            "`*` gonging, `/` deling",
+            "`**` opphøgd i: `2 ** 10` er 1024",
+            "`//` heiltalsdeling: `7 // 2` er **3** (kastar resten)",
+            "`%` rest: `7 % 2` er **1**"
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "`%` er meir nyttig enn han ser ut. `tal % 2 == 0` er sant når talet er eit partal, og `tal % 5 == 0` er sant når det er deleleg med 5."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "For kvadratrot og andre funksjonar hentar du inn biblioteket `math`:"
+        },
+        {
+          "type": "kode",
+          "kode": "import math\n\nprint(math.sqrt(16))\nprint(math.pi)\nprint(round(3.14159, 2))"
+        },
+        {
+          "type": "merk",
+          "tekst": "`/` gjev alltid eit desimaltal, òg når det går opp: `6 / 2` blir `3.0`, ikkje `3`. Vil du ha eit heiltal, bruker du `//` eller `int()`."
+        }
+      ],
+      "doeme": {
+        "kode": "import math\n\nkatet1 = 3\nkatet2 = 4\nhypotenus = math.sqrt(katet1 ** 2 + katet2 ** 2)\nprint(\"Hypotenusen er\", hypotenus)",
+        "oppmoding": "Dette er Pytagoras. Byt katetane og sjå. Prøv 5 og 12 — svaret blir eit heilt tal."
+      },
+      "turne": {
+        "tittel": "Rekn ut kor mange fulle esker du treng",
+        "steg": [
+          {
+            "tekst": "Vi har 47 egg, og det går 12 i kvar eske.",
+            "kode": "egg = 47\nper_eske = 12"
+          },
+          {
+            "tekst": "Vanleg deling gjev eit desimaltal, som ikkje seier så mykje om esker.",
+            "kode": "egg = 47\nper_eske = 12\nprint(egg / per_eske)"
+          },
+          {
+            "tekst": "Med `//` får vi kor mange **fulle** esker vi kan fylle.",
+            "kode": "egg = 47\nper_eske = 12\nfulle = egg // per_eske\nprint(\"Fulle esker:\", fulle)"
+          },
+          {
+            "tekst": "Og med `%` får vi kor mange egg som blir til overs.",
+            "kode": "egg = 47\nper_eske = 12\nfulle = egg // per_eske\ntil_overs = egg % per_eske\nprint(\"Fulle esker:\", fulle)\nprint(\"Egg til overs:\", til_overs)",
+            "proev": "Byt til 60 egg. Kva blir `til_overs` då, og kvifor?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "mat-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `er_partal` som tek imot eit tal og returnerer `True` om det er eit partal, og `False` elles.",
+          "startkode": "def er_partal(tal):\n    # skriv koden her\n",
+          "hint": [
+            "Bruk `%`. Kva blir resten når du deler eit partal på 2?",
+            "`return tal % 2 == 0` gjer heile jobben på éi linje."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "er_partal",
+              "args": [
+                4
+              ],
+              "vent": true
+            },
+            {
+              "type": "kall",
+              "fn": "er_partal",
+              "args": [
+                7
+              ],
+              "vent": false
+            },
+            {
+              "type": "kall",
+              "fn": "er_partal",
+              "args": [
+                0
+              ],
+              "vent": true
+            }
+          ],
+          "loeysing": "def er_partal(tal):\n    return tal % 2 == 0"
+        },
+        {
+          "id": "mat-2",
+          "type": "les",
+          "kode": "print(7 // 2)\nprint(7 % 2)\nprint(7 / 2)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "3\n1\n3.5",
+            "3.5\n1\n3.5",
+            "3\n3\n3.5",
+            "4\n1\n3.5"
+          ],
+          "rett": 0,
+          "forklaring": "`//` gjev heiltalsdelinga **3** (resten blir kasta), `%` gjev resten **1**, og `/` gjev det fullstendige svaret **3.5**. Til saman: 7 = 2 gonger 3, pluss 1."
+        },
+        {
+          "id": "mat-3",
+          "type": "rett",
+          "tekst": "Programmet skal skrive ut kor mange **heile** timar 200 minutt er. Det skriv ut eit desimaltal i staden. Rett det.",
+          "startkode": "minutt = 200\ntimar = minutt / 60\nprint(timar)",
+          "hint": [
+            "`/` gjev alltid desimaltal.",
+            "Kva teikn gjev heiltalsdeling?"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "3"
+            }
+          ],
+          "loeysing": "minutt = 200\ntimar = minutt // 60\nprint(timar)"
+        }
+      ],
+      "oppsummering": "Python følgjer vanlege reknereglar. `**` er opphøgd i, `//` er heiltalsdeling og `%` gjev resten. `/` gjev alltid desimaltal. `math` har `sqrt`, `pi` og mykje meir."
+    },
+    {
+      "id": "feilmeldingar",
+      "tittel": "Når noko går gale",
+      "kompetansemaal": [
+        "10. trinn: lese og forklare tekstbasert programkode i Python",
+        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Alle som programmerer får feilmeldingar — heile tida. Det er ikkje eit teikn på at du er dårleg; det er slik arbeidet ser ut. Det som skil ein god programmerar frå ein nybyrjar er ikkje kor få feil han får, men kor fort han les dei."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ormritaren forklarer feilen på norsk, men viser òg den opphavlege meldinga frå Python. **Les alltid begge.** Den norske seier kva som truleg er gale; den engelske er den du møter alle andre stader."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`SyntaxError` — Python skjøner ikkje korleis linja er skriven. Sjå etter manglande `:` eller ein parentes som ikkje er lukka.",
+            "`NameError` — du bruker eit namn Python ikkje kjenner. Stavefeil, eller variabelen har ikkje fått verdi enno.",
+            "`TypeError` — du bruker ein verdi på ein måte som ikkje passar typen, til dømes reknar med tekst.",
+            "`IndentationError` — innrykket stemmer ikkje.",
+            "`ZeroDivisionError` — du deler på null."
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Feilmeldinga seier kva **linje** det skjedde på. Det er ikkje alltid der feilen er — men det er alltid der du skal byrje å leite."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein siste ting: når koden køyrer men gjev feil svar, får du inga feilmelding i det heile. Då er **Variablar**-ruta til stor hjelp — der ser du kva verdiane faktisk vart."
+        }
+      ],
+      "doeme": {
+        "kode": "# Denne koden har ein feil. Køyr og les meldinga.\ntal = 10\nprint(tall + 5)",
+        "oppmoding": "Kva slags feil er det, og kva linje står han på? Rett feilen og køyr igjen."
+      },
+      "turne": {
+        "tittel": "Tre feil, ein om gongen",
+        "steg": [
+          {
+            "tekst": "Her er eit program med fleire feil. Køyr det og les den fyrste meldinga.",
+            "kode": "def areal(lengd, breidd)\n    return lengd * breidd\n\nprint(areal(3, 4))"
+          },
+          {
+            "tekst": "`SyntaxError` — det manglar eit kolon etter `def`-linja. Vi rettar det og køyrer igjen.",
+            "kode": "def areal(lengd, breidd):\n    return lengd * breidd\n\nprint(areal(3, 4))",
+            "proev": "Køyr no. Denne gongen skal det gå bra — 12 kvadratmeter."
+          },
+          {
+            "tekst": "No lagar vi ein ny feil med vilje: vi skriv variabelnamnet feil.",
+            "kode": "def areal(lengd, breidd):\n    return lengd * bredd\n\nprint(areal(3, 4))",
+            "proev": "Køyr. Kva heiter feilen no, og kva linje peikar han på?"
+          },
+          {
+            "tekst": "`NameError` — `bredd` finst ikkje; parameteren heiter `breidd`. Rett stavinga, så er programmet heilt.",
+            "kode": "def areal(lengd, breidd):\n    return lengd * breidd\n\nprint(areal(3, 4))"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "feil-1",
+          "type": "les",
+          "kode": "alder = \"13\"\nprint(alder + 1)",
+          "sporsmal": "Kva slags feilmelding gjev dette programmet?",
+          "alternativ": [
+            "NameError",
+            "TypeError",
+            "SyntaxError",
+            "Ingen feil — det skriv ut 14"
+          ],
+          "rett": 1,
+          "forklaring": "`alder` er **tekst**, ikkje tal — hermeteikna gjer det. Python kan ikkje leggje talet 1 til ein tekst, og det er ein `TypeError`. Hadde det stått `alder = 13`, ville svaret vore 14."
+        },
+        {
+          "id": "feil-2",
+          "type": "rett",
+          "tekst": "Dette programmet har **to** feil. Rett begge, så det skriv ut tala 1 til 3.",
+          "startkode": "for i in range(1, 4)\nprint(i)",
+          "hint": [
+            "Den fyrste feilen er på `for`-linja. Kva manglar på slutten?",
+            "Den andre er innrykket: kva skal vere **inni** løkka?"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "1\n2\n3"
+            }
+          ],
+          "loeysing": "for i in range(1, 4):\n    print(i)"
+        },
+        {
+          "id": "feil-3",
+          "type": "rett",
+          "tekst": "Programmet køyrer utan feilmelding, men svaret er feil. Det skal rekne ut gjennomsnittet av dei tre tala. Bruk gjerne **Variablar**-ruta til å finne ut kva som går gale.",
+          "startkode": "a = 4\nb = 8\nc = 6\nsnitt = a + b + c / 3\nprint(snitt)",
+          "hint": [
+            "Python reknar deling før pluss — akkurat som i matematikken.",
+            "Kva må til for at heile summen blir delt på 3?"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "6.0"
+            }
+          ],
+          "loeysing": "a = 4\nb = 8\nc = 6\nsnitt = (a + b + c) / 3\nprint(snitt)"
+        }
+      ],
+      "oppsummering": "Feilmeldingar er normalt. Les både den norske forklaringa og den opphavlege meldinga, og start å leite på linja ho peikar på. Køyrer koden men gjev feil svar, er **Variablar**-ruta staden å sjå."
     }
   ]
 }
