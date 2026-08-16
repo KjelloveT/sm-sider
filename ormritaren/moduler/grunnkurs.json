@@ -36,7 +36,7 @@
         "kode": "# Alt som står bak # er ein kommentar\nprint(\"Hei, verda!\")\nprint(\"Eg lærer Python\")",
         "oppmoding": "Trykk Køyr. Byt så ut teksten med ditt eige namn, og køyr på nytt."
       },
-      "turne": {
+      "loype": {
         "tittel": "Bygg ditt fyrste program",
         "steg": [
           {
@@ -57,7 +57,8 @@
             "tekst": "Til slutt legg vi på ein kommentar, så den som les koden skjøner kva han gjer.",
             "kode": "# Eit lite presentasjonsprogram\nprint(\"Hei!\")\nprint(\"Eg heiter Ormritaren\")\nprint(\"Eg er\", 1, \"år gammal\")"
           }
-        ]
+        ],
+        "maal": "eit lite presentasjonsprogram som skriv ut fleire linjer om deg"
       },
       "oppgaver": [
         {
@@ -154,7 +155,7 @@
         "kode": "namn = \"Åse\"\nalder = 13\nprint(namn, \"er\", alder, \"år\")",
         "oppmoding": "Køyr, og sjå etter i Variablar-ruta kva som ligg lagra. Byt så namn og alder til dine eigne."
       },
-      "turne": {
+      "loype": {
         "tittel": "Rekn ut prisen på ein handletur",
         "steg": [
           {
@@ -174,7 +175,8 @@
             "kode": "pris = 25\ntal = 4\ntotal = pris * tal\nprint(\"Du må betale\", total, \"kroner\")",
             "proev": "Byt tal til 7 og køyr på nytt. Du treng berre endre éin stad."
           }
-        ]
+        ],
+        "maal": "ein handletur-kalkulator som reknar ut kva du må betale"
       },
       "oppgaver": [
         {
@@ -268,7 +270,7 @@
         "kode": "namn = input(\"Kva heiter du? \")\nalder = int(input(\"Kor gamal er du? \"))\nprint(\"Hei,\", namn + \"! Om ti år er du\", alder + 10)",
         "oppmoding": "Køyr og svar på spørsmåla. Prøv så å ta bort `int` rundt det andre spørsmålet — kva skjer då?"
       },
-      "turne": {
+      "loype": {
         "tittel": "Lag ein liten kalkulator",
         "steg": [
           {
@@ -284,7 +286,8 @@
             "kode": "a = int(input(\"Fyrste talet: \"))\nb = int(input(\"Andre talet: \"))\nprint(a, \"+\", b, \"=\", a + b)",
             "proev": "Legg til ei linje som òg viser `a` gonger `b`."
           }
-        ]
+        ],
+        "maal": "ein kalkulator som spør brukaren om to tal og legg dei saman"
       },
       "oppgaver": [
         {
@@ -392,7 +395,7 @@
         "kode": "# 7-gangen\nfor i in range(1, 11):\n    print(i, \"gonger 7 er\", i * 7)",
         "oppmoding": "Køyr, og byt så 7 med eit anna tal. Prøv òg å endre `range(1, 11)` til `range(1, 5)`."
       },
-      "turne": {
+      "loype": {
         "tittel": "Legg saman tala frå 1 til 100",
         "steg": [
           {
@@ -412,7 +415,8 @@
             "kode": "sum = 0\nfor tal in range(1, 101):\n    sum = sum + tal\nprint(\"Summen er\", sum)",
             "proev": "Flytt `print`-linja inn i løkka ved å rykkje henne inn. Kva skjer då, og kvifor?"
           }
-        ]
+        ],
+        "maal": "eit program som legg saman alle tala frå 1 til 100"
       },
       "oppgaver": [
         {
@@ -526,7 +530,7 @@
         "kode": "tal = int(input(\"Skriv eit tal: \"))\nif tal % 2 == 0:\n    print(tal, \"er eit partal\")\nelse:\n    print(tal, \"er eit oddetal\")",
         "oppmoding": "Køyr og prøv fleire tal. `%` gjev resten etter deling — du møter han igjen i leksjonen om matematikk."
       },
-      "turne": {
+      "loype": {
         "tittel": "Gjer om poeng til karakter",
         "steg": [
           {
@@ -546,7 +550,8 @@
             "kode": "poeng = 34\nif poeng >= 40:\n    print(\"Karakter 6\")\nelif poeng >= 30:\n    print(\"Karakter 5\")\nelif poeng >= 20:\n    print(\"Karakter 4\")\nelse:\n    print(\"Under 20 poeng\")",
             "proev": "Snu rekkjefølgja så `poeng >= 20` kjem fyrst. Kva skjer med 34 poeng då — og kvifor?"
           }
-        ]
+        ],
+        "maal": "eit program som gjer om poengsum til karakter"
       },
       "oppgaver": [
         {
@@ -655,7 +660,7 @@
         "kode": "# Nedteljing\ntal = 5\nwhile tal > 0:\n    print(tal)\n    tal = tal - 1\nprint(\"Start!\")",
         "oppmoding": "Køyr fyrst som han står. Ta så bort linja `tal = tal - 1` og køyr igjen — og trykk **Stopp** når du har sett kva som skjer."
       },
-      "turne": {
+      "loype": {
         "tittel": "Kor mange gonger må vi doble?",
         "steg": [
           {
@@ -675,7 +680,8 @@
             "kode": "kroner = 1\ngonger = 0\nwhile kroner < 1000:\n    kroner = kroner * 2\n    gonger = gonger + 1\nprint(\"Etter\", gonger, \"doblingar har du\", kroner, \"kroner\")",
             "proev": "Byt 1000 med 1000000. Kor mange doblingar trengst då? Gjett fyrst, køyr etterpå."
           }
-        ]
+        ],
+        "maal": "eit program som finn ut kor mange gonger du må doble 1 krone for å passere 1000"
       },
       "oppgaver": [
         {
@@ -790,7 +796,7 @@
         "kode": "def areal(lengd, breidd):\n    return lengd * breidd\n\nprint(\"Rommet er\", areal(4, 3), \"kvadratmeter\")\nprint(\"Bordet er\", areal(2, 1), \"kvadratmeter\")",
         "oppmoding": "Byt `return` med `print` inni funksjonen og køyr. Kvifor blir det `None` i utskrifta?"
       },
-      "turne": {
+      "loype": {
         "tittel": "Lag ein funksjon som reknar ut omkrinsen",
         "steg": [
           {
@@ -810,7 +816,8 @@
             "kode": "def omkrins(lengd, breidd):\n    svar = 2 * lengd + 2 * breidd\n    return svar\n\nprint(omkrins(4, 3))\nprint(omkrins(10, 2))",
             "proev": "Lag ein funksjon `areal` under, og skriv ut både areal og omkrins for same rektangelet."
           }
-        ]
+        ],
+        "maal": "din eigen funksjon som reknar ut omkrinsen av eit rektangel"
       },
       "oppgaver": [
         {
@@ -945,7 +952,7 @@
         "kode": "import math\n\nkatet1 = 3\nkatet2 = 4\nhypotenus = math.sqrt(katet1 ** 2 + katet2 ** 2)\nprint(\"Hypotenusen er\", hypotenus)",
         "oppmoding": "Dette er Pytagoras. Byt katetane og sjå. Prøv 5 og 12 — svaret blir eit heilt tal."
       },
-      "turne": {
+      "loype": {
         "tittel": "Rekn ut kor mange fulle esker du treng",
         "steg": [
           {
@@ -965,7 +972,8 @@
             "kode": "egg = 47\nper_eske = 12\nfulle = egg // per_eske\ntil_overs = egg % per_eske\nprint(\"Fulle esker:\", fulle)\nprint(\"Egg til overs:\", til_overs)",
             "proev": "Byt til 60 egg. Kva blir `til_overs` då, og kvifor?"
           }
-        ]
+        ],
+        "maal": "eit program som reknar ut kor mange fulle eggesker du får, og kor mange egg som blir til overs"
       },
       "oppgaver": [
         {
@@ -1078,7 +1086,7 @@
         "kode": "# Denne koden har ein feil. Køyr og les meldinga.\ntal = 10\nprint(tall + 5)",
         "oppmoding": "Kva slags feil er det, og kva linje står han på? Rett feilen og køyr igjen."
       },
-      "turne": {
+      "loype": {
         "tittel": "Tre feil, ein om gongen",
         "steg": [
           {
@@ -1099,7 +1107,8 @@
             "tekst": "`NameError` — `bredd` finst ikkje; parameteren heiter `breidd`. Rett stavinga, så er programmet heilt.",
             "kode": "def areal(lengd, breidd):\n    return lengd * breidd\n\nprint(areal(3, 4))"
           }
-        ]
+        ],
+        "maal": "eit program med tre feil som du rettar ein om gongen"
       },
       "oppgaver": [
         {

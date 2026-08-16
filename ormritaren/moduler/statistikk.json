@@ -1,0 +1,1050 @@
+{
+  "app": "ormritaren",
+  "version": 1,
+  "id": "statistikk",
+  "tittel": "Statistikk",
+  "leksjonar": [
+    {
+      "id": "datasett",
+      "tittel": "Tal i ei liste",
+      "kompetansemaal": [
+        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Statistikk handlar om mange tal på ein gong. I Python samlar vi dei i ei **liste**."
+        },
+        {
+          "type": "kode",
+          "kode": "hoegder = [162, 158, 171, 165, 159]\nprint(hoegder)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Lista har innebygde funksjonar som gjer mykje av jobben for deg:"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`len(tal)` — kor mange tal det er",
+            "`sum(tal)` — alle lagde saman",
+            "`min(tal)` og `max(tal)` — minste og største",
+            "`sorted(tal)` — ei ny liste, sortert"
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "`sorted` lagar ei **ny** liste og lèt den opphavlege vere i fred. `tal.sort()` endrar lista du alt har. Skilnaden er lett å gå på ein smell i når du treng rekkjefølgja seinare."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Du kan hente ut eitt tal med plassnummeret. Fyrste plass er `0`, og siste kan du nå med `-1`."
+        },
+        {
+          "type": "kode",
+          "kode": "hoegder = [162, 158, 171, 165, 159]\nprint(hoegder[0])\nprint(hoegder[-1])"
+        }
+      ],
+      "doeme": {
+        "kode": "hoegder = [162, 158, 171, 165, 159]\n\nprint(\"Tal på elevar:\", len(hoegder))\nprint(\"Lågast:\", min(hoegder))\nprint(\"Høgast:\", max(hoegder))\nprint(\"Sortert:\", sorted(hoegder))",
+        "oppmoding": "Byt ut tala med høgdene til nokre i klassen din, og køyr på nytt."
+      },
+      "loype": {
+        "tittel": "Finn variasjonsbreidda",
+        "maal": "eit program som finn skilnaden mellom høgaste og lågaste tal i eit datasett",
+        "steg": [
+          {
+            "tekst": "Vi startar med datasettet.",
+            "kode": "hoegder = [162, 158, 171, 165, 159]"
+          },
+          {
+            "tekst": "Så finn vi det største og det minste talet.",
+            "kode": "hoegder = [162, 158, 171, 165, 159]\nhoegast = max(hoegder)\nlaagast = min(hoegder)\nprint(hoegast, laagast)"
+          },
+          {
+            "tekst": "Variasjonsbreidda er skilnaden mellom dei — eit enkelt mål på kor spreidde tala er.",
+            "kode": "hoegder = [162, 158, 171, 165, 159]\nhoegast = max(hoegder)\nlaagast = min(hoegder)\nbreidd = hoegast - laagast\nprint(\"Variasjonsbreidd:\", breidd, \"cm\")",
+            "proev": "Legg til ein elev på 190 cm i lista. Kva skjer med variasjonsbreidda?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "data-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `variasjonsbreidd` som tek imot ei liste med tal og returnerer skilnaden mellom det største og det minste.",
+          "startkode": "def variasjonsbreidd(tal):\n    # skriv koden her\n",
+          "hint": [
+            "`max(tal)` gjev det største, `min(tal)` det minste.",
+            "`return max(tal) - min(tal)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "variasjonsbreidd",
+              "args": [
+                [
+                  162,
+                  158,
+                  171,
+                  165,
+                  159
+                ]
+              ],
+              "vent": 13
+            },
+            {
+              "type": "kall",
+              "fn": "variasjonsbreidd",
+              "args": [
+                [
+                  5,
+                  5,
+                  5
+                ]
+              ],
+              "vent": 0
+            },
+            {
+              "type": "kall",
+              "fn": "variasjonsbreidd",
+              "args": [
+                [
+                  1,
+                  100
+                ]
+              ],
+              "vent": 99
+            }
+          ],
+          "loeysing": "def variasjonsbreidd(tal):\n    return max(tal) - min(tal)"
+        },
+        {
+          "id": "data-2",
+          "type": "les",
+          "kode": "tal = [4, 1, 3]\nsortert = sorted(tal)\nprint(tal, sortert)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "[1, 3, 4] [1, 3, 4]",
+            "[4, 1, 3] [1, 3, 4]",
+            "[4, 1, 3] [4, 1, 3]",
+            "[1, 3, 4] [4, 1, 3]"
+          ],
+          "rett": 1,
+          "forklaring": "`sorted` lagar ei **ny** sortert liste og lèt den opphavlege vere som ho var. Difor er `tal` framleis usortert, medan `sortert` er sortert."
+        },
+        {
+          "id": "data-3",
+          "type": "rett",
+          "tekst": "Programmet skal skrive ut det **siste** talet i lista, men det ryk med ein `IndexError`. Rett feilen.",
+          "startkode": "tal = [3, 7, 9, 12]\nprint(tal[4])",
+          "hint": [
+            "Plassane tel frå 0. Kva nummer har det siste av fire tal?",
+            "Du kan òg bruke `-1` for å nå det siste."
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "12"
+            }
+          ],
+          "loeysing": "tal = [3, 7, 9, 12]\nprint(tal[-1])"
+        }
+      ],
+      "oppsummering": "Ei liste held mange tal. `len`, `sum`, `min`, `max` og `sorted` gjer det meste av grovarbeidet. Plassane tel frå **0**, og `-1` er den siste."
+    },
+    {
+      "id": "gjennomsnitt",
+      "tittel": "Gjennomsnitt og median",
+      "kompetansemaal": [
+        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "**Gjennomsnittet** er summen delt på talet på verdiar. Det er det sentralmålet folk flest meiner når dei seier «snitt»."
+        },
+        {
+          "type": "kode",
+          "kode": "tal = [4, 6, 8]\nsnitt = sum(tal) / len(tal)\nprint(snitt)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "**Medianen** er talet som ligg **midt i** når du sorterer. Er det eit partal av verdiar, tek du gjennomsnittet av dei to midterste."
+        },
+        {
+          "type": "merk",
+          "tekst": "Dei to måla svarar på ulike spørsmål. Eitt einaste ekstremt tal dreg gjennomsnittet langt, men rører nesten ikkje medianen. Difor bruker ein median når nokre få verdiar stikk av — til dømes på løn og bustadprisar."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Python har begge ferdige i biblioteket `statistics`:"
+        },
+        {
+          "type": "kode",
+          "kode": "import statistics\n\ntal = [4, 6, 8, 100]\nprint(\"Gjennomsnitt:\", statistics.mean(tal))\nprint(\"Median:\", statistics.median(tal))"
+        }
+      ],
+      "doeme": {
+        "kode": "import statistics\n\nloener = [420000, 450000, 480000, 510000, 12000000]\nprint(\"Gjennomsnitt:\", statistics.mean(loener))\nprint(\"Median:      \", statistics.median(loener))",
+        "oppmoding": "Fire vanlege lønningar og éin direktør. Kva tal gjev det mest ærlege biletet av kva folk her tener?"
+      },
+      "loype": {
+        "tittel": "Rekn ut gjennomsnittet utan ferdig funksjon",
+        "maal": "din eigen gjennomsnittsfunksjon, som du så samanliknar med den ferdige i statistics",
+        "steg": [
+          {
+            "tekst": "Vi startar med datasettet og legg saman alle tala.",
+            "kode": "tal = [4, 6, 8, 10]\ntotal = sum(tal)\nprint(total)"
+          },
+          {
+            "tekst": "Så tel vi kor mange dei er.",
+            "kode": "tal = [4, 6, 8, 10]\ntotal = sum(tal)\nkor_mange = len(tal)\nprint(total, kor_mange)"
+          },
+          {
+            "tekst": "Gjennomsnittet er summen delt på talet.",
+            "kode": "tal = [4, 6, 8, 10]\ntotal = sum(tal)\nkor_mange = len(tal)\nsnitt = total / kor_mange\nprint(\"Gjennomsnitt:\", snitt)"
+          },
+          {
+            "tekst": "Og vi sjekkar mot den ferdige funksjonen. Får du same svar, har du gjort det rett.",
+            "kode": "import statistics\n\ntal = [4, 6, 8, 10]\ntotal = sum(tal)\nkor_mange = len(tal)\nsnitt = total / kor_mange\n\nprint(\"Mitt svar: \", snitt)\nprint(\"statistics:\", statistics.mean(tal))",
+            "proev": "Legg til talet 1000 i lista. Kor mykje flyttar gjennomsnittet seg?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "snitt-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `snitt` som tek imot ei liste med tal og returnerer gjennomsnittet. Bruk `sum` og `len` — ikkje `statistics`.",
+          "startkode": "def snitt(tal):\n    # skriv koden her\n",
+          "hint": [
+            "`return sum(tal) / len(tal)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                [
+                  4,
+                  6,
+                  8
+                ]
+              ],
+              "vent": 6
+            },
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                [
+                  10,
+                  20
+                ]
+              ],
+              "vent": 15
+            },
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                [
+                  7
+                ]
+              ],
+              "vent": 7
+            }
+          ],
+          "loeysing": "def snitt(tal):\n    return sum(tal) / len(tal)"
+        },
+        {
+          "id": "snitt-2",
+          "type": "les",
+          "kode": "import statistics\ntal = [1, 2, 3, 100]\nprint(statistics.median(tal))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "2.5",
+            "26.5",
+            "3",
+            "2"
+          ],
+          "rett": 0,
+          "forklaring": "Med fire tal finst det ikkje eitt einaste midtpunkt, så medianen er gjennomsnittet av dei to midterste: (2 + 3) delt på 2 er **2.5**. Legg merke til at 100 ikkje påverkar medianen i det heile."
+        },
+        {
+          "id": "snitt-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal rekne ut gjennomsnittet, men han deler på feil tal. Rett det.",
+          "startkode": "def snitt(tal):\n    return sum(tal) / 3",
+          "hint": [
+            "Kva om lista har fire tal, eller ti?",
+            "Du må dele på kor mange tal lista faktisk har."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                [
+                  4,
+                  6,
+                  8
+                ]
+              ],
+              "vent": 6
+            },
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                [
+                  10,
+                  20
+                ]
+              ],
+              "vent": 15
+            }
+          ],
+          "loeysing": "def snitt(tal):\n    return sum(tal) / len(tal)"
+        }
+      ],
+      "oppsummering": "Gjennomsnitt er sum delt på tal. Median er verdien i midten. Eitt ekstremt tal dreg gjennomsnittet langt, men rører nesten ikkje medianen."
+    },
+    {
+      "id": "typetal",
+      "tittel": "Typetal og spreiing",
+      "kompetansemaal": [
+        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "**Typetalet** er den verdien som går att flest gonger. Det er det einaste sentralmålet som òg verkar på ting som ikkje er tal — favorittfarge, til dømes."
+        },
+        {
+          "type": "kode",
+          "kode": "import statistics\n\nkast = [3, 5, 3, 6, 3, 2]\nprint(statistics.mode(kast))"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Sentralmåla fortel kvar tyngdepunktet ligg. **Spreiingsmåla** fortel kor spreidde tala er kring det."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "**Variasjonsbreidd** — største minus minste. Enkel, men lèt seg lure av éin uteliggjar.",
+            "**Standardavvik** — kor langt frå gjennomsnittet tala ligg i snitt. `statistics.stdev(tal)`"
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "To datasett kan ha nøyaktig same gjennomsnitt og likevel sjå heilt ulike ut. Gjennomsnittet åleine seier lite; du treng eit spreiingsmål ved sida av."
+        },
+        {
+          "type": "kode",
+          "kode": "import statistics\n\njamn = [49, 50, 50, 51]\nspreidd = [10, 30, 70, 90]\n\nprint(statistics.mean(jamn), statistics.stdev(jamn))\nprint(statistics.mean(spreidd), statistics.stdev(spreidd))"
+        }
+      ],
+      "doeme": {
+        "kode": "import statistics\n\njamn = [49, 50, 50, 51]\nspreidd = [10, 30, 70, 90]\n\nprint(\"Jamn    — snitt\", statistics.mean(jamn), \" avvik\", round(statistics.stdev(jamn), 1))\nprint(\"Spreidd — snitt\", statistics.mean(spreidd), \" avvik\", round(statistics.stdev(spreidd), 1))",
+        "oppmoding": "Begge har gjennomsnitt 50. Kva fortel standardavviket som gjennomsnittet ikkje gjer?"
+      },
+      "loype": {
+        "tittel": "Tel opp kva som går att",
+        "maal": "eit program som tel kor mange gonger kvar verdi finst i eit datasett",
+        "steg": [
+          {
+            "tekst": "Vi startar med datasettet.",
+            "kode": "kast = [3, 5, 3, 6, 3, 2, 5]"
+          },
+          {
+            "tekst": "Ei **ordbok** kan halde eit tal for kvar verdi. Vi startar med ei tom.",
+            "kode": "kast = [3, 5, 3, 6, 3, 2, 5]\ntel = {}\nprint(tel)"
+          },
+          {
+            "tekst": "For kvart kast aukar vi teljaren. `tel.get(k, 0)` gjev 0 om verdien ikkje finst frå før.",
+            "kode": "kast = [3, 5, 3, 6, 3, 2, 5]\ntel = {}\nfor k in kast:\n    tel[k] = tel.get(k, 0) + 1\nprint(tel)"
+          },
+          {
+            "tekst": "Og skriv det ut ryddig.",
+            "kode": "kast = [3, 5, 3, 6, 3, 2, 5]\ntel = {}\nfor k in kast:\n    tel[k] = tel.get(k, 0) + 1\n\nfor verdi in sorted(tel):\n    print(verdi, \"kom\", tel[verdi], \"gonger\")",
+            "proev": "Kva verdi er typetalet her? Sjekk med `statistics.mode(kast)`."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "type-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `finn_typetal` som tek imot ei liste og returnerer verdien som går att **flest gonger**. Bruk ei ordbok til å telje opp fyrst.",
+          "startkode": "def finn_typetal(liste):\n    tel = {}\n    # tel opp kvar verdi her\n\n    # finn så verdien med høgast tal\n",
+          "hint": [
+            "Fyrst same oppteljinga som i løypa: `tel[x] = tel.get(x, 0) + 1`",
+            "Så går du gjennom `tel` og hugsar den verdien som har høgast tal."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "finn_typetal",
+              "args": [
+                [
+                  1,
+                  2,
+                  2,
+                  3
+                ]
+              ],
+              "vent": 2
+            },
+            {
+              "type": "kall",
+              "fn": "finn_typetal",
+              "args": [
+                [
+                  7,
+                  2,
+                  7,
+                  9,
+                  2,
+                  7
+                ]
+              ],
+              "vent": 7
+            },
+            {
+              "type": "kall",
+              "fn": "finn_typetal",
+              "args": [
+                [
+                  5
+                ]
+              ],
+              "vent": 5
+            }
+          ],
+          "loeysing": "def finn_typetal(liste):\n    tel = {}\n    for x in liste:\n        tel[x] = tel.get(x, 0) + 1\n\n    beste = liste[0]\n    for verdi in tel:\n        if tel[verdi] > tel[beste]:\n            beste = verdi\n    return beste"
+        },
+        {
+          "id": "type-2",
+          "type": "les",
+          "kode": "import statistics\nprint(statistics.mode([7, 2, 7, 9, 2, 7]))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "2",
+            "7",
+            "9",
+            "5.67"
+          ],
+          "rett": 1,
+          "forklaring": "Typetalet er den verdien som går att flest gonger. 7 kjem tre gonger, 2 kjem to og 9 éin — så svaret er **7**."
+        },
+        {
+          "id": "type-3",
+          "type": "rett",
+          "tekst": "Programmet skal telje opp verdiane, men det ryk med ein `KeyError`. Rett det.",
+          "startkode": "tal = [1, 2, 2, 3]\ntel = {}\nfor x in tal:\n    tel[x] = tel[x] + 1\nprint(tel)",
+          "hint": [
+            "Fyrste gongen ein verdi dukkar opp, finst han ikkje i ordboka enno.",
+            "`tel.get(x, 0)` gjev 0 i staden for å ryke når nøkkelen manglar."
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "{1: 1, 2: 2, 3: 1}"
+            }
+          ],
+          "loeysing": "tal = [1, 2, 2, 3]\ntel = {}\nfor x in tal:\n    tel[x] = tel.get(x, 0) + 1\nprint(tel)"
+        }
+      ],
+      "oppsummering": "Typetalet er verdien som går att oftast. Standardavviket fortel kor spreidde tala er — og to datasett med same gjennomsnitt kan ha heilt ulik spreiing."
+    },
+    {
+      "id": "eige-datasett",
+      "tittel": "Klassen sitt eige datasett",
+      "kompetansemaal": [
+        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Tala blir langt meir interessante når dei handlar om dykk sjølve. Samle inn noko i klassen — høgde, skostorleik, tal på søsken, minutt brukt på skulevegen — og legg det inn."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Med `input` kan du skrive inn eitt og eitt tal, men det blir tungvint for tretti elevar. Enklare er å skrive heile lista rett inn i koden:"
+        },
+        {
+          "type": "kode",
+          "kode": "skostorleik = [38, 41, 39, 44, 37, 40, 42, 39, 38, 43]"
+        },
+        {
+          "type": "merk",
+          "tekst": "Tala de samlar inn i klassen skal ikkje kunne peike attende på einskildpersonar. Skostorleik og tal på søsken er greitt; ting som kan identifisere nokon, eller som nokon kan synast er vondt å få ut, høyrer ikkje heime i eit øvingsdatasett."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ei liste kan du òg byggje opp bit for bit med `append`, om du vil lese inn tal medan programmet går."
+        },
+        {
+          "type": "kode",
+          "kode": "tal = []\ntal.append(38)\ntal.append(41)\nprint(tal)"
+        }
+      ],
+      "doeme": {
+        "kode": "import statistics\n\nskostorleik = [38, 41, 39, 44, 37, 40, 42, 39, 38, 43]\n\nprint(\"Tal på elevar: \", len(skostorleik))\nprint(\"Gjennomsnitt:  \", round(statistics.mean(skostorleik), 1))\nprint(\"Median:        \", statistics.median(skostorleik))\nprint(\"Typetal:       \", statistics.mode(skostorleik))\nprint(\"Standardavvik: \", round(statistics.stdev(skostorleik), 1))",
+        "oppmoding": "Byt ut med tal frå din eigen klasse. Er gjennomsnittet og medianen like her?"
+      },
+      "loype": {
+        "tittel": "Les inn tal og lag ei oversikt",
+        "maal": "eit program som byggjer opp ei liste og skriv ut ei full oversikt over datasettet",
+        "steg": [
+          {
+            "tekst": "Vi startar med ei tom liste.",
+            "kode": "tal = []\nprint(tal)"
+          },
+          {
+            "tekst": "Så legg vi til nokre verdiar med `append`.",
+            "kode": "tal = []\ntal.append(38)\ntal.append(41)\ntal.append(39)\nprint(tal)"
+          },
+          {
+            "tekst": "No reknar vi ut sentralmåla.",
+            "kode": "import statistics\n\ntal = []\ntal.append(38)\ntal.append(41)\ntal.append(39)\n\nprint(\"Snitt: \", statistics.mean(tal))\nprint(\"Median:\", statistics.median(tal))"
+          },
+          {
+            "tekst": "Og legg på spreiing, så oversikta er komplett.",
+            "kode": "import statistics\n\ntal = []\ntal.append(38)\ntal.append(41)\ntal.append(39)\n\nprint(\"Tal:          \", len(tal))\nprint(\"Snitt:        \", round(statistics.mean(tal), 1))\nprint(\"Median:       \", statistics.median(tal))\nprint(\"Minste–største:\", min(tal), \"–\", max(tal))\nprint(\"Standardavvik:\", round(statistics.stdev(tal), 1))",
+            "proev": "Legg til fleire tal frå klassen din, og køyr på nytt."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "eige-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `oversikt` som tek imot ei liste og returnerer ei **ordbok** med nøklane `tal`, `snitt`, `minste` og `storste`. `snitt` skal vere avrunda til éin desimal.",
+          "startkode": "def oversikt(liste):\n    # skriv koden her\n",
+          "hint": [
+            "Ei ordbok skriv du slik: `{\"tal\": len(liste), ...}`",
+            "`round(sum(liste) / len(liste), 1)` gjev snittet med éin desimal."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "oversikt",
+              "args": [
+                [
+                  2,
+                  4,
+                  6
+                ]
+              ],
+              "vent": {
+                "tal": 3,
+                "snitt": 4.0,
+                "minste": 2,
+                "storste": 6
+              }
+            },
+            {
+              "type": "kall",
+              "fn": "oversikt",
+              "args": [
+                [
+                  10
+                ]
+              ],
+              "vent": {
+                "tal": 1,
+                "snitt": 10.0,
+                "minste": 10,
+                "storste": 10
+              }
+            }
+          ],
+          "loeysing": "def oversikt(liste):\n    return {\n        \"tal\": len(liste),\n        \"snitt\": round(sum(liste) / len(liste), 1),\n        \"minste\": min(liste),\n        \"storste\": max(liste)\n    }"
+        },
+        {
+          "id": "eige-2",
+          "type": "les",
+          "kode": "tal = [1, 2]\ntal.append([3, 4])\nprint(len(tal))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "4",
+            "3",
+            "2",
+            "Det blir feilmelding"
+          ],
+          "rett": 1,
+          "forklaring": "`append` legg til **eitt** element. Her er det elementet sjølv ei liste, så `tal` blir `[1, 2, [3, 4]]` — tre element. Skulle du slått saman to lister, måtte du brukt `extend` eller `+`."
+        },
+        {
+          "id": "eige-3",
+          "type": "rett",
+          "tekst": "Programmet skal leggje tre tal i lista, men lista er tom til slutt. Rett feilen.",
+          "startkode": "tal = []\nfor x in [38, 41, 39]:\n    tal = []\n    tal.append(x)\nprint(tal)",
+          "hint": [
+            "Sjå kva som skjer inni løkka for kvar runde.",
+            "Lista skal lagast **éin** gong, før løkka."
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "[38, 41, 39]"
+            }
+          ],
+          "loeysing": "tal = []\nfor x in [38, 41, 39]:\n    tal.append(x)\nprint(tal)"
+        }
+      ],
+      "oppsummering": "Eit datasett frå din eigen klasse gjer statistikken konkret. `append` byggjer opp ei liste bit for bit — men lista må lagast før løkka, ikkje inni."
+    },
+    {
+      "id": "diagram",
+      "tittel": "Teikn tala",
+      "kompetansemaal": [
+        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene",
+        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei liste med tretti tal seier lite ved fyrste augekast. Eit diagram seier alt med ein gong."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "`matplotlib` teiknar for oss. Fyrste gongen tek det nokre sekund å hente biblioteket; etterpå går det fort."
+        },
+        {
+          "type": "kode",
+          "kode": "import matplotlib.pyplot as plt\n\nfag = [\"Norsk\", \"Matte\", \"Engelsk\"]\ntimar = [5, 6, 3]\n\nplt.bar(fag, timar)\nplt.ylabel(\"Timar i veka\")\nplt.show()"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`plt.bar(namn, verdiar)` — søylediagram",
+            "`plt.hist(tal, bins=10)` — histogram som grupperer tala sjølv",
+            "`plt.plot(x, y)` — linje",
+            "`plt.pie(verdiar)` — kakediagram"
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Hugs alltid `plt.show()` til slutt. Utan han blir figuren laga, men aldri vist."
+        }
+      ],
+      "doeme": {
+        "kode": "import matplotlib.pyplot as plt\n\nskostorleik = [38, 41, 39, 44, 37, 40, 42, 39, 38, 43, 40, 39]\n\nplt.hist(skostorleik, bins=8)\nplt.xlabel(\"Skostorleik\")\nplt.ylabel(\"Talet på elevar\")\nplt.title(\"Skostorleik i klassen\")\nplt.show()",
+        "oppmoding": "Byt `bins=8` til `bins=3`. Kva gjer det med inntrykket av kor spreidde tala er?"
+      },
+      "loype": {
+        "tittel": "Frå tal til diagram",
+        "maal": "eit søylediagram over kor mange gonger kvar terningside kom",
+        "steg": [
+          {
+            "tekst": "Vi lagar eit datasett ved å kaste terning hundre gonger.",
+            "kode": "import random\n\nkast = []\nfor i in range(100):\n    kast.append(random.randint(1, 6))\nprint(len(kast))"
+          },
+          {
+            "tekst": "Så tel vi opp kvar side.",
+            "kode": "import random\n\nkast = []\nfor i in range(100):\n    kast.append(random.randint(1, 6))\n\ntel = []\nfor side in range(1, 7):\n    tel.append(kast.count(side))\nprint(tel)"
+          },
+          {
+            "tekst": "No teiknar vi det som søyler.",
+            "kode": "import random\nimport matplotlib.pyplot as plt\n\nkast = []\nfor i in range(100):\n    kast.append(random.randint(1, 6))\n\ntel = []\nfor side in range(1, 7):\n    tel.append(kast.count(side))\n\nplt.bar(range(1, 7), tel)\nplt.show()"
+          },
+          {
+            "tekst": "Og set på tekst, så andre skjøner kva dei ser.",
+            "kode": "import random\nimport matplotlib.pyplot as plt\n\nkast = []\nfor i in range(100):\n    kast.append(random.randint(1, 6))\n\ntel = []\nfor side in range(1, 7):\n    tel.append(kast.count(side))\n\nplt.bar(range(1, 7), tel)\nplt.xlabel(\"Terningside\")\nplt.ylabel(\"Talet på kast\")\nplt.title(\"100 terningkast\")\nplt.show()",
+            "proev": "Byt 100 med 6000. Blir søylene jamnare?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "diag-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `tel_side` som tek imot ei liste med terningkast og eit sidetal, og returnerer kor mange gonger den sida kom. Bruk `count`.",
+          "startkode": "def tel_side(kast, side):\n    # skriv koden her\n",
+          "hint": [
+            "`liste.count(x)` tel kor mange gonger `x` finst i lista.",
+            "`return kast.count(side)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "tel_side",
+              "args": [
+                [
+                  1,
+                  6,
+                  3,
+                  6,
+                  6
+                ],
+                6
+              ],
+              "vent": 3
+            },
+            {
+              "type": "kall",
+              "fn": "tel_side",
+              "args": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                5
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def tel_side(kast, side):\n    return kast.count(side)"
+        },
+        {
+          "id": "diag-2",
+          "type": "les",
+          "kode": "tal = [2, 5, 2, 8, 2]\nprint(tal.count(2), len(tal))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "3 5",
+            "5 3",
+            "2 5",
+            "3 3"
+          ],
+          "rett": 0,
+          "forklaring": "`count(2)` tel kor mange **toarar** det er — tre stykke. `len` tel kor mange element lista har i alt — fem. Dei to svarar på ulike spørsmål."
+        },
+        {
+          "id": "diag-3",
+          "type": "rett",
+          "tekst": "Programmet lagar eit diagram, men det dukkar aldri opp i grafikkruta. Rett det.",
+          "startkode": "import matplotlib.pyplot as plt\n\nplt.bar([1, 2, 3], [4, 7, 2])\nplt.title(\"Eit diagram\")",
+          "hint": [
+            "Figuren blir laga, men aldri vist.",
+            "Kva linje manglar heilt til slutt?"
+          ],
+          "testar": [
+            {
+              "type": "inneheld",
+              "vent": "plt.show()",
+              "grunn": "Figuren blir ikkje vist utan plt.show()"
+            }
+          ],
+          "loeysing": "import matplotlib.pyplot as plt\n\nplt.bar([1, 2, 3], [4, 7, 2])\nplt.title(\"Eit diagram\")\nplt.show()"
+        }
+      ],
+      "oppsummering": "`matplotlib` teiknar tala dine. `bar` for søyler, `hist` for histogram, `plot` for linje. Hugs `plt.show()`, elles blir figuren laga men aldri vist."
+    },
+    {
+      "id": "same-tal-to-bilete",
+      "tittel": "Same tal, to ulike bilete",
+      "kompetansemaal": [
+        "9. trinn: sammenligne og argumentere for hvordan framstillinger av tall og data kan brukes for å fremme ulike synspunkter",
+        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet",
+        "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Her kjem den viktigaste leksjonen i heile dette emnet. Du kan teikne **nøyaktig dei same tala** på to måtar, og få folk til å tru to heilt ulike ting."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det vanlegaste trikset er å kutte y-aksen. Startar aksen på null, ser ein liten skilnad liten ut. Startar han rett under den lågaste søyla, ser den same skilnaden dramatisk ut."
+        },
+        {
+          "type": "kode",
+          "kode": "plt.ylim(0, 100)     # ærleg\nplt.ylim(78, 84)     # dramatisk"
+        },
+        {
+          "type": "merk",
+          "tekst": "Ingen av dei to figurane lyg om tala — tala er dei same. Det er **valet av akse** som styrer inntrykket. Difor er det fyrste du skal sjå etter i eit diagram i avisa: kvar startar y-aksen?"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Andre grep som gjer det same: å velje eit smalt tidsrom, å bruke kakediagram for tal som ikkje summerer til ein heilskap, eller å la søylene ha ulik breidd."
+        }
+      ],
+      "doeme": {
+        "kode": "import matplotlib.pyplot as plt\n\naar = [2022, 2023, 2024, 2025]\nresultat = [80, 81, 82, 83]\n\nplt.bar(aar, resultat)\nplt.ylim(78, 84)\nplt.title(\"Kraftig framgang!\")\nplt.show()\n\nplt.bar(aar, resultat)\nplt.ylim(0, 100)\nplt.title(\"Same tal, heile aksen\")\nplt.show()",
+        "oppmoding": "To figurar, same tala. Kva overskrift ville du sett på kvar av dei om du ville selje ei sak?"
+      },
+      "loype": {
+        "tittel": "Lag begge biletet sjølv",
+        "maal": "to diagram av dei same tala — eitt som overdriv skilnaden og eitt som viser han ærleg",
+        "steg": [
+          {
+            "tekst": "Vi startar med tala. Fire år med små endringar.",
+            "kode": "aar = [2022, 2023, 2024, 2025]\nresultat = [80, 81, 82, 83]\nprint(resultat)"
+          },
+          {
+            "tekst": "Fyrst teiknar vi dei heilt vanleg.",
+            "kode": "import matplotlib.pyplot as plt\n\naar = [2022, 2023, 2024, 2025]\nresultat = [80, 81, 82, 83]\n\nplt.bar(aar, resultat)\nplt.show()"
+          },
+          {
+            "tekst": "No kuttar vi y-aksen slik at han startar rett under den lågaste søyla. Sjå kva som skjer med inntrykket.",
+            "kode": "import matplotlib.pyplot as plt\n\naar = [2022, 2023, 2024, 2025]\nresultat = [80, 81, 82, 83]\n\nplt.bar(aar, resultat)\nplt.ylim(79, 84)\nplt.title(\"Dramatisk auke\")\nplt.show()",
+            "proev": "Ser det ut som ein stor auke? Tala har berre endra seg med 3 av 80 — under fire prosent."
+          },
+          {
+            "tekst": "Og så den ærlege utgåva, med aksen frå null.",
+            "kode": "import matplotlib.pyplot as plt\n\naar = [2022, 2023, 2024, 2025]\nresultat = [80, 81, 82, 83]\n\nplt.bar(aar, resultat)\nplt.ylim(0, 100)\nplt.title(\"Same tal, aksen frå null\")\nplt.show()",
+            "proev": "Same tal, same kode — berre éi linje er endra. Kva figur ville du brukt om du ville be om meir pengar?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "bilete-1",
+          "type": "les",
+          "kode": "gamal = 80\nny = 83\nauke = (ny - gamal) / gamal * 100\nprint(round(auke, 1))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "3.0",
+            "3.8",
+            "0.0",
+            "103.8"
+          ],
+          "rett": 1,
+          "forklaring": "Auken er 3 av 80, som er 3,75 prosent — avrunda **3.8**. Ein figur med kutta akse kan få desse 3,8 prosentane til å sjå ut som ei dobling."
+        },
+        {
+          "id": "bilete-2",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `prosentvis_endring` som tek imot eit gammalt og eit nytt tal og returnerer endringa i prosent, avrunda til éin desimal.",
+          "startkode": "def prosentvis_endring(gamal, ny):\n    # skriv koden her\n",
+          "hint": [
+            "Endringa er `(ny - gamal) / gamal`",
+            "Gong med 100 og bruk `round(..., 1)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "prosentvis_endring",
+              "args": [
+                80,
+                83
+              ],
+              "vent": 3.8
+            },
+            {
+              "type": "kall",
+              "fn": "prosentvis_endring",
+              "args": [
+                100,
+                150
+              ],
+              "vent": 50.0
+            },
+            {
+              "type": "kall",
+              "fn": "prosentvis_endring",
+              "args": [
+                50,
+                25
+              ],
+              "vent": -50.0
+            }
+          ],
+          "loeysing": "def prosentvis_endring(gamal, ny):\n    return round((ny - gamal) / gamal * 100, 1)"
+        },
+        {
+          "id": "bilete-3",
+          "type": "rett",
+          "tekst": "Figuren skal vise tala ærleg, med y-aksen frå null. No er han kutta slik at små skilnader ser store ut. Rett det.",
+          "startkode": "import matplotlib.pyplot as plt\n\nplt.bar([1, 2, 3], [80, 81, 83])\nplt.ylim(79, 84)\nplt.show()",
+          "hint": [
+            "Kvar startar y-aksen no?",
+            "`plt.ylim(0, ...)` let aksen starte på null."
+          ],
+          "testar": [
+            {
+              "type": "inneheld",
+              "vent": "plt.ylim(0",
+              "grunn": "Y-aksen skal starte på null"
+            },
+            {
+              "type": "inneheld",
+              "vent": "plt.show()",
+              "grunn": "Figuren må visast"
+            }
+          ],
+          "loeysing": "import matplotlib.pyplot as plt\n\nplt.bar([1, 2, 3], [80, 81, 83])\nplt.ylim(0, 100)\nplt.show()"
+        }
+      ],
+      "oppsummering": "Same tala kan teiknast så dei fortel to ulike historier. Det vanlegaste grepet er å kutte y-aksen. Sjå alltid etter kvar aksen startar — i avisa òg."
+    },
+    {
+      "id": "les-eit-diagram",
+      "tittel": "Les eit diagram kritisk",
+      "kompetansemaal": [
+        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet",
+        "9. trinn: sammenligne og argumentere for hvordan framstillinger av tall og data kan brukes for å fremme ulike synspunkter",
+        "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "No har du sjølv laga eit villeiande diagram. Då er du godt rusta til å kjenne att eitt."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ei sjekkliste du kan bruke på kva som helst du møter i media:"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "**Kvar startar y-aksen?** Ikkje på null er ikkje alltid feil, men det skal du merke deg.",
+            "**Kva tidsrom er valt?** Eit smalt utsnitt kan snu ein trend.",
+            "**Kor mange er med?** Ein prosent av tolv personar er noko heilt anna enn ein prosent av tolv tusen.",
+            "**Kven har laga figuren,** og kva vil dei at du skal meine?",
+            "**Summerer kakediagrammet til 100?** Elles er kakediagram feil form."
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Eit gjennomsnitt utan tal på kor mange som er med, og utan eit spreiingsmål, er nesten alltid for lite informasjon til å seie noko sikkert."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Du kan bruke Python til å sjekke påstandar. Får du oppgjeve nokre tal i ein artikkel, kan du rekne etter sjølv i staden for å tru på figuren."
+        }
+      ],
+      "doeme": {
+        "kode": "import statistics\n\n# «Snittet i gruppa er 50» — men sjå på spreiinga\ngruppe_a = [48, 49, 50, 51, 52]\ngruppe_b = [10, 20, 50, 80, 90]\n\nfor namn, g in [(\"A\", gruppe_a), (\"B\", gruppe_b)]:\n    print(namn, \"snitt\", statistics.mean(g),\n          \"| avvik\", round(statistics.stdev(g), 1),\n          \"| frå\", min(g), \"til\", max(g))",
+        "oppmoding": "Begge gruppene har snitt 50. Ville du sagt at dei to gruppene liknar kvarandre?"
+      },
+      "loype": {
+        "tittel": "Sjekk ein påstand",
+        "maal": "eit program som reknar etter om ein påstand frå ein artikkel held vatn",
+        "steg": [
+          {
+            "tekst": "Påstanden: «Over halvparten av elevane brukar meir enn ein time på skulevegen.» Vi legg inn tala.",
+            "kode": "minutt = [15, 20, 25, 30, 45, 62, 70, 90]\nprint(len(minutt), \"elevar\")"
+          },
+          {
+            "tekst": "Vi tel kor mange som faktisk brukar meir enn 60 minutt.",
+            "kode": "minutt = [15, 20, 25, 30, 45, 62, 70, 90]\nover = 0\nfor m in minutt:\n    if m > 60:\n        over = over + 1\nprint(over, \"av\", len(minutt))"
+          },
+          {
+            "tekst": "Og reknar det om til prosent.",
+            "kode": "minutt = [15, 20, 25, 30, 45, 62, 70, 90]\nover = 0\nfor m in minutt:\n    if m > 60:\n        over = over + 1\n\ndel = over / len(minutt) * 100\nprint(round(del, 1), \"prosent brukar meir enn ein time\")",
+            "proev": "Er påstanden sann? Kva ville skjedd om utvalet berre var dei tre siste elevane?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "kritisk-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `del_over` som tek imot ei liste med tal og ei grense, og returnerer kor stor **prosentdel** av tala som er større enn grensa. Rund av til éin desimal.",
+          "startkode": "def del_over(tal, grense):\n    over = 0\n    # skriv løkka her\n    return round(over / len(tal) * 100, 1)\n",
+          "hint": [
+            "`for x in tal:` og `if x > grense:`",
+            "Hugs at det er **strengt større enn**, ikkje større eller lik."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "del_over",
+              "args": [
+                [
+                  15,
+                  20,
+                  62,
+                  70
+                ],
+                60
+              ],
+              "vent": 50.0
+            },
+            {
+              "type": "kall",
+              "fn": "del_over",
+              "args": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                10
+              ],
+              "vent": 0.0
+            },
+            {
+              "type": "kall",
+              "fn": "del_over",
+              "args": [
+                [
+                  5,
+                  5,
+                  5,
+                  5
+                ],
+                4
+              ],
+              "vent": 100.0
+            }
+          ],
+          "loeysing": "def del_over(tal, grense):\n    over = 0\n    for x in tal:\n        if x > grense:\n            over = over + 1\n    return round(over / len(tal) * 100, 1)"
+        },
+        {
+          "id": "kritisk-2",
+          "type": "les",
+          "kode": "svar = [1, 1, 5, 5]\nsnitt = sum(svar) / len(svar)\nprint(snitt)",
+          "sporsmal": "Fire elevar har gjeve karakteren 1, 1, 5 og 5. Kva skriv programmet ut?",
+          "alternativ": [
+            "3.0",
+            "1.0",
+            "5.0",
+            "2.5"
+          ],
+          "rett": 0,
+          "forklaring": "Snittet er **3.0** — men ikkje éin einaste elev gav 3. Dette er eit godt døme på at gjennomsnittet åleine kan skjule at gruppa er delt i to."
+        },
+        {
+          "id": "kritisk-3",
+          "type": "rett",
+          "tekst": "Programmet skal rekne ut kor stor prosentdel som er over grensa, men det gjev talet i staden for prosenten. Rett det.",
+          "startkode": "def del_over(tal, grense):\n    over = 0\n    for x in tal:\n        if x > grense:\n            over = over + 1\n    return over",
+          "hint": [
+            "Del på kor mange tal det er, og gong med 100.",
+            "`return round(over / len(tal) * 100, 1)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "del_over",
+              "args": [
+                [
+                  15,
+                  20,
+                  62,
+                  70
+                ],
+                60
+              ],
+              "vent": 50.0
+            },
+            {
+              "type": "kall",
+              "fn": "del_over",
+              "args": [
+                [
+                  1,
+                  2,
+                  3
+                ],
+                10
+              ],
+              "vent": 0.0
+            }
+          ],
+          "loeysing": "def del_over(tal, grense):\n    over = 0\n    for x in tal:\n        if x > grense:\n            over = over + 1\n    return round(over / len(tal) * 100, 1)"
+        }
+      ],
+      "oppsummering": "Sjå etter kvar y-aksen startar, kva tidsrom som er valt, og kor mange som er med. Eit gjennomsnitt utan spreiing og utvalsstorleik seier lite — og du kan alltid rekne etter sjølv."
+    }
+  ]
+}
