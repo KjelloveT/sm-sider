@@ -1,0 +1,1002 @@
+{
+  "app": "ormritaren",
+  "version": 1,
+  "id": "okonomi",
+  "tittel": "Rente og økonomi",
+  "leksjonar": [
+    {
+      "id": "prosent",
+      "tittel": "Prosent og vekstfaktor",
+      "kompetansemaal": [
+        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ein pris går opp 20 prosent. Dei fleste reknar det i to steg: finn 20 prosent, og legg det til. Det går fint, men blir tungvint så snart noko skal endre seg mange gonger."
+        },
+        {
+          "type": "kode",
+          "kode": "pris = 200\naauke = pris * 0.20\nny_pris = pris + aauke\nprint(ny_pris)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "**Vekstfaktoren** gjer det same i eitt steg. Ein auke på 20 prosent er det same som å gonge med **1,20**."
+        },
+        {
+          "type": "kode",
+          "kode": "pris = 200\nny_pris = pris * 1.20\nprint(ny_pris)"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "Auke på 20 % gjev vekstfaktor `1.20`",
+            "Auke på 5 % gjev vekstfaktor `1.05`",
+            "Nedgang på 20 % gjev vekstfaktor `0.80`",
+            "Nedgang på 5 % gjev vekstfaktor `0.95`"
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Vekstfaktoren er alltid `1 + prosenten delt på 100`. Ein nedgang er berre ein negativ prosent: `1 + (-20)/100` blir `0.80`."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Grunnen til at dette er verdt å lære: skal noko endre seg **fleire gonger**, gongar du berre med vekstfaktoren like mange gonger."
+        }
+      ],
+      "doeme": {
+        "kode": "pris = 200\nvekstfaktor = 1.20\n\nprint(\"Start:    \", pris)\nprint(\"Etter 1 år:\", round(pris * vekstfaktor, 2))\nprint(\"Etter 2 år:\", round(pris * vekstfaktor ** 2, 2))\nprint(\"Etter 3 år:\", round(pris * vekstfaktor ** 3, 2))",
+        "oppmoding": "Byt vekstfaktoren til `0.80` — altså 20 prosent ned. Kjem prisen tilbake til 200 etter ein opp og ein ned?"
+      },
+      "loype": {
+        "tittel": "Rekn ut vekstfaktoren sjølv",
+        "maal": "eit program som gjer om ein prosentendring til vekstfaktor, og bruker han",
+        "steg": [
+          {
+            "tekst": "Vi startar med prosenten.",
+            "kode": "prosent = 20"
+          },
+          {
+            "tekst": "Vekstfaktoren er 1 pluss prosenten delt på 100.",
+            "kode": "prosent = 20\nvekstfaktor = 1 + prosent / 100\nprint(vekstfaktor)"
+          },
+          {
+            "tekst": "No kan vi bruke han på ein pris.",
+            "kode": "prosent = 20\nvekstfaktor = 1 + prosent / 100\npris = 200\nprint(pris * vekstfaktor)"
+          },
+          {
+            "tekst": "Og på fleire år på ein gong, med `**`.",
+            "kode": "prosent = 20\nvekstfaktor = 1 + prosent / 100\npris = 200\n\nfor aar in range(1, 5):\n    print(\"Etter\", aar, \"år:\", round(pris * vekstfaktor ** aar, 2))",
+            "proev": "Byt `prosent` til -20. Vekstfaktoren blir 0.8 — og prisen fell i staden."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "pros-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `vekstfaktor` som tek imot ein prosent og returnerer vekstfaktoren. 20 skal gje `1.2`, og -20 skal gje `0.8`.",
+          "startkode": "def vekstfaktor(prosent):\n    # skriv koden her\n",
+          "hint": [
+            "Formelen er `1 + prosent / 100`",
+            "Han verkar på negative tal òg — du treng ikkje noko `if`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "vekstfaktor",
+              "args": [
+                20
+              ],
+              "vent": 1.2
+            },
+            {
+              "type": "kall",
+              "fn": "vekstfaktor",
+              "args": [
+                -20
+              ],
+              "vent": 0.8
+            },
+            {
+              "type": "kall",
+              "fn": "vekstfaktor",
+              "args": [
+                0
+              ],
+              "vent": 1.0
+            }
+          ],
+          "loeysing": "def vekstfaktor(prosent):\n    return 1 + prosent / 100"
+        },
+        {
+          "id": "pros-2",
+          "type": "les",
+          "kode": "pris = 100\npris = pris * 1.10\npris = pris * 0.90\nprint(round(pris, 2))",
+          "sporsmal": "Prisen går opp 10 prosent, og så ned 10 prosent. Kva skriv programmet ut?",
+          "alternativ": [
+            "100.0",
+            "99.0",
+            "101.0",
+            "90.0"
+          ],
+          "rett": 1,
+          "forklaring": "Du endar **under** der du starta. Auken på 10 prosent blir rekna av 100, men nedgangen blir rekna av 110 — og 10 prosent av 110 er meir enn 10 prosent av 100. Dette overraskar mange, og er verdt å hugse når nokon reklamerer med «opp 20 %, no ned 20 %»."
+        },
+        {
+          "id": "pros-3",
+          "type": "rett",
+          "tekst": "Programmet skal rekne ut prisen etter ein **nedgang** på 25 prosent, men det legg til i staden. Rett vekstfaktoren.",
+          "startkode": "pris = 800\nny = pris * 1.25\nprint(ny)",
+          "hint": [
+            "Ein nedgang på 25 prosent tyder at du har 75 prosent att.",
+            "Vekstfaktoren blir `1 + (-25)/100`, altså 0.75."
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "600.0"
+            }
+          ],
+          "loeysing": "pris = 800\nny = pris * 0.75\nprint(ny)"
+        }
+      ],
+      "oppsummering": "Vekstfaktoren er `1 + prosent/100`. Han gjer prosentrekning til ei enkel gonging — og lèt deg rekne mange endringar på rad med `**`."
+    },
+    {
+      "id": "renters-rente",
+      "tittel": "Renters rente",
+      "kompetansemaal": [
+        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Set du pengar i banken, får du rente. Året etter får du rente **både** av det du sette inn og av renta du alt har fått. Det er dette som heiter renters rente, og det er grunnen til at sparing over lang tid blir kraftigare enn folk trur."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Med vekstfaktor er det ei enkel løkke:"
+        },
+        {
+          "type": "kode",
+          "kode": "sparing = 10000\nfor aar in range(10):\n    sparing = sparing * 1.03\nprint(round(sparing, 2))"
+        },
+        {
+          "type": "merk",
+          "tekst": "Legg merke til at `sparing` blir brukt på begge sider av likskapsteiknet. Det tyder «ta den verdien du har, gong med 1,03, og lagre resultatet under same namn»."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Same svaret kan reknast direkte med potens, utan løkke:"
+        },
+        {
+          "type": "kode",
+          "kode": "sparing = 10000 * 1.03 ** 10\nprint(round(sparing, 2))"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Løkka viser kva som skjer år for år. Potensen gjev svaret med ein gong. Begge er nyttige — den eine forklarer, den andre reknar."
+        }
+      ],
+      "doeme": {
+        "kode": "sparing = 10000\nrente = 1.03\n\nfor aar in range(1, 11):\n    sparing = sparing * rente\n    print(\"År\", aar, \":\", round(sparing, 2))",
+        "oppmoding": "Byt renta til 1.07. Kor mykje meir blir det etter ti år — og korleis er skilnaden mot 3 prosent i starten mot i slutten?"
+      },
+      "loype": {
+        "tittel": "Kor lenge tek det å doble pengane?",
+        "maal": "eit program som finn ut kor mange år sparepengane treng for å bli dobla",
+        "steg": [
+          {
+            "tekst": "Vi startar med beløpet og målet.",
+            "kode": "sparing = 10000\nmaal = 20000\naar = 0"
+          },
+          {
+            "tekst": "Så lagar vi ei løkke som held fram til vi er framme.",
+            "kode": "sparing = 10000\nmaal = 20000\naar = 0\n\nwhile sparing < maal:\n    sparing = sparing * 1.03"
+          },
+          {
+            "tekst": "Vi må telje åra, elles veit vi ikkje svaret.",
+            "kode": "sparing = 10000\nmaal = 20000\naar = 0\n\nwhile sparing < maal:\n    sparing = sparing * 1.03\n    aar = aar + 1"
+          },
+          {
+            "tekst": "Og skriv ut resultatet.",
+            "kode": "sparing = 10000\nmaal = 20000\naar = 0\n\nwhile sparing < maal:\n    sparing = sparing * 1.03\n    aar = aar + 1\n\nprint(\"Det tek\", aar, \"år\")\nprint(\"Då har du\", round(sparing, 2), \"kroner\")",
+            "proev": "Byt renta til 1.07. Kor mange år då? Prøv òg med eit anna startbeløp — endrar svaret seg?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "rente-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `spar` som tek imot eit beløp, ein rentefot i prosent og eit tal år, og returnerer kor mykje du har til slutt. Rund av til to desimalar.",
+          "startkode": "def spar(belop, prosent, aar):\n    # skriv koden her\n",
+          "hint": [
+            "Vekstfaktoren er `1 + prosent / 100`",
+            "`return round(belop * (1 + prosent/100) ** aar, 2)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "spar",
+              "args": [
+                10000,
+                3,
+                10
+              ],
+              "vent": 13439.16
+            },
+            {
+              "type": "kall",
+              "fn": "spar",
+              "args": [
+                1000,
+                5,
+                1
+              ],
+              "vent": 1050.0
+            },
+            {
+              "type": "kall",
+              "fn": "spar",
+              "args": [
+                500,
+                0,
+                20
+              ],
+              "vent": 500.0
+            }
+          ],
+          "loeysing": "def spar(belop, prosent, aar):\n    return round(belop * (1 + prosent / 100) ** aar, 2)"
+        },
+        {
+          "id": "rente-2",
+          "type": "les",
+          "kode": "sparing = 1000\nfor aar in range(2):\n    sparing = sparing * 1.10\nprint(round(sparing, 2))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "1200.0",
+            "1210.0",
+            "1100.0",
+            "1020.0"
+          ],
+          "rett": 1,
+          "forklaring": "Fyrste året: 1000 gonger 1,10 er **1100**. Andre året: 1100 gonger 1,10 er **1210** — ikkje 1200. Dei ekstra ti kronene er renta du fekk av renta frå fyrste året."
+        },
+        {
+          "id": "rente-3",
+          "type": "rett",
+          "tekst": "Programmet skal rekne renters rente over fem år, men det gjev same beløpet kvart år. Rett feilen.",
+          "startkode": "sparing = 10000\nfor aar in range(5):\n    ny = sparing * 1.05\nprint(round(ny, 2))",
+          "hint": [
+            "Sjå kva som blir lagra kvar runde. Kva verdi bruker neste runde?",
+            "Resultatet må lagrast tilbake i `sparing`, elles startar kvar runde på nytt."
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "12762.82"
+            }
+          ],
+          "loeysing": "sparing = 10000\nfor aar in range(5):\n    sparing = sparing * 1.05\nprint(round(sparing, 2))"
+        }
+      ],
+      "oppsummering": "Renters rente er vekstfaktoren brukt om att. Ei løkke viser året-for-året, `**` gjev svaret direkte. Verdien må lagrast tilbake, elles startar kvar runde på nytt."
+    },
+    {
+      "id": "sparing-kvar-maanad",
+      "tittel": "Å spare litt kvar månad",
+      "kompetansemaal": [
+        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
+        "10. trinn: planlegge, utføre og presentere et utforskende arbeid knyttet til personlig økonomi"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Dei fleste sparar ikkje eit stort beløp éin gong — dei legg litt til side kvar månad. Då veks pengane av to grunnar samstundes: du legg til meir, og det du alt har får rente."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det er tungt å rekne ut med formel, men lett å simulere. Vi går månad for månad:"
+        },
+        {
+          "type": "kode",
+          "kode": "sparing = 0\nfor maanad in range(12):\n    sparing = sparing + 200      # du set inn\n    sparing = sparing * 1.0025   # banken legg til rente\nprint(round(sparing, 2))"
+        },
+        {
+          "type": "merk",
+          "tekst": "Månadsrenta er ikkje årsrenta delt på tolv, men nær nok til skulebruk. Ei årsrente på 3 prosent svarar omtrent til 0,25 prosent i månaden — altså vekstfaktor `1.0025`."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Dette er eit godt døme på noko som er vanskeleg å rekne på papiret, men enkelt å programmere. Du treng ikkje formelen når du kan la maskina gjere kvart steg."
+        }
+      ],
+      "doeme": {
+        "kode": "sparing = 0\ninnskot = 200\n\nfor maanad in range(1, 61):\n    sparing = sparing + innskot\n    sparing = sparing * 1.0025\n    if maanad % 12 == 0:\n        print(\"Etter\", maanad // 12, \"år:\", round(sparing, 2))\n\nprint(\"Du har sett inn:\", 60 * innskot)",
+        "oppmoding": "Fem år med 200 kroner i månaden. Kor mykje av sluttsummen er renter?"
+      },
+      "loype": {
+        "tittel": "Spar til noko du vil ha",
+        "maal": "eit program som finn ut kor mange månader du må spare for å nå eit mål",
+        "steg": [
+          {
+            "tekst": "Vi startar med målet og kor mykje du legg til side.",
+            "kode": "maal = 12000\ninnskot = 500\nsparing = 0\nmaanader = 0"
+          },
+          {
+            "tekst": "Så sparar vi til vi er framme.",
+            "kode": "maal = 12000\ninnskot = 500\nsparing = 0\nmaanader = 0\n\nwhile sparing < maal:\n    sparing = sparing + innskot\n    maanader = maanader + 1"
+          },
+          {
+            "tekst": "No legg vi på renta. Ho gjer at du kjem fram litt før.",
+            "kode": "maal = 12000\ninnskot = 500\nsparing = 0\nmaanader = 0\n\nwhile sparing < maal:\n    sparing = sparing + innskot\n    sparing = sparing * 1.0025\n    maanader = maanader + 1"
+          },
+          {
+            "tekst": "Og skriv ut svaret på ein måte som er til å skjøne.",
+            "kode": "maal = 12000\ninnskot = 500\nsparing = 0\nmaanader = 0\n\nwhile sparing < maal:\n    sparing = sparing + innskot\n    sparing = sparing * 1.0025\n    maanader = maanader + 1\n\nprint(\"Du treng\", maanader, \"månader\")\nprint(\"Det er\", maanader // 12, \"år og\", maanader % 12, \"månader\")\nprint(\"Du har sett inn\", maanader * innskot, \"og fått\", round(sparing - maanader * innskot, 2), \"i rente\")",
+            "proev": "Byt innskotet til 1000. Blir du ferdig på halve tida?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "maaned-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `maanader_til` som tek imot eit mål og eit månadleg innskot, og returnerer kor mange månader du må spare. Rekn **utan** rente.",
+          "startkode": "def maanader_til(maal, innskot):\n    sparing = 0\n    maanader = 0\n    # skriv løkka her\n    return maanader\n",
+          "hint": [
+            "`while sparing < maal:` og så legg du til innskotet",
+            "Hugs å telje månadene inni løkka."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "maanader_til",
+              "args": [
+                12000,
+                500
+              ],
+              "vent": 24
+            },
+            {
+              "type": "kall",
+              "fn": "maanader_til",
+              "args": [
+                1000,
+                1000
+              ],
+              "vent": 1
+            },
+            {
+              "type": "kall",
+              "fn": "maanader_til",
+              "args": [
+                1500,
+                1000
+              ],
+              "vent": 2
+            }
+          ],
+          "loeysing": "def maanader_til(maal, innskot):\n    sparing = 0\n    maanader = 0\n    while sparing < maal:\n        sparing = sparing + innskot\n        maanader = maanader + 1\n    return maanader"
+        },
+        {
+          "id": "maaned-2",
+          "type": "les",
+          "kode": "maanader = 30\nprint(maanader // 12, \"år og\", maanader % 12, \"månader\")",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "2 år og 6 månader",
+            "2.5 år og 0 månader",
+            "3 år og 6 månader",
+            "30 år og 0 månader"
+          ],
+          "rett": 0,
+          "forklaring": "`//` gjev heile år: 30 delt på 12 er **2** heile år. `%` gjev resten: **6** månader. Dette er same paret du brukte til egg og esker i grunnkurset."
+        },
+        {
+          "id": "maaned-3",
+          "type": "rett",
+          "tekst": "Programmet skal spare 500 i månaden i to år, men sluttsummen blir altfor låg. Rett feilen.",
+          "startkode": "sparing = 0\nfor maanad in range(24):\n    sparing = 500\nprint(sparing)",
+          "hint": [
+            "Sjå nøye på linja inni løkka. Legg ho til, eller set ho ein ny verdi?",
+            "Du vil **leggje til**: `sparing = sparing + 500`"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "12000"
+            }
+          ],
+          "loeysing": "sparing = 0\nfor maanad in range(24):\n    sparing = sparing + 500\nprint(sparing)"
+        }
+      ],
+      "oppsummering": "Månadssparing er vanskeleg å rekne med formel, men lett å simulere: legg til, legg på rente, gjenta. Du treng ikkje formelen når maskina kan gå kvart steg."
+    },
+    {
+      "id": "laan",
+      "tittel": "Lån og nedbetaling",
+      "kompetansemaal": [
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Eit lån er renters rente den andre vegen. Du skuldar pengar, og gjelda veks med renta kvar månad. Betalinga di går fyrst til å dekkje renta — det som er att, går til å redusere sjølve gjelda."
+        },
+        {
+          "type": "kode",
+          "kode": "gjeld = 50000\nrente = 0.005      # 0,5 prosent i månaden\nterming = 2000\n\nrente_denne = gjeld * rente\navdrag = terming - rente_denne\ngjeld = gjeld - avdrag\nprint(round(gjeld, 2))"
+        },
+        {
+          "type": "merk",
+          "tekst": "Er terminbeløpet **mindre** enn renta, går gjelda opp sjølv om du betalar. Det er slik folk hamnar i gjeldsfeller — og det er lett å sjå når du simulerer det."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "For å sjå heile nedbetalinga køyrer vi ei løkke til gjelda er borte, og tel kor mykje vi har betalt til saman."
+        }
+      ],
+      "doeme": {
+        "kode": "gjeld = 50000\nrente = 0.005\nterming = 2000\nbetalt = 0\nmaanader = 0\n\nwhile gjeld > 0:\n    gjeld = gjeld + gjeld * rente\n    gjeld = gjeld - terming\n    betalt = betalt + terming\n    maanader = maanader + 1\n\nprint(\"Månader:\", maanader)\nprint(\"Betalt i alt:\", round(betalt, 2))\nprint(\"Av det var renter:\", round(betalt - 50000, 2))",
+        "oppmoding": "Byt terminbeløpet til 3000. Kor mykje mindre betalar du til saman — og kvifor er skilnaden større enn du kanskje trur?"
+      },
+      "loype": {
+        "tittel": "Følg gjelda månad for månad",
+        "maal": "ei nedbetalingsplan som viser kor mykje av kvar innbetaling som går til renter og kor mykje til gjelda",
+        "steg": [
+          {
+            "tekst": "Vi startar med lånet.",
+            "kode": "gjeld = 50000\nrente = 0.005\nterming = 2000"
+          },
+          {
+            "tekst": "Fyrste månad: rekn ut renta, og sjå kor mykje som er att til å betale ned.",
+            "kode": "gjeld = 50000\nrente = 0.005\nterming = 2000\n\nrente_denne = gjeld * rente\navdrag = terming - rente_denne\nprint(\"Rente:\", round(rente_denne, 2), \" Avdrag:\", round(avdrag, 2))"
+          },
+          {
+            "tekst": "Så trekkjer vi avdraget frå gjelda.",
+            "kode": "gjeld = 50000\nrente = 0.005\nterming = 2000\n\nrente_denne = gjeld * rente\navdrag = terming - rente_denne\ngjeld = gjeld - avdrag\nprint(\"Ny gjeld:\", round(gjeld, 2))"
+          },
+          {
+            "tekst": "Og gjentek til gjelda er borte.",
+            "kode": "gjeld = 50000\nrente = 0.005\nterming = 2000\nmaanad = 0\n\nwhile gjeld > 0:\n    rente_denne = gjeld * rente\n    avdrag = terming - rente_denne\n    gjeld = gjeld - avdrag\n    maanad = maanad + 1\n    if maanad <= 3 or gjeld <= 0:\n        print(\"Månad\", maanad, \"— rente\", round(rente_denne, 2),\n              \"avdrag\", round(avdrag, 2), \"att\", round(max(gjeld, 0), 2))",
+            "proev": "Sjå på dei tre fyrste månadene: kor mykje av dei 2000 gjekk til renter? Blir den delen større eller mindre etter kvart?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "laan-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `maanader_paa_laan` som tek imot gjeld, månadsrente (som desimaltal) og terminbeløp, og returnerer kor mange månader det tek å betale ned.",
+          "startkode": "def maanader_paa_laan(gjeld, rente, terming):\n    maanader = 0\n    # skriv løkka her\n    return maanader\n",
+          "hint": [
+            "Kvar runde: legg til renta, trekk frå terminbeløpet, tel opp.",
+            "`while gjeld > 0:`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "maanader_paa_laan",
+              "args": [
+                50000,
+                0.005,
+                2000
+              ],
+              "vent": 27
+            },
+            {
+              "type": "kall",
+              "fn": "maanader_paa_laan",
+              "args": [
+                1000,
+                0.0,
+                500
+              ],
+              "vent": 2
+            }
+          ],
+          "loeysing": "def maanader_paa_laan(gjeld, rente, terming):\n    maanader = 0\n    while gjeld > 0:\n        gjeld = gjeld + gjeld * rente\n        gjeld = gjeld - terming\n        maanader = maanader + 1\n    return maanader"
+        },
+        {
+          "id": "laan-2",
+          "type": "les",
+          "kode": "gjeld = 10000\nrente_denne = gjeld * 0.01\nterming = 80\navdrag = terming - rente_denne\nprint(avdrag)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "80.0",
+            "-20.0",
+            "20.0",
+            "100.0"
+          ],
+          "rett": 1,
+          "forklaring": "Renta er 100 kroner, men du betalar berre 80. Avdraget blir **-20** — altså negativt. Gjelda **veks** sjølv om du betalar kvar månad. Dette er nøyaktig korleis ei gjeldsfelle ser ut i tal."
+        },
+        {
+          "id": "laan-3",
+          "type": "rett",
+          "tekst": "Programmet skal telje kor mange månader det tek å betale ned lånet, men det gløymer å leggje til renta. Difor blir svaret for lågt. Rett det.",
+          "startkode": "def maanader_paa_laan(gjeld, rente, terming):\n    maanader = 0\n    while gjeld > 0:\n        gjeld = gjeld - terming\n        maanader = maanader + 1\n    return maanader",
+          "hint": [
+            "Kvar månad veks gjelda med renta **før** du betalar.",
+            "Legg inn `gjeld = gjeld + gjeld * rente` fyrst i løkka."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "maanader_paa_laan",
+              "args": [
+                50000,
+                0.005,
+                2000
+              ],
+              "vent": 27
+            },
+            {
+              "type": "kall",
+              "fn": "maanader_paa_laan",
+              "args": [
+                20000,
+                0.01,
+                1000
+              ],
+              "vent": 23
+            }
+          ],
+          "loeysing": "def maanader_paa_laan(gjeld, rente, terming):\n    maanader = 0\n    while gjeld > 0:\n        gjeld = gjeld + gjeld * rente\n        gjeld = gjeld - terming\n        maanader = maanader + 1\n    return maanader"
+        }
+      ],
+      "oppsummering": "På eit lån går betalinga fyrst til renta, resten til gjelda. Er terminbeløpet lågare enn renta, veks gjelda sjølv om du betalar."
+    },
+    {
+      "id": "kredittkjoep",
+      "tittel": "Kva kostar det å dele opp?",
+      "kompetansemaal": [
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "«Kjøp no, betal seinare» og «berre 399 i månaden» finst overalt. Spørsmålet er alltid det same: kva kostar det **til saman**, samanlikna med å betale med ein gong?"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Rekninga er enkel. Gong terminbeløpet med talet på terminar, legg til eventuelle gebyr, og trekk frå kontantprisen."
+        },
+        {
+          "type": "kode",
+          "kode": "kontant = 8000\nterming = 399\nmaanader = 24\netableringsgebyr = 500\n\ntotal = terming * maanader + etableringsgebyr\nprint(\"Du betalar:\", total)\nprint(\"Meirkostnad:\", total - kontant)"
+        },
+        {
+          "type": "merk",
+          "tekst": "Legg alltid merke til **gebyra**. Eit termingebyr på 45 kroner i månaden ser lite ut, men over to år er det over tusen kroner — ofte meir enn renta."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein nyttig måte å sjå det på: kor mange prosent dyrare blir det? Då kan du samanlikne tilbod som elles ser heilt ulike ut."
+        }
+      ],
+      "doeme": {
+        "kode": "kontant = 8000\nterming = 399\nmaanader = 24\netablering = 500\ntermingebyr = 45\n\ntotal = (terming + termingebyr) * maanader + etablering\nmeir = total - kontant\n\nprint(\"Kontantpris:  \", kontant)\nprint(\"Du betalar:   \", total)\nprint(\"Meirkostnad:  \", meir)\nprint(\"Prosent meir: \", round(meir / kontant * 100, 1))",
+        "oppmoding": "Ta bort termingebyret og køyr på nytt. Kor stor del av meirkostnaden var berre gebyr?"
+      },
+      "loype": {
+        "tittel": "Rekn ut kva avbetalinga verkeleg kostar",
+        "maal": "eit program som samanliknar kontantpris og avbetaling, og viser meirkostnaden i kroner og prosent",
+        "steg": [
+          {
+            "tekst": "Vi legg inn tala frå tilbodet.",
+            "kode": "kontant = 8000\nterming = 399\nmaanader = 24"
+          },
+          {
+            "tekst": "Fyrst kor mykje du betalar i alt.",
+            "kode": "kontant = 8000\nterming = 399\nmaanader = 24\n\ntotal = terming * maanader\nprint(\"Du betalar\", total)"
+          },
+          {
+            "tekst": "Så legg vi på gebyra, som er lette å oversjå.",
+            "kode": "kontant = 8000\nterming = 399\nmaanader = 24\netablering = 500\ntermingebyr = 45\n\ntotal = (terming + termingebyr) * maanader + etablering\nprint(\"Du betalar\", total)"
+          },
+          {
+            "tekst": "Og reknar ut meirkostnaden, både i kroner og prosent.",
+            "kode": "kontant = 8000\nterming = 399\nmaanader = 24\netablering = 500\ntermingebyr = 45\n\ntotal = (terming + termingebyr) * maanader + etablering\nmeir = total - kontant\n\nprint(\"Kontantpris: \", kontant)\nprint(\"Du betalar:  \", total)\nprint(\"Meirkostnad: \", meir, \"kroner\")\nprint(\"Det er\", round(meir / kontant * 100, 1), \"prosent meir\")",
+            "proev": "Kor mykje må terminbeløpet ned for at meirkostnaden skal bli under 1000 kroner?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "kred-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `meirkostnad` som tek imot kontantpris, terminbeløp, tal månader og eit etableringsgebyr, og returnerer kor mange kroner meir du betalar enn kontantprisen.",
+          "startkode": "def meirkostnad(kontant, terming, maanader, gebyr):\n    # skriv koden her\n",
+          "hint": [
+            "Totalen er `terming * maanader + gebyr`",
+            "Meirkostnaden er totalen minus kontantprisen."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "meirkostnad",
+              "args": [
+                8000,
+                399,
+                24,
+                500
+              ],
+              "vent": 2076
+            },
+            {
+              "type": "kall",
+              "fn": "meirkostnad",
+              "args": [
+                1000,
+                100,
+                10,
+                0
+              ],
+              "vent": 0
+            },
+            {
+              "type": "kall",
+              "fn": "meirkostnad",
+              "args": [
+                5000,
+                500,
+                12,
+                250
+              ],
+              "vent": 1250
+            }
+          ],
+          "loeysing": "def meirkostnad(kontant, terming, maanader, gebyr):\n    return terming * maanader + gebyr - kontant"
+        },
+        {
+          "id": "kred-2",
+          "type": "les",
+          "kode": "termingebyr = 45\nmaanader = 24\nprint(termingebyr * maanader)",
+          "sporsmal": "Kor mykje utgjer termingebyret over heile perioden?",
+          "alternativ": [
+            "45",
+            "540",
+            "1080",
+            "2160"
+          ],
+          "rett": 2,
+          "forklaring": "45 kroner i månaden i 24 månader er **1080 kroner**. Eit gebyr som ser ubetydeleg ut per månad blir fort den største enkeltposten i eit lite lån."
+        },
+        {
+          "id": "kred-3",
+          "type": "rett",
+          "tekst": "Programmet skal rekne ut meirkostnaden, men det gløymer termingebyret som kjem kvar månad. Rett det.",
+          "startkode": "kontant = 8000\nterming = 399\nmaanader = 24\netablering = 500\ntermingebyr = 45\n\ntotal = terming * maanader + etablering + termingebyr\nprint(total - kontant)",
+          "hint": [
+            "Termingebyret kjem **kvar** månad, ikkje éin gong.",
+            "Legg det til terminbeløpet før du gongar med talet på månader."
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "3156"
+            }
+          ],
+          "loeysing": "kontant = 8000\nterming = 399\nmaanader = 24\netablering = 500\ntermingebyr = 45\n\ntotal = (terming + termingebyr) * maanader + etablering\nprint(total - kontant)"
+        }
+      ],
+      "oppsummering": "Rekn alltid ut kva du betalar **til saman**, og samanlikn med kontantprisen. Gebyr per termin er lette å oversjå og blir store over tid."
+    },
+    {
+      "id": "samanlikne",
+      "tittel": "Samanlikne tilbod",
+      "kompetansemaal": [
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp",
+        "10. trinn: planlegge, utføre og presentere et utforskende arbeid knyttet til personlig økonomi"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "To tilbod kan sjå heilt ulike ut og likevel koste det same — eller sjå like ut og koste svært ulikt. Den einaste måten å vite det på er å rekne ut totalen for begge."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ei **liste med ordbøker** er ein ryddig måte å halde fleire tilbod i same programmet:"
+        },
+        {
+          "type": "kode",
+          "kode": "tilbod = [\n    {\"namn\": \"Butikk A\", \"terming\": 399, \"maanader\": 24, \"gebyr\": 500},\n    {\"namn\": \"Butikk B\", \"terming\": 299, \"maanader\": 36, \"gebyr\": 0},\n]"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Så går du gjennom lista og reknar ut det same for kvart tilbod:"
+        },
+        {
+          "type": "kode",
+          "kode": "for t in tilbod:\n    total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n    print(t[\"namn\"], total)"
+        },
+        {
+          "type": "merk",
+          "tekst": "Butikk B har lågare månadsbeløp, men fleire månader. Lågare terminbeløp tyder nesten aldri billegare — det tyder oftast lengre nedbetaling og meir renter."
+        }
+      ],
+      "doeme": {
+        "kode": "kontant = 8000\n\ntilbod = [\n    {\"namn\": \"Butikk A\", \"terming\": 399, \"maanader\": 24, \"gebyr\": 500},\n    {\"namn\": \"Butikk B\", \"terming\": 299, \"maanader\": 36, \"gebyr\": 0},\n    {\"namn\": \"Butikk C\", \"terming\": 749, \"maanader\": 12, \"gebyr\": 300},\n]\n\nfor t in tilbod:\n    total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n    print(t[\"namn\"], \"— betalar\", total, \"— meir enn kontant:\", total - kontant)",
+        "oppmoding": "Kva tilbod har lågast månadsbeløp? Og kva tilbod er billegast i alt? Er det same tilbodet?"
+      },
+      "loype": {
+        "tittel": "Finn det billegaste tilbodet",
+        "maal": "eit program som samanliknar fleire tilbod og peikar ut det som kostar minst i alt",
+        "steg": [
+          {
+            "tekst": "Vi legg inn tilboda i ei liste.",
+            "kode": "tilbod = [\n    {\"namn\": \"A\", \"terming\": 399, \"maanader\": 24, \"gebyr\": 500},\n    {\"namn\": \"B\", \"terming\": 299, \"maanader\": 36, \"gebyr\": 0},\n]\nprint(len(tilbod), \"tilbod\")"
+          },
+          {
+            "tekst": "Så reknar vi ut totalen for kvart.",
+            "kode": "tilbod = [\n    {\"namn\": \"A\", \"terming\": 399, \"maanader\": 24, \"gebyr\": 500},\n    {\"namn\": \"B\", \"terming\": 299, \"maanader\": 36, \"gebyr\": 0},\n]\n\nfor t in tilbod:\n    total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n    print(t[\"namn\"], total)"
+          },
+          {
+            "tekst": "No hugsar vi det billegaste medan vi går.",
+            "kode": "tilbod = [\n    {\"namn\": \"A\", \"terming\": 399, \"maanader\": 24, \"gebyr\": 500},\n    {\"namn\": \"B\", \"terming\": 299, \"maanader\": 36, \"gebyr\": 0},\n]\n\nbeste = None\nbeste_total = 0\nfor t in tilbod:\n    total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n    if beste is None or total < beste_total:\n        beste = t[\"namn\"]\n        beste_total = total\n\nprint(\"Billegast:\", beste, beste_total)"
+          },
+          {
+            "tekst": "Og skriv ut heile samanlikninga til slutt.",
+            "kode": "tilbod = [\n    {\"namn\": \"A\", \"terming\": 399, \"maanader\": 24, \"gebyr\": 500},\n    {\"namn\": \"B\", \"terming\": 299, \"maanader\": 36, \"gebyr\": 0},\n]\n\nbeste = None\nbeste_total = 0\nfor t in tilbod:\n    total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n    print(t[\"namn\"], \"betalar\", total, \"over\", t[\"maanader\"], \"månader\")\n    if beste is None or total < beste_total:\n        beste = t[\"namn\"]\n        beste_total = total\n\nprint()\nprint(\"Billegast i alt:\", beste, \"med\", beste_total, \"kroner\")",
+            "proev": "Legg til eit tredje tilbod med 749 i 12 månader og 300 i gebyr. Endrar svaret seg?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "saml-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `billegast` som tek imot ei liste med tilbod og returnerer **namnet** på det som kostar minst i alt. Kvart tilbod er ei ordbok med `namn`, `terming`, `maanader` og `gebyr`.",
+          "startkode": "def billegast(tilbod):\n    beste = None\n    beste_total = 0\n    # skriv løkka her\n    return beste\n",
+          "hint": [
+            "Totalen er `t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]`",
+            "Fyrste runde må alltid bli den beste så langt: `if beste is None or total < beste_total:`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "billegast",
+              "args": [
+                [
+                  {
+                    "namn": "A",
+                    "terming": 399,
+                    "maanader": 24,
+                    "gebyr": 500
+                  },
+                  {
+                    "namn": "B",
+                    "terming": 299,
+                    "maanader": 36,
+                    "gebyr": 0
+                  }
+                ]
+              ],
+              "vent": "A"
+            },
+            {
+              "type": "kall",
+              "fn": "billegast",
+              "args": [
+                [
+                  {
+                    "namn": "X",
+                    "terming": 100,
+                    "maanader": 10,
+                    "gebyr": 0
+                  },
+                  {
+                    "namn": "Y",
+                    "terming": 50,
+                    "maanader": 10,
+                    "gebyr": 0
+                  }
+                ]
+              ],
+              "vent": "Y"
+            }
+          ],
+          "loeysing": "def billegast(tilbod):\n    beste = None\n    beste_total = 0\n    for t in tilbod:\n        total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n        if beste is None or total < beste_total:\n            beste = t[\"namn\"]\n            beste_total = total\n    return beste"
+        },
+        {
+          "id": "saml-2",
+          "type": "les",
+          "kode": "a = 399 * 24\nb = 299 * 36\nprint(a, b)",
+          "sporsmal": "To tilbod: 399 i 24 månader mot 299 i 36 månader. Kva skriv programmet ut?",
+          "alternativ": [
+            "9576 10764",
+            "10764 9576",
+            "9576 9576",
+            "698 698"
+          ],
+          "rett": 0,
+          "forklaring": "A kostar **9576** og B kostar **10764**. Tilbodet med lågast månadsbeløp er altså det dyraste — fordi det går over tolv månader lenger."
+        },
+        {
+          "id": "saml-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal finne det **billegaste** tilbodet, men han finn det dyraste. Rett samanlikninga.",
+          "startkode": "def billegast(tilbod):\n    beste = None\n    beste_total = 0\n    for t in tilbod:\n        total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n        if beste is None or total > beste_total:\n            beste = t[\"namn\"]\n            beste_total = total\n    return beste",
+          "hint": [
+            "Sjå på teiknet i samanlikninga.",
+            "Skal du hugse eit nytt tilbod når totalen er **større** eller **mindre** enn den beste så langt?"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "billegast",
+              "args": [
+                [
+                  {
+                    "namn": "A",
+                    "terming": 399,
+                    "maanader": 24,
+                    "gebyr": 500
+                  },
+                  {
+                    "namn": "B",
+                    "terming": 299,
+                    "maanader": 36,
+                    "gebyr": 0
+                  }
+                ]
+              ],
+              "vent": "A"
+            }
+          ],
+          "loeysing": "def billegast(tilbod):\n    beste = None\n    beste_total = 0\n    for t in tilbod:\n        total = t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]\n        if beste is None or total < beste_total:\n            beste = t[\"namn\"]\n            beste_total = total\n    return beste"
+        }
+      ],
+      "oppsummering": "Rekn ut totalen for kvart tilbod og samanlikn. Lågt månadsbeløp tyder nesten aldri billegare — det tyder oftast lengre nedbetaling."
+    },
+    {
+      "id": "eige-budsjett",
+      "tittel": "Ditt eige budsjett",
+      "kompetansemaal": [
+        "10. trinn: planlegge, utføre og presentere et utforskende arbeid knyttet til personlig økonomi",
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp",
+        "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Til slutt set vi det saman. Eit budsjett er inntekter minus utgifter — og det som blir att, er det du kan spare."
+        },
+        {
+          "type": "kode",
+          "kode": "inntekter = {\"lommepengar\": 500, \"jobb\": 1200}\nutgifter = {\"mobil\": 199, \"buss\": 350, \"anna\": 400}\n\ninn = sum(inntekter.values())\nut = sum(utgifter.values())\nprint(\"Att:\", inn - ut)"
+        },
+        {
+          "type": "merk",
+          "tekst": "`sum(ordbok.values())` legg saman alle verdiane i ordboka. Du treng ikkje skrive dei opp éin for éin, og du treng ikkje endre koden når du legg til ein post."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Med eit budsjett på plass kan du svare på spørsmål du faktisk lurer på: kor lenge tek det å spare til noko? Kva skjer om mobilabonnementet blir 100 kroner dyrare? Tåler budsjettet eit avdrag på 399 i månaden?"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det er heile poenget med dette emnet. Ikkje å pugge formlar, men å kunne stille eit spørsmål om eigen økonomi og rekne ut svaret sjølv."
+        }
+      ],
+      "doeme": {
+        "kode": "inntekter = {\"lommepengar\": 500, \"jobb\": 1200}\nutgifter = {\"mobil\": 199, \"buss\": 350, \"anna\": 400}\n\ninn = sum(inntekter.values())\nut = sum(utgifter.values())\natt = inn - ut\n\nprint(\"Inntekter:\", inn)\nprint(\"Utgifter: \", ut)\nprint(\"Att:      \", att)\n\nmaal = 12000\nif att > 0:\n    print(\"Du sparar til 12000 på\", -(-maal // att), \"månader\")\nelse:\n    print(\"Du går i minus — då blir det ikkje sparing\")",
+        "oppmoding": "Byt ut tala med dine eigne. `-(-a // b)` rundar oppover — prøv å skjøne kvifor."
+      },
+      "loype": {
+        "tittel": "Bygg budsjettet ditt",
+        "maal": "eit budsjett som reknar ut kor mykje du har att, og kor lenge du må spare til noko du vil ha",
+        "steg": [
+          {
+            "tekst": "Vi startar med inntektene.",
+            "kode": "inntekter = {\"lommepengar\": 500, \"jobb\": 1200}\nprint(sum(inntekter.values()))"
+          },
+          {
+            "tekst": "Så utgiftene.",
+            "kode": "inntekter = {\"lommepengar\": 500, \"jobb\": 1200}\nutgifter = {\"mobil\": 199, \"buss\": 350}\n\nprint(\"Inn:\", sum(inntekter.values()))\nprint(\"Ut: \", sum(utgifter.values()))"
+          },
+          {
+            "tekst": "Kor mykje er att?",
+            "kode": "inntekter = {\"lommepengar\": 500, \"jobb\": 1200}\nutgifter = {\"mobil\": 199, \"buss\": 350}\n\natt = sum(inntekter.values()) - sum(utgifter.values())\nprint(\"Att kvar månad:\", att)"
+          },
+          {
+            "tekst": "Og kor lenge tek det å spare til noko?",
+            "kode": "inntekter = {\"lommepengar\": 500, \"jobb\": 1200}\nutgifter = {\"mobil\": 199, \"buss\": 350}\n\natt = sum(inntekter.values()) - sum(utgifter.values())\nmaal = 12000\n\nsparing = 0\nmaanader = 0\nwhile sparing < maal:\n    sparing = sparing + att\n    maanader = maanader + 1\n\nprint(\"Du har\", att, \"att kvar månad\")\nprint(\"Du treng\", maanader, \"månader for å spare\", maal)",
+            "proev": "Legg til ei utgift på 399 i månaden — eit avbetalingskjøp. Kor mykje lengre tid tek sparinga då?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "budsj-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `att_kvar_maanad` som tek imot to ordbøker — inntekter og utgifter — og returnerer kor mykje som er att.",
+          "startkode": "def att_kvar_maanad(inntekter, utgifter):\n    # skriv koden her\n",
+          "hint": [
+            "`sum(inntekter.values())` legg saman alle inntektene.",
+            "Trekk frå summen av utgiftene."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "att_kvar_maanad",
+              "args": [
+                {
+                  "a": 500,
+                  "b": 1200
+                },
+                {
+                  "c": 199,
+                  "d": 350
+                }
+              ],
+              "vent": 1151
+            },
+            {
+              "type": "kall",
+              "fn": "att_kvar_maanad",
+              "args": [
+                {
+                  "a": 100
+                },
+                {
+                  "b": 200
+                }
+              ],
+              "vent": -100
+            },
+            {
+              "type": "kall",
+              "fn": "att_kvar_maanad",
+              "args": [
+                {},
+                {}
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def att_kvar_maanad(inntekter, utgifter):\n    return sum(inntekter.values()) - sum(utgifter.values())"
+        },
+        {
+          "id": "budsj-2",
+          "type": "les",
+          "kode": "utgifter = {\"mobil\": 199, \"buss\": 350}\nutgifter[\"mat\"] = 800\nprint(sum(utgifter.values()))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "549",
+            "1349",
+            "800",
+            "3"
+          ],
+          "rett": 1,
+          "forklaring": "Ein ny post blir lagd til ordboka med `utgifter[\"mat\"] = 800`. `sum(...values())` legg saman alle tre: 199 + 350 + 800 er **1349**. Du treng ikkje endre summeringa når du legg til ein post."
+        },
+        {
+          "id": "budsj-3",
+          "type": "rett",
+          "tekst": "Programmet skal summere utgiftene, men det summerer **namna** på postane i staden for beløpa. Rett det.",
+          "startkode": "utgifter = {\"mobil\": 199, \"buss\": 350}\nprint(sum(utgifter))",
+          "hint": [
+            "`sum(ordbok)` går gjennom **nøklane**, ikkje verdiane.",
+            "Du må be om verdiane: `utgifter.values()`"
+          ],
+          "testar": [
+            {
+              "type": "utskrift",
+              "vent": "549"
+            }
+          ],
+          "loeysing": "utgifter = {\"mobil\": 199, \"buss\": 350}\nprint(sum(utgifter.values()))"
+        }
+      ],
+      "oppsummering": "Eit budsjett er inntekter minus utgifter. Med ordbøker og `sum(...values())` kan du leggje til postar utan å endre resten av koden — og då kan du svare på dine eigne spørsmål om økonomi."
+    }
+  ]
+}
