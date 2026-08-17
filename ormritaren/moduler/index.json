@@ -75,7 +75,7 @@
       "accent": "accent5",
       "trinn": "10. trinn",
       "talLeksjonar": 7,
-      "klar": false,
+      "klar": true,
       "skildring": "Kva kostar eit kredittkjøp eigentleg? Du reknar på vekstfaktor, sparing med renters rente, lån og nedbetaling — og samanliknar tilbod som ser like ut.",
       "kompetansemaal": [
         "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
