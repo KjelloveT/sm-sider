@@ -329,7 +329,10 @@
             "Det blir feilmelding"
           ],
           "rett": 1,
-          "forklaring": "`input` gjev tekst, ikkje tal. For tekst tyder `+` å **setje saman**, ikkje å leggje saman — så `\"3\" + \"3\"` blir `\"33\"`. Hadde det stått `int(input(...))`, ville svaret vore 6."
+          "forklaring": "`input` gjev tekst, ikkje tal. For tekst tyder `+` å **setje saman**, ikkje å leggje saman — så `\"3\" + \"3\"` blir `\"33\"`. Hadde det stått `int(input(...))`, ville svaret vore 6.",
+          "stdin": [
+            "3"
+          ]
         },
         {
           "id": "input-3",
