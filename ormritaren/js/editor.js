@@ -91,7 +91,7 @@ const OrmEditor = (function () {
         }
     }
 
-    /** Markerer linjene som kom til i dette steget av ein kodeturné. */
+    /** Markerer linjene som kom til i dette steget av ein kodeløype. */
     function markerNyeLinjer(linjer) {
         if (!cm || !linjer?.length) return;
         reinsk();

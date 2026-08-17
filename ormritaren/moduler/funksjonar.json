@@ -1,0 +1,1216 @@
+{
+  "app": "ormritaren",
+  "version": 1,
+  "id": "funksjonar",
+  "tittel": "Graf og funksjonar",
+  "leksjonar": [
+    {
+      "id": "koordinatsystem",
+      "tittel": "Teikn koordinatsystemet sjølv",
+      "kompetansemaal": [
+        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Før du teiknar grafar, er det verdt å lage sjølve koordinatsystemet. Skilpadda er perfekt til det, for ho **bruker** koordinatsystemet medan ho teiknar det."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Skilpadda startar i punktet `(0, 0)` — origo, midt på flata. `goto` flyttar henne til eit punkt du vel:"
+        },
+        {
+          "type": "kode",
+          "kode": "import turtle\n\nturtle.goto(100, 50)"
+        },
+        {
+          "type": "merk",
+          "tekst": "`penup()` løftar pennen så skilpadda kan flytte seg **utan** å teikne. `pendown()` set han ned att. Utan dette blir alt eitt samanhengande rot."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`goto(x, y)` — flytt til eit punkt",
+            "`penup()` og `pendown()` — løft og senk pennen",
+            "`home()` — tilbake til origo",
+            "`speed(0)` — teikn med ein gong, utan å vente"
+          ]
+        }
+      ],
+      "doeme": {
+        "kode": "import turtle\nturtle.speed(0)\n\n# x-aksen\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)\n\n# y-aksen\nturtle.penup()\nturtle.goto(0, -150)\nturtle.pendown()\nturtle.goto(0, 150)\n\nturtle.hideturtle()",
+        "oppmoding": "Køyr og sjå på aksane. Prøv å ta bort `penup()` på linje 5 — kva blir gale då?"
+      },
+      "loype": {
+        "tittel": "Bygg eit koordinatsystem med merke",
+        "maal": "eit koordinatsystem med begge aksar og små merke for kvar tiande eining",
+        "steg": [
+          {
+            "tekst": "Fyrst x-aksen. Vi løftar pennen, flyttar til venstre kant, og teiknar tvers over.",
+            "kode": "import turtle\nturtle.speed(0)\n\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)"
+          },
+          {
+            "tekst": "Så y-aksen på same måten.",
+            "kode": "import turtle\nturtle.speed(0)\n\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)\n\nturtle.penup()\nturtle.goto(0, -150)\nturtle.pendown()\nturtle.goto(0, 150)"
+          },
+          {
+            "tekst": "No set vi merke langs x-aksen med ei løkke. Kvart merke er ein liten strek opp og ned.",
+            "kode": "import turtle\nturtle.speed(0)\n\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)\n\nturtle.penup()\nturtle.goto(0, -150)\nturtle.pendown()\nturtle.goto(0, 150)\n\nfor x in range(-200, 201, 20):\n    turtle.penup()\n    turtle.goto(x, -5)\n    turtle.pendown()\n    turtle.goto(x, 5)"
+          },
+          {
+            "tekst": "Og gøymer skilpadda til slutt, så figuren står rein.",
+            "kode": "import turtle\nturtle.speed(0)\n\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)\n\nturtle.penup()\nturtle.goto(0, -150)\nturtle.pendown()\nturtle.goto(0, 150)\n\nfor x in range(-200, 201, 20):\n    turtle.penup()\n    turtle.goto(x, -5)\n    turtle.pendown()\n    turtle.goto(x, 5)\n\nturtle.hideturtle()",
+            "proev": "Legg til same slags merke langs y-aksen."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "koord-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `punkt_paa_linje` som tek imot ein `x`-verdi og returnerer `y` for linja **y = 2x + 1**.",
+          "startkode": "def punkt_paa_linje(x):\n    # skriv koden her\n",
+          "hint": [
+            "Uttrykket er `2 * x + 1`",
+            "Hugs `return`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "punkt_paa_linje",
+              "args": [
+                0
+              ],
+              "vent": 1
+            },
+            {
+              "type": "kall",
+              "fn": "punkt_paa_linje",
+              "args": [
+                3
+              ],
+              "vent": 7
+            },
+            {
+              "type": "kall",
+              "fn": "punkt_paa_linje",
+              "args": [
+                -2
+              ],
+              "vent": -3
+            }
+          ],
+          "loeysing": "def punkt_paa_linje(x):\n    return 2 * x + 1"
+        },
+        {
+          "id": "koord-2",
+          "type": "les",
+          "kode": "for x in range(-4, 5, 2):\n    print(x, end=\" \")",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "-4 -2 0 2 4",
+            "-4 -3 -2 -1 0 1 2 3 4",
+            "-4 -2 0 2",
+            "0 2 4"
+          ],
+          "rett": 0,
+          "forklaring": "`range(-4, 5, 2)` startar på -4, hoppar to og to, og stoppar **før** 5. Difor blir det -4, -2, 0, 2 og 4. Same tellemåten som du brukte i grunnkurset, men med negative tal."
+        },
+        {
+          "id": "koord-3",
+          "type": "rett",
+          "tekst": "Programmet skal teikne x-aksen, men det dreg ein strek frå der skilpadda stod i staden. Rett det.",
+          "startkode": "import turtle\nturtle.speed(0)\n\nturtle.goto(-200, 0)\nturtle.goto(200, 0)\n\nsvar = turtle.position()",
+          "hint": [
+            "Skilpadda startar i origo og teiknar heile vegen ho flyttar seg.",
+            "Bruk `penup()` før den fyrste `goto`, og `pendown()` etter."
+          ],
+          "testar": [
+            {
+              "type": "inneheld",
+              "vent": "penup",
+              "grunn": "Løft pennen før du flyttar til startpunktet"
+            },
+            {
+              "type": "inneheld",
+              "vent": "pendown",
+              "grunn": "Set pennen ned att før du teiknar"
+            }
+          ],
+          "loeysing": "import turtle\nturtle.speed(0)\n\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)\n\nsvar = turtle.position()"
+        }
+      ],
+      "oppsummering": "Skilpadda flyttar seg med `goto(x, y)` og teiknar undervegs. `penup()` og `pendown()` avgjer om ho set spor. Origo `(0, 0)` er midt på flata."
+    },
+    {
+      "id": "tabell",
+      "tittel": "Frå situasjon til tabell",
+      "kompetansemaal": [
+        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
+        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ein funksjon er ein samanheng: du set inn eitt tal og får ut eitt tal. Same samanhengen kan visast på fire måtar — som **situasjon**, **tabell**, **graf** og **uttrykk**."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Situasjon: du leiger ein sparkesykkel. Det kostar 20 kroner i startgebyr og 3 kroner per minutt."
+        },
+        {
+          "type": "kode",
+          "kode": "def pris(minutt):\n    return 20 + 3 * minutt"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Tabellen får du ved å køyre funksjonen for fleire verdiar:"
+        },
+        {
+          "type": "kode",
+          "kode": "for minutt in range(0, 31, 5):\n    print(minutt, \"minutt koster\", pris(minutt))"
+        },
+        {
+          "type": "merk",
+          "tekst": "Legg merke til korleis funksjonen i Python og funksjonen i matematikken er det same her. `def pris(minutt)` er nøyaktig same tanken som `p(m) = 20 + 3m`."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Startgebyret på 20 er **konstantleddet** — det du betalar sjølv om du ikkje køyrer. Dei 3 kronene per minutt er **stigningstalet** — kor mykje prisen endrar seg per eining."
+        }
+      ],
+      "doeme": {
+        "kode": "def pris(minutt):\n    return 20 + 3 * minutt\n\nprint(\"Minutt | Pris\")\nfor m in range(0, 31, 5):\n    print(f\"{m:>6} | {pris(m)}\")",
+        "oppmoding": "Byt startgebyret til 0. Kva skjer med den fyrste rada — og kva tyder det i praksis?"
+      },
+      "loype": {
+        "tittel": "Lag ein pristabell",
+        "maal": "ein tabell som viser kva ein sparkesykkeltur kostar for ulike køyretider",
+        "steg": [
+          {
+            "tekst": "Vi lagar funksjonen som reknar ut prisen.",
+            "kode": "def pris(minutt):\n    return 20 + 3 * minutt\n\nprint(pris(10))"
+          },
+          {
+            "tekst": "Så køyrer vi han for fleire verdiar med ei løkke.",
+            "kode": "def pris(minutt):\n    return 20 + 3 * minutt\n\nfor m in range(0, 31, 5):\n    print(m, pris(m))"
+          },
+          {
+            "tekst": "Vi gjer det litt penare å lese.",
+            "kode": "def pris(minutt):\n    return 20 + 3 * minutt\n\nprint(\"Minutt | Pris\")\nfor m in range(0, 31, 5):\n    print(f\"{m:>6} | {pris(m)}\")"
+          },
+          {
+            "tekst": "Og reknar ut kor mykje prisen aukar for kvart steg — det er stigningstalet gonger steglengda.",
+            "kode": "def pris(minutt):\n    return 20 + 3 * minutt\n\nprint(\"Minutt | Pris | Endring\")\nfoerre = None\nfor m in range(0, 31, 5):\n    p = pris(m)\n    endring = \"\" if foerre is None else p - foerre\n    print(f\"{m:>6} | {p:>4} | {endring}\")\n    foerre = p",
+            "proev": "Endringa er den same for kvart steg. Det er nettopp det som gjer funksjonen **lineær**."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "tab-1",
+          "type": "skriv",
+          "tekst": "Ein taxi tek **45 kroner** i startgebyr og **12 kroner per kilometer**. Lag ein funksjon `taxipris` som tek imot tal kilometer og returnerer prisen.",
+          "startkode": "def taxipris(km):\n    # skriv koden her\n",
+          "hint": [
+            "Startgebyret er konstantleddet — det kjem uansett.",
+            "`return 45 + 12 * km`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "taxipris",
+              "args": [
+                0
+              ],
+              "vent": 45
+            },
+            {
+              "type": "kall",
+              "fn": "taxipris",
+              "args": [
+                10
+              ],
+              "vent": 165
+            },
+            {
+              "type": "kall",
+              "fn": "taxipris",
+              "args": [
+                3
+              ],
+              "vent": 81
+            }
+          ],
+          "loeysing": "def taxipris(km):\n    return 45 + 12 * km"
+        },
+        {
+          "id": "tab-2",
+          "type": "les",
+          "kode": "def f(x):\n    return 5 + 2 * x\n\nprint(f(0), f(1), f(2))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "5 7 9",
+            "0 1 2",
+            "5 6 7",
+            "7 9 11"
+          ],
+          "rett": 0,
+          "forklaring": "`f(0)` er 5 (berre konstantleddet), `f(1)` er 7, `f(2)` er 9. Verdien aukar med **2** for kvart steg — det er stigningstalet."
+        },
+        {
+          "id": "tab-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal gje prisen for eit abonnement på **99 kroner i månaden pluss 2 kroner per GB**, men konstantleddet og stigningstalet har bytt plass. Rett det.",
+          "startkode": "def abonnement(gb):\n    return 2 + 99 * gb",
+          "hint": [
+            "Kva kostar det om du ikkje bruker eitt einaste GB?",
+            "Det faste beløpet skal stå åleine, og prisen per GB skal gongast med `gb`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "abonnement",
+              "args": [
+                0
+              ],
+              "vent": 99
+            },
+            {
+              "type": "kall",
+              "fn": "abonnement",
+              "args": [
+                10
+              ],
+              "vent": 119
+            }
+          ],
+          "loeysing": "def abonnement(gb):\n    return 99 + 2 * gb"
+        }
+      ],
+      "oppsummering": "Ein funksjon i Python er den same tanken som ein funksjon i matematikken. Konstantleddet er det du får uansett; stigningstalet er endringa per eining."
+    },
+    {
+      "id": "teikn-graf",
+      "tittel": "Frå tabell til graf",
+      "kompetansemaal": [
+        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ein tabell viser nokre punkt. Ein graf viser samanhengen. Med `matplotlib` går du frå det eine til det andre på tre linjer."
+        },
+        {
+          "type": "kode",
+          "kode": "import matplotlib.pyplot as plt\n\nx = [0, 1, 2, 3, 4]\ny = [1, 3, 5, 7, 9]\n\nplt.plot(x, y)\nplt.show()"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Som regel vil du ikkje skrive y-verdiane for hand. Du reknar dei ut frå funksjonen:"
+        },
+        {
+          "type": "kode",
+          "kode": "def f(x):\n    return 2 * x + 1\n\nx = []\ny = []\nfor tal in range(-5, 6):\n    x.append(tal)\n    y.append(f(tal))"
+        },
+        {
+          "type": "merk",
+          "tekst": "Ein graf i eit dataprogram er alltid **punkt som blir bundne saman med rette strekar**. Tek du få nok punkt, ser ei kurve ut som ein knekt strek. Fleire punkt gjev jamnare kurve."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "`plt.grid(True)` legg på rutenett, og `plt.axhline(0)` teiknar x-aksen — begge gjer grafen langt lettare å lese av."
+        }
+      ],
+      "doeme": {
+        "kode": "import matplotlib.pyplot as plt\n\ndef f(x):\n    return 2 * x + 1\n\nx = []\ny = []\nfor tal in range(-5, 6):\n    x.append(tal)\n    y.append(f(tal))\n\nplt.plot(x, y)\nplt.grid(True)\nplt.axhline(0, color=\"black\")\nplt.axvline(0, color=\"black\")\nplt.title(\"y = 2x + 1\")\nplt.show()",
+        "oppmoding": "Byt funksjonen til `return x * x`. Kva form får grafen då?"
+      },
+      "loype": {
+        "tittel": "Teikn ei linje frå funksjonen",
+        "maal": "ein graf av y = 2x + 1 med rutenett og aksar",
+        "steg": [
+          {
+            "tekst": "Vi startar med funksjonen.",
+            "kode": "def f(x):\n    return 2 * x + 1\n\nprint(f(3))"
+          },
+          {
+            "tekst": "Så byggjer vi to lister: x-verdiane og dei tilhøyrande y-verdiane.",
+            "kode": "def f(x):\n    return 2 * x + 1\n\nx = []\ny = []\nfor tal in range(-5, 6):\n    x.append(tal)\n    y.append(f(tal))\n\nprint(x)\nprint(y)"
+          },
+          {
+            "tekst": "No teiknar vi dei mot kvarandre.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef f(x):\n    return 2 * x + 1\n\nx = []\ny = []\nfor tal in range(-5, 6):\n    x.append(tal)\n    y.append(f(tal))\n\nplt.plot(x, y)\nplt.show()"
+          },
+          {
+            "tekst": "Og legg på rutenett og aksar, så grafen er til å lese av.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef f(x):\n    return 2 * x + 1\n\nx = []\ny = []\nfor tal in range(-5, 6):\n    x.append(tal)\n    y.append(f(tal))\n\nplt.plot(x, y)\nplt.grid(True)\nplt.axhline(0, color=\"black\")\nplt.axvline(0, color=\"black\")\nplt.title(\"y = 2x + 1\")\nplt.show()",
+            "proev": "Kvar krysser linja y-aksen? Samanlikn med konstantleddet i uttrykket."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "graf-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `y_verdiar` som tek imot ei liste med x-verdiar og returnerer ei liste med `3x - 2` for kvar av dei.",
+          "startkode": "def y_verdiar(x_liste):\n    y = []\n    # skriv løkka her\n    return y\n",
+          "hint": [
+            "`for x in x_liste:` og så `y.append(3 * x - 2)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "y_verdiar",
+              "args": [
+                [
+                  0,
+                  1,
+                  2
+                ]
+              ],
+              "vent": [
+                -2,
+                1,
+                4
+              ]
+            },
+            {
+              "type": "kall",
+              "fn": "y_verdiar",
+              "args": [
+                [
+                  -1
+                ]
+              ],
+              "vent": [
+                -5
+              ]
+            },
+            {
+              "type": "kall",
+              "fn": "y_verdiar",
+              "args": [
+                []
+              ],
+              "vent": []
+            }
+          ],
+          "loeysing": "def y_verdiar(x_liste):\n    y = []\n    for x in x_liste:\n        y.append(3 * x - 2)\n    return y"
+        },
+        {
+          "id": "graf-2",
+          "type": "les",
+          "kode": "x = []\nfor tal in range(0, 3):\n    x.append(tal * tal)\nprint(x)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "[0, 1, 2]",
+            "[0, 1, 4]",
+            "[1, 4, 9]",
+            "[0, 2, 4]"
+          ],
+          "rett": 1,
+          "forklaring": "Løkka går over 0, 1 og 2, og legg til kvadratet av kvart: 0, 1 og 4. Dette er dei fyrste punkta på ein andregradsgraf."
+        },
+        {
+          "id": "graf-3",
+          "type": "rett",
+          "tekst": "Programmet skal teikne grafen, men begge listene inneheld x-verdiar. Rett det.",
+          "startkode": "import matplotlib.pyplot as plt\n\ndef f(x):\n    return 2 * x + 1\n\nx = []\ny = []\nfor tal in range(-5, 6):\n    x.append(tal)\n    y.append(tal)\n\nsvar = y",
+          "hint": [
+            "Sjå på kva som blir lagt i `y`.",
+            "y-verdien er funksjonen av tal, ikkje tal sjølv: `y.append(f(tal))`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "f",
+              "args": [
+                3
+              ],
+              "vent": 7
+            },
+            {
+              "type": "inneheld",
+              "vent": "y.append(f(",
+              "grunn": "y skal innehalde funksjonsverdiane"
+            }
+          ],
+          "loeysing": "import matplotlib.pyplot as plt\n\ndef f(x):\n    return 2 * x + 1\n\nx = []\ny = []\nfor tal in range(-5, 6):\n    x.append(tal)\n    y.append(f(tal))\n\nsvar = y"
+        }
+      ],
+      "oppsummering": "Ein graf blir laga av to lister: x-verdiar og dei tilhøyrande y-verdiane. `plt.plot(x, y)` bind punkta saman med rette strekar."
+    },
+    {
+      "id": "stigningstal",
+      "tittel": "Stigningstal og endring per eining",
+      "kompetansemaal": [
+        "10. trinn: forklare begrepet endring per enhet og regne ut stigningstallet til lineære funksjoner",
+        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "**Stigningstalet** fortel kor bratt ei linje er: kor mykje `y` endrar seg når `x` aukar med éin."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Har du to punkt på linja, finn du det slik:"
+        },
+        {
+          "type": "kode",
+          "kode": "stigningstal = (y2 - y1) / (x2 - x1)"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "Positivt stigningstal — linja går **oppover** mot høgre",
+            "Negativt — linja går **nedover**",
+            "Null — linja er vassrett",
+            "Stort tal — bratt linje. Lite tal — slak linje."
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Stigningstalet er det same som «endring per eining». På sparkesykkelen var det 3 kroner per minutt; på ein graf er det kor mange steg opp linja går for kvart steg til høgre. Det er nøyaktig same tal."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Skriv du linja som `y = ax + b`, er `a` stigningstalet og `b` er der linja krysser y-aksen."
+        }
+      ],
+      "doeme": {
+        "kode": "def stigningstal(x1, y1, x2, y2):\n    return (y2 - y1) / (x2 - x1)\n\nprint(\"Gjennom (0,1) og (3,7):\", stigningstal(0, 1, 3, 7))\nprint(\"Gjennom (0,5) og (2,1):\", stigningstal(0, 5, 2, 1))",
+        "oppmoding": "Det andre svaret er negativt. Kva tyder det for korleis linja ser ut?"
+      },
+      "loype": {
+        "tittel": "Samanlikn to linjer",
+        "maal": "ein graf med to linjer med ulikt stigningstal, teikna i same figuren",
+        "steg": [
+          {
+            "tekst": "To abonnement: eitt med lågt fastbeløp og høg pris per GB, eitt motsett.",
+            "kode": "def billig_start(gb):\n    return 49 + 5 * gb\n\ndef dyr_start(gb):\n    return 149 + 1 * gb\n\nprint(billig_start(10), dyr_start(10))"
+          },
+          {
+            "tekst": "Vi lagar verdiar for begge.",
+            "kode": "def billig_start(gb):\n    return 49 + 5 * gb\n\ndef dyr_start(gb):\n    return 149 + 1 * gb\n\nx = list(range(0, 41))\na = []\nb = []\nfor gb in x:\n    a.append(billig_start(gb))\n    b.append(dyr_start(gb))\nprint(a[0], b[0])"
+          },
+          {
+            "tekst": "Så teiknar vi begge i same figuren.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef billig_start(gb):\n    return 49 + 5 * gb\n\ndef dyr_start(gb):\n    return 149 + 1 * gb\n\nx = list(range(0, 41))\na = []\nb = []\nfor gb in x:\n    a.append(billig_start(gb))\n    b.append(dyr_start(gb))\n\nplt.plot(x, a, label=\"49 + 5 per GB\")\nplt.plot(x, b, label=\"149 + 1 per GB\")\nplt.legend()\nplt.show()"
+          },
+          {
+            "tekst": "Og finn kvar dei kryssar — punktet der det lønner seg å byte.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef billig_start(gb):\n    return 49 + 5 * gb\n\ndef dyr_start(gb):\n    return 149 + 1 * gb\n\nx = list(range(0, 41))\na = []\nb = []\nfor gb in x:\n    a.append(billig_start(gb))\n    b.append(dyr_start(gb))\n\nfor gb in x:\n    if billig_start(gb) > dyr_start(gb):\n        print(\"Frå\", gb, \"GB lønner det dyre abonnementet seg\")\n        break\n\nplt.plot(x, a, label=\"49 + 5 per GB\")\nplt.plot(x, b, label=\"149 + 1 per GB\")\nplt.grid(True)\nplt.legend()\nplt.show()",
+            "proev": "Linja med størst stigningstal er brattast. Kvifor tek ho att den andre til slutt, sjølv om ho startar lågare?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "stig-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `stigningstal` som tek imot to punkt — `x1, y1, x2, y2` — og returnerer stigningstalet til linja gjennom dei.",
+          "startkode": "def stigningstal(x1, y1, x2, y2):\n    # skriv koden her\n",
+          "hint": [
+            "Endringa i y delt på endringa i x.",
+            "`return (y2 - y1) / (x2 - x1)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "stigningstal",
+              "args": [
+                0,
+                1,
+                3,
+                7
+              ],
+              "vent": 2.0
+            },
+            {
+              "type": "kall",
+              "fn": "stigningstal",
+              "args": [
+                0,
+                5,
+                2,
+                1
+              ],
+              "vent": -2.0
+            },
+            {
+              "type": "kall",
+              "fn": "stigningstal",
+              "args": [
+                1,
+                4,
+                5,
+                4
+              ],
+              "vent": 0.0
+            }
+          ],
+          "loeysing": "def stigningstal(x1, y1, x2, y2):\n    return (y2 - y1) / (x2 - x1)"
+        },
+        {
+          "id": "stig-2",
+          "type": "les",
+          "kode": "def f(x):\n    return 4 - 3 * x\n\nprint(f(0), f(1), f(2))",
+          "sporsmal": "Kva skriv programmet ut, og kva er stigningstalet?",
+          "alternativ": [
+            "4 1 -2",
+            "4 7 10",
+            "4 1 2",
+            "0 1 2"
+          ],
+          "rett": 0,
+          "forklaring": "Verdien minkar med **3** for kvart steg: 4, 1, -2. Stigningstalet er difor -3, og linja går nedover mot høgre."
+        },
+        {
+          "id": "stig-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal rekne ut stigningstalet, men han deler feil veg. Rett det.",
+          "startkode": "def stigningstal(x1, y1, x2, y2):\n    return (x2 - x1) / (y2 - y1)",
+          "hint": [
+            "Stigningstalet er endring i **y** per endring i **x**.",
+            "Kva skal stå øvst i brøken?"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "stigningstal",
+              "args": [
+                0,
+                1,
+                3,
+                7
+              ],
+              "vent": 2.0
+            },
+            {
+              "type": "kall",
+              "fn": "stigningstal",
+              "args": [
+                0,
+                5,
+                2,
+                1
+              ],
+              "vent": -2.0
+            }
+          ],
+          "loeysing": "def stigningstal(x1, y1, x2, y2):\n    return (y2 - y1) / (x2 - x1)"
+        }
+      ],
+      "oppsummering": "Stigningstalet er endring i y delt på endring i x — det same som «endring per eining». I `y = ax + b` er `a` stigningstalet og `b` er skjeringspunktet med y-aksen."
+    },
+    {
+      "id": "andregrad",
+      "tittel": "Når grafen bøyer seg",
+      "kompetansemaal": [
+        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Alle funksjonane hittil har vore **lineære** — grafen er ei rett linje. Set du `x` i andre potens, bøyer grafen seg."
+        },
+        {
+          "type": "kode",
+          "kode": "def f(x):\n    return x * x"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Grafen blir ein **parabel**. Han er symmetrisk, og har eit botnpunkt (eller toppunkt, om han vender ned)."
+        },
+        {
+          "type": "merk",
+          "tekst": "Stigningstalet er ikkje lenger fast. Nær botnpunktet er kurva nesten flat; lenger ute blir ho brattare og brattare. Det er nettopp difor han ikkje er ei linje."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein andregradsfunksjon skriv vi som `y = ax² + bx + c`. I Python bruker du `**` for potens:"
+        },
+        {
+          "type": "kode",
+          "kode": "def f(x):\n    return 2 * x ** 2 - 4 * x + 1"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vil du finne botnpunktet utan å rekne, kan du la programmet leite: prøv mange x-verdiar og hugs den som gav lågast y."
+        }
+      ],
+      "doeme": {
+        "kode": "import matplotlib.pyplot as plt\n\ndef f(x):\n    return x ** 2 - 4 * x + 3\n\nx = []\ny = []\nfor i in range(-20, 61):\n    tal = i / 10\n    x.append(tal)\n    y.append(f(tal))\n\nplt.plot(x, y)\nplt.grid(True)\nplt.axhline(0, color=\"black\")\nplt.title(\"y = x² - 4x + 3\")\nplt.show()",
+        "oppmoding": "Kvar krysser kurva x-aksen? Prøv å byte `x ** 2` med `-x ** 2` og sjå kva som skjer."
+      },
+      "loype": {
+        "tittel": "Finn botnpunktet ved å leite",
+        "maal": "eit program som finn det lågaste punktet på ein parabel ved å prøve mange verdiar",
+        "steg": [
+          {
+            "tekst": "Vi startar med funksjonen.",
+            "kode": "def f(x):\n    return x ** 2 - 4 * x + 3\n\nprint(f(0), f(2), f(4))"
+          },
+          {
+            "tekst": "Så prøver vi mange x-verdiar. Vi deler på 10 for å få desimaltal.",
+            "kode": "def f(x):\n    return x ** 2 - 4 * x + 3\n\nfor i in range(0, 41, 10):\n    x = i / 10\n    print(x, f(x))"
+          },
+          {
+            "tekst": "No hugsar vi det lågaste punktet medan vi leitar.",
+            "kode": "def f(x):\n    return x ** 2 - 4 * x + 3\n\nbeste_x = 0\nbeste_y = f(0)\nfor i in range(-100, 501):\n    x = i / 10\n    if f(x) < beste_y:\n        beste_y = f(x)\n        beste_x = x\n\nprint(\"Botnpunkt:\", beste_x, beste_y)"
+          },
+          {
+            "tekst": "Og teiknar kurva med punktet markert.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef f(x):\n    return x ** 2 - 4 * x + 3\n\nbeste_x = 0\nbeste_y = f(0)\nxs = []\nys = []\nfor i in range(-100, 501):\n    x = i / 10\n    xs.append(x)\n    ys.append(f(x))\n    if f(x) < beste_y:\n        beste_y = f(x)\n        beste_x = x\n\nplt.plot(xs, ys)\nplt.scatter([beste_x], [beste_y], color=\"red\")\nplt.grid(True)\nplt.title(f\"Botnpunkt i ({beste_x}, {beste_y})\")\nplt.show()",
+            "proev": "Metoden finn ikkje det eksakte svaret — berre det beste av dei du prøvde. Kva må til for å kome nærare?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "andre-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `botnpunkt` som tek imot ein `a`, `b` og `c` for `y = ax² + bx + c`, og returnerer **x-verdien** i botnpunktet. Formelen er `-b / (2a)`.",
+          "startkode": "def botnpunkt(a, b, c):\n    # skriv koden her\n",
+          "hint": [
+            "`return -b / (2 * a)`",
+            "`c` blir ikkje brukt — han flyttar kurva opp og ned, ikkje sidevegs."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "botnpunkt",
+              "args": [
+                1,
+                -4,
+                3
+              ],
+              "vent": 2.0
+            },
+            {
+              "type": "kall",
+              "fn": "botnpunkt",
+              "args": [
+                1,
+                0,
+                0
+              ],
+              "vent": 0.0
+            },
+            {
+              "type": "kall",
+              "fn": "botnpunkt",
+              "args": [
+                2,
+                8,
+                1
+              ],
+              "vent": -2.0
+            }
+          ],
+          "loeysing": "def botnpunkt(a, b, c):\n    return -b / (2 * a)"
+        },
+        {
+          "id": "andre-2",
+          "type": "les",
+          "kode": "def f(x):\n    return x ** 2\n\nprint(f(-3), f(0), f(3))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "-9 0 9",
+            "9 0 9",
+            "-6 0 6",
+            "9 0 -9"
+          ],
+          "rett": 1,
+          "forklaring": "Eit negativt tal gonga med seg sjølv blir **positivt**: (-3) gonger (-3) er 9. Difor er parabelen symmetrisk om y-aksen — same verdi på begge sider."
+        },
+        {
+          "id": "andre-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal vere `y = x² + 2`, men han gongar med 2 i staden for å opphøgje i andre. Rett det.",
+          "startkode": "def f(x):\n    return x * 2 + 2",
+          "hint": [
+            "`x * 2` er gonging. Kva teikn gjev potens?",
+            "`x ** 2` er x opphøgd i andre."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "f",
+              "args": [
+                3
+              ],
+              "vent": 11
+            },
+            {
+              "type": "kall",
+              "fn": "f",
+              "args": [
+                0
+              ],
+              "vent": 2
+            },
+            {
+              "type": "kall",
+              "fn": "f",
+              "args": [
+                -4
+              ],
+              "vent": 18
+            }
+          ],
+          "loeysing": "def f(x):\n    return x ** 2 + 2"
+        }
+      ],
+      "oppsummering": "`x ** 2` gjev ein parabel. Stigningstalet er ikkje lenger fast — kurva er flat nær botnpunktet og brattare lenger ute. Botnpunktet ligg i `x = -b / (2a)`."
+    },
+    {
+      "id": "eksponential",
+      "tittel": "Når veksten tek av",
+      "kompetansemaal": [
+        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Du møtte eksponentiell vekst i rente og økonomi utan at han vart kalla det. No skal vi sjå på grafen."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "**Lineær:** du legg til det same kvar gong. `y = 100 + 50x`",
+            "**Eksponentiell:** du gongar med det same kvar gong. `y = 100 * 1.1 ** x`"
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Ein eksponentialfunksjon startar ofte lågare enn ein lineær, og ser uskuldig ut lenge. Men han **tek alltid att** til slutt, uansett kor stort stigningstalet på den lineære er. Det er verdt å sjå med eigne auge."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vekstfaktoren frå økonomi-modulen er nøyaktig det same talet som grunntalet her. Ei rente på 3 prosent gjev `1.03 ** aar`."
+        },
+        {
+          "type": "kode",
+          "kode": "def sparing(aar):\n    return 10000 * 1.03 ** aar"
+        }
+      ],
+      "doeme": {
+        "kode": "import matplotlib.pyplot as plt\n\ndef lineaer(x):\n    return 100 + 50 * x\n\ndef eksponentiell(x):\n    return 100 * 1.1 ** x\n\nx = list(range(0, 41))\nplt.plot(x, [lineaer(t) for t in x], label=\"100 + 50x\")\nplt.plot(x, [eksponentiell(t) for t in x], label=\"100 · 1,1^x\")\nplt.legend()\nplt.grid(True)\nplt.show()",
+        "oppmoding": "Kvar krysser kurvene kvarandre? Prøv å auke stigningstalet frå 50 til 500 — kryssar dei framleis?"
+      },
+      "loype": {
+        "tittel": "Kva veks raskast?",
+        "maal": "ein graf som viser når eksponentiell vekst tek att lineær vekst",
+        "steg": [
+          {
+            "tekst": "To funksjonar: éin som legg til, éin som gongar.",
+            "kode": "def lineaer(x):\n    return 100 + 50 * x\n\ndef eksponentiell(x):\n    return 100 * 1.1 ** x\n\nprint(lineaer(5), round(eksponentiell(5), 1))"
+          },
+          {
+            "tekst": "Vi ser på fleire verdiar. Den lineære ligg føre lenge.",
+            "kode": "def lineaer(x):\n    return 100 + 50 * x\n\ndef eksponentiell(x):\n    return 100 * 1.1 ** x\n\nfor x in range(0, 41, 5):\n    print(x, lineaer(x), round(eksponentiell(x), 1))"
+          },
+          {
+            "tekst": "Vi finn punktet der den eksponentielle tek att.",
+            "kode": "def lineaer(x):\n    return 100 + 50 * x\n\ndef eksponentiell(x):\n    return 100 * 1.1 ** x\n\nfor x in range(0, 60):\n    if eksponentiell(x) > lineaer(x):\n        print(\"Tek att ved x =\", x)\n        break"
+          },
+          {
+            "tekst": "Og teiknar begge.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef lineaer(x):\n    return 100 + 50 * x\n\ndef eksponentiell(x):\n    return 100 * 1.1 ** x\n\nx = list(range(0, 41))\nplt.plot(x, [lineaer(t) for t in x], label=\"legg til 50\")\nplt.plot(x, [eksponentiell(t) for t in x], label=\"gongar med 1,1\")\nplt.grid(True)\nplt.legend()\nplt.title(\"Lineær mot eksponentiell\")\nplt.show()",
+            "proev": "Byt grunntalet til 1.05 — altså 5 prosent vekst. Tek han framleis att? Kor lang tid brukar han?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "eks-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `tek_att` som tek imot eit stigningstal `a` og eit grunntal `g`, og returnerer den fyrste heiltals-`x` der `100 * g ** x` er større enn `100 + a * x`. Prøv `x` frå 0 og oppover.",
+          "startkode": "def tek_att(a, g):\n    x = 0\n    # skriv løkka her\n    return x\n",
+          "hint": [
+            "`while 100 * g ** x <= 100 + a * x:` og så `x = x + 1`",
+            "Løkka stoppar av seg sjølv fordi eksponentiell vekst alltid tek att."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "tek_att",
+              "args": [
+                50,
+                1.1
+              ],
+              "vent": 29
+            },
+            {
+              "type": "kall",
+              "fn": "tek_att",
+              "args": [
+                20,
+                1.1
+              ],
+              "vent": 15
+            },
+            {
+              "type": "kall",
+              "fn": "tek_att",
+              "args": [
+                0,
+                2
+              ],
+              "vent": 1
+            }
+          ],
+          "loeysing": "def tek_att(a, g):\n    x = 0\n    while 100 * g ** x <= 100 + a * x:\n        x = x + 1\n    return x"
+        },
+        {
+          "id": "eks-2",
+          "type": "les",
+          "kode": "print(2 ** 0, 2 ** 1, 2 ** 10)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "0 2 20",
+            "1 2 1024",
+            "2 2 20",
+            "1 2 100"
+          ],
+          "rett": 1,
+          "forklaring": "Alt opphøgd i null er **1**. `2 ** 10` er 1024 — doblar du ti gonger, blir det over tusen. Det er denne veksten som gjer renters rente og smitte så kraftig."
+        },
+        {
+          "id": "eks-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal vere eksponentiell — `100 * 1.1 ** x` — men han er lineær. Rett det.",
+          "startkode": "def f(x):\n    return 100 * 1.1 * x",
+          "hint": [
+            "Skilnaden er eitt teikn.",
+            "`*` gongar. `**` opphøgjer i."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "f",
+              "args": [
+                0
+              ],
+              "vent": 100.0
+            },
+            {
+              "type": "kall",
+              "fn": "f",
+              "args": [
+                2
+              ],
+              "vent": 121.00000000000001
+            }
+          ],
+          "loeysing": "def f(x):\n    return 100 * 1.1 ** x"
+        }
+      ],
+      "oppsummering": "Lineær vekst legg til det same kvar gong; eksponentiell gongar med det same. Den eksponentielle tek alltid att til slutt, same kor slak han ser ut i starten."
+    },
+    {
+      "id": "samanlikne-funksjonar",
+      "tittel": "Fire funksjonstypar i same figur",
+      "kompetansemaal": [
+        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
+        "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "No har du møtt tre av dei fire typane i kompetansemålet. Den siste er **brøkfunksjonen**, der `x` står i nemnaren."
+        },
+        {
+          "type": "kode",
+          "kode": "def broek(x):\n    return 100 / x"
+        },
+        {
+          "type": "merk",
+          "tekst": "Ein brøkfunksjon er ikkje definert i `x = 0` — du kan ikkje dele på null. Prøver du, får du `ZeroDivisionError`. Difor må du hoppe over det punktet når du teiknar."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ei praktisk tolking: skal fem personar dele ei pizza til 200 kroner, betalar kvar 40. Skal ti dele, betalar kvar 20. Prisen per person er `200 / talet`."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "**Lineær** `ax + b` — rett linje, fast endring",
+            "**Andregrad** `ax² + bx + c` — parabel med botn- eller toppunkt",
+            "**Eksponentiell** `a · g^x` — flat lenge, så bratt",
+            "**Brøk** `a / x` — fell fort, flatar ut, aldri null"
+          ]
+        }
+      ],
+      "doeme": {
+        "kode": "import matplotlib.pyplot as plt\n\nx = [i / 10 for i in range(1, 101)]\n\nplt.plot(x, [2 * t + 1 for t in x], label=\"lineær 2x+1\")\nplt.plot(x, [t ** 2 for t in x], label=\"andregrad x²\")\nplt.plot(x, [1.5 ** t for t in x], label=\"eksponentiell 1,5^x\")\nplt.plot(x, [10 / t for t in x], label=\"brøk 10/x\")\nplt.ylim(0, 30)\nplt.grid(True)\nplt.legend()\nplt.show()",
+        "oppmoding": "Kva kurve veks raskast heilt til høgre i figuren? Utvid x til 20 og sjå om svaret endrar seg."
+      },
+      "loype": {
+        "tittel": "Del rekninga",
+        "maal": "ein graf som viser kva kvar person betalar når fleire deler på same rekninga",
+        "steg": [
+          {
+            "tekst": "Rekninga er 200 kroner. Vi ser kva kvar betalar for nokre gruppestorleikar.",
+            "kode": "def per_person(tal):\n    return 200 / tal\n\nprint(per_person(2), per_person(5), per_person(10))"
+          },
+          {
+            "tekst": "Så byggjer vi lister. Vi startar på 1 — ikkje 0 — fordi vi ikkje kan dele på null.",
+            "kode": "def per_person(tal):\n    return 200 / tal\n\nx = list(range(1, 21))\ny = []\nfor t in x:\n    y.append(per_person(t))\nprint(y[0], y[-1])"
+          },
+          {
+            "tekst": "Og teiknar kurva.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef per_person(tal):\n    return 200 / tal\n\nx = list(range(1, 21))\ny = []\nfor t in x:\n    y.append(per_person(t))\n\nplt.plot(x, y)\nplt.grid(True)\nplt.show()"
+          },
+          {
+            "tekst": "Med tekst blir figuren til å skjøne for andre enn deg.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef per_person(tal):\n    return 200 / tal\n\nx = list(range(1, 21))\ny = []\nfor t in x:\n    y.append(per_person(t))\n\nplt.plot(x, y)\nplt.xlabel(\"Talet på personar\")\nplt.ylabel(\"Kroner kvar\")\nplt.title(\"200 kroner delt på fleire\")\nplt.grid(True)\nplt.show()",
+            "proev": "Kurva kjem aldri heilt ned til null. Kva tyder det når det gjeld pizza?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "saml-f-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `per_person` som tek imot ei rekning og eit tal personar, og returnerer kva kvar må betale. Er talet personar **0**, skal han returnere `0` i staden for å ryke.",
+          "startkode": "def per_person(rekning, personar):\n    # skriv koden her\n",
+          "hint": [
+            "Bruk ein `if` for å sjekke om `personar` er 0.",
+            "Elles: `return rekning / personar`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "per_person",
+              "args": [
+                200,
+                5
+              ],
+              "vent": 40.0
+            },
+            {
+              "type": "kall",
+              "fn": "per_person",
+              "args": [
+                200,
+                0
+              ],
+              "vent": 0
+            },
+            {
+              "type": "kall",
+              "fn": "per_person",
+              "args": [
+                100,
+                8
+              ],
+              "vent": 12.5
+            }
+          ],
+          "loeysing": "def per_person(rekning, personar):\n    if personar == 0:\n        return 0\n    return rekning / personar"
+        },
+        {
+          "id": "saml-f-2",
+          "type": "les",
+          "kode": "print(100 / 4)\nprint(100 / 8)\nprint(100 / 16)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "25.0\n12.5\n6.25",
+            "25\n12\n6",
+            "4.0\n8.0\n16.0",
+            "25.0\n12.5\n6.5"
+          ],
+          "rett": 0,
+          "forklaring": "`/` gjev alltid desimaltal. For kvar dobling av talet under brøkstreken blir svaret **halvert** — 25, 12.5, 6.25. Det er formen på ein brøkfunksjon."
+        },
+        {
+          "id": "saml-f-3",
+          "type": "rett",
+          "tekst": "Programmet skal teikne `10 / x`, men det ryk med `ZeroDivisionError`. Rett området så null ikkje er med.",
+          "startkode": "def f(x):\n    return 10 / x\n\ny = []\nfor x in range(0, 11):\n    y.append(f(x))",
+          "hint": [
+            "Kva skjer når `x` er 0?",
+            "La løkka starte på 1 i staden."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "f",
+              "args": [
+                2
+              ],
+              "vent": 5.0
+            },
+            {
+              "type": "inneheld",
+              "vent": "range(1,",
+              "grunn": "Løkka må starte på 1, ikkje 0"
+            }
+          ],
+          "loeysing": "def f(x):\n    return 10 / x\n\ny = []\nfor x in range(1, 11):\n    y.append(f(x))"
+        }
+      ],
+      "oppsummering": "Fire typar: lineær, andregrad, eksponentiell og brøk. Brøkfunksjonen er ikkje definert i null — du kan ikkje dele på null, og må hoppe over det punktet."
+    },
+    {
+      "id": "eige-problem",
+      "tittel": "Modeller noko du lurer på",
+      "kompetansemaal": [
+        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
+        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Til slutt set vi det saman. Ein **modell** er ein funksjon som beskriv noko i verkelegheita godt nok til at du kan rekne på det."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Framgangsmåten er alltid den same:"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "Kva er det du set inn, og kva vil du få ut?",
+            "Er samanhengen fast tillegg (lineær) eller fast gonging (eksponentiell)?",
+            "Skriv funksjonen, lag ein tabell, teikn grafen.",
+            "Sjekk om modellen gjev fornuftige svar for verdiar du kjenner."
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Det siste punktet er det viktigaste. Ein modell som gjev negativ høgde eller ein million kroner i vekepengar er gal, uansett kor fin grafen ser ut. Sjekk alltid mot noko du veit."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein modell gjeld dessutan berre i eit visst område. Ein sparkesykkel som kostar 3 kroner i minuttet kostar ikkje 4320 kroner om du køyrer eit døgn — då har selskapet andre reglar."
+        }
+      ],
+      "doeme": {
+        "kode": "import matplotlib.pyplot as plt\n\n# Modell: eit basseng blir fylt med 50 liter i minuttet, og har 200 frå før\ndef vatn(minutt):\n    return 200 + 50 * minutt\n\nx = list(range(0, 61))\nplt.plot(x, [vatn(t) for t in x])\nplt.xlabel(\"Minutt\")\nplt.ylabel(\"Liter\")\nplt.grid(True)\nplt.show()\n\nfor t in [0, 10, 60]:\n    print(t, \"minutt:\", vatn(t), \"liter\")",
+        "oppmoding": "Bassenget tek 2500 liter. Når er det fullt — og kva seier modellen skjer etter det?"
+      },
+      "loype": {
+        "tittel": "Modeller ditt eige spørsmål",
+        "maal": "ein ferdig modell med funksjon, tabell, graf og ein sjekk av om svaret er fornuftig",
+        "steg": [
+          {
+            "tekst": "Spørsmålet: eit basseng har 200 liter og blir fylt med 50 liter i minuttet. Vi skriv modellen.",
+            "kode": "def vatn(minutt):\n    return 200 + 50 * minutt\n\nprint(vatn(0), vatn(10))"
+          },
+          {
+            "tekst": "Så lagar vi ein tabell for nokre tidspunkt.",
+            "kode": "def vatn(minutt):\n    return 200 + 50 * minutt\n\nfor t in range(0, 61, 10):\n    print(t, \"minutt:\", vatn(t), \"liter\")"
+          },
+          {
+            "tekst": "Vi finn når bassenget er fullt.",
+            "kode": "def vatn(minutt):\n    return 200 + 50 * minutt\n\nfor t in range(0, 200):\n    if vatn(t) >= 2500:\n        print(\"Fullt etter\", t, \"minutt\")\n        break"
+          },
+          {
+            "tekst": "Og teiknar det, med ei linje som viser kor fullt er.",
+            "kode": "import matplotlib.pyplot as plt\n\ndef vatn(minutt):\n    return 200 + 50 * minutt\n\nfullt = 2500\nx = list(range(0, 61))\n\nplt.plot(x, [vatn(t) for t in x], label=\"vatn i bassenget\")\nplt.axhline(fullt, color=\"red\", label=\"fullt\")\nplt.xlabel(\"Minutt\")\nplt.ylabel(\"Liter\")\nplt.grid(True)\nplt.legend()\nplt.show()",
+            "proev": "Modellen held fram over den raude linja. Kva skjer i verkelegheita der — og kva fortel det om kvar modellen sluttar å gjelde?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "modell-1",
+          "type": "skriv",
+          "tekst": "Lag ein funksjon `minutt_til_full` som tek imot startmengd, påfyll per minutt og kor mykje bassenget tek, og returnerer kor mange heile minutt det tek å fylle det.",
+          "startkode": "def minutt_til_full(start, per_minutt, kapasitet):\n    minutt = 0\n    # skriv løkka her\n    return minutt\n",
+          "hint": [
+            "`while start < kapasitet:` og legg til `per_minutt` kvar runde.",
+            "Hugs å telje minutta."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "minutt_til_full",
+              "args": [
+                200,
+                50,
+                2500
+              ],
+              "vent": 46
+            },
+            {
+              "type": "kall",
+              "fn": "minutt_til_full",
+              "args": [
+                0,
+                100,
+                500
+              ],
+              "vent": 5
+            },
+            {
+              "type": "kall",
+              "fn": "minutt_til_full",
+              "args": [
+                500,
+                50,
+                500
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def minutt_til_full(start, per_minutt, kapasitet):\n    minutt = 0\n    while start < kapasitet:\n        start = start + per_minutt\n        minutt = minutt + 1\n    return minutt"
+        },
+        {
+          "id": "modell-2",
+          "type": "les",
+          "kode": "def hoegde(alder):\n    return 50 + 6 * alder\n\nprint(hoegde(10), hoegde(80))",
+          "sporsmal": "Modellen skal gje høgda i centimeter. Kva skriv programmet ut?",
+          "alternativ": [
+            "110 530",
+            "56 86",
+            "110 480",
+            "60 130"
+          ],
+          "rett": 0,
+          "forklaring": "110 cm for ein tiåring er rimeleg. **530 cm for ein åttiåring er over fem meter** — modellen er openbert gal der. Ein modell gjeld berre i eit visst område, og du finn grensa ved å sjekke mot noko du veit."
+        },
+        {
+          "id": "modell-3",
+          "type": "rett",
+          "tekst": "Modellen skal seie kor mykje vatn som er i bassenget, men han startar på null og gløymer dei 200 litrane som var der frå før. Rett det.",
+          "startkode": "def vatn(minutt):\n    return 50 * minutt",
+          "hint": [
+            "Kva skal funksjonen gje når `minutt` er 0?",
+            "Legg til startmengda som eit konstantledd."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "vatn",
+              "args": [
+                0
+              ],
+              "vent": 200
+            },
+            {
+              "type": "kall",
+              "fn": "vatn",
+              "args": [
+                10
+              ],
+              "vent": 700
+            }
+          ],
+          "loeysing": "def vatn(minutt):\n    return 200 + 50 * minutt"
+        }
+      ],
+      "oppsummering": "Ein modell er ein funksjon som beskriv noko verkeleg. Sjekk alltid om svaret er fornuftig for verdiar du kjenner — og hugs at ein modell berre gjeld i eit visst område."
+    }
+  ]
+}

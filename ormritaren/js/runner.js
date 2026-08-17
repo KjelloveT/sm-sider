@@ -130,6 +130,14 @@ const OrmRunner = (function () {
     let testTeljar = 0;
     const ventandeTestar = new Map();
 
+    /* Kor lenge ei retting får lov til å ta før vi drep workeren.
+     *
+     * Ein elev kan skrive ei løkke som aldri sluttar, og trykkje «Sjekk
+     * svaret». Utan denne grensa heng workeren, og einaste utvegen er
+     * Stopp-knappen — som eleven ikkje har nokon grunn til å tenkje på når
+     * han nettopp bad om å få svaret retta. */
+    const TEST_GRENSE_MS = 10000;
+
     /**
      * Køyrer testane mot koden og gjev eitt resultat per test.
      * Testane køyrer kvar for seg i eit ferskt __main__ på Python-sida, så
@@ -142,7 +150,20 @@ const OrmRunner = (function () {
         }
         return new Promise((svar) => {
             const id = ++testTeljar;
-            ventandeTestar.set(id, svar);
+
+            const klokke = setTimeout(() => {
+                if (!ventandeTestar.has(id)) return;
+                ventandeTestar.delete(id);
+                // Workeren står fast i elevkoden og tek ikkje imot meldingar.
+                // Einaste utvegen er å drepe han og byggje han opp att.
+                worker.terminate();
+                lagWorker();
+                cb.onStoppa?.();
+                svar([{ ok: false, melding:
+                    'Rettinga brukte for lang tid. Har koden ei løkke som aldri sluttar?' }]);
+            }, TEST_GRENSE_MS);
+
+            ventandeTestar.set(id, (resultat) => { clearTimeout(klokke); svar(resultat); });
             worker.postMessage({ type: 'test', id, kode, testar });
         });
     }

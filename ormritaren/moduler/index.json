@@ -58,7 +58,7 @@
       "accent": "accent4",
       "trinn": "9. trinn",
       "talLeksjonar": 7,
-      "klar": false,
+      "klar": true,
       "skildring": "Rekn ut sentralmål og spreiingsmål på eit datasett klassen din har samla sjølv, teikn diagram — og sjå korleis dei same tala kan framstillast for å fremje kvart sitt syn.",
       "kompetansemaal": [
         "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene",
@@ -75,7 +75,7 @@
       "accent": "accent5",
       "trinn": "10. trinn",
       "talLeksjonar": 7,
-      "klar": false,
+      "klar": true,
       "skildring": "Kva kostar eit kredittkjøp eigentleg? Du reknar på vekstfaktor, sparing med renters rente, lån og nedbetaling — og samanliknar tilbod som ser like ut.",
       "kompetansemaal": [
         "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
@@ -91,7 +91,7 @@
       "accent": "accent3",
       "trinn": "8. og 10. trinn",
       "talLeksjonar": 8,
-      "klar": false,
+      "klar": true,
       "skildring": "Teikn koordinatsystemet sjølv med skilpadda, og gå frå situasjon til tabell til graf til uttrykk. Til slutt samanliknar du lineære, andregrads- og eksponentialfunksjonar.",
       "kompetansemaal": [
         "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
