@@ -62,10 +62,13 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
  * Difor ber ei stripe fargen i staden. Teksten står på --surface med --text og
  * er dermed lesbar i alle tema, og modulen er framleis lett å kjenne att.
  *
+ * Designsystemet har seinare fått same problemet fiksa i .box4 .box-header,
+ * som no er invertert (--text/--surface). Overstyringa her står likevel: eit
+ * modulkort skal ha eit flatt hovud med fargen i brikka, ikkje eit svart band.
+ *
  * Selektoren må vere .orm-modulkort .orm-modultopp: designsystemet set
- * `.box4 .box-header { background: var(--accent) }` med to klassar, og ein
- * enkeltklasse taper den kampen utan at det synest på anna vis enn at fargane
- * blir ståande. */
+ * `.box4 .box-header` med to klassar, og ein enkeltklasse taper den kampen
+ * utan at det synest på anna vis enn at fargane blir ståande. */
 .orm-modulkort .orm-modultopp {
     background: var(--surface);
     color: var(--text);

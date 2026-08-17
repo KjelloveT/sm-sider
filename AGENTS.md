@@ -64,9 +64,21 @@ Retningslinjer:
   - `.box5` (boks med tabs, krev `.box-tabs`, `.box-tab`, og `.box-body`)
 - **Knappar:** Bruk klassen `.btn`. Kan utvidast med `.active` eller hover-effektar handtert av stilarket.
 - **Kontrast på fargar (KRITISK):** Neobrutalisme-temaet har to tekst-på-bakgrunn-variablar med ulike formål:
-  - `--text-on-accent` = **kvit** (`#ffffff`) — bruk berre på **mørke** bakgrunnar: `--accent`, `--accent2`, og faste mørke fargar.
+  - `--text-on-accent` = **kvit** (`#ffffff`) — bruk berre på **faste mørke fargar**. Sjå åtvaringa under før du brukar han på `--accent` eller `--accent2`.
   - `--text-on-light-accent` = **mørk** (`#1a1a1a`) — bruk på **lyse pastell-bakgrunnar**: `--accent3`, `--accent4`, `--accent5`, og faste lyse fargar som `#BAFCA2`, `#FFD166`, `#fef08a` osv.
-  - Bruk **aldri** `color: var(--text)` eller `color: var(--border)` på element med fast bakgrunn — desse vekslar mellom svart og kvitt avhengig av temaet og kan gje usynleg tekst.
+  - Bruk **aldri** `color: var(--text)` eller `color: var(--border)` på element med **fast** bakgrunn — desse vekslar mellom svart og kvitt avhengig av temaet og kan gje usynleg tekst. (Mot `--surface` er `--text` derimot trygg — sjå neste punkt.)
+
+  **`--text-on-accent` held ikkje på `--accent`/`--accent2` i dei mørke temaa.** Regelen over vart skriven for dei lyse temaa, der `--accent` er ein mørk farge og kvit tekst ligg på 5–17:1. I dei sju mørke temaa — `hacker`, `dracula`, `neon`, `cyberpunk`, `midnight`, `slate`, `space` — er `--accent` og `--accent2` lyse neonfargar, og kvit tekst fell til **2,41–4,47:1**, altså under AA-kravet på 4,5:1.
+
+  Å definere ein eigen `--text-on-accent` per tema løyser det **ikkje**: `space` har `--accent: #8b5cf6`, ein mellomtone der kvit gir 4,23:1 og svart 4,11:1 — ingen tekstfarge klarer 4,5:1 mot han.
+
+  Difor: **fyll aldri ei flate med `--accent`/`--accent2` og legg tekst oppå.** Vel ein av desse i staden:
+  - **Inverter:** `background: var(--text); color: var(--surface);`. `--text` og `--surface` er motsetnader i kvart einaste tema, så dette gir 8,59:1 («dracula») til 18,88:1 («grayscale») i alle 21 — per konstruksjon, utan måling. Dette er det `.box4 .box-header` og `.box5 .box-tab.active` gjer.
+  - **Ber fargen ved sida av teksten:** la flata stå på `--surface` med `--text`, og legg aksentfargen i ei lita brikke med eiga ramme, ei kantstripe eller ein ramme­farge. Sjå `.orm-modulbrikke` i `ormritaren/css/landing.css`.
+
+  Aksentfyll er framleis greitt der det ikkje ligg tekst oppå (kantar, stripes, prikkar, ikon med `--border` rundt).
+
+  **Legg du til eit nytt tema:** dei to komponentane over treng ikkje målast på nytt. Alt anna som brukar `--text-on-accent` gjer det — mål mot den faktiske bakgrunnen og krev 4,5:1.
 - **Modalar:** `.modal1` til `.modal5` i kombinasjon med ein `<div class="modal-overlay">`.
 - **Ikon:** Bruk inline SVG-ar frå Lucide Icons. Aldri bruk emoji.
   - **Unntak — Dagsvegen:** Dagsplan-verktøyet `dagsvegen/` har eksplisitt godkjent unntak: emoji brukast som visuell representasjon av fag og innhald (kuratert liste i `dagsvegen/js/emoji.js`, ingen flagg-emoji pga. manglande Windows-støtte). Unntaket gjeld berre faginnhald — UI-chrome (knappar, verktøyrad) brukar framleis Lucide.

@@ -229,8 +229,10 @@
 
 .orm-oppgave-rett { border-color: var(--accent); }
 
-/* Hovudet må overstyre .box4 .box-header, som set aksentfargen med to
- * klassar. Ein enkeltklasse taper den kampen. */
+/* Hovudet må overstyre .box4 .box-header, som set bakgrunnen med to klassar.
+ * Ein enkeltklasse taper den kampen. Oppgåvekorta skal ha eit flatt hovud der
+ * typefargen ligg i den nedre kanten, ikkje det inverterte bandet
+ * designsystemet gir. */
 .orm-oppgave .orm-oppgavetopp {
     display: flex;
     align-items: center;

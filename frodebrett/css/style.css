@@ -189,10 +189,13 @@ textarea.form-input { resize: vertical; min-height: 80px; }
   box-shadow: 3px 3px 0 var(--shadow);
 }
 .box-tabs.editor-tabs .box-tab:hover { background: var(--bg); }
+/* Invertert som .box5 .box-tab.active i neobrutalisme.css — kvit tekst på
+ * --accent fall til 2,54:1 i «hacker» og under 4,5:1 i alle dei sju mørke
+ * temaa. Sjå kommentaren ved .box4 .box-header for heile grunngjevinga. */
 .box-tabs.editor-tabs .box-tab.active {
-  background: var(--accent);
-  color: var(--text-on-accent);
-  border-bottom-color: var(--accent);
+  background: var(--text);
+  color: var(--surface);
+  border-bottom-color: var(--text);
   box-shadow: 3px 3px 0 var(--shadow);
 }
 .category-tab-content { border: 3px solid var(--border); padding: 16px; background: var(--surface); box-shadow: 4px 4px 0 var(--shadow); }
