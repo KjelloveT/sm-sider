@@ -47,6 +47,18 @@ def _normaliser(tekst):
     return "\n".join(linjer)
 
 
+def _kall(fn, args):
+    """Kallar elevens funksjon og held utskrifta hans for seg sjølv.
+
+    Sjølve programmet blir køyrt med omdirigert stdout, men kallet skjedde
+    utanfor — så ein funksjon med `print` inni sende teksten rett i
+    utskriftsruta medan oppgåva vart retta. Eleven fekk då tilfeldige tal i
+    ruta som ikkje kom frå hans eiga køyring.
+    """
+    with contextlib.redirect_stdout(io.StringIO()):
+        return fn(*args)
+
+
 def _hent_funksjon(modul, namn):
     fn = modul.__dict__.get(namn)
     if fn is None:
@@ -85,7 +97,7 @@ def _ein_test(src, test):
         fn, feil = _hent_funksjon(modul, test["fn"])
         if feil:
             return {"ok": False, "melding": feil}
-        fekk = fn(*test.get("args", []))
+        fekk = _kall(fn, test.get("args", []))
         if fekk == test["vent"]:
             return {"ok": True}
         kall = f"{test['fn']}({', '.join(repr(a) for a in test.get('args', []))})"
@@ -102,7 +114,7 @@ def _ein_test(src, test):
             fn, feil = _hent_funksjon(modul, test["fn"])
             if feil:
                 return {"ok": False, "melding": feil}
-            fekk = fn(*test.get("args", []))
+            fekk = _kall(fn, test.get("args", []))
         else:
             namn = test["variabel"]
             if namn not in modul.__dict__:

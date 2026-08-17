@@ -91,7 +91,7 @@
       "accent": "accent3",
       "trinn": "8. og 10. trinn",
       "talLeksjonar": 8,
-      "klar": false,
+      "klar": true,
       "skildring": "Teikn koordinatsystemet sjølv med skilpadda, og gå frå situasjon til tabell til graf til uttrykk. Til slutt samanliknar du lineære, andregrads- og eksponentialfunksjonar.",
       "kompetansemaal": [
         "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
