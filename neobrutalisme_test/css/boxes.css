@@ -14,7 +14,7 @@
 .box-13 { background: var(--surface); border: 3px solid var(--border); padding: 20px; box-shadow: 5px 5px 0 var(--shadow); border-image: repeating-linear-gradient(45deg, var(--accent), var(--accent) 5px, var(--accent2) 5px, var(--accent2) 10px) 5; }
 .box-14 { background: var(--surface); border: 3px solid var(--border); padding: 20px; box-shadow: 5px 5px 0 var(--shadow); border-top: 8px solid var(--accent); }
 .box-15 { background: var(--surface); border: 3px solid var(--border); padding: 0; overflow: hidden; box-shadow: 5px 5px 0 var(--shadow); }
-.box-15 .box-header { background: var(--accent); color: #fff; padding: 10px 16px; font-weight: 800; border-bottom: 3px solid var(--border); }
+.box-15 .box-header { background: var(--text); color: var(--surface); padding: 10px 16px; font-weight: 800; border-bottom: 3px solid var(--border); }
 .box-15 .box-body { padding: 16px; }
 .box-16 { background: var(--surface); border: 3px solid var(--border); padding: 20px; box-shadow: 8px 8px 0 var(--shadow); outline: 3px solid var(--accent); outline-offset: 6px; }
 .box-17 { background: var(--surface); padding: 20px; position: relative; border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow); }

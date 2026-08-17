@@ -96,7 +96,10 @@
 
             <!-- PRIVACY NOTICE -->
             <div class="box4" style="margin-top: 32px;">
-                <div class="box-header" style="background: var(--accent); color: var(--text-on-accent);">
+                <!-- Inline-stilen her gjentok `background: var(--accent); color: var(--text-on-accent)`
+                     og ville overstyrt fiksen i neobrutalisme.css. .box4 .box-header
+                     gir same hovudet med lesbar kontrast i alle 21 tema. -->
+                <div class="box-header">
                     <strong style="display: flex; align-items: center; gap: 8px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                         Personvern og datasikkerheit

@@ -378,13 +378,36 @@ main.main-wide {
   .hero-box { flex-direction: column; flex-wrap: nowrap; text-align: center; }
   .hero-text { flex-basis: auto; max-width: 100%; }
 }
-.box4 .box-header { background: var(--accent); color: var(--text-on-accent); padding: 10px 16px; font-weight: 800; border-bottom: 3px solid var(--border); }
+/* Hovudet er invertert i staden for å bere aksentfargen.
+ *
+ * Fyrste utgåve var `background: var(--accent); color: var(--text-on-accent)`,
+ * slik §3.2 legg opp til. Måling over alle 21 tema viste at regelen om at
+ * --text-on-accent (kvit) høyrer heime på --accent berre held i dei lyse
+ * temaa: i dei sju mørke er --accent ein lys neonfarge, og kvit tekst fell til
+ * 2,54:1 («hacker») – 4,23:1 («space»). Alle under AA sitt krav på 4,5:1.
+ *
+ * Å snu teksten til mørk i dei mørke temaa er heller ingen veg ut. «space» har
+ * --accent: #8b5cf6, ein mellomtone der kvit gir 4,23:1 og svart 4,11:1 — det
+ * finst ingen tekstfarge som klarer 4,5:1 mot han. Difor kan ikkje problemet
+ * løysast med ein eigen --text-on-accent per tema.
+ *
+ * --text og --surface er derimot definerte som motsetnader i kvart einaste
+ * tema. Inverteringa gir 8,59:1 («dracula») til 18,88:1 («grayscale») i alle
+ * 21, og aksentfargen blir boren av kantane rundt i staden.
+ *
+ * Same grunngjeving gjeld .box5 .box-tab.active nedanfor. Legg du til eit nytt
+ * tema, treng du ikkje måle desse to på nytt — inverteringa held per
+ * konstruksjon. Måler du likevel, gjer det mot --surface, ikkje --bg. */
+.box4 .box-header { background: var(--text); color: var(--surface); padding: 10px 16px; font-weight: 800; border-bottom: 3px solid var(--border); }
 .box4 .box-body { padding: 16px; }
 .box5 { background: var(--surface); border: 3px solid var(--border); padding: 0; overflow: hidden; box-shadow: 5px 5px 0 var(--shadow); margin-bottom: 20px; }
 .box5 .box-tabs { display: flex; border-bottom: 3px solid var(--border); }
 .box5 .box-tab { padding: 8px 16px; font-weight: 700; border-right: 2px solid var(--border); font-size: 12px; text-transform: uppercase; cursor: pointer; background: var(--surface); color: var(--text); font-family: inherit; }
 .box5 .box-tab:last-child { border-right: none; }
-.box5 .box-tab.active { background: var(--accent); color: var(--text-on-accent); }
+/* Invertert av same grunn som .box4 .box-header — sjå kommentaren der. Den
+ * aktive fana skil seg dessutan tydelegare frå dei uaktive slik, sidan dei
+ * står på --surface med --text. */
+.box5 .box-tab.active { background: var(--text); color: var(--surface); }
 .box5 .box-body { padding: 12px 16px; }
 
 /* Numbered modifier (works inside any box) */
