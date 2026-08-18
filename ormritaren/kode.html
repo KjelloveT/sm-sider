@@ -143,14 +143,40 @@
             <button class="btn orm-btn-stopp" id="stoppKnapp" type="button" disabled>
               <span data-icon="stop"></span>Stopp
             </button>
+            <button class="btn orm-btn-liten orm-btn-steg" id="stegKnapp" type="button">
+              <span data-icon="footprints"></span>Steg for steg
+            </button>
             <span class="orm-status" id="status" role="status" aria-live="polite">Startar …</span>
             <span class="orm-snarveg">Ctrl + Enter</span>
+          </div>
+
+          <!-- Stegkontrollar. Kjem fram når stegvis køyring er i gang. -->
+          <div class="orm-stegrad" id="stegrad" hidden>
+            <button class="btn orm-btn-liten orm-btn-neste" id="nesteLinjeKnapp" type="button">
+              <span data-icon="chevR"></span>Neste linje
+            </button>
+            <button class="btn orm-btn-liten" id="spelAvKnapp" type="button">
+              <span data-icon="play"></span>Spel av
+            </button>
+            <label class="orm-fartsval">
+              Fart
+              <input type="range" id="stegFart" min="1" max="5" value="2"
+                     aria-label="Kor fort avspelinga går">
+            </label>
+            <span class="orm-steginfo" id="stegInfo" aria-live="polite"></span>
           </div>
 
           <p class="orm-varsel orm-varsel-treg" id="tregVarsel" hidden>
             Programmet har køyrt ei stund. Er det ei løkke som aldri sluttar?
             Trykk <strong>Stopp</strong> — koden din blir verande.
           </p>
+
+          <!-- Kva linje som køyrer no. Står her, rett over grafikken, så
+               eleven kan følgje skilpadda utan å sjå opp på koden. -->
+          <div class="orm-steglinje" id="stegLinje" hidden>
+            <span class="orm-steglinje-merke" id="stegLinjeNr"></span>
+            <code class="orm-steglinje-kode" id="stegLinjeKode"></code>
+          </div>
 
           <!-- Grafikk. Skjult til programmet lagar noko som skal hit. -->
           <section class="box4 orm-panel" id="panelGrafikk" aria-labelledby="grafikkTittel" hidden>

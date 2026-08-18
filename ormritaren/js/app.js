@@ -25,7 +25,9 @@ for i in range(1, 6):
             'fanerad', 'arbeidsflate', 'isolasjonsVarsel', 'lagringsVarsel',
             'lerret', 'biletboks', 'tomGrafikkKnapp', 'bibliotekliste',
             'panelGrafikk', 'grafikkFane', 'filerKnapp', 'filpanel', 'filTal',
-            'panelLeksjon', 'leksjonFane', 'diagnosePanel'
+            'panelLeksjon', 'leksjonFane', 'diagnosePanel',
+            'stegKnapp', 'stegrad', 'nesteLinjeKnapp', 'spelAvKnapp', 'stegFart', 'stegInfo',
+            'stegLinje', 'stegLinjeNr', 'stegLinjeKode'
         ].forEach(id => { el[id] = document.getElementById(id); });
 
         OrmUI.init({ utskrift: el.utskrift, status: el.status, treg: el.tregVarsel });
@@ -158,8 +160,10 @@ for i in range(1, 6):
             onBilete: (base64) => OrmGrafikk.visBilete(base64),
             onPakkeliste: (pakkar) => OrmPakkar.settLasta(pakkar),
             onInput: (ledetekst, svar) => OrmUI.spor(ledetekst, svar, () => OrmRunner.stopp()),
+            onSteg: (linje, variablar) => visSteg(linje, variablar),
             onTreg: (treg) => OrmUI.visTreg(treg),
             onFerdig: (feil, variablar) => {
+                avsluttStegmodus();
                 el.koyrKnapp.disabled = false;
                 el.stoppKnapp.disabled = true;
                 OrmUI.visVariablar(variablar);
@@ -172,6 +176,7 @@ for i in range(1, 6):
                 }
             },
             onStoppa: () => {
+                avsluttStegmodus();
                 el.stoppKnapp.disabled = true;
                 OrmUI.skriv('\n— Du stoppa programmet. —\n', true);
                 OrmUI.status('Startar Python på nytt …', 'ventar');
@@ -186,11 +191,106 @@ for i in range(1, 6):
         OrmRunner.koyr(OrmEditor.hent());
     }
 
+    /* ---- steg for steg --------------------------------------------------
+     *
+     * Poenget er å sjå samanhengen: linja som står for tur lyser i editoren,
+     * og utskrift, variablar og teikning oppdaterer seg i same augeblink.
+     * Python blokkerer mellom kvar linje, så det er ingen forskjell på det
+     * eleven ser og det som faktisk har skjedd. */
+
+    let stegModus = false;
+    let spelarAv = false;
+    let avspelingsTimer = null;
+    let stegTeljar = 0;
+
+    /* Millisekund mellom linjene, frå fartsvelgaren. Tregaste er nesten
+     * to sekund — det er meint å vere lesbart, ikkje effektivt. */
+    const FART = { 1: 1800, 2: 1100, 3: 650, 4: 350, 5: 120 };
+
+    function startStegmodus() {
+        if (!OrmRunner.erKlar() || OrmRunner.koyrer()) return;
+        if (!OrmRunner.harStdin()) {
+            OrmUI.status('Steg for steg krev delt minne — sjå meldinga øvst', 'feil');
+            return;
+        }
+        stegModus = true;
+        stegTeljar = 0;
+        spelarAv = false;
+        el.stegrad.hidden = false;
+        el.stegKnapp.disabled = true;
+        el.stegInfo.textContent = '';
+        oppdaterAvspelingsknapp();
+        OrmRunner.koyrStegvis(OrmEditor.hent());
+    }
+
+    function visSteg(linje, variablar) {
+        stegTeljar++;
+        OrmEditor.markerKoyrelinje(linje);
+        OrmUI.visVariablar(variablar);
+        el.stegInfo.textContent = `Linje ${linje} — steg ${stegTeljar}`;
+        visSteglinje(linje);
+
+        // På mobil ligg utskrift og grafikk bak fanar. Vi byter ikkje fane av
+        // oss sjølv, men merkjer dei så eleven ser at noko skjedde.
+        merkFane('ut');
+
+        if (spelarAv) {
+            avspelingsTimer = setTimeout(
+                () => OrmRunner.nesteSteg(), FART[el.stegFart.value] || 1100);
+        }
+    }
+
+    /* Gjentek linja rett over grafikken. Utan dette må eleven som følgjer
+     * skilpadda sjå opp i editoren for kvar linje — og då ser han ikkje
+     * strekane bli teikna, som var heile poenget. Vi viser boksen berre når
+     * det faktisk er grafikk å sjå på; elles seier stegraden det same. */
+    function visSteglinje(linje) {
+        if (el.panelGrafikk.hidden) { el.stegLinje.hidden = true; return; }
+        const tekst = OrmEditor.linjeTekst(linje);
+        el.stegLinjeNr.textContent = `Linje ${linje}`;
+        el.stegLinjeKode.textContent = tekst.trim() ? tekst : '(tom linje)';
+        el.stegLinje.hidden = false;
+    }
+
+    function avsluttStegmodus() {
+        if (!stegModus) return;
+        stegModus = false;
+        spelarAv = false;
+        clearTimeout(avspelingsTimer);
+        el.stegrad.hidden = true;
+        el.stegLinje.hidden = true;
+        el.stegKnapp.disabled = false;
+        OrmEditor.markerKoyrelinje(null);
+        // Elles står knappen att på «Pause» til neste gong nokon startar
+        // steg for steg, og lyg om kva han gjer.
+        oppdaterAvspelingsknapp();
+    }
+
+    function oppdaterAvspelingsknapp() {
+        el.spelAvKnapp.textContent = spelarAv ? 'Pause' : 'Spel av';
+        el.nesteLinjeKnapp.disabled = spelarAv;
+        if (window.hydrateIcons) {
+            const i = document.createElement('span');
+            i.dataset.icon = spelarAv ? 'pause' : 'play';
+            el.spelAvKnapp.prepend(i);
+            hydrateIcons(el.spelAvKnapp);
+        }
+    }
+
     /* ---- knappar ------------------------------------------------------- */
 
     function koplKnappar() {
         el.koyrKnapp.addEventListener('click', koyr);
         el.stoppKnapp.addEventListener('click', () => OrmRunner.stopp());
+        el.stegKnapp.addEventListener('click', startStegmodus);
+        el.nesteLinjeKnapp.addEventListener('click', () => OrmRunner.nesteSteg());
+        el.spelAvKnapp.addEventListener('click', () => {
+            spelarAv = !spelarAv;
+            oppdaterAvspelingsknapp();
+            if (spelarAv) OrmRunner.nesteSteg();
+            else clearTimeout(avspelingsTimer);
+        });
+
         el.tomKnapp.addEventListener('click', () => OrmUI.tomUtskrift());
         el.tomGrafikkKnapp.addEventListener('click', () => {
             OrmGrafikk.tom();

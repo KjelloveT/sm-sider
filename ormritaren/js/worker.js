@@ -20,6 +20,7 @@ const TEST_URL = new URL('../py/_test.py', import.meta.url).href;
 let pyodide = null;
 let runUserCode = null;
 let hentVariablar = null;
+let koyrStegvis = null;
 let koyrTestar = null;
 let mplKopla = false;
 
@@ -58,6 +59,18 @@ function lesLinje(ledetekst) {
     return dekodar.decode(new Uint8Array(data.subarray(0, lengd)));
 }
 
+/** Stoppar på ei linje og ventar på at eleven vil vidare.
+ *
+ * Same mekanismen som lesLinje: vi blokkerer workeren med Atomics.wait medan
+ * hovudtråden viser linja, variablane og utskrifta. Skilnaden er at vi ikkje
+ * treng noko svar tilbake — berre lov til å halde fram. */
+function ventPaaSteg(linje, variablarJson) {
+    if (!kontroll) return;   // utan delt minne kan vi ikkje stoppe
+    Atomics.store(kontroll, 0, 0);
+    meld('steg', { linje, variablar: JSON.parse(variablarJson) });
+    Atomics.wait(kontroll, 0, 0);
+}
+
 /* ---- oppstart --------------------------------------------------------- */
 
 async function start() {
@@ -76,7 +89,8 @@ async function start() {
         teikn: (kommandoar) => meld('teikn', { kommandoar: kommandoar.toJs
             ? kommandoar.toJs({ dict_converter: Object.fromEntries })
             : kommandoar }),
-        vis_bilete: (base64) => meld('bilete', { base64 })
+        vis_bilete: (base64) => meld('bilete', { base64 }),
+        steg: (linje, variablarJson) => ventPaaSteg(linje, variablarJson)
     });
 
     // sys.stdin.readline() o.l. skal òg verke. Emscripten vil ha linjeskiftet med.
@@ -88,6 +102,7 @@ async function start() {
     pyodide.runPython(boot, { globals: pyodide.globals });
     runUserCode = pyodide.globals.get('run_user_code');
     hentVariablar = pyodide.globals.get('variablar');
+    koyrStegvis = pyodide.globals.get('koyr_stegvis');
 
     // turtle finst ikkje i Pyodide (stdlib-versjonen krev tkinter), så vi
     // legg vår eiga utgåve i arbeidsmappa, som ligg på sys.path.
@@ -172,6 +187,36 @@ self.onmessage = async (e) => {
             meld('testsvar', {
                 id: m.id,
                 resultat: [{ ok: false, melding: String(feil && feil.message || feil) }]
+            });
+        }
+        return;
+    }
+
+    if (m.type === 'stegvis') {
+        if (m.sab) {
+            kontroll = new Int32Array(m.sab, 0, 2);
+            data = new Uint8Array(m.sab, 8);
+        }
+        try {
+            await lastFraaImportar(m.kode);
+            pyodide.runPython("import sys\nsys.modules.pop('turtle', None)");
+
+            const resultat = await koyrStegvis(m.kode);
+
+            pyodide.runPython(
+                "import sys\n"
+                + "_t = sys.modules.get('turtle')\n"
+                + "if _t is not None: _t.tøm()\n"
+            );
+            meld('ferdig', {
+                feil: resultat ? JSON.parse(resultat) : null,
+                variablar: JSON.parse(hentVariablar())
+            });
+        } catch (feil) {
+            meld('ferdig', {
+                feil: { type: 'RuntimeError', melding: String(feil && feil.message || feil),
+                        linje: null, traceback: String(feil && feil.message || feil) },
+                variablar: []
             });
         }
         return;
