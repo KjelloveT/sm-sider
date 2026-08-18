@@ -25,7 +25,7 @@ for i in range(1, 6):
             'fanerad', 'arbeidsflate', 'isolasjonsVarsel', 'lagringsVarsel',
             'lerret', 'biletboks', 'tomGrafikkKnapp', 'bibliotekliste',
             'panelGrafikk', 'grafikkFane', 'filerKnapp', 'filpanel', 'filTal',
-            'panelLeksjon', 'leksjonFane'
+            'panelLeksjon', 'leksjonFane', 'diagnosePanel'
         ].forEach(id => { el[id] = document.getElementById(id); });
 
         OrmUI.init({ utskrift: el.utskrift, status: el.status, treg: el.tregVarsel });
@@ -141,6 +141,9 @@ for i in range(1, 6):
             onOppstartsfeil: (melding) => {
                 OrmUI.status('Python starta ikkje', 'feil');
                 OrmUI.skriv('Klarte ikkje starte Python: ' + melding + '\n', true);
+                // Utskriftsruta ligg bak ei fane på mobil, så feilen må òg stå
+                // der eleven faktisk ser — med prøver som seier kvifor.
+                OrmDiagnose.vis(melding, el.diagnosePanel);
             },
             onStart: () => {
                 OrmUI.tomUtskrift();

@@ -24,6 +24,7 @@
 <script src="../_libs/codemirror/addon/hint/show-hint.js" defer></script>
 <script src="js/autocomplete.js" defer></script>
 <script src="js/tekst.js" defer></script>
+<script src="js/diagnose.js" defer></script>
 <script src="js/errors.js" defer></script>
 <script src="js/storage.js" defer></script>
 <script src="js/runner.js" defer></script>
@@ -101,6 +102,9 @@
   </div>
 
   <p class="orm-varsel orm-varsel-aatvaring" id="lagringsVarsel" hidden></p>
+
+  <!-- Sjølvdiagnose. Står tom til Python faktisk ikkje startar. -->
+  <section class="orm-diagnose" id="diagnosePanel" role="alert" hidden></section>
 
   <div class="orm-flate">
 
