@@ -100,7 +100,26 @@ const OrmEditor = (function () {
         }
         if (!linje || linje < 1 || linje > cm.lineCount()) return;
         cm.addLineClass(linje - 1, 'background', 'orm-koyrelinje');
-        cm.scrollIntoView({ line: linje - 1, ch: 0 }, 90);
+        rullInternt(linje - 1);
+    }
+
+    /* Held linja synleg inne i editoren, utan å røre sida rundt.
+     *
+     * cm.scrollIntoView rullar òg vindauget når editoren er delvis utanfor
+     * skjermen. Under stegvis køyring betyr det at sida hoppar opp til koden
+     * for kvar einaste linje, og eleven som ville sjå skilpadda teikne får
+     * aldri lov. Difor reknar vi ut posisjonen sjølve og flyttar berre
+     * CodeMirror sin eigen rulleboks. */
+    function rullInternt(i) {
+        const boks = cm.getScrollInfo();
+        const topp = cm.heightAtLine(i, 'local');
+        const botn = cm.heightAtLine(i + 1, 'local');
+        const luft = 24;
+        if (topp < boks.top + luft) {
+            cm.scrollTo(null, Math.max(0, topp - luft));
+        } else if (botn > boks.top + boks.clientHeight - luft) {
+            cm.scrollTo(null, botn - boks.clientHeight + luft);
+        }
     }
 
     /** Markerer linjene som kom til i dette steget av ein kodeløype. */
@@ -118,6 +137,10 @@ const OrmEditor = (function () {
         if (flate) { flate.style.fontSize = px + 'px'; cm.refresh(); }
     }
 
+    /** Teksten på éi linje, 1-indeksert som Python tel. */
+    const linjeTekst = (linje) =>
+        (cm && linje >= 1 && linje <= cm.lineCount()) ? cm.getLine(linje - 1) : '';
+
     return { lag, hent, set, markerFeillinje, markerNyeLinjer, markerKoyrelinje,
-             reinsk, setSkrift, cm: () => cm };
+             linjeTekst, reinsk, setSkrift, cm: () => cm };
 })();

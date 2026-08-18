@@ -26,7 +26,8 @@ for i in range(1, 6):
             'lerret', 'biletboks', 'tomGrafikkKnapp', 'bibliotekliste',
             'panelGrafikk', 'grafikkFane', 'filerKnapp', 'filpanel', 'filTal',
             'panelLeksjon', 'leksjonFane', 'diagnosePanel',
-            'stegKnapp', 'stegrad', 'nesteLinjeKnapp', 'spelAvKnapp', 'stegFart', 'stegInfo'
+            'stegKnapp', 'stegrad', 'nesteLinjeKnapp', 'spelAvKnapp', 'stegFart', 'stegInfo',
+            'stegLinje', 'stegLinjeNr', 'stegLinjeKode'
         ].forEach(id => { el[id] = document.getElementById(id); });
 
         OrmUI.init({ utskrift: el.utskrift, status: el.status, treg: el.tregVarsel });
@@ -227,6 +228,7 @@ for i in range(1, 6):
         OrmEditor.markerKoyrelinje(linje);
         OrmUI.visVariablar(variablar);
         el.stegInfo.textContent = `Linje ${linje} — steg ${stegTeljar}`;
+        visSteglinje(linje);
 
         // På mobil ligg utskrift og grafikk bak fanar. Vi byter ikkje fane av
         // oss sjølv, men merkjer dei så eleven ser at noko skjedde.
@@ -238,12 +240,25 @@ for i in range(1, 6):
         }
     }
 
+    /* Gjentek linja rett over grafikken. Utan dette må eleven som følgjer
+     * skilpadda sjå opp i editoren for kvar linje — og då ser han ikkje
+     * strekane bli teikna, som var heile poenget. Vi viser boksen berre når
+     * det faktisk er grafikk å sjå på; elles seier stegraden det same. */
+    function visSteglinje(linje) {
+        if (el.panelGrafikk.hidden) { el.stegLinje.hidden = true; return; }
+        const tekst = OrmEditor.linjeTekst(linje);
+        el.stegLinjeNr.textContent = `Linje ${linje}`;
+        el.stegLinjeKode.textContent = tekst.trim() ? tekst : '(tom linje)';
+        el.stegLinje.hidden = false;
+    }
+
     function avsluttStegmodus() {
         if (!stegModus) return;
         stegModus = false;
         spelarAv = false;
         clearTimeout(avspelingsTimer);
         el.stegrad.hidden = true;
+        el.stegLinje.hidden = true;
         el.stegKnapp.disabled = false;
         OrmEditor.markerKoyrelinje(null);
         // Elles står knappen att på «Pause» til neste gong nokon startar

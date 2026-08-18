@@ -605,6 +605,40 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
     color: var(--text-on-light-accent);
 }
 
+/* Linja som køyrer, gjenteken rett over grafikken. Eleven som ser på
+ * skilpadda skal sleppe å velje mellom teikninga og koden. */
+.orm-steglinje {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: -6px 0 14px;
+    padding: 9px 12px;
+    background: var(--accent3);
+    border: 3px solid var(--border);
+    box-shadow: 5px 5px 0 var(--shadow);
+    overflow-x: auto;
+}
+
+.orm-steglinje[hidden] { display: none; }
+
+.orm-steglinje-merke {
+    flex: none;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--text-on-light-accent);
+}
+
+.orm-steglinje-kode {
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: pre;
+    color: var(--text-on-light-accent);
+}
+
 .orm-btn-steg { background: var(--accent5); color: var(--text-on-light-accent); }
 .orm-btn-steg:disabled { opacity: .45; cursor: not-allowed; }
 
@@ -761,6 +795,9 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
     .orm-arbeid[data-fane="ut"] #panelGrafikk,
     .orm-arbeid[data-fane="grafikk"] #panelKode,
     .orm-arbeid[data-fane="grafikk"] #panelUt { display: none; }
+
+    /* I kodefana ser eleven linja markert i editoren alt. */
+    .orm-arbeid[data-fane="kode"] #stegLinje { display: none; }
 
     .CodeMirror { height: clamp(220px, 38vh, 420px); }
 
