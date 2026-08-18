@@ -573,6 +573,47 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
     color: var(--muted);
 }
 
+/* ---- steg for steg --------------------------------------------------- */
+
+.orm-stegrad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: -6px 0 16px;
+    padding: 9px 12px;
+    background: var(--accent3);
+    border: 3px solid var(--border);
+}
+
+.orm-fartsval {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-on-light-accent);
+}
+
+.orm-fartsval input { width: 90px; }
+
+.orm-steginfo {
+    margin-left: auto;
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-on-light-accent);
+}
+
+.orm-btn-steg { background: var(--accent5); color: var(--text-on-light-accent); }
+.orm-btn-steg:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Linja som står for tur. Blå — skild frå gult (ny linje i ei løype) og
+ * raudt (feil), så dei tre aldri blir forveksla. */
+.orm-koyrelinje {
+    background: color-mix(in srgb, var(--orm-skriv-farge, #1d4ed8) 30%, transparent);
+}
+
 /* ---- sjølvdiagnose --------------------------------------------------- */
 
 .orm-diagnose {

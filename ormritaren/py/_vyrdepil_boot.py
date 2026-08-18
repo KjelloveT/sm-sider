@@ -125,3 +125,88 @@ def run_user_code(src):
         return json.dumps(_feil(exc))
 
     return None
+
+
+# --- Steg for steg -------------------------------------------------------
+
+MAKS_STEG = 4000
+
+
+def _variablar_i(ramme):
+    """Same filteret som variablar(), men for éi ramme under køyring."""
+    ut = []
+    for namn, verdi in list(ramme.f_locals.items()):
+        if namn.startswith("_") or namn in _SKJUL:
+            continue
+        if isinstance(verdi, types.ModuleType) or callable(verdi):
+            continue
+        try:
+            tekst = repr(verdi)
+        except BaseException:  # noqa: BLE001
+            tekst = "<klarte ikkje vise verdien>"
+        if len(tekst) > 200:
+            tekst = tekst[:200] + " …"
+        ut.append({"namn": namn, "type": type(verdi).__name__, "verdi": tekst})
+    return ut
+
+
+def koyr_stegvis(src):
+    """Køyrer elevkode ei linje om gongen.
+
+    sys.settrace gjev oss eit varsel rett FØR kvar linje blir køyrd. Vi sender
+    linjenummeret og variablane til hovudtråden og blokkerer der til han seier
+    frå at vi kan gå vidare — same mekanismen som input() bruker.
+
+    At varselet kjem før linja er nettopp det vi vil ha: eleven ser linja
+    lyse opp, trykkjer vidare, og ser så kva ho gjorde.
+    """
+    from _ormbru import steg as _steg
+
+    modul = types.ModuleType("__main__")
+    modul.__dict__["__name__"] = "__main__"
+    modul.__dict__["__file__"] = PROGRAM_FILE
+    sys.modules["__main__"] = modul
+
+    try:
+        kode = compile(src, PROGRAM_FILE, "exec")
+    except SyntaxError as exc:
+        return json.dumps(_syntaksfeil(exc))
+
+    teljar = [0]
+
+    def sporar(ramme, hending, arg):
+        # Berre elevens eigen kode. Utan dette ville vi stoppa inne i
+        # biblioteka òg, og eleven hamna i kjeldekoden til random.
+        if ramme.f_code.co_filename != PROGRAM_FILE:
+            return None
+        if hending == "line":
+            teljar[0] += 1
+            if teljar[0] > MAKS_STEG:
+                raise RuntimeError(
+                    f"Steg for steg stoppar etter {MAKS_STEG} linjer. "
+                    "Programmet ditt gjer for mange steg til å følgjast slik — "
+                    "prøv med færre rundar i løkka."
+                )
+            # Skilpadda samlar strekar i ein buffer og sender dei i bolkar.
+            # Under stegvis køyring må teikninga følgje linja, elles ser
+            # eleven variablane endre seg utan at noko skjer på lerretet.
+            skilpadde = sys.modules.get("turtle")
+            if skilpadde is not None:
+                try:
+                    skilpadde.tøm()
+                except BaseException:  # noqa: BLE001
+                    pass
+            _steg(ramme.f_lineno, json.dumps(_variablar_i(ramme)))
+        return sporar
+
+    sys.settrace(sporar)
+    try:
+        exec(kode, modul.__dict__)  # noqa: S102
+    except SystemExit:
+        pass
+    except BaseException as exc:  # noqa: BLE001
+        return json.dumps(_feil(exc))
+    finally:
+        sys.settrace(None)
+
+    return None

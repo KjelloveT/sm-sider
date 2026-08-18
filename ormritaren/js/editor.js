@@ -88,7 +88,19 @@ const OrmEditor = (function () {
         for (let i = 0; i < cm.lineCount(); i++) {
             cm.removeLineClass(i, 'background', 'orm-feillinje');
             cm.removeLineClass(i, 'background', 'orm-nylinje');
+            cm.removeLineClass(i, 'background', 'orm-koyrelinje');
         }
+    }
+
+    /** Markerer linja som står for tur i stegvis køyring. */
+    function markerKoyrelinje(linje) {
+        if (!cm) return;
+        for (let i = 0; i < cm.lineCount(); i++) {
+            cm.removeLineClass(i, 'background', 'orm-koyrelinje');
+        }
+        if (!linje || linje < 1 || linje > cm.lineCount()) return;
+        cm.addLineClass(linje - 1, 'background', 'orm-koyrelinje');
+        cm.scrollIntoView({ line: linje - 1, ch: 0 }, 90);
     }
 
     /** Markerer linjene som kom til i dette steget av ein kodeløype. */
@@ -106,5 +118,6 @@ const OrmEditor = (function () {
         if (flate) { flate.style.fontSize = px + 'px'; cm.refresh(); }
     }
 
-    return { lag, hent, set, markerFeillinje, markerNyeLinjer, reinsk, setSkrift, cm: () => cm };
+    return { lag, hent, set, markerFeillinje, markerNyeLinjer, markerKoyrelinje,
+             reinsk, setSkrift, cm: () => cm };
 })();

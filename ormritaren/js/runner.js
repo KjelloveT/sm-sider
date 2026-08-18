@@ -58,6 +58,9 @@ const OrmRunner = (function () {
             case 'input':
                 cb.onInput?.(m.ledetekst, svarPaaInput);
                 break;
+            case 'steg':
+                cb.onSteg?.(m.linje, m.variablar);
+                break;
             case 'teikn':
                 cb.onTeikn?.(m.kommandoar);
                 break;
@@ -88,6 +91,24 @@ const OrmRunner = (function () {
         Atomics.store(kontroll, 1, lengd);
         Atomics.store(kontroll, 0, 1);
         Atomics.notify(kontroll, 0);
+    }
+
+    /** Slepper workeren vidare til neste linje. */
+    function nesteSteg() {
+        if (!kontroll) return;
+        Atomics.store(kontroll, 1, 0);
+        Atomics.store(kontroll, 0, 1);
+        Atomics.notify(kontroll, 0);
+    }
+
+    /** Køyrer koden ei linje om gongen. Krev delt minne, som input(). */
+    function koyrStegvis(kode) {
+        if (!klar || koyrer) return false;
+        if (!harSAB) return false;
+        koyrer = true;
+        cb.onStart?.();
+        worker.postMessage({ type: 'stegvis', kode, sab });
+        return true;
     }
 
     function avsluttKoyring() {
@@ -169,7 +190,7 @@ const OrmRunner = (function () {
     }
 
     return {
-        init, koyr, stopp, test,
+        init, koyr, koyrStegvis, nesteSteg, stopp, test,
         erKlar: () => klar,
         koyrer: () => koyrer,
         harStdin: () => harSAB
