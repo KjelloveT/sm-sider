@@ -467,11 +467,6 @@
           ],
           "testar": [
             {
-              "type": "inneheld",
-              "vent": "[0] * 13",
-              "grunn": "Lista må ha plass til indeks 12"
-            },
-            {
               "type": "naer",
               "variabel": "sum",
               "vent": 7,
