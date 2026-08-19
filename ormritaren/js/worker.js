@@ -73,14 +73,84 @@ function ventPaaSteg(linje, variablarJson) {
 
 /* ---- oppstart --------------------------------------------------------- */
 
+/* Pyodide melder ikkje frå når det verkeleg smell.
+ *
+ * Greier ikkje nettlesaren å byggje wasm-modulen — det som skjer på ein iPad
+ * som er tom for minne — gjer Pyodide berre console.warn('wasm instantiation
+ * failed!') og lèt oppstarten stå og vente for alltid. Løftet frå loadPyodide
+ * blir korkje innfridd eller avvist, og utanfrå ser det ut som eit evig
+ * «Lastar Python-motoren …». Eleven har ingenting å gå på.
+ *
+ * Vi lyttar difor på konsollen medan vi startar, og gjer den svelgde meldinga
+ * om til ein feil som kjem fram på skjermen. */
+const MARKOER = 'wasm instantiation failed';
+
+/* Ein iPad kan bruke lang tid på 9,6 MB wasm. Grensa skal fange ei oppstart
+ * som aldri kjem til å bli ferdig, ikkje ei som berre er treg. */
+const OPPSTART_GRENSE_MS = 120000;
+
+function tekstAv(x) {
+    if (x instanceof Error) return `${x.name}: ${x.message}`;
+    if (x && typeof x === 'object') {
+        try { return JSON.stringify(x); } catch (e) { return String(x); }
+    }
+    return String(x);
+}
+
+/** Lyttar på console.warn/error og seier frå så snart Pyodide gjev opp. */
+function lyttPaaKonsollen() {
+    const opphav = { warn: console.warn, error: console.error };
+    const linjer = [];
+    let sagtFraa = null;
+    const naarSmell = new Promise((_, avvis) => { sagtFraa = avvis; });
+
+    const fang = (namn) => (...a) => {
+        const linje = a.map(tekstAv).join(' ');
+        linjer.push(linje);
+        opphav[namn].apply(console, a);
+        if (linje.includes(MARKOER)) {
+            // Sjølve årsaka kjem i eit eige console.warn rett etterpå, så vi
+            // ventar eit blunk på ho før vi melder frå.
+            setTimeout(() => sagtFraa(new Error(
+                'Nettlesaren greidde ikkje byggje Python-motoren. '
+                + linjer.slice(-3).join(' — ')
+            )), 50);
+        }
+    };
+    console.warn = fang('warn');
+    console.error = fang('error');
+
+    return {
+        naarSmell,
+        linjer,
+        slepp() { console.warn = opphav.warn; console.error = opphav.error; }
+    };
+}
+
 async function start() {
     meld('framdrift', { steg: 'Lastar Python-motoren …' });
 
-    pyodide = await loadPyodide({
-        indexURL: PYODIDE_URL,
-        stdout: (linje) => meld('ut', { tekst: linje + '\n' }),
-        stderr: (linje) => meld('feilut', { tekst: linje + '\n' }),
-    });
+    const konsoll = lyttPaaKonsollen();
+    const klokke = new Promise((_, avvis) => setTimeout(() => avvis(new Error(
+        'Python-motoren vart ikkje ferdig å starte. '
+        + (konsoll.linjer.length
+            ? konsoll.linjer.slice(-3).join(' — ')
+            : 'Nettlesaren sa ikkje kvifor — oftast er det minnet som tek slutt.')
+    )), OPPSTART_GRENSE_MS));
+
+    try {
+        pyodide = await Promise.race([
+            loadPyodide({
+                indexURL: PYODIDE_URL,
+                stdout: (linje) => meld('ut', { tekst: linje + '\n' }),
+                stderr: (linje) => meld('feilut', { tekst: linje + '\n' }),
+            }),
+            konsoll.naarSmell,
+            klokke,
+        ]);
+    } finally {
+        konsoll.slepp();
+    }
 
     // input() går gjennom denne brua i staden for stdin — sjå _vyrdepil_boot.py.
     // turtle og matplotlib sender teikninga si same vegen.

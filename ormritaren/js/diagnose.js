@@ -47,9 +47,75 @@ const OrmDiagnose = (function () {
         }
     }
 
+    /* Dei tunge prøvene, i den rekkjefylgja Pyodide sjølv gjer dei. Rekkjefylgja
+     * er poenget: den fyrste som ikkje svarer er den som felte iPaden. */
+    const TUNGE = [
+        'Wasm-minne (4 GB tak)',
+        'Kompilerer Python-motoren',
+        'Importerer pyodide.mjs',
+        'Importerer pyodide.asm.mjs',
+    ];
+
+    /** Køyrer dei ekte oppstartsstega i ein worker og ser kor langt dei kjem.
+     *
+     * Ei worker som blir drepen av minnemangel svarer ikkje i det heile — ho
+     * berre tagnar. Difor er det ikkje nok å samle svara; vi må òg vite kva
+     * steg som mangla svar, for det er der iPaden gav opp. */
+    function proevOppstart() {
+        return new Promise(svar => {
+            const funne = new Map();
+            let w;
+            let ferdig = false;
+
+            function avslutt() {
+                if (ferdig) return;   // timeout og onerror kan kome i same slengen
+                ferdig = true;
+                clearTimeout(tid);
+                try { w.terminate(); } catch (e) {}
+                const rader = [];
+                let fyrsteTapte = null;
+                TUNGE.forEach(steg => {
+                    if (funne.has(steg)) {
+                        rader.push([steg, funne.get(steg)]);
+                    } else if (!fyrsteTapte) {
+                        fyrsteTapte = steg;
+                        rader.push([steg, 'nei — nettlesaren gav opp her, utan feilmelding']);
+                    } else {
+                        rader.push([steg, '(ikkje prøvd)']);
+                    }
+                });
+                // Ekstraprøver som berre finst når noko gjekk gale.
+                funne.forEach((verdi, steg) => {
+                    if (!TUNGE.includes(steg) && steg !== '__ferdig') rader.push([steg, verdi]);
+                });
+                svar(rader);
+            }
+
+            // Å kompilere 9,6 MB wasm tek tid på ein gamal iPad. Betre å vente
+            // for lenge enn å melde feil på ein maskin som berre er treg.
+            const tid = setTimeout(avslutt, 30000);
+
+            try {
+                w = new Worker('js/probe-wasm.js', { type: 'module' });
+            } catch (e) {
+                clearTimeout(tid);
+                svar([['Oppstartsprøvene', 'nei — ' + e.message]]);
+                return;
+            }
+            w.onmessage = (e) => {
+                funne.set(e.data.steg, e.data.resultat);
+                if (e.data.steg === '__ferdig') avslutt();
+            };
+            w.onerror = (e) => {
+                funne.set('Prøveworkeren', 'stoppa — ' + (e.message || 'utan feilmelding'));
+                avslutt();
+            };
+        });
+    }
+
     async function samle() {
         const [modulWorker, filer] = await Promise.all([proevModulWorker(), proevFiler()]);
-        return [
+        const rader = [
             ['Nettlesar', navigator.userAgent],
             ['Python-filene', filer],
             ['Module workers', modulWorker],
@@ -58,6 +124,12 @@ const OrmDiagnose = (function () {
             ['Cross-origin isolert', self.crossOriginIsolated ? 'ja' : 'nei'],
             ['Minne oppgjeve', navigator.deviceMemory ? navigator.deviceMemory + ' GB' : '(ikkje oppgjeve)'],
         ];
+
+        // Dei tunge prøvene har berre meining om grunnlaget er på plass.
+        if (typeof WebAssembly !== 'undefined' && modulWorker === 'ja' && filer === 'ja') {
+            rader.push(...await proevOppstart());
+        }
+        return rader;
     }
 
     /** Kort forklaring på norsk, ut frå kva prøvene fann. */
@@ -78,6 +150,30 @@ const OrmDiagnose = (function () {
         if (f['WebAssembly'] === 'nei') {
             return 'Nettlesaren støttar ikkje WebAssembly, som Python køyrer på.';
         }
+        const minne = f['Wasm-minne (4 GB tak)'] || '';
+        if (minne.startsWith('nei')) {
+            const utanTak = f['Wasm-minne utan tak'] || '';
+            if (utanTak.startsWith('ja')) {
+                return 'Nettlesaren nektar å setje av så mykje minne som Python-motoren ber om. '
+                     + 'Dette er den kjende grensa i Safari på iPad. Prøv å lukke andre faner og appar '
+                     + 'og lasta sida på nytt — eller bruk ein PC eller Chromebook.';
+            }
+            return 'iPaden har ikkje minne nok til Python akkurat no. Lukk andre faner og appar, '
+                 + 'start Safari på nytt, og prøv igjen.';
+        }
+        if ((f['Kompilerer Python-motoren'] || '').startsWith('nei')) {
+            return 'Nettlesaren greidde ikkje byggje Python-motoren. Oftast er det minnet som tek slutt '
+                 + 'midtvegs. Lukk andre faner og appar og prøv på nytt.';
+        }
+        if ((f['Importerer pyodide.mjs'] || '').startsWith('nei')
+            || (f['Importerer pyodide.asm.mjs'] || '').startsWith('nei')) {
+            return 'Nettlesaren fekk ikkje lasta Python-filene inn i bakgrunnsprosessen. '
+                 + 'Sjekk om noko blokkerer skript på denne sida.';
+        }
+        if (TUNGE.some(steg => (f[steg] || '').includes('gav opp her'))) {
+            return 'Nettlesaren stoppa midt i oppstarten utan å seie kvifor. Det er nesten alltid minnet '
+                 + 'som tek slutt. Lukk andre faner og appar, start Safari på nytt, og prøv igjen.';
+        }
         return 'Alle prøvene gjekk gjennom, så feilen ligg lenger inne. Meldinga under er den viktigaste opplysninga.';
     }
 
@@ -94,7 +190,7 @@ const OrmDiagnose = (function () {
 
         const venter = document.createElement('p');
         venter.className = 'orm-diagnose-tekst';
-        venter.textContent = 'Sjekkar kva som er gale …';
+        venter.textContent = 'Sjekkar kva som er gale — dette kan ta eit halvt minutt …';
         vert.appendChild(venter);
 
         const rader = await samle();
