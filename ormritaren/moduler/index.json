@@ -12,7 +12,7 @@
     {
       "id": "tema",
       "tittel": "Matematikk med programmering",
-      "skildring": "Fire emne der programmering er verktøyet, ikkje målet. Du kan ta dei i den rekkjefølgja som passar timen — men grunnkurset bør sitje fyrst."
+      "skildring": "Fem emne der programmering er verktøyet, ikkje målet. Du kan ta dei i den rekkjefølgja som passar timen — men grunnkurset bør sitje fyrst."
     }
   ],
   "modular": [
@@ -31,6 +31,25 @@
         "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
         "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ]
+    },
+    {
+      "id": "algebra",
+      "gruppe": "tema",
+      "fil": "algebra.json",
+      "tittel": "Algebra",
+      "ikon": "shapes",
+      "accent": "accent",
+      "trinn": "8. og 10. trinn",
+      "talLeksjonar": 8,
+      "klar": true,
+      "skildring": "Ein bokstav er eit tal du ikkje har bestemt enno. Du sjekkar om to uttrykk er like, ser kvadratsetninga som eit areal du kan teikne, og løyser likningar og likningssett med kode.",
+      "kompetansemaal": [
+        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk",
+        "10. trinn: utforske kvadratsetningene geometrisk og algebraisk og bruke kvadratsetningene som regnestrategier",
+        "10. trinn: lage, løse og forklare ligningssett knyttet til praktiske situasjoner",
+        "10. trinn: modellere situasjoner, presentere resultatene og vurdere hvor gyldige modellene er",
+        "8. trinn: lage og løse ligninger knyttet til praktiske situasjoner og kritisk vurdere løsninger"
       ]
     },
     {

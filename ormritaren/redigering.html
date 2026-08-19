@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Denne sida er ikkje lenka til frå nokon stad, og skal ikkje indekserast.
+     Ho er eit lærarverktøy, ikkje ein del av opplegget elevane ser. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Ormritaren — rediger oppgåver</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+<link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/redigering.css">
+<script src="../js/neo-header.js" defer></script>
+<script src="../js/vyrdepil-icons.js" defer></script>
+<script src="../js/vyrdepil-storage.js" defer></script>
+<script src="js/tekst.js" defer></script>
+<script src="js/runner.js" defer></script>
+<script src="js/redigering.js" defer></script>
+</head>
+<body data-light-theme="forest" data-dark-theme="space" data-theme="forest">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content main-wide">
+
+  <div class="box2 hero-box">
+    <img src="../_resources/ormritaren.png" alt="" class="hero-logo">
+    <div class="hero-text">
+      <h1>Rediger oppgåver</h1>
+      <p>Lærarverktøy. Endringane blir verande i denne nettlesaren til du eksporterer dei — ingenting går til nokon tenar, og elevane ser ingen ting av det du gjer her før endringane er lagde inn i sjølve nettstaden.</p>
+    </div>
+  </div>
+
+  <!-- Verktøyrad -->
+  <div class="box1 orm-toppverktoy orm-redverktoy">
+    <label class="orm-redlabel">
+      Øy
+      <select id="modulVal" class="orm-redvel" aria-label="Vel øy"></select>
+    </label>
+
+    <span class="orm-redstatus" id="redStatus" role="status" aria-live="polite">Lastar …</span>
+
+    <span class="orm-verktoy-spacer"></span>
+
+    <button class="btn orm-btn-liten" id="sjekkKnapp" type="button">
+      <span data-icon="check"></span>Sjekk oppgåvene
+    </button>
+    <button class="btn orm-btn-liten" id="kopierKnapp" type="button">
+      <span data-icon="copy"></span>Kopier endringane
+    </button>
+    <button class="btn orm-btn-liten" id="lastNedKnapp" type="button">
+      <span data-icon="download"></span>Last ned fila
+    </button>
+    <label class="btn orm-btn-liten orm-btn-fil">
+      <span data-icon="upload"></span>Hent inn fil
+      <input type="file" id="hentInnFelt" accept=".json,application/json" hidden>
+    </label>
+    <button class="btn orm-btn-liten orm-btn-fare" id="nullstillKnapp" type="button">
+      <span data-icon="undo"></span>Nullstill
+    </button>
+  </div>
+
+  <p class="orm-varsel orm-varsel-aatvaring" id="redVarsel" hidden></p>
+
+  <!-- Resultatet av «Sjekk oppgåvene» -->
+  <section class="orm-sjekkpanel" id="sjekkPanel" role="status" hidden></section>
+
+  <!-- Eksportruta. Kjem fram når du trykkjer «Kopier endringane». -->
+  <section class="box4 orm-panel" id="eksportPanel" hidden>
+    <div class="box-header orm-panel-topp">
+      <span>Endringane dine</span>
+      <button class="btn orm-btn-liten" id="lukkEksport" type="button">
+        <span data-icon="xMark"></span>Lukk
+      </button>
+    </div>
+    <div class="box-body">
+      <p class="orm-sidenote" id="eksportHjelp"></p>
+      <textarea id="eksportFelt" class="orm-eksportfelt" readonly spellcheck="false"
+                aria-label="Endringane som JSON"></textarea>
+    </div>
+  </section>
+
+  <div class="orm-redrad">
+
+    <!-- Leksjonslista -->
+    <aside class="box1 orm-redliste" aria-labelledby="listeTittel">
+      <h2 class="heading4 no-mt" id="listeTittel">Leksjonar</h2>
+      <div id="leksjonsliste"></div>
+      <p class="orm-sidenote">
+        Ein prikk tyder at du har endra noko i leksjonen.
+      </p>
+    </aside>
+
+    <!-- Skjemaet -->
+    <section class="orm-redskjema" id="skjema" aria-live="polite"></section>
+
+  </div>
+
+  <p class="orm-botntekst">
+    Verktøyet endrar berre ei kopi i nettlesaren din. For at elevane skal sjå
+    endringane, må den eksporterte fila leggjast inn i nettstaden.
+  </p>
+
+</main>
+</div>
+
+</body>
+</html>

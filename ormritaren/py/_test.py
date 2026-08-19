@@ -80,6 +80,12 @@ def _ein_test(src, test):
 
     modul, utskrift = _ferskt_program(src, test.get("stdin"))
 
+    if typ == "koyrer":
+        # Ingen fasit — vi sjekkar berre at koden går gjennom utan å kaste.
+        # Redigeringsverktøyet bruker denne på løypestega, der det ikkje finst
+        # noko rett svar, berre eit krav om at koden faktisk køyrer.
+        return {"ok": True}
+
     if typ == "utskrift":
         fekk = _normaliser(utskrift)
         vente = _normaliser(test["vent"])
