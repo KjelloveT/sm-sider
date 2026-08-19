@@ -39,10 +39,12 @@ const OrmRedigering = (function () {
             'modulVal', 'redStatus', 'sjekkKnapp', 'kopierKnapp', 'lastNedKnapp',
             'hentInnFelt', 'nullstillKnapp', 'redVarsel', 'sjekkPanel',
             'eksportPanel', 'eksportFelt', 'eksportHjelp', 'lukkEksport',
-            'leksjonsliste', 'skjema'
+            'leksjonsliste', 'skjema', 'visingKolonne', 'visingRamme',
+            'visingOppdater', 'visingLukk'
         ].forEach(id => { el[id] = document.getElementById(id); });
 
         koplKnappar();
+        koplVising();
 
         try {
             katalog = await hentJson('moduler/index.json');
@@ -97,6 +99,7 @@ const OrmRedigering = (function () {
         teiknListe();
         teiknSkjema();
         oppdaterStatus();
+        send_til_vising({ settKode: true, bolk: 'om' });
     }
 
     /* ---- kladd i nettlesaren -------------------------------------------- */
@@ -133,6 +136,118 @@ const OrmRedigering = (function () {
         lagre_kladd();
         oppdaterStatus();
         teiknListe();
+        visingSeinare();
+    }
+
+    /* ---- førehandsvising ------------------------------------------------ */
+
+    let visingKlar = false;
+    let visingTimer = null;
+    let visingPaa = true;
+    let sisteBolk = null;
+
+    /* Vi ventar litt før vi sender. Utan det ville visinga bli teikna på nytt
+     * for kvar tast, og læraren fekk ei rute som blafra medan han skreiv. */
+    function visingSeinare() {
+        clearTimeout(visingTimer);
+        visingTimer = setTimeout(() => send_til_vising({ settKode: false }), 450);
+    }
+
+    function send_til_vising({ settKode = false, bolk = null } = {}) {
+        if (!visingKlar || !visingPaa || !arbeid) return;
+        el.visingRamme.contentWindow.postMessage({
+            type: 'ormritaren:leksjon',
+            modul: arbeid,
+            indeks: vald,
+            settKode,
+            bolk: bolk || sisteBolk
+        }, location.origin);
+    }
+
+    /* Rullar visinga til den same bolken som læraren står i.
+     *
+     * Vi rører ramma direkte i staden for å sende ei melding. Ramma er på
+     * same opphav, og ei melding til gjer berre at rullinga skjer eit steg
+     * seinare enn målinga vi baserte henne på. Sjølve leksjonsdataa går
+     * framleis gjennom postMessage — dei må teiknast av app.js. */
+    function send_bolk(namn) {
+        if (!namn || namn === sisteBolk) return;
+        sisteBolk = namn;
+        rull_visinga(namn);
+    }
+
+    function rull_visinga(namn) {
+        if (!visingKlar || !visingPaa || !namn) return;
+        const dok = el.visingRamme.contentDocument;
+        const boks = dok && dok.getElementById('panelLeksjon');
+        if (!boks) return;
+        const maal = boks.querySelector(`[data-bolk="${CSS.escape(namn)}"]`);
+        if (!maal) return;
+        /* offsetTop, ikkje getBoundingClientRect: panelet er sticky, og då
+         * flyttar rect-en seg med rullinga i sida rundt, så same utrekninga
+         * gav ulikt svar frå gong til gong. offsetTop er avstanden inne i
+         * innhaldet og ligg i ro. (Panelet er posisjonert, så det er sjølv
+         * offsetParent for bolkane.) */
+        let av = 0;
+        for (let e = maal; e && e !== boks; e = e.offsetParent) av += e.offsetTop;
+        boks.scrollTop = Math.max(0, av - 8);
+    }
+
+    function koplVising() {
+        window.addEventListener('message', (e) => {
+            if (e.origin !== location.origin) return;
+            if (e.data?.type === 'ormritaren:klar') {
+                visingKlar = true;
+                send_til_vising({ settKode: true });
+            } else if (e.data?.type === 'ormritaren:teikna') {
+                // Elementa i visinga er nye etter kvar teikning, så
+                // posisjonen må settast opp att.
+                rull_visinga(sisteBolk);
+            }
+        });
+
+        // Står læraren og skriv i Løype-bolken, skal løypa stå ved sida av.
+        el.skjema.addEventListener('focusin', (e) => {
+            const del = e.target.closest('[data-bolk]');
+            if (del) send_bolk(del.dataset.bolk);
+        });
+
+        /* Og han skal følgje òg når læraren berre rullar og les, utan å
+         * klikke i eit felt. Vi tek den bolken som ligg øvst i biletet. */
+        /* Lytt i fangstfasen på document: rulling boblar ikkje, og det er
+         * ikkje vindauget som rullar her — .main-content har si eiga
+         * overflow. Då slepp vi å vite kven av dei det er. */
+        let rullTimer = null;
+        document.addEventListener('scroll', () => {
+            clearTimeout(rullTimer);
+            rullTimer = setTimeout(() => {
+                const bolkar = [...el.skjema.querySelectorAll('[data-bolk]')];
+                if (!bolkar.length) return;
+                const grense = 120;   // litt under toppen, så overgangen kjem naturleg
+                let oeverst = bolkar[0];
+                for (const b of bolkar) {
+                    if (b.getBoundingClientRect().top <= grense) oeverst = b;
+                }
+                send_bolk(oeverst.dataset.bolk);
+            }, 160);
+        }, { capture: true, passive: true });
+
+        el.visingOppdater.addEventListener('click',
+            () => send_til_vising({ settKode: true }));
+
+        el.visingLukk.addEventListener('click', () => {
+            visingPaa = !visingPaa;
+            el.visingKolonne.classList.toggle('orm-redvising-av', !visingPaa);
+            el.visingLukk.setAttribute('aria-expanded', String(visingPaa));
+            el.visingLukk.textContent = visingPaa ? 'Skjul' : 'Vis';
+            if (window.hydrateIcons) {
+                const i = document.createElement('span');
+                i.dataset.icon = visingPaa ? 'eyeOff' : 'eye';
+                el.visingLukk.prepend(i);
+                hydrateIcons(el.visingLukk);
+            }
+            if (visingPaa) send_til_vising({ settKode: true });
+        });
     }
 
     function oppdaterStatus() {
@@ -182,6 +297,7 @@ const OrmRedigering = (function () {
                 vald = i;
                 teiknListe();
                 teiknSkjema();
+                send_til_vising({ settKode: true, bolk: 'om' });
             });
             el.leksjonsliste.appendChild(knapp);
         });
@@ -189,9 +305,10 @@ const OrmRedigering = (function () {
 
     /* ---- byggjeklossar for skjemaet ------------------------------------- */
 
-    function bolk(tittel) {
+    function bolk(tittel, namn) {
         const s = document.createElement('section');
         s.className = 'box4 orm-panel orm-redbolk';
+        if (namn) s.dataset.bolk = namn;
         const h = document.createElement('div');
         h.className = 'box-header orm-panel-topp';
         h.textContent = tittel;
@@ -336,7 +453,7 @@ const OrmRedigering = (function () {
         el.skjema.appendChild(topp);
 
         // --- om leksjonen
-        const om = bolk('Om leksjonen');
+        const om = bolk('Om leksjonen', 'om');
         om.kropp.appendChild(tekstfelt('Tittel', l, 'tittel'));
         om.kropp.appendChild(linjeliste('Kompetansemål', l, 'kompetansemaal',
             'Eitt mål per linje. Blir vist til læraren øvst i leksjonen.'));
@@ -351,7 +468,7 @@ const OrmRedigering = (function () {
 
     /* Læreteksten — blokkene i rekkjefølgje. */
     function tekstbolk(l) {
-        const b = bolk('Læretekst');
+        const b = bolk('Læretekst', 'tekst');
         l.tekst = l.tekst || [];
 
         const teikn = () => {
@@ -403,7 +520,7 @@ const OrmRedigering = (function () {
     }
 
     function doemebolk(l) {
-        const b = bolk('Prøv sjølv');
+        const b = bolk('Prøv sjølv', 'doeme');
         l.doeme = l.doeme || { kode: '', oppmoding: '' };
         b.kropp.appendChild(omraade('Kode', l.doeme, 'kode', { kode: true, rader: 8 }));
         b.kropp.appendChild(omraade('Oppmoding', l.doeme, 'oppmoding', { rader: 2 }));
@@ -411,7 +528,7 @@ const OrmRedigering = (function () {
     }
 
     function loypebolk(l) {
-        const b = bolk('Løype');
+        const b = bolk('Løype', 'loype');
         l.loype = l.loype || { tittel: '', maal: '', steg: [] };
         b.kropp.appendChild(tekstfelt('Tittel', l.loype, 'tittel'));
         b.kropp.appendChild(omraade('Mål — kva eleven byggjer', l.loype, 'maal', { rader: 2 }));
@@ -450,7 +567,7 @@ const OrmRedigering = (function () {
     }
 
     function oppgavebolk(l) {
-        const b = bolk('Oppgåver');
+        const b = bolk('Oppgåver', 'oppgaver');
         l.oppgaver = l.oppgaver || [];
 
         const teikn = () => {

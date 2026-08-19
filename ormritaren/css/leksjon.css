@@ -447,3 +447,58 @@
     .orm-arbeid[data-modus="leksjon"][data-fane="leksjon"] #panelVariablar,
     .orm-arbeid[data-modus="leksjon"][data-fane="leksjon"] .orm-bibliotek { display: none; }
 }
+
+/* ---- inne i redigeringsverktøyet si førehandsvising ------------------- */
+
+/* Ramma er berre to femdelar av skjermen, så tre kolonner blir for trangt.
+ * Vi gjev oppgåveteksten og koden ein halvdel kvar — det er dei to læraren
+ * skal sjå — og legg utskrifta under koden i staden for ved sida av. */
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"] .orm-rad {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px;
+}
+
+/* Oppgåveteksten i fyrste kolonne, koden i andre, og utskrifta under koden.
+ * Utan grid-column: 1 arvar leksjonen «1 / -1» frå nettbrettbreidda og legg
+ * seg over heile rada i staden for ved sida av. */
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"] .orm-leksjon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    position: sticky;
+    top: 4px;
+    /* Må ha ei høgdegrense, elles er panelet ikkje ein rulleboks i det heile
+     * og «følg det eg redigerer» har ingenting å flytte på. */
+    max-height: calc(100vh - 16px);
+    overflow-y: auto;
+}
+
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"] .orm-kolonne-brei {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"] .orm-kolonne-smal {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+body[data-forhandsvis="1"] .CodeMirror { height: clamp(200px, 32vh, 360px); }
+
+
+/* Ramma er berre kring 700 px brei, så kode.html trur ho står på ein mobil
+ * og gøymer panela bak fanar. Her er breidda eit utsnitt av ein stor skjerm,
+ * ikkje ei lita eining — så vi slår av fanane og viser alt samtidig.
+ * Selektorane er med vilje meir spesifikke enn mobilreglane over; media
+ * queries gjev ikkje spesifisitet, så desse vinn uansett rekkjefølgje. */
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"] .orm-fanerad { display: none; }
+
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"][data-fane] .orm-leksjon,
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"][data-fane] #panelKode,
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"][data-fane] #panelUt {
+    display: block;
+}
+
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"][data-fane] #panelGrafikk:not([hidden]),
+body[data-forhandsvis="1"] .orm-arbeid[data-modus="leksjon"][data-fane] #panelVariablar:not([hidden]) {
+    display: block;
+}

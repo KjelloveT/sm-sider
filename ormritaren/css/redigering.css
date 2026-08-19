@@ -260,3 +260,61 @@
 }
 
 .orm-sjekkaatvaring { border-color: var(--muted); opacity: .9; }
+
+/* ---- førehandsvising -------------------------------------------------- */
+
+/* Tre kolonner: leksjonsliste, skjema, og arbeidsflata slik eleven ser
+ * henne. Visinga er sticky og like høg som skjermen, så ho står i ro ved
+ * sida av det læraren skriv i staden for å rulle vekk. */
+.orm-redvising {
+    position: sticky;
+    top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: calc(100vh - 24px);
+    min-width: 0;
+}
+
+.orm-redvisingstopp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.orm-redvisingsmerke {
+    margin-right: auto;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+.orm-redramme {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    background: var(--surface);
+    border: 3px solid var(--border);
+    box-shadow: 5px 5px 0 var(--shadow);
+}
+
+.orm-redvising-av .orm-redramme { display: none; }
+.orm-redvising-av { height: auto; }
+
+/* Under 1400px er det ikkje plass til både skjema og vising side ved side
+ * utan at begge blir for smale. Då er skjemaet det viktigaste. */
+@media (max-width: 1399px) {
+    .orm-redvising { display: none; }
+}
+
+/* Femdelt på brei skjerm: leksjonsliste 1, skjema 2, vising 2 — og visinga
+ * deler seg internt i oppgåvetekst og kodeboks, slik at dei to òg blir ein
+ * femdel kvar. */
+@media (min-width: 1400px) {
+    .orm-redrad {
+        grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr) minmax(440px, 2fr);
+    }
+}
