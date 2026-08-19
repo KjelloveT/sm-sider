@@ -1,0 +1,1319 @@
+{
+  "app": "ormritaren",
+  "version": 1,
+  "id": "algebra",
+  "tittel": "Algebra",
+  "leksjonar": [
+    {
+      "id": "uttrykk",
+      "tittel": "Bokstavar som tal",
+      "kompetansemaal": [
+        "8. trinn: lage og forklare regneuttrykk med tall, variabler og konstanter knyttet til praktiske situasjoner",
+        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "I algebra står ein bokstav for eit tal vi ikkje har bestemt enno. `x` kan vere 2, den kan vere 100, og den kan vere −7. Uttrykket `3x + 5` seier kva vi skal gjere med talet, utan å seie kva talet er."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det er nøyaktig same tanken som ein funksjon i Python:"
+        },
+        {
+          "type": "kode",
+          "kode": "def uttrykk(x):\n    return 3 * x + 5\n\nprint(uttrykk(2))\nprint(uttrykk(10))"
+        },
+        {
+          "type": "merk",
+          "tekst": "I matematikken skriv vi `3x`. I Python må gongeteiknet stå der: `3 * x`. Skriv du `3x`, får du ein syntaksfeil — Python veit ikkje kva `3x` skal tyde."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Uttrykket `3x + 5` har tre delar, og alle tre har namn:"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`x` er **variabelen** — talet som kan skifte",
+            "`3` er **koeffisienten** — kor mange gonger vi tek `x`",
+            "`5` er **konstantleddet** — det som kjem uansett kva `x` er"
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Styrken ved å skrive uttrykket som ein funksjon er at du kan prøve det med mange tal på eitt sekund. Det er noko heilt anna enn å rekne ut tre verdiar for hand."
+        }
+      ],
+      "doeme": {
+        "kode": "def uttrykk(x):\n    return 3 * x + 5\n\nprint(\"  x | 3x + 5\")\nfor x in range(0, 6):\n    print(f\"{x:>3} | {uttrykk(x):>6}\")",
+        "oppmoding": "Byt `3` med `10`. Kva skjer med kor fort tala veks? Og byt så `5` med `0` — kva skjer med den fyrste rada?"
+      },
+      "loype": {
+        "tittel": "Bygg ein uttrykksmaskin",
+        "maal": "eit program som skriv ut verdien av `3x + 5` for mange x, og som viser at uttrykket veks like mykje for kvart steg",
+        "steg": [
+          {
+            "tekst": "Vi startar med sjølve uttrykket, skrive som ein funksjon.",
+            "kode": "def uttrykk(x):\n    return 3 * x + 5\n\nprint(uttrykk(2))"
+          },
+          {
+            "tekst": "Så prøver vi mange verdiar i staden for éin.",
+            "kode": "def uttrykk(x):\n    return 3 * x + 5\n\nfor x in range(0, 6):\n    print(x, uttrykk(x))"
+          },
+          {
+            "tekst": "Ein tabell er lettare å lese enn to tal per linje.",
+            "kode": "def uttrykk(x):\n    return 3 * x + 5\n\nprint(\"  x | 3x + 5\")\nfor x in range(0, 6):\n    print(f\"{x:>3} | {uttrykk(x):>6}\")"
+          },
+          {
+            "tekst": "Til slutt reknar vi ut kor mykje uttrykket endrar seg for kvart steg.",
+            "kode": "def uttrykk(x):\n    return 3 * x + 5\n\nprint(\"  x | 3x + 5 | endring\")\nfoerre = None\nfor x in range(0, 6):\n    verdi = uttrykk(x)\n    endring = \"\" if foerre is None else verdi - foerre\n    print(f\"{x:>3} | {verdi:>6} | {endring}\")\n    foerre = verdi",
+            "proev": "Endringa er **3** kvar einaste gong — same tal som koeffisienten. Prøv å byte `3` med `7` og sjå om det framleis stemmer."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "utt-1",
+          "type": "skriv",
+          "tekst": "Eit rektangel har lengd `l` og breidde `b`. Omkrinsen er **to lengder pluss to breidder**. Skriv funksjonen `omkrins` som tek imot `l` og `b` og returnerer omkrinsen.",
+          "startkode": "def omkrins(l, b):\n    # skriv koden her\n",
+          "hint": [
+            "Omkrinsen er `l + b + l + b`.",
+            "Det same kan skrivast kortare: `2 * l + 2 * b`, eller `2 * (l + b)`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "omkrins",
+              "args": [
+                3,
+                4
+              ],
+              "vent": 14
+            },
+            {
+              "type": "kall",
+              "fn": "omkrins",
+              "args": [
+                10,
+                10
+              ],
+              "vent": 40
+            },
+            {
+              "type": "kall",
+              "fn": "omkrins",
+              "args": [
+                7,
+                0
+              ],
+              "vent": 14
+            }
+          ],
+          "loeysing": "def omkrins(l, b):\n    return 2 * (l + b)"
+        },
+        {
+          "id": "utt-2",
+          "type": "les",
+          "kode": "def f(x):\n    return 2 * x + 1\n\nprint(f(3), f(0), f(-2))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "7 1 -3",
+            "6 0 -4",
+            "7 1 -4",
+            "5 1 -3"
+          ],
+          "rett": 0,
+          "forklaring": "`f(3)` er 2·3 + 1 = **7**. `f(0)` er 0 + 1 = **1** — konstantleddet står att åleine. `f(-2)` er −4 + 1 = **−3**. Legg merke til at `print` med komma set eit mellomrom mellom tala."
+        },
+        {
+          "id": "utt-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal rekne ut uttrykket `4x - 6`, men han er skriven slik ein ville skrive det i matematikkboka. Python godtek det ikkje. Rett opp.",
+          "startkode": "def uttrykk(x):\n    return 4x - 6",
+          "hint": [
+            "Kva manglar mellom `4` og `x`?",
+            "I Python må gongeteiknet alltid skrivast: `4 * x`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "uttrykk",
+              "args": [
+                0
+              ],
+              "vent": -6
+            },
+            {
+              "type": "kall",
+              "fn": "uttrykk",
+              "args": [
+                3
+              ],
+              "vent": 6
+            },
+            {
+              "type": "kall",
+              "fn": "uttrykk",
+              "args": [
+                10
+              ],
+              "vent": 34
+            }
+          ],
+          "loeysing": "def uttrykk(x):\n    return 4 * x - 6"
+        }
+      ],
+      "oppsummering": "Eit algebraisk uttrykk er ei oppskrift som ventar på eit tal. Skriv du oppskrifta som ein funksjon, kan du prøve henne med hundre tal like fort som med eitt. Neste gong bruker vi det til å sjekke om to uttrykk eigentleg er det same."
+    },
+    {
+      "id": "like",
+      "tittel": "Er dei to uttrykka like?",
+      "kompetansemaal": [
+        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "`2(x + 3)` og `2x + 6` ser ulike ut. Er dei det same? I algebra svarar vi med ein regel. Med programmering kan vi i tillegg **prøve**."
+        },
+        {
+          "type": "kode",
+          "kode": "def venstre(x):\n    return 2 * (x + 3)\n\ndef hoegre(x):\n    return 2 * x + 6\n\nfor x in range(-3, 4):\n    print(x, venstre(x), hoegre(x), venstre(x) == hoegre(x))"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Sju gonger `True`. Det er godt nytt — men her må vi vere ærlege på kva programmet faktisk har vist."
+        },
+        {
+          "type": "merk",
+          "tekst": "Programmet kan **avkrefte**, men ikkje **prove**. Éin einaste `False` viser at uttrykka ikkje er like. Tusen `True` viser berre at dei er like for dei tusen tala du prøvde. Det er algebraen som seier kvifor det gjeld for alle."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Nettopp difor er dette ein god måte å arbeide på: du prøver deg fram til ein regel du trur på, og så finn du ut kvifor han gjeld. Og finn programmet ein `False`, har du spart deg for å lære noko som er feil."
+        }
+      ],
+      "doeme": {
+        "kode": "def venstre(x):\n    return (x + 3) ** 2\n\ndef hoegre(x):\n    return x ** 2 + 9\n\nfor x in range(-3, 4):\n    print(x, venstre(x), hoegre(x), venstre(x) == hoegre(x))",
+        "oppmoding": "Her er nesten alt `False`. Berre éin verdi av `x` gjev `True` — kva for ein, og kvifor akkurat den?"
+      },
+      "loype": {
+        "tittel": "Bygg ein regelsjekkar",
+        "maal": "eit program som seier ifrå med éi linje om to uttrykk er like for alle tal frå −50 til 50",
+        "steg": [
+          {
+            "tekst": "Fyrst dei to uttrykka, kvar for seg.",
+            "kode": "def venstre(x):\n    return 3 * (x - 2)\n\ndef hoegre(x):\n    return 3 * x - 6\n\nprint(venstre(5), hoegre(5))"
+          },
+          {
+            "tekst": "Så samanliknar vi dei for mange tal.",
+            "kode": "def venstre(x):\n    return 3 * (x - 2)\n\ndef hoegre(x):\n    return 3 * x - 6\n\nfor x in range(-50, 51):\n    if venstre(x) != hoegre(x):\n        print(\"Ulike for x =\", x)"
+          },
+          {
+            "tekst": "Programmet skriv ingenting når alt stemmer. Det er utrygt — vi vil ha eit svar uansett.",
+            "kode": "def venstre(x):\n    return 3 * (x - 2)\n\ndef hoegre(x):\n    return 3 * x - 6\n\nalltid_like = True\nfor x in range(-50, 51):\n    if venstre(x) != hoegre(x):\n        alltid_like = False\n        print(\"Ulike for x =\", x)\n\nprint(\"Like for alle vi prøvde:\", alltid_like)"
+          },
+          {
+            "tekst": "No kan du bruke same sjekkaren på kva regel som helst — berre byt ut dei to uttrykka.",
+            "kode": "def venstre(x):\n    return (x + 1) ** 2\n\ndef hoegre(x):\n    return x ** 2 + 2 * x + 1\n\nalltid_like = True\nfor x in range(-50, 51):\n    if venstre(x) != hoegre(x):\n        alltid_like = False\n        print(\"Ulike for x =\", x)\n\nprint(\"Like for alle vi prøvde:\", alltid_like)",
+            "proev": "Denne regelen møter du att i leksjon 4 — det er **fyrste kvadratsetning**. Prøv å fjerne `2 * x` frå det høgre uttrykket og sjå kva sjekkaren seier."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "lik-1",
+          "type": "skriv",
+          "tekst": "Nokon påstår at `(x + 3)²` er det same som `x² + 9`. Skriv funksjonen `avvik` som tek imot `x` og returnerer **kor mykje dei to uttrykka skil seg** — altså det venstre minus det høgre.",
+          "startkode": "def avvik(x):\n    # (x + 3) ** 2  minus  x ** 2 + 9\n",
+          "hint": [
+            "`(x + 3) ** 2` skriv du akkurat slik, med parentesen.",
+            "Hugs parentes rundt heile det høgre uttrykket når du trekkjer det frå.",
+            "`return (x + 3) ** 2 - (x ** 2 + 9)`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "avvik",
+              "args": [
+                0
+              ],
+              "vent": 0
+            },
+            {
+              "type": "kall",
+              "fn": "avvik",
+              "args": [
+                1
+              ],
+              "vent": 6
+            },
+            {
+              "type": "kall",
+              "fn": "avvik",
+              "args": [
+                5
+              ],
+              "vent": 30
+            },
+            {
+              "type": "kall",
+              "fn": "avvik",
+              "args": [
+                -2
+              ],
+              "vent": -12
+            }
+          ],
+          "loeysing": "def avvik(x):\n    return (x + 3) ** 2 - (x ** 2 + 9)"
+        },
+        {
+          "id": "lik-2",
+          "type": "les",
+          "kode": "def a(x):\n    return 5 * (x - 1)\n\ndef b(x):\n    return 5 * x - 1\n\nprint(a(1) == b(1), a(0) == b(0))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "False False",
+            "True False",
+            "False True",
+            "True True"
+          ],
+          "rett": 0,
+          "forklaring": "For `x = 1`: `a` gjev 5·0 = **0**, `b` gjev 5 − 1 = **4**. Ulike. For `x = 0`: `a` gjev 5·(−1) = **−5**, `b` gjev −1. Òg ulike. Feilen er at femtalet må gongast med **heile** parentesen: `5(x − 1)` er `5x − 5`, ikkje `5x − 1`."
+        },
+        {
+          "id": "lik-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal rekne ut `10 - (x - 4)`, men parentesen er berre fjerna utan at forteikna vart endra. Rett opp — utan å bruke parentes i svaret.",
+          "startkode": "def h(x):\n    return 10 - x - 4",
+          "hint": [
+            "Prøv med `x = 0`. Kva skal svaret vere, og kva får du?",
+            "Når eit minus står framfor ein parentes, skiftar **begge** ledda inni forteikn.",
+            "`10 - x + 4`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "h",
+              "args": [
+                0
+              ],
+              "vent": 14
+            },
+            {
+              "type": "kall",
+              "fn": "h",
+              "args": [
+                6
+              ],
+              "vent": 8
+            },
+            {
+              "type": "kall",
+              "fn": "h",
+              "args": [
+                -3
+              ],
+              "vent": 17
+            }
+          ],
+          "loeysing": "def h(x):\n    return 10 - x + 4"
+        }
+      ],
+      "oppsummering": "To uttrykk er like når dei gjev same svar for **alle** tal. Eit program kan avkrefte ein påstand med eitt einaste moteksempel, men det er algebraen som viser at ein regel held. Bruk begge delar."
+    },
+    {
+      "id": "reknereglar",
+      "tittel": "Reglane som gjeld uansett tal",
+      "kompetansemaal": [
+        "8. trinn: bruke kommutative, assosiative og distributive egenskaper til å utvikle og kommunisere strategier for hoderegning og skriftlig regning",
+        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Nokre reglar gjeld same kva tal du set inn. Dei er ikkje triks — dei er grunnen til at algebra i det heile går an."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "**Kommutativ:** `a + b` er det same som `b + a`, og `a * b` er `b * a`",
+            "**Assosiativ:** `(a + b) + c` er `a + (b + c)` — det spelar inga rolle kva du legg saman fyrst",
+            "**Distributiv:** `a * (b + c)` er `a * b + a * c` — dette er den viktigaste"
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vi kan la programmet prøve dei med tilfeldige tal:"
+        },
+        {
+          "type": "kode",
+          "kode": "import random\n\nfor forsok in range(5):\n    a = random.randint(1, 20)\n    b = random.randint(1, 20)\n    c = random.randint(1, 20)\n    print(a * (b + c), a * b + a * c)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Den distributive regelen er òg ein hoderekningsstrategi. `7 · 98` er tungt. Men `98` er `100 - 2`, og då er `7 · 98` det same som `7 · 100 - 7 · 2` — altså `700 - 14 = 686`. Det klarer du i hovudet."
+        },
+        {
+          "type": "merk",
+          "tekst": "Legg merke til at subtraksjon **ikkje** er kommutativ: `7 - 3` er ikkje `3 - 7`. Det same gjeld deling. Reglane over gjeld pluss og gonge."
+        }
+      ],
+      "doeme": {
+        "kode": "tal = 98\nganger = 7\n\nprint(\"Rett fram:\", ganger * tal)\nprint(\"Distributivt:\", ganger * 100 - ganger * 2)\n\nfor n in [97, 98, 99, 101, 102]:\n    print(n, \"*\", ganger, \"=\", ganger * 100 + ganger * (n - 100))",
+        "oppmoding": "Byt `ganger` til 12 og sjå om strategien framleis stemmer. Kva blir `12 · 97` med denne metoden?"
+      },
+      "loype": {
+        "tittel": "Rekn smartare enn kalkulatoren",
+        "maal": "ein funksjon som gongar eit tal nær hundre ved hjelp av den distributive regelen, og viser mellomrekninga",
+        "steg": [
+          {
+            "tekst": "Fyrst gjer vi det for eitt tal, heilt konkret.",
+            "kode": "print(7 * 98)\nprint(7 * 100 - 7 * 2)"
+          },
+          {
+            "tekst": "Så skriv vi om til ein funksjon, slik at talet kan skiftast.",
+            "kode": "def smart(ganger, tal):\n    avstand = tal - 100\n    return ganger * 100 + ganger * avstand\n\nprint(smart(7, 98))\nprint(smart(7, 102))"
+          },
+          {
+            "tekst": "Vi viser mellomrekninga, så det går an å følgje tanken.",
+            "kode": "def smart(ganger, tal):\n    avstand = tal - 100\n    print(f\"{ganger} * {tal} = {ganger} * 100 + {ganger} * ({avstand})\")\n    return ganger * 100 + ganger * avstand\n\nprint(smart(7, 98))"
+          },
+          {
+            "tekst": "Og til slutt sjekkar vi at strategien alltid gjev same svar som vanleg gonging.",
+            "kode": "def smart(ganger, tal):\n    avstand = tal - 100\n    return ganger * 100 + ganger * avstand\n\nfeil = 0\nfor ganger in range(1, 13):\n    for tal in range(90, 111):\n        if smart(ganger, tal) != ganger * tal:\n            feil = feil + 1\n\nprint(\"Tal på feil:\", feil)",
+            "proev": "Null feil. Prøv å byte `ganger * avstand` med `ganger + avstand` og sjå kor fort sjekken oppdagar det."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "reg-1",
+          "type": "skriv",
+          "tekst": "Ein butikk gjev **20 % avslag** på alt. Skriv funksjonen `pris` som tek imot ordinær pris og tal varer, og returnerer kva du må betale. Du kan bruke at 20 % avslag er det same som å betale 80 % — det er den distributive regelen i praksis.",
+          "startkode": "def pris(ordinaer, tal):\n    # skriv koden her\n",
+          "hint": [
+            "Full pris for alle varene er `ordinaer * tal`.",
+            "Å trekkje frå 20 % er det same som å gonge med `0.8`.",
+            "`return 0.8 * ordinaer * tal`"
+          ],
+          "testar": [
+            {
+              "type": "naer",
+              "fn": "pris",
+              "args": [
+                100,
+                3
+              ],
+              "vent": 240,
+              "slingring": 0.01
+            },
+            {
+              "type": "naer",
+              "fn": "pris",
+              "args": [
+                250,
+                2
+              ],
+              "vent": 400,
+              "slingring": 0.01
+            },
+            {
+              "type": "naer",
+              "fn": "pris",
+              "args": [
+                99,
+                1
+              ],
+              "vent": 79.2,
+              "slingring": 0.01
+            }
+          ],
+          "loeysing": "def pris(ordinaer, tal):\n    return 0.8 * ordinaer * tal"
+        },
+        {
+          "id": "reg-2",
+          "type": "les",
+          "kode": "print(2 * (5 + 3))\nprint(2 * 5 + 3)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "16\n13",
+            "16\n16",
+            "13\n16",
+            "10\n13"
+          ],
+          "rett": 0,
+          "forklaring": "Fyrst reknar Python ut parentesen: 5 + 3 = 8, og 2 · 8 = **16**. På den neste linja gjeld gonge føre pluss, så det blir 10 + 3 = **13**. Parentesen er ikkje pynt — han avgjer svaret."
+        },
+        {
+          "id": "reg-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal rekne ut gjennomsnittet av to tal, men parentesen manglar. Rett opp.",
+          "startkode": "def snitt(a, b):\n    return a + b / 2",
+          "hint": [
+            "Prøv med `a = 4` og `b = 6`. Svaret skal vere 5 — kva får du?",
+            "Deling går føre pluss, så `b / 2` blir rekna ut fyrst.",
+            "Set parentes rundt `a + b`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                4,
+                6
+              ],
+              "vent": 5.0
+            },
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                0,
+                10
+              ],
+              "vent": 5.0
+            },
+            {
+              "type": "kall",
+              "fn": "snitt",
+              "args": [
+                7,
+                7
+              ],
+              "vent": 7.0
+            }
+          ],
+          "loeysing": "def snitt(a, b):\n    return (a + b) / 2"
+        }
+      ],
+      "oppsummering": "Kommutativ, assosiativ og distributiv er dei tre reglane som lèt deg skrive om eit uttrykk utan å endre verdien. Den distributive er den du bruker mest — både når du løyser opp parentesar og når du reknar i hovudet."
+    },
+    {
+      "id": "kvadrat-geometrisk",
+      "tittel": "Kvadratsetninga du kan sjå",
+      "kompetansemaal": [
+        "10. trinn: utforske kvadratsetningene geometrisk og algebraisk og bruke kvadratsetningene som regnestrategier",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Fyrste kvadratsetning seier at `(a + b)²` er `a² + 2ab + b²`. Som bokstavar er det lett å gløyme leddet i midten. Som **areal** er det vanskeleg å gløyme."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Tenk deg eit kvadrat med side `a + b`. Arealet er `(a + b)²`. Men du kan òg dele kvadratet i fire delar:"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "eit kvadrat med side `a` — areal `a²`",
+            "eit kvadrat med side `b` — areal `b²`",
+            "**to** rektangel med sidene `a` og `b` — areal `ab` kvar"
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Til saman: `a² + 2ab + b²`. Det er det same arealet, berre delt opp. Leddet `2ab` er dei to rektangla — og no ser du kvifor det er **to** av dei."
+        },
+        {
+          "type": "kode",
+          "kode": "a = 120\nb = 60\n\nprint(\"Heile kvadratet:\", (a + b) ** 2)\nprint(\"Dei fire delane:\", a ** 2 + 2 * a * b + b ** 2)"
+        },
+        {
+          "type": "merk",
+          "tekst": "Teikninga under bruker skilpadda. Vil du sjå henne teikne sakte, kan du trykkje **Steg for steg** i staden for Køyr."
+        }
+      ],
+      "doeme": {
+        "kode": "import turtle\n\na = 120\nb = 60\nt = turtle.Turtle()\nt.speed(3)\nt.penup()\nt.goto(-90, -90)\nt.pendown()\n\n# Det store kvadratet, med side a + b\nfor side in range(4):\n    t.forward(a + b)\n    t.left(90)\n\n# Ei loddrett linje som deler av a fra venstre\nt.penup()\nt.goto(-90 + a, -90)\nt.setheading(90)\nt.pendown()\nt.forward(a + b)\n\n# Ei vassrett linje som deler av a nedanfra\nt.penup()\nt.goto(-90, -90 + a)\nt.setheading(0)\nt.pendown()\nt.forward(a + b)",
+        "oppmoding": "Byt `b` til 120, så begge er like store. Kva slags figur får du då — og kva blir dei fire delane?"
+      },
+      "loype": {
+        "tittel": "Teikn kvadratsetninga",
+        "maal": "ei teikning som viser `(a + b)²` delt i `a²`, `b²` og dei to `ab`-rektangla — med tal som stemmer",
+        "steg": [
+          {
+            "tekst": "Fyrst berre det store kvadratet med side `a + b`.",
+            "kode": "import turtle\n\na = 120\nb = 60\nt = turtle.Turtle()\nt.speed(3)\nt.penup()\nt.goto(-90, -90)\nt.pendown()\n\nfor side in range(4):\n    t.forward(a + b)\n    t.left(90)"
+          },
+          {
+            "tekst": "Så deler vi det opp med to strekar.",
+            "kode": "import turtle\n\na = 120\nb = 60\nt = turtle.Turtle()\nt.speed(3)\nt.penup()\nt.goto(-90, -90)\nt.pendown()\n\nfor side in range(4):\n    t.forward(a + b)\n    t.left(90)\n\nt.penup()\nt.goto(-90 + a, -90)\nt.setheading(90)\nt.pendown()\nt.forward(a + b)\n\nt.penup()\nt.goto(-90, -90 + a)\nt.setheading(0)\nt.pendown()\nt.forward(a + b)"
+          },
+          {
+            "tekst": "No skriv vi kva kvar del heiter, rett inn i figuren.",
+            "kode": "import turtle\n\na = 120\nb = 60\nt = turtle.Turtle()\nt.speed(3)\nt.penup()\nt.goto(-90, -90)\nt.pendown()\n\nfor side in range(4):\n    t.forward(a + b)\n    t.left(90)\n\nt.penup()\nt.goto(-90 + a, -90)\nt.setheading(90)\nt.pendown()\nt.forward(a + b)\n\nt.penup()\nt.goto(-90, -90 + a)\nt.setheading(0)\nt.pendown()\nt.forward(a + b)\n\nt.penup()\nt.goto(-40, -40)\nt.write(\"a*a\")\nt.goto(50, -40)\nt.write(\"a*b\")\nt.goto(-40, 60)\nt.write(\"a*b\")\nt.goto(50, 60)\nt.write(\"b*b\")\nt.hideturtle()"
+          },
+          {
+            "tekst": "Og heilt til slutt reknar vi ut begge sider av setninga og ser at dei stemmer.",
+            "kode": "import turtle\n\na = 120\nb = 60\n\nprint(\"(a + b) i andre :\", (a + b) ** 2)\nprint(\"a*a + 2ab + b*b:\", a ** 2 + 2 * a * b + b ** 2)\n\nt = turtle.Turtle()\nt.speed(3)\nt.penup()\nt.goto(-90, -90)\nt.pendown()\n\nfor side in range(4):\n    t.forward(a + b)\n    t.left(90)\n\nt.penup()\nt.goto(-90 + a, -90)\nt.setheading(90)\nt.pendown()\nt.forward(a + b)\n\nt.penup()\nt.goto(-90, -90 + a)\nt.setheading(0)\nt.pendown()\nt.forward(a + b)\n\nt.penup()\nt.goto(-40, -40)\nt.write(\"a*a\")\nt.goto(50, -40)\nt.write(\"a*b\")\nt.goto(-40, 60)\nt.write(\"a*b\")\nt.goto(50, 60)\nt.write(\"b*b\")\nt.hideturtle()",
+            "proev": "Prøv å byte `a` og `b` med kvarandre. Figuren speglar seg, men arealet er det same — det er den kommutative regelen du ser."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "kvg-1",
+          "type": "skriv",
+          "tekst": "Skriv funksjonen `midtleddet` som tek imot `a` og `b` og returnerer arealet av **dei to** rektangla til saman — altså leddet i midten av fyrste kvadratsetning.",
+          "startkode": "def midtleddet(a, b):\n    # skriv koden her\n",
+          "hint": [
+            "Kvart rektangel har areal `a * b`.",
+            "Det er to av dei.",
+            "`return 2 * a * b`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "midtleddet",
+              "args": [
+                3,
+                4
+              ],
+              "vent": 24
+            },
+            {
+              "type": "kall",
+              "fn": "midtleddet",
+              "args": [
+                10,
+                10
+              ],
+              "vent": 200
+            },
+            {
+              "type": "kall",
+              "fn": "midtleddet",
+              "args": [
+                5,
+                0
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def midtleddet(a, b):\n    return 2 * a * b"
+        },
+        {
+          "id": "kvg-2",
+          "type": "les",
+          "kode": "a = 5\nb = 2\nprint((a + b) ** 2)\nprint(a ** 2 + b ** 2)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "49\n29",
+            "49\n49",
+            "29\n49",
+            "14\n29"
+          ],
+          "rett": 0,
+          "forklaring": "`(5 + 2)²` er `7²` = **49**. Men `5² + 2²` er 25 + 4 = **29**. Skilnaden er 20, som er nøyaktig `2ab` = 2·5·2. Det er derfor midtleddet må vere med."
+        },
+        {
+          "id": "kvg-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal rekne ut `(a + b)²` ved hjelp av fyrste kvadratsetning, men midtleddet er gløymt. Legg det inn.",
+          "startkode": "def kvadrat(a, b):\n    return a ** 2 + b ** 2",
+          "hint": [
+            "Prøv med `a = 1` og `b = 1`. Svaret skal vere 4 — kva får du?",
+            "Det manglar to rektangel med areal `a * b`.",
+            "`a ** 2 + 2 * a * b + b ** 2`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                1,
+                1
+              ],
+              "vent": 4
+            },
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                5,
+                2
+              ],
+              "vent": 49
+            },
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                10,
+                0
+              ],
+              "vent": 100
+            }
+          ],
+          "loeysing": "def kvadrat(a, b):\n    return a ** 2 + 2 * a * b + b ** 2"
+        }
+      ],
+      "oppsummering": "`(a + b)²` er arealet av eit kvadrat med side `a + b`. Deler du det opp, ser du `a²`, `b²` og to `ab`-rektangel. Midtleddet `2ab` er ikkje noko å pugge — det er dei to rektangla."
+    },
+    {
+      "id": "kvadrat-strategi",
+      "tittel": "Kvadratsetningane som reknestrategi",
+      "kompetansemaal": [
+        "10. trinn: utforske kvadratsetningene geometrisk og algebraisk og bruke kvadratsetningene som regnestrategier",
+        "8. trinn: bruke kommutative, assosiative og distributive egenskaper til å utvikle og kommunisere strategier for hoderegning og skriftlig regning"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Det er tre kvadratsetningar, og alle tre er reknestrategiar like mykje som formlar."
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "**Fyrste:** `(a + b)²` er `a² + 2ab + b²`",
+            "**Andre:** `(a - b)²` er `a² - 2ab + b²`",
+            "**Konjugat:** `(a + b)(a - b)` er `a² - b²`"
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Kva er `102²`? Med blyant er det tungt. Men `102` er `100 + 2`, og då seier fyrste setning at svaret er `10000 + 2·100·2 + 4` — altså `10404`. Det tok fem sekund."
+        },
+        {
+          "type": "kode",
+          "kode": "a = 100\nb = 2\n\nprint(\"102 * 102 =\", a ** 2 + 2 * a * b + b ** 2)\nprint(\" 98 *  98 =\", a ** 2 - 2 * a * b + b ** 2)\nprint(\"102 *  98 =\", a ** 2 - b ** 2)"
+        },
+        {
+          "type": "merk",
+          "tekst": "Den siste er den mest overraskande. `102 · 98` ser ut som eit tungt gongestykke, men konjugatsetninga gjer det om til `10000 - 4`. Det er hoderekning."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Legg merke til at andre setning berre skil seg frå den fyrste ved eitt forteikn. Det er den vanlegaste feilen som finst i algebra — og ein sjekkar i Python finn han med ein gong."
+        }
+      ],
+      "doeme": {
+        "kode": "def med_setning(a, b):\n    return a ** 2 + 2 * a * b + b ** 2\n\nfor b in range(1, 6):\n    tal = 100 + b\n    print(tal, \"i andre er\", med_setning(100, b), \"— sjekk:\", tal * tal)",
+        "oppmoding": "Byt `+ 2 * a * b` med `- 2 * a * b`. Kva slags tal reknar programmet ut då — og kva må du endre i `tal` for at det skal stemme att?"
+      },
+      "loype": {
+        "tittel": "Bygg ein hoderekningshjelpar",
+        "maal": "eit program som kvadrerer tal nær hundre med kvadratsetningane, og som sjekkar seg sjølv mot vanleg gonging",
+        "steg": [
+          {
+            "tekst": "Vi startar med fyrste setning, for tal over hundre.",
+            "kode": "def kvadrat_over(b):\n    return 100 ** 2 + 2 * 100 * b + b ** 2\n\nprint(kvadrat_over(2))\nprint(102 * 102)"
+          },
+          {
+            "tekst": "Så andre setning, for tal under hundre. Berre eitt forteikn skil dei.",
+            "kode": "def kvadrat_over(b):\n    return 100 ** 2 + 2 * 100 * b + b ** 2\n\ndef kvadrat_under(b):\n    return 100 ** 2 - 2 * 100 * b + b ** 2\n\nprint(kvadrat_over(2), 102 * 102)\nprint(kvadrat_under(2), 98 * 98)"
+          },
+          {
+            "tekst": "Vi slår dei saman til éin funksjon som tek talet direkte.",
+            "kode": "def kvadrat(tal):\n    b = tal - 100\n    return 100 ** 2 + 2 * 100 * b + b ** 2\n\nfor tal in [96, 98, 100, 102, 104]:\n    print(tal, \"i andre er\", kvadrat(tal))"
+          },
+          {
+            "tekst": "Og til slutt lèt vi programmet kontrollere seg sjølv.",
+            "kode": "def kvadrat(tal):\n    b = tal - 100\n    return 100 ** 2 + 2 * 100 * b + b ** 2\n\nfeil = 0\nfor tal in range(80, 121):\n    if kvadrat(tal) != tal * tal:\n        feil = feil + 1\n        print(\"Feil for\", tal)\n\nprint(\"Tal på feil:\", feil)",
+            "proev": "Éin funksjon dekkjer både over og under hundre, fordi `b` blir negativ av seg sjølv. Det er andre kvadratsetning — den er den fyrste med negativ `b`."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "kvs-1",
+          "type": "skriv",
+          "tekst": "Skriv funksjonen `konjugat` som tek imot `a` og `b` og reknar ut `(a + b)(a - b)` ved hjelp av konjugatsetninga — altså **utan** å skrive parentesane.",
+          "startkode": "def konjugat(a, b):\n    # skriv koden her\n",
+          "hint": [
+            "Konjugatsetninga seier at svaret er `a²` minus `b²`.",
+            "I Python skriv du `a ** 2 - b ** 2`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "konjugat",
+              "args": [
+                100,
+                2
+              ],
+              "vent": 9996
+            },
+            {
+              "type": "kall",
+              "fn": "konjugat",
+              "args": [
+                10,
+                3
+              ],
+              "vent": 91
+            },
+            {
+              "type": "kall",
+              "fn": "konjugat",
+              "args": [
+                7,
+                7
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def konjugat(a, b):\n    return a ** 2 - b ** 2"
+        },
+        {
+          "id": "kvs-2",
+          "type": "les",
+          "kode": "a = 50\nb = 1\nprint((a - b) ** 2)\nprint(a ** 2 - 2 * a * b + b ** 2)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "2401\n2401",
+            "2401\n2499",
+            "2499\n2401",
+            "2500\n2401"
+          ],
+          "rett": 0,
+          "forklaring": "`49²` er **2401**. Andre kvadratsetning gjev 2500 − 100 + 1 = **2401**. Same svar — det er nettopp poenget med setninga. Og 2500 − 100 + 1 er noko du klarer i hovudet."
+        },
+        {
+          "id": "kvs-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal rekne ut `(a - b)²` med andre kvadratsetning, men eitt forteikn er feil. Finn det.",
+          "startkode": "def kvadrat(a, b):\n    return a ** 2 + 2 * a * b + b ** 2",
+          "hint": [
+            "Prøv med `a = 10` og `b = 1`. Svaret skal vere 81 — kva får du?",
+            "Det er midtleddet som har feil forteikn.",
+            "Andre kvadratsetning har **minus** framfor `2ab`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                10,
+                1
+              ],
+              "vent": 81
+            },
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                100,
+                2
+              ],
+              "vent": 9604
+            },
+            {
+              "type": "kall",
+              "fn": "kvadrat",
+              "args": [
+                5,
+                5
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def kvadrat(a, b):\n    return a ** 2 - 2 * a * b + b ** 2"
+        }
+      ],
+      "oppsummering": "Kvadratsetningane er snarvegar. `102²` blir `10000 + 400 + 4`, og `102 · 98` blir `10000 - 4`. Skil du dei to fyrste, held du styr på eitt einaste forteikn — og eit program finn feilen om du bommar."
+    },
+    {
+      "id": "likningar",
+      "tittel": "Løyse likningar med programmet",
+      "kompetansemaal": [
+        "8. trinn: lage og løse ligninger knyttet til praktiske situasjoner og kritisk vurdere løsninger",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei likning er eit spørsmål: **kva må `x` vere for at dette skal stemme?** `3x + 7 = 22` spør kva tal som gjer venstresida lik 22."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Du kan løyse henne algebraisk. Men du kan òg la programmet prøve alle tal frå −20 til 20 og sjå kva som passar:"
+        },
+        {
+          "type": "kode",
+          "kode": "def venstre(x):\n    return 3 * x + 7\n\nfor x in range(-20, 21):\n    if venstre(x) == 22:\n        print(\"x =\", x)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Programmet finn `x = 5`. Det er ikkje juks — det er ein **algoritme**: prøv alle kandidatar, behald dei som stemmer. Metoden heiter systematisk prøving."
+        },
+        {
+          "type": "merk",
+          "tekst": "Men han har to veikskapar, og begge er verdt å kjenne. Han finn berre svar som ligg i området du leitar i, og han finn berre **heile** tal. Er svaret 4,5, går løkka rett forbi det."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Difor er ikkje dette ei erstatning for å rekne. Det er ein måte å **sjekke** svaret ditt på — og ein måte å sjå kva ei likning eigentleg er."
+        }
+      ],
+      "doeme": {
+        "kode": "def venstre(x):\n    return 3 * x + 7\n\nmaal = 22\nfunne = False\nfor x in range(-20, 21):\n    if venstre(x) == maal:\n        print(\"Løysing: x =\", x)\n        funne = True\n\nif not funne:\n    print(\"Fann inga heiltalsløysing mellom -20 og 20\")",
+        "oppmoding": "Byt `maal` til 23. Kva seier programmet — og kva er det eigentlege svaret på `3x + 7 = 23`?"
+      },
+      "loype": {
+        "tittel": "Bygg ein likningsløysar",
+        "maal": "eit program som løyser `3x + 7 = maal` for kva mål som helst, og som seier ifrå når svaret ikkje er eit heilt tal",
+        "steg": [
+          {
+            "tekst": "Fyrst set vi opp venstresida som ein funksjon.",
+            "kode": "def venstre(x):\n    return 3 * x + 7\n\nprint(venstre(5))"
+          },
+          {
+            "tekst": "Så leitar vi etter det talet som treffer.",
+            "kode": "def venstre(x):\n    return 3 * x + 7\n\nfor x in range(-20, 21):\n    if venstre(x) == 22:\n        print(\"x =\", x)"
+          },
+          {
+            "tekst": "Vi gjer det om til ein funksjon som kan svare på fleire spørsmål.",
+            "kode": "def venstre(x):\n    return 3 * x + 7\n\ndef loys(maal):\n    for x in range(-100, 101):\n        if venstre(x) == maal:\n            return x\n    return None\n\nprint(loys(22))\nprint(loys(43))"
+          },
+          {
+            "tekst": "Og til slutt seier programmet ifrå når det ikkje finst noko heiltalssvar.",
+            "kode": "def venstre(x):\n    return 3 * x + 7\n\ndef loys(maal):\n    for x in range(-100, 101):\n        if venstre(x) == maal:\n            return x\n    return None\n\nfor maal in [22, 23, 43]:\n    svar = loys(maal)\n    if svar is None:\n        print(maal, \"— fann ingen heiltalsløysing\")\n    else:\n        print(maal, \"— x =\", svar)",
+            "proev": "For 23 finst det eit svar, men det er `16/3`. Programmet finn det ikkje, fordi det berre prøver heile tal. Kva måtte du endre for å finne det?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "lik6-1",
+          "type": "skriv",
+          "tekst": "Skriv funksjonen `loys` som finn det heile talet `x` mellom −100 og 100 som gjer at `5x - 3` blir lik `maal`. Returner `None` om du ikkje finn noko.",
+          "startkode": "def loys(maal):\n    for x in range(-100, 101):\n        # sjekk om 5 * x - 3 er lik maal\n        pass\n    return None\n",
+          "hint": [
+            "Inne i løkka: `if 5 * x - 3 == maal:`",
+            "Når du finn talet, skal du `return x` med ein gong.",
+            "Hugs to likskapsteikn: `==` spør, `=` lagrar."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "loys",
+              "args": [
+                22
+              ],
+              "vent": 5
+            },
+            {
+              "type": "kall",
+              "fn": "loys",
+              "args": [
+                -3
+              ],
+              "vent": 0
+            },
+            {
+              "type": "kall",
+              "fn": "loys",
+              "args": [
+                47
+              ],
+              "vent": 10
+            },
+            {
+              "type": "kall",
+              "fn": "loys",
+              "args": [
+                4
+              ],
+              "vent": null
+            }
+          ],
+          "loeysing": "def loys(maal):\n    for x in range(-100, 101):\n        if 5 * x - 3 == maal:\n            return x\n    return None"
+        },
+        {
+          "id": "lik6-2",
+          "type": "les",
+          "kode": "for x in range(0, 6):\n    if 2 * x == x + 3:\n        print(\"treff:\", x)\nprint(\"ferdig\")",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "treff: 3\nferdig",
+            "ferdig",
+            "treff: 0\nferdig",
+            "treff: 3"
+          ],
+          "rett": 0,
+          "forklaring": "Likninga `2x = x + 3` har løysinga `x = 3`, og 3 ligg i `range(0, 6)`. Så programmet skriv **treff: 3**. `print(\"ferdig\")` står utanfor løkka og køyrer uansett."
+        },
+        {
+          "id": "lik6-3",
+          "type": "rett",
+          "tekst": "Programmet skal finne løysinga på `4x = 20`, men det brukar feil likskapsteikn og finn ingenting. Rett opp.",
+          "startkode": "def loys():\n    for x in range(0, 21):\n        if 4 * x = 20:\n            return x\n    return None",
+          "hint": [
+            "Eitt likskapsteikn lagrar ein verdi. To likskapsteikn spør om noko er likt.",
+            "Inne i ein `if` skal det alltid vere `==`."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "loys",
+              "args": [],
+              "vent": 5
+            }
+          ],
+          "loeysing": "def loys():\n    for x in range(0, 21):\n        if 4 * x == 20:\n            return x\n    return None"
+        }
+      ],
+      "oppsummering": "Å løyse ei likning med programmering er å prøve kandidatar systematisk. Det er raskt, og det viser tydeleg kva ei likning spør om — men det finn berre svar som ligg i området du leitar i, og berre heile tal. Bruk det til å sjekke, ikkje til å sleppe å rekne."
+    },
+    {
+      "id": "likningssett",
+      "tittel": "To ukjende på ein gong",
+      "kompetansemaal": [
+        "10. trinn: lage, løse og forklare ligningssett knyttet til praktiske situasjoner",
+        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Sju personar går på kino. Ein barnebillett kostar 90 kroner, ein vaksenbillett 150. Til saman betalte dei 810 kroner. Kor mange barn var det?"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Her er det **to** ting vi ikkje veit, og **to** opplysningar. Det er eit likningssett:"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "`barn + vaksne = 7`",
+            "`90 · barn + 150 · vaksne = 810`"
+          ]
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Trikset i programmet er at den fyrste likninga gjer den andre ukjende gratis: veit du kor mange barn det er, veit du òg kor mange vaksne."
+        },
+        {
+          "type": "kode",
+          "kode": "for barn in range(0, 8):\n    vaksne = 7 - barn\n    if 90 * barn + 150 * vaksne == 810:\n        print(\"Barn:\", barn, \"— vaksne:\", vaksne)"
+        },
+        {
+          "type": "merk",
+          "tekst": "Legg merke til at vi berre går gjennom **éin** ukjend. Den andre reknar vi ut. Det er nøyaktig same tanken som **innsetjingsmetoden** i matematikkboka."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Algebraisk løyser du det slik: sett `vaksne = 7 - barn` inn i den andre likninga, og du står att med éi likning og éin ukjend. Programmet gjer det same, det berre prøver seg fram i staden for å rekne om."
+        }
+      ],
+      "doeme": {
+        "kode": "personar = 7\nsum_betalt = 810\n\nfor barn in range(0, personar + 1):\n    vaksne = personar - barn\n    total = 90 * barn + 150 * vaksne\n    merke = \"  <-- stemmer\" if total == sum_betalt else \"\"\n    print(f\"{barn} barn, {vaksne} vaksne: {total} kr{merke}\")",
+        "oppmoding": "Programmet viser alle kombinasjonane, ikkje berre svaret. Byt `sum_betalt` til 900 — kva skjer, og kva tyder det?"
+      },
+      "loype": {
+        "tittel": "Løys eit likningssett",
+        "maal": "eit program som finn kor mange barn og vaksne som var på kino, og som taklar at det ikkje alltid finst eit svar",
+        "steg": [
+          {
+            "tekst": "Vi prøver alle moglege tal barn, og reknar ut kor mange vaksne det då må vere.",
+            "kode": "for barn in range(0, 8):\n    vaksne = 7 - barn\n    print(barn, vaksne)"
+          },
+          {
+            "tekst": "For kvar kombinasjon reknar vi ut kva det ville kosta.",
+            "kode": "for barn in range(0, 8):\n    vaksne = 7 - barn\n    print(barn, vaksne, 90 * barn + 150 * vaksne)"
+          },
+          {
+            "tekst": "Så plukkar vi ut den som treffer 810 kroner.",
+            "kode": "for barn in range(0, 8):\n    vaksne = 7 - barn\n    if 90 * barn + 150 * vaksne == 810:\n        print(\"Barn:\", barn, \"— vaksne:\", vaksne)"
+          },
+          {
+            "tekst": "Til slutt gjer vi det om til ein funksjon, så det går an å svare på fleire spørsmål av same slag.",
+            "kode": "def finn(personar, betalt):\n    for barn in range(0, personar + 1):\n        vaksne = personar - barn\n        if 90 * barn + 150 * vaksne == betalt:\n            return barn, vaksne\n    return None\n\nprint(finn(7, 810))\nprint(finn(7, 900))\nprint(finn(10, 1140))",
+            "proev": "For 900 kroner finst det ingen kombinasjon. Programmet returnerer `None` — og det er eit ekte svar: **den situasjonen kan ikkje ha skjedd**."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "sett-1",
+          "type": "skriv",
+          "tekst": "På ein gard er det høner og sauer — til saman `dyr` hovud og `bein` bein. Ei høne har 2 bein, ein sau har 4. Skriv funksjonen `finn_hoener` som returnerer kor mange høner det er, eller `None` om det ikkje går opp.",
+          "startkode": "def finn_hoener(dyr, bein):\n    for hoener in range(0, dyr + 1):\n        sauer = dyr - hoener\n        # sjekk om beina stemmer\n    return None\n",
+          "hint": [
+            "Talet bein er `2 * hoener + 4 * sauer`.",
+            "`if 2 * hoener + 4 * sauer == bein:` og så `return hoener`.",
+            "Hugs at `return None` skal stå heilt til slutt, utanfor løkka."
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "finn_hoener",
+              "args": [
+                10,
+                28
+              ],
+              "vent": 6
+            },
+            {
+              "type": "kall",
+              "fn": "finn_hoener",
+              "args": [
+                5,
+                20
+              ],
+              "vent": 0
+            },
+            {
+              "type": "kall",
+              "fn": "finn_hoener",
+              "args": [
+                5,
+                10
+              ],
+              "vent": 5
+            },
+            {
+              "type": "kall",
+              "fn": "finn_hoener",
+              "args": [
+                3,
+                9
+              ],
+              "vent": null
+            }
+          ],
+          "loeysing": "def finn_hoener(dyr, bein):\n    for hoener in range(0, dyr + 1):\n        sauer = dyr - hoener\n        if 2 * hoener + 4 * sauer == bein:\n            return hoener\n    return None"
+        },
+        {
+          "id": "sett-2",
+          "type": "les",
+          "kode": "for a in range(0, 5):\n    b = 4 - a\n    if 2 * a + 3 * b == 10:\n        print(a, b)",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "2 2",
+            "1 3",
+            "0 4",
+            "ingenting"
+          ],
+          "rett": 0,
+          "forklaring": "Vi treng `a + b = 4` og `2a + 3b = 10`. For `a = 2` blir `b = 2`, og 2·2 + 3·2 = 4 + 6 = **10**. Treff. Sjekk sjølv at `a = 1` gjev 2 + 9 = 11, som er for mykje."
+        },
+        {
+          "id": "sett-3",
+          "type": "rett",
+          "tekst": "Programmet skal finne kor mange 10-kroningar og 20-kroningar som til saman er `mynter` stykk og `sum_kr` kroner. Men den andre ukjende blir rekna ut feil. Rett opp.",
+          "startkode": "def finn(mynter, sum_kr):\n    for ti in range(0, mynter + 1):\n        tjue = mynter\n        if 10 * ti + 20 * tjue == sum_kr:\n            return ti\n    return None",
+          "hint": [
+            "Om du har `mynter` mynter til saman og `ti` av dei er tikroningar, kor mange er då tjuekroningar?",
+            "`tjue = mynter - ti`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "finn",
+              "args": [
+                5,
+                80
+              ],
+              "vent": 2
+            },
+            {
+              "type": "kall",
+              "fn": "finn",
+              "args": [
+                4,
+                40
+              ],
+              "vent": 4
+            },
+            {
+              "type": "kall",
+              "fn": "finn",
+              "args": [
+                3,
+                60
+              ],
+              "vent": 0
+            }
+          ],
+          "loeysing": "def finn(mynter, sum_kr):\n    for ti in range(0, mynter + 1):\n        tjue = mynter - ti\n        if 10 * ti + 20 * tjue == sum_kr:\n            return ti\n    return None"
+        }
+      ],
+      "oppsummering": "Eit likningssett har fleire ukjende og like mange opplysningar. I programmet går du gjennom éin ukjend og reknar ut resten — same tanken som innsetjingsmetoden. Finn programmet ingen løysing, er det òg eit svar."
+    },
+    {
+      "id": "modellar",
+      "tittel": "Frå mønster til formel — og kor langt han held",
+      "kompetansemaal": [
+        "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk",
+        "10. trinn: modellere situasjoner, presentere resultatene og vurdere hvor gyldige modellene er",
+        "10. trinn: lese og forklare tekstbasert programkode i Python"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Du legg fyrstikker i ei rekkje med kvadrat. Fyrste figur er eitt kvadrat og bruker 4 fyrstikker. Andre figur deler ei side med den fyrste og bruker 7. Tredje bruker 10."
+        },
+        {
+          "type": "kode",
+          "kode": "for figur in [1, 2, 3, 4, 5]:\n    print(figur, 3 * figur + 1)"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Formelen `3n + 1` er ein **generalisering**: eitt uttrykk som dekkjer alle figurane. Og han er ikkje gjetta — han har ei forklaring. Kvar ny figur legg til tre fyrstikker, og den fyrste treng ei ekstra til å lukke seg."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det same gjer vi når vi modellerer noko frå verkelegheita. Skilnaden er viktig:"
+        },
+        {
+          "type": "punkt",
+          "punkt": [
+            "Fyrstikkmønsteret følgjer formelen **nøyaktig**, for alle `n`",
+            "Ein modell av noko verkeleg er berre ei **tilnærming** — og han sluttar å gjelde ein stad"
+          ]
+        },
+        {
+          "type": "merk",
+          "tekst": "Å vurdere kor gyldig ein modell er, er ein del av matematikken — ikkje noko du gjer etterpå. Ein modell som seier at ein tolvåring veg 900 kilo er ikkje litt unøyaktig; han er brukt utanfor sitt område."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Sjå på dette: ei vasslilje i ein dam doblar seg kvar dag. Modellen `2**dag` stemmer fint i starten. Men han seier at etter 40 dagar er det tusen milliardar liljer — og dammen tek slutt lenge før det."
+        }
+      ],
+      "doeme": {
+        "kode": "def fyrstikker(n):\n    return 3 * n + 1\n\nprint(\"Figur | Fyrstikker | Lagt til\")\nfoerre = None\nfor n in range(1, 8):\n    tal = fyrstikker(n)\n    lagt_til = \"\" if foerre is None else tal - foerre\n    print(f\"{n:>5} | {tal:>10} | {lagt_til}\")\n    foerre = tal",
+        "oppmoding": "Kolonna til høgre er **3** heile vegen. Kvar i formelen ser du det talet — og kvar ser du eittalet?"
+      },
+      "loype": {
+        "tittel": "Lag ein modell og finn grensa hans",
+        "maal": "eit program som modellerer vassliljene i ein dam, og som seier ifrå den dagen modellen sluttar å gje meining",
+        "steg": [
+          {
+            "tekst": "Fyrst sjølve modellen: talet doblar seg kvar dag.",
+            "kode": "def liljer(dag):\n    return 2 ** dag\n\nfor dag in range(0, 11):\n    print(dag, liljer(dag))"
+          },
+          {
+            "tekst": "Så seier vi kor stor dammen er. Han har plass til 10 000 liljer.",
+            "kode": "def liljer(dag):\n    return 2 ** dag\n\nPLASS = 10000\n\nfor dag in range(0, 20):\n    print(dag, liljer(dag))"
+          },
+          {
+            "tekst": "No lèt vi programmet finne dagen då dammen er full.",
+            "kode": "def liljer(dag):\n    return 2 ** dag\n\nPLASS = 10000\n\nfor dag in range(0, 20):\n    tal = liljer(dag)\n    if tal > PLASS:\n        print(\"Dag\", dag, \"— dammen er full. Modellen gjeld ikkje lenger.\")\n        break\n    print(dag, tal)"
+          },
+          {
+            "tekst": "Og til slutt viser vi kva modellen ville påstått om vi lét han halde fram.",
+            "kode": "def liljer(dag):\n    return 2 ** dag\n\nPLASS = 10000\n\nfull_dag = None\nfor dag in range(0, 41):\n    if liljer(dag) > PLASS and full_dag is None:\n        full_dag = dag\n\nprint(\"Dammen er full på dag\", full_dag)\nprint(\"Modellen påstår at det på dag 40 er\", liljer(40), \"liljer.\")\nprint(\"Dammen har plass til\", PLASS)",
+            "proev": "Modellen er ikkje feil — han er brukt for langt. Kva ville skjedd om du sette `PLASS` til ein million? Blir modellen gyldig lenger då, eller berre litt lenger?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "mod-1",
+          "type": "skriv",
+          "tekst": "Eit mønster av trekantar bruker **2 fyrstikker per figur pluss ei ekstra til slutt**: figur 1 har 3, figur 2 har 5, figur 3 har 7. Skriv funksjonen `fyrstikker` som tek imot figurnummeret og returnerer talet fyrstikker.",
+          "startkode": "def fyrstikker(n):\n    # skriv koden her\n",
+          "hint": [
+            "Kor mange kjem til for kvar ny figur? Sjå på 3, 5, 7.",
+            "Talet aukar med 2, så uttrykket startar med `2 * n`.",
+            "`2 * 1` er 2, men figur 1 har 3. Kva må leggjast til?"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "fyrstikker",
+              "args": [
+                1
+              ],
+              "vent": 3
+            },
+            {
+              "type": "kall",
+              "fn": "fyrstikker",
+              "args": [
+                2
+              ],
+              "vent": 5
+            },
+            {
+              "type": "kall",
+              "fn": "fyrstikker",
+              "args": [
+                10
+              ],
+              "vent": 21
+            },
+            {
+              "type": "kall",
+              "fn": "fyrstikker",
+              "args": [
+                100
+              ],
+              "vent": 201
+            }
+          ],
+          "loeysing": "def fyrstikker(n):\n    return 2 * n + 1"
+        },
+        {
+          "id": "mod-2",
+          "type": "les",
+          "kode": "def modell(dag):\n    return 100 * 2 ** dag\n\nprint(modell(0), modell(1), modell(3))",
+          "sporsmal": "Kva skriv programmet ut?",
+          "alternativ": [
+            "100 200 800",
+            "0 200 800",
+            "100 200 600",
+            "200 400 800"
+          ],
+          "rett": 0,
+          "forklaring": "`2 ** 0` er **1**, så `modell(0)` er 100. `2 ** 1` er 2, så det blir 200. `2 ** 3` er 8, så det blir 800. Legg merke til at potensen blir rekna ut før gongen — `100 * 2 ** 3` er `100 * 8`, ikkje `200 ** 3`."
+        },
+        {
+          "id": "mod-3",
+          "type": "rett",
+          "tekst": "Funksjonen skal modellere ei mengd som **doblar** seg for kvart steg og startar på 50. Men han gongar med feil tal. Rett opp.",
+          "startkode": "def mengd(steg):\n    return 50 * steg ** 2",
+          "hint": [
+            "Prøv med `steg = 3`. Svaret skal vere 400 — kva får du?",
+            "Å doble seg for kvart steg er `2` opphøgd i steget, ikkje steget opphøgd i andre.",
+            "`50 * 2 ** steg`"
+          ],
+          "testar": [
+            {
+              "type": "kall",
+              "fn": "mengd",
+              "args": [
+                0
+              ],
+              "vent": 50
+            },
+            {
+              "type": "kall",
+              "fn": "mengd",
+              "args": [
+                1
+              ],
+              "vent": 100
+            },
+            {
+              "type": "kall",
+              "fn": "mengd",
+              "args": [
+                3
+              ],
+              "vent": 400
+            },
+            {
+              "type": "kall",
+              "fn": "mengd",
+              "args": [
+                10
+              ],
+              "vent": 51200
+            }
+          ],
+          "loeysing": "def mengd(steg):\n    return 50 * 2 ** steg"
+        }
+      ],
+      "oppsummering": "Ein formel som `3n + 1` generaliserer eit mønster — eitt uttrykk for alle tilfelle. Ein modell av verkelegheita gjer det same, men berre eit stykke på veg. Å vite **kvar** modellen sluttar å gjelde er like mykje matematikk som å lage han."
+    }
+  ]
+}
