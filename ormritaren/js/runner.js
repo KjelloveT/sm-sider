@@ -36,19 +36,30 @@ const OrmRunner = (function () {
     const STILLE_GRENSE_MS = 150000;
     let stilleTimer = null;
 
+    /* Kva oppstarten heldt på med då det stoppa. Skiljet mellom «Lastar
+     * Python-motoren …» og «Set opp køyremiljøet …» er skiljet mellom wasm som
+     * ikkje let seg byggje og CPython som ikkje får minne til stdlib — to heilt
+     * ulike feil som elles ser like ut. */
+    let sisteSteg = null;
+
+    function medSteg(melding) {
+        return sisteSteg ? `${melding} (stoppa under: ${sisteSteg})` : melding;
+    }
+
     function stillKlokka() {
         clearTimeout(stilleTimer);
         if (klar) return;
         stilleTimer = setTimeout(() => {
-            cb.onOppstartsfeil?.(
+            cb.onOppstartsfeil?.(medSteg(
                 'Bakgrunnsprosessen slutta å svare medan Python starta, utan feilmelding. '
                 + 'På iPad tyder det som regel at minnet tok slutt.'
-            );
+            ));
         }, STILLE_GRENSE_MS);
     }
 
     function lagWorker() {
         klar = false;
+        sisteSteg = null;
         worker = new Worker('js/worker.js', { type: 'module' });
         worker.onmessage = (e) => { stillKlokka(); handter(e.data); };
         worker.onerror = (e) => {
@@ -56,7 +67,7 @@ const OrmRunner = (function () {
             // Safari gjev ofte tom message for feil under modullasting. Då er
             // fila og linja det einaste som seier noko.
             const stad = e.filename ? ` (${e.filename}:${e.lineno || '?'})` : '';
-            cb.onOppstartsfeil?.((e.message || 'Ukjend feil i workeren.') + stad);
+            cb.onOppstartsfeil?.(medSteg((e.message || 'Ukjend feil i workeren.') + stad));
         };
         worker.postMessage({ type: 'start' });
         stillKlokka();
@@ -65,6 +76,7 @@ const OrmRunner = (function () {
     function handter(m) {
         switch (m.type) {
             case 'framdrift':
+                sisteSteg = m.steg;
                 cb.onFramdrift?.(m.steg);
                 break;
             case 'klar':
@@ -74,7 +86,7 @@ const OrmRunner = (function () {
                 break;
             case 'oppstartsfeil':
                 clearTimeout(stilleTimer);
-                cb.onOppstartsfeil?.(m.melding);
+                cb.onOppstartsfeil?.(medSteg(m.melding));
                 break;
             case 'ut':
                 cb.onUtskrift?.(m.tekst, false);

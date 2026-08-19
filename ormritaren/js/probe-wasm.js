@@ -80,6 +80,34 @@ async function koeyr() {
         return 'ja';
     });
 
+    /* 5. Minnet som faktisk blir teke i bruk.
+     *
+     * Å be om ein Memory med tak på 4 GB kostar ingenting — nettlesaren berre
+     * reserverer adresserom, og ein iPad seier gladeleg ja. Det er når CPython
+     * pakkar ut standardbiblioteket og veks til eit par hundre MB at rekninga
+     * kjem. Difor veks vi minnet på ekte her, og skriv i kvart steg: utan å
+     * røre ved sidene set nettlesaren dei aldri av, og prøven ville løge.
+     *
+     * Denne står sist med vilje. Blir workeren drepen her, er dei fire andre
+     * svara alt sende, og «stoppa på N MB» er sjølve svaret vi er ute etter. */
+    await proev('Minne som let seg ta i bruk', () => {
+        const STEG_MB = 32;
+        const MAAL_MB = 320;   // om lag det Pyodide treng når stdlib er inne
+        const m = new WebAssembly.Memory({ initial: 480, maximum: 65536 });
+        let mb = m.buffer.byteLength / (1024 * 1024);
+        try {
+            while (mb < MAAL_MB) {
+                m.grow(STEG_MB * 1024 / 64);   // ei wasm-side er 64 kB
+                mb += STEG_MB;
+                // grow() byter ut bufferen, så synsvinkelen må lagast på nytt.
+                new Uint8Array(m.buffer, m.buffer.byteLength - 4096, 4096).fill(1);
+            }
+            return `ja — ${mb} MB`;
+        } catch (feil) {
+            return `nei — stoppa på ${mb} MB: ${forklar(feil)}`;
+        }
+    });
+
     meld('__ferdig', 'ja');
 }
 

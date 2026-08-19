@@ -54,6 +54,7 @@ const OrmDiagnose = (function () {
         'Kompilerer Python-motoren',
         'Importerer pyodide.mjs',
         'Importerer pyodide.asm.mjs',
+        'Minne som let seg ta i bruk',
     ];
 
     /** Køyrer dei ekte oppstartsstega i ein worker og ser kor langt dei kjem.
@@ -170,11 +171,57 @@ const OrmDiagnose = (function () {
             return 'Nettlesaren fekk ikkje lasta Python-filene inn i bakgrunnsprosessen. '
                  + 'Sjekk om noko blokkerer skript på denne sida.';
         }
+        const bruk = f['Minne som let seg ta i bruk'] || '';
+        if (bruk.startsWith('nei')) {
+            return 'iPaden slepp Python til å reservere minne, men ikkje til å bruke det. '
+                 + bruk.replace(/^nei — /, 'Han ') + '. Python treng kring 300 MB når '
+                 + 'standardbiblioteket er inne. Lukk andre faner og appar, start Safari på nytt, '
+                 + 'og prøv igjen — hjelper det ikkje, har eininga for lite minne til dette verktøyet.';
+        }
         if (TUNGE.some(steg => (f[steg] || '').includes('gav opp her'))) {
             return 'Nettlesaren stoppa midt i oppstarten utan å seie kvifor. Det er nesten alltid minnet '
                  + 'som tek slutt. Lukk andre faner og appar, start Safari på nytt, og prøv igjen.';
         }
-        return 'Alle prøvene gjekk gjennom, så feilen ligg lenger inne. Meldinga under er den viktigaste opplysninga.';
+        return 'Alle prøvene gjekk gjennom, så feilen ligg lenger inne. Den ramma teksten rett under '
+             + 'er den viktigaste opplysninga — send henne vidare ordrett.';
+    }
+
+    /** Heile diagnosen som rein tekst, klar til å limast inn i ein e-post. */
+    function somTekst(rader, feilmelding) {
+        return ['Ormritaren — Python starta ikkje', '', tolk(rader), '',
+                feilmelding ? 'Melding: ' + feilmelding : 'Ingen feilmelding.', '',
+                ...rader.map(([namn, verdi]) => `${namn}: ${verdi}`), '',
+                location.href].join('\n');
+    }
+
+    /* Ein knapp som tek heile rapporten, ikkje berre feilmeldinga.
+     *
+     * Ei tabellrad blir borte på vegen når nokon skriv av det dei ser, og det
+     * er alltid den eine rada som forklarte alt. Tre rundar med skjermbilete
+     * som mangla den avgjerande linja er nok. */
+    function lagKopiknapp(rader, feilmelding) {
+        const knapp = document.createElement('button');
+        knapp.type = 'button';
+        knapp.className = 'orm-diagnose-kopi';
+        knapp.textContent = 'Kopier heile rapporten';
+        knapp.addEventListener('click', async () => {
+            const tekst = somTekst(rader, feilmelding);
+            try {
+                await navigator.clipboard.writeText(tekst);
+                knapp.textContent = 'Kopiert — lim inn i ein e-post';
+            } catch (e) {
+                // Utan løyve til utklippstavla er det beste vi kan gjere å
+                // merke teksten, så eleven berre treng «Kopier» sjølv.
+                const felt = document.createElement('textarea');
+                felt.className = 'orm-diagnose-felt';
+                felt.value = tekst;
+                felt.readOnly = true;
+                knapp.replaceWith(felt);
+                felt.focus();
+                felt.select();
+            }
+        });
+        return knapp;
     }
 
     /** Teiknar heile diagnosen i eit element. */
@@ -197,12 +244,14 @@ const OrmDiagnose = (function () {
 
         venter.textContent = tolk(rader);
 
-        if (feilmelding) {
-            const m = document.createElement('p');
-            m.className = 'orm-diagnose-melding';
-            m.textContent = feilmelding;
-            vert.appendChild(m);
-        }
+        // Meldinga står her jamvel når ho manglar. Ei tom rute er ei opplysning
+        // i seg sjølv — då sa nettlesaren ingenting, og det må vi få vite.
+        const m = document.createElement('p');
+        m.className = 'orm-diagnose-melding';
+        m.textContent = feilmelding || 'Nettlesaren gav inga feilmelding.';
+        vert.appendChild(m);
+
+        vert.appendChild(lagKopiknapp(rader, feilmelding));
 
         const detaljar = document.createElement('details');
         detaljar.className = 'orm-diagnose-detalj';
