@@ -684,6 +684,44 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
     color: var(--text);
 }
 
+/* Knappen ber teksten sin i --text på --surface, ikkje kvit på --accent2:
+ * i dei mørke temaa er aksentfargen ein lys neonfarge, og kvit tekst fell
+ * under AA. Sjå AGENTS.md §3.2. */
+.orm-diagnose-kopi {
+    display: block;
+    margin: 0 0 12px;
+    padding: 8px 14px;
+    min-height: 44px;          /* tommelvenleg på iPad */
+    background: var(--surface);
+    color: var(--text);
+    border: 3px solid var(--text);
+    box-shadow: 3px 3px 0 var(--shadow);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.orm-diagnose-kopi:active {
+    box-shadow: 0 0 0 var(--shadow);
+    transform: translate(3px, 3px);
+}
+
+/* Naudløysinga når utklippstavla er stengd: teksten merkt og klar. */
+.orm-diagnose-felt {
+    display: block;
+    width: 100%;
+    margin: 0 0 12px;
+    padding: 8px 10px;
+    min-height: 160px;
+    background: var(--bg);
+    color: var(--text);
+    border: 2px solid var(--border);
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 12.5px;
+    resize: vertical;
+}
+
 .orm-diagnose-detalj summary {
     cursor: pointer;
     font-size: 13px;
