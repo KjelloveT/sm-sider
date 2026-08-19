@@ -66,6 +66,7 @@ for i in range(1, 6):
     async function startLeksjonEllerFri() {
         const url = new URLSearchParams(location.search);
         const modulId = url.get('modul');
+        if (url.get('forhandsvis') === '1') { startForhandsvising(); return; }
         if (!modulId) { gjenopprett(); return; }
 
         OrmOppgaver.init({
@@ -113,6 +114,89 @@ for i in range(1, 6):
         OrmEditor.set(OrmLeksjon.leksjon().doeme?.kode || '# Skriv koden din her\n');
         ulagraEndringar = false;
         oppdaterLagreknapp();
+    }
+
+    /* ---- førehandsvising for redigeringsverktøyet ------------------------ */
+
+    /* Same arbeidsflate som eleven får, men leksjonen kjem frå vindauget
+     * over i staden for frå tenaren — læraren har endra henne i nettlesaren,
+     * og ho finst ikkje på tenaren enno.
+     *
+     * Vi merkjer ingen framgang her. Ein lærar som blar gjennom for å sjå
+     * korleis noko ser ut, skal ikkje få leksjonane registrerte som
+     * gjennomgåtte på si eiga maskin. */
+    function startForhandsvising() {
+        // Hero, botntekst og bibliotekruta stel plass i ei smal sidekolonne.
+        document.body.dataset.forhandsvis = '1';
+
+        OrmOppgaver.init({
+            opneKode: (kode, oppgaveId) => opneKode(kode, oppgaveId),
+            sjekk: (oppgave) => OrmRunner.test(OrmEditor.hent(), oppgave.testar || []),
+            loest: () => {}
+        });
+
+        OrmLeksjon.init({
+            opneKode: (kode) => opneKode(kode),
+            opneLoypesteg: (kode, nye) => {
+                opneKode(kode);
+                OrmEditor.markerNyeLinjer(nye);
+            }
+        });
+
+        el.arbeidsflate.dataset.modus = 'leksjon';
+        el.panelLeksjon.hidden = false;
+        el.leksjonFane.hidden = false;
+
+        window.addEventListener('message', (e) => {
+            // Berre vår eiga side kan styre denne visinga.
+            if (e.origin !== location.origin) return;
+            const m = e.data;
+            if (!m || typeof m !== 'object') return;
+
+            if (m.type === 'ormritaren:leksjon') {
+                OrmLeksjon.settLeksjon(m.modul, m.indeks || 0);
+                OrmLeksjon.teikn(el.panelLeksjon);
+                // Koden i editoren skal følgje dømet, men ikkje riste laus
+                // det læraren står og prøver ut.
+                if (m.settKode !== false) {
+                    OrmEditor.set(OrmLeksjon.leksjon().doeme?.kode || '');
+                    ulagraEndringar = false;
+                    oppdaterLagreknapp();
+                }
+                rullTilBolk(m.bolk);
+                // Sei ifrå at elementa er nye, så den som styrer oss kan
+                // setje rullinga på plass att.
+                window.parent.postMessage({ type: 'ormritaren:teikna' }, location.origin);
+            } else if (m.type === 'ormritaren:bolk') {
+                rullTilBolk(m.bolk);
+            }
+        });
+
+        // Si ifrå at vi er klare til å ta imot ein leksjon.
+        if (window.parent !== window) {
+            window.parent.postMessage({ type: 'ormritaren:klar' }, location.origin);
+        }
+    }
+
+    function rullTilBolk(namn) {
+        if (!namn) return;
+        const maal = el.panelLeksjon.querySelector(`[data-bolk="${CSS.escape(namn)}"]`);
+        if (!maal) return;
+
+        /* Vi flyttar rullinga i panelet for hand i staden for å bruke
+         * scrollIntoView.
+         *
+         * scrollIntoView rullar kvar einaste rullbare forelder — og når vi
+         * står i ei ramme på same opphav, går han rett gjennom rammekanten og
+         * rullar redigeringssida rundt oss òg. Resultatet var at sida hoppa
+         * tilbake kvar gong visinga skulle følgje med.
+         *
+         * Direkte, ikkje mjukt: læraren hoppar mellom bolkar medan han skriv,
+         * og ein animasjon på veg ville lege etter heile tida. */
+        const boks = el.panelLeksjon;
+        let av = 0;
+        for (let e = maal; e && e !== boks; e = e.offsetParent) av += e.offsetTop;
+        boks.scrollTop = Math.max(0, av - 8);
     }
 
     /** Legg kode i editoren. Spør fyrst om eleven har endra noko sjølv —

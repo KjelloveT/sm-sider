@@ -98,6 +98,24 @@
     <!-- Skjemaet -->
     <section class="orm-redskjema" id="skjema" aria-live="polite"></section>
 
+    <!-- Førehandsvising. Sjølve arbeidsflata elevane får, i ei ramme, så
+         visinga aldri kan kome i utakt med det som faktisk blir vist.
+         Berre på breie skjermar — under det er det ikkje plass til begge. -->
+    <aside class="orm-redvising" id="visingKolonne">
+      <div class="orm-redvisingstopp">
+        <span class="orm-redvisingsmerke">Slik ser eleven det</span>
+        <button class="btn orm-btn-liten" id="visingOppdater" type="button">
+          <span data-icon="refresh"></span>Oppdater
+        </button>
+        <button class="btn orm-btn-liten" id="visingLukk" type="button"
+                aria-expanded="true" aria-controls="visingRamme">
+          <span data-icon="eyeOff"></span>Skjul
+        </button>
+      </div>
+      <iframe id="visingRamme" class="orm-redramme" title="Førehandsvising av leksjonen"
+              src="kode.html?forhandsvis=1"></iframe>
+    </aside>
+
   </div>
 
   <p class="orm-botntekst">
