@@ -318,3 +318,13 @@
         grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr) minmax(440px, 2fr);
     }
 }
+
+/* Designsystemet set `main { overflow-x: hidden }`. Då reknar nettlesaren
+ * overflow-y som `auto`, og main blir ein rulleboks — og ein sticky boks
+ * klistrar seg til den næraste rulleboksen, ikkje til vindauget. Sidan main
+ * sjølv aldri rullar (det er sida som rullar), fekk førehandsvisinga aldri
+ * noko å klistre seg til, og seig rett ut av biletet.
+ *
+ * Her har vi ikkje noko som stikk ut vassrett — kode, JSON og tabellar ligg
+ * i sine eigne rulleboksar — så vi kan slå det av på denne eine sida. */
+.orm-redigeringsside .main-content { overflow: visible; }
