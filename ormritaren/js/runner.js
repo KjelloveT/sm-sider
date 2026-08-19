@@ -27,14 +27,39 @@ const OrmRunner = (function () {
         data = new Uint8Array(sab, 8);
     }
 
+    /* Ein worker som blir drepen av minnemangel — det Safari på iPad gjer —
+     * seier ikkje frå. Ingen onerror, inga melding, berre stille. Utan denne
+     * vakta står appen på «Startar Python …» til nokon lastar sida på nytt.
+     *
+     * Klokka blir stilt på nytt for kvar melding frå workeren, så ein iPad som
+     * berre er treg får halde fram så lenge han faktisk arbeider. */
+    const STILLE_GRENSE_MS = 150000;
+    let stilleTimer = null;
+
+    function stillKlokka() {
+        clearTimeout(stilleTimer);
+        if (klar) return;
+        stilleTimer = setTimeout(() => {
+            cb.onOppstartsfeil?.(
+                'Bakgrunnsprosessen slutta å svare medan Python starta, utan feilmelding. '
+                + 'På iPad tyder det som regel at minnet tok slutt.'
+            );
+        }, STILLE_GRENSE_MS);
+    }
+
     function lagWorker() {
         klar = false;
         worker = new Worker('js/worker.js', { type: 'module' });
-        worker.onmessage = (e) => handter(e.data);
+        worker.onmessage = (e) => { stillKlokka(); handter(e.data); };
         worker.onerror = (e) => {
-            cb.onOppstartsfeil?.(e.message || 'Ukjend feil i workeren.');
+            clearTimeout(stilleTimer);
+            // Safari gjev ofte tom message for feil under modullasting. Då er
+            // fila og linja det einaste som seier noko.
+            const stad = e.filename ? ` (${e.filename}:${e.lineno || '?'})` : '';
+            cb.onOppstartsfeil?.((e.message || 'Ukjend feil i workeren.') + stad);
         };
         worker.postMessage({ type: 'start' });
+        stillKlokka();
     }
 
     function handter(m) {
@@ -44,9 +69,11 @@ const OrmRunner = (function () {
                 break;
             case 'klar':
                 klar = true;
+                clearTimeout(stilleTimer);
                 cb.onKlar?.(m.versjon);
                 break;
             case 'oppstartsfeil':
+                clearTimeout(stilleTimer);
                 cb.onOppstartsfeil?.(m.melding);
                 break;
             case 'ut':
