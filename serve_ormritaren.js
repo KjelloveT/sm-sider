@@ -19,6 +19,25 @@
  */
 
 const http = require('http');
+
+/* Same Content-Security-Policy som produksjon.
+ *
+ * Vi les han frå staticwebapp.config.json i staden for å skrive han av, så
+ * dei to ikkje kan gli frå kvarandre. Utan dette har den lokale tenaren
+ * lausare reglar enn den ekte sida, og ein CSP-feil viser seg fyrst etter
+ * utrulling — det var nettopp slik `frame-ancestors 'none'` fekk stå og
+ * blokkere førehandsvisinga i redigeringsverktøyet. */
+const CSP = (() => {
+    try {
+        const konf = JSON.parse(
+            require('fs').readFileSync(
+                require('path').join(__dirname, 'staticwebapp.config.json'), 'utf8'));
+        return konf.globalHeaders?.['Content-Security-Policy'] || '';
+    } catch (feil) {
+        console.warn('Fann ingen CSP i staticwebapp.config.json:', feil.message);
+        return '';
+    }
+})();
 const fs = require('fs');
 const path = require('path');
 
@@ -52,6 +71,7 @@ http.createServer((req, res) => {
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     res.setHeader('Cache-Control', 'no-store');
+    if (CSP) res.setHeader('Content-Security-Policy', CSP);
 
     let rel;
     try {
