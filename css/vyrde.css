@@ -19,7 +19,12 @@
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: clamp(72px, 8vw, 120px);
+  /* Den nye pila er høg og smal (196 x 253 px i ei rute på 440 x 300),
+     der den gamle var brei (355 x 269). Boksen er difor auka med 8 % slik
+     at maskoten blir like *høg* som før — han blir noko smalare, men
+     ingen layoutar veks. Høgdestyrte bruk (t.d. .hero-logo) treng ingen
+     justering, sidan høgda i ruta er nesten uendra. */
+  width: clamp(78px, 8.7vw, 130px);
   aspect-ratio: 440 / 300;
   line-height: 0;
   flex-shrink: 0;
