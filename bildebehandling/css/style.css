@@ -1,28 +1,26 @@
 /* ══════════════════════════════════════
    HANDSAM BILETE — verktøy-spesifikk stil (utvidar neobrutalisme.css)
+
+   Tre kolonnar: biletstrimmel | arbeidsflate | verktøypanel.
+   På smale skjermar blir strimmelen ei vassrett rad og panelet fell under
+   arbeidsflata, så det aldri blir vassrett skrolling.
    ══════════════════════════════════════ */
 
 .page-wrapper { padding-top: 0; }
 
-.main-content {
-    max-width: 1500px;
-    margin: 0 auto;
-    padding: clamp(16px, 3vw, 28px);
-}
-
 /* Hero */
 .hb-hero {
     display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    justify-content: space-between; margin-bottom: 20px;
+    justify-content: space-between; margin-bottom: 18px;
 }
 .hb-hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; line-height: 1.1; }
-.hb-hero p { color: var(--muted); font-weight: 600; margin-top: 4px; }
+.hb-hero p { color: var(--muted); font-weight: 600; margin-top: 4px; max-width: 70ch; }
 
 /* Opplastingssone */
 .upload-zone {
     background: var(--surface); border: 3px dashed var(--border); box-shadow: 5px 5px 0 var(--shadow);
     padding: clamp(28px, 6vw, 56px) 24px; text-align: center; cursor: pointer;
-    transition: transform 0.1s, box-shadow 0.1s, background 0.1s; margin-bottom: 24px;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
 }
 .upload-zone:hover, .upload-zone.dragover {
     background: var(--accent4); transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--shadow);
@@ -31,39 +29,176 @@
 .upload-text { font-size: clamp(1.1rem, 3vw, 1.4rem); font-weight: 900; margin-top: 8px; }
 .upload-sub { color: var(--muted); font-weight: 600; font-size: 0.9rem; margin-top: 4px; }
 
-/* Layout: panel | scene */
-.app-layout {
+.app { display: flex; flex-direction: column; gap: 14px; }
+
+/* ──────────────── Steg ──────────────── */
+.steps { display: flex; gap: 8px; flex-wrap: wrap; }
+.step {
+    flex: 1 1 180px; display: flex; align-items: center; gap: 10px;
+    background: var(--surface); color: var(--text); border: 3px solid var(--border);
+    box-shadow: 4px 4px 0 var(--shadow); padding: 10px 14px;
+    font-family: inherit; font-weight: 800; font-size: 0.95rem; cursor: pointer;
+    transition: all 0.1s ease; text-align: left;
+}
+.step b {
+    display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0;
+    background: var(--bg); border: 2px solid var(--border); font-size: 0.85rem;
+}
+.step:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--shadow); }
+.step.active { background: var(--accent); color: var(--text-on-accent); }
+.step.active b { background: var(--surface); color: var(--text); }
+
+/* ──────────────── Utvalslinje ──────────────── */
+.selbar {
+    background: var(--accent5); color: var(--text-on-light-accent);
+    border: 3px solid var(--border); box-shadow: 4px 4px 0 var(--shadow);
+    padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 10px;
+    align-items: center; justify-content: space-between;
+}
+.selbar-text { font-weight: 900; font-size: 0.95rem; }
+.selbar-actions { display: flex; gap: 8px; }
+
+/* ──────────────── Arbeidsområde ──────────────── */
+.work {
     display: grid;
-    grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
-    gap: clamp(14px, 2vw, 22px);
-    align-items: start;
-}
-@media (max-width: 900px) {
-    .app-layout { grid-template-columns: 1fr; }
+    grid-template-columns: 104px minmax(0, 1fr) minmax(256px, 300px);
+    gap: 14px; align-items: start;
 }
 
-/* Panel */
-.panel {
-    background: var(--surface); border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow);
-    padding: 16px; display: flex; flex-direction: column; gap: 18px;
+/* Biletstrimmel */
+.strip {
+    background: var(--surface); border: 3px solid var(--border); box-shadow: 4px 4px 0 var(--shadow);
+    padding: 10px; display: flex; flex-direction: column; gap: 8px;
+    max-height: 74vh;
 }
-.panel > h2 {
-    font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;
-    border-bottom: 3px solid var(--border); padding-bottom: 6px; display: flex; align-items: center; gap: 8px;
+.strip-head {
+    font-weight: 900; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--muted);
 }
-.ctrl { display: flex; flex-direction: column; gap: 10px; }
-.ctrl-label {
-    font-weight: 900; text-transform: uppercase; letter-spacing: 0.4px; font-size: 0.78rem;
-    color: var(--accent); display: flex; align-items: center; gap: 6px;
+.strip-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; min-height: 0; }
+.strip-item {
+    position: relative; border: 3px solid var(--border); background: var(--accent3);
+    cursor: pointer; aspect-ratio: 4 / 3; overflow: hidden; padding: 0;
+}
+.strip-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.strip-item.active { outline: 3px solid var(--accent2); outline-offset: 2px; }
+.strip-pick {
+    position: absolute; top: 3px; left: 3px; width: 20px; height: 20px;
+    accent-color: var(--accent); cursor: pointer; margin: 0;
+}
+.strip-x {
+    position: absolute; top: 3px; right: 3px; width: 20px; height: 20px;
+    display: grid; place-items: center; cursor: pointer;
+    background: var(--surface); color: var(--text); border: 2px solid var(--border); padding: 0;
+}
+.strip-x:hover { background: var(--accent2); color: var(--text-on-accent); }
+.strip-add {
+    background: var(--bg); color: var(--text); border: 3px dashed var(--border);
+    padding: 8px 6px; font-family: inherit; font-weight: 800; font-size: 0.78rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.strip-add:hover { background: var(--accent4); }
+
+/* Arbeidsflate */
+.stage { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.viewer {
+    background: var(--surface); border: 3px solid var(--border); box-shadow: 4px 4px 0 var(--shadow);
+    padding: 12px; display: flex; align-items: center; justify-content: center;
+    min-height: 320px;
+}
+.viewer-inner {
+    position: relative; line-height: 0; touch-action: none;
+    max-width: 100%; user-select: none;
+}
+/* Breidda blir sett i JS ut frå plassen som finst, så «før» og «etter»
+   ligg nøyaktig oppå kvarandre uansett format på biletet. */
+.cv { display: block; width: 100%; height: auto; }
+.cv-after { position: absolute; inset: 0; width: 100%; height: 100%; }
+.viewer-inner.split-off .cv-after { clip-path: none !important; }
+.viewer-inner.split-off .split,
+.viewer-inner.split-off .tag { display: none; }
+
+.tag {
+    position: absolute; top: 8px; font-size: 0.68rem; font-weight: 900; line-height: 1;
+    text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 7px;
+    background: var(--surface); color: var(--text); border: 2px solid var(--border);
+}
+.tag-before { left: 8px; }
+.tag-after { right: 8px; }
+
+.split {
+    position: absolute; top: 0; bottom: 0; width: 3px; background: var(--border);
+    cursor: ew-resize; touch-action: none;
+}
+.split-grip {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 30px; height: 30px; display: grid; place-items: center;
+    background: var(--accent4); color: #1a1a1a; border: 3px solid var(--border);
 }
 
+/* Beskjering */
+.crop-layer { position: absolute; inset: 0; cursor: crosshair; }
+.crop-box { position: absolute; border: 2px solid #fff; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45); cursor: move; }
+.crop-box::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+        linear-gradient(to right, transparent 33.33%, rgba(255,255,255,.35) 33.33% 33.66%, transparent 33.66% 66.33%, rgba(255,255,255,.35) 66.33% 66.66%, transparent 66.66%),
+        linear-gradient(to bottom, transparent 33.33%, rgba(255,255,255,.35) 33.33% 33.66%, transparent 33.66% 66.33%, rgba(255,255,255,.35) 66.33% 66.66%, transparent 66.66%);
+    pointer-events: none;
+}
+.ch {
+    position: absolute; width: 18px; height: 18px; background: var(--accent4);
+    border: 2px solid #1a1a1a; touch-action: none;
+}
+.ch-nw { top: -10px; left: -10px; cursor: nwse-resize; }
+.ch-ne { top: -10px; right: -10px; cursor: nesw-resize; }
+.ch-sw { bottom: -10px; left: -10px; cursor: nesw-resize; }
+.ch-se { bottom: -10px; right: -10px; cursor: nwse-resize; }
+
+.viewer-meta {
+    display: flex; gap: 14px; flex-wrap: wrap; align-items: baseline;
+    padding: 0 2px;
+}
+.meta-dims { font-weight: 900; font-size: 0.95rem; }
+.meta-size { font-weight: 700; font-size: 0.82rem; color: var(--muted); }
+
+/* ──────────────── Verktøypanel ──────────────── */
+.tools { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.tool-step { display: flex; flex-direction: column; gap: 10px; }
+
+.tool, .tool-card {
+    background: var(--surface); border: 3px solid var(--border); box-shadow: 4px 4px 0 var(--shadow);
+}
+.tool-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.tool-card h2 {
+    font-size: 0.8rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--accent);
+}
+
+.tool > summary {
+    padding: 12px 14px; font-weight: 900; font-size: 0.92rem; cursor: pointer;
+    display: flex; align-items: center; gap: 9px; list-style: none; user-select: none;
+}
+.tool > summary::-webkit-details-marker { display: none; }
+.tool > summary::after {
+    content: '▾'; margin-left: auto; font-size: 1rem; line-height: 1; transition: transform 0.2s ease;
+}
+.tool[open] > summary { background: var(--accent); color: var(--text-on-accent); border-bottom: 3px solid var(--border); }
+.tool[open] > summary::after { transform: rotate(180deg); }
+.tool-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+.field-label {
+    font-weight: 900; font-size: 0.72rem; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.4px;
+}
 .btn-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .btn.mini { padding: 7px 10px; font-size: 0.82rem; box-shadow: 3px 3px 0 var(--shadow); flex: 1 1 auto; }
 .btn.mini:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.btn.full { width: 100%; }
 
 .dim-row { display: flex; gap: 8px; align-items: flex-end; }
 .field { display: flex; flex-direction: column; gap: 4px; flex: 1; }
-.field-label { font-weight: 800; font-size: 0.74rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.3px; }
+.field-label + .neo-input { margin-top: 2px; }
 .target-unit { font-weight: 800; padding-bottom: 12px; }
 
 .neo-input {
@@ -82,22 +217,28 @@ select.neo-input { cursor: pointer; }
 }
 
 .check { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.86rem; cursor: pointer; }
-.check input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+.check.big { font-weight: 900; font-size: 0.95rem; }
+.check input { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
 
 .hint { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
 .hint code {
     background: var(--accent3); border: 1px solid var(--border); padding: 0 4px;
     font-family: monospace; font-size: 0.9em;
 }
+.hint.warn { color: var(--accent2); font-weight: 700; }
+
+.po-fields { display: flex; flex-direction: column; gap: 10px; }
+.svg-box {
+    border-top: 3px solid var(--border); padding-top: 10px; margin-top: 2px;
+    display: flex; flex-direction: column; gap: 8px;
+}
 
 /* Vassmerke-plassering */
-.position-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; width: 132px;
-}
+.position-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; width: 132px; }
 .pos-btn {
     aspect-ratio: 1; border: 2px solid var(--border); background: var(--bg); color: var(--text);
-    cursor: pointer; font-size: 1rem; font-family: inherit; display: flex; align-items: center; justify-content: center;
-    transition: background 0.1s;
+    cursor: pointer; font-size: 1rem; font-family: inherit;
+    display: flex; align-items: center; justify-content: center; transition: background 0.1s;
 }
 .pos-btn:hover { background: var(--accent4); }
 .pos-btn.active { background: var(--accent); color: var(--text-on-accent); }
@@ -109,44 +250,19 @@ select.neo-input { cursor: pointer; }
 .logo-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .chip-x { background: none; border: none; cursor: pointer; color: var(--accent2); display: flex; padding: 2px; }
 
-/* Scene */
-.stage { display: flex; flex-direction: column; gap: 16px; }
-
-.action-bar {
-    background: var(--surface); border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow);
-    padding: 14px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
-}
-.action-left { display: flex; flex-direction: column; gap: 2px; }
-.action-right { display: flex; gap: 8px; flex-wrap: wrap; }
-.action-right .btn { padding: 8px 12px; font-size: 0.85rem; box-shadow: 3px 3px 0 var(--shadow); }
-.action-right .btn:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
-.count { font-weight: 900; font-size: 1.05rem; }
-.savings { font-weight: 700; font-size: 0.82rem; color: var(--muted); }
-
-/* Galleri */
-.preview-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
-}
-.preview-card {
+/* ──────────────── Botnlinje ──────────────── */
+.savebar {
     background: var(--surface); border: 3px solid var(--border); box-shadow: 4px 4px 0 var(--shadow);
-    padding: 12px; display: flex; flex-direction: column; gap: 10px;
+    padding: 12px 14px; display: flex; flex-wrap: wrap; gap: 12px;
+    align-items: center; justify-content: space-between;
 }
-.thumb-wrap {
-    background: var(--accent3); border: 2px solid var(--border); height: 150px;
-    display: flex; align-items: center; justify-content: center; overflow: hidden;
+.savebar-note {
+    font-size: 0.8rem; font-weight: 700; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
 }
-.thumb { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-.card-info { display: flex; flex-direction: column; gap: 2px; font-size: 0.8rem; }
-.card-name { font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.card-dims { color: var(--text); font-weight: 600; }
-.card-size { color: var(--muted); font-weight: 700; }
-.card-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.card-actions .btn.mini { padding: 6px 8px; font-size: 0.75rem; }
-
-/* Beskjerings-modal */
-.crop-stage { display: flex; justify-content: center; margin: 14px 0; overflow: auto; }
-#crop-canvas { max-width: 100%; max-height: 56vh; cursor: crosshair; border: 3px solid var(--border); touch-action: none; }
-.crop-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.savebar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.savebar-actions .btn { padding: 9px 14px; font-size: 0.9rem; box-shadow: 3px 3px 0 var(--shadow); }
+.savebar-actions .btn:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
 
 /* Personvern */
 .privacy-body h3 { font-size: 1rem; font-weight: 900; margin: 16px 0 8px; }
@@ -160,13 +276,32 @@ select.neo-input { cursor: pointer; }
 .btn .lucide { vertical-align: -3px; }
 
 /* Tilgjenge */
-.btn:focus-visible, .pos-btn:focus-visible, .neo-input:focus-visible,
-.upload-zone:focus-visible, .modal-close:focus-visible, .neo-range:focus-visible {
+.btn:focus-visible, .pos-btn:focus-visible, .neo-input:focus-visible, .step:focus-visible,
+.upload-zone:focus-visible, .modal-close:focus-visible, .neo-range:focus-visible,
+.strip-item:focus-visible, .strip-add:focus-visible, .split:focus-visible, .tool > summary:focus-visible {
     outline: 3px solid var(--accent2); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+    .step, .btn, .tool > summary::after { transition: none; }
+}
+
+/* ──────────────── Smalare skjermar ──────────────── */
+@media (max-width: 1080px) {
+    .work { grid-template-columns: 1fr; }
+    .strip { max-height: none; }
+    .strip-list { flex-direction: row; overflow-x: auto; overflow-y: hidden; }
+    .strip-item { flex: 0 0 96px; }
+    .strip-add { flex-shrink: 0; }
+}
+@media (max-width: 560px) {
+    .step { flex: 1 1 100%; }
+    .savebar-actions { width: 100%; }
+    .savebar-actions .btn { flex: 1 1 auto; }
 }
 
 @media print {
-    neo-header, .panel, .action-bar, .hb-hero, .upload-zone, .card-actions { display: none !important; }
-    .app-layout { display: block; }
-    .preview-card { box-shadow: none; break-inside: avoid; }
+    neo-header, .tools, .strip, .steps, .selbar, .savebar, .hb-hero, .upload-zone,
+    .split, .tag, .crop-layer { display: none !important; }
+    .work { display: block; }
+    .viewer { box-shadow: none; border: none; }
 }

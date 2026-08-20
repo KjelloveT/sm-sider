@@ -178,10 +178,6 @@
                     <p><strong>Ingen data blir lagra.</strong> Bilete du lastar opp blir berre lese inn i minnet med FileReader API. Når du lukkar sida, er alt borte.</p>
                     <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> Ingen. Verktøyet fungerer heilt offline.</p>
 
-                    <h4><img src="_resources/reinskore bilete.png" alt="" style="height:20px;width:auto;margin-right:4px;vertical-align:-4px"> Reinskore bilete</h4>
-                    <p><strong>Ingen data blir lagra.</strong> Bilete du lastar opp blir berre behandla i nettlesaren sitt minne.</p>
-                    <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> Ingen. Verktøyet fungerer heilt offline.</p>
-
                     <h4><img src="_resources/klassekart.png" alt="" style="height:20px;width:auto;margin-right:4px;vertical-align:-4px"> Klassekart</h4>
                     <table class="data-table"><tr><th>Kva</th><th>Kvifor</th></tr><tr><td>Lagra klasseoppsett (elevnamn, plassering, møblar)</td><td>For å lagre og hente namngjeve klasseoppsett</td></tr><tr><td>Flikar / aktive oppsett</td><td>For å gjenopprette opne flikar ved neste besøk</td></tr></table>
                     <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> Ingen. Elevnamn lagrast kun lokalt — aldri på nokon server. Du kan eksportere/importere oppsett som JSON-fil.</p>
@@ -191,8 +187,8 @@
                     <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> Ingen. Elevnamn og relasjonar lagrast berre lokalt og forlèt aldri eininga di.</p>
 
                     <h4><img src="_resources/bilethandsaming.png" alt="" style="height:20px;width:auto;margin-right:4px;vertical-align:-4px"> Handsam bilete</h4>
-                    <p><strong>Ingen data blir lagra.</strong> Bilete blir lese inn i minnet og behandla med Canvas API. Når du lukkar sida, er alt borte.</p>
-                    <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> JSZip-biblioteket blir lasta frå <strong>cdnjs.cloudflare.com</strong> (kun for ZIP-nedlasting). Ingen bilete blir sendt nokon stad.</p>
+                    <p><strong>Ingen data blir lagra.</strong> Bilete blir lese inn i minnet og behandla med Canvas API. Når du lukkar sida, er alt borte. Reinskoring (tidlegare det eigne verktøyet «Reinskore bilete») og SVG-eksport skjer også heilt lokalt.</p>
+                    <p class="accordion-note">🌐 <strong>Ekstern tilgang:</strong> Ingen. ZIP-biblioteket ligg lokalt i verktøyet, så alt — også ZIP- og SVG-nedlasting — fungerer offline.</p>
 
                     <h4><svg width="20" height="20" style="vertical-align:-4px;margin-right:4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H6a4 4 0 1 1 .5-7.97A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 10Z"/></svg> Ordskodde</h4>
                     <table class="data-table"><tr><th>Kva</th><th>Kvifor</th></tr><tr><td>Lagra ordskyer: innlimt tekst, ordval og innstillingar</td><td>For å opne og redigere skyene seinare utan å lime inn teksten på nytt</td></tr></table>
