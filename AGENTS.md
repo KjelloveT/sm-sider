@@ -235,6 +235,25 @@ lokalt (serve.ps1)  →  branch + PR  →  Azure preview-URL  →  merge  →  p
    Feilar eller manglar deployen (t.d. full kvote på preview-miljø, §6.4), sei det tydeleg framfor å utelate URL-en.
 4. **Merge:** `gh pr merge --squash --delete-branch`. Produksjon (`https://icy-water-0487ac303.2.azurestaticapps.net/`) oppdaterer seg på eit par minutt, og `close_pull_request_job` slettar preview-miljøet.
 
+**Ein merga PR tek ikkje imot fleire commitar.** Når PR-en er squash-merga, er branchen død. Pushar du meir dit, går det tilsynelatande bra — `git push` melder suksess — men commitane hamnar ingen stad og kjem aldri til produksjon. Dette skjer lett når nokon merger medan du framleis arbeider.
+
+**For AI-assistenten:** Grein alltid ut frå ein fersk `origin/main` når du startar noko nytt, og `git fetch` først — `main` har ofte flytta seg medan du jobba. Skal du levere arbeid som ligg på ein branch der PR-en alt er merga, lag ein ny branch frå `origin/main` og plukk over berre dei commitane som manglar.
+
+To fallgruver når du skal finne ut kva som faktisk manglar:
+
+- **Squash-merge skjuler historikk.** Commitane frå branchen finst aldri i `main` med sine eigne SHA-ar, så `git log origin/main..branch` listar dei som «manglande» sjølv om innhaldet er merga for lenge sidan. Bruk `git diff --stat origin/main..HEAD` og sjekk filinnhaldet i staden — `git cat-file -e origin/main:<fil>` seier om fila er der.
+- **Ein gammal branch reverserer andres arbeid.** Har det landa andre PR-ar på `main` etter at din branch vart laga, vil ein PR frå henne rulle dei tilbake. Sjå etter slettingar før du opnar PR-en:
+
+  ```bash
+  git diff --diff-filter=D --name-only origin/main..HEAD
+  ```
+
+**Stadfest at PR-en er open før du seier han er klar.** `gh pr create` skriv ut ein URL, men det er ikkje bevis for at han står open no. Sjekk:
+
+```bash
+gh pr list --state open
+```
+
 CHANGELOG-oppdateringa (§6.2) høyrer heime i **same PR** som endringa ho skildrar.
 
 **Vit dette om preview-miljøa:**
