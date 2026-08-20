@@ -293,8 +293,8 @@
         {
           "id": "input-1",
           "type": "skriv",
-          "tekst": "Skriv eit program som spør «Kor mange kroner? », og skriv ut kor mange femtiøringar det blir (`kroner` gonger **2**). Skriv berre ut talet.",
-          "startkode": "kroner = \n",
+          "tekst": "Programmet spør allereie om eit tal. Gjer om svaret til eit heiltal med `int()`, og skriv ut kor mange femtiøringar det blir — `kroner` gonger **2**.",
+          "startkode": "kroner = input(\"Kor mange kroner? \")\n",
           "hint": [
             "Du må gjere svaret om til eit tal: `int(input(\"Kor mange kroner? \"))`",
             "`print(kroner * 2)`"
@@ -305,14 +305,14 @@
               "stdin": [
                 "12"
               ],
-              "vent": "24"
+              "vent": "Kor mange kroner? 12\n24"
             },
             {
               "type": "utskrift",
               "stdin": [
                 "5"
               ],
-              "vent": "10"
+              "vent": "Kor mange kroner? 5\n10"
             }
           ],
           "loeysing": "kroner = int(input(\"Kor mange kroner? \"))\nprint(kroner * 2)"
@@ -321,11 +321,11 @@
           "id": "input-2",
           "type": "les",
           "kode": "tal = input(\"Skriv eit tal: \")\nprint(tal + tal)",
-          "sporsmal": "Brukaren skriv 3. Kva skriv programmet ut?",
+          "sporsmal": "Brukaren skriv 3. Kva står i utskrifta etterpå?",
           "alternativ": [
-            "6",
-            "33",
-            "3 3",
+            "Skriv eit tal: 3\n6",
+            "Skriv eit tal: 3\n33",
+            "Skriv eit tal: 3\n3 3",
             "Det blir feilmelding"
           ],
           "rett": 1,
@@ -349,7 +349,7 @@
               "stdin": [
                 "5"
               ],
-              "vent": "11"
+              "vent": "Skriv eit tal: 5\n11"
             }
           ],
           "loeysing": "tal = int(input(\"Skriv eit tal: \"))\nprint(tal * 2 + 1)"
