@@ -148,7 +148,17 @@ def køyr_og_fang(kode, stdin_svar=None):
     modul = types.ModuleType("__main__")
     modul.__dict__["__name__"] = "__main__"
     att = list(stdin_svar or [])
-    modul.__dict__["input"] = lambda prompt="": att.pop(0) if att else ""
+
+    def _input(prompt=""):
+        svar = att.pop(0) if att else ""
+        # Skriv same samtalen som arbeidsflata viser eleven: ledeteksten slik
+        # CPython sjølv skriv han, og så svaret, slik eit terminalvindauge
+        # ekkar det du tastar. Då er ein fasit kopiert rett frå utskrifta
+        # i editoren den same teksten som rettinga samanliknar mot.
+        print(f"{prompt}{svar}")
+        return svar
+
+    modul.__dict__["input"] = _input
 
     ut = io.StringIO()
     try:
