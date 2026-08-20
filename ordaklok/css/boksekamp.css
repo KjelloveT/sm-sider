@@ -413,7 +413,9 @@ h1, h2, h3, h4 {
 /* Maskoten er sprite-komponenten frå css/vyrde.css — her set vi berre
    storleik og skugge. Sjølve ansiktsuttrykket kjem frå Vyrde.setMood(). */
 .bk-vyrde {
-  width: clamp(72px, 8vw, 120px);
+  /* Litt breiare boks enn før, så den nye høge, smale pila blir like
+     høg som den gamle brede. Sjå css/vyrde.css. */
+  width: clamp(78px, 8.7vw, 130px);
   height: auto;
   display: block;
   filter: drop-shadow(3px 3px 0 var(--bk-ink));
@@ -1065,7 +1067,7 @@ h1, h2, h3, h4 {
   align-items: flex-start;
   gap: 14px;
 }
-.bk-flashcard-vyrde .bk-vyrde { width: 80px; }
+.bk-flashcard-vyrde .bk-vyrde { width: 87px; }
 
 .bk-flashcard {
   width: min(600px, 90vw);
@@ -1252,7 +1254,7 @@ h1, h2, h3, h4 {
   align-items: center;
   gap: 8px;
 }
-.bk-mc-vyrde .bk-vyrde { width: 90px; }
+.bk-mc-vyrde .bk-vyrde { width: 98px; }
 
 .bk-mc-prompt-wrap {
   text-align: center;
@@ -1616,7 +1618,7 @@ h1, h2, h3, h4 {
   align-items: flex-end;
   gap: 14px;
 }
-.bk-type-vyrde .bk-vyrde { width: 80px; }
+.bk-type-vyrde .bk-vyrde { width: 87px; }
 @media (max-width: 720px) {
   .bk-type-vyrde { display: none; }
 }
@@ -1731,7 +1733,7 @@ h1, h2, h3, h4 {
   overflow: hidden;
 }
 .bk-ring-vyrde-badge .bk-vyrde {
-  width: 140px;
+  width: 152px;
   filter: none;
 }
 .bk-ring-vyrde .dommar-tag {
