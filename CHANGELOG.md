@@ -3,7 +3,7 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
-## [Ikkje publisert]
+## [1.0] — 2026-08-20
 
 ### Lagt til
 - **Ormritaren: opplæringsdel med grunnkurs og sannsyn.** Verktøyet var til no ei tom kodeflate — ein elev kunne skrive Python, men fekk ingen veg inn. No er det ei landingsside der ein vel mellom fri programmering og opplæringsmodular.
@@ -75,6 +75,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **Favicon — Vyrde i fanelinja.** Sidene har aldri hatt eit eige ikon, så nettlesaren viste standardikonet sitt. No ligg `favicon.ico` på rot, med Vyrde klipt ut av rute 2 i sprite-arket — den kompakte posituren med hendene framfor seg, sidan den vinkande varianten har armane for langt ut til å vere leseleg nede i 16 px. Fila har storleikane 16, 32, 48 og 64 px, og i tillegg finst `_resources/vyrde-ikon.png` (384 px) og `_resources/vyrde-ikon-180.png` for iOS-heimskjerm. Lenkjene er lagde inn i `<head>` på alle 49 HTML-sidene med rot-absolutte adresser, så dei verkar likt frå undermapper.
 
 ### Endra
+- **Notatet på framsida er oppdatert til versjon 1.0.** Det peikar no på den nye Vyrde-maskoten, **Ormritaren** som eit komplett programmeringsverktøy for ungdomstrinnet, **Duldord** som nynorsk ordgåte, og det nyleg oppdaterte **Handsam bilete**. Dei gamle punkta om Rissverk, Lydskurd og kryssordverktøya er tekne bort.
 - **Oppdaterte standardfrøder i Frødebrett.** Kategorien «Eidet skule» er bytt ut med «Supre heltar» i Blanda drops og heilt fjerna frå Småtrinn — spørsmål om éin bestemt skule er til lita nytte for alle andre. Standardfrødene har eit **versjonsnummer** (`SEED_VERSION` i `frodebrett/js/app.js`), lagra som `seedVersion` i tilstanden. Før no vart ei standardfrøde berre lagt inn dersom tittelen mangla, så alle som hadde spelt Frødebrett før sat att med den gamle utgåva for alltid; no blir dei skrivne over éin gong når nummeret aukar. Frøder brukaren har laga eller importert sjølv har eigne id-ar og blir ikkje rørte, og eigne endringar i standardfrødene held seg fram til neste gong nummeret blir auka.
 - **Ny rekkjefølgje på spel og verktøy på framsida** (`json/apps.json`). Duldord og Vidfaren står no først under Spel, Frødebrett først under Aktivitetar i klasserommet, og Dagsvegen sist under Verktøy. Plasshaldaren «Fleire verktøy — kjem snart» er teken bort, og omtalen av Rissverk er korta ned til to avsnitt som dei andre.
 - **Etikktesten er teken ut av framsida og toppmenyen.** Forteljingane med etiske dilemma kan vere sterk kost for dei yngste, og testen bør veljast bevisst av ein lærar framfor å liggje open i oversikta. Sjølve verktøyet er ikkje fjerna: `etikk-test/index.html` verkar som før for den som har lenkja. Nytt felt `hidden: true` i `json/apps.json` gjer det same for andre appar seinare — både `js/home.js` og `js/neo-header.js` filtrerer på det.
