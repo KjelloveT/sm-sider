@@ -853,3 +853,13 @@ li.CodeMirror-hint-active .orm-hint-skildring { color: var(--surface); }
 @media (hover: none) and (pointer: coarse) {
     .orm-symbolrad { display: flex; }
 }
+
+/* ---- førehandsvising i redigeringsverktøyet -------------------------- */
+
+/* Same arbeidsflate som eleven får, men innramma i ei sidekolonne. Alt som
+ * berre er der for å ramme inn sida stel plass her. */
+body[data-forhandsvis="1"] .hero-box,
+body[data-forhandsvis="1"] .orm-botntekst,
+body[data-forhandsvis="1"] neo-header { display: none; }
+
+body[data-forhandsvis="1"] .page-wrapper { padding-top: 8px; }

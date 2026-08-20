@@ -45,13 +45,19 @@ const OrmLeksjon = (function () {
         panel.textContent = '';
         loypesteg = 0;
 
-        panel.appendChild(topptekst());
-        panel.appendChild(blokker(leksjon.tekst || []));
+        // data-bolk lèt redigeringsverktøyet rulle førehandsvisinga til den
+        // same delen som læraren står og skriv i.
+        const merk = (node, namn) => { node.dataset.bolk = namn; return node; };
 
-        if (leksjon.doeme) panel.appendChild(doeme(leksjon.doeme));
-        if (leksjon.loype) panel.appendChild(loype(leksjon.loype));
-        if (leksjon.oppgaver?.length) panel.appendChild(oppgaver(leksjon.oppgaver));
-        if (leksjon.oppsummering) panel.appendChild(oppsummering());
+        panel.appendChild(merk(topptekst(), 'om'));
+        panel.appendChild(merk(blokker(leksjon.tekst || []), 'tekst'));
+
+        if (leksjon.doeme) panel.appendChild(merk(doeme(leksjon.doeme), 'doeme'));
+        if (leksjon.loype) panel.appendChild(merk(loype(leksjon.loype), 'loype'));
+        if (leksjon.oppgaver?.length) {
+            panel.appendChild(merk(oppgaver(leksjon.oppgaver), 'oppgaver'));
+        }
+        if (leksjon.oppsummering) panel.appendChild(merk(oppsummering(), 'om'));
 
         panel.appendChild(navigasjon());
         if (window.hydrateIcons) hydrateIcons(panel);
@@ -342,8 +348,23 @@ const OrmLeksjon = (function () {
         return ider.length > 0 && ider.every(id => loeyste.has(id));
     }
 
+    /** Set leksjonen direkte i staden for å hente henne frå tenaren.
+     *
+     * Redigeringsverktøyet viser leksjonen slik læraren har endra henne i
+     * nettlesaren — ho finst ikkje på tenaren enno. Vi merkjer heller ingen
+     * framgang her: ein lærar som ser gjennom ei leksjon skal ikkje få henne
+     * registrert som gjennomgått.
+     */
+    function settLeksjon(nyModul, nyIndeks) {
+        modul = nyModul;
+        indeks = Math.max(0, Math.min(nyIndeks | 0, nyModul.leksjonar.length - 1));
+        leksjon = modul.leksjonar[indeks];
+        loypesteg = 0;
+        return { modul, leksjon, indeks };
+    }
+
     return {
-        init, last, teikn, finnOppgave, alleLoeyste,
+        init, last, teikn, settLeksjon, finnOppgave, alleLoeyste,
         modul: () => modul,
         leksjon: () => leksjon
     };
