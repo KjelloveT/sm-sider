@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handsam bilete — endre storleik, skjer, roter og vassmerk lokalt</title>
+    <title>Handsam bilete — endre storleik, skjer, reinskor og vassmerk lokalt</title>
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
     <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
@@ -14,17 +14,17 @@
     <neo-header></neo-header>
 
     <div class="page-wrapper">
-        <main class="main-content">
+        <main class="main-content main-wide">
 
             <div class="hb-hero">
                 <div>
                     <h1>Handsam bilete</h1>
-                    <p>Endre storleik, skjer, roter, speglar og vassmerk — alt skjer lokalt i nettlesaren din.</p>
+                    <p>Endre storleik, skjer, roter, reinskor og vassmerk — alt skjer lokalt i nettlesaren din.</p>
                 </div>
                 <button class="btn" id="btn-privacy"><span data-icon="lock"></span> Personvern</button>
             </div>
 
-            <!-- Opplastingssone -->
+            <!-- Tom skjerm: berre opplastingssona -->
             <div class="upload-zone" id="upload-zone" role="button" tabindex="0" aria-label="Legg til bilete">
                 <span class="upload-icon" data-icon="imagePlus" data-icon-size="44"></span>
                 <div class="upload-text">Dra og slepp bilete her</div>
@@ -32,152 +32,266 @@
                 <input type="file" id="file-input" accept="image/*" multiple hidden>
             </div>
 
-            <div class="app-layout" id="app-layout" hidden>
-                <!-- Innstillingspanel -->
-                <aside class="panel" aria-label="Innstillingar">
-                    <h2><span data-icon="sliders" data-icon-size="16"></span> Innstillingar</h2>
+            <div class="app" id="app" hidden>
 
-                    <!-- Storleik -->
-                    <section class="ctrl">
-                        <div class="ctrl-label"><span data-icon="scaling" data-icon-size="16"></span> Storleik</div>
-                        <div class="btn-row">
-                            <button class="btn mini" data-resize-px="1920">1920</button>
-                            <button class="btn mini" data-resize-px="1280">1280</button>
-                            <button class="btn mini" data-resize-px="800">800</button>
-                        </div>
-                        <div class="btn-row">
-                            <button class="btn mini" data-resize-pct="50">50%</button>
-                            <button class="btn mini" data-resize-pct="75">75%</button>
-                            <button class="btn mini" data-resize-pct="100">100%</button>
-                        </div>
-                        <div class="dim-row">
-                            <label class="field">
-                                <span class="field-label">Breidde</span>
-                                <input type="number" id="resize-w" class="neo-input" min="1" placeholder="px">
-                            </label>
-                            <label class="field">
-                                <span class="field-label">Høgde</span>
-                                <input type="number" id="resize-h" class="neo-input" min="1" placeholder="px">
-                            </label>
-                        </div>
-                        <label class="check"><input type="checkbox" id="lock-aspect" checked> Lås tilhøve</label>
-                    </section>
+                <!-- Steg -->
+                <nav class="steps" aria-label="Steg">
+                    <button class="step" data-step="add"><b>1</b> Legg til bilete</button>
+                    <button class="step active" data-step="edit"><b>2</b> Endre</button>
+                    <button class="step" data-step="save"><b>3</b> Lagre</button>
+                </nav>
 
-                    <!-- Roter og spegle -->
-                    <section class="ctrl">
-                        <div class="ctrl-label"><span data-icon="rotateCw" data-icon-size="16"></span> Roter og spegle</div>
-                        <div class="btn-row">
-                            <button class="btn mini" data-rotate="-90" aria-label="Roter mot klokka"><span data-icon="rotateCcw"></span></button>
-                            <button class="btn mini" data-rotate="90" aria-label="Roter med klokka"><span data-icon="rotateCw"></span></button>
-                            <button class="btn mini" data-flip="h" aria-label="Spegl vassrett"><span data-icon="flipHorizontal"></span></button>
-                            <button class="btn mini" data-flip="v" aria-label="Spegl loddrett"><span data-icon="flipVertical"></span></button>
-                        </div>
-                    </section>
-
-                    <!-- Format og kvalitet -->
-                    <section class="ctrl">
-                        <div class="ctrl-label"><span data-icon="fileDown" data-icon-size="16"></span> Format og kvalitet</div>
-                        <select id="format" class="neo-input">
-                            <option value="jpeg">JPEG</option>
-                            <option value="png">PNG (taps­fri)</option>
-                            <option value="webp">WebP</option>
-                        </select>
-                        <label class="slider-label" id="quality-row">Kvalitet: <span id="quality-val">90</span>%</label>
-                        <input type="range" id="quality" min="10" max="100" value="90" class="neo-range">
-                        <label class="check"><input type="checkbox" id="target-on"> Sikt mot filstorleik</label>
-                        <div class="dim-row" id="target-row" hidden>
-                            <label class="field">
-                                <span class="field-label">Mål</span>
-                                <input type="number" id="target-kb" class="neo-input" min="10" value="200" placeholder="KB">
-                            </label>
-                            <span class="target-unit">KB</span>
-                        </div>
-                    </section>
-
-                    <!-- Vassmerke -->
-                    <section class="ctrl">
-                        <div class="ctrl-label"><span data-icon="stamp" data-icon-size="16"></span> Vassmerke</div>
-                        <input type="text" id="wm-text" class="neo-input" placeholder="Tekst (valfritt)">
-                        <div class="position-grid" id="wm-grid" aria-label="Plassering">
-                            <button class="pos-btn" data-pos="top-left" aria-label="Oppe til venstre">↖</button>
-                            <button class="pos-btn" data-pos="top-center" aria-label="Oppe i midten">↑</button>
-                            <button class="pos-btn" data-pos="top-right" aria-label="Oppe til høgre">↗</button>
-                            <button class="pos-btn" data-pos="center-left" aria-label="Midt til venstre">←</button>
-                            <button class="pos-btn" data-pos="center" aria-label="Midten">●</button>
-                            <button class="pos-btn" data-pos="center-right" aria-label="Midt til høgre">→</button>
-                            <button class="pos-btn" data-pos="bottom-left" aria-label="Nede til venstre">↙</button>
-                            <button class="pos-btn active" data-pos="bottom-right" aria-label="Nede til høgre">↘</button>
-                            <button class="pos-btn" data-pos="bottom-center" aria-label="Nede i midten">↓</button>
-                        </div>
-                        <label class="slider-label">Storleik: <span id="wm-size-val">24</span>px</label>
-                        <input type="range" id="wm-size" min="10" max="96" value="24" class="neo-range">
-                        <label class="slider-label">Synlegheit: <span id="wm-opacity-val">80</span>%</label>
-                        <input type="range" id="wm-opacity" min="10" max="100" value="80" class="neo-range">
-                        <label class="field">
-                            <span class="field-label">Farge</span>
-                            <input type="color" id="wm-color" class="neo-color" value="#ffffff">
-                        </label>
-                        <label class="field">
-                            <span class="field-label">Logo-bilete (valfritt)</span>
-                            <button class="btn mini" id="wm-logo-btn"><span data-icon="image"></span> Vel logo</button>
-                        </label>
-                        <div class="logo-chip" id="wm-logo-chip" hidden>
-                            <span id="wm-logo-name"></span>
-                            <button class="chip-x" id="wm-logo-clear" aria-label="Fjern logo"><span data-icon="x" data-icon-size="14"></span></button>
-                        </div>
-                        <label class="slider-label" id="wm-logo-scale-row" hidden>Logo-storleik: <span id="wm-logo-scale-val">20</span>%</label>
-                        <input type="range" id="wm-logo-scale" min="5" max="60" value="20" class="neo-range" hidden>
-                    </section>
-
-                    <!-- Filnamn -->
-                    <section class="ctrl">
-                        <div class="ctrl-label"><span data-icon="pencil" data-icon-size="16"></span> Filnamn</div>
-                        <input type="text" id="name-pattern" class="neo-input" value="{namn}" placeholder="{namn}">
-                        <p class="hint">Bruk <code>{namn}</code> for originalnamnet, <code>{n}</code> for nummer og <code>{dato}</code> for dagens dato.</p>
-                    </section>
-                </aside>
-
-                <!-- Galleri -->
-                <section class="stage">
-                    <div class="action-bar">
-                        <div class="action-left">
-                            <span class="count" id="count">0 bilete</span>
-                            <span class="savings" id="savings"></span>
-                        </div>
-                        <div class="action-right">
-                            <button class="btn c-blue" id="btn-add-more"><span data-icon="imagePlus"></span> Fleire</button>
-                            <button class="btn" id="btn-apply-all"><span data-icon="check"></span> Bruk på alle</button>
-                            <button class="btn" id="btn-reset"><span data-icon="rotateCcw"></span> Nullstill</button>
-                            <button class="btn c-green" id="btn-zip"><span data-icon="package"></span> Last ned alle (ZIP)</button>
-                            <button class="btn c-red" id="btn-clear"><span data-icon="trash2"></span> Tøm</button>
-                        </div>
+                <!-- Kva endringane gjeld -->
+                <div class="selbar">
+                    <span class="selbar-text" id="sel-text" role="status">Endringane gjeld alle bileta</span>
+                    <div class="selbar-actions">
+                        <button class="btn mini" id="sel-all"><span data-icon="check"></span> Vel alle</button>
+                        <button class="btn mini" id="sel-none">Vel ingen</button>
                     </div>
-                    <div class="preview-grid" id="preview-grid"></div>
-                </section>
+                </div>
+
+                <div class="work">
+
+                    <!-- Biletstrimmel -->
+                    <aside class="strip" aria-label="Bileta dine">
+                        <div class="strip-head">Bileta dine</div>
+                        <div class="strip-list" id="strip-list"></div>
+                        <button class="strip-add" id="strip-add">
+                            <span data-icon="imagePlus" data-icon-size="18"></span> Fleire
+                        </button>
+                    </aside>
+
+                    <!-- Arbeidsflate -->
+                    <section class="stage" aria-label="Arbeidsflate">
+                        <div class="viewer" id="viewer">
+                            <div class="viewer-inner" id="viewer-inner">
+                                <canvas id="cv-before" class="cv"></canvas>
+                                <canvas id="cv-after" class="cv cv-after"></canvas>
+                                <span class="tag tag-before">Før</span>
+                                <span class="tag tag-after">Etter</span>
+                                <div class="split" id="split" role="separator" aria-label="Dra for å samanlikne før og etter" tabindex="0">
+                                    <span class="split-grip" data-icon="arrowLeftRight" data-icon-size="16"></span>
+                                </div>
+                                <div class="crop-layer" id="crop-layer" hidden>
+                                    <div class="crop-box" id="crop-box">
+                                        <span class="ch ch-nw" data-handle="nw"></span>
+                                        <span class="ch ch-ne" data-handle="ne"></span>
+                                        <span class="ch ch-sw" data-handle="sw"></span>
+                                        <span class="ch ch-se" data-handle="se"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="viewer-meta">
+                            <span class="meta-dims" id="meta-dims"></span>
+                            <span class="meta-size" id="meta-size"></span>
+                        </div>
+                    </section>
+
+                    <!-- Verktøypanel -->
+                    <aside class="tools" aria-label="Verktøy">
+
+                        <!-- STEG 1 -->
+                        <div class="tool-step" data-panel="add" hidden>
+                            <div class="tool-card">
+                                <h2>Legg til bilete</h2>
+                                <button class="btn c-blue full" id="btn-add-more">
+                                    <span data-icon="imagePlus"></span> Vel filer
+                                </button>
+                                <p class="hint">Du kan òg dra bilete rett inn i vindauget.</p>
+                            </div>
+                            <div class="tool-card">
+                                <h2>Rydd opp</h2>
+                                <button class="btn full" id="btn-reset-one">
+                                    <span data-icon="undo"></span> Tilbakestill dette biletet
+                                </button>
+                                <button class="btn full" id="btn-reset-all">
+                                    <span data-icon="refreshCw"></span> Tilbakestill alt
+                                </button>
+                                <button class="btn c-red full" id="btn-clear">
+                                    <span data-icon="trash2"></span> Fjern alle bileta
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEG 2 -->
+                        <div class="tool-step" data-panel="edit">
+
+                            <details class="tool" data-tool="crop" open>
+                                <summary><span data-icon="crop" data-icon-size="16"></span> Skjer og vend</summary>
+                                <div class="tool-body">
+                                    <div class="field-label">Format</div>
+                                    <div class="btn-row" id="crop-ratios">
+                                        <button class="btn mini active" data-ratio="free">Fritt</button>
+                                        <button class="btn mini" data-ratio="1">1:1</button>
+                                        <button class="btn mini" data-ratio="1.3333">4:3</button>
+                                        <button class="btn mini" data-ratio="1.7778">16:9</button>
+                                        <button class="btn mini" data-ratio="0.7071">A4 ståande</button>
+                                        <button class="btn mini" data-ratio="1.4142">A4 liggjande</button>
+                                    </div>
+                                    <p class="hint">Dra på biletet for å velje utsnitt, og dra i hjørna for å justere.</p>
+                                    <div class="btn-row">
+                                        <button class="btn mini c-green" id="crop-apply"><span data-icon="check"></span> Bruk utsnittet</button>
+                                        <button class="btn mini" id="crop-clear">Fjern utsnitt</button>
+                                    </div>
+                                    <div class="field-label">Roter og spegle</div>
+                                    <div class="btn-row">
+                                        <button class="btn mini" data-rotate="-90" aria-label="Roter mot klokka"><span data-icon="rotateCcw"></span></button>
+                                        <button class="btn mini" data-rotate="90" aria-label="Roter med klokka"><span data-icon="rotateCw"></span></button>
+                                        <button class="btn mini" data-flip="h" aria-label="Spegl vassrett"><span data-icon="flipHorizontal"></span></button>
+                                        <button class="btn mini" data-flip="v" aria-label="Spegl loddrett"><span data-icon="flipVertical"></span></button>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="tool" data-tool="size">
+                                <summary><span data-icon="scaling" data-icon-size="16"></span> Storleik</summary>
+                                <div class="tool-body">
+                                    <div class="field-label">Lengste sida</div>
+                                    <div class="btn-row">
+                                        <button class="btn mini" data-resize-px="1920">1920</button>
+                                        <button class="btn mini" data-resize-px="1280">1280</button>
+                                        <button class="btn mini" data-resize-px="800">800</button>
+                                    </div>
+                                    <div class="field-label">Del av originalen</div>
+                                    <div class="btn-row">
+                                        <button class="btn mini" data-resize-pct="50">50 %</button>
+                                        <button class="btn mini" data-resize-pct="75">75 %</button>
+                                        <button class="btn mini active" data-resize-pct="100">100 %</button>
+                                    </div>
+                                    <div class="dim-row">
+                                        <label class="field">
+                                            <span class="field-label">Breidde</span>
+                                            <input type="number" id="resize-w" class="neo-input" min="1" placeholder="px">
+                                        </label>
+                                        <label class="field">
+                                            <span class="field-label">Høgde</span>
+                                            <input type="number" id="resize-h" class="neo-input" min="1" placeholder="px">
+                                        </label>
+                                    </div>
+                                    <label class="check"><input type="checkbox" id="lock-aspect" checked> Behald forholdet mellom breidd og høgd</label>
+                                </div>
+                            </details>
+
+                            <details class="tool" data-tool="colors">
+                                <summary><span data-icon="palette" data-icon-size="16"></span> Fargar</summary>
+                                <div class="tool-body">
+                                    <label class="check big"><input type="checkbox" id="po-on"> Reinskore biletet</label>
+                                    <p class="hint">Reduserer biletet til nokre få reine fargar. Former og kontrastar trer fram, detaljane forsvinn.</p>
+
+                                    <div class="po-fields" id="po-fields" hidden>
+                                        <div class="field-label">Uttrykk</div>
+                                        <div class="btn-row" id="po-mode">
+                                            <button class="btn mini active" data-mode="gray">Gråtone</button>
+                                            <button class="btn mini" data-mode="color">Behald fargane</button>
+                                        </div>
+                                        <label class="slider-label">Tal på fargar: <span id="po-levels-val">4</span></label>
+                                        <input type="range" id="po-levels" min="2" max="9" value="4" class="neo-range">
+                                        <label class="slider-label">Lysstyrke: <span id="po-bright-val">0</span></label>
+                                        <input type="range" id="po-bright" min="-100" max="100" value="0" class="neo-range">
+                                        <label class="slider-label">Kontrast: <span id="po-contrast-val">0</span></label>
+                                        <input type="range" id="po-contrast" min="-100" max="100" value="0" class="neo-range">
+
+                                        <div class="svg-box">
+                                            <div class="field-label">Last ned som teikning</div>
+                                            <p class="hint">Eit reinskore bilete kan bli ekte vektor: kvar farge blir eit område du kan
+                                                forstørre til plakat utan at han blir uskarp, og som kan opnast i Rissverk.</p>
+                                            <label class="slider-label">Detaljnivå: <span id="svg-detail-val">3</span></label>
+                                            <input type="range" id="svg-detail" min="1" max="5" value="3" class="neo-range">
+                                            <button class="btn mini c-blue full" id="btn-svg">
+                                                <span data-icon="shapes"></span> Last ned som SVG
+                                            </button>
+                                            <p class="hint" id="svg-info">Reknar ut …</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="tool" data-tool="watermark">
+                                <summary><span data-icon="stamp" data-icon-size="16"></span> Vassmerke</summary>
+                                <div class="tool-body">
+                                    <input type="text" id="wm-text" class="neo-input" placeholder="Tekst (valfritt)">
+                                    <div class="field-label">Plassering</div>
+                                    <div class="position-grid" id="wm-grid" aria-label="Plassering">
+                                        <button class="pos-btn" data-pos="top-left" aria-label="Oppe til venstre">↖</button>
+                                        <button class="pos-btn" data-pos="top-center" aria-label="Oppe i midten">↑</button>
+                                        <button class="pos-btn" data-pos="top-right" aria-label="Oppe til høgre">↗</button>
+                                        <button class="pos-btn" data-pos="center-left" aria-label="Midt til venstre">←</button>
+                                        <button class="pos-btn" data-pos="center" aria-label="Midten">●</button>
+                                        <button class="pos-btn" data-pos="center-right" aria-label="Midt til høgre">→</button>
+                                        <button class="pos-btn" data-pos="bottom-left" aria-label="Nede til venstre">↙</button>
+                                        <button class="pos-btn" data-pos="bottom-center" aria-label="Nede i midten">↓</button>
+                                        <button class="pos-btn active" data-pos="bottom-right" aria-label="Nede til høgre">↘</button>
+                                    </div>
+                                    <label class="slider-label">Storleik: <span id="wm-size-val">24</span> px</label>
+                                    <input type="range" id="wm-size" min="10" max="96" value="24" class="neo-range">
+                                    <label class="slider-label">Synlegheit: <span id="wm-opacity-val">80</span> %</label>
+                                    <input type="range" id="wm-opacity" min="10" max="100" value="80" class="neo-range">
+                                    <label class="field">
+                                        <span class="field-label">Farge</span>
+                                        <input type="color" id="wm-color" class="neo-color" value="#ffffff">
+                                    </label>
+                                    <div class="field-label">Logo-bilete (valfritt)</div>
+                                    <button class="btn mini full" id="wm-logo-btn"><span data-icon="image"></span> Vel logo</button>
+                                    <div class="logo-chip" id="wm-logo-chip" hidden>
+                                        <span id="wm-logo-name"></span>
+                                        <button class="chip-x" id="wm-logo-clear" aria-label="Fjern logo"><span data-icon="x" data-icon-size="14"></span></button>
+                                    </div>
+                                    <label class="slider-label" id="wm-logo-scale-row" hidden>Logo-storleik: <span id="wm-logo-scale-val">20</span> %</label>
+                                    <input type="range" id="wm-logo-scale" min="5" max="60" value="20" class="neo-range" hidden>
+                                </div>
+                            </details>
+                        </div>
+
+                        <!-- STEG 3 -->
+                        <div class="tool-step" data-panel="save" hidden>
+                            <div class="tool-card">
+                                <h2>Format og kvalitet</h2>
+                                <select id="format" class="neo-input" aria-label="Filformat">
+                                    <option value="jpeg">JPEG</option>
+                                    <option value="png">PNG (tapsfri)</option>
+                                    <option value="webp">WebP</option>
+                                </select>
+                                <label class="slider-label" id="quality-row">Kvalitet: <span id="quality-val">90</span> %</label>
+                                <input type="range" id="quality" min="10" max="100" value="90" class="neo-range">
+                                <label class="check"><input type="checkbox" id="target-on"> Ikkje større enn</label>
+                                <div class="dim-row" id="target-row" hidden>
+                                    <label class="field">
+                                        <span class="field-label">Filstorleik</span>
+                                        <input type="number" id="target-kb" class="neo-input" min="10" value="200" placeholder="KB">
+                                    </label>
+                                    <span class="target-unit">KB</span>
+                                </div>
+                            </div>
+                            <div class="tool-card">
+                                <h2>Filnamn</h2>
+                                <input type="text" id="name-pattern" class="neo-input" value="{namn}" placeholder="{namn}">
+                                <div class="btn-row" id="name-tokens">
+                                    <button class="btn mini" data-token="{namn}">Originalnamnet</button>
+                                    <button class="btn mini" data-token="{n}">Nummer</button>
+                                    <button class="btn mini" data-token="{dato}">Dagens dato</button>
+                                </div>
+                                <p class="hint" id="name-example"></p>
+                            </div>
+                        </div>
+
+                    </aside>
+                </div>
+
+                <!-- Botnlinje -->
+                <div class="savebar">
+                    <span class="savebar-note"><span data-icon="lock" data-icon-size="14"></span> Alt skjer i nettlesaren — ingenting blir lasta opp</span>
+                    <div class="savebar-actions">
+                        <button class="btn" id="btn-download-one"><span data-icon="download"></span> Berre dette</button>
+                        <button class="btn c-green" id="btn-download-all"><span data-icon="package"></span> Last ned alle</button>
+                    </div>
+                </div>
             </div>
 
         </main>
     </div>
 
     <input type="file" id="logo-input" accept="image/*" hidden>
-
-    <!-- Beskjerings-modal -->
-    <div class="modal-overlay" id="crop-modal">
-        <div class="modal3" role="dialog" aria-modal="true" aria-label="Skjer bilete">
-            <div class="modal-header">
-                <span>Skjer bilete</span>
-                <button class="modal-close" data-close="crop-modal" aria-label="Lukk"><span data-icon="x"></span></button>
-            </div>
-            <div class="modal-body">
-                <p>Dra for å markere det du vil ta vare på.</p>
-                <div class="crop-stage"><canvas id="crop-canvas"></canvas></div>
-                <div class="crop-actions">
-                    <button class="btn c-green" id="crop-apply"><span data-icon="check"></span> Bruk</button>
-                    <button class="btn" id="crop-cancel">Avbryt</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Personvern-modal -->
     <div class="modal-overlay" id="privacy-modal">
@@ -194,7 +308,7 @@
                     <li><strong>Ingen lagring:</strong> Bileta blir ikkje lagra. Når du lukkar fana, er alt borte.</li>
                     <li><strong>Metadata blir fjerna:</strong> Når biletet blir lagra på nytt, fell EXIF-data som kameramodell og GPS-posisjon bort.</li>
                     <li><strong>Ingen cookies eller sporing.</strong></li>
-                    <li><strong>Fungerer offline</strong> når sida først er lasta — også ZIP-nedlasting.</li>
+                    <li><strong>Fungerer offline</strong> når sida først er lasta — også ZIP- og SVG-nedlasting.</li>
                 </ul>
                 <p>Verktøyet brukar HTML5 Canvas og FileReader for å handsame bilete lokalt. Bileta forlèt aldri eininga di.</p>
             </div>
@@ -205,6 +319,7 @@
     <script src="js/vendor/jszip.min.js"></script>
     <script src="../js/vyrdepil-icons.js"></script>
     <script src="js/processor.js"></script>
+    <script src="js/vectorize.js"></script>
     <script src="js/app.js"></script>
     <script src="../js/neobrutalisme.js"></script>
     <script src="../js/neo-header.js"></script>
