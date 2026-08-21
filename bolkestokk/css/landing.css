@@ -1,0 +1,278 @@
+/* Bolkestokk — landingssida. Utvidar css/neobrutalisme.css.
+ *
+ * Dette er ei innhaldsside, ikkje ei arbeidsflate, så ho brukar ikkje
+ * .main-wide (AGENTS.md §3.1.1).
+ */
+
+/* ---- fri programmering ------------------------------------------------
+ * Same kortform som modulane under, så framsida har éin type boks. */
+
+.bs-frikort-pil {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* ---- modulgrupper ----------------------------------------------------- */
+
+.bs-modulgruppe { margin-bottom: 32px; }
+
+.bs-gruppetekst {
+    max-width: 74ch;
+    margin: -6px 0 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+.bs-modulrutenett {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 16px;
+    align-items: start;
+}
+
+/* ---- modulkort -------------------------------------------------------- */
+
+.bs-modulkort {
+    display: block;
+    margin: 0;
+    text-decoration: none;
+    color: var(--text);
+}
+
+a.bs-modulkort:hover { transform: translate(-2px, -2px); }
+
+.bs-modulkort-kjem { opacity: .72; }
+
+.bs-modultopp {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* Fargekoding per modul, utan å fylle heile hovudet.
+ *
+ * Fyrste utgåve la aksentfargen som bakgrunn med --text-on-accent oppå, slik
+ * §3.2 legg opp til. Måling over alle 21 tema viste at det held berre i dei
+ * lyse: i mørke tema er --accent og --accent2 lyse neonfargar, og kvit tekst
+ * på dei fall til 2,4–4,2:1 (verst i «hacker» og «dracula»).
+ *
+ * Difor ber ei stripe fargen i staden. Teksten står på --surface med --text og
+ * er dermed lesbar i alle tema, og modulen er framleis lett å kjenne att.
+ *
+ * Designsystemet har seinare fått same problemet fiksa i .box4 .box-header,
+ * som no er invertert (--text/--surface). Overstyringa her står likevel: eit
+ * modulkort skal ha eit flatt hovud med fargen i brikka, ikkje eit svart band.
+ *
+ * Selektoren må vere .bs-modulkort .bs-modultopp: designsystemet set
+ * `.box4 .box-header` med to klassar, og ein enkeltklasse taper den kampen
+ * utan at det synest på anna vis enn at fargane blir ståande. */
+.bs-modulkort .bs-modultopp {
+    background: var(--surface);
+    color: var(--text);
+}
+
+/* Fargen ligg i ei lita brikke framfor ikonet.
+ *
+ * Fyrst prøvde eg ei stripe i sjølve aksentfargen. Måling viste at pastellane
+ * (accent3/4/5) då blir borte mot den kvite flata i dei lyse temaa — nede i
+ * 1,1:1. Ei brikke med si eiga ramme er avgrensa uansett kor lys fargen er,
+ * og teksten er heilt utanfor problemet. */
+.bs-modulbrikke {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    background: var(--accent);
+}
+
+.bs-modultopp[data-accent="accent"]  .bs-modulbrikke { background: var(--accent); }
+.bs-modultopp[data-accent="accent2"] .bs-modulbrikke { background: var(--accent2); }
+.bs-modultopp[data-accent="accent3"] .bs-modulbrikke { background: var(--accent3); }
+.bs-modultopp[data-accent="accent4"] .bs-modulbrikke { background: var(--accent4); }
+.bs-modultopp[data-accent="accent5"] .bs-modulbrikke { background: var(--accent5); }
+
+.bs-modulnamn { flex: 1; min-width: 0; }
+
+.bs-modultrinn {
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: none;
+    opacity: .85;
+}
+
+.bs-modulkropp { padding: 14px 16px; }
+
+.bs-modultekst {
+    margin: 0 0 12px;
+    max-width: 60ch;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.bs-modulkjem {
+    margin: 0 0 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+/* ---- framgang --------------------------------------------------------- */
+
+.bs-framgang {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bs-framgang-spor {
+    flex: 1;
+    height: 12px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    overflow: hidden;
+}
+
+.bs-framgang-fyll {
+    height: 100%;
+    background: var(--accent);
+    transition: width .3s ease;
+}
+
+.bs-framgang-tal {
+    flex: 0 0 auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+/* ---- leksjonsliste ---------------------------------------------------- */
+
+.bs-leksjonsliste {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    counter-reset: leksjon;
+}
+
+.bs-leksjonspost { margin-bottom: 2px; }
+
+.bs-leksjonslenkje {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 8px;
+    text-decoration: none;
+    color: var(--text);
+    border: 2px solid transparent;
+    font-size: 13.5px;
+    line-height: 1.35;
+}
+
+.bs-leksjonslenkje:hover {
+    background: var(--accent3);
+    color: var(--text-on-light-accent);
+    border-color: var(--border);
+}
+
+.bs-leksjonsmerke {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+    font-weight: 800;
+    background: var(--surface);
+    color: var(--muted);
+    border: 2px solid var(--border);
+}
+
+.bs-leksjonstittel { flex: 1; min-width: 0; }
+
+/* Ferdig: hake i aksentfargen, og tittelen dempa så det uferdige står fram. */
+.er-ferdig .bs-leksjonsmerke {
+    background: var(--accent);
+    color: var(--text-on-accent);
+}
+
+.er-ferdig .bs-leksjonstittel { color: var(--muted); }
+
+/* Der eleven skal halde fram. Både ramme, feit skrift og ordet «held fram
+ * her» — status skal ikkje kvile på farge åleine. */
+.er-neste .bs-leksjonslenkje {
+    border-color: var(--border);
+    background: var(--surface);
+    font-weight: 700;
+}
+
+.bs-leksjonsher {
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: var(--accent);
+}
+
+.bs-leksjonslenkje:hover .bs-leksjonsher { color: var(--text-on-light-accent); }
+
+/* ---- kompetansemål ---------------------------------------------------- */
+
+.bs-maal { font-size: 12.5px; }
+
+.bs-maal summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.bs-maalliste {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    line-height: 1.55;
+    color: var(--muted);
+}
+
+.bs-maalliste li { margin-bottom: 5px; }
+
+/* ---- lærartekst og botn ----------------------------------------------- */
+
+.bs-larartekst { margin-top: 8px; }
+
+.bs-larartekst p {
+    max-width: 74ch;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.bs-landing-lasting {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.bs-landing-feil {
+    padding: 10px 14px;
+    background: var(--accent4);
+    color: var(--text-on-light-accent);
+    border: 3px solid var(--border);
+    max-width: 74ch;
+}
+
+.bs-botntekst {
+    max-width: 78ch;
+    margin-top: 24px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bs-frikort:hover,
+    a.bs-modulkort:hover { transform: none; }
+    .bs-framgang-fyll { transition: none; }
+}

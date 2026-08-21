@@ -1,0 +1,239 @@
+/* Bolkestokk — leksjonspanelet, løypa og oppgåvene.
+ *
+ * Tilbakemelding på ei oppgåve er den einaste staden i verktøyet der farge
+ * ber tyding: grønt er rett, raudt er ikkje rett enno. Difor er dei to
+ * fargane faste og ikkje henta frå temaet — ei tilbakemelding som skiftar
+ * frå grøn til lilla når nokon byter tema, sluttar å bety noko.
+ *
+ * Men fargen ligg i ei KANTSTRIPE, ikkje under teksten (AGENTS.md §3.2).
+ * Sjølve flata står på --surface med --text, så teksten er lesbar i alle 21
+ * tema, og ordet «Rett!» står der uansett for den som ikkje skil fargane.
+ */
+
+.bs-leksjonstekst,
+.bs-oppgavetekst,
+.bs-loypetekst,
+.bs-oppsummering p,
+.bs-bru p {
+    max-width: 78ch;      /* AGENTS.md §3.1.1 — brei flate, lesbare tekstlinjer */
+}
+
+/* ---- topp ------------------------------------------------------------------ */
+
+.bs-leksjonstopp { margin-bottom: 14px; }
+
+.bs-leksjonssti {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+}
+.bs-leksjonssti:hover { text-decoration: underline; }
+
+.bs-leksjonsteljar {
+    margin: 4px 0 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.bs-maal { margin-top: 8px; font-size: 13px; }
+.bs-maal summary { cursor: pointer; font-weight: 700; color: var(--muted); }
+.bs-maalliste { margin: 6px 0 0; padding-left: 20px; color: var(--muted); line-height: 1.55; }
+
+/* ---- læretekst -------------------------------------------------------------- */
+
+.bs-leksjonstekst p { line-height: 1.65; }
+
+.bs-leskode {
+    padding: 10px 13px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    box-shadow: 2px 2px 0 var(--shadow);
+    overflow-x: auto;
+}
+
+.bs-kodeord {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .92em;
+    padding: 1px 5px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+}
+
+/* Fargen står som ei stripe til venstre, ikkje som fyll under teksten. */
+.bs-merk {
+    padding: 9px 13px;
+    border-left: 6px solid var(--accent2);
+    background: var(--surface);
+    line-height: 1.6;
+}
+
+.bs-punktliste { padding-left: 22px; line-height: 1.65; max-width: 78ch; }
+
+/* ---- deltitlar ---------------------------------------------------------------- */
+
+.bs-deltittel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+/* ---- døme og løype -------------------------------------------------------------- */
+
+.bs-doeme, .bs-loype, .bs-oppsummering, .bs-bru { margin: 16px 0; }
+
+.bs-loypemaal { margin: 0 0 10px; font-size: 14px; color: var(--muted); max-width: 78ch; }
+
+.bs-loypeteljar {
+    margin: 0 0 6px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--muted);
+}
+
+.bs-loypetekst { margin: 0 0 8px; line-height: 1.6; }
+
+.bs-loypeproev {
+    margin: 0 0 10px;
+    padding: 8px 12px;
+    max-width: 78ch;
+    font-size: 13.5px;
+    line-height: 1.55;
+    border-left: 6px solid var(--accent);
+    background: var(--surface);
+}
+
+.bs-loypeknappar, .bs-oppgaveknappar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.bs-btn-liten { font-size: 12px; padding: 6px 12px; }
+
+/* ---- oppgåver ---------------------------------------------------------------------- */
+
+.bs-oppgavebolk { margin: 22px 0; }
+
+.bs-oppgave { margin-bottom: 14px; }
+
+.bs-oppgavetopp { display: flex; align-items: center; gap: 10px; }
+
+.bs-oppgavemerke {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.bs-oppgavenummer { margin-left: auto; font-size: 11px; opacity: .85; }
+
+.bs-oppgavetekst { margin: 0 0 12px; line-height: 1.6; }
+
+/* Løyst oppgåve: ei tydeleg ramme, og kortet blir ståande ope. */
+.bs-oppgave-rett { box-shadow: 5px 5px 0 var(--shadow), 0 0 0 3px #16a34a; }
+
+/* ---- blokkene i ei lesoppgåve --------------------------------------------------------- */
+
+.bs-lesblokker {
+    margin: 0 0 12px;
+    padding: 12px;
+    background: var(--bg);
+    border: 2px solid var(--border);
+}
+
+/* Dei er til for å lesast, ikkje til å rørast. */
+.bs-lesblokker .bs-blokk { cursor: default; }
+.bs-lesblokker .bs-felt { pointer-events: none; }
+
+.bs-sporsmal { margin: 0 0 10px; font-weight: 700; }
+
+.bs-alternativ { display: flex; flex-direction: column; gap: 7px; align-items: flex-start; }
+
+.bs-alternativ-knapp {
+    text-align: left;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    white-space: pre-wrap;
+}
+
+.bs-alternativ-knapp.er-rett  { border-left: 8px solid #16a34a; }
+.bs-alternativ-knapp.er-feil  { border-left: 8px solid #e11d48; }
+.bs-alternativ-knapp:disabled { opacity: 1; cursor: default; }
+
+/* ---- svar ------------------------------------------------------------------------------ */
+
+.bs-svar {
+    margin-top: 12px;
+    padding: 10px 13px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-left-width: 8px;
+}
+
+.bs-svar-rett { border-left-color: #16a34a; }
+.bs-svar-feil { border-left-color: #e11d48; }
+
+.bs-svartittel { margin: 0 0 6px; font-weight: 800; }
+.bs-svarrad { margin-bottom: 4px; }
+
+/* ---- hint -------------------------------------------------------------------------------- */
+
+.bs-hint:empty { margin: 0; }
+
+.bs-hinttekst {
+    margin: 10px 0 0;
+    padding: 8px 12px;
+    max-width: 78ch;
+    line-height: 1.55;
+    border-left: 6px solid var(--accent5);
+    background: var(--surface);
+}
+
+.bs-loeysingstekst { border-left-color: var(--accent3); font-style: italic; }
+
+.bs-btn-hint { margin-top: 10px; }
+
+/* ---- navigasjon og bru ---------------------------------------------------------------------- */
+
+.bs-leksjonsnav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin: 20px 0 4px;
+}
+
+.bs-nav-neste { margin-left: auto; }
+
+.bs-bru { width: 100%; }
+.bs-bru p { line-height: 1.6; margin-bottom: 12px; }
+
+/* Overskrifta over ein stabel i ei lesoppgåve. Ho står som tekst og ikkje
+ * som ei hatt-blokk: eleven skal lese programmet, ikkje tru han kan røre det. */
+.bs-leshatt {
+    margin: 10px 0 5px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    color: var(--muted);
+}
+.bs-leshatt:first-child { margin-top: 0; }

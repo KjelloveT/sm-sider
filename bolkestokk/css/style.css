@@ -1,0 +1,159 @@
+/* Bolkestokk — arbeidsflata. Utvidar css/neobrutalisme.css.
+ *
+ * Dette ER ei arbeidsflate, så sida brukar .main-wide (AGENTS.md §3.1.1):
+ * paletten, blokkene og teikninga skal alle vere synlege samtidig, og kvar
+ * piksel breidd går til det. Tekstblokkene i leksjonspanelet held si eiga
+ * breiddegrense uansett, slik same paragraf krev.
+ */
+
+/* ---- flata ----------------------------------------------------------------- */
+
+.bs-flate {
+    display: grid;
+    grid-template-columns: 210px minmax(280px, 1fr) minmax(300px, 1fr);
+    gap: 14px;
+    align-items: start;
+}
+
+/* Under 1100px har det ikkje plass til tre spalter. Teikninga går under,
+ * i full breidd — ho tener mest på plassen. */
+@media (max-width: 1100px) {
+    .bs-flate { grid-template-columns: 190px minmax(0, 1fr); }
+    .bs-utflate { grid-column: 1 / -1; }
+}
+
+/* På telefon er alt under kvarandre, men teikninga blir klistra øvst så
+ * eleven ser figuren endre seg medan han byggjer lenger nede. */
+@media (max-width: 700px) {
+    .bs-flate { grid-template-columns: 1fr; }
+    .bs-utflate { grid-column: auto; position: sticky; top: 0; z-index: 5; }
+}
+
+/* ---- paletten --------------------------------------------------------------- */
+
+.bs-palett {
+    position: sticky;
+    top: 8px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    padding: 12px 10px;
+    background: var(--surface);
+    border: 3px solid var(--border);
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+@media (max-width: 700px) {
+    .bs-palett { position: static; max-height: none; }
+}
+
+/* ---- arbeidsbenken ------------------------------------------------------------ */
+
+.bs-benk { min-width: 0; }
+
+.bs-verktoyrad {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.bs-fart {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.bs-fart input { width: 108px; accent-color: var(--accent); }
+
+.bs-arbeid {
+    min-height: 340px;
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+    padding: 14px;
+    background: var(--bg);
+    border: 3px solid var(--border);
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.bs-stabelboks { margin-bottom: 22px; }
+
+/* ---- teikninga ------------------------------------------------------------------ */
+
+.bs-utflate { min-width: 0; }
+
+.bs-lerretboks {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-height: 60vh;
+    background: var(--surface);
+}
+
+.bs-lerret { display: block; width: 100%; height: 100%; }
+
+.bs-pythonrute {
+    margin: 0;
+    padding: 12px 14px;
+    max-height: 52vh;
+    overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.bs-utskrift {
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.bs-utskrift:empty { display: none; }
+
+.bs-feil {
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    background: var(--surface);
+    color: var(--text);
+    border: 3px solid var(--accent2);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+
+/* ---- statuslinje ------------------------------------------------------------------ */
+
+/* Statuslinja er role="status" og melder frå om køyringa. Ho må vere lesbar
+ * — difor --text, ikkje --muted (som fell til 3,2:1 i lyse tema). */
+.bs-status {
+    margin: 8px 0 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    min-height: 1.2em;
+}
+
+/* ---- hjelpetekst ------------------------------------------------------------------- */
+
+/* Forklarer korleis ein dreg og slettar blokker. Det er ikkje pynt for ein
+ * sjetteklassing som opnar verktøyet for fyrste gong. */
+.bs-hjelp {
+    max-width: 78ch;
+    margin: 18px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+}

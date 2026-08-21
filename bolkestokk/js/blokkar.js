@@ -1,0 +1,283 @@
+/* Bolkestokk — blokkatalogen.
+ *
+ * Kvar blokk er eitt dataobjekt. Editoren, tolken og Python-omsetjaren les
+ * alle herifrå, og ingen av dei har si eiga liste over kva blokker som finst.
+ * Det er heile poenget: ein ny modul — rutenett-robot, terningkast, tabellar —
+ * skal vere ei utviding av desse dataa, ikkje ny motorkode.
+ *
+ * Felt i ein definisjon:
+ *   id        nøkkelen som ligg i lagra program. Endrar du han, brotnar
+ *             gamle program og alle fasitane i moduler/*.json.
+ *   form      'hatt'    — toppen av ein stabel, kan ikkje ligge inni noko
+ *             'setning' — vanleg blokk i ein stabel
+ *             'krop'    — setning som har ein stabel inni seg (gjenta)
+ *             'verdi'   — kan berre ligge i eit verdi-hol
+ *   tekst     orda og hola, i den rekkjefølgja dei skal lesast
+ *   koyr      generator: gjer arbeidet. Kvart yield er eitt steg.
+ *   verdi     rein funksjon: reknar ut ein verdi. Berre for form 'verdi'.
+ *   python    lagar ei lesbar Python-linje
+ *
+ * Hola i `tekst` er objekt:
+ *   { felt:'lengd', slag:'tal', standard:100 }   tal, kan bytast med verdiblokk
+ *   { felt:'op', slag:'val', val:[...] }         nedtrekksliste
+ */
+const BolkBlokkar = (function () {
+
+    /* Farge på pennen.
+     *
+     * «Vanleg» er ikkje ein fast farge: han blir slått opp i --text når
+     * teikninga skjer, slik at streken er synleg i alle 21 tema. Dei andre
+     * er faste — ei teikning er elevens innhald, ikkje UI-krom, og då skal
+     * ho sjå lik ut same kva tema maskina står i. Alle seks er valde så dei
+     * held mot både lys og mørk bakgrunn. */
+    const FARGAR = [
+        { verdi: 'vanleg',  tekst: 'vanleg',  hex: null,      py: 'black'  },
+        { verdi: 'raud',    tekst: 'raud',    hex: '#e11d48', py: 'red'    },
+        { verdi: 'blaa',    tekst: 'blå',     hex: '#2563eb', py: 'blue'   },
+        { verdi: 'groen',   tekst: 'grøn',    hex: '#16a34a', py: 'green'  },
+        { verdi: 'gul',     tekst: 'gul',     hex: '#eab308', py: 'gold'   },
+        { verdi: 'lilla',   tekst: 'lilla',   hex: '#9333ea', py: 'purple' },
+        { verdi: 'oransje', tekst: 'oransje', hex: '#ea580c', py: 'orange' }
+    ];
+
+    /* Rekneartane. Dei ligg i éi blokk med nedtrekksliste framfor fem
+     * separate blokker: paletten til ein sjetteklassing skal vere kort nok
+     * til å sjåast utan å rulle. */
+    const REKNEARTAR = [
+        { verdi: 'pluss', tekst: '+',               py: '+', gjer: (a, b) => a + b },
+        { verdi: 'minus', tekst: '−',          py: '-', gjer: (a, b) => a - b },
+        { verdi: 'gonge', tekst: '×',          py: '*', gjer: (a, b) => a * b },
+        { verdi: 'dele',  tekst: '÷',          py: '/', gjer: (a, b) => b === 0 ? 0 : a / b },
+        { verdi: 'rest',  tekst: 'rest ved deling', py: '%', gjer: (a, b) => b === 0 ? 0 : a % b }
+    ];
+
+    const KATEGORIAR = [
+        { id: 'styring',   tittel: 'Styring',          accent: 'accent'  },
+        { id: 'skilpadde', tittel: 'Skilpadda',        accent: 'accent2' },
+        { id: 'verdi',     tittel: 'Tal og rekning',   accent: 'accent4' },
+        { id: 'variabel',  tittel: 'Variablar',        accent: 'accent5' },
+        { id: 'kommando',  tittel: 'Eigne kommandoar', accent: 'accent3' }
+    ];
+
+    const DEF = [
+
+        /* ---- styring ---------------------------------------------------- */
+        {
+            id: 'start', kategori: 'styring', form: 'hatt',
+            tekst: ['Når eg trykkjer Køyr'],
+            python: () => null
+        },
+        {
+            id: 'gjenta', kategori: 'styring', form: 'krop',
+            tekst: ['Gjenta', { felt: 'tal', slag: 'tal', standard: 4 }, 'gonger'],
+            /* Taket på 1000 er ikkje ei tryggleiksgrense — utan medan-løkke kan
+             * eit program uansett ikkje henge. Det er for å hindre at ein elev
+             * som skriv 100000 i farta trur maskina er øydelagd. */
+            koyr: function* (node, ktx, hj) {
+                const n = Math.min(1000, Math.max(0, Math.round(hj.verdi(node.felt.tal, ktx))));
+                for (let i = 0; i < n; i++) yield* hj.koyrStabel(node.kropp || [], ktx);
+            },
+            python: (f, hj) => 'for i in range(' + hj.uttrykk(f.tal) + '):'
+        },
+
+        /* ---- skilpadda -------------------------------------------------- */
+        {
+            id: 'framover', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Gå framover', { felt: 'lengd', slag: 'tal', standard: 100 }, 'steg'],
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(hj.verdi(node.felt.lengd, ktx)); yield; },
+            python: (f, hj) => 'forward(' + hj.uttrykk(f.lengd) + ')'
+        },
+        {
+            id: 'bakover', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Gå bakover', { felt: 'lengd', slag: 'tal', standard: 50 }, 'steg'],
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(-hj.verdi(node.felt.lengd, ktx)); yield; },
+            python: (f, hj) => 'backward(' + hj.uttrykk(f.lengd) + ')'
+        },
+        {
+            id: 'snuHogre', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Snu høgre', { felt: 'grader', slag: 'tal', standard: 90 }, 'gradar'],
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(hj.verdi(node.felt.grader, ktx)); yield; },
+            python: (f, hj) => 'right(' + hj.uttrykk(f.grader) + ')'
+        },
+        {
+            id: 'snuVenstre', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Snu venstre', { felt: 'grader', slag: 'tal', standard: 90 }, 'gradar'],
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(-hj.verdi(node.felt.grader, ktx)); yield; },
+            python: (f, hj) => 'left(' + hj.uttrykk(f.grader) + ')'
+        },
+        {
+            id: 'pennOpp', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Penn opp'],
+            koyr: function* (node, ktx) { ktx.skilpadde.penn(false); yield; },
+            python: () => 'penup()'
+        },
+        {
+            id: 'pennNed', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Penn ned'],
+            koyr: function* (node, ktx) { ktx.skilpadde.penn(true); yield; },
+            python: () => 'pendown()'
+        },
+        {
+            id: 'setFarge', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Set farge til', { felt: 'farge', slag: 'val', val: FARGAR, standard: 'raud' }],
+            koyr: function* (node, ktx) { ktx.skilpadde.setFarge(node.felt.farge); yield; },
+            python: (f) => {
+                const v = FARGAR.find(x => x.verdi === f.farge) || FARGAR[0];
+                return 'pencolor("' + v.py + '")';
+            }
+        },
+        {
+            id: 'setTjukn', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Set tjukn til', { felt: 'tjukn', slag: 'tal', standard: 3 }],
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.setTjukn(hj.verdi(node.felt.tjukn, ktx)); yield; },
+            python: (f, hj) => 'pensize(' + hj.uttrykk(f.tjukn) + ')'
+        },
+        {
+            id: 'tilStart', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Gå til start'],
+            koyr: function* (node, ktx) { ktx.skilpadde.tilStart(); yield; },
+            /* Python sin turtle startar peikande mot høgre, så retninga
+             * må setjast attende til opp. Fleire linjer ut av éi blokk. */
+            python: () => ['penup()', 'goto(0, 0)', 'setheading(90)', 'pendown()']
+        },
+
+        /* ---- tal og rekning --------------------------------------------- */
+        /* Det finst med vilje inga «tal»-blokk. Kvart tal-hòl har eit felt
+         * eleven kan skrive rett i, så ei eiga blokk for å halde eit tal
+         * ville vore ein omveg til det same — og ein blokk til i ein palett
+         * som skal kunne sjåast utan å rulle. */
+        {
+            id: 'rekne', kategori: 'verdi', form: 'verdi', namn: 'rekning',
+            tekst: [
+                { felt: 'a', slag: 'tal', standard: 360 },
+                { felt: 'op', slag: 'val', val: REKNEARTAR, standard: 'dele' },
+                { felt: 'b', slag: 'tal', standard: 6 }
+            ],
+            verdi: (f, ktx, hj) => {
+                const art = REKNEARTAR.find(r => r.verdi === f.op) || REKNEARTAR[0];
+                return art.gjer(hj.verdi(f.a, ktx), hj.verdi(f.b, ktx));
+            },
+            /* Parentes berre der han trengst. `right(360 / 6)` les betre enn
+             * `right((360 / 6))`, men `2 * (3 + 4)` må ha han for å bety det
+             * blokkene viser. */
+            python: (f, hj) => {
+                const art = REKNEARTAR.find(r => r.verdi === f.op) || REKNEARTAR[0];
+                const led = (h) => {
+                    const t = hj.uttrykk(h);
+                    return (h && typeof h === 'object' && h.type === 'rekne') ? '(' + t + ')' : t;
+                };
+                return led(f.a) + ' ' + art.py + ' ' + led(f.b);
+            }
+        },
+        {
+            id: 'tilfeldig', kategori: 'verdi', form: 'verdi',
+            tekst: ['tilfeldig tal frå', { felt: 'fra', slag: 'tal', standard: 1 },
+                    'til', { felt: 'til', slag: 'tal', standard: 6 }],
+            verdi: (f, ktx, hj) => {
+                const a = Math.round(hj.verdi(f.fra, ktx));
+                const b = Math.round(hj.verdi(f.til, ktx));
+                const laag = Math.min(a, b), hoeg = Math.max(a, b);
+                return laag + Math.floor(ktx.tilfeldig() * (hoeg - laag + 1));
+            },
+            python: (f, hj) => 'randint(' + hj.uttrykk(f.fra) + ', ' + hj.uttrykk(f.til) + ')'
+        },
+
+        /* ---- variablar --------------------------------------------------- */
+        {
+            id: 'settVar', kategori: 'variabel', form: 'setning',
+            tekst: ['Set', { felt: 'namn', slag: 'val', val: 'variablar', standard: 'lengd' },
+                    'til', { felt: 'verdi', slag: 'tal', standard: 50 }],
+            koyr: function* (node, ktx, hj) {
+                ktx.variablar[node.felt.namn] = hj.verdi(node.felt.verdi, ktx);
+                yield;
+            },
+            python: (f, hj) => f.namn + ' = ' + hj.uttrykk(f.verdi)
+        },
+        {
+            id: 'endreVar', kategori: 'variabel', form: 'setning',
+            tekst: ['Endre', { felt: 'namn', slag: 'val', val: 'variablar', standard: 'lengd' },
+                    'med', { felt: 'med', slag: 'tal', standard: 10 }],
+            koyr: function* (node, ktx, hj) {
+                const naa = ktx.variablar[node.felt.namn] || 0;
+                ktx.variablar[node.felt.namn] = naa + hj.verdi(node.felt.med, ktx);
+                yield;
+            },
+            python: (f, hj) => f.namn + ' = ' + f.namn + ' + ' + hj.uttrykk(f.med)
+        },
+        {
+            id: 'lesVar', kategori: 'variabel', form: 'verdi', namn: 'verdien i ein variabel',
+            tekst: [{ felt: 'namn', slag: 'val', val: 'variablar', standard: 'lengd' }],
+            verdi: (f, ktx) => ktx.variablar[f.namn] || 0,
+            python: (f) => f.namn
+        },
+
+        /* ---- eigne kommandoar -------------------------------------------- */
+        {
+            id: 'lagKommando', kategori: 'kommando', form: 'hatt',
+            tekst: ['Lag kommandoen', { felt: 'namn', slag: 'tekst', standard: 'firkant' }],
+            python: (f) => 'def ' + f.namn + '():'
+        },
+        {
+            id: 'kallKommando', kategori: 'kommando', form: 'setning',
+            tekst: ['Bruk', { felt: 'namn', slag: 'val', val: 'kommandoar', standard: '' }],
+            /* Djupna på 20 finst fordi ein kommando kan kalle seg sjølv. Det er
+             * ikkje forbode — ein spiral laga med rekursjon er eit fint syn —
+             * men utan grense ville det tømt stakken i staden for å seie frå. */
+            koyr: function* (node, ktx, hj) {
+                const kom = ktx.kommandoar[node.felt.namn];
+                if (!kom) return;
+                if (ktx.djupn >= 20) throw new Error('Kommandoen brukar seg sjølv for mange gonger.');
+                ktx.djupn++;
+                try { yield* hj.koyrStabel(kom, ktx); } finally { ktx.djupn--; }
+            },
+            python: (f) => f.namn + '()'
+        },
+
+        /* ---- utskrift ----------------------------------------------------- */
+        {
+            id: 'skrivUt', kategori: 'verdi', form: 'setning',
+            tekst: ['Skriv ut', { felt: 'verdi', slag: 'tal', standard: 0 }],
+            koyr: function* (node, ktx, hj) {
+                ktx.utskrift.push(talTekst(hj.verdi(node.felt.verdi, ktx)));
+                yield;
+            },
+            python: (f, hj) => 'print(' + hj.uttrykk(f.verdi) + ')'
+        }
+    ];
+
+    const KART = new Map(DEF.map(d => [d.id, d]));
+
+    function hent(id) { return KART.get(id); }
+
+    /** Hola i ei blokk, i lesest-rekkjefølgje. */
+    function felt(id) {
+        const def = hent(id);
+        return (def ? def.tekst : []).filter(d => typeof d === 'object');
+    }
+
+    /** Standardverdiane for ei fersk blokk. */
+    function standardFelt(id) {
+        const ut = {};
+        felt(id).forEach(f => { ut[f.felt] = f.standard !== undefined ? f.standard : 0; });
+        return ut;
+    }
+
+    /* Tal blir viste utan unødige desimalar: 360/6 skal stå som «60», ikkje
+     * «60.00000000000001». Seks desimalar er langt meir enn ein sjetteklassing
+     * treng, og nok til at avrundingsstøy frå flyttal forsvinn. */
+    function talTekst(n) {
+        if (!isFinite(n)) return '0';
+        return String(Math.round(n * 1e6) / 1e6);
+    }
+
+    function fargeHex(namn) {
+        const f = FARGAR.find(x => x.verdi === namn);
+        return (f || FARGAR[0]).hex;
+    }
+
+    return {
+        DEF, KATEGORIAR, FARGAR, REKNEARTAR,
+        hent, felt, standardFelt, talTekst, fargeHex,
+        idar: () => DEF.map(d => d.id)
+    };
+})();
