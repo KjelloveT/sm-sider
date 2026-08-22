@@ -288,10 +288,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 2.6em;
-    padding: 4px 8px;
+    min-width: 2.2em;
+    padding: 4px 6px;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 14px;
     color: var(--text);
     background: var(--bs-hvit);
     border: 3px solid var(--border);
@@ -350,10 +350,10 @@
 
 /* Spalta er smal. Med same luft og skriftgrad som på benken braut fjorten
  * av sytten blokker over fleire linjer, så her strammar vi inn. */
-.bs-palettbolk .bs-rad { gap: 6px; font-size: 14px; min-height: 46px; padding: 8px 10px; }
+.bs-palettbolk .bs-rad { gap: 5px; font-size: 13.5px; min-height: 46px; padding: 8px 9px; }
 .bs-palettbolk .bs-symbol { width: 22px; height: 22px; }
 .bs-palettbolk .bs-symbol svg { width: 21px; height: 21px; }
-.bs-palettbolk .bs-felt-val { max-width: 6.5em; font-size: 13px; min-height: 30px; }
+.bs-palettbolk .bs-felt-val { max-width: 5.4em; font-size: 12.5px; min-height: 30px; }
 .bs-palettbolk .bs-felt-tekst { width: 5.5em; font-size: 14px; min-height: 30px; }
 
 /* Gjenta i paletten treng berre vise at ho HAR eit rom, ikkje kor stort det

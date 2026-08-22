@@ -103,8 +103,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ---- målingane -------------------------------------------------------
      * Dei same påstandane som står i planen. Alt som ikkje er 0 avvik er ein
-     * feil, ikkje ein smakssak. */
-    setTimeout(() => {
+     * feil, ikkje ein smakssak.
+     *
+     * Vi ventar to animasjonsbilete OG eit halvt sekund. Fyrste utgåva målte
+     * etter 250ms og rapporterte OK for blokker som seinare braut over to
+     * linjer: hydrateIcons hadde ikkje sett inn SVG-ane enno, så blokkene
+     * var smalare enn dei kom til å bli. */
+    const naarLayoutSit = (fn) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(fn, 500)));
+
+    naarLayoutSit(() => {
         const ut = [];
         const rund = (x) => Math.round(x);
         const R = (el) => el.getBoundingClientRect();
@@ -173,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         seier('Gjenta i paletten under 130px', pgh < 130, pgh + 'px');
 
         document.getElementById('maaling').textContent = ut.join('\n');
-    }, 250);
+    });
 });
 </script>
 </body>
