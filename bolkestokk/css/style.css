@@ -374,3 +374,70 @@
 /* Fanene over teikninga følgjer same profil: fylt farge, svart tekst. */
 body.bs-tema .box5 .box-tab { font-family: var(--bs-font); font-weight: 800; background: var(--bs-palettflate); color: var(--text); }
 body.bs-tema .box5 .box-tab.active { background: var(--bs-start); color: var(--text); }
+
+/* ---- leksjonen glir vekk medan programmet køyrer ---------------------------
+ *
+ * Spalta blir ikkje borte, ho glir. Eit panel som forsvinn momentant er eit
+ * panel eleven trur han har mist; eit som glir ut mot venstre er eit han veit
+ * kvar er — og knappen i verktøyraden hentar det att.
+ *
+ * Over 1280px er leksjonen ei eiga spalte, så det er spaltebreidda som skal
+ * animerast. Chrome kan animere grid-template-columns; skulle ein nettlesar
+ * ikkje kunne det, skjer det same, berre utan glidinga. */
+
+@media (min-width: 1280px) {
+    .bs-flate:has(> .bs-leksjonspanel:not([hidden])) {
+        transition: grid-template-columns .38s cubic-bezier(.4, 0, .2, 1);
+    }
+    .bs-flate.bs-leksjon-borte:has(> .bs-leksjonspanel:not([hidden])) {
+        grid-template-columns: 0 var(--bs-palett) minmax(280px, 1fr) minmax(320px, 1fr);
+    }
+    .bs-leksjonspanel {
+        transition: opacity .22s ease,
+                    transform .38s cubic-bezier(.4, 0, .2, 1),
+                    padding .38s cubic-bezier(.4, 0, .2, 1),
+                    border-width .38s cubic-bezier(.4, 0, .2, 1);
+    }
+    .bs-leksjon-borte > .bs-leksjonspanel {
+        opacity: 0;
+        transform: translateX(-24px);
+        padding-left: 0;
+        padding-right: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        pointer-events: none;
+    }
+}
+
+/* Under 1280px ligg leksjonen som eit band øvst, og då er det høgda som
+ * skal gje etter. */
+@media (max-width: 1279px) {
+    .bs-leksjonspanel {
+        transition: max-height .38s cubic-bezier(.4, 0, .2, 1),
+                    opacity .22s ease,
+                    padding .38s cubic-bezier(.4, 0, .2, 1),
+                    border-width .38s cubic-bezier(.4, 0, .2, 1),
+                    margin .38s cubic-bezier(.4, 0, .2, 1);
+    }
+    .bs-leksjon-borte > .bs-leksjonspanel {
+        max-height: 0;
+        opacity: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        pointer-events: none;
+    }
+}
+
+/* Panelet må klippe innhaldet sitt medan det krympar, elles stikk teksten
+ * ut av spalta på veg vekk. */
+.bs-leksjon-borte > .bs-leksjonspanel { overflow: hidden; }
+
+/* Knappen ber same fargen som leksjonspanelet er lagt på. */
+body.bs-tema #leksjonKnapp { background: var(--bs-mi); }
+
+@media (prefers-reduced-motion: reduce) {
+    .bs-flate,
+    .bs-leksjonspanel { transition: none; }
+}

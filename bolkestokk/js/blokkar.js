@@ -170,8 +170,12 @@ const BolkBlokkar = (function () {
          * eleven kan skrive rett i, så ei eiga blokk for å halde eit tal
          * ville vore ein omveg til det same — og ein blokk til i ein palett
          * som skal kunne sjåast utan å rulle. */
+        /* Ikonet er ei lita skjerm med siffer, ikkje eit plussteikn. Eit «+»
+         * på ei blokk som kan gjere alle fem rekneartane fortel eleven at
+         * dette er addisjonsblokka, og at dei andre må liggje ein annan
+         * stad. Kva rekneart det er, står i nedtrekket midt i blokka. */
         {
-            id: 'rekne', farge: 'tal', ikon: 'plus', kategori: 'verdi', form: 'verdi', namn: 'rekning',
+            id: 'rekne', farge: 'tal', ikon: 'digital', kategori: 'verdi', form: 'verdi', namn: 'rekning',
             tekst: [
                 { felt: 'a', slag: 'tal', standard: 360 },
                 { felt: 'op', slag: 'val', val: REKNEARTAR, standard: 'dele' },

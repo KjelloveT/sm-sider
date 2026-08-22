@@ -33,7 +33,8 @@
          'lerret', 'utskrift', 'feil', 'faneTeikning', 'fanePython',
          'ruteTeikning', 'rutePython', 'leksjonspanel',
          'stegKnapp', 'stegrad', 'nesteSteg', 'spelAv', 'stegInfo',
-         'stegblokk', 'stegblokkTekst', 'variablar']
+         'stegblokk', 'stegblokkTekst', 'variablar',
+         'flate', 'leksjonKnapp', 'leksjonKnappTekst']
             .forEach(id => { el[id] = document.getElementById(id); });
 
         program = BolkLager.hentSiste() || nyttProgram();
@@ -58,6 +59,7 @@
         el.stegKnapp.addEventListener('click', startStegmodus);
         el.nesteSteg.addEventListener('click', () => { stansAvspeling(); eittSteg(); });
         el.spelAv.addEventListener('click', vekselAvspeling);
+        el.leksjonKnapp.addEventListener('click', vekselLeksjon);
 
         // Ei uferdig teikning er ikkje verdt å miste fordi ein fane vart lukka.
         window.addEventListener('beforeunload', lagre);
@@ -125,6 +127,57 @@
         endra();
     }
 
+    /* ---- leksjonen gjer plass medan programmet køyrer -----------------------
+     *
+     * Leksjonsspalta tek ein fjerdedel av flata. Medan programmet køyrer er
+     * det teikninga og blokkene eleven ser på, ikkje teksten, så spalta
+     * glir vekk og kjem att litt etter at programmet er ferdig.
+     *
+     * Ho GLIR — ho blir ikkje borte. Eit panel som forsvinn momentant er eit
+     * panel eleven trur han har mist; eit som glir ut mot venstre er eit han
+     * veit kvar er.
+     *
+     * Knappen overstyrer alltid. Har eleven sjølv gøymt leksjonen, kjem ho
+     * ikkje att av seg sjølv — det ville vore å overprøve han. */
+
+    const VENT_FOER_VISING = 1600;
+    let brukarSkjult = false;
+    let visTimer = null;
+
+    const harLeksjon = () => el.leksjonspanel && !el.leksjonspanel.hidden;
+
+    function leksjonOpna() {
+        el.leksjonKnapp.hidden = false;
+        setLeksjonSynleg(true);
+    }
+
+    function setLeksjonSynleg(synleg) {
+        el.flate.classList.toggle('bs-leksjon-borte', !synleg);
+        el.leksjonKnapp.setAttribute('aria-expanded', String(synleg));
+        el.leksjonKnappTekst.textContent = synleg ? 'Skjul leksjon' : 'Vis leksjon';
+    }
+
+    const leksjonSynleg = () => !el.flate.classList.contains('bs-leksjon-borte');
+
+    function vekselLeksjon() {
+        clearTimeout(visTimer);
+        const skalVise = !leksjonSynleg();
+        brukarSkjult = !skalVise;
+        setLeksjonSynleg(skalVise);
+    }
+
+    function gjemLeksjonMedanKoyrer() {
+        if (!harLeksjon()) return;
+        clearTimeout(visTimer);
+        setLeksjonSynleg(false);
+    }
+
+    function hentLeksjonAtt() {
+        if (!harLeksjon() || brukarSkjult) return;
+        clearTimeout(visTimer);
+        visTimer = setTimeout(() => setLeksjonSynleg(true), VENT_FOER_VISING);
+    }
+
     /* ---- køyring --------------------------------------------------------- */
 
     function koyr(naarFerdig) {
@@ -139,6 +192,7 @@
         el.stopp.disabled = false;
         el.koyr.disabled = true;
         melding('Køyrer …');
+        gjemLeksjonMedanKoyrer();
 
         // Ligg fana alt i bakgrunnen, får vi aldri eit animasjonsbilete å
         // steppe på. Då teiknar vi ferdig med det same.
@@ -231,6 +285,7 @@
         } else {
             melding('Ferdig — ' + ktx.skilpadde.strek.length + ' strek teikna.');
         }
+        hentLeksjonAtt();
         if (kall) kall({ ktx, feil });
     }
 
@@ -240,6 +295,7 @@
         BolkEditor.markerKoyrande(null);
         avslutt();
         melding('Stoppa.');
+        hentLeksjonAtt();
     }
 
     /* Ingen worker å terminere: å stoppe er berre å slutte å be generatoren
@@ -391,6 +447,7 @@
     function vertsapi() {
         return {
             panel: el.leksjonspanel,
+            leksjonOpna,
             setProgram,
             hentProgram: () => program,
             setPalett: (liste) => { BolkEditor.setPalett(liste); BolkEditor.teiknPalett(); },

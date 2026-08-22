@@ -3,6 +3,17 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.4] — 2026-08-22
+
+### Lagt til
+- **Leksjonen glir vekk medan programmet køyrer.** Leksjonsspalta tek ein fjerdedel av flata, og medan koden køyrer er det teikninga og blokkene eleven ser på, ikkje teksten. Spalta glir difor ut mot venstre når han trykkjer Køyr, og kjem att 1,6 sekund etter at programmet er ferdig. Arbeidsbenken veks frå 404 til 586px medan ho er borte.
+  - Ho **glir** — ho blir ikkje borte. Eit panel som forsvinn momentant er eit panel eleven trur han har mist; eit som glir ut mot venstre er eit han veit kvar er.
+  - Ein knapp i verktøyraden tvingar fram vising eller skjuling. Har eleven sjølv gøymt leksjonen, kjem ho ikkje att av seg sjølv etter neste køyring — det ville vore å overprøve han.
+  - Over 1280px er det spaltebreidda som blir animert, under er det høgda. `prefers-reduced-motion` slår av glidinga.
+
+### Fiksa
+- **Det tomme mellomrommet i blokkvelgaren.** Marginen som skil palettblokkene frå kvarandre var skriven med etterkomar-veljar og traff difor òg hovudet **inne i** C-forma til `Gjenta`. Hovudet vart rive 20px frå sin eigen kropp og fot, og blokka såg ut som to laushengande orange bitar med eit hol mellom. Barne-kombinator retta det; `Gjenta` gjekk frå 114px til 94px.
+- **Rekneblokka hadde eit plussteikn som ikon.** På ei blokk som kan gjere alle fem rekneartane fortalde det eleven at dette er addisjonsblokka, og at dei andre måtte liggje ein annan stad. Ikonet er no ei nøytral talskjerm; kva rekneart det er, står i nedtrekket midt i blokka.
 ## [1.3] — 2026-08-22
 
 ### Fiksa

@@ -340,9 +340,13 @@
 .bs-paletttittel[data-farge="boks"]  { --bs-kat: var(--bs-boks);  }
 .bs-paletttittel[data-farge="mi"]    { --bs-kat: var(--bs-mi);    }
 
-/* I paletten står blokkene som frittståande døme, med luft til tappen. */
-.bs-palettbolk .bs-blokk,
-.bs-palettbolk .bs-krop-ytre { margin-bottom: 20px; }
+/* I paletten står blokkene som frittståande døme, med luft til tappen.
+ *
+ * MÅ vere barne-kombinator. Med etterkomar-veljar traff marginen òg hovudet
+ * inni C-forma til Gjenta, og reiv det 20px frå sin eigen kropp og fot — det
+ * såg ut som to laushengande orange bitar med eit hol mellom. */
+.bs-palettbolk > .bs-blokk,
+.bs-palettbolk > .bs-krop-ytre { margin-bottom: 20px; }
 .bs-palettblokk { cursor: pointer; }
 .bs-palettblokk::before { content: none; }
 .bs-palettblokk:hover { transform: translate(-2px, -2px); }

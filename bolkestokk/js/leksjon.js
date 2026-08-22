@@ -31,6 +31,7 @@ const BolkLeksjon = (function () {
         }
 
         vert.panel.hidden = false;
+        if (vert.leksjonOpna) vert.leksjonOpna();
         vert.setPalett(leksjon.palett || null);
         teikn();
 
