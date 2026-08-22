@@ -13,10 +13,13 @@
      * Heile skalaen låg mellom «for fort å følgje med på» og «endå fortare».
      * Med tid som eining betyr hakka det same same kor rask skjermen er.
      *
-     * To steg i sekundet er sakte nok til at ein sjetteklassing rekk å lese
-     * blokka som lyser opp før neste tek over. Øvste hakket hoppar over
-     * animasjonen heilt, for den som berre vil sjå figuren. */
-    const FART = { 1: 2, 2: 5, 3: 12, 4: 30, 5: 90, 6: Infinity };
+     * Skalaen strekkjer seg heilt ned til éi blokk annakvart sekund. Det
+     * verkar absurd sakte til ein set seg ved sida av ein elev som ikkje har
+     * skjøna kva løkka gjer: der er det nettopp den farten som trengst, og
+     * to i sekundet — som var det tregaste i fyrste utgåva — ligg no midt på
+     * skalaen. Øvste hakket hoppar over animasjonen heilt, for den som berre
+     * vil sjå figuren. */
+    const FART = { 1: 0.5, 2: 1, 3: 2, 4: 5, 5: 15, 6: Infinity };
 
     const el = {};
     let program = null;
@@ -28,7 +31,9 @@
     function start() {
         ['palett', 'arbeid', 'koyr', 'stopp', 'toem', 'nyKommando', 'fart', 'status',
          'lerret', 'utskrift', 'feil', 'faneTeikning', 'fanePython',
-         'ruteTeikning', 'rutePython', 'leksjonspanel']
+         'ruteTeikning', 'rutePython', 'leksjonspanel',
+         'stegKnapp', 'stegrad', 'nesteSteg', 'spelAv', 'stegInfo',
+         'stegblokk', 'stegblokkTekst', 'variablar']
             .forEach(id => { el[id] = document.getElementById(id); });
 
         program = BolkLager.hentSiste() || nyttProgram();
@@ -50,6 +55,9 @@
         el.nyKommando.addEventListener('click', nyKommando);
         el.faneTeikning.addEventListener('click', () => fane('teikning'));
         el.fanePython.addEventListener('click', () => fane('python'));
+        el.stegKnapp.addEventListener('click', startStegmodus);
+        el.nesteSteg.addEventListener('click', () => { stansAvspeling(); eittSteg(); });
+        el.spelAv.addEventListener('click', vekselAvspeling);
 
         // Ei uferdig teikning er ikkje verdt å miste fordi ein fane vart lukka.
         window.addEventListener('beforeunload', lagre);
@@ -98,6 +106,8 @@
         BolkLerret.tom();
         el.utskrift.textContent = '';
         el.feil.hidden = true;
+        el.variablar.hidden = true;
+        el.stegblokk.hidden = true;
         ulagra = true;
     }
 
@@ -199,6 +209,9 @@
         if (koyring.ktx.utskrift.length) {
             el.utskrift.textContent = koyring.ktx.utskrift.join('\n');
         }
+        // Variablane er like nyttige i vanleg køyring som stegvis — det er
+        // dei som gjer at ein spiral er noko anna enn ein figur som veks.
+        visVariablar(koyring.ktx.variablar);
     }
 
     function ferdig(feil) {
@@ -233,8 +246,126 @@
      * om fleire steg. Han blir samla inn som alt anna. */
     function avslutt() {
         koyring = null;
+        stansAvspeling();
+        el.stegrad.hidden = true;
+        el.stegblokk.hidden = true;
+        el.stegKnapp.disabled = false;
         el.stopp.disabled = true;
         el.koyr.disabled = false;
+    }
+
+    /* ---- steg for steg -----------------------------------------------------
+     *
+     * Same tanken som i Ormritaren: blokka som står for tur lyser opp, og
+     * teikning, utskrift og variablar oppdaterer seg i same augeblink.
+     *
+     * Den utheva blokka er den som skal køyre NO, ikkje den som nettopp
+     * køyrde. Det er same semantikken som `sys.settrace` gjev Ormritaren, og
+     * det er den som let eleven gjette kva som kjem til å skje før han
+     * trykkjer — som er heile grunnen til at ein går stegvis.
+     */
+
+    let avspelingsTimer = null;
+
+    function startStegmodus() {
+        stopp();
+        el.feil.hidden = true;
+        el.utskrift.textContent = '';
+
+        const ktx = BolkTolk.nyKontekst(program);
+        const g = BolkTolk.koyr(program, { ktx });
+        koyring = { g, ktx, id: null, stegvis: true, teljar: 0, naarFerdig: null };
+
+        el.stegrad.hidden = false;
+        el.stegKnapp.disabled = true;
+        el.stopp.disabled = false;
+        /* Køyr blir med vilje ståande open. Ein elev som er lei av å trykkje
+         * seg gjennom skal kunne la resten gå av seg sjølv utan å måtte finne
+         * ut at han fyrst må trykkje Stopp — koyr() ryddar opp i stegmodus
+         * sjølv gjennom stopp(). */
+        oppdaterAvspelingsknapp();
+        BolkLerret.tom();
+        melding('Steg for steg.');
+
+        eittSteg();
+    }
+
+    /** Køyr blokka som står for tur, og vis kva som kjem etterpå. */
+    function eittSteg() {
+        if (!koyring || !koyring.stegvis) return;
+
+        let r;
+        try {
+            r = koyring.g.next();
+        } catch (f) {
+            return ferdig(f.message || String(f));
+        }
+        if (r.done) return ferdig(null);
+
+        koyring.teljar++;
+        const id = r.value && r.value.blokk;
+        BolkEditor.markerKoyrande(id);
+        visStegblokk(id);
+        visVariablar(koyring.ktx.variablar);
+        teiknNo();
+
+        if (avspelingsTimer !== null) {
+            const per = FART[el.fart.value] || 2;
+            avspelingsTimer = setTimeout(eittSteg, per === Infinity ? 0 : Math.round(1000 / per));
+        }
+    }
+
+    /* Blokka blir gjenteken som tekst rett over teikninga. Utan det måtte
+     * eleven som følgjer skilpadda sjå bort på arbeidsbenken for kvart steg
+     * — og då ser han ikkje streken bli teikna, som var heile poenget. */
+    function visStegblokk(id) {
+        const stad = id ? BolkTre.finn(program, id) : null;
+        if (!stad) { el.stegblokk.hidden = true; return; }
+        el.stegblokkTekst.textContent = BolkBlokkar.lesbar(stad.node);
+        el.stegblokk.hidden = false;
+        el.stegInfo.textContent = 'Steg ' + koyring.teljar;
+    }
+
+    function vekselAvspeling() {
+        if (avspelingsTimer !== null) { stansAvspeling(); return; }
+        avspelingsTimer = 0;               // 0 = spelar av, men ingen timer enno
+        oppdaterAvspelingsknapp();
+        eittSteg();
+    }
+
+    function stansAvspeling() {
+        if (avspelingsTimer) clearTimeout(avspelingsTimer);
+        avspelingsTimer = null;
+        oppdaterAvspelingsknapp();
+    }
+
+    function oppdaterAvspelingsknapp() {
+        if (!el.spelAv) return;
+        const spelar = avspelingsTimer !== null;
+        el.spelAv.textContent = spelar ? 'Pause' : 'Spel av';
+        el.nesteSteg.disabled = spelar;
+    }
+
+    /* ---- variablar ----------------------------------------------------------
+     *
+     * Berre synlege når programmet faktisk har nokon. Dei tre fyrste
+     * leksjonane brukar ingen variablar, og ei tom rute under kvar køyring
+     * er berre rot. */
+    function visVariablar(vars) {
+        const namn = Object.keys(vars || {});
+        el.variablar.textContent = '';
+        el.variablar.hidden = !namn.length;
+        if (!namn.length) return;
+
+        namn.forEach(n => {
+            const brikke = document.createElement('span');
+            brikke.className = 'bs-variabel';
+            const nm = document.createElement('strong');
+            nm.textContent = n;
+            brikke.appendChild(nm);
+            brikke.appendChild(document.createTextNode(' = ' + BolkBlokkar.talTekst(vars[n])));
+            el.variablar.appendChild(brikke);
+        });
     }
 
     const melding = (t) => { el.status.textContent = t; };

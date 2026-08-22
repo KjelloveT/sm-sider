@@ -270,6 +270,33 @@ const BolkBlokkar = (function () {
         return String(Math.round(n * 1e6) / 1e6);
     }
 
+    /**
+     * Blokka lesen som ei setning, med verdiane fylte inn:
+     * «Gå framover 100 steg», «Gjenta 6 gonger».
+     *
+     * Brukt av stegmodus, som gjentek blokka ved sida av teikninga. Utan det
+     * måtte eleven som følgjer skilpadda sjå bort på arbeidsbenken for kvart
+     * steg — og då ser han ikkje streken bli teikna, som var heile poenget.
+     */
+    function lesbar(node) {
+        const def = hent(node && node.type);
+        if (!def) return '';
+        return def.tekst.map(del => {
+            if (typeof del === 'string') return del;
+            const v = node.felt ? node.felt[del.felt] : undefined;
+
+            // Eit hòl med ei verdiblokk i blir lese ut det òg.
+            if (v && typeof v === 'object') return lesbar(v);
+
+            if (del.slag === 'val') {
+                const liste = Array.isArray(del.val) ? del.val : null;
+                const treff = liste && liste.find(x => x.verdi === v);
+                return treff ? treff.tekst : String(v === undefined ? '' : v);
+            }
+            return v === undefined || v === '' ? '…' : String(v);
+        }).join(' ').replace(/\s+/g, ' ').trim();
+    }
+
     function fargeHex(namn) {
         const f = FARGAR.find(x => x.verdi === namn);
         return (f || FARGAR[0]).hex;
@@ -277,7 +304,7 @@ const BolkBlokkar = (function () {
 
     return {
         DEF, KATEGORIAR, FARGAR, REKNEARTAR,
-        hent, felt, standardFelt, talTekst, fargeHex,
+        hent, felt, standardFelt, talTekst, fargeHex, lesbar,
         idar: () => DEF.map(d => d.id)
     };
 })();

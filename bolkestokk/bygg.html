@@ -50,6 +50,9 @@
       <div class="bs-verktoyrad">
         <button type="button" class="btn" id="koyr">Køyr</button>
         <button type="button" class="btn" id="stopp" disabled>Stopp</button>
+        <button type="button" class="btn bs-btn-steg" id="stegKnapp">
+          <span data-icon="footprints" data-icon-size="15"></span>Steg for steg
+        </button>
         <button type="button" class="btn" id="toem">Tøm</button>
         <button type="button" class="btn" id="nyKommando">Ny kommando</button>
         <label class="bs-fart">
@@ -59,12 +62,31 @@
         </label>
       </div>
 
+      <!-- Stegkontrollar. Kjem fram når stegvis køyring er i gang. -->
+      <div class="bs-stegrad" id="stegrad" hidden>
+        <button type="button" class="btn bs-btn-liten" id="nesteSteg">
+          <span data-icon="chevR" data-icon-size="14"></span>Neste blokk
+        </button>
+        <button type="button" class="btn bs-btn-liten" id="spelAv">Spel av</button>
+        <span class="bs-steginfo" id="stegInfo" aria-live="polite"></span>
+      </div>
+
       <div class="bs-arbeid" id="arbeid" tabindex="0"></div>
       <p class="bs-status" id="status" role="status"></p>
     </section>
 
     <!-- Teikninga og koden -->
     <section class="bs-utflate" aria-label="Resultat">
+
+      <!-- Blokka som står for tur. Ho har ikkje køyrt enno — det er nettopp
+           det som gjer at eleven kan gjette kva som skjer før han trykkjer.
+           Står her, rett over teikninga, så han kan følgje skilpadda utan
+           å sjå bort på arbeidsbenken. -->
+      <div class="bs-stegblokk" id="stegblokk" hidden>
+        <span class="bs-stegblokk-merke">Står for tur</span>
+        <code class="bs-stegblokk-tekst" id="stegblokkTekst"></code>
+      </div>
+
       <div class="box5">
         <div class="box-tabs" role="tablist">
           <button type="button" class="box-tab active" id="faneTeikning"
@@ -80,6 +102,9 @@
                aria-labelledby="fanePython" hidden></pre>
         </div>
       </div>
+
+      <!-- Variablane og verdiane deira. Skjult til programmet har nokon. -->
+      <div class="bs-variablar" id="variablar" aria-label="Variablar" hidden></div>
 
       <pre class="bs-utskrift" id="utskrift" aria-live="polite"></pre>
       <div class="bs-feil" id="feil" hidden></div>
