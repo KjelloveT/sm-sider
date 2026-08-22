@@ -26,7 +26,7 @@
     align-items: start;
 
     /* Veks med skjermen, men stoppar før paletten blir eit landskap. */
-    --bs-palett: clamp(250px, 17vw, 340px);
+    --bs-palett: clamp(260px, 19vw, 360px);
 }
 
 /* Med leksjon: han får ei eiga spalte når det er plass til fire. */

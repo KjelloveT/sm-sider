@@ -50,6 +50,11 @@
 /* Stabla blokker deler ramme, så det blir éi svart strek og ikkje to. */
 .bs-stabel > * + * { margin-top: calc(-1 * var(--bs-ramme)); }
 
+/* Hatten er søsken til stabelen, ikkje barn, så regelen over nådde aldri
+ * overgangen hatt → fyrste blokk. Utan dette ligg to 4px-rammer oppå
+ * kvarandre og gjev eit 8px svart band under hatten. */
+.bs-stabelboks > .bs-stabel { margin-top: calc(-1 * var(--bs-ramme)); }
+
 /* Fargen kjem frå data-farge og blir liggjande som ein variabel, så
  * knastane og C-forma kan arve han. */
 .bs-blokk[data-farge="gaa"],   .bs-krop-ytre[data-farge="gaa"]   { --bs-f: var(--bs-gaa);   }
@@ -151,15 +156,29 @@
     box-sizing: border-box;
 }
 
+/* Ingen padding. Det er ikkje ei innstramming, det er sjolve verkemaaten:
+ *
+ *  - i toppen ligg fyrste blokk klemt mot border-top, sa knasten hennar
+ *    (mala i lokkefargen) punkterer den svarte streken og les som eit hol.
+ *    Med luft der flaut knasten i staden i eit kremgult tomrom.
+ *  - i botnen ligg siste blokk klemt mot foten, og tappen hennar heng ned i
+ *    han. Same verkemaaten som i Scratch.
+ *  - til hogre blir indre blokker fluste med lokkehovudets hogrekant,
+ *    nøyaktig som i mockupen (indre 346px + spine 30px - 4px overlapp = 372px). */
 .bs-kropp {
     flex: 1;
     min-width: 0;
     min-height: 46px;
-    padding: 9px 9px 9px 0;
+    padding: 0;
     margin-left: calc(-1 * var(--bs-ramme));
     border-top: var(--bs-ramme) solid var(--border);
     box-sizing: border-box;
 }
+
+/* Kroppen har border-top for at ei TOM lokke skal ha ei strek under hovudet.
+ * Er ho ikkje tom, skal fyrste blokk dele den streken i staden for a leggje
+ * si eiga rett under — elles blir det 8px svart der det skal vere 4. */
+.bs-kropp > .bs-stabelpost:first-child { margin-top: calc(-1 * var(--bs-ramme)); }
 
 /* Foten som lukkar C-en, med tappen under. */
 .bs-krop-botn {
@@ -210,26 +229,45 @@
 .bs-felt:focus-visible,
 .bs-blokk:focus-visible { outline: 4px solid var(--border); outline-offset: 3px; }
 
-/* ---- talfelt med − og + -----------------------------------------------------
- * Mockupen har steppeknappar rundt talet. Dei er ikkje pynt: å treffe eit
- * lite talfelt og få opp rett tastatur er tungt på nettbrett, medan to
- * store knappar alltid verkar. Feltet står att for den som vil skrive. */
+/* ---- talfelt med + og − -----------------------------------------------------
+ *
+ * Knappane står over kvarandre til høgre for talet i staden for på kvar si
+ * side. Vassrett tok gruppa 128px — over halve blokkbreidda i paletten — og
+ * pressa fjorten av sytten blokker over på fleire linjer. Loddrett tek ho
+ * kring 94px.
+ *
+ * Prisen er at kvar knapp blir ca. 32×21px, altså under dei 44px som elles
+ * gjeld for treffflater her. Talfeltet er framleis direkte redigerbart, så
+ * knappane er ei snarveg og ikkje den einaste vegen inn; vi gjer gruppa så
+ * høg rada tillèt for å hente inn mest mogleg. */
 
-.bs-steg { display: inline-flex; align-items: stretch; border: 3px solid var(--border); background: var(--bs-hvit); }
+.bs-steg {
+    display: inline-flex;
+    align-items: stretch;
+    border: 3px solid var(--border);
+    background: var(--bs-hvit);
+    min-height: 48px;
+}
 
 .bs-steg .bs-felt {
     border: none;
+    min-height: 0;
+    align-self: stretch;
+}
+
+.bs-steg-kolonne {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 32px;
     border-left: 3px solid var(--border);
-    border-right: 3px solid var(--border);
-    min-height: 32px;
 }
 
 .bs-steg-knapp {
-    flex: 0 0 auto;
-    width: 32px;
+    flex: 1 1 50%;
+    min-height: 0;
     padding: 0;
     font-family: var(--bs-font);
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 800;
     line-height: 1;
     color: var(--text);
@@ -238,8 +276,26 @@
     cursor: pointer;
     touch-action: manipulation;
 }
+.bs-steg-knapp + .bs-steg-knapp { border-top: 3px solid var(--border); }
 .bs-steg-knapp:hover { background: var(--bs-start); }
 .bs-steg-knapp:focus-visible { outline: 3px solid var(--border); outline-offset: -3px; }
+
+/* ---- statisk talbrikke i paletten ---------------------------------------
+ * Palettblokkene er døme ein plukkar frå, ikkje noko ein stiller inn — felta
+ * der har alltid vore readOnly. Difor blir talet ei brikke utan knappar, og
+ * blokka slepp 44px ho ikkje har bruk for. */
+.bs-brikke {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.6em;
+    padding: 4px 8px;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--bs-hvit);
+    border: 3px solid var(--border);
+}
 
 /* Hòlet som er i ferd med å ta imot ei verdiblokk. */
 .bs-hol.er-maal { outline: 3px dashed var(--border); outline-offset: 3px; }
@@ -249,9 +305,10 @@
 .bs-hol-fylt > .bs-verdi .bs-rad { min-height: 34px; padding: 3px 8px; gap: 6px; font-size: 14px; }
 .bs-hol-fylt > .bs-verdi .bs-symbol { width: 18px; height: 18px; }
 .bs-hol-fylt > .bs-verdi .bs-symbol svg { width: 16px; height: 16px; }
-.bs-hol-fylt > .bs-verdi .bs-felt { font-size: 15px; min-height: 28px; }
-.bs-hol-fylt > .bs-verdi .bs-steg .bs-felt { min-height: 26px; }
-.bs-hol-fylt > .bs-verdi .bs-steg-knapp { width: 26px; font-size: 17px; }
+.bs-hol-fylt > .bs-verdi .bs-felt { font-size: 15px; }
+.bs-hol-fylt > .bs-verdi .bs-steg { min-height: 34px; }
+.bs-hol-fylt > .bs-verdi .bs-steg-kolonne { flex-basis: 24px; }
+.bs-hol-fylt > .bs-verdi .bs-steg-knapp { font-size: 12px; }
 
 /* ---- paletten -------------------------------------------------------------- */
 
@@ -289,8 +346,20 @@
 .bs-palettblokk { cursor: pointer; }
 .bs-palettblokk::before { content: none; }
 .bs-palettblokk:hover { transform: translate(-2px, -2px); }
-.bs-palettblokk .bs-felt,
-.bs-palettblokk .bs-steg-knapp { pointer-events: none; }
+.bs-palettblokk .bs-felt { pointer-events: none; }
+
+/* Spalta er smal. Med same luft og skriftgrad som på benken braut fjorten
+ * av sytten blokker over fleire linjer, så her strammar vi inn. */
+.bs-palettbolk .bs-rad { gap: 6px; font-size: 14px; min-height: 46px; padding: 8px 10px; }
+.bs-palettbolk .bs-symbol { width: 22px; height: 22px; }
+.bs-palettbolk .bs-symbol svg { width: 21px; height: 21px; }
+.bs-palettbolk .bs-felt-val { max-width: 6.5em; font-size: 13px; min-height: 30px; }
+.bs-palettbolk .bs-felt-tekst { width: 5.5em; font-size: 14px; min-height: 30px; }
+
+/* Gjenta i paletten treng berre vise at ho HAR eit rom, ikkje kor stort det
+ * kan bli. Full høgd gjorde henne til ein 219px orange kloss. */
+.bs-palettbolk .bs-kropp { min-height: 22px; }
+.bs-palettbolk .bs-krop-botn { height: 20px; }
 
 /* Paletten blir til ei søppelbøtte medan ein dreg. */
 .bs-palett.er-soppel { outline: 4px dashed var(--border); outline-offset: -8px; background: var(--bs-stopp); }
@@ -308,7 +377,7 @@
     background: var(--surface);
     border: 3px dashed var(--border);
 }
-.bs-tom-inni { padding: 6px 10px; font-size: 12px; }
+.bs-tom-inni { margin: 8px; padding: 6px 10px; font-size: 12px; }
 
 .bs-markor {
     height: 10px;
@@ -334,7 +403,11 @@ body.bs-dreg .bs-felt { pointer-events: none; }
 
 /* ---- merkt og køyrande ---------------------------------------------------------- */
 
-.bs-blokk.er-vald { outline: 4px solid var(--border); outline-offset: 3px; }
+/* Markeringa sit pa stabelposten, ikkje pa blokka. For ei gjenta-blokk er
+ * posten heile C-forma, og da femner ramma om kroppen og foten og — ikkje
+ * berre om hovudet. */
+.bs-stabelpost.er-vald,
+.bs-stabelpost:has(> .bs-blokk.er-vald) { outline: 4px solid var(--border); outline-offset: 3px; }
 
 .bs-blokk.er-koyrande {
     outline: 5px solid var(--bs-gaa-ja);

@@ -318,44 +318,55 @@ const BolkEditor = (function () {
      * noko — 15 gradar om gongen, ikkje éin.
      */
     function talfelt(node, spek, verdi, erPalett) {
+        const tekst = verdi === undefined || verdi === null ? '' : String(verdi);
+
+        /* I paletten er talet berre eit døme. Felta der har alltid vore
+         * readOnly, så knappane hadde ingen jobb — og dei tok 44px av ei
+         * blokk som må få plass på ei linje i ei smal spalte. */
+        if (erPalett) {
+            const brikke = document.createElement('span');
+            brikke.className = 'bs-brikke';
+            brikke.textContent = tekst;
+            return brikke;
+        }
+
         const boks = document.createElement('span');
         boks.className = 'bs-steg';
 
         const felt = document.createElement('input');
         felt.className = 'bs-felt bs-felt-tal';
         felt.type = 'number';
-        felt.value = verdi === undefined || verdi === null ? '' : verdi;
+        felt.value = tekst;
         felt.setAttribute('aria-label', spek.felt);
+        boks.appendChild(felt);
 
-        const sett = (ny) => {
-            felt.value = ny;
-            if (node) node.felt[spek.felt] = ny;
-            if (vert.paaEndring) vert.paaEndring();
-        };
+        /* + over −, i kvar si rute til høgre for talet. Vassrett tok gruppa
+         * over halve blokkbreidda i paletten; loddrett tek ho to tredelar av
+         * det. Sjå kommentaren i blokk.css for treffflate-avveginga. */
+        const kolonne = document.createElement('span');
+        kolonne.className = 'bs-steg-kolonne';
 
-        const knapp = (tekst, retning) => {
+        const knapp = (merke, retning) => {
             const k = document.createElement('button');
             k.type = 'button';
             k.className = 'bs-steg-knapp';
-            k.textContent = tekst;
-            k.tabIndex = erPalett ? -1 : 0;
+            k.textContent = merke;
             k.setAttribute('aria-label', (retning > 0 ? 'Auk ' : 'Minsk ') + spek.felt);
-            if (!erPalett) {
-                k.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const n = Number(felt.value) || 0;
-                    sett(n + retning * (spek.steg || 1));
-                });
-                k.addEventListener('pointerdown', (e) => e.stopPropagation());
-            }
+            k.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const n = Number(felt.value) || 0;
+                const ny = n + retning * (spek.steg || 1);
+                felt.value = ny;
+                if (node) node.felt[spek.felt] = ny;
+                if (vert.paaEndring) vert.paaEndring();
+            });
+            k.addEventListener('pointerdown', (e) => e.stopPropagation());
             return k;
         };
 
-        boks.appendChild(knapp('−', -1));
-        boks.appendChild(felt);
-        boks.appendChild(knapp('+', 1));
-
-        if (erPalett) { felt.tabIndex = -1; felt.readOnly = true; return boks; }
+        kolonne.appendChild(knapp('+', 1));
+        kolonne.appendChild(knapp('−', -1));
+        boks.appendChild(kolonne);
 
         felt.addEventListener('input', () => {
             if (node) node.felt[spek.felt] = felt.value === '' ? '' : Number(felt.value);

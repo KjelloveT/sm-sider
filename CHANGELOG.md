@@ -3,6 +3,16 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.3] — 2026-08-22
+
+### Fiksa
+- **Blokkgeometrien i Bolkestokk.** Formene frå mockupen var rette, men fire detaljar i utrekninga var det ikkje, og resultatet var synleg gale både på arbeidsbenken og i blokkvelgaren.
+  - **Tre av dei kom frå éi CSS-regel.** `.bs-kropp` hadde `padding: 9px 9px 9px 0`. Dei ni pikslane i toppen (pluss 4px ramme) gjorde at knasten på fyrste blokk i ei løkke flaut i eit kremgult tomrom i staden for å møte løkkehovudet; dei ni i botnen la ei lys stripe tvers over løkka rett over foten; og dei ni til høgre gav ein sliver langs kanten. Mockupen har inga luft der i det heile: fyrste blokk skal klemmast mot `border-top` slik at knasten punkterer den svarte streken, og siste blokk skal klemmast mot foten slik at tappen heng ned i han.
+  - **Den fjerde var eit 8px svart band under START-hatten.** Regelen som slår saman rammene gjeld berre mellom søsken inne i ein stabel, og hatten står utanfor. Overgangen hatt → fyrste blokk var difor aldri dekt, og to 4px-rammer låg oppå kvarandre.
+  - Fyrste blokk i ei løkke deler no `border-top` med kroppen. Kroppen har framleis den kanten, for det er han som gjev ei tom løkke ei strek under hovudet.
+  - Markeringa femner no om heile gjenta-blokka og ikkje berre om hovudet.
+- **Blokkvelgaren fekk ein eigen, kompakt variant.** Med 220px indre breidd og ei steppegruppe på 128px braut **fjorten av sytten** blokker over to eller tre linjer, og `Gjenta` vart ein 219px orange kloss. Felta i paletten har alltid vore `readOnly` — ein stiller inn på benken, ikkje i menyen — så talet blir no ei statisk brikke utan knappar. Saman med strammare luft og eit kortare nedtrekk gjev det **alle sytten blokkene på éi linje** (53–57px), og `Gjenta` på 115px.
+- **+ og − står no over kvarandre** til høgre for talet i staden for på kvar si side. Gruppa gjekk frå 128px til 94px. Prisen er at kvar knapp blir kring 32×21px, altså under dei 44px som elles gjeld for treffflater her; talfeltet er framleis direkte redigerbart, så knappane er ei snarveg og ikkje den einaste vegen inn.
 ## [1.2] — 2026-08-22
 
 ### Endra
