@@ -143,6 +143,40 @@ const BolkLeksjon = (function () {
         return boks;
     }
 
+    /**
+     * Ein del som er lukka til eleven treng han.
+     *
+     * Fyrste utgava la laretekst, dome, loype, tre oppgaver og oppsummering
+     * ut samtidig. Ein sjetteklassing som opna sida moette da ein vegg av
+     * tekst for han hadde gjort noko som helst. No er alt bortsett fra
+     * laereteksten lukka, og han opnar det han skal bruke.
+     *
+     * <details> og ikkje eigen JS: tastatur og skjermlesar folgjer med.
+     */
+    function trekkspel(tittel, ikon, ope) {
+        const boks = document.createElement('details');
+        boks.className = 'box4 bs-del';
+        if (ope) boks.open = true;
+
+        const hovud = document.createElement('summary');
+        hovud.className = 'box-header bs-deltopp';
+        const i = document.createElement('span');
+        i.dataset.icon = ikon;
+        i.dataset.iconSize = '18';
+        hovud.appendChild(i);
+        const t = document.createElement('span');
+        t.className = 'bs-deltittel-tekst';
+        t.textContent = tittel;
+        hovud.appendChild(t);
+        boks.appendChild(hovud);
+
+        const kropp = document.createElement('div');
+        kropp.className = 'box-body bs-delkropp';
+        boks.appendChild(kropp);
+        boks.kropp = kropp;
+        return boks;
+    }
+
     function deltittel(tekst, ikon) {
         const h = document.createElement('h2');
         h.className = 'bs-deltittel';
@@ -157,12 +191,11 @@ const BolkLeksjon = (function () {
     /* ---- dømet -------------------------------------------------------------- */
 
     function doeme(d) {
-        const seksjon = document.createElement('section');
-        seksjon.className = 'box1 bs-doeme';
-        seksjon.appendChild(deltittel('Prøv sjølv', 'play'));
+        const seksjon = trekkspel('Prøv sjølv', 'play', true);
+        seksjon.classList.add('bs-doeme');
 
         if (d.oppmoding) {
-            seksjon.appendChild(BolkTekst.set(document.createElement('p'), d.oppmoding));
+            seksjon.kropp.appendChild(BolkTekst.set(document.createElement('p'), d.oppmoding));
         }
 
         const knapp = document.createElement('button');
@@ -173,7 +206,7 @@ const BolkLeksjon = (function () {
             vert.setProgram(BolkTre.lesInn(d.program));
             vert.melding('Dømet ligg klart. Trykk Køyr.');
         });
-        seksjon.appendChild(knapp);
+        seksjon.kropp.appendChild(knapp);
         return seksjon;
     }
 
@@ -189,28 +222,28 @@ const BolkLeksjon = (function () {
      * jobben.
      */
     function loype(t) {
-        const seksjon = document.createElement('section');
-        seksjon.className = 'box1 bs-loype';
-        seksjon.appendChild(deltittel(t.tittel || 'Bygg programmet steg for steg', 'footprints'));
+        const seksjon = trekkspel(t.tittel || 'Bygg programmet steg for steg', 'footprints', false);
+        seksjon.classList.add('bs-loype');
+        const inn = (n) => seksjon.kropp.appendChild(n);
 
         if (t.maal) {
             const m = document.createElement('p');
             m.className = 'bs-loypemaal';
             BolkTekst.set(m, 'Målet: ' + t.maal);
-            seksjon.appendChild(m);
+            inn(m);
         }
 
         const teljar = document.createElement('p');
         teljar.className = 'bs-loypeteljar';
-        seksjon.appendChild(teljar);
+        inn(teljar);
 
         const tekst = document.createElement('p');
         tekst.className = 'bs-loypetekst';
-        seksjon.appendChild(tekst);
+        inn(tekst);
 
         const proev = document.createElement('p');
         proev.className = 'bs-loypeproev';
-        seksjon.appendChild(proev);
+        inn(proev);
 
         const rad = document.createElement('div');
         rad.className = 'bs-loypeknappar';
@@ -223,7 +256,7 @@ const BolkLeksjon = (function () {
         });
         hent.classList.add('bs-btn-hent');
         rad.appendChild(foerre); rad.appendChild(neste); rad.appendChild(hent);
-        seksjon.appendChild(rad);
+        inn(rad);
 
         function vis(i) {
             loypesteg = Math.max(0, Math.min(t.steg.length - 1, i));
@@ -279,10 +312,9 @@ const BolkLeksjon = (function () {
     /* ---- botn ------------------------------------------------------------------ */
 
     function oppsummering() {
-        const boks = document.createElement('section');
-        boks.className = 'box1 bs-oppsummering';
-        boks.appendChild(deltittel('Kort sagt', 'bookmark'));
-        boks.appendChild(BolkTekst.set(document.createElement('p'), leksjon.oppsummering));
+        const boks = trekkspel('Kort sagt', 'bookmark', false);
+        boks.classList.add('bs-oppsummering');
+        boks.kropp.appendChild(BolkTekst.set(document.createElement('p'), leksjon.oppsummering));
         return boks;
     }
 

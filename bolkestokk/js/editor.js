@@ -1,15 +1,18 @@
 /* Bolkestokk — teikning av palett og arbeidsbenk.
  *
- * Blokkene er DOM, ikkje SVG. Scratch og Blockly teiknar sine i SVG fordi
- * dei har puslespelknastar som må passe millimeterpresist i kvarandre. Vi
- * har ikkje det: ei blokk her er ei neobrutalistisk ramme, og hierarkiet
- * kjem av innrykk og ei fargestripe til venstre.
+ * Blokkene er DOM, ikkje SVG — også etter at dei fekk knastar. Scratch og
+ * Blockly teiknar sine i SVG, men knastane her er to pseudoelement på
+ * 46×15px, og C-forma rundt ei gjenta-blokk er tre vanlege boksar i ein
+ * flexbox. Ingen koordinatar blir rekna ut nokon stad.
  *
- * Det gjer tre ting enklare, og alle tre betyr noko på eit nettbrett:
+ * DOM gjev tre ting SVG ikkje gjev, og alle tre betyr noko på eit nettbrett:
  *   - tal-hòl er ekte <input type="number">, så eleven får taltastaturet
  *   - nedtrekk er ekte <select>, så han får systemet sin eigen veljar
  *   - ei gjenta-blokk sin kropp er ein ekte DOM-forelder, så teksten bryt
  *     og blokka veks slik ho skal utan at vi reknar ut ein einaste koordinat
+ *
+ * Kvar blokk er fylt med kategorifargen sin og har eit Lucide-symbol før
+ * orda. Sjå css/blokk.css for forma og css/palett.css for fargane.
  *
  * Ingenting her endrar treet. Alt som endrar noko ligg i dra.js.
  */
@@ -61,9 +64,9 @@ const BolkEditor = (function () {
 
             const tittel = document.createElement('h3');
             tittel.className = 'bs-paletttittel';
+            tittel.dataset.farge = kat.farge;
             const brikke = document.createElement('span');
             brikke.className = 'bs-katbrikke';
-            brikke.dataset.accent = kat.accent;
             tittel.appendChild(brikke);
             tittel.appendChild(document.createTextNode(kat.tittel));
             bolk.appendChild(tittel);
@@ -81,14 +84,35 @@ const BolkEditor = (function () {
     function palettblokk(def) {
         const knapp = document.createElement('button');
         knapp.type = 'button';
-        knapp.className = 'bs-blokk bs-palettblokk';
+        knapp.className = 'bs-blokk bs-palettblokk bs-' + def.form;
         knapp.dataset.type = def.id;
         knapp.dataset.form = def.form;
-        knapp.dataset.kat = def.kategori;
+        knapp.dataset.farge = def.farge;
         knapp.setAttribute('aria-label', 'Legg til blokka ' + reintNamn(def));
 
         knapp.appendChild(blokkrad(null, def, true));
-        return knapp;
+        if (def.form !== 'krop') return knapp;
+
+        /* Gjenta i paletten skal vise at ho har eit rom inni seg. Ho blir
+         * pakka i same C-forma som pa benken, men utan noko a leggje i. */
+        const ytre = document.createElement('div');
+        ytre.className = 'bs-krop-ytre';
+        ytre.dataset.farge = def.farge;
+        ytre.appendChild(knapp);
+
+        const midt = document.createElement('div');
+        midt.className = 'bs-krop-midt';
+        const spine = document.createElement('div');
+        spine.className = 'bs-krop-spine';
+        const hol = document.createElement('div');
+        hol.className = 'bs-kropp';
+        midt.appendChild(spine); midt.appendChild(hol);
+        ytre.appendChild(midt);
+
+        const botn = document.createElement('div');
+        botn.className = 'bs-krop-botn';
+        ytre.appendChild(botn);
+        return ytre;
     }
 
     /* Blokka lesen som ei setning, til aria-label.
@@ -129,20 +153,33 @@ const BolkEditor = (function () {
         const hatt = document.createElement('div');
         hatt.className = 'bs-blokk bs-hatt';
         hatt.dataset.form = 'hatt';
-        hatt.dataset.kat = def.kategori;
+        hatt.dataset.farge = def.farge;
         hatt.appendChild(blokkrad(kommando ? { felt: kommando } : null, def, false, nokkel));
         boks.appendChild(hatt);
 
-        boks.appendChild(stabelliste(stabel, nokkel));
+        boks.appendChild(stabelliste(stabel, nokkel, def.farge));
         return boks;
     }
 
-    function stabelliste(stabel, nokkel) {
+    /**
+     * Ein stabel med blokker.
+     *
+     * `--bs-over` er fargen på blokka rett over. Hakket i toppen av kvar
+     * blokk blir måla i han, slik at tappen ovanfrå ser ut til å fylle
+     * hakket i staden for å ligge oppå. Fyrste blokka arvar flata bak.
+     */
+    function stabelliste(stabel, nokkel, overFarge) {
         const liste = document.createElement('div');
         liste.className = 'bs-stabel';
         liste.dataset.stabelId = nokkel;
 
-        stabel.forEach(node => liste.appendChild(blokk(node)));
+        let over = overFarge || null;
+        stabel.forEach(node => {
+            const post = blokk(node);
+            if (over) post.style.setProperty('--bs-over', 'var(--bs-' + over + ')');
+            liste.appendChild(post);
+            over = (BolkBlokkar.hent(node.type) || {}).farge || over;
+        });
 
         if (!stabel.length) {
             const tom = document.createElement('p');
@@ -153,43 +190,83 @@ const BolkEditor = (function () {
         return liste;
     }
 
+    /**
+     * Éi blokk. Blokker med kropp blir pakka i ei ytre C-form, så
+     * arbeidsbenken kan behandle dei som éin post i stabelen.
+     */
     function blokk(node) {
         const def = BolkBlokkar.hent(node.type);
-        const boks = document.createElement('div');
-        boks.className = 'bs-blokk bs-' + def.form;
-        boks.dataset.id = node.id;
-        boks.dataset.type = node.type;
-        boks.dataset.form = def.form;
-        boks.dataset.kat = def.kategori;
-        if (node.id === valdId) boks.classList.add('er-vald');
+        const hovud = document.createElement('div');
+        hovud.className = 'bs-blokk bs-' + def.form + ' bs-stabelpost';
+        hovud.dataset.id = node.id;
+        hovud.dataset.type = node.type;
+        hovud.dataset.form = def.form;
+        hovud.dataset.farge = def.farge;
+        if (node.id === valdId) hovud.classList.add('er-vald');
 
-        boks.appendChild(blokkrad(node, def, false));
+        hovud.appendChild(blokkrad(node, def, false));
+        if (def.form !== 'krop') return hovud;
 
-        if (def.form === 'krop') {
-            const kropp = document.createElement('div');
-            kropp.className = 'bs-kropp bs-stabel';
-            kropp.dataset.stabelId = 'krop:' + node.id;
-            (node.kropp || []).forEach(k => kropp.appendChild(blokk(k)));
-            if (!(node.kropp || []).length) {
-                const tom = document.createElement('p');
-                tom.className = 'bs-tom bs-tom-inni';
-                tom.textContent = 'Dra hit';
-                kropp.appendChild(tom);
-            }
-            boks.appendChild(kropp);
-            // Ein botn under kroppen, så det synest at gjenta femner om han.
-            const botn = document.createElement('div');
-            botn.className = 'bs-krop-botn';
-            boks.appendChild(botn);
+        /* C-forma: hovud, ryggsøyle med kroppen ved sida, og ein fot.
+         * Ryggsøyla er eit ekte element og ikkje ein kant, fordi han skal
+         * strekkje seg like langt ned som kroppen er høg — og det veit
+         * flexbox, medan CSS-kantar ikkje gjer det. */
+        const ytre = document.createElement('div');
+        ytre.className = 'bs-krop-ytre bs-stabelpost';
+        ytre.dataset.farge = def.farge;
+        hovud.classList.remove('bs-stabelpost');
+        ytre.appendChild(hovud);
+
+        const midt = document.createElement('div');
+        midt.className = 'bs-krop-midt';
+
+        const spine = document.createElement('div');
+        spine.className = 'bs-krop-spine';
+        midt.appendChild(spine);
+
+        const kropp = document.createElement('div');
+        kropp.className = 'bs-kropp bs-stabel';
+        kropp.dataset.stabelId = 'krop:' + node.id;
+        let over = def.farge;
+        (node.kropp || []).forEach(k => {
+            const post = blokk(k);
+            post.style.setProperty('--bs-over', 'var(--bs-' + over + ')');
+            kropp.appendChild(post);
+            over = (BolkBlokkar.hent(k.type) || {}).farge || over;
+        });
+        if (!(node.kropp || []).length) {
+            const tom = document.createElement('p');
+            tom.className = 'bs-tom bs-tom-inni';
+            tom.textContent = 'Dra hit';
+            kropp.appendChild(tom);
         }
+        midt.appendChild(kropp);
+        ytre.appendChild(midt);
 
-        return boks;
+        const botn = document.createElement('div');
+        botn.className = 'bs-krop-botn';
+        ytre.appendChild(botn);
+
+        return ytre;
     }
 
-    /** Orda og hòla i ei blokk. */
+    /** Orda og hòla i ei blokk, med symbolet først. */
     function blokkrad(node, def, erPalett, stabelNokkel) {
         const rad = document.createElement('div');
         rad.className = 'bs-rad';
+
+        /* Symbolet kjem før orda. Ein elev som ikkje har lese ferdig
+         * kjenner att pila eller pennen lenge før han kjenner att ordet,
+         * og på ei blokk som er dregen i full fart er det symbolet som
+         * seier kva ho er. Lucide, ikkje emoji (AGENTS.md §3.2). */
+        if (def.ikon) {
+            const sym = document.createElement('span');
+            sym.className = 'bs-symbol';
+            sym.dataset.icon = def.ikon;
+            sym.dataset.iconSize = '24';
+            sym.setAttribute('aria-hidden', 'true');
+            rad.appendChild(sym);
+        }
 
         def.tekst.forEach(del => {
             if (typeof del === 'string') {
@@ -225,9 +302,67 @@ const BolkEditor = (function () {
         if (spek.slag === 'tal') skal.dataset.takVerdi = '1';
 
         if (spek.slag === 'val') skal.appendChild(nedtrekk(node, spek, verdi, erPalett));
+        else if (spek.slag === 'tal') skal.appendChild(talfelt(node, spek, verdi, erPalett));
         else skal.appendChild(tekstfelt(node, spek, verdi, erPalett, stabelNokkel));
 
         return skal;
+    }
+
+    /**
+     * Eit tal med − og + rundt seg.
+     *
+     * Feltet åleine ville halde, men på nettbrett er det tungt: ein må
+     * treffe eit lite felt, vente på tastaturet, merke det som står og
+     * skrive nytt. To store knappar gjer det same med eitt trykk, og
+     * `steg` i blokkdefinisjonen gjer at dei flyttar seg i tal som betyr
+     * noko — 15 gradar om gongen, ikkje éin.
+     */
+    function talfelt(node, spek, verdi, erPalett) {
+        const boks = document.createElement('span');
+        boks.className = 'bs-steg';
+
+        const felt = document.createElement('input');
+        felt.className = 'bs-felt bs-felt-tal';
+        felt.type = 'number';
+        felt.value = verdi === undefined || verdi === null ? '' : verdi;
+        felt.setAttribute('aria-label', spek.felt);
+
+        const sett = (ny) => {
+            felt.value = ny;
+            if (node) node.felt[spek.felt] = ny;
+            if (vert.paaEndring) vert.paaEndring();
+        };
+
+        const knapp = (tekst, retning) => {
+            const k = document.createElement('button');
+            k.type = 'button';
+            k.className = 'bs-steg-knapp';
+            k.textContent = tekst;
+            k.tabIndex = erPalett ? -1 : 0;
+            k.setAttribute('aria-label', (retning > 0 ? 'Auk ' : 'Minsk ') + spek.felt);
+            if (!erPalett) {
+                k.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const n = Number(felt.value) || 0;
+                    sett(n + retning * (spek.steg || 1));
+                });
+                k.addEventListener('pointerdown', (e) => e.stopPropagation());
+            }
+            return k;
+        };
+
+        boks.appendChild(knapp('−', -1));
+        boks.appendChild(felt);
+        boks.appendChild(knapp('+', 1));
+
+        if (erPalett) { felt.tabIndex = -1; felt.readOnly = true; return boks; }
+
+        felt.addEventListener('input', () => {
+            if (node) node.felt[spek.felt] = felt.value === '' ? '' : Number(felt.value);
+            if (vert.paaEndring) vert.paaEndring();
+        });
+        felt.addEventListener('pointerdown', (e) => e.stopPropagation());
+        return boks;
     }
 
     function tekstfelt(node, spek, verdi, erPalett, stabelNokkel) {

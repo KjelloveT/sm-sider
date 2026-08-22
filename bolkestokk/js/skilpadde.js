@@ -19,6 +19,12 @@ function BolkSkilpadde() {
     let x = 0, y = 0, vinkel = 0;
     let nede = true, farge = 'vanleg', tjukn = 3;
 
+    /* Samla veglengd. Lerretet brukar han til a velje kva ramme av
+     * skilpadde-animasjonen som skal visast, slik at ho padlar i takt med
+     * kor fort ho faktisk flyttar seg. Han tel med rorsle med pennen oppe:
+     * ho symjer like mykje for det. */
+    let gaatt = 0;
+
     const rad = (g) => g * Math.PI / 180;
 
     function gaa(lengd) {
@@ -26,6 +32,7 @@ function BolkSkilpadde() {
         const nx = x + d * Math.sin(rad(vinkel));
         const ny = y + d * Math.cos(rad(vinkel));
         if (nede && d !== 0) strek.push({ x1: x, y1: y, x2: nx, y2: ny, farge, tjukn });
+        gaatt += Math.abs(d);
         x = nx; y = ny;
     }
 
@@ -57,7 +64,7 @@ function BolkSkilpadde() {
     return {
         gaa, snu, tilStart, setTjukn, setFarge, penn, omfang,
         get strek() { return strek; },
-        get tilstand() { return { x, y, vinkel, nede, farge, tjukn }; }
+        get tilstand() { return { x, y, vinkel, nede, farge, tjukn, gaatt }; }
     };
 }
 

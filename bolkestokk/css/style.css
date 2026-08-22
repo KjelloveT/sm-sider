@@ -309,3 +309,68 @@
     border-left: 6px solid var(--accent5);
     box-shadow: 2px 2px 0 var(--shadow);
 }
+
+/* ===========================================================================
+   NY UTSJÅNAD — sjå css/palett.css for fargeprofilen og grunngjevinga.
+   =========================================================================== */
+
+/* Arbeidsbenken har prikkeraster, som i mockupen. Det gjev flata eit golv
+ * å ligge på, og gjer at ei blokk som blir dregen har noko å bli dregen
+ * OVER i staden for å sveve i tomrom. */
+.bs-arbeid {
+    background-color: var(--surface);
+    background-image: radial-gradient(var(--bs-prikk) 2px, transparent 2px);
+    background-size: 28px 28px;
+    border-width: var(--bs-ramme);
+    box-shadow: none;
+    padding: 26px 22px;
+}
+
+.bs-palett {
+    background: var(--bs-palettflate);
+    border-width: var(--bs-ramme);
+    box-shadow: none;
+    padding: 16px 14px;
+}
+
+.bs-leksjonspanel {
+    background: var(--bs-palettflate);
+    border-width: var(--bs-ramme);
+    box-shadow: none;
+}
+
+/* Teikneflata er kvit. Figuren er elevens arbeid, og han skal ikkje ligge
+ * på ei tona flate som gjer fargane hans til noko anna enn dei er. */
+.bs-lerretboks { background: var(--bs-hvit); }
+
+.bs-verktoyrad { gap: 9px; }
+
+.bs-fart { color: var(--text); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.bs-fart input { accent-color: var(--bs-boks); }
+
+.bs-status { font-weight: 700; }
+
+.bs-pythonrute, .bs-utskrift { background: var(--bs-hvit); border-width: 3px; box-shadow: none; }
+.bs-feil { background: var(--bs-stopp); border: var(--bs-ramme) solid var(--border); box-shadow: none; }
+
+.bs-stegrad, .bs-stegblokk {
+    background: var(--bs-start);
+    border: var(--bs-ramme) solid var(--border);
+    border-left-width: var(--bs-ramme);
+    box-shadow: none;
+}
+.bs-stegblokk { background: var(--bs-gaa); }
+.bs-stegblokk-tekst { font-family: var(--bs-font); font-weight: 800; }
+
+.bs-variabel {
+    background: var(--bs-boks);
+    border: 3px solid var(--border);
+    border-left-width: 3px;
+    box-shadow: none;
+    font-family: var(--bs-font);
+    font-weight: 800;
+}
+
+/* Fanene over teikninga følgjer same profil: fylt farge, svart tekst. */
+body.bs-tema .box5 .box-tab { font-family: var(--bs-font); font-weight: 800; background: var(--bs-palettflate); color: var(--text); }
+body.bs-tema .box5 .box-tab.active { background: var(--bs-start); color: var(--text); }

@@ -54,24 +54,45 @@ const BolkBlokkar = (function () {
         { verdi: 'rest',  tekst: 'rest ved deling', py: '%', gjer: (a, b) => b === 0 ? 0 : a % b }
     ];
 
+    /* Blokkfargane.
+     *
+     * Faste verdiar, ikkje temavariablar. Ei blokk er fylt med fargen sin og
+     * har svart tekst og svart ramme oppå, og då må fargen vere kjend på
+     * førehand for at kontrasten skal vere det. Alle sju er lyse nok til at
+     * #111 held minst 7,3:1 mot dei — målt. Det er den motsette løysinga av
+     * den AGENTS.md §3.2 skisserer (fargen ved sida av teksten), men han
+     * held same krav, og han er den som gjer blokkene til blokker.
+     *
+     * Verdiane er henta ordrett frå fargeprofilen i Block Coding UI-mockupen. */
+    const FARGAR_BLOKK = {
+        gaa:   '#8CC2FF',   // gå og flytt
+        snu:   '#2FD4C4',   // snu
+        penn:  '#FF6FB5',   // penn og farge
+        lokke: '#FFB833',   // gjenta
+        tal:   '#FFC93C',   // tal, rekning og utskrift
+        boks:  '#FF7A45',   // variablar
+        mi:    '#CBAAFF',   // eigne kommandoar
+        start: '#FFDD57'    // hattar
+    };
+
     const KATEGORIAR = [
-        { id: 'styring',   tittel: 'Styring',          accent: 'accent'  },
-        { id: 'skilpadde', tittel: 'Skilpadda',        accent: 'accent2' },
-        { id: 'verdi',     tittel: 'Tal og rekning',   accent: 'accent4' },
-        { id: 'variabel',  tittel: 'Variablar',        accent: 'accent5' },
-        { id: 'kommando',  tittel: 'Eigne kommandoar', accent: 'accent3' }
+        { id: 'styring',   tittel: 'Styring',          farge: 'lokke' },
+        { id: 'skilpadde', tittel: 'Skilpadda',        farge: 'gaa'   },
+        { id: 'verdi',     tittel: 'Tal og rekning',   farge: 'tal'   },
+        { id: 'variabel',  tittel: 'Variablar',        farge: 'boks'  },
+        { id: 'kommando',  tittel: 'Eigne kommandoar', farge: 'mi'    }
     ];
 
     const DEF = [
 
         /* ---- styring ---------------------------------------------------- */
         {
-            id: 'start', kategori: 'styring', form: 'hatt',
+            id: 'start', farge: 'start', ikon: 'flag', kategori: 'styring', form: 'hatt',
             tekst: ['Når eg trykkjer Køyr'],
             python: () => null
         },
         {
-            id: 'gjenta', kategori: 'styring', form: 'krop',
+            id: 'gjenta', farge: 'lokke', ikon: 'refreshCw', kategori: 'styring', form: 'krop',
             tekst: ['Gjenta', { felt: 'tal', slag: 'tal', standard: 4 }, 'gonger'],
             /* Taket på 1000 er ikkje ei tryggleiksgrense — utan medan-løkke kan
              * eit program uansett ikkje henge. Det er for å hindre at ein elev
@@ -85,43 +106,43 @@ const BolkBlokkar = (function () {
 
         /* ---- skilpadda -------------------------------------------------- */
         {
-            id: 'framover', kategori: 'skilpadde', form: 'setning',
-            tekst: ['Gå framover', { felt: 'lengd', slag: 'tal', standard: 100 }, 'steg'],
+            id: 'framover', farge: 'gaa', ikon: 'arrowUp', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Gå framover', { felt: 'lengd', slag: 'tal', standard: 100, steg: 10 }, 'steg'],
             koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(hj.verdi(node.felt.lengd, ktx)); },
             python: (f, hj) => 'forward(' + hj.uttrykk(f.lengd) + ')'
         },
         {
-            id: 'bakover', kategori: 'skilpadde', form: 'setning',
-            tekst: ['Gå bakover', { felt: 'lengd', slag: 'tal', standard: 50 }, 'steg'],
+            id: 'bakover', farge: 'gaa', ikon: 'arrowDown', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Gå bakover', { felt: 'lengd', slag: 'tal', standard: 50, steg: 10 }, 'steg'],
             koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(-hj.verdi(node.felt.lengd, ktx)); },
             python: (f, hj) => 'backward(' + hj.uttrykk(f.lengd) + ')'
         },
         {
-            id: 'snuHogre', kategori: 'skilpadde', form: 'setning',
-            tekst: ['Snu høgre', { felt: 'grader', slag: 'tal', standard: 90 }, 'gradar'],
+            id: 'snuHogre', farge: 'snu', ikon: 'rotateCw', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Snu høgre', { felt: 'grader', slag: 'tal', standard: 90, steg: 15 }, 'gradar'],
             koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(hj.verdi(node.felt.grader, ktx)); },
             python: (f, hj) => 'right(' + hj.uttrykk(f.grader) + ')'
         },
         {
-            id: 'snuVenstre', kategori: 'skilpadde', form: 'setning',
-            tekst: ['Snu venstre', { felt: 'grader', slag: 'tal', standard: 90 }, 'gradar'],
+            id: 'snuVenstre', farge: 'snu', ikon: 'rotateCcw', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Snu venstre', { felt: 'grader', slag: 'tal', standard: 90, steg: 15 }, 'gradar'],
             koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(-hj.verdi(node.felt.grader, ktx)); },
             python: (f, hj) => 'left(' + hj.uttrykk(f.grader) + ')'
         },
         {
-            id: 'pennOpp', kategori: 'skilpadde', form: 'setning',
+            id: 'pennOpp', farge: 'penn', ikon: 'eraser', kategori: 'skilpadde', form: 'setning',
             tekst: ['Penn opp'],
             koyr: function* (node, ktx) { ktx.skilpadde.penn(false); },
             python: () => 'penup()'
         },
         {
-            id: 'pennNed', kategori: 'skilpadde', form: 'setning',
+            id: 'pennNed', farge: 'penn', ikon: 'pencil', kategori: 'skilpadde', form: 'setning',
             tekst: ['Penn ned'],
             koyr: function* (node, ktx) { ktx.skilpadde.penn(true); },
             python: () => 'pendown()'
         },
         {
-            id: 'setFarge', kategori: 'skilpadde', form: 'setning',
+            id: 'setFarge', farge: 'penn', ikon: 'palette', kategori: 'skilpadde', form: 'setning',
             tekst: ['Set farge til', { felt: 'farge', slag: 'val', val: FARGAR, standard: 'raud' }],
             koyr: function* (node, ktx) { ktx.skilpadde.setFarge(node.felt.farge); },
             python: (f) => {
@@ -130,13 +151,13 @@ const BolkBlokkar = (function () {
             }
         },
         {
-            id: 'setTjukn', kategori: 'skilpadde', form: 'setning',
+            id: 'setTjukn', farge: 'penn', ikon: 'sliders', kategori: 'skilpadde', form: 'setning',
             tekst: ['Set tjukn til', { felt: 'tjukn', slag: 'tal', standard: 3 }],
             koyr: function* (node, ktx, hj) { ktx.skilpadde.setTjukn(hj.verdi(node.felt.tjukn, ktx)); },
             python: (f, hj) => 'pensize(' + hj.uttrykk(f.tjukn) + ')'
         },
         {
-            id: 'tilStart', kategori: 'skilpadde', form: 'setning',
+            id: 'tilStart', farge: 'gaa', ikon: 'home', kategori: 'skilpadde', form: 'setning',
             tekst: ['Gå til start'],
             koyr: function* (node, ktx) { ktx.skilpadde.tilStart(); },
             /* Python sin turtle startar peikande mot høgre, så retninga
@@ -150,7 +171,7 @@ const BolkBlokkar = (function () {
          * ville vore ein omveg til det same — og ein blokk til i ein palett
          * som skal kunne sjåast utan å rulle. */
         {
-            id: 'rekne', kategori: 'verdi', form: 'verdi', namn: 'rekning',
+            id: 'rekne', farge: 'tal', ikon: 'plus', kategori: 'verdi', form: 'verdi', namn: 'rekning',
             tekst: [
                 { felt: 'a', slag: 'tal', standard: 360 },
                 { felt: 'op', slag: 'val', val: REKNEARTAR, standard: 'dele' },
@@ -173,7 +194,7 @@ const BolkBlokkar = (function () {
             }
         },
         {
-            id: 'tilfeldig', kategori: 'verdi', form: 'verdi',
+            id: 'tilfeldig', farge: 'tal', ikon: 'shuffle', kategori: 'verdi', form: 'verdi',
             tekst: ['tilfeldig tal frå', { felt: 'fra', slag: 'tal', standard: 1 },
                     'til', { felt: 'til', slag: 'tal', standard: 6 }],
             verdi: (f, ktx, hj) => {
@@ -187,18 +208,18 @@ const BolkBlokkar = (function () {
 
         /* ---- variablar --------------------------------------------------- */
         {
-            id: 'settVar', kategori: 'variabel', form: 'setning',
+            id: 'settVar', farge: 'boks', ikon: 'package', kategori: 'variabel', form: 'setning',
             tekst: ['Set', { felt: 'namn', slag: 'val', val: 'variablar', standard: 'lengd' },
-                    'til', { felt: 'verdi', slag: 'tal', standard: 50 }],
+                    'til', { felt: 'verdi', slag: 'tal', standard: 50, steg: 10 }],
             koyr: function* (node, ktx, hj) {
                 ktx.variablar[node.felt.namn] = hj.verdi(node.felt.verdi, ktx);
             },
             python: (f, hj) => f.namn + ' = ' + hj.uttrykk(f.verdi)
         },
         {
-            id: 'endreVar', kategori: 'variabel', form: 'setning',
+            id: 'endreVar', farge: 'boks', ikon: 'plusCircle', kategori: 'variabel', form: 'setning',
             tekst: ['Endre', { felt: 'namn', slag: 'val', val: 'variablar', standard: 'lengd' },
-                    'med', { felt: 'med', slag: 'tal', standard: 10 }],
+                    'med', { felt: 'med', slag: 'tal', standard: 10, steg: 5 }],
             koyr: function* (node, ktx, hj) {
                 const naa = ktx.variablar[node.felt.namn] || 0;
                 ktx.variablar[node.felt.namn] = naa + hj.verdi(node.felt.med, ktx);
@@ -206,7 +227,7 @@ const BolkBlokkar = (function () {
             python: (f, hj) => f.namn + ' = ' + f.namn + ' + ' + hj.uttrykk(f.med)
         },
         {
-            id: 'lesVar', kategori: 'variabel', form: 'verdi', namn: 'verdien i ein variabel',
+            id: 'lesVar', farge: 'boks', ikon: 'package', kategori: 'variabel', form: 'verdi', namn: 'verdien i ein variabel',
             tekst: [{ felt: 'namn', slag: 'val', val: 'variablar', standard: 'lengd' }],
             verdi: (f, ktx) => ktx.variablar[f.namn] || 0,
             python: (f) => f.namn
@@ -214,12 +235,12 @@ const BolkBlokkar = (function () {
 
         /* ---- eigne kommandoar -------------------------------------------- */
         {
-            id: 'lagKommando', kategori: 'kommando', form: 'hatt',
+            id: 'lagKommando', farge: 'mi', ikon: 'sparkles', kategori: 'kommando', form: 'hatt',
             tekst: ['Lag kommandoen', { felt: 'namn', slag: 'tekst', standard: 'firkant' }],
             python: (f) => 'def ' + f.namn + '():'
         },
         {
-            id: 'kallKommando', kategori: 'kommando', form: 'setning',
+            id: 'kallKommando', farge: 'mi', ikon: 'sparkle', kategori: 'kommando', form: 'setning',
             tekst: ['Bruk', { felt: 'namn', slag: 'val', val: 'kommandoar', standard: '' }],
             /* Djupna på 20 finst fordi ein kommando kan kalle seg sjølv. Det er
              * ikkje forbode — ein spiral laga med rekursjon er eit fint syn —
@@ -236,7 +257,7 @@ const BolkBlokkar = (function () {
 
         /* ---- utskrift ----------------------------------------------------- */
         {
-            id: 'skrivUt', kategori: 'verdi', form: 'setning',
+            id: 'skrivUt', farge: 'tal', ikon: 'text', kategori: 'verdi', form: 'setning',
             tekst: ['Skriv ut', { felt: 'verdi', slag: 'tal', standard: 0 }],
             koyr: function* (node, ktx, hj) {
                 ktx.utskrift.push(talTekst(hj.verdi(node.felt.verdi, ktx)));
@@ -304,7 +325,7 @@ const BolkBlokkar = (function () {
 
     return {
         DEF, KATEGORIAR, FARGAR, REKNEARTAR,
-        hent, felt, standardFelt, talTekst, fargeHex, lesbar,
+        hent, felt, standardFelt, talTekst, fargeHex, lesbar, FARGAR_BLOKK,
         idar: () => DEF.map(d => d.id)
     };
 })();

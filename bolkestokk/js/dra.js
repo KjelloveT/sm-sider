@@ -57,13 +57,17 @@ const BolkDra = (function () {
         if (!boks) return;
         if (boks.dataset.form === 'hatt') return;                 // hattar sit fast
 
+        /* Breidda blir malt pa heile posten. Dreg du ei gjenta-blokk, er
+         * det C-forma som skal folgje fingeren, ikkje berre hovudet. */
+        const post = boks.closest(POST) || boks;
+
         dro = false;
         start = {
             x: e.clientX, y: e.clientY,
             id: boks.dataset.id || null,
             type: boks.dataset.type,
             fraaPalett: boks.classList.contains('bs-palettblokk'),
-            breidd: boks.getBoundingClientRect().width
+            breidd: post.getBoundingClientRect().width
         };
 
         window.addEventListener('pointermove', paaRoersle);
@@ -142,9 +146,14 @@ const BolkDra = (function () {
         return { stabel, indeks: indeksI(stabel, y) };
     }
 
-    /** Kvar mellom blokkene i stabelen ligg y? */
+    /* Ein post i ein stabel er anten ei vanleg blokk eller heile C-forma
+     * rundt ei gjenta-blokk. Begge har klassa bs-stabelpost, slik at dette
+     * ikkje treng vite kva slag han har med a gjere. */
+    const POST = '.bs-stabelpost';
+
+    /** Kvar mellom postane i stabelen ligg y? */
     function indeksI(stabel, y) {
-        const born = [...stabel.children].filter(b => b.classList.contains('bs-blokk'));
+        const born = [...stabel.children].filter(b => b.matches(POST));
         for (let i = 0; i < born.length; i++) {
             const r = born[i].getBoundingClientRect();
             if (y < r.top + r.height / 2) return i;
@@ -164,7 +173,7 @@ const BolkDra = (function () {
 
         markor = document.createElement('div');
         markor.className = 'bs-markor';
-        const born = [...maal.stabel.children].filter(b => b.classList.contains('bs-blokk'));
+        const born = [...maal.stabel.children].filter(b => b.matches(POST));
         if (maal.indeks >= born.length) maal.stabel.appendChild(markor);
         else maal.stabel.insertBefore(markor, born[maal.indeks]);
     }

@@ -108,14 +108,60 @@ const BolkLerret = (function () {
         return { x1, y1, x2, y2 };
     }
 
-    /* Skilpadda er ein trekant som peikar dit ho skal. Ho blir teikna i
-     * fast storleik, uavhengig av skala — elles blir ho borte i ein stor
-     * figur og dekkjer heile ein liten. */
+    /* ---- skilpadda ------------------------------------------------------------
+     *
+     * Ho er eit sprite-ark: 24 rammer à 96px på ei stripe, bygd frå den
+     * teikna GIF-en. Vi valde det framfor å leggje GIF-en rett inn av tre
+     * grunnar. Ein GIF på 1,44 MB blir liggjande i historikka for alltid i
+     * eit repo utan LFS. Ein GIF kan ikkje pausast når skilpadda står
+     * stille. Og MP4-en har ingen alfakanal, så han hadde fått ein synleg
+     * firkant rundt seg. Arket er 25 kB og løyser alle tre.
+     *
+     * Rammene går fram etter kor langt skilpadda har GÅTT, ikkje etter
+     * klokka. Då padlar ho fortare når ho teiknar fort, ho står heilt
+     * stille når programmet står stille, og luffene stemmer med farten
+     * eleven sjølv har valt — utan ei einaste ekstra innstilling.
+     */
+
+    const ARK = '../_resources/bolkestokk-skilpadde.png';
+    const RAMMER = 24;
+    const RAMME_PX = 96;
+    const VIS_PX = 46;              // storleik på skjermen
+    const STEG_PER_RAMME = 14;      // teikneeiningar mellom kvar luffe-ramme
+
+    /* Skilpadda er teikna med nasen 46 grader frå rett opp. Målt over alle
+     * 69 GIF-rammene: retninga held seg mellom 44 og 53 grader, med sum
+     * rotasjon 0 over syklusen — ho svaiar, ho spinn ikkje. Vi trekkjer frå
+     * dei 46 så ho peikar dit ho faktisk går. */
+    const NASE = 46;
+
+    const bilete = new Image();
+    let arkKlart = false;
+    bilete.addEventListener('load', () => { arkKlart = true; teiknPaaNytt(); });
+    bilete.src = ARK;
+
     function teiknSkilpadde(px, py, t, vanleg) {
         const x = px(t.x), y = py(t.y);
-        const v = (t.vinkel - 90) * Math.PI / 180;   // 0 = opp, canvas 0 = høgre
-        const L = 13, B = 7;
+        const v = (t.vinkel - NASE) * Math.PI / 180;
 
+        if (!arkKlart) return teiknTrekant(x, y, t, vanleg);
+
+        const ramme = Math.abs(Math.floor((t.gaatt || 0) / STEG_PER_RAMME)) % RAMMER;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(v);
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(bilete, ramme * RAMME_PX, 0, RAMME_PX, RAMME_PX,
+                      -VIS_PX / 2, -VIS_PX / 2, VIS_PX, VIS_PX);
+        ctx.restore();
+    }
+
+    /* Reserve medan arket lastar, og om det skulle mangle. Ein trekant er
+     * ikkje like triveleg, men han peikar rett — og det er det viktigaste
+     * skilpadda gjer. */
+    function teiknTrekant(x, y, t, vanleg) {
+        const v = (t.vinkel - 90) * Math.PI / 180;
+        const L = 13, B = 7;
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(v);
@@ -124,10 +170,10 @@ const BolkLerret = (function () {
         ctx.lineTo(-B, B);
         ctx.lineTo(-B, -B);
         ctx.closePath();
-        ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--accent').trim() || vanleg;
+        ctx.fillStyle = '#6FDE4F';
         ctx.fill();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = vanleg;
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#111';
         ctx.stroke();
         ctx.restore();
     }

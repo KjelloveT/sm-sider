@@ -3,6 +3,20 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.2] — 2026-08-22
+
+### Endra
+- **Bolkestokk har fått eit eige, barnevendt utsjånad.** Fargeprofilen kjem frå eit designarbeid i Claude Design og er teken inn ordrett. Blokkene er ikkje lenger flate kort med ei fargestripe — dei er **fylte med kategorifargen sin**, med svart tekst, 4px svarte rammer, ekte puslespelknastar og ei open C-form rundt gjenta-blokka.
+  - **Det er motsett av det AGENTS.md §3.2 skisserer**, og det held berre fordi fargane er faste. Alle sju blokkfargane er målte til minst **7,30:1** mot svart, flatene til minst 13,4:1, og den dempa teksten til 6,28:1 — mot 3,21:1 for `--muted` i førre utgåve. Der §3.2 legg fargen ved sida av teksten, garanterer denne paletten kontrasten ved å halde fargane lyse og teksten svart.
+  - **Eit medvite unntak frå §3.3:** temavelgaren rører ikkje Bolkestokk. Ein palett teikna for tolvåringar ville blitt noko heilt anna i «hacker» eller «neon», og garantien over ville falle bort. Verktøyet overstyrer difor temavariablane i staden for å ignorere dei, slik at dei delte komponentane (`.box4`, `.btn`, `.box5`) får rett utsjånad utan å teiknast på nytt. Sjå `bolkestokk/css/palett.css`.
+  - **Systemfontar, ikkje Google Fonts.** Mockupen brukar Baloo 2 og Space Grotesk; §5.6 er kategorisk imot eksterne font-bibliotek. `ui-rounded` gjev SF Pro Rounded på iPad og Mac, som ligg tett på uttrykket, med Segoe UI Variable Display og system-ui bak.
+  - **Kvar blokk har fått eit symbol** i tillegg til teksten — Lucide, ikkje emoji (§3.2). Ei pil, ein penn eller ein sirkelpil seier kva blokka er lenge før eit barn har lese ferdig ordet, og på ei blokk som er dregen i full fart er symbolet det einaste som rekk fram.
+  - **Talfelta har fått − og +.** Å treffe eit lite felt, vente på tastaturet og skrive om eit tal er tungt på nettbrett. Knappane flyttar verdien i steg som betyr noko: 15 gradar om gongen, 10 steg om gongen, ikkje éin.
+- **Leksjonen er kollapsa når sida opnar.** Døme, løype, kvar oppgåve og oppsummeringa er `<details>`, og berre «Prøv sjølv» står open. Før møtte ein sjetteklassing som opna sida ein vegg av tekst før han hadde gjort noko. Målet med kvar oppgåve står i sjølve samandraget, så han ser kva dei går ut på utan å opne dei. `<details>` og ikkje eigen JS: tastatur, skjermlesar og Ctrl+F følgjer med.
+- **Skilpadda er animert.** Ho padlar med luffene medan ho teiknar, og står heilt stille når programmet står stille.
+  - Sprite-ark på **24 rammer à 96px, 25 kB**, bygd frå den teikna GIF-en. GIF-en sjølv er 1,44 MB og ville lege i historikka for alltid i eit repo utan LFS; han kan heller ikkje pausast; og MP4-en manglar alfakanal og ville fått ein synleg firkant rundt seg.
+  - Rammene går fram etter kor langt skilpadda har **gått**, ikkje etter klokka. Då padlar ho i takt med farten eleven sjølv har valt, utan ei einaste ny innstilling.
+  - Målt over alle 69 GIF-rammene: retninga held seg mellom 44 og 53 gradar med sum rotasjon 0 — ho svaiar, ho spinn ikkje. Nasen peikar 46 gradar frå rett opp, og det blir trekt frå når ho blir rotert, så ho peikar dit ho faktisk går.
 ## [1.1] — 2026-08-21
 
 ### Lagt til

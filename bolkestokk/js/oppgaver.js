@@ -32,12 +32,21 @@ const BolkOppgaver = (function () {
     function kort(oppgave, nr) {
         const type = TYPAR[oppgave.type] || { merke: 'Oppgåve', ikon: 'helpCircle' };
 
-        const boks = document.createElement('section');
+        /* Kortet er eit trekkspel.
+         *
+         * Ei leksjon har opptil tre oppgåver, kvar med tekst, knappar, hint
+         * og svar. Lagt ut samtidig blir det ein vegg av tekst før eleven
+         * har gjort noko som helst. No ser han tre linjer, og opnar den han
+         * skal arbeide med.
+         *
+         * <details> og ikkje eigen JS: tastatur, skjermlesar og Ctrl+F i
+         * nettlesaren verkar av seg sjølv. */
+        const boks = document.createElement('details');
         boks.className = 'box4 bs-oppgave';
         boks.dataset.type = oppgave.type;
         boks.dataset.id = oppgave.id;
 
-        const topp = document.createElement('div');
+        const topp = document.createElement('summary');
         topp.className = 'box-header bs-oppgavetopp';
 
         const merke = document.createElement('span');
@@ -51,9 +60,16 @@ const BolkOppgaver = (function () {
         merke.appendChild(merketekst);
         topp.appendChild(merke);
 
+        /* Målet står i sjølve samandraget. Ein elev som ser etter noko han
+         * ikkje har gjort enno, skal sleppe å opne alle tre for å finne det. */
+        const tittel = document.createElement('span');
+        tittel.className = 'bs-oppgavemaal';
+        tittel.textContent = oppgave.maal || ('Oppgåve ' + nr);
+        topp.appendChild(tittel);
+
         const nummer = document.createElement('span');
         nummer.className = 'bs-oppgavenummer';
-        nummer.textContent = 'Oppgåve ' + nr;
+        nummer.textContent = String(nr);
         topp.appendChild(nummer);
         boks.appendChild(topp);
 
@@ -121,6 +137,7 @@ const BolkOppgaver = (function () {
         const rett = feila.length === 0;
 
         boks.classList.toggle('bs-oppgave-rett', rett);
+        boks.open = true;
         svarboks.className = 'bs-svar ' + (rett ? 'bs-svar-rett' : 'bs-svar-feil');
 
         const tittel = document.createElement('p');
@@ -295,6 +312,7 @@ const BolkOppgaver = (function () {
             }
 
             boks.classList.toggle('bs-oppgave-rett', rett);
+            boks.open = true;
             // Ei lesoppgåve tel som løyst når ho er svara på: eleven har
             // sett fasiten og forklaringa, og å svare på nytt lærer ingen noko.
             loyste.add(oppgave.id);

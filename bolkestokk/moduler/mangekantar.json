@@ -225,6 +225,7 @@
         {
           "id": "f1",
           "type": "les",
+          "maal": "Kva teiknar dette?",
           "tekst": "Les blokkene under. Ikkje køyr dei — sjå for deg kva skilpadda gjer.",
           "program": {
             "app": "bolkestokk",
@@ -263,6 +264,7 @@
         {
           "id": "f2",
           "type": "bygg",
+          "maal": "Teikn ein firkant",
           "tekst": "Bygg ein firkant med sider på **100 steg**, slik du gjorde i løypa. Du treng åtte blokker.",
           "hint": [
             "Ein firkant har fire sider. Mellom kvar side må skilpadda snu.",
@@ -338,6 +340,7 @@
         {
           "id": "f3",
           "type": "rett",
+          "maal": "Finn feilen i firkanten",
           "tekst": "Dette programmet skulle teikne ein firkant, men figuren lukkar seg ikkje. Hent det inn, finn feilen og rett han.",
           "startProgram": {
             "app": "bolkestokk",
@@ -657,6 +660,7 @@
         {
           "id": "g1",
           "type": "bygg",
+          "maal": "Firkant med høgst 3 blokker",
           "tekst": "Teikn den same firkanten med sider på **100 steg** — men denne gongen med **høgst 3 blokker**.",
           "hint": [
             "Kva to blokker gjentek seg i firkanten?",
@@ -712,6 +716,7 @@
         {
           "id": "g2",
           "type": "les",
+          "maal": "Kva figur blir dette?",
           "tekst": "Les blokkene. Kva slags figur blir dette?",
           "program": {
             "app": "bolkestokk",
@@ -752,6 +757,7 @@
         {
           "id": "g3",
           "type": "bygg",
+          "maal": "Teikn ein trekant",
           "tekst": "Teikn ein **trekant** med sider på 120 steg. Snuinga skal vere 120 gradar. Høgst 3 blokker.",
           "hint": [
             "Same oppskrifta som firkanten, men med tre sider i staden for fire."
@@ -1010,6 +1016,7 @@
         {
           "id": "v1",
           "type": "bygg",
+          "maal": "Vinkelen i ein nikant",
           "tekst": "Kor mange gradar må skilpadda snu for kvart hjørne i ein **nikant** (9 kantar)? Bruk ei `Skriv ut`-blokk med ei rekneblokk inni, så maskina reknar det ut.",
           "hint": [
             "Ein heil runde er 360 gradar, og han skal delast på talet på kantar.",
@@ -1049,6 +1056,7 @@
         {
           "id": "v2",
           "type": "bygg",
+          "maal": "Teikn ein åttekant",
           "tekst": "Teikn ein **åttekant** med sider på 60 steg. Vinkelen skal **reknast ut** med ei rekneblokk, ikkje skrivast inn som eit ferdig tal. Høgst 4 blokker.",
           "hint": [
             "Åtte kantar. Kva blir 360 ÷ 8?",
@@ -1111,6 +1119,7 @@
         {
           "id": "v3",
           "type": "les",
+          "maal": "Kva figur blir dette?",
           "tekst": "Les blokkene under.",
           "program": {
             "app": "bolkestokk",
@@ -1367,6 +1376,7 @@
         {
           "id": "r1",
           "type": "les",
+          "maal": "Kva skjer utan Endre?",
           "tekst": "Sjå på spiralen under. Tenk deg at nokon fjernar `Endre lengd med 10`.",
           "program": {
             "app": "bolkestokk",
@@ -1426,6 +1436,7 @@
         {
           "id": "r2",
           "type": "bygg",
+          "maal": "Bygg ein spiral",
           "tekst": "Bygg spiralen sjølv: start med `lengd` på **20**, gjenta **12** gonger, gå framover `lengd`, snu 90 gradar, og auk `lengd` med **10** kvar runde.",
           "hint": [
             "Du treng `Set lengd til 20` **før** løkka.",
@@ -1495,6 +1506,7 @@
         {
           "id": "r3",
           "type": "rett",
+          "maal": "Spiralen som ikkje veks",
           "tekst": "Dette skulle vere ein spiral, men figuren veks ikkje. Hent det inn, finn ut kvifor, og rett det.",
           "startProgram": {
             "app": "bolkestokk",
@@ -1824,6 +1836,7 @@
         {
           "id": "k1",
           "type": "les",
+          "maal": "Kor mange strek?",
           "tekst": "Under ser du både kommandoen og programmet som brukar han.",
           "program": {
             "app": "bolkestokk",
@@ -1889,6 +1902,7 @@
         {
           "id": "k2",
           "type": "bygg",
+          "maal": "Lag kommandoen trekant",
           "tekst": "Lag ein kommando som heiter **trekant** og teiknar ein trekant med sider på 100 steg. Bruk han så **to gonger**, med ei sving på **180 gradar** mellom.",
           "hint": [
             "Trykk **Ny kommando**, og skriv `trekant` i namnefeltet.",
@@ -2228,6 +2242,7 @@
         {
           "id": "m1",
           "type": "bygg",
+          "maal": "Vinkelen for 18 figurar",
           "tekst": "Kor mange gradar må det vere mellom kvar figur om du vil ha **18 figurar** heile vegen rundt? Bruk `Skriv ut` med ei rekneblokk.",
           "hint": [
             "Ein heil runde er 360 gradar."
@@ -2266,6 +2281,7 @@
         {
           "id": "m2",
           "type": "bygg",
+          "maal": "Bygg rosetten",
           "tekst": "Bygg rosetten: ein kommando `firkant` med sider på **60 steg**, brukt **12 gonger** med **30 gradar** mellom kvar.",
           "hint": [
             "Lag kommandoen fyrst, med `Gjenta 4` inni.",
@@ -2342,6 +2358,7 @@
         {
           "id": "m3",
           "type": "bygg",
+          "maal": "Åtte trekantar i ring",
           "tekst": "Lag ditt eige mønster med **åtte trekantar** rundt eit midtpunkt. Trekanten skal ha sider på 100 steg, og du må rekne ut snuinga mellom dei med ei rekneblokk.",
           "hint": [
             "Åtte figurar heile vegen rundt: 360 ÷ 8.",
