@@ -419,3 +419,23 @@ body.bs-dreg .bs-felt { pointer-events: none; }
     .bs-blokk.er-koyrande { transform: none; }
     .bs-palettblokk:hover { transform: none; }
 }
+
+/* ---- paletten på smale skjermar ------------------------------------------
+ * Palettspalta er clamp(260px, 19vw, 360px), så ho når 300px fyrst ved
+ * 1580px skjermbreidd. Under det er det ikkje plass til «Endre [lengd] med
+ * [10]» på éi linje med same skrift som elles.
+ *
+ * Grensa stod fyrst på 1400px. Målt gav det ei ny klemme mellom 1400 og
+ * 1580, der spalta framleis er smal men innstramminga hadde slutta å gjelde
+ * — to blokker braut ved 1440 mot éi ved 1366. Grensa må følgje spalta,
+ * ikkje eit rundt tal.
+ *
+ * Vi strammar her i staden for å gjere spalta breiare: plassen måtte i så
+ * fall takast frå arbeidsbenken, som treng han meir. */
+@media (max-width: 1579px) {
+    .bs-palettbolk .bs-rad { font-size: 13px; gap: 4px; padding: 7px 8px; }
+    .bs-palettbolk .bs-symbol { width: 20px; height: 20px; }
+    .bs-palettbolk .bs-symbol svg { width: 19px; height: 19px; }
+    .bs-palettbolk .bs-felt-val { max-width: 4.8em; font-size: 12px; }
+    .bs-palettbolk .bs-brikke { min-width: 2em; padding: 4px 5px; font-size: 13px; }
+}
