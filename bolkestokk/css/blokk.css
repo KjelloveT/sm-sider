@@ -117,9 +117,12 @@
     box-sizing: border-box;
 }
 
-.bs-felt-tal { width: 5.5em; text-align: center; }
-.bs-felt-tekst { width: 8em; }
-.bs-felt-val { padding-right: 4px; max-width: 11em; }
+/* 4,5em tek fire siffer med god margin, og det er meir enn nokon vinkel
+ * eller lengd i denne modulen treng. Breiare felt gjorde at rekneblokka og
+ * «tilfeldig tal frå … til …» braut over to linjer i paletten. */
+.bs-felt-tal { width: 4.5em; text-align: center; }
+.bs-felt-tekst { width: 7em; }
+.bs-felt-val { padding-right: 4px; max-width: 9.5em; }
 
 .bs-felt:focus-visible,
 .bs-blokk:focus-visible {

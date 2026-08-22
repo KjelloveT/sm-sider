@@ -6,27 +6,96 @@
  * breiddegrense uansett, slik same paragraf krev.
  */
 
-/* ---- flata ----------------------------------------------------------------- */
+/* ---- flata -----------------------------------------------------------------
+ *
+ * Fire ting skal helst vere synlege samtidig: leksjonen, paletten, blokkene
+ * og teikninga. Fyrste utgåva la leksjonen som eit fullbreitt band over
+ * resten, og på ein stor skjerm skuva ein lang leksjonstekst då både
+ * arbeidsbenken og lerretet ned under skjermkanten — eleven måtte rulle for
+ * å sjå det han bygde. No er leksjonen ei spalte som alle dei andre.
+ *
+ * Paletten er breiare enn han var. «tilfeldig tal frå [1] til [6]» og
+ * «Set farge til [oransje]» er ikkje smale blokker, og på 210px braut dei
+ * over tre linjer kvar.
+ */
 
 .bs-flate {
     display: grid;
-    grid-template-columns: 210px minmax(280px, 1fr) minmax(300px, 1fr);
+    grid-template-columns: var(--bs-palett) minmax(300px, 1fr) minmax(330px, 1fr);
     gap: 14px;
     align-items: start;
+
+    /* Veks med skjermen, men stoppar før paletten blir eit landskap. */
+    --bs-palett: clamp(250px, 17vw, 340px);
 }
 
-/* Under 1100px har det ikkje plass til tre spalter. Teikninga går under,
- * i full breidd — ho tener mest på plassen. */
+/* Med leksjon: han får ei eiga spalte når det er plass til fire. */
+@media (min-width: 1280px) {
+    .bs-flate:has(> .bs-leksjonspanel:not([hidden])) {
+        grid-template-columns: minmax(330px, 24%) var(--bs-palett) minmax(280px, 1fr) minmax(320px, 1fr);
+    }
+}
+
+/* Under 1280px er det ikkje plass til fire spalter. Leksjonen legg seg
+ * øvst i full breidd, men med eiga rulling og tak på høgda — elles er vi
+ * tilbake til at han skuvar arbeidsflata ut av synet. */
+@media (max-width: 1279px) {
+    .bs-leksjonspanel {
+        grid-column: 1 / -1;
+        max-height: 46vh;
+        overflow-y: auto;
+    }
+}
+
+/* Under 1100px har det ikkje plass til tre spalter heller. Då flyttar
+ * teikninga OPP over paletten og blir klistra til toppen.
+ *
+ * La han bli liggjande nedanfor, hamna han eit par skjermhøgder ned så snart
+ * leksjonen stod over — og då bygde eleven blindt. Teikninga er det han
+ * arbeider mot, så ho er det siste som skal ut av synet. */
 @media (max-width: 1100px) {
-    .bs-flate { grid-template-columns: 190px minmax(0, 1fr); }
-    .bs-utflate { grid-column: 1 / -1; }
+    .bs-flate { grid-template-columns: var(--bs-palett) minmax(0, 1fr); }
+    .bs-leksjonspanel { order: -2; }
+    .bs-utflate {
+        order: -1;
+        grid-column: 1 / -1;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: var(--bg);
+    }
+    .bs-lerretboks { max-height: 38vh; }
 }
 
-/* På telefon er alt under kvarandre, men teikninga blir klistra øvst så
- * eleven ser figuren endre seg medan han byggjer lenger nede. */
+/* På telefon er alt under kvarandre. */
 @media (max-width: 700px) {
-    .bs-flate { grid-template-columns: 1fr; }
-    .bs-utflate { grid-column: auto; position: sticky; top: 0; z-index: 5; }
+    .bs-flate { grid-template-columns: 1fr; --bs-palett: 1fr; }
+    .bs-utflate { grid-column: auto; }
+    .bs-leksjonspanel { max-height: 40vh; }
+}
+
+/* ---- leksjonspanelet --------------------------------------------------------- */
+
+/* --bg og ikkje --surface: oppgåvekorta er .box4, som står på --surface.
+ * Same farge bak dei ville gjort at korta forsvann inn i panelet. */
+.bs-leksjonspanel {
+    min-width: 0;
+    padding: 16px 18px;
+    background: var(--bg);
+    color: var(--text);
+    border: 3px solid var(--border);
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+/* Som eiga spalte følgjer han med når ein rullar i blokkene, og har si
+ * eiga rulling så ein lang leksjon ikkje gjer sida uendeleg høg. */
+@media (min-width: 1280px) {
+    .bs-leksjonspanel {
+        position: sticky;
+        top: 8px;
+        max-height: calc(100vh - 24px);
+        overflow-y: auto;
+    }
 }
 
 /* ---- paletten --------------------------------------------------------------- */

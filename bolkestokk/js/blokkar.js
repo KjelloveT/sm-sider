@@ -13,7 +13,10 @@
  *             'krop'    — setning som har ein stabel inni seg (gjenta)
  *             'verdi'   — kan berre ligge i eit verdi-hol
  *   tekst     orda og hola, i den rekkjefølgja dei skal lesast
- *   koyr      generator: gjer arbeidet. Kvart yield er eitt steg.
+ *   koyr      generator: gjer arbeidet. Han treng ikkje yield sjølv —
+ *             koyrNode() varslar blokka før han kallar han, og det
+ *             varselet ER steget. Berre blokker som inneheld andre
+ *             blokker (gjenta, Bruk) gjev vidare med yield*.
  *   verdi     rein funksjon: reknar ut ein verdi. Berre for form 'verdi'.
  *   python    lagar ei lesbar Python-linje
  *
@@ -84,43 +87,43 @@ const BolkBlokkar = (function () {
         {
             id: 'framover', kategori: 'skilpadde', form: 'setning',
             tekst: ['Gå framover', { felt: 'lengd', slag: 'tal', standard: 100 }, 'steg'],
-            koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(hj.verdi(node.felt.lengd, ktx)); yield; },
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(hj.verdi(node.felt.lengd, ktx)); },
             python: (f, hj) => 'forward(' + hj.uttrykk(f.lengd) + ')'
         },
         {
             id: 'bakover', kategori: 'skilpadde', form: 'setning',
             tekst: ['Gå bakover', { felt: 'lengd', slag: 'tal', standard: 50 }, 'steg'],
-            koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(-hj.verdi(node.felt.lengd, ktx)); yield; },
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.gaa(-hj.verdi(node.felt.lengd, ktx)); },
             python: (f, hj) => 'backward(' + hj.uttrykk(f.lengd) + ')'
         },
         {
             id: 'snuHogre', kategori: 'skilpadde', form: 'setning',
             tekst: ['Snu høgre', { felt: 'grader', slag: 'tal', standard: 90 }, 'gradar'],
-            koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(hj.verdi(node.felt.grader, ktx)); yield; },
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(hj.verdi(node.felt.grader, ktx)); },
             python: (f, hj) => 'right(' + hj.uttrykk(f.grader) + ')'
         },
         {
             id: 'snuVenstre', kategori: 'skilpadde', form: 'setning',
             tekst: ['Snu venstre', { felt: 'grader', slag: 'tal', standard: 90 }, 'gradar'],
-            koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(-hj.verdi(node.felt.grader, ktx)); yield; },
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.snu(-hj.verdi(node.felt.grader, ktx)); },
             python: (f, hj) => 'left(' + hj.uttrykk(f.grader) + ')'
         },
         {
             id: 'pennOpp', kategori: 'skilpadde', form: 'setning',
             tekst: ['Penn opp'],
-            koyr: function* (node, ktx) { ktx.skilpadde.penn(false); yield; },
+            koyr: function* (node, ktx) { ktx.skilpadde.penn(false); },
             python: () => 'penup()'
         },
         {
             id: 'pennNed', kategori: 'skilpadde', form: 'setning',
             tekst: ['Penn ned'],
-            koyr: function* (node, ktx) { ktx.skilpadde.penn(true); yield; },
+            koyr: function* (node, ktx) { ktx.skilpadde.penn(true); },
             python: () => 'pendown()'
         },
         {
             id: 'setFarge', kategori: 'skilpadde', form: 'setning',
             tekst: ['Set farge til', { felt: 'farge', slag: 'val', val: FARGAR, standard: 'raud' }],
-            koyr: function* (node, ktx) { ktx.skilpadde.setFarge(node.felt.farge); yield; },
+            koyr: function* (node, ktx) { ktx.skilpadde.setFarge(node.felt.farge); },
             python: (f) => {
                 const v = FARGAR.find(x => x.verdi === f.farge) || FARGAR[0];
                 return 'pencolor("' + v.py + '")';
@@ -129,13 +132,13 @@ const BolkBlokkar = (function () {
         {
             id: 'setTjukn', kategori: 'skilpadde', form: 'setning',
             tekst: ['Set tjukn til', { felt: 'tjukn', slag: 'tal', standard: 3 }],
-            koyr: function* (node, ktx, hj) { ktx.skilpadde.setTjukn(hj.verdi(node.felt.tjukn, ktx)); yield; },
+            koyr: function* (node, ktx, hj) { ktx.skilpadde.setTjukn(hj.verdi(node.felt.tjukn, ktx)); },
             python: (f, hj) => 'pensize(' + hj.uttrykk(f.tjukn) + ')'
         },
         {
             id: 'tilStart', kategori: 'skilpadde', form: 'setning',
             tekst: ['Gå til start'],
-            koyr: function* (node, ktx) { ktx.skilpadde.tilStart(); yield; },
+            koyr: function* (node, ktx) { ktx.skilpadde.tilStart(); },
             /* Python sin turtle startar peikande mot høgre, så retninga
              * må setjast attende til opp. Fleire linjer ut av éi blokk. */
             python: () => ['penup()', 'goto(0, 0)', 'setheading(90)', 'pendown()']
@@ -189,7 +192,6 @@ const BolkBlokkar = (function () {
                     'til', { felt: 'verdi', slag: 'tal', standard: 50 }],
             koyr: function* (node, ktx, hj) {
                 ktx.variablar[node.felt.namn] = hj.verdi(node.felt.verdi, ktx);
-                yield;
             },
             python: (f, hj) => f.namn + ' = ' + hj.uttrykk(f.verdi)
         },
@@ -200,7 +202,6 @@ const BolkBlokkar = (function () {
             koyr: function* (node, ktx, hj) {
                 const naa = ktx.variablar[node.felt.namn] || 0;
                 ktx.variablar[node.felt.namn] = naa + hj.verdi(node.felt.med, ktx);
-                yield;
             },
             python: (f, hj) => f.namn + ' = ' + f.namn + ' + ' + hj.uttrykk(f.med)
         },
@@ -239,7 +240,6 @@ const BolkBlokkar = (function () {
             tekst: ['Skriv ut', { felt: 'verdi', slag: 'tal', standard: 0 }],
             koyr: function* (node, ktx, hj) {
                 ktx.utskrift.push(talTekst(hj.verdi(node.felt.verdi, ktx)));
-                yield;
             },
             python: (f, hj) => 'print(' + hj.uttrykk(f.verdi) + ')'
         }

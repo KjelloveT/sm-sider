@@ -6,10 +6,17 @@
  */
 (function () {
 
-    /* Steg per bilete. Ei blokk i sekundet er for seint til å halde ut,
-     * og alt på ein gong lærer ingen noko — difor ein skala. Øvste hakket
-     * hoppar over animasjonen heilt, for den som berre vil sjå figuren. */
-    const FART = { 1: 1, 2: 2, 3: 5, 4: 14, 5: 60, 6: Infinity };
+    /* Steg per SEKUND, ikkje per bilete.
+     *
+     * Fyrste utgåva talde steg per animasjonsbilete, og då vart lågaste fart
+     * eitt steg per bilete — altså seksti i sekundet på ein vanleg skjerm.
+     * Heile skalaen låg mellom «for fort å følgje med på» og «endå fortare».
+     * Med tid som eining betyr hakka det same same kor rask skjermen er.
+     *
+     * To steg i sekundet er sakte nok til at ein sjetteklassing rekk å lese
+     * blokka som lyser opp før neste tek over. Øvste hakket hoppar over
+     * animasjonen heilt, for den som berre vil sjå figuren. */
+    const FART = { 1: 2, 2: 5, 3: 12, 4: 30, 5: 90, 6: Infinity };
 
     const el = {};
     let program = null;
@@ -47,6 +54,16 @@
         // Ei uferdig teikning er ikkje verdt å miste fordi ein fane vart lukka.
         window.addEventListener('beforeunload', lagre);
         setInterval(() => { if (ulagra) lagre(); }, 4000);
+
+        /* Nettlesaren pausar requestAnimationFrame i ei fane som ligg i
+         * bakgrunnen. Utan dette ville eit program eleven starta og så bytte
+         * vekk frå, stå fryst midt i figuren — og Køyr-knappen bli ståande
+         * deaktivert til han lasta sida på nytt. Animasjonen er til for den
+         * som ser på; er ingen der, teiknar vi ferdig med ein gong. Same
+         * grepet som Ormritaren gjer med turtle-avspelinga. */
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && koyring) fullfoerStrakt();
+        });
 
         /* `typeof`, ikkje `window.BolkLeksjon`: modulane er deklarerte med
          * `const` på toppnivå, og ein slik konstant blir aldri ein eigenskap
@@ -107,34 +124,74 @@
 
         const ktx = BolkTolk.nyKontekst(program);
         const g = BolkTolk.koyr(program, { ktx });
-        koyring = { g, ktx, id: null, naarFerdig };
+        koyring = { g, ktx, id: null, naarFerdig, sist: null, rest: 0, sisteBlokk: null };
 
         el.stopp.disabled = false;
         el.koyr.disabled = true;
         melding('Køyrer …');
+
+        // Ligg fana alt i bakgrunnen, får vi aldri eit animasjonsbilete å
+        // steppe på. Då teiknar vi ferdig med det same.
+        if (document.hidden) return fullfoerStrakt();
         steg();
     }
 
-    function steg() {
+    function steg(naa) {
         if (!koyring) return;
-        const per = FART[el.fart.value] || 14;
-        let n = 0;
-        let siste = null;
 
+        const perSekund = FART[el.fart.value] || 30;
+        let aa = 0;
+
+        if (perSekund === Infinity) {
+            aa = Infinity;
+        } else {
+            /* Vi samlar opp brøkdelar av eit steg mellom bileta. Utan det
+             * ville alt under eitt steg per bilete runda ned til null, og
+             * dei sakte hakka hadde stått heilt stille. */
+            if (koyring.sist === null) koyring.sist = naa || performance.now();
+            const gaatt = Math.min(250, (naa || performance.now()) - koyring.sist);
+            koyring.sist = naa || performance.now();
+            koyring.rest += gaatt / 1000 * perSekund;
+            aa = Math.floor(koyring.rest);
+            koyring.rest -= aa;
+        }
+
+        let siste = koyring.sisteBlokk;
         try {
-            while (n < per) {
+            for (let n = 0; n < aa; n++) {
                 const r = koyring.g.next();
                 if (r.done) return ferdig(null);
                 if (r.value && r.value.blokk) siste = r.value.blokk;
-                n++;
             }
         } catch (f) {
             return ferdig(f.message || String(f));
         }
 
-        BolkEditor.markerKoyrande(siste);
-        teiknNo();
+        if (siste !== koyring.sisteBlokk) {
+            koyring.sisteBlokk = siste;
+            BolkEditor.markerKoyrande(siste);
+        }
+        if (aa) teiknNo();
         koyring.id = requestAnimationFrame(steg);
+    }
+
+    /** Køyr resten av programmet utan pause. Brukt når fana blir borte. */
+    function fullfoerStrakt() {
+        if (koyring.id) cancelAnimationFrame(koyring.id);
+        koyring.id = null;
+        try {
+            let n = 0;
+            for (;;) {
+                const r = koyring.g.next();
+                if (r.done) break;
+                // Same taket som tolken har, så ei uventa stor løkke ikkje
+                // låser tråden i staden for å seie frå.
+                if (++n > BolkTolk.MAKS_STEG) throw new Error('Programmet vart for langt.');
+            }
+        } catch (f) {
+            return ferdig(f.message || String(f));
+        }
+        ferdig(null);
     }
 
     function teiknNo() {
