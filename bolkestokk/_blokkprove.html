@@ -105,12 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
      * Dei same påstandane som står i planen. Alt som ikkje er 0 avvik er ein
      * feil, ikkje ein smakssak.
      *
-     * Vi ventar to animasjonsbilete OG eit halvt sekund. Fyrste utgåva målte
-     * etter 250ms og rapporterte OK for blokker som seinare braut over to
-     * linjer: hydrateIcons hadde ikkje sett inn SVG-ane enno, så blokkene
-     * var smalare enn dei kom til å bli. */
-    const naarLayoutSit = (fn) =>
-        requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(fn, 500)));
+     * Fyrste utgåva målte etter 250ms og rapporterte OK for blokker som
+     * seinare braut over to linjer: hydrateIcons hadde ikkje sett inn
+     * SVG-ane enno, så blokkene var smalare enn dei kom til å bli.
+     *
+     * Andre utgåva venta på requestAnimationFrame, og då stod panelet på
+     * «Måler …» for alltid i ei fane nettlesaren ikkje teiknar — rAF er
+     * pausa der. setTimeout blir strupa i same situasjon, men han fyrer. */
+    const naarLayoutSit = (fn) => {
+        const klar = () => setTimeout(fn, 400);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(klar);
+        else klar();
+    };
 
     naarLayoutSit(() => {
         const ut = [];
@@ -166,13 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
         seier('knasten har fargen til blokka over', !feilFarge.length, feilFarge.join(', '));
 
         // 7. palettblokkene skal vere éi linje
-        /* Rekneblokka og tilfeldig-blokka har tre felt kvar og fell over pa
-         * to linjer uansett kor mykje vi strammar. Dei er unntekne. */
-        const UNNTAK = ['rekne', 'tilfeldig'];
+        /* Ingen unntak. Etter innstramminga er alle sytten blokkene éi linje,
+         * òg rekne og tilfeldig som har tre felt kvar. */
         const hoege = [...document.querySelectorAll('#palett .bs-palettblokk')]
             .map(b => ({ t: b.dataset.type, h: rund(R(b).height) }))
-            .filter(x => x.h > 64 && UNNTAK.indexOf(x.t) < 0);
-        seier('inga palettblokk over 64px (utan rekne/tilfeldig)', hoege.length === 0,
+            .filter(x => x.h > 64);
+        seier('inga palettblokk over 64px', hoege.length === 0,
               hoege.map(x => x.t + '=' + x.h).join(', '));
 
         // Gjenta i paletten skal ikkje vere ein kloss
