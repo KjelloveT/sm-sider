@@ -1037,7 +1037,7 @@
         }
       ],
       "doeme": {
-        "oppmoding": "Ein klasse på 28 elevar skal på tur. Bussen tek 48, og turen kostar 3600 kroner delt likt. Kva betaler kvar elev?",
+        "oppmoding": "28 elevar kjøper kvar sin billett til 85 kroner, og klassa betaler 500 kroner for buss. Kva kostar turen til saman? Sjå kva blokk som ligg innerst.",
         "program": {
           "app": "bolkestokk",
           "version": 1,
@@ -1048,9 +1048,16 @@
                 "verdi": {
                   "type": "rekne",
                   "felt": {
-                    "a": 3600,
-                    "op": "dele",
-                    "b": 28
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 28,
+                        "op": "gonge",
+                        "b": 85
+                      }
+                    },
+                    "op": "pluss",
+                    "b": 500
                   }
                 }
               }
