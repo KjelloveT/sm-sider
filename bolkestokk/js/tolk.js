@@ -24,6 +24,11 @@ const BolkTolk = (function () {
         return {
             skilpadde: (val && val.skilpadde) || BolkSkilpadde(),
             variablar: {},
+            /* Lister ligg for seg og ikkje blant variablane. Ein variabel er
+             * eitt tal, ei liste er mange, og blandar vi dei to i same
+             * oppslagsverket, kan «Set tala til 5» øydeleggje eit datasett
+             * utan at noko seier frå. */
+            lister: {},
             funksjonar,
             utskrift: [],
             steg: 0,

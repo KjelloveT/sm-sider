@@ -108,6 +108,7 @@ const BolkBlokkar = (function () {
         { id: 'verdi',     tittel: 'Tal og rekning',   farge: 'tal'   },
         { id: 'variabel',  tittel: 'Variablar',        farge: 'boks'  },
         { id: 'rutenett',  tittel: 'Rutenettet',       farge: 'gaa'   },
+        { id: 'liste',     tittel: 'Lister',           farge: 'boks'  },
         { id: 'vilkaar',   tittel: 'Vilkår',           farge: 'vilkaar' },
         { id: 'funksjon',  tittel: 'Eigne funksjonar', farge: 'mi'    }
     ];
@@ -320,6 +321,97 @@ const BolkBlokkar = (function () {
             tekst: ['y'],
             verdi: (f, ktx) => Math.round(ktx.skilpadde.tilstand.y / RUTE),
             python: () => 'round(ycor() / RUTE)'
+        },
+
+        /* ---- lister ------------------------------------------------------
+         *
+         * Ei liste er mange tal med eitt namn. Ho ligg for seg i tolken og
+         * ikkje blant variablane, av same grunn som ho har eigne blokker:
+         * ein variabel er eitt tal, og blandar vi dei to, kan «Set tala til
+         * 5» øydeleggje eit datasett utan at noko seier frå.
+         *
+         * Alle åtte blokkene har eit ekte motstykke i Python — `append`,
+         * `len`, `sum`, `sort`, `min`, `max` og hakeparentesar. Det er same
+         * kravet som resten av verktøyet held: vi skriv Python, ikkje vår
+         * eigen dialekt.
+         */
+        {
+            id: 'nyListe', farge: 'boks', ikon: 'list', kategori: 'liste', form: 'setning',
+            tekst: ['Lag lista', { felt: 'liste', slag: 'tekst', standard: 'tala' }],
+            koyr: function* (node, ktx) { ktx.lister[node.felt.liste] = []; },
+            python: (f) => f.liste + ' = []'
+        },
+        {
+            id: 'leggIListe', farge: 'boks', ikon: 'plusCircle', kategori: 'liste', form: 'setning',
+            tekst: ['Legg', { felt: 'verdi', slag: 'tal', standard: 0 },
+                    'i lista', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            koyr: function* (node, ktx, hj) {
+                const l = ktx.lister[node.felt.liste] || (ktx.lister[node.felt.liste] = []);
+                /* Same taket som ei løkke har. Ei liste som veks fritt kunne
+                 * ete minnet på ein skulemaskin, og ingen oppgåve her treng
+                 * meir enn nokre tusen tal. */
+                if (l.length < 5000) l.push(hj.verdi(node.felt.verdi, ktx));
+            },
+            python: (f, hj) => f.liste + '.append(' + hj.uttrykk(f.verdi) + ')'
+        },
+        {
+            id: 'sorterListe', farge: 'boks', ikon: 'arrowDown', kategori: 'liste', form: 'setning',
+            tekst: ['Sorter lista', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            koyr: function* (node, ktx) {
+                const l = ktx.lister[node.felt.liste];
+                if (l) l.sort((a, b) => a - b);
+            },
+            python: (f) => f.liste + '.sort()'
+        },
+        {
+            id: 'listeLengd', farge: 'boks', ikon: 'hash', kategori: 'liste', form: 'verdi',
+            namn: 'talet på tal i ei liste',
+            tekst: ['kor mange tal er i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => (ktx.lister[f.liste] || []).length,
+            python: (f) => 'len(' + f.liste + ')'
+        },
+        {
+            id: 'listeSum', farge: 'boks', ikon: 'digital', kategori: 'liste', form: 'verdi',
+            namn: 'summen av ei liste',
+            tekst: ['summen av', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => (ktx.lister[f.liste] || []).reduce((a, b) => a + b, 0),
+            python: (f) => 'sum(' + f.liste + ')'
+        },
+        {
+            id: 'listeHent', farge: 'boks', ikon: 'pointer', kategori: 'liste', form: 'verdi',
+            namn: 'eitt tal frå ei liste',
+            /* Eleven tel frå 1: «tal nummer 1» er det fyrste. Python tel frå
+             * 0, og difor står det `- 1` i utskrifta. Vi skjuler det ikkje —
+             * det er ein skilnad han møter for alvor i Ormritaren, og betre
+             * å sjå han her enn å bli overraska der. */
+            tekst: ['tal nummer', { felt: 'nr', slag: 'tal', standard: 1 },
+                    'i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx, hj) => {
+                const l = ktx.lister[f.liste] || [];
+                const i = Math.round(hj.verdi(f.nr, ktx)) - 1;
+                return (i >= 0 && i < l.length) ? l[i] : 0;
+            },
+            python: (f, hj) => f.liste + '[' + hj.uttrykk(f.nr) + ' - 1]'
+        },
+        {
+            id: 'listeMinst', farge: 'boks', ikon: 'chevronDown', kategori: 'liste', form: 'verdi',
+            namn: 'det minste talet i ei liste',
+            tekst: ['det minste talet i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => {
+                const l = ktx.lister[f.liste] || [];
+                return l.length ? Math.min.apply(null, l) : 0;
+            },
+            python: (f) => 'min(' + f.liste + ')'
+        },
+        {
+            id: 'listeStorst', farge: 'boks', ikon: 'chevronUp', kategori: 'liste', form: 'verdi',
+            namn: 'det største talet i ei liste',
+            tekst: ['det største talet i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => {
+                const l = ktx.lister[f.liste] || [];
+                return l.length ? Math.max.apply(null, l) : 0;
+            },
+            python: (f) => 'max(' + f.liste + ')'
         },
 
         /* ---- vilkår ------------------------------------------------------ */

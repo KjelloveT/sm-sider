@@ -442,6 +442,9 @@ const BolkEditor = (function () {
             return (program ? BolkTre.variablar(program) : BolkTre.GRUNNVARIABLAR)
                 .map(n => ({ verdi: n, tekst: n }));
         }
+        if (spek.val === 'lister') {
+            return (program ? BolkTre.lister(program) : ['tala']).map(n => ({ verdi: n, tekst: n }));
+        }
         if (spek.val === 'funksjonar') {
             const namn = program ? BolkTre.funksjonsnamn(program) : [];
             return namn.length ? namn.map(n => ({ verdi: n, tekst: n }))

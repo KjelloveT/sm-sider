@@ -3,6 +3,13 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.19] — 2026-08-23
+
+### Lagt til
+- **Lister i blokkspråket.** Åtte nye blokker: lag ei liste, legg tal i henne, sorter, og spør henne om lengd, sum, eit tal på ein bestemt plass, minst og størst. Ei liste ligg for seg og ikkje blant variablane — ein variabel er eitt tal, og blandar ein dei to, kan «Set tala til 5» øydeleggje eit heilt datasett utan at noko seier frå. Alle åtte har eit ekte motstykke i Python: `append`, `len`, `sum`, `sort`, `min`, `max` og hakeparentesar.
+- **Bolkestokk: «Datasett og sentralmål»** — seks leksjonar for 7. trinn. Ni elevar og skulevegen deira: 11, 12, 12, 13, 14, 15, 16, 16 og **62** minutt. Gjennomsnittet blir 19 og medianen 14, og heile modulen handlar om kvifor dei to ikkje er samde. Åtte av ni kjenner seg att i 14. Ingen kjenner seg att i 19.
+- Eleven tel frå 1 i `tal nummer … i lista`, medan Python tel frå 0. Utskrifta viser `- 1` heilt ope — det er ein skilnad han møter att i Ormritaren, og betre å sjå her enn å bli overraska der.
+
 ## [1.18] — 2026-08-23
 
 ### Lagt til

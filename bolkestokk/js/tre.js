@@ -177,6 +177,24 @@ const BolkTre = (function () {
         return [...sett];
     }
 
+    /* Namna som skal stå i nedtrekkslistene for lister.
+     *
+     * `nyListe` er den einaste blokka som LAGAR ei liste, men namnet blir
+     * lese frå alle listeblokkene. Elles ville ein elev som byrjar med
+     * «Legg 5 i lista …» fått eit tomt nedtrekk og ikkje skjønt kvifor. */
+    const LISTEBLOKKER = ['nyListe', 'leggIListe', 'sorterListe',
+                          'listeLengd', 'listeSum', 'listeHent',
+                          'listeMinst', 'listeStorst'];
+
+    function lister(program) {
+        const sett = new Set();
+        alle(program).forEach(n => {
+            if (n.felt && typeof n.felt.liste === 'string'
+                && LISTEBLOKKER.indexOf(n.type) >= 0 && n.felt.liste) sett.add(n.felt.liste);
+        });
+        return sett.size ? [...sett] : ['tala'];
+    }
+
     function funksjonsnamn(program) {
         return (program.funksjonar || []).map(k => k.namn).filter(Boolean);
     }
@@ -239,7 +257,7 @@ const BolkTre = (function () {
         nyNode, nyttProgram, klone, kloneProgram,
         alle, stablar, finn, loys, inni,
         tel, brukar, brukarInni,
-        variablar, funksjonsnamn, GRUNNVARIABLAR,
+        variablar, lister, funksjonsnamn, GRUNNVARIABLAR,
         serialiser, lesInn
     };
 })();

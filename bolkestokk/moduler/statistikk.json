@@ -1,0 +1,5857 @@
+{
+  "app": "bolkestokk",
+  "version": 1,
+  "id": "statistikk",
+  "tittel": "Datasett og sentralmål",
+  "_note": "Datasettet er ni skulevegar: 11, 12, 12, 13, 14, 15, 16, 16, 62. Tala er valde så summen blir 171 og gjennomsnittet nøyaktig 19, medan medianen er 14 — og byter ein 62 med 17, blir begge 14. Kontrasten mellom dei to settа ER leksjonen om formålstenleg sentralmål. Byggjeskriptet stoppar dersom tala ikkje gjev dei summane teksten lovar.",
+  "leksjonar": [
+    {
+      "id": "samle-inn",
+      "tittel": "Mange tal med eitt namn",
+      "kompetansemaal": [
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling"
+      ],
+      "palett": [
+        "nyListe",
+        "leggIListe",
+        "listeLengd",
+        "listeSum",
+        "skrivUt",
+        "rekne",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ein **variabel** held eitt tal. Ei **liste** held så mange du vil, under eitt namn. Det er det du treng når du skal arbeide med eit **datasett** — mange tal som høyrer saman."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "`Lag lista` startar ei tom liste. `Legg … i lista` legg eitt tal bak i køa. Så kan du spørje lista om ting: `kor mange tal er i` og `summen av`."
+        },
+        {
+          "type": "merk",
+          "tekst": "Rekkjefølgja blir hugsa. Tala ligg i lista slik du la dei inn, heilt til du sorterer henne."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Ni elevar har sagt kor mange minutt dei brukar på skulevegen. Køyr, og sjå kor mange tal lista har og kva dei blir til saman.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "nyListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 11
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 13
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 14
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 15
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 62
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "listeLengd",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                }
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "listeSum",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Bygg datasettet",
+        "maal": "ei liste med dei ni måletala, og summen av dei",
+        "steg": [
+          {
+            "tekst": "Fyrst ei tom liste, og tre tal i henne. `kor mange tal er i` svarar 3.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Alle ni tala. Talet blir 9 — lista veks for kvar blokk du legg til.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Ta bort ei av blokkene. Endrar svaret seg?"
+          },
+          {
+            "tekst": "Og `summen av` legg alle saman for deg: 171 minutt til saman.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeSum",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "s1",
+          "type": "bygg",
+          "maal": "Legg inn eit datasett",
+          "tekst": "Fem elevar les **12, 20, 15, 18 og 10** sider. Lag ei liste med tala, og skriv ut **summen**.",
+          "hint": [
+            "Start med `Lag lista`, og legg så inn eitt tal per blokk.",
+            "Til slutt `Skriv ut` med `summen av` inni."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "leggIListe"
+            },
+            {
+              "type": "svar",
+              "vent": 75
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "sider"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 20
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 18
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 10
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeSum",
+                    "felt": {
+                      "liste": "sider"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "s2",
+          "type": "les",
+          "maal": "Kva svarar lista?",
+          "tekst": "Lista inneheld tala 11, 12, 12, 13, 14, 15, 16, 16 og 62.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeLengd",
+                    "felt": {
+                      "liste": "minutt"
+                    }
+                  }
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeSum",
+                    "felt": {
+                      "liste": "minutt"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva skriv `kor mange tal er i` ut?",
+          "alternativ": [
+            "171, som er summen",
+            "9, som er talet på tal",
+            "62, som er det største talet"
+          ],
+          "rett": 1,
+          "forklaring": "`kor mange tal er i` tel elementa, ikkje verdien deira. Summen er 171 og det største talet er 62 — tre ulike spørsmål med tre ulike svar."
+        },
+        {
+          "id": "s3",
+          "type": "bygg",
+          "maal": "Ei liste bygd av ei løkke",
+          "tekst": "Lag ei liste med **tala 1 til 10**, og skriv ut summen. Bruk ei løkke og ein variabel i staden for ti blokker.",
+          "hint": [
+            "Set ein variabel til 1. Inni løkka: legg variabelen i lista, og auk han med 1.",
+            "Summen av 1 til 10 er 55 — bruk det til å sjekke at du har fått rett."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "brukar",
+              "blokk": "leggIListe"
+            },
+            {
+              "type": "svar",
+              "vent": 55
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "tala"
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 10
+                },
+                "kropp": [
+                  {
+                    "type": "leggIListe",
+                    "felt": {
+                      "liste": "tala",
+                      "verdi": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeSum",
+                    "felt": {
+                      "liste": "tala"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ei **liste** held mange tal under eitt namn. `Lag lista` startar henne tom, `Legg … i lista` fyller på, og `kor mange tal er i` og `summen av` svarar på spørsmål om heile settet."
+    },
+    {
+      "id": "gjennomsnitt",
+      "tittel": "Gjennomsnittet",
+      "kompetansemaal": [
+        "7. trinn: rekne sentralmål i eigne og andre sine datasett og velje formålstenleg sentralmål",
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ],
+      "palett": [
+        "nyListe",
+        "leggIListe",
+        "listeLengd",
+        "listeSum",
+        "skrivUt",
+        "rekne",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Eit **sentralmål** er eitt tal som skal seie noko om heile settet. Det vanlegaste er **gjennomsnittet**: summen delt på talet på tal."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Med lista treng du ikkje rekne sjølv. `summen av` gjev deg det eine talet og `kor mange tal er i` det andre, og ei `Rekn ut` med `÷` mellom dei gjer resten. Endrar datasettet seg, følgjer svaret med."
+        },
+        {
+          "type": "merk",
+          "tekst": "Gjennomsnittet er tenkt som «kor mykje kvar ville fått om alt vart delt likt». Det treng ikkje vere eit av tala i settet — og ofte er det ikkje det."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Gjennomsnittleg skuleveg for dei ni elevane. Svaret er 19 minutt. Ser du kven i lista som har 19?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "nyListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 11
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 13
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 14
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 15
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 62
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "listeSum",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    },
+                    "op": "dele",
+                    "b": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Del summen på talet",
+        "maal": "gjennomsnittet av dei ni måletala",
+        "steg": [
+          {
+            "tekst": "Dei to tala vi treng: summen er 171, og det er 9 tal.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeSum",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så deler vi. 171 ÷ 9 = 19 minutt i gjennomsnitt.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeSum",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        },
+                        "op": "dele",
+                        "b": {
+                          "type": "listeLengd",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Finst det nokon elev i lista som brukar 19 minutt?"
+          },
+          {
+            "tekst": "Byt den siste eleven frå 62 til 17 minutt, og køyr igjen. Gjennomsnittet fell frå 19 til 14 — éin elev flytta det med fem minutt.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 17
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeSum",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        },
+                        "op": "dele",
+                        "b": {
+                          "type": "listeLengd",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kvifor gjer eitt tal så stor skilnad når det er ni av dei?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "g1",
+          "type": "bygg",
+          "maal": "Rekn ut gjennomsnittet",
+          "tekst": "Fem elevar les **12, 20, 15, 18 og 10** sider. Lag lista og skriv ut **gjennomsnittet**.",
+          "hint": [
+            "Gjennomsnittet er summen delt på talet på tal.",
+            "Legg `summen av` i det eine hòlet i `Rekn ut` og `kor mange tal er i` i det andre."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "listeSum"
+            },
+            {
+              "type": "brukar",
+              "blokk": "listeLengd"
+            },
+            {
+              "type": "svar",
+              "vent": 15
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "sider"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 20
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 18
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 10
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "listeSum",
+                        "felt": {
+                          "liste": "sider"
+                        }
+                      },
+                      "op": "dele",
+                      "b": {
+                        "type": "listeLengd",
+                        "felt": {
+                          "liste": "sider"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "g2",
+          "type": "les",
+          "maal": "Kvifor 19?",
+          "tekst": "Åtte av dei ni elevane brukar mellom 11 og 16 minutt. Gjennomsnittet er 19.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "listeSum",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      },
+                      "op": "dele",
+                      "b": {
+                        "type": "listeLengd",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Korleis kan gjennomsnittet vere høgare enn åtte av dei ni tala?",
+          "alternativ": [
+            "Det kan det ikkje — programmet må rekne feil",
+            "Fordi den eine eleven med 62 minutt dreg summen kraftig opp",
+            "Fordi gjennomsnittet alltid rundar oppover"
+          ],
+          "rett": 1,
+          "forklaring": "Gjennomsnittet deler alt likt. Dei 62 minutta til den eine blir fordelte på alle ni, og det løftar snittet med fem minutt — sjølv om ingen andre er i nærleiken av 19."
+        },
+        {
+          "id": "g3",
+          "type": "bygg",
+          "maal": "Same settet utan uteliggjaren",
+          "tekst": "Bygg det same datasettet, men byt den siste eleven frå **62** til **17** minutt. Skriv ut gjennomsnittet.",
+          "hint": [
+            "Alt er likt bortsett frå den siste `Legg … i lista`.",
+            "Summen blir 126, og 126 ÷ 9 = 14."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "listeSum"
+            },
+            {
+              "type": "svar",
+              "vent": 14
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 17
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "listeSum",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      },
+                      "op": "dele",
+                      "b": {
+                        "type": "listeLengd",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "**Gjennomsnittet** er summen delt på talet på tal. Det er kor mykje kvar ville fått om alt vart delt likt — og eitt uvanleg stort tal kan dra det langt bort frå der dei fleste ligg."
+    },
+    {
+      "id": "median",
+      "tittel": "Talet i midten",
+      "kompetansemaal": [
+        "7. trinn: rekne sentralmål i eigne og andre sine datasett og velje formålstenleg sentralmål",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling"
+      ],
+      "palett": [
+        "nyListe",
+        "leggIListe",
+        "listeLengd",
+        "listeSum",
+        "skrivUt",
+        "rekne",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta",
+        "sorterListe",
+        "listeHent",
+        "listeMinst",
+        "listeStorst"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "**Medianen** er eit anna sentralmål: det talet som står **midt i** når du har sortert settet frå minst til størst. Halvparten ligg under, halvparten over."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Difor må lista sorterast fyrst. `Sorter lista` gjer det, og så hentar du talet i midten med `tal nummer … i`. Med 9 tal er midten nummer 5, altså `(9 + 1) ÷ 2`."
+        },
+        {
+          "type": "merk",
+          "tekst": "Eleven tel frå 1: «tal nummer 1» er det fyrste i lista. I Python tel ein frå 0, og difor står det `- 1` i Python-utskrifta. Det er ikkje ein feil — det er ein skilnad du møter att i Ormritaren."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Same datasettet, sortert, og talet i midten henta ut. Svaret er 14 — medan gjennomsnittet var 19.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "nyListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 11
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 13
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 14
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 15
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 62
+              }
+            },
+            {
+              "type": "sorterListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "listeHent",
+                  "felt": {
+                    "liste": "minutt",
+                    "nr": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "listeLengd",
+                              "felt": {
+                                "liste": "minutt"
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 1
+                          }
+                        },
+                        "op": "dele",
+                        "b": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Finn talet i midten",
+        "maal": "medianen i datasettet, funnen ved å sortere og hente talet i midten",
+        "steg": [
+          {
+            "tekst": "Fyrst sorterer vi og hentar det fyrste og det siste. No ligg tala i orden: minst er 11, størst er 62.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "sorterListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeMinst",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeStorst",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Med 9 tal er midten nummer 5. Vi hentar han rett ut.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "sorterListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeHent",
+                      "felt": {
+                        "liste": "minutt",
+                        "nr": 5
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Hent nummer 4 og nummer 6 òg. Kor mange ligg under 14, og kor mange over?"
+          },
+          {
+            "tekst": "Og for at det skal verke same kor mange tal lista har, reknar vi midten ut: `(kor mange + 1) ÷ 2`.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "sorterListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeHent",
+                      "felt": {
+                        "liste": "minutt",
+                        "nr": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": {
+                                  "type": "listeLengd",
+                                  "felt": {
+                                    "liste": "minutt"
+                                  }
+                                },
+                                "op": "pluss",
+                                "b": 1
+                              }
+                            },
+                            "op": "dele",
+                            "b": 2
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Legg til to tal til i lista og køyr igjen. Følgjer midten med?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "m1",
+          "type": "bygg",
+          "maal": "Finn medianen",
+          "tekst": "Fem elevar les **12, 20, 15, 18 og 10** sider. Sorter lista og skriv ut **medianen**. Med fem tal er midten nummer 3.",
+          "hint": [
+            "`Sorter lista` må kome før du hentar noko ut.",
+            "Sortert blir det 10, 12, 15, 18, 20. Nummer 3 er 15."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "sorterListe"
+            },
+            {
+              "type": "brukar",
+              "blokk": "listeHent"
+            },
+            {
+              "type": "svar",
+              "vent": 15
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "sider"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 20
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 18
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "sider",
+                  "verdi": 10
+                }
+              },
+              {
+                "type": "sorterListe",
+                "felt": {
+                  "liste": "sider"
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeHent",
+                    "felt": {
+                      "liste": "sider",
+                      "nr": 3
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "m2",
+          "type": "rett",
+          "maal": "Medianen som ikkje vart sortert",
+          "tekst": "Dette skulle finne medianen i skulevegs-settet, men svaret blir 14 berre av flaks — eller kanskje ikkje i det heile. Hent det inn og finn kva som manglar.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeHent",
+                    "felt": {
+                      "liste": "minutt",
+                      "nr": 5
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Medianen er talet i midten **når lista er sortert**. Er ho det her?",
+            "Legg inn `Sorter lista` før du hentar talet."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "sorterListe"
+            },
+            {
+              "type": "svar",
+              "vent": 14
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "sorterListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeHent",
+                    "felt": {
+                      "liste": "minutt",
+                      "nr": 5
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "m3",
+          "type": "bygg",
+          "maal": "Medianen uansett kor mange",
+          "tekst": "Bygg medianen for skulevegs-settet slik at han verkar **same kor mange tal lista har**: rekn midten ut som `(kor mange tal er i + 1) ÷ 2`.",
+          "hint": [
+            "Legg ei `Rekn ut` med `÷` inni talfeltet til `tal nummer … i`.",
+            "I teljaren står ei ny `Rekn ut`: `kor mange tal er i` pluss 1."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "listeLengd"
+            },
+            {
+              "type": "brukar",
+              "blokk": "listeHent"
+            },
+            {
+              "type": "svar",
+              "vent": 14
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "sorterListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeHent",
+                    "felt": {
+                      "liste": "minutt",
+                      "nr": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": {
+                                "type": "listeLengd",
+                                "felt": {
+                                  "liste": "minutt"
+                                }
+                              },
+                              "op": "pluss",
+                              "b": 1
+                            }
+                          },
+                          "op": "dele",
+                          "b": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "**Medianen** er talet i midten når settet er sortert. Med `n` tal er midten nummer `(n + 1) ÷ 2`. Lista må sorterast fyrst — utan det er «talet i midten» berre det talet som tilfeldigvis vart lagt inn femte."
+    },
+    {
+      "id": "vel-rett",
+      "tittel": "Kva sentralmål skal du bruke?",
+      "kompetansemaal": [
+        "7. trinn: rekne sentralmål i eigne og andre sine datasett og velje formålstenleg sentralmål",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling"
+      ],
+      "palett": [
+        "nyListe",
+        "leggIListe",
+        "listeLengd",
+        "listeSum",
+        "skrivUt",
+        "rekne",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta",
+        "sorterListe",
+        "listeHent",
+        "listeMinst",
+        "listeStorst",
+        "dersom",
+        "samanlikn"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "For skulevegs-settet er gjennomsnittet **19** og medianen **14**. Begge er rett rekna. Men berre det eine av dei svarar godt på spørsmålet «kor lang skuleveg har elevane i denne klassa?»."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Åtte av ni brukar mellom 11 og 16 minutt. Ein median på 14 kjenner dei seg att i. Eit gjennomsnitt på 19 gjer dei ikkje — det talet er drege opp av **éin** elev som tek bussen langt."
+        },
+        {
+          "type": "merk",
+          "tekst": "Eit tal som ligg langt frå resten heiter ein **uteliggjar**. Medianen bryr seg ikkje om kor stor han er, berre om at han er størst. Gjennomsnittet bryr seg om kvar einaste krone."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Begge sentralmåla for same settet, rett under kvarandre. Fyrst gjennomsnittet, så medianen.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "nyListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 11
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 13
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 14
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 15
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 62
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "listeSum",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    },
+                    "op": "dele",
+                    "b": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "sorterListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "listeHent",
+                  "felt": {
+                    "liste": "minutt",
+                    "nr": 5
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "To tal om same settet",
+        "maal": "gjennomsnittet og medianen skrivne ut saman, så dei kan samanliknast",
+        "steg": [
+          {
+            "tekst": "Gjennomsnittet: 19 minutt.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeSum",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        },
+                        "op": "dele",
+                        "b": {
+                          "type": "listeLengd",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Medianen: 14 minutt. Fem minutt lågare, av same tala.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "sorterListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeHent",
+                      "felt": {
+                        "liste": "minutt",
+                        "nr": 5
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Begge på ein gong. Skilnaden mellom dei to er eit varsel: er han stor, har settet ein uteliggjar.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeSum",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        },
+                        "op": "dele",
+                        "b": {
+                          "type": "listeLengd",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "sorterListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeHent",
+                      "felt": {
+                        "liste": "minutt",
+                        "nr": 5
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt 62 til 17 og køyr. Kor stor er skilnaden då?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "v1",
+          "type": "les",
+          "maal": "Kva ville du oppgjeve?",
+          "tekst": "Ein journalist spør kor lang skuleveg elevane i klassa har. Gjennomsnittet er 19 minutt, medianen 14.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "listeSum",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      },
+                      "op": "dele",
+                      "b": {
+                        "type": "listeLengd",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "sorterListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeHent",
+                    "felt": {
+                      "liste": "minutt",
+                      "nr": 5
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva tal gjev det ærlegaste biletet?",
+          "alternativ": [
+            "Gjennomsnittet, fordi det tek med alle tala",
+            "Medianen, fordi åtte av ni ligg nær det",
+            "Det største talet, fordi det viser kor gale det kan bli"
+          ],
+          "rett": 1,
+          "forklaring": "Begge er rett rekna, men eit sentralmål skal seie noko om kvar dei fleste ligg. Medianen på 14 kjenner åtte av ni elevar seg att i. Gjennomsnittet på 19 er høgare enn alle bortsett frå éin."
+        },
+        {
+          "id": "v2",
+          "type": "bygg",
+          "maal": "Skriv ut skilnaden",
+          "tekst": "Skriv ut **skilnaden** mellom gjennomsnittet og medianen i skulevegs-settet. Er han stor, veit du at settet har ein uteliggjar.",
+          "hint": [
+            "Du treng begge tala i same reknestykket: gjennomsnittet minus medianen.",
+            "Hugs `Sorter lista` før medianen. Svaret er 19 − 14 = 5."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "sorterListe"
+            },
+            {
+              "type": "svar",
+              "vent": 5
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "sorterListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeSum",
+                            "felt": {
+                              "liste": "minutt"
+                            }
+                          },
+                          "op": "dele",
+                          "b": {
+                            "type": "listeLengd",
+                            "felt": {
+                              "liste": "minutt"
+                            }
+                          }
+                        }
+                      },
+                      "op": "minus",
+                      "b": {
+                        "type": "listeHent",
+                        "felt": {
+                          "liste": "minutt",
+                          "nr": 5
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "v3",
+          "type": "bygg",
+          "maal": "Kor mange ligg under gjennomsnittet?",
+          "tekst": "Tel kor mange av dei ni elevane som brukar **mindre enn 19 minutt** — altså mindre enn gjennomsnittet. Bruk ei løkke som går gjennom lista.",
+          "hint": [
+            "Set ein teljar til 0 og ein posisjon til 1. Inni løkka: hent `tal nummer posisjon`, samanlikn med 19, og auk posisjonen.",
+            "Svaret er 8. Berre éin av dei ni ligg over gjennomsnittet."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "listeHent"
+            },
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "svar",
+              "vent": 8
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "under",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "i",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "mindre",
+                          "b": 19
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "under",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "i",
+                      "med": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "under"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Gjennomsnittet og medianen er begge rett rekna, men dei svarar ulikt når settet har ein **uteliggjar**. Medianen bryr seg berre om rekkjefølgja, gjennomsnittet om kvar einaste verdi. Er skilnaden mellom dei stor, er det eit varsel."
+    },
+    {
+      "id": "diagram",
+      "tittel": "Vis fram datasettet",
+      "kompetansemaal": [
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling",
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ],
+      "palett": [
+        "nyListe",
+        "leggIListe",
+        "listeLengd",
+        "listeSum",
+        "skrivUt",
+        "rekne",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta",
+        "sorterListe",
+        "listeHent",
+        "listeMinst",
+        "listeStorst",
+        "dersom",
+        "samanlikn",
+        "framover",
+        "bakover",
+        "snuHogre",
+        "snuVenstre",
+        "pennOpp",
+        "pennNed",
+        "setFarge",
+        "setTjukn",
+        "kallFunksjon"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ni tal i ei utskriftsrute er vanskelege å samanlikne. Same ni tala som **stolpar** ser du på eit blunk — og uteliggjaren står fram med ein gong."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "No treng du ikkje skrive høgdene inn for hand. Ei løkke går gjennom lista med `tal nummer … i`, og teiknar ein stolpe for kvart tal."
+        },
+        {
+          "type": "merk",
+          "tekst": "Høgda blir gonga med 4 så figuren blir stor nok til å sjåast. Det endrar ikkje kva tala tyder — berre målestokken på teikninga."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Dei ni skulevegane som stolpediagram. Ser du kven som tek bussen?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "nyListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 11
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 13
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 14
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 15
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 62
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "i",
+                "verdi": 1
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 9
+              },
+              "kropp": [
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeHent",
+                          "felt": {
+                            "liste": "minutt",
+                            "nr": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "i"
+                              }
+                            }
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeHent",
+                          "felt": {
+                            "liste": "minutt",
+                            "nr": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "i"
+                              }
+                            }
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 30
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "i",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Ein stolpe for kvart tal",
+        "maal": "ni stolpar, ein for kvart tal i datasettet, teikna av ei løkke",
+        "steg": [
+          {
+            "tekst": "Éin stolpe fyrst, med det fyrste talet i lista: 11 gonge 4 = 44 steg opp.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeHent",
+                          "felt": {
+                            "liste": "minutt",
+                            "nr": 1
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så ned att og 30 steg til høgre med pennen oppe, klar til den neste.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeHent",
+                          "felt": {
+                            "liste": "minutt",
+                            "nr": 1
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeHent",
+                          "felt": {
+                            "liste": "minutt",
+                            "nr": 1
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 30
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kva skjer om du gløymer `Penn opp` før du går ned att?"
+          },
+          {
+            "tekst": "Og så alle ni i ei løkke, der `i` tel seg oppover og hentar eitt tal om gongen.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "i",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 9
+                  },
+                  "kropp": [
+                    {
+                      "type": "pennNed",
+                      "felt": {}
+                    },
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "listeHent",
+                              "felt": {
+                                "liste": "minutt",
+                                "nr": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "i"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "gonge",
+                            "b": 4
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "pennOpp",
+                      "felt": {}
+                    },
+                    {
+                      "type": "bakover",
+                      "felt": {
+                        "lengd": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "listeHent",
+                              "felt": {
+                                "liste": "minutt",
+                                "nr": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "i"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "gonge",
+                            "b": 4
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    },
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 30
+                      }
+                    },
+                    {
+                      "type": "snuVenstre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "i",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Sorter lista før du teiknar. Kva slags form får diagrammet då?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "d1",
+          "type": "bygg",
+          "maal": "Teikn stolpediagrammet",
+          "tekst": "Teikn dei ni skulevegs-tala som stolpar. Gong kvar høgd med **4**, og flytt **30 steg** til høgre mellom stolpane. Bruk ei løkke og `tal nummer … i`.",
+          "hint": [
+            "Set ein variabel `i` til 1 før løkka, og auk han med 1 heilt til slutt inni henne.",
+            "Éin stolpe er: penn ned, framover (tal nummer i × 4), penn opp, bakover like langt, snu høgre 90, framover 30, snu venstre 90."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "listeHent"
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 9,
+            "breidd": 240,
+            "hogd": 248
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "i",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "pennNed",
+                    "felt": {}
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "pennOpp",
+                    "felt": {}
+                  },
+                  {
+                    "type": "bakover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 30
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "i",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "d2",
+          "type": "les",
+          "maal": "Kva ser du med ein gong?",
+          "tekst": "Diagrammet viser dei ni skulevegane.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "i",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "pennNed",
+                    "felt": {}
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "pennOpp",
+                    "felt": {}
+                  },
+                  {
+                    "type": "bakover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 30
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "i",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva er det diagrammet viser tydelegare enn talrekkja?",
+          "alternativ": [
+            "Nøyaktig kor mange minutt kvar elev brukar",
+            "At åtte stolpar er omtrent like høge og éin er mykje høgare",
+            "Kva gjennomsnittet er"
+          ],
+          "rett": 1,
+          "forklaring": "Eit diagram er godt til å samanlikne og dårleg til å lese av nøyaktige verdiar. Uteliggjaren, som du måtte rekne deg fram til i tala, ser du her med ein gong."
+        },
+        {
+          "id": "d3",
+          "type": "bygg",
+          "maal": "Sorter før du teiknar",
+          "tekst": "Teikn det same diagrammet, men **sorter lista fyrst**. Då stig stolpane jamt frå venstre mot høgre.",
+          "hint": [
+            "Legg `Sorter lista` rett etter at alle tala er lagde inn, og før løkka som teiknar.",
+            "Alt anna er likt."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "sorterListe"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 9,
+            "breidd": 240,
+            "hogd": 248
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "sorterListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "i",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "pennNed",
+                    "felt": {}
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "pennOpp",
+                    "felt": {}
+                  },
+                  {
+                    "type": "bakover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 30
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "i",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Eit **stolpediagram** gjer tal samanliknbare med ein gong. Ei løkke med `tal nummer … i` teiknar ein stolpe for kvart tal i lista, same kor mange dei er. Diagram er gode til å samanlikne, og dårlege til å lese av nøyaktige verdiar."
+    },
+    {
+      "id": "eige-datasett",
+      "tittel": "Ditt eige datasett",
+      "kompetansemaal": [
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling",
+        "7. trinn: rekne sentralmål i eigne og andre sine datasett og velje formålstenleg sentralmål"
+      ],
+      "palett": [
+        "nyListe",
+        "leggIListe",
+        "listeLengd",
+        "listeSum",
+        "skrivUt",
+        "rekne",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta",
+        "sorterListe",
+        "listeHent",
+        "listeMinst",
+        "listeStorst",
+        "dersom",
+        "samanlikn",
+        "framover",
+        "bakover",
+        "snuHogre",
+        "snuVenstre",
+        "pennOpp",
+        "pennNed",
+        "setFarge",
+        "setTjukn",
+        "kallFunksjon"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "No har du heile verktøykassa: **logge** tala i ei liste, **sortere** dei, **rekne** sentralmål, og **presentere** dei som diagram. Det er nøyaktig dei fire orda kompetansemålet brukar."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det som står att, er å hente tala sjølv. Spør klassa om noko: kor mange søsken, kor mange minutt på skulevegen, kor mange bøker lese i sommar. Legg svara inn og lat programmet gjere resten."
+        },
+        {
+          "type": "merk",
+          "tekst": "Og hugs det siste ordet i målet: **forklare valet**. Kvifor akkurat det diagrammet, og kvifor akkurat det sentralmålet?"
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Ei ferdig mal: liste, sortering, begge sentralmåla, og diagram. Byt ut tala med dine eigne.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "nyListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 11
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 12
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 13
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 14
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 15
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 16
+              }
+            },
+            {
+              "type": "leggIListe",
+              "felt": {
+                "liste": "minutt",
+                "verdi": 62
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "listeSum",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    },
+                    "op": "dele",
+                    "b": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "sorterListe",
+              "felt": {
+                "liste": "minutt"
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "listeHent",
+                  "felt": {
+                    "liste": "minutt",
+                    "nr": 5
+                  }
+                }
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "i",
+                "verdi": 1
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 9
+              },
+              "kropp": [
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeHent",
+                          "felt": {
+                            "liste": "minutt",
+                            "nr": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "i"
+                              }
+                            }
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeHent",
+                          "felt": {
+                            "liste": "minutt",
+                            "nr": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "i"
+                              }
+                            }
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 30
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "i",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Heile analysen",
+        "maal": "eit datasett med sentralmål og diagram i eitt og same programmet",
+        "steg": [
+          {
+            "tekst": "Fyrst tala, og talet på dei.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeLengd",
+                      "felt": {
+                        "liste": "minutt"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så begge sentralmåla.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeSum",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        },
+                        "op": "dele",
+                        "b": {
+                          "type": "listeLengd",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "sorterListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeHent",
+                      "felt": {
+                        "liste": "minutt",
+                        "nr": 5
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Og til slutt diagrammet, under tala. Alt om settet på éin skjerm.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "nyListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 11
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 12
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 13
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 14
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 15
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 16
+                  }
+                },
+                {
+                  "type": "leggIListe",
+                  "felt": {
+                    "liste": "minutt",
+                    "verdi": 62
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "listeSum",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        },
+                        "op": "dele",
+                        "b": {
+                          "type": "listeLengd",
+                          "felt": {
+                            "liste": "minutt"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "sorterListe",
+                  "felt": {
+                    "liste": "minutt"
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "listeHent",
+                      "felt": {
+                        "liste": "minutt",
+                        "nr": 5
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "i",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 9
+                  },
+                  "kropp": [
+                    {
+                      "type": "pennNed",
+                      "felt": {}
+                    },
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "listeHent",
+                              "felt": {
+                                "liste": "minutt",
+                                "nr": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "i"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "gonge",
+                            "b": 4
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "pennOpp",
+                      "felt": {}
+                    },
+                    {
+                      "type": "bakover",
+                      "felt": {
+                        "lengd": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "listeHent",
+                              "felt": {
+                                "liste": "minutt",
+                                "nr": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "i"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "gonge",
+                            "b": 4
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    },
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 30
+                      }
+                    },
+                    {
+                      "type": "snuVenstre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "i",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt ut tala med noko du har spurt klassa om."
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "e1",
+          "type": "bygg",
+          "maal": "Minst og størst",
+          "tekst": "Skriv ut **spennet** i datasettet: det største talet minus det minste. Bruk skulevegs-tala.",
+          "hint": [
+            "`det største talet i` og `det minste talet i` gjev deg begge.",
+            "62 − 11 = 51."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "listeStorst"
+            },
+            {
+              "type": "brukar",
+              "blokk": "listeMinst"
+            },
+            {
+              "type": "svar",
+              "vent": 51
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "listeStorst",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      },
+                      "op": "minus",
+                      "b": {
+                        "type": "listeMinst",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "e2",
+          "type": "les",
+          "maal": "Kva slags framstilling?",
+          "tekst": "Du har spurt 25 elevar kor mange søsken dei har, og svara ligg mellom 0 og 4.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 2
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 3
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 2
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "i",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "pennNed",
+                    "felt": {}
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "pennOpp",
+                    "felt": {}
+                  },
+                  {
+                    "type": "bakover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 30
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "i",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva framstilling passar best?",
+          "alternativ": [
+            "Eit stolpediagram som viser kor mange som svarte 0, 1, 2, 3 og 4",
+            "Ei liste med alle dei 25 svara i den rekkjefølgja dei kom",
+            "Berre gjennomsnittet, som eitt tal"
+          ],
+          "rett": 0,
+          "forklaring": "Med berre fem moglege svar er det interessante **kor mange** som gav kvart svar. Rålista er lang og uoversiktleg, og gjennomsnittet åleine — til dømes 1,4 søsken — skjuler at ingen faktisk har 1,4 søsken."
+        },
+        {
+          "id": "e3",
+          "type": "bygg",
+          "maal": "Analysen din",
+          "tekst": "Hent inn eit datasett du har samla sjølv, eller bruk skulevegs-tala. Programmet skal skrive ut **gjennomsnittet** og **medianen**, og teikne **diagrammet**. Skriv i tillegg ned éi setning om kvifor du valde det sentralmålet du meiner er best.",
+          "hint": [
+            "Bruk malen frå løypa: liste, gjennomsnitt, sorter, median, og så løkka som teiknar.",
+            "Hugs at `Sorter lista` må kome før medianen, men helst etter at gjennomsnittet er rekna — elles blir det lett rot i rekkjefølgja."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "listeSum"
+            },
+            {
+              "type": "brukar",
+              "blokk": "sorterListe"
+            },
+            {
+              "type": "brukar",
+              "blokk": "listeHent"
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "nyListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 11
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 12
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 13
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 14
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 15
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 16
+                }
+              },
+              {
+                "type": "leggIListe",
+                "felt": {
+                  "liste": "minutt",
+                  "verdi": 62
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "listeSum",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      },
+                      "op": "dele",
+                      "b": {
+                        "type": "listeLengd",
+                        "felt": {
+                          "liste": "minutt"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "sorterListe",
+                "felt": {
+                  "liste": "minutt"
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "listeHent",
+                    "felt": {
+                      "liste": "minutt",
+                      "nr": 5
+                    }
+                  }
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "i",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "pennNed",
+                    "felt": {}
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "pennOpp",
+                    "felt": {}
+                  },
+                  {
+                    "type": "bakover",
+                    "felt": {
+                      "lengd": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "listeHent",
+                            "felt": {
+                              "liste": "minutt",
+                              "nr": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "i"
+                                }
+                              }
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 30
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "i",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Heile analysen i eitt program: **logg** tala i ei liste, **sorter** dei, **rekn** sentralmåla, og **presenter** dei som diagram. Det siste steget er ikkje programmering — det er å forklare kvifor du valde nettopp den framstillinga og det sentralmålet."
+    }
+  ]
+}

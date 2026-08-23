@@ -120,6 +120,24 @@
         "7. trinn: formulere og løyse problem som har med likningar å gjere",
         "7. trinn: bruke tal, tekst, teikning og konkret til å løyse ulikskapar og teste og forklare løysingar"
       ]
+    },
+    {
+      "id": "statistikk",
+      "gruppe": "geometri",
+      "fil": "statistikk.json",
+      "tittel": "Datasett og sentralmål",
+      "ikon": "presentation",
+      "accent": "accent4",
+      "trinn": "7. trinn",
+      "talLeksjonar": 6,
+      "klar": true,
+      "krev": "grunnkurs",
+      "skildring": "Ni elevar, og kor lang skuleveg dei har. Du loggar tala i ei liste, sorterer dei, reknar gjennomsnitt og median — og oppdagar at dei to ikkje er samde.",
+      "kompetansemaal": [
+        "7. trinn: rekne sentralmål i eigne og andre sine datasett og velje formålstenleg sentralmål",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling",
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ]
     }
   ]
 }
