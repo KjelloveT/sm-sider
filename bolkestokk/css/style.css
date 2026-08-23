@@ -91,7 +91,7 @@
 
 .bs-spalte-leksjon  { --sp-bg: #FBE6EE; }   /* dus rosa */
 .bs-spalte-palett   { --sp-bg: #DCEBFF; }   /* dus blå — henta frå mockupen */
-.bs-spalte-resultat { --sp-bg: #F4EEE0; }   /* dus sand, så teikninga står fram */
+.bs-spalte-resultat { --sp-bg: #E4F5DF; }   /* dus grøn */
 
 @media (min-width: 1280px) {
     .bs-spalte-leksjon, .bs-spalte-palett {
@@ -467,6 +467,13 @@ body.bs-tema .box5 .box-tab.active { background: var(--bs-start); color: var(--t
     padding: 0;
 }
 .bs-ikonknapp svg { width: 20px; height: 20px; stroke-width: 2.4; }
+
+/* Eit <svg> er inline av natur og står difor på ei tekstlinje. Spanet rundt
+ * vart då 24px høgt for eit 20px ikon — dei fire ekstra pikslane er rom til
+ * underlengder — og ikonet hamna 2px for høgt i knappen. `display: block`
+ * tek det bort. Gjeld alle ikon i verktøyet, ikkje berre knappane. */
+body.bs-tema [data-icon] { display: grid; place-items: center; line-height: 0; }
+body.bs-tema [data-icon] > svg { display: block; }
 
 /* Fanene over resultatet: penn for teikninga, orm for Python. */
 .bs-fane {

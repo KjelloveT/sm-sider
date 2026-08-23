@@ -80,6 +80,14 @@
         /* `typeof`, ikkje `window.BolkLeksjon`: modulane er deklarerte med
          * `const` på toppnivå, og ein slik konstant blir aldri ein eigenskap
          * på window. Vakta ville difor alltid vore usann. */
+        /* Resultatet er lukka til det finst eit resultat.
+         *
+         * Ei tom kvit teikneflate og ei tom utskriftsrute fortel ingenting, og
+         * dei tek ein fjerdedel av flata frå blokkene eleven skal byggje med.
+         * Fyrste Køyr opnar spalta, og då blir ho ståande — det er der han
+         * skal sjå etter frå då av. */
+        setSpalte(RESULTAT, true);
+
         if (typeof BolkLeksjon !== 'undefined') BolkLeksjon.start(vertsapi());
     }
 
@@ -175,6 +183,7 @@
     }
 
     const LEKSJON = SPALTER[0];
+    const RESULTAT = SPALTER[2];
 
     function leksjonOpna() {
         el.spalteLeksjon.hidden = false;
@@ -182,11 +191,16 @@
     }
 
     function gjemLeksjonMedanKoyrer() {
+        // Resultatet kjem fram i same augeblink som leksjonen gjer plass.
+        if (erKollapsa(RESULTAT)) setSpalte(RESULTAT, false);
         if (!harLeksjon() || erKollapsa(LEKSJON)) return;
         clearTimeout(visTimer);
         setSpalte(LEKSJON, true);
     }
 
+    /* Berre leksjonen kjem att av seg sjølv. Resultatet blir ståande til
+     * eleven lukkar det sjølv — han er som regel ikkje ferdig med å sjå på
+     * figuren i det programmet stoppar. */
     function hentLeksjonAtt() {
         if (!harLeksjon() || brukarSkjultLeksjon) return;
         clearTimeout(visTimer);

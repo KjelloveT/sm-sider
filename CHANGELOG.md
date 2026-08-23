@@ -3,6 +3,18 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.7] — 2026-08-23
+
+### Endra
+- **Resultatspalta er lukka til fyrste køyring.** Ei tom kvit teikneflate og ei tom utskriftsrute fortel ingenting, og dei tok ein fjerdedel av flata frå blokkene eleven skal byggje med. Køyr opnar spalta i same augeblink som leksjonen gjer plass — og så blir ho ståande. Ein elev er sjeldan ferdig med å sjå på figuren i det programmet stoppar, så berre leksjonen kjem att av seg sjølv. Vil han lukke resultatet, gjer han det sjølv.
+- **Resultatspalta er lysegrøn.**
+- **Runde kantar der det skal tal inn.** Talfelt og verdiblokker er begge pilleforma, så ei rund blokk og eit rundt hòl kjenner kvarandre att — det er heile forklaringa eleven treng for kvar ei verdiblokk kan sleppast.
+- **+ og − står til høgre for feltet** med luft imellom, i staden for å dele ramme med det.
+
+### Fiksa
+- **Symbola stod 2px for høgt i knappane.** Eit `<svg>` er inline av natur og står difor på ei tekstlinje: spanet rundt vart 24px høgt for eit 20px ikon, og dei fire ekstra pikslane er rom til underlengder. `display: block` tek det bort. Målt 0px avvik frå sentrum på alle åtte ikonknappane no.
+- **+ og − var ikkje like store.** Dei hadde `flex: 1 1 50%`, og då tok kvar av dei høgda til teiknet sitt — minus er ein lav strek og pluss eit høgt kryss. Begge er 32×20px no.
+- **Knasten lysna ikkje saman med blokka på hover.** Han er eit pseudoelement med eigen bakgrunn og måtte takast med i regelen; elles stod tappen mørk under ei lys blokk.
 ## [1.6] — 2026-08-23
 
 ### Endra

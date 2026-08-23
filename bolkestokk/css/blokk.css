@@ -222,83 +222,92 @@
 .bs-felt::-webkit-outer-spin-button,
 .bs-felt::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-.bs-felt-tal { width: 3.4em; text-align: center; }
-.bs-felt-tekst { width: 6.5em; }
-.bs-felt-val { padding-right: 4px; max-width: 9.5em; font-size: 14px; }
+/* Runde kantar der det skal tal inn, mjukt avrunda der det er tekst eller
+ * nedtrekk. Skiljet er med vilje: forma fortel kva slag verdi som høyrer til. */
+.bs-felt-tal { width: 3.4em; text-align: center; border-radius: 999px; }
+.bs-felt-tekst { width: 6.5em; border-radius: 10px; }
+.bs-felt-val { padding-right: 4px; max-width: 9.5em; font-size: 14px; border-radius: 10px; }
 
 .bs-felt:focus-visible,
 .bs-blokk:focus-visible { outline: 4px solid var(--border); outline-offset: 3px; }
 
 /* ---- talfelt med + og − -----------------------------------------------------
  *
- * Knappane står over kvarandre til høgre for talet i staden for på kvar si
- * side. Vassrett tok gruppa 128px — over halve blokkbreidda i paletten — og
- * pressa fjorten av sytten blokker over på fleire linjer. Loddrett tek ho
- * kring 94px.
+ * Feltet er avrunda, knappane er firkanta og står for seg sjølve til høgre.
+ * Runde kantar er signalet om at her skal det eit TAL inn — same signalet som
+ * verdiblokkene ber, så ei rund blokk og eit rundt hòl kjenner kvarandre att.
  *
- * Prisen er at kvar knapp blir ca. 32×21px, altså under dei 44px som elles
- * gjeld for treffflater her. Talfeltet er framleis direkte redigerbart, så
- * knappane er ei snarveg og ikkje den einaste vegen inn; vi gjer gruppa så
- * høg rada tillèt for å hente inn mest mogleg. */
+ * Knappane har fast høgd. Før hadde dei `flex: 1 1 50%`, og då tok kvar av dei
+ * høgda til teiknet sitt: minus er ein lav strek og pluss eit høgt kryss, så
+ * dei vart ulike. */
 
 .bs-steg {
     display: inline-flex;
-    align-items: stretch;
-    border: 3px solid var(--border);
-    background: var(--bs-hvit);
-    min-height: 48px;
+    align-items: center;
+    gap: 7px;
+    border: none;
+    background: none;
 }
 
 .bs-steg .bs-felt {
-    border: none;
-    min-height: 0;
-    align-self: stretch;
+    border: 3px solid var(--border);
+    border-radius: 999px;
+    min-height: 44px;
 }
 
 .bs-steg-kolonne {
     display: flex;
     flex-direction: column;
-    flex: 0 0 32px;
-    border-left: 3px solid var(--border);
+    flex: 0 0 auto;
+    gap: 4px;
+    border: none;
 }
 
 .bs-steg-knapp {
-    flex: 1 1 50%;
-    min-height: 0;
+    width: 32px;
+    height: 20px;                 /* 20 + 4 + 20 = 44, same høgd som feltet */
+    flex: 0 0 auto;
     padding: 0;
     font-family: var(--bs-font);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
     line-height: 1;
     color: var(--text);
     background: var(--bs-hvit);
-    border: none;
+    border: 3px solid var(--border);
     cursor: pointer;
     touch-action: manipulation;
 }
-.bs-steg-knapp + .bs-steg-knapp { border-top: 3px solid var(--border); }
 .bs-steg-knapp:hover { background: var(--bs-start); }
-.bs-steg-knapp:focus-visible { outline: 3px solid var(--border); outline-offset: -3px; }
+.bs-steg-knapp:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
 
 /* ---- statisk talbrikke i paletten ---------------------------------------
  * Palettblokkene er døme ein plukkar frå, ikkje noko ein stiller inn — felta
  * der har alltid vore readOnly. Difor blir talet ei brikke utan knappar, og
- * blokka slepp 44px ho ikkje har bruk for. */
+ * blokka slepp plass ho ikkje har bruk for. */
 .bs-brikke {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: 2.2em;
-    padding: 4px 6px;
+    padding: 4px 10px;
     font-weight: 800;
     font-size: 14px;
     color: var(--text);
     background: var(--bs-hvit);
     border: 3px solid var(--border);
+    border-radius: 999px;
 }
 
 /* Hòlet som er i ferd med å ta imot ei verdiblokk. */
 .bs-hol.er-maal { outline: 3px dashed var(--border); outline-offset: 3px; }
+
+/* Verdiblokker er runde. Ei rund blokk høyrer til i eit rundt hòl, og det
+ * er heile forklaringa eleven treng for kvar ho kan sleppast. */
+.bs-verdi { border-radius: 999px; }
+.bs-verdi .bs-rad { padding-left: 14px; padding-right: 14px; }
+
+.bs-hol[data-tak-verdi] { border-radius: 999px; }
 
 /* Ei verdiblokk som ligg i eit hòl er smalare. */
 .bs-hol-fylt > .bs-verdi { width: auto; border-width: 3px; }
@@ -306,9 +315,9 @@
 .bs-hol-fylt > .bs-verdi .bs-symbol { width: 18px; height: 18px; }
 .bs-hol-fylt > .bs-verdi .bs-symbol svg { width: 16px; height: 16px; }
 .bs-hol-fylt > .bs-verdi .bs-felt { font-size: 15px; }
-.bs-hol-fylt > .bs-verdi .bs-steg { min-height: 34px; }
-.bs-hol-fylt > .bs-verdi .bs-steg-kolonne { flex-basis: 24px; }
-.bs-hol-fylt > .bs-verdi .bs-steg-knapp { font-size: 12px; }
+.bs-hol-fylt > .bs-verdi .bs-steg { gap: 5px; }
+.bs-hol-fylt > .bs-verdi .bs-steg .bs-felt { min-height: 34px; }
+.bs-hol-fylt > .bs-verdi .bs-steg-knapp { width: 26px; height: 15px; font-size: 11px; }
 
 /* ---- paletten -------------------------------------------------------------- */
 
@@ -357,12 +366,14 @@
  * avdekte ei hårstrek under knasten der blokka hadde stått. Eit lag med kvitt
  * oppå fyllet gjer det same utan å røre layouten — og det tek berre fyllet,
  * ikkje ramma eller teksten. */
-.bs-palettblokk:hover {
-    background-image: linear-gradient(rgba(255, 255, 255, .45), rgba(255, 255, 255, .45));
-}
+.bs-palettblokk:hover,
+.bs-palettblokk:hover::after,
 .bs-palettbolk > .bs-krop-ytre:hover .bs-blokk,
 .bs-palettbolk > .bs-krop-ytre:hover .bs-krop-spine,
-.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-botn {
+.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-botn,
+.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-botn::after {
+    /* Knasten er eit pseudoelement med eigen bakgrunn, så han må lysnast
+     * for seg — elles blir tappen ståande mørk under ei lys blokk. */
     background-image: linear-gradient(rgba(255, 255, 255, .45), rgba(255, 255, 255, .45));
 }
 .bs-palettblokk .bs-felt { pointer-events: none; }
