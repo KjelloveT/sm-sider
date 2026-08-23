@@ -194,6 +194,29 @@ const BolkBlokkar = (function () {
             python: () => ['penup()', 'goto(0, 0)', 'setheading(90)', 'pendown()']
         },
 
+        {
+            id: 'avstandTilStart', farge: 'gaa', ikon: 'crosshair', kategori: 'skilpadde',
+            form: 'verdi', namn: 'avstanden til start',
+            tekst: ['avstanden til start'],
+            /* Målebandet i verktøyet.
+             *
+             * Med han kan eleven finne diameteren i ein mangekant utan å vite
+             * noko om sinus: han teiknar halve figuren, og då står skilpadda
+             * på det motsette hjørnet. Avstanden derifrå til start ER
+             * diameteren.
+             *
+             * `distance` er ein ekte metode i Python sin turtle. Det er heile
+             * grunnen til at blokka ser slik ut og ikkje måler ei ramme rundt
+             * figuren: ei ramme finst ikkje i turtle, og då måtte vi ha dikta
+             * opp ein hjelpefunksjon. Denne fila skriv Python, ikkje vår
+             * eigen dialekt (sjå toppen av python.js). */
+            verdi: (f, ktx) => {
+                const t = ktx.skilpadde.tilstand;
+                return Math.hypot(t.x, t.y);
+            },
+            python: () => 'distance(0, 0)'
+        },
+
         /* ---- tal og rekning --------------------------------------------- */
         /* Det finst med vilje inga «tal»-blokk. Kvart tal-hòl har eit felt
          * eleven kan skrive rett i, så ei eiga blokk for å halde eit tal

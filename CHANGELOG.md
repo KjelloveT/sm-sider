@@ -3,6 +3,12 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.17] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Sirkelen og pi»** — fem leksjonar for 6. trinn. Eleven reknar ut vegen rundt, måler vegen tvers over, og deler. Sekskanten gjev **nøyaktig 3**. 36-kanten gjev 3,1376. 90-kanten gjev 3,1410. Pi sluttar å vere eit tal i boka og blir noko maskina finn. Leksjonen «Frå mangekant til sirkel» er **flytt** hit frå «Mangekantar og mønster» — han var kimen til modulen, og to utgåver ville kome i utakt.
+- **Ny blokk: `avstanden til start`.** Målebandet i verktøyet. Teiknar du halve mangekanten, står skilpadda på hjørnet rett imot der ho starta — og avstanden derifrå ER diameteren. Blokka finst i denne forma og ikkje som ei ramme rundt figuren fordi ei ramme ikkje finst i Python sin turtle, medan `distance(0, 0)` er ein ekte metode. Python-fila skriv Python, ikkje vår eigen dialekt.
+
 ## [1.16] — 2026-08-23
 
 ### Fiksa

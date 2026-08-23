@@ -41,15 +41,33 @@
       "ikon": "shapes",
       "accent": "accent2",
       "trinn": "6. trinn",
-      "talLeksjonar": 5,
+      "talLeksjonar": 4,
       "klar": true,
-      "skildring": "Vinkelen som lukkar ein figur, kva som skil eit kvadrat frå eit rektangel, sirkelen som eigentleg er ein mangekant, og stjerna som går to rundar.",
+      "skildring": "Vinkelen som lukkar ein figur, kva som skil eit kvadrat frå eit rektangel, stjerna som går to rundar, og mønsteret som kjem av å gjenta.",
       "kompetansemaal": [
         "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
         "6. trinn: beskrive og utforske eigenskapar ved to- og tredimensjonale figurar og forklare kva for eigenskapar figurane har til felles, og kva for eigenskapar som skil figurane frå kvarandre",
         "6. trinn: utforske og beskrive symmetri i mønster"
       ],
       "krev": "grunnkurs"
+    },
+    {
+      "id": "sirkel",
+      "gruppe": "geometri",
+      "fil": "sirkel.json",
+      "tittel": "Sirkelen og pi",
+      "ikon": "circle",
+      "accent": "accent3",
+      "trinn": "6. trinn",
+      "talLeksjonar": 5,
+      "klar": true,
+      "krev": "grunnkurs",
+      "skildring": "Ein sirkel er ein mangekant med så mange kantar at hjørna forsvinn. Du reknar ut vegen rundt, måler vegen tvers over, og deler — og får det same talet kvar gong.",
+      "kompetansemaal": [
+        "6. trinn: måle radius, diameter og omkrins i sirklar og utforske og forklare samanhengen mellom pi og diameteren i ein sirkel",
+        "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins",
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster"
+      ]
     },
     {
       "id": "rutenett",
