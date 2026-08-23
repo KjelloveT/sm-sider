@@ -3,6 +3,15 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.14] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Terningkast og sannsyn» er ferdig** — seks leksjonar for 7. trinn. Frå eitt kast, til å telje opp i mange kast, til relativ frekvens som brøk, til at to terningar slett ikkje er som éin, til stolpediagram — og til slutt eit forsøk eleven stiller spørsmålet til sjølv.
+- Med det er alle fire modulane ferdige: grunnkurset, geometri (6. trinn), koordinatar (5. trinn) og sannsyn (7. trinn). 62 oppgåver til saman.
+
+### Endra
+- **«På veg»-gruppa er borte** frå modulsida. Ho var til for å vise kva som var planlagt, og no er ingenting planlagt lenger — alt er skrive.
+
 ## [1.13] — 2026-08-23
 
 ### Lagt til

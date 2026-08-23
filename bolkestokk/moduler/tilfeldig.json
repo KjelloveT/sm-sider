@@ -1,0 +1,4081 @@
+{
+  "app": "bolkestokk",
+  "version": 1,
+  "id": "tilfeldig",
+  "tittel": "Terningkast og sannsyn",
+  "_note": "Sannsynsmodulen. Oppgåver med terning kan IKKJE ha `teikning`- eller `svar`-testar: rettemotoren køyrer eleven sitt program og fasiten kvar for seg, og to tilfeldige køyringar er aldri like. Dei blir kontrollerte med `brukar` — at framgangsmåten er der. Oppgåver som skal ha ein fasit er laga deterministiske, med tal eleven får oppgjeve (sjå leksjon 5).",
+  "leksjonar": [
+    {
+      "id": "ein-terning",
+      "tittel": "Ein terning i programmet",
+      "kompetansemaal": [
+        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk"
+      ],
+      "palett": [
+        "tilfeldig",
+        "skrivUt",
+        "rekne",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Blokka `tilfeldig tal frå 1 til 6` er ein terning. Kvar gong ho blir lesen, gjev ho eit nytt tal — og du kan ikkje vite kva på førehand."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Køyrer du det same programmet to gonger, får du to ulike svar. Det er ikkje ein feil. Det er heile poenget, og det er den eine tingen som skil eit tilfeldig forsøk frå alt anna du har programmert til no."
+        },
+        {
+          "type": "merk",
+          "tekst": "Fordi svaret skiftar, kan ikkje desse oppgåvene ha ein fasit å samanlikne med. Dei blir retta på **framgangsmåten** — at du har bygd forsøket rett."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Eitt terningkast. Trykk **Køyr** fleire gonger etter kvarandre og sjå at talet skiftar.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "tilfeldig",
+                  "felt": {
+                    "fra": 1,
+                    "til": 6
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Frå eitt kast til fem",
+        "maal": "fem terningkast skrivne under kvarandre",
+        "steg": [
+          {
+            "tekst": "Eitt kast. `Skriv ut` viser talet i Utskrift-ruta.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Same blokka to gonger. Legg merke til at dei to tala som regel er ulike — kvar `tilfeldig` blir lesen for seg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Køyr fem gonger. Hende det at dei to tala vart like?"
+          },
+          {
+            "tekst": "Fem kast med ei løkke. No er det éi blokk som gjer jobben til fem.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 5
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt til `tilfeldig tal frå 1 til 20`. Kva slags terning har du no?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "e1",
+          "type": "les",
+          "maal": "Kva kan kome ut?",
+          "tekst": "Blokka i programmet under er ein terning.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "tilfeldig",
+                    "felt": {
+                      "fra": 1,
+                      "til": 6
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva tal kan dette programmet skrive ut?",
+          "alternativ": [
+            "Berre 1 eller 6",
+            "Eit heiltal frå 1 til og med 6",
+            "Kva som helst tal mellom 1 og 6, òg 3,5"
+          ],
+          "rett": 1,
+          "forklaring": "Blokka gjev eit **heiltal**, og begge endane er med. 1 og 6 kan kome, og 3,5 kan ikkje — ein terning har ikkje ei slik side."
+        },
+        {
+          "id": "e2",
+          "type": "bygg",
+          "maal": "Kast ein tjuesidig terning",
+          "tekst": "Skriv ut **fem kast** med ein terning som har **tjue sider**. Bruk ei løkke.",
+          "hint": [
+            "Ein tjuesidig terning er `tilfeldig tal frå 1 til 20`.",
+            "Legg `Skriv ut` med terningen inni ei `Gjenta 5`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "tilfeldig"
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 5
+                },
+                "kropp": [
+                  {
+                    "type": "skrivUt",
+                    "felt": {
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 20
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "e3",
+          "type": "bygg",
+          "maal": "Summen av to terningar",
+          "tekst": "Kast **to** terningar og skriv ut **summen**. Køyr fleire gonger og sjå kva tal som kjem.",
+          "hint": [
+            "Du treng to `tilfeldig`-blokker, ei i kvart hòl i ei `Rekn ut`-blokk.",
+            "Sett `Rekn ut` med `+` inni `Skriv ut`, og ein terning i kvart av dei to hòla."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "brukar",
+              "blokk": "tilfeldig"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      },
+                      "op": "pluss",
+                      "b": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ein terning i programmet er `tilfeldig tal frå 1 til 6`. Han gjev eit nytt heiltal kvar gong han blir lesen, og det er difor same programmet ikkje gjev same svaret to gonger."
+    },
+    {
+      "id": "tel-opp",
+      "tittel": "Tel opp kor ofte",
+      "kompetansemaal": [
+        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk",
+        "7. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
+      ],
+      "palett": [
+        "tilfeldig",
+        "skrivUt",
+        "rekne",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "dersom",
+        "samanlikn"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Eitt kast fortel deg ingenting. Skal du finne ut kor ofte noko skjer, må du kaste **mange** gonger og telje opp."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det treng tre ting du alt kan: ei **løkke** som kastar, ein **variabel** som held teljinga, og eit **vilkår** som avgjer om denne teljinga skal auke."
+        },
+        {
+          "type": "merk",
+          "tekst": "Legg kastet i ein eigen variabel før du samanliknar. Les du `tilfeldig` to gonger, har du kasta to gonger — og då samanliknar du ikkje det talet du trudde."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Seksti kast, og ei teljing av kor mange av dei som vart seksarar. Køyr fleire gonger og sjå kor mykje talet varierer.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "seksarar",
+                "verdi": 0
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 60
+              },
+              "kropp": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "kast",
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "kast"
+                          }
+                        },
+                        "op": "lik",
+                        "b": 6
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "seksarar",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "lesVar",
+                  "felt": {
+                    "namn": "seksarar"
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Tel seksarane",
+        "maal": "talet på seksarar i seksti kast",
+        "steg": [
+          {
+            "tekst": "Fyrst eitt kast lagt i ein variabel, så vi kan bruke det same talet fleire gonger.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "kast",
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "kast"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så eit vilkår: er kastet ein seksar, aukar vi teljaren. Her køyrer vi berre éin gong, så teljaren blir 0 eller 1.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "seksarar",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "kast",
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "kast"
+                          }
+                        },
+                        "op": "lik",
+                        "b": 6
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "seksarar",
+                        "med": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "seksarar"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Køyr seks gonger. Kor mange av dei gav 1?"
+          },
+          {
+            "tekst": "Og til slutt seksti kast i ei løkke. Teljaren blir sett éin gong FØR løkka — set du han inni, byrjar du på null kvar runde.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "seksarar",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 60
+                  },
+                  "kropp": [
+                    {
+                      "type": "settVar",
+                      "felt": {
+                        "namn": "kast",
+                        "verdi": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "kast"
+                              }
+                            },
+                            "op": "lik",
+                            "b": 6
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "endreVar",
+                          "felt": {
+                            "namn": "seksarar",
+                            "med": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "seksarar"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `Gjenta 60` til `Gjenta 600`. Kva skjer med talet?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "t1",
+          "type": "bygg",
+          "maal": "Tel seksarane",
+          "tekst": "Kast terningen **60 gonger** og skriv ut kor mange av kasta som vart **seksarar**.",
+          "hint": [
+            "Set ein teljar til 0 før løkka. Inni løkka: legg kastet i ein variabel, og bruk `Dersom kast = 6` til å auke teljaren.",
+            "Skriv ut teljaren etter at løkka er ferdig, ikkje inni henne."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "brukar",
+              "blokk": "endreVar",
+              "inni": "gjenta"
+            },
+            {
+              "type": "brukar",
+              "blokk": "tilfeldig"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "seksarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 60
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "kast",
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "kast"
+                            }
+                          },
+                          "op": "lik",
+                          "b": 6
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "seksarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "seksarar"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "t2",
+          "type": "les",
+          "maal": "Kvar skal teljaren setjast?",
+          "tekst": "To program tel seksarar. Det eine har `Set seksarar til 0` **før** løkka, det andre har henne **inni**.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "seksarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 60
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "kast",
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "kast"
+                            }
+                          },
+                          "op": "lik",
+                          "b": 6
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "seksarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "seksarar"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva skjer dersom `Set seksarar til 0` blir flytt inn i løkka?",
+          "alternativ": [
+            "Ingenting — svaret blir det same",
+            "Svaret blir alltid 0 eller 1, fordi teljinga startar på nytt kvar runde",
+            "Programmet stoppar med ein feil"
+          ],
+          "rett": 1,
+          "forklaring": "Blokka køyrer på nytt for kvart kast og nullstiller teljaren. Det einaste som kan bli ståande, er det siste kastet — så svaret blir 1 om det vart ein seksar, og 0 elles."
+        },
+        {
+          "id": "t3",
+          "type": "rett",
+          "maal": "Teljinga som samanliknar feil kast",
+          "tekst": "Dette skulle telje seksarar, men talet blir for lågt. Hent det inn, køyr det nokre gonger, og finn feilen.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "seksarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 60
+                },
+                "kropp": [
+                  {
+                    "type": "skrivUt",
+                    "felt": {
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "tilfeldig",
+                            "felt": {
+                              "fra": 1,
+                              "til": 6
+                            }
+                          },
+                          "op": "lik",
+                          "b": 6
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "seksarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "seksarar"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Kor mange gonger blir terningen kasta i kvar runde av løkka?",
+            "Det er to `tilfeldig`-blokker, altså to ulike kast. Legg kastet i ein variabel fyrst, og samanlikn variabelen."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "settVar",
+              "inni": "gjenta"
+            },
+            {
+              "type": "brukar",
+              "blokk": "lesVar",
+              "inni": "samanlikn"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "seksarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 60
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "kast",
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "kast"
+                            }
+                          },
+                          "op": "lik",
+                          "b": 6
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "seksarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "seksarar"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "For å finne ut kor ofte noko skjer: ein **teljar** sett til 0 før løkka, eit **kast lagt i ein variabel**, og eit **vilkår** som avgjer om teljaren skal auke. Teljaren må setjast før løkka, ikkje inni."
+    },
+    {
+      "id": "brok",
+      "tittel": "Frå teljing til brøk",
+      "kompetansemaal": [
+        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk"
+      ],
+      "palett": [
+        "tilfeldig",
+        "skrivUt",
+        "rekne",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "dersom",
+        "samanlikn"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "At det vart 11 seksarar seier lite åleine. Av **kor mange** kast? Elleve av seksti er noko anna enn elleve av tusen."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Difor deler vi: `11 ÷ 60 ≈ 0,18`. Det kallar vi den **relative frekvensen** — brøken mellom det som skjedde og alt som kunne skje."
+        },
+        {
+          "type": "merk",
+          "tekst": "Sannsynet for ein seksar er `1/6 ≈ 0,167`. Kast mange nok gonger, og den relative frekvensen legg seg tett inntil det talet. Kast få gonger, og ho spretter."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Same teljinga som før, men delt på talet kast. Køyr fleire gonger og sjå kor nær 0,167 du kjem.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "seksarar",
+                "verdi": 0
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 60
+              },
+              "kropp": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "kast",
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "kast"
+                          }
+                        },
+                        "op": "lik",
+                        "b": 6
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "seksarar",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "seksarar"
+                      }
+                    },
+                    "op": "dele",
+                    "b": 60
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Del på talet kast",
+        "maal": "den relative frekvensen av seksarar, som eit desimaltal",
+        "steg": [
+          {
+            "tekst": "Teljinga du bygde i førre leksjon. Ho gjev eit tal mellom 0 og 60.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "seksarar",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 60
+                  },
+                  "kropp": [
+                    {
+                      "type": "settVar",
+                      "felt": {
+                        "namn": "kast",
+                        "verdi": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "kast"
+                              }
+                            },
+                            "op": "lik",
+                            "b": 6
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "endreVar",
+                          "felt": {
+                            "namn": "seksarar",
+                            "med": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "seksarar"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "No deler vi på 60. Svaret blir eit tal mellom 0 og 1 — brøken mellom seksarar og kast.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "seksarar",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 60
+                  },
+                  "kropp": [
+                    {
+                      "type": "settVar",
+                      "felt": {
+                        "namn": "kast",
+                        "verdi": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "kast"
+                              }
+                            },
+                            "op": "lik",
+                            "b": 6
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "endreVar",
+                          "felt": {
+                            "namn": "seksarar",
+                            "med": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "seksarar"
+                          }
+                        },
+                        "op": "dele",
+                        "b": 60
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Køyr ti gonger og skriv ned svara. Kor langt frå kvarandre ligg det høgaste og det lågaste?"
+          },
+          {
+            "tekst": "Med 600 kast i staden. Same reknestykket, berre fleire forsøk — og svaret ligg mykje tettare på 0,167.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "seksarar",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 600
+                  },
+                  "kropp": [
+                    {
+                      "type": "settVar",
+                      "felt": {
+                        "namn": "kast",
+                        "verdi": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "kast"
+                              }
+                            },
+                            "op": "lik",
+                            "b": 6
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "endreVar",
+                          "felt": {
+                            "namn": "seksarar",
+                            "med": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "seksarar"
+                          }
+                        },
+                        "op": "dele",
+                        "b": 600
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Køyr ti gonger til. Sprikjer svara mindre no?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "b1",
+          "type": "les",
+          "maal": "Kva er sannsynet?",
+          "tekst": "Ein vanleg terning har seks sider, og alle er like sannsynlege.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 1,
+                      "op": "dele",
+                      "b": 6
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva er sannsynet for å få ein seksar i eitt kast?",
+          "alternativ": [
+            "1/6, altså om lag 0,167",
+            "1/2, altså 0,5",
+            "6/1, altså 6"
+          ],
+          "rett": 0,
+          "forklaring": "Det finst seks utfall, og eitt av dei er ein seksar. Sannsynet er talet på gunstige utfall delt på talet på moglege: 1 av 6."
+        },
+        {
+          "id": "b2",
+          "type": "bygg",
+          "maal": "Rekn ut den relative frekvensen",
+          "tekst": "Kast terningen **600 gonger**, tel seksarane, og skriv ut **kor stor del** av kasta som vart seksarar. Svaret skal vere eit tal mellom 0 og 1.",
+          "hint": [
+            "Dette er teljinga frå førre leksjon, med ei `Rekn ut`-blokk til slutt.",
+            "Del teljaren på 600 med `÷`, og legg heile reknestykket inni `Skriv ut`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "brukar",
+              "blokk": "endreVar",
+              "inni": "gjenta"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "seksarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 600
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "kast",
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "kast"
+                            }
+                          },
+                          "op": "lik",
+                          "b": 6
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "seksarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "seksarar"
+                        }
+                      },
+                      "op": "dele",
+                      "b": 600
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "b3",
+          "type": "les",
+          "maal": "Kvifor sprikjer svara?",
+          "tekst": "Ein elev køyrer same programmet ti gonger med 60 kast, og får 0,10 — 0,20 — 0,15 — 0,23 — 0,13 og så vidare.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "seksarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 60
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "kast",
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "kast"
+                            }
+                          },
+                          "op": "lik",
+                          "b": 6
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "seksarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "seksarar"
+                        }
+                      },
+                      "op": "dele",
+                      "b": 60
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva bør han gjere for at svara skal sprike mindre?",
+          "alternativ": [
+            "Køyre programmet fleire gonger",
+            "Auke talet kast i løkka",
+            "Bruke ein terning med fleire sider"
+          ],
+          "rett": 1,
+          "forklaring": "Kvart einskilt svar byggjer på 60 kast, og då slår tilfeldet hardt ut. Med 600 eller 6000 kast i kvar køyring legg den relative frekvensen seg tettare inntil 1/6. Å køyre fleire gonger gjev fleire sprikande svar — ikkje eit betre eitt."
+        }
+      ],
+      "oppsummering": "Den **relative frekvensen** er talet på treff delt på talet på forsøk. Jo fleire forsøk, jo nærare legg ho seg det teoretiske sannsynet — for ein terning er det `1/6 ≈ 0,167`."
+    },
+    {
+      "id": "to-terningar",
+      "tittel": "To terningar er ikkje som éin",
+      "kompetansemaal": [
+        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk"
+      ],
+      "palett": [
+        "tilfeldig",
+        "skrivUt",
+        "rekne",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "dersom",
+        "samanlikn"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Med **éin** terning er alle seks utfalla like sannsynlege. Med **to** terningar er summen mellom 2 og 12 — men dei elleve summane er slett ikkje like sannsynlege."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein toar krev 1 + 1, og det er den einaste måten. Ein sjuar kan bli 1+6, 2+5, 3+4, 4+3, 5+2 eller 6+1 — seks måtar. Difor kjem sjuaren seks gonger så ofte som toaren."
+        },
+        {
+          "type": "merk",
+          "tekst": "Dette er ikkje noko du treng tru på. Du kan kaste tre hundre gonger i programmet og telje sjølv."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "360 kast med to terningar, og ei teljing av sjuarane. Kva ville du venta? 360 delt på 6 er 60 — men sjuaren har seks av 36 måtar, så venta tal er om lag 60.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "sjuarar",
+                "verdi": 0
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 360
+              },
+              "kropp": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "sum",
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "sum"
+                          }
+                        },
+                        "op": "lik",
+                        "b": 7
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "sjuarar",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "lesVar",
+                  "felt": {
+                    "namn": "sjuarar"
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Tel sjuarane",
+        "maal": "talet på sjuarar i 360 kast med to terningar",
+        "steg": [
+          {
+            "tekst": "Summen av to terningar, lagt i ein variabel. Legg merke til at det er to `tilfeldig`-blokker — to terningar, kasta kvar for seg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "sum",
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "sum"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Eit vilkår som ser etter sjuarar, køyrt éin gong.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "sjuarar",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "sum",
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "sum"
+                          }
+                        },
+                        "op": "lik",
+                        "b": 7
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "sjuarar",
+                        "med": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "sjuarar"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "360 kast. Talet legg seg som regel rundt 60, som er ein sjettedel — akkurat som dei seks måtane av 36 skulle tilseie.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "sjuarar",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 360
+                  },
+                  "kropp": [
+                    {
+                      "type": "settVar",
+                      "felt": {
+                        "namn": "sum",
+                        "verdi": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "tilfeldig",
+                              "felt": {
+                                "fra": 1,
+                                "til": 6
+                              }
+                            },
+                            "op": "pluss",
+                            "b": {
+                              "type": "tilfeldig",
+                              "felt": {
+                                "fra": 1,
+                                "til": 6
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "sum"
+                              }
+                            },
+                            "op": "lik",
+                            "b": 7
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "endreVar",
+                          "felt": {
+                            "namn": "sjuarar",
+                            "med": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "sjuarar"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `= 7` til `= 2`. Kor mange toarar får du, og kvifor er det så mykje færre?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "s1",
+          "type": "les",
+          "maal": "Kor mange måtar?",
+          "tekst": "To terningar blir kasta, og summen blir rekna ut.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      },
+                      "op": "pluss",
+                      "b": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "På kor mange måtar kan summen bli 12?",
+          "alternativ": [
+            "Éin: 6 + 6",
+            "To: 6 + 6 og 12 + 0",
+            "Seks, like mange som for sjuaren"
+          ],
+          "rett": 0,
+          "forklaring": "Begge terningane må vise 6. Det er den einaste kombinasjonen, og difor er tolv den sjeldnaste summen saman med toaren — kvar av dei har 1 av 36 måtar, mot sjuaren sine 6."
+        },
+        {
+          "id": "s2",
+          "type": "bygg",
+          "maal": "Tel sjuarane",
+          "tekst": "Kast **to terningar 360 gonger**, og tel kor mange gonger summen blir **7**. Køyr fleire gonger og sjå kor stabilt talet er.",
+          "hint": [
+            "Legg summen i ein variabel fyrst: `Rekn ut` med `+` og ein terning i kvart hòl.",
+            "Så `Dersom sum = 7` med `Endre sjuarar med 1` inni."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "brukar",
+              "blokk": "endreVar",
+              "inni": "gjenta"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "sjuarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 360
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "sum",
+                      "verdi": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "tilfeldig",
+                            "felt": {
+                              "fra": 1,
+                              "til": 6
+                            }
+                          },
+                          "op": "pluss",
+                          "b": {
+                            "type": "tilfeldig",
+                            "felt": {
+                              "fra": 1,
+                              "til": 6
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "sum"
+                            }
+                          },
+                          "op": "lik",
+                          "b": 7
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "sjuarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "sjuarar"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "s3",
+          "type": "bygg",
+          "maal": "Tel toarane i staden",
+          "tekst": "Bygg om programmet så det tel kor mange gonger summen blir **2**. Køyr det, og samanlikn med sjuarane.",
+          "hint": [
+            "Det einaste som skal endrast er talet i samanlikninga.",
+            "Sjuaren har seks måtar av 36, toaren berre éin. Venta tal er difor om lag 10 mot 60."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "toarar",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 360
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "sum",
+                      "verdi": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "tilfeldig",
+                            "felt": {
+                              "fra": 1,
+                              "til": 6
+                            }
+                          },
+                          "op": "pluss",
+                          "b": {
+                            "type": "tilfeldig",
+                            "felt": {
+                              "fra": 1,
+                              "til": 6
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "sum"
+                            }
+                          },
+                          "op": "lik",
+                          "b": 2
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "toarar",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "toarar"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Summen av **to** terningar er ikkje jamt fordelt. Sjuaren har seks kombinasjonar av 36, toaren og tolvaren berre éin kvar. Difor kjem sjuaren seks gonger så ofte."
+    },
+    {
+      "id": "diagram",
+      "tittel": "Vis fram tala",
+      "kompetansemaal": [
+        "7. trinn: bruke tabeller og diagrammer til å samle inn, sortere, analysere og presentere data"
+      ],
+      "palett": [
+        "tilfeldig",
+        "skrivUt",
+        "rekne",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "dersom",
+        "samanlikn",
+        "framover",
+        "bakover",
+        "snuHogre",
+        "snuVenstre",
+        "pennOpp",
+        "pennNed",
+        "setTjukn",
+        "setFarge",
+        "kallFunksjon"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Seks tal i ei utskriftsrute er vanskelege å samanlikne. Same seks tala som **stolpar** ser du på eit blunk."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein stolpe er ein strek oppover. Så løftar du pennen, går ned att, flyttar deg til sides, og teiknar den neste. Same seks blokkene kvar gong — altså ein god kandidat for ein **eigen funksjon**."
+        },
+        {
+          "type": "merk",
+          "tekst": "Her er tala oppgjevne og faste. Difor har denne oppgåva ein fasit — noko ei terningoppgåve aldri kan ha."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Seks stolpar med høgdene 8, 11, 9, 12, 10 og 10 — resultatet av 60 terningkast. Kva ser du med ein gong som du ikkje såg i talrekkja?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 80
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "bakover",
+              "felt": {
+                "lengd": 80
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 40
+              }
+            },
+            {
+              "type": "snuVenstre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 110
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "bakover",
+              "felt": {
+                "lengd": 110
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 40
+              }
+            },
+            {
+              "type": "snuVenstre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 90
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "bakover",
+              "felt": {
+                "lengd": 90
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 40
+              }
+            },
+            {
+              "type": "snuVenstre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 120
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "bakover",
+              "felt": {
+                "lengd": 120
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 40
+              }
+            },
+            {
+              "type": "snuVenstre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 100
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "bakover",
+              "felt": {
+                "lengd": 100
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 40
+              }
+            },
+            {
+              "type": "snuVenstre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 100
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "bakover",
+              "felt": {
+                "lengd": 100
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 40
+              }
+            },
+            {
+              "type": "snuVenstre",
+              "felt": {
+                "grader": 90
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Eit stolpediagram",
+        "maal": "seks stolpar med høgdene 8, 11, 9, 12, 10 og 10, teikna frå venstre mot høgre",
+        "steg": [
+          {
+            "tekst": "Éin stolpe: penn ned, opp 80 steg. Talet 8 er gonga med 10 så stolpen blir stor nok til å sjåast.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 80
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Og så tilbake ned, og 40 steg til høgre med pennen oppe. No står skilpadda klar til neste stolpe.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 80
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": 80
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kva skjer om du gløymer `Penn opp`?"
+          },
+          {
+            "tekst": "Alle seks. Dei same sju blokkene om att med ulik høgd — det er nettopp det ein eigen funksjon er til for.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 80
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": 80
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 110
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": 110
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 90
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": 90
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 120
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": 120
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 100
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": 100
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 100
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": 100
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "d1",
+          "type": "bygg",
+          "maal": "Teikn stolpediagrammet",
+          "tekst": "Seksti terningkast gav desse tala: **8, 11, 9, 12, 10, 10**. Teikn dei som seks stolpar frå venstre mot høgre. Gong kvar høgd med **10**, og flytt **40 steg** til høgre mellom stolpane.",
+          "hint": [
+            "Éin stolpe er: penn ned, framover (talet gonge 10), penn opp, bakover like langt, snu høgre 90, framover 40, snu venstre 90.",
+            "Bygg den fyrste stolpen ferdig, og gjenta så det same med dei fem andre tala."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "pennOpp"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 6,
+            "breidd": 200,
+            "hogd": 120
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 80
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 80
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 110
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 110
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 90
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 90
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 120
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 120
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "d2",
+          "type": "les",
+          "maal": "Kva fortel diagrammet?",
+          "tekst": "Stolpane viser kor mange gonger kvar av dei seks sidene kom opp i 60 kast: 8, 11, 9, 12, 10 og 10.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 80
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 80
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 110
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 110
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 90
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 90
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 120
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 120
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": 100
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva er den rimelegaste konklusjonen?",
+          "alternativ": [
+            "Terningen er skeiv — firaren kjem oftare enn dei andre",
+            "Tala ligg rundt 10, som er det ein ventar av 60 kast på seks sider",
+            "Éinaren er defekt fordi han berre kom åtte gonger"
+          ],
+          "rett": 1,
+          "forklaring": "60 kast fordelte på seks sider gjev 10 i snitt. Å få 8 eller 12 i staden for nøyaktig 10 er heilt vanleg med så få kast — det skal mykje meir til før ein kan seie at ein terning er skeiv."
+        },
+        {
+          "id": "d3",
+          "type": "bygg",
+          "maal": "Same diagrammet med ein funksjon",
+          "tekst": "Teikn det same diagrammet, men lag ein **eigen funksjon** som teiknar éin stolpe og bruk han seks gonger. Høgda må du setje før du kallar funksjonen.",
+          "hint": [
+            "Lag ein variabel `h`. Funksjonen `stolpe` teiknar: penn ned, framover h, penn opp, bakover h, snu høgre 90, framover 40, snu venstre 90.",
+            "I hovudprogrammet: sett `h` til 80 og bruk `stolpe`, sett `h` til 110 og bruk `stolpe`, og så vidare."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "kallFunksjon"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 6,
+            "breidd": 200,
+            "hogd": 120
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "h",
+                  "verdi": 80
+                }
+              },
+              {
+                "type": "kallFunksjon",
+                "felt": {
+                  "namn": "stolpe"
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "h",
+                  "verdi": 110
+                }
+              },
+              {
+                "type": "kallFunksjon",
+                "felt": {
+                  "namn": "stolpe"
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "h",
+                  "verdi": 90
+                }
+              },
+              {
+                "type": "kallFunksjon",
+                "felt": {
+                  "namn": "stolpe"
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "h",
+                  "verdi": 120
+                }
+              },
+              {
+                "type": "kallFunksjon",
+                "felt": {
+                  "namn": "stolpe"
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "h",
+                  "verdi": 100
+                }
+              },
+              {
+                "type": "kallFunksjon",
+                "felt": {
+                  "namn": "stolpe"
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "h",
+                  "verdi": 100
+                }
+              },
+              {
+                "type": "kallFunksjon",
+                "felt": {
+                  "namn": "stolpe"
+                }
+              }
+            ],
+            "funksjonar": [
+              {
+                "namn": "stolpe",
+                "kropp": [
+                  {
+                    "type": "pennNed",
+                    "felt": {}
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "h"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "pennOpp",
+                    "felt": {}
+                  },
+                  {
+                    "type": "bakover",
+                    "felt": {
+                      "lengd": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "h"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 40
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "oppsummering": "Eit **stolpediagram** gjer tal samanliknbare med ein gong. Ein stolpe er ein strek opp, og så eit hopp til sides med pennen oppe. Er stolpen den same kvar gong, høyrer han heime i ein eigen funksjon."
+    },
+    {
+      "id": "eige-forsok",
+      "tittel": "Ditt eige forsøk",
+      "kompetansemaal": [
+        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk",
+        "7. trinn: bruke tabeller og diagrammer til å samle inn, sortere, analysere og presentere data",
+        "7. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
+      ],
+      "palett": [
+        "tilfeldig",
+        "skrivUt",
+        "rekne",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "dersom",
+        "samanlikn",
+        "framover",
+        "bakover",
+        "snuHogre",
+        "snuVenstre",
+        "pennOpp",
+        "pennNed",
+        "setTjukn",
+        "setFarge",
+        "kallFunksjon"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "No har du alt: ein terning, ei løkke som kastar mange gonger, eit vilkår som tel opp, ein brøk som gjer teljinga samanliknbar, og eit diagram som viser fram svaret."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Eit **forsøk** er å setje dei fem saman rundt eit spørsmål du sjølv har stilt. «Kor ofte får eg to like?» «Kor ofte er summen større enn 9?» «Kor mange kast går det før eg får ein seksar?»"
+        },
+        {
+          "type": "merk",
+          "tekst": "Det viktigaste steget er å seie kva du ventar **før** du køyrer. Utan ei venting er eit resultat berre eit tal."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Kor ofte viser to terningar det same? Køyr det, og gjett fyrst: 360 kast, kor mange trur du?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "like",
+                "verdi": 0
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 360
+              },
+              "kropp": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "a",
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "b",
+                    "verdi": {
+                      "type": "tilfeldig",
+                      "felt": {
+                        "fra": 1,
+                        "til": 6
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "a"
+                          }
+                        },
+                        "op": "lik",
+                        "b": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "b"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "like",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "lesVar",
+                  "felt": {
+                    "namn": "like"
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Kor ofte blir summen større enn 9?",
+        "maal": "talet på kast der summen av to terningar er over 9, av 360 kast",
+        "steg": [
+          {
+            "tekst": "Fyrst summen, lagt i ein variabel.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "sum",
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "sum"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så vilkåret. Her brukar vi `>` og ikkje `=` — vi spør om summen er **større enn** 9, altså 10, 11 eller 12.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "over",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "sum",
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "tilfeldig",
+                          "felt": {
+                            "fra": 1,
+                            "til": 6
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "sum"
+                          }
+                        },
+                        "op": "storre",
+                        "b": 9
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "over",
+                        "med": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "over"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `>` til `≥`. Kva summar blir talde med då?"
+          },
+          {
+            "tekst": "360 kast, og til slutt delt på 360 så vi får ein brøk. Ti, elleve og tolv har til saman 6 av 36 måtar, så venta svar er om lag 0,167.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "over",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 360
+                  },
+                  "kropp": [
+                    {
+                      "type": "settVar",
+                      "felt": {
+                        "namn": "sum",
+                        "verdi": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "tilfeldig",
+                              "felt": {
+                                "fra": 1,
+                                "til": 6
+                              }
+                            },
+                            "op": "pluss",
+                            "b": {
+                              "type": "tilfeldig",
+                              "felt": {
+                                "fra": 1,
+                                "til": 6
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "sum"
+                              }
+                            },
+                            "op": "storre",
+                            "b": 9
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "endreVar",
+                          "felt": {
+                            "namn": "over",
+                            "med": 1
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "over"
+                          }
+                        },
+                        "op": "dele",
+                        "b": 360
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "f1",
+          "type": "bygg",
+          "maal": "Kor ofte blir det to like?",
+          "tekst": "Kast **to terningar 360 gonger** og tel kor mange gonger dei viser **det same**. Skriv ut kor stor del av kasta det vart.",
+          "hint": [
+            "Legg dei to kasta i kvar sin variabel, så du kan samanlikne dei med kvarandre.",
+            "Vilkåret er `a = b`. Ein variabel kan stå i begge hòla i samanlikninga."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            },
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "brukar",
+              "blokk": "endreVar",
+              "inni": "gjenta"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "like",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 360
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "a",
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "b",
+                      "verdi": {
+                        "type": "tilfeldig",
+                        "felt": {
+                          "fra": 1,
+                          "til": 6
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "a"
+                            }
+                          },
+                          "op": "lik",
+                          "b": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "b"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "like",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "like"
+                        }
+                      },
+                      "op": "dele",
+                      "b": 360
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "f2",
+          "type": "les",
+          "maal": "Kva ventar du?",
+          "tekst": "To terningar viser det same når begge er 1, eller begge er 2, og så vidare — seks kombinasjonar av dei 36 moglege.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 6,
+                      "op": "dele",
+                      "b": 36
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Om lag kor mange av 360 kast ventar du å få to like?",
+          "alternativ": [
+            "Om lag 10",
+            "Om lag 60",
+            "Om lag 180"
+          ],
+          "rett": 1,
+          "forklaring": "6 av 36 er ein sjettedel. Ein sjettedel av 360 er 60. At du får 54 eller 67 er heilt vanleg — det er tilfeldet som svingar, ikkje rekninga som er feil."
+        },
+        {
+          "id": "f3",
+          "type": "bygg",
+          "maal": "Ditt eige spørsmål",
+          "tekst": "Still ditt eige spørsmål om terningkast, og bygg forsøket som svarar på det. Skriv ned kva du **ventar** før du køyrer. Døme: kor ofte er summen eit partal? Kor ofte er begge terningane over 4?",
+          "hint": [
+            "Bruk oppskrifta: teljar til 0, løkke som kastar, kast i variabel, `Dersom` med vilkåret ditt, teljar opp, og del på talet kast til slutt.",
+            "Er du usikker på kva du ventar: tel opp kor mange av dei 36 kombinasjonane som passar, og del på 36."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "brukar",
+              "blokk": "tilfeldig"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "treff",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 360
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "sum",
+                      "verdi": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "tilfeldig",
+                            "felt": {
+                              "fra": 1,
+                              "til": 6
+                            }
+                          },
+                          "op": "pluss",
+                          "b": {
+                            "type": "tilfeldig",
+                            "felt": {
+                              "fra": 1,
+                              "til": 6
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "sum"
+                            }
+                          },
+                          "op": "storre",
+                          "b": 9
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "treff",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "treff"
+                        }
+                      },
+                      "op": "dele",
+                      "b": 360
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Eit forsøk er fem ting sette saman: **kast**, **løkke**, **vilkår**, **teljar** og **brøk**. Og eitt steg til som ikkje er programmering — å seie kva du ventar før du køyrer."
+    }
+  ]
+}

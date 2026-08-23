@@ -12,12 +12,7 @@
     {
       "id": "geometri",
       "tittel": "Matematikk med programmering",
-      "skildring": "Modular knytte til eitt kompetansemål kvar. Dei tek det grunnkurset har lært, og brukar det på matematikken."
-    },
-    {
-      "id": "kjem",
-      "tittel": "På veg",
-      "skildring": "Desse modulane er planlagde, men ikkje skrivne enno."
+      "skildring": "Kvar modul er knytt til kompetansemål for eitt trinn. Dei tek det grunnkurset har lært, og brukar det på matematikken."
     }
   ],
   "modular": [
@@ -71,16 +66,19 @@
     },
     {
       "id": "tilfeldig",
-      "gruppe": "kjem",
+      "gruppe": "geometri",
       "fil": "tilfeldig.json",
       "tittel": "Terningkast og sannsyn",
       "ikon": "diamond",
       "accent": "accent5",
       "trinn": "7. trinn",
       "talLeksjonar": 6,
-      "klar": false,
-      "skildring": "Kast tusen terningar og tel opp. Ein smakebit på det Ormritaren gjer med Python på ungdomstrinnet.",
-      "kompetansemaal": [],
+      "klar": true,
+      "skildring": "Kast tre hundre terningar og tel opp. Frå eitt kast til relativ frekvens, til at to terningar ikkje er som éin — og eit stolpediagram til slutt.",
+      "kompetansemaal": [
+        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk",
+        "7. trinn: bruke tabeller og diagrammer til å samle inn, sortere, analysere og presentere data"
+      ],
       "krev": "grunnkurs"
     }
   ]
