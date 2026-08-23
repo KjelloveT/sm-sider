@@ -8,8 +8,8 @@
       "id": "uttrykk",
       "tittel": "Bokstavar som tal",
       "kompetansemaal": [
-        "8. trinn: lage og forklare regneuttrykk med tall, variabler og konstanter knyttet til praktiske situasjoner",
-        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk"
+        "8. trinn: lage og forklare rekneuttrykk med tal, variablar og konstantar knytte til praktiske situasjonar",
+        "10. trinn: bruke reknereglar og generalisere samanhengar algebraisk"
       ],
       "tekst": [
         {
@@ -171,8 +171,8 @@
       "id": "like",
       "tittel": "Er dei to uttrykka like?",
       "kompetansemaal": [
-        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "10. trinn: bruke reknereglar og generalisere samanhengar algebraisk",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -329,8 +329,8 @@
       "id": "reknereglar",
       "tittel": "Reglane som gjeld uansett tal",
       "kompetansemaal": [
-        "8. trinn: bruke kommutative, assosiative og distributive egenskaper til å utvikle og kommunisere strategier for hoderegning og skriftlig regning",
-        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk"
+        "8. trinn: bruke kommutative, assosiative og distributive eigenskapar til å utvikle og kommunisere strategiar for hovudrekning og skriftleg rekning",
+        "10. trinn: bruke reknereglar og generalisere samanhengar algebraisk"
       ],
       "tekst": [
         {
@@ -466,7 +466,7 @@
                 4,
                 6
               ],
-              "vent": 5.0
+              "vent": 5
             },
             {
               "type": "kall",
@@ -475,7 +475,7 @@
                 0,
                 10
               ],
-              "vent": 5.0
+              "vent": 5
             },
             {
               "type": "kall",
@@ -484,7 +484,7 @@
                 7,
                 7
               ],
-              "vent": 7.0
+              "vent": 7
             }
           ],
           "loeysing": "def snitt(a, b):\n    return (a + b) / 2"
@@ -496,8 +496,8 @@
       "id": "kvadrat-geometrisk",
       "tittel": "Kvadratsetninga du kan sjå",
       "kompetansemaal": [
-        "10. trinn: utforske kvadratsetningene geometrisk og algebraisk og bruke kvadratsetningene som regnestrategier",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "10. trinn: utforske kvadratsetningane geometrisk og algebraisk og bruke kvadratsetningane som reknestrategiar",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -660,8 +660,8 @@
       "id": "kvadrat-strategi",
       "tittel": "Kvadratsetningane som reknestrategi",
       "kompetansemaal": [
-        "10. trinn: utforske kvadratsetningene geometrisk og algebraisk og bruke kvadratsetningene som regnestrategier",
-        "8. trinn: bruke kommutative, assosiative og distributive egenskaper til å utvikle og kommunisere strategier for hoderegning og skriftlig regning"
+        "10. trinn: utforske kvadratsetningane geometrisk og algebraisk og bruke kvadratsetningane som reknestrategiar",
+        "8. trinn: bruke kommutative, assosiative og distributive eigenskapar til å utvikle og kommunisere strategiar for hovudrekning og skriftleg rekning"
       ],
       "tekst": [
         {
@@ -823,8 +823,8 @@
       "id": "likningar",
       "tittel": "Løyse likningar med programmet",
       "kompetansemaal": [
-        "8. trinn: lage og løse ligninger knyttet til praktiske situasjoner og kritisk vurdere løsninger",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "8. trinn: lage og løyse likningar knytte til praktiske situasjonar og kritisk vurdere løysingar",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -845,7 +845,7 @@
         },
         {
           "type": "merk",
-          "tekst": "Men han har to veikskapar, og begge er verdt å kjenne. Han finn berre svar som ligg i området du leitar i, og han finn berre **heile** tal. Er svaret 4,5, går løkka rett forbi det."
+          "tekst": "Men han har to veikskapar, og begge er verdt å kjenne. Han finn berre svar som ligg i området du leitar i, og han finn berre **heile** tal. Er svaret 4,5, går lykkja rett forbi det."
         },
         {
           "type": "avsnitt",
@@ -886,7 +886,7 @@
           "tekst": "Skriv funksjonen `loys` som finn det heile talet `x` mellom −100 og 100 som gjer at `5x - 3` blir lik `maal`. Returner `None` om du ikkje finn noko.",
           "startkode": "def loys(maal):\n    for x in range(-100, 101):\n        # sjekk om 5 * x - 3 er lik maal\n        pass\n    return None\n",
           "hint": [
-            "Inne i løkka: `if 5 * x - 3 == maal:`",
+            "Inne i lykkja: `if 5 * x - 3 == maal:`",
             "Når du finn talet, skal du `return x` med ein gong.",
             "Hugs to likskapsteikn: `==` spør, `=` lagrar."
           ],
@@ -938,7 +938,7 @@
             "treff: 3"
           ],
           "rett": 0,
-          "forklaring": "Likninga `2x = x + 3` har løysinga `x = 3`, og 3 ligg i `range(0, 6)`. Så programmet skriv **treff: 3**. `print(\"ferdig\")` står utanfor løkka og køyrer uansett."
+          "forklaring": "Likninga `2x = x + 3` har løysinga `x = 3`, og 3 ligg i `range(0, 6)`. Så programmet skriv **treff: 3**. `print(\"ferdig\")` står utanfor lykkja og køyrer uansett."
         },
         {
           "id": "lik6-3",
@@ -966,8 +966,8 @@
       "id": "likningssett",
       "tittel": "To ukjende på ein gong",
       "kompetansemaal": [
-        "10. trinn: lage, løse og forklare ligningssett knyttet til praktiske situasjoner",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "10. trinn: lage, løyse og forklare likningssett knytte til praktiske situasjonar",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -1038,7 +1038,7 @@
           "hint": [
             "Talet bein er `2 * hoener + 4 * sauer`.",
             "`if 2 * hoener + 4 * sauer == bein:` og så `return hoener`.",
-            "Hugs at `return None` skal stå heilt til slutt, utanfor løkka."
+            "Hugs at `return None` skal stå heilt til slutt, utanfor lykkja."
           ],
           "testar": [
             {
@@ -1141,8 +1141,8 @@
       "id": "modellar",
       "tittel": "Frå mønster til formel — og kor langt han held",
       "kompetansemaal": [
-        "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk",
-        "10. trinn: modellere situasjoner, presentere resultatene og vurdere hvor gyldige modellene er",
+        "8. trinn: utforske og generalisere geometriske mønster og tallmønster med eigne ord og algebraisk",
+        "10. trinn: modellere situasjonar, presentere resultata og vurdere kor gyldige modellane er",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ],
       "tekst": [

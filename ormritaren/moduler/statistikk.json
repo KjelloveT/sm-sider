@@ -8,7 +8,7 @@
       "id": "datasett",
       "tittel": "Tal i ei liste",
       "kompetansemaal": [
-        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+        "9. trinn: rekne på sentralmål og spreiingsmål i eigne og reelle datasett og bruke resultata til å beskrive dataa"
       ],
       "tekst": [
         {
@@ -157,7 +157,7 @@
       "id": "gjennomsnitt",
       "tittel": "Gjennomsnitt og median",
       "kompetansemaal": [
-        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+        "9. trinn: rekne på sentralmål og spreiingsmål i eigne og reelle datasett og bruke resultata til å beskrive dataa"
       ],
       "tekst": [
         {
@@ -315,7 +315,7 @@
       "id": "typetal",
       "tittel": "Typetal og spreiing",
       "kompetansemaal": [
-        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+        "9. trinn: rekne på sentralmål og spreiingsmål i eigne og reelle datasett og bruke resultata til å beskrive dataa"
       ],
       "tekst": [
         {
@@ -463,7 +463,7 @@
       "id": "eige-datasett",
       "tittel": "Klassen sitt eige datasett",
       "kompetansemaal": [
-        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene"
+        "9. trinn: rekne på sentralmål og spreiingsmål i eigne og reelle datasett og bruke resultata til å beskrive dataa"
       ],
       "tekst": [
         {
@@ -541,7 +541,7 @@
               ],
               "vent": {
                 "tal": 3,
-                "snitt": 4.0,
+                "snitt": 4,
                 "minste": 2,
                 "storste": 6
               }
@@ -556,7 +556,7 @@
               ],
               "vent": {
                 "tal": 1,
-                "snitt": 10.0,
+                "snitt": 10,
                 "minste": 10,
                 "storste": 10
               }
@@ -584,8 +584,8 @@
           "tekst": "Programmet skal leggje tre tal i lista, men lista er tom til slutt. Rett feilen.",
           "startkode": "tal = []\nfor x in [38, 41, 39]:\n    tal = []\n    tal.append(x)\nprint(tal)",
           "hint": [
-            "Sjå kva som skjer inni løkka for kvar runde.",
-            "Lista skal lagast **éin** gong, før løkka."
+            "Sjå kva som skjer inni lykkja for kvar runde.",
+            "Lista skal lagast **éin** gong, før lykkja."
           ],
           "testar": [
             {
@@ -596,14 +596,14 @@
           "loeysing": "tal = []\nfor x in [38, 41, 39]:\n    tal.append(x)\nprint(tal)"
         }
       ],
-      "oppsummering": "Eit datasett frå din eigen klasse gjer statistikken konkret. `append` byggjer opp ei liste bit for bit — men lista må lagast før løkka, ikkje inni."
+      "oppsummering": "Eit datasett frå din eigen klasse gjer statistikken konkret. `append` byggjer opp ei liste bit for bit — men lista må lagast før lykkja, ikkje inni."
     },
     {
       "id": "diagram",
       "tittel": "Teikn tala",
       "kompetansemaal": [
-        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene",
-        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet"
+        "9. trinn: rekne på sentralmål og spreiingsmål i eigne og reelle datasett og bruke resultata til å beskrive dataa",
+        "9. trinn: tolke og kritisk vurdere statistiske framstillingar frå media og lokalsamfunnet"
       ],
       "tekst": [
         {
@@ -740,8 +740,8 @@
       "id": "same-tal-to-bilete",
       "tittel": "Same tal, to ulike bilete",
       "kompetansemaal": [
-        "9. trinn: sammenligne og argumentere for hvordan framstillinger av tall og data kan brukes for å fremme ulike synspunkter",
-        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet",
+        "9. trinn: samanlikne og argumentere for korleis framstillingar av tal og data kan brukast for å fremje ulike synspunkt",
+        "9. trinn: tolke og kritisk vurdere statistiske framstillingar frå media og lokalsamfunnet",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ],
       "tekst": [
@@ -835,7 +835,7 @@
                 100,
                 150
               ],
-              "vent": 50.0
+              "vent": 50
             },
             {
               "type": "kall",
@@ -844,7 +844,7 @@
                 50,
                 25
               ],
-              "vent": -50.0
+              "vent": -50
             }
           ],
           "loeysing": "def prosentvis_endring(gamal, ny):\n    return round((ny - gamal) / gamal * 100, 1)"
@@ -879,8 +879,8 @@
       "id": "les-eit-diagram",
       "tittel": "Les eit diagram kritisk",
       "kompetansemaal": [
-        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet",
-        "9. trinn: sammenligne og argumentere for hvordan framstillinger av tall og data kan brukes for å fremme ulike synspunkter",
+        "9. trinn: tolke og kritisk vurdere statistiske framstillingar frå media og lokalsamfunnet",
+        "9. trinn: samanlikne og argumentere for korleis framstillingar av tal og data kan brukast for å fremje ulike synspunkt",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ],
       "tekst": [
@@ -939,7 +939,7 @@
           "id": "kritisk-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `del_over` som tek imot ei liste med tal og ei grense, og returnerer kor stor **prosentdel** av tala som er større enn grensa. Rund av til éin desimal.",
-          "startkode": "def del_over(tal, grense):\n    over = 0\n    # skriv løkka her\n    return round(over / len(tal) * 100, 1)\n",
+          "startkode": "def del_over(tal, grense):\n    over = 0\n    # skriv lykkja her\n    return round(over / len(tal) * 100, 1)\n",
           "hint": [
             "`for x in tal:` og `if x > grense:`",
             "Hugs at det er **strengt større enn**, ikkje større eller lik."
@@ -957,7 +957,7 @@
                 ],
                 60
               ],
-              "vent": 50.0
+              "vent": 50
             },
             {
               "type": "kall",
@@ -970,7 +970,7 @@
                 ],
                 10
               ],
-              "vent": 0.0
+              "vent": 0
             },
             {
               "type": "kall",
@@ -984,7 +984,7 @@
                 ],
                 4
               ],
-              "vent": 100.0
+              "vent": 100
             }
           ],
           "loeysing": "def del_over(tal, grense):\n    over = 0\n    for x in tal:\n        if x > grense:\n            over = over + 1\n    return round(over / len(tal) * 100, 1)"
@@ -1025,7 +1025,7 @@
                 ],
                 60
               ],
-              "vent": 50.0
+              "vent": 50
             },
             {
               "type": "kall",
@@ -1038,7 +1038,7 @@
                 ],
                 10
               ],
-              "vent": 0.0
+              "vent": 0
             }
           ],
           "loeysing": "def del_over(tal, grense):\n    over = 0\n    for x in tal:\n        if x > grense:\n            over = over + 1\n    return round(over / len(tal) * 100, 1)"

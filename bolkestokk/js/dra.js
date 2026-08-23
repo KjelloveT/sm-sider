@@ -270,7 +270,7 @@ const BolkDra = (function () {
      * Legg blokka der eleven mest sannsynleg vil ha henne.
      *
      * Er ei gjenta-blokk merkt, hamnar den nye INNI henne. Det er nesten
-     * alltid det ein vil rett etter å ha lagt ut ei løkke, og alternativet —
+     * alltid det ein vil rett etter å ha lagt ut ei lykkje, og alternativet —
      * å leggje henne etter — tvingar fram eit drag med ein gong.
      */
     function settInn(type) {

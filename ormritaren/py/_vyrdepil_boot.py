@@ -185,7 +185,7 @@ def koyr_stegvis(src):
                 raise RuntimeError(
                     f"Steg for steg stoppar etter {MAKS_STEG} linjer. "
                     "Programmet ditt gjer for mange steg til å følgjast slik — "
-                    "prøv med færre rundar i løkka."
+                    "prøv med færre rundar i lykkja."
                 )
             # Skilpadda samlar strekar i ein buffer og sender dei i bolkar.
             # Under stegvis køyring må teikninga følgje linja, elles ser

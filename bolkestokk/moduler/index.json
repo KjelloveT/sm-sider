@@ -1,21 +1,38 @@
 {
   "app": "bolkestokk",
   "version": 1,
-  "_note": "Katalog over modular. Same mønster som ormritaren/moduler/index.json. Modular med klar:false blir viste som «kjem snart» — det er med vilje, så ein lærar ser kva som er på veg.",
+  "_note": "Katalog over modular. Same mønster som ormritaren/moduler/index.json. Modular med klar:false blir viste som «kjem snart» — det er med vilje, så ein lærar ser kva som er på veg. Modular med krev:\"grunnkurs\" byggjer på grunnkurset og seier det på kortet.",
   "_kompetansemaal": "Henta ordrett frå udir.no/lk20/mat01-06 (gjeldande læreplan), august 2026. Blir viste både på modulkortet og i leksjonen, så læraren ser kva mål opplegget svarar på.",
   "grupper": [
     {
-      "id": "geometri",
-      "tittel": "Geometri og mønster",
-      "skildring": "Programmering som verktøy for å utforske figurar. Du treng ikkje ha programmert før — modulen startar heilt frå byrjinga."
+      "id": "grunnkurs",
+      "tittel": "Grunnkurs",
+      "skildring": "Her lærer eleven korleis eit program er bygd opp. Fire leksjonar som dei andre modulane byggjer vidare på. Du treng ikkje ha programmert før."
     },
     {
-      "id": "kjem",
-      "tittel": "På veg",
-      "skildring": "Desse modulane er planlagde, men ikkje skrivne enno."
+      "id": "geometri",
+      "tittel": "Matematikk med programmering",
+      "skildring": "Kvar modul er knytt til kompetansemål for eitt trinn. Dei tek det grunnkurset har lært, og brukar det på matematikken."
     }
   ],
   "modular": [
+    {
+      "id": "grunnkurs",
+      "gruppe": "grunnkurs",
+      "fil": "grunnkurs.json",
+      "tittel": "Fyrste stega",
+      "ikon": "footprints",
+      "accent": "accent",
+      "trinn": "5.–7. trinn",
+      "talLeksjonar": 4,
+      "klar": true,
+      "skildring": "Skilpadda, lykkja, variabelen og din eigen funksjon. Fire leksjonar som gjev deg alt du treng for å ta fatt på dei andre modulane.",
+      "kompetansemaal": [
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ]
+    },
     {
       "id": "mangekantar",
       "gruppe": "geometri",
@@ -24,40 +41,104 @@
       "ikon": "shapes",
       "accent": "accent2",
       "trinn": "6. trinn",
-      "talLeksjonar": 6,
+      "talLeksjonar": 4,
       "klar": true,
-      "skildring": "Frå éi strek til ein rosett. Du lærer løkker, den vinkelen som lukkar ein figur, variablar som veks, og korleis du lagar din eigen funksjon.",
+      "skildring": "Vinkelen som lukkar ein figur, kva som skil eit kvadrat frå eit rektangel, stjerna som går to rundar, og mønsteret som kjem av å gjenta.",
       "kompetansemaal": [
-        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre",
-        "6. trinn: beskrive og utforske egenskaper ved to- og tredimensjonale figurer og forklare hvilke egenskaper figurene har til felles, og hvilke egenskaper som skiller figurene fra hverandre",
-        "6. trinn: utforske og beskrive symmetri i mønstre"
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
+        "6. trinn: beskrive og utforske eigenskapar ved to- og tredimensjonale figurar og forklare kva for eigenskapar figurane har til felles, og kva for eigenskapar som skil figurane frå kvarandre",
+        "6. trinn: utforske og beskrive symmetri i mønster"
+      ],
+      "krev": "grunnkurs"
+    },
+    {
+      "id": "sirkel",
+      "gruppe": "geometri",
+      "fil": "sirkel.json",
+      "tittel": "Sirkelen og pi",
+      "ikon": "circle",
+      "accent": "accent3",
+      "trinn": "6. trinn",
+      "talLeksjonar": 5,
+      "klar": true,
+      "krev": "grunnkurs",
+      "skildring": "Ein sirkel er ein mangekant med så mange kantar at hjørna forsvinn. Du reknar ut vegen rundt, måler vegen tvers over, og deler — og får det same talet kvar gong.",
+      "kompetansemaal": [
+        "6. trinn: måle radius, diameter og omkrins i sirklar og utforske og forklare samanhengen mellom pi og diameteren i ein sirkel",
+        "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins",
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster"
       ]
     },
     {
       "id": "rutenett",
-      "gruppe": "kjem",
+      "gruppe": "geometri",
       "fil": "rutenett.json",
       "tittel": "Rutenett og koordinatar",
       "ikon": "grid",
       "accent": "accent4",
-      "trinn": "5. trinn",
-      "talLeksjonar": 6,
-      "klar": false,
-      "skildring": "Flytt ein robot i eit rutenett. Her kjem vilkår inn: gjer noko berre dersom noko er sant.",
-      "kompetansemaal": []
+      "trinn": "5.–7. trinn",
+      "talLeksjonar": 8,
+      "klar": true,
+      "skildring": "Kvar noko er, sagt med to tal. Du teiknar figurar av punkt, flyttar og speglar dei utan å endre forma, og lèt ein variabel styre koordinaten.",
+      "kompetansemaal": [
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem",
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
+        "7. trinn: bruke og utforske negative tal både praktisk og teoretisk"
+      ],
+      "krev": "grunnkurs"
     },
     {
       "id": "tilfeldig",
-      "gruppe": "kjem",
+      "gruppe": "geometri",
       "fil": "tilfeldig.json",
       "tittel": "Terningkast og sannsyn",
       "ikon": "diamond",
       "accent": "accent5",
+      "trinn": "5. trinn",
+      "talLeksjonar": 6,
+      "klar": true,
+      "skildring": "Kast tre hundre terningar og tel opp. Frå eitt kast til relativ frekvens, til at to terningar ikkje er som éin — og eit stolpediagram til slutt.",
+      "kompetansemaal": [
+        "5. trinn: utforske og beskrive tilfeldigheit og sannsyn i spel og praktiske situasjonar, og knyte det til brøk",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling"
+      ],
+      "krev": "grunnkurs"
+    },
+    {
+      "id": "likningar",
+      "gruppe": "geometri",
+      "fil": "likningar.json",
+      "tittel": "Likningar og ulikskapar",
+      "ikon": "scaling",
+      "accent": "accent5",
+      "trinn": "7. trinn",
+      "talLeksjonar": 5,
+      "klar": true,
+      "krev": "grunnkurs",
+      "skildring": "Ei likning er ein påstand som er sann for nokre tal og usann for andre. Lat maskina prøve alle, så blir utskrifta løysinga sjølv.",
+      "kompetansemaal": [
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige",
+        "7. trinn: formulere og løyse problem som har med likningar å gjere",
+        "7. trinn: bruke tal, tekst, teikning og konkret til å løyse ulikskapar og teste og forklare løysingar"
+      ]
+    },
+    {
+      "id": "statistikk",
+      "gruppe": "geometri",
+      "fil": "statistikk.json",
+      "tittel": "Datasett og sentralmål",
+      "ikon": "presentation",
+      "accent": "accent4",
       "trinn": "7. trinn",
       "talLeksjonar": 6,
-      "klar": false,
-      "skildring": "Kast tusen terningar og tel opp. Ein smakebit på det Ormritaren gjer med Python på ungdomstrinnet.",
-      "kompetansemaal": []
+      "klar": true,
+      "krev": "grunnkurs",
+      "skildring": "Ni elevar, og kor lang skuleveg dei har. Du loggar tala i ei liste, sorterer dei, reknar gjennomsnitt og median — og oppdagar at dei to ikkje er samde.",
+      "kompetansemaal": [
+        "7. trinn: rekne sentralmål i eigne og andre sine datasett og velje formålstenleg sentralmål",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling",
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ]
     }
   ]
 }

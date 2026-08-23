@@ -18,7 +18,7 @@
  *
  * Gjenta-blokka er ei open C-form: eit hovud, ein farga ryggsøyle på 30px
  * ned venstresida, og ein fot. Kroppen ligg mellom dei, og då er det ikkje
- * til å ta feil av kva som er inni løkka og kva som kjem etter.
+ * til å ta feil av kva som er inni lykkja og kva som kjem etter.
  */
 
 /* ---- felles blokkform ---------------------------------------------------- */
@@ -64,6 +64,7 @@
 .bs-blokk[data-farge="tal"],   .bs-krop-ytre[data-farge="tal"]   { --bs-f: var(--bs-tal);   }
 .bs-blokk[data-farge="boks"],  .bs-krop-ytre[data-farge="boks"]  { --bs-f: var(--bs-boks);  }
 .bs-blokk[data-farge="mi"],    .bs-krop-ytre[data-farge="mi"]    { --bs-f: var(--bs-mi);    }
+.bs-blokk[data-farge="vilkaar"], .bs-krop-ytre[data-farge="vilkaar"] { --bs-f: var(--bs-vilkaar); }
 .bs-blokk[data-farge="start"], .bs-krop-ytre[data-farge="start"] { --bs-f: var(--bs-start); }
 
 .bs-rad {

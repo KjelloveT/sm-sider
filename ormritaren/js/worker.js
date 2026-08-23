@@ -1,7 +1,7 @@
 /* Ormritaren — Pyodide-worker.
  *
  * Køyrer som module worker (type: 'module') fordi Pyodide-limet er ESM.
- * All elevkode køyrer her, aldri på hovudtråden, slik at ei uendeleg løkke
+ * All elevkode køyrer her, aldri på hovudtråden, slik at ei uendeleg lykkje
  * kan avbrytast med worker.terminate() utan at eleven mistar arbeidet sitt.
  *
  * input() er synkron i Python, men postMessage er det ikkje. Difor blokkerer

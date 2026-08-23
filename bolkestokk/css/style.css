@@ -36,11 +36,25 @@
     grid-template-columns: var(--sp-palett) var(--sp-benk) var(--sp-resultat);
 }
 
+/* INGEN `transition` på `grid-template-columns`. Ikkje legg han inn att.
+ *
+ * Spaltebreidda blir styrt av custom properties (`--sp-resultat` og
+ * søskena hennar). Endrar ein av dei seg, oppdaterer ikkje Chrome den
+ * utrekna `grid-template-columns` så lenge eigenskapen har ein overgang —
+ * han lèt den gamle verdien bli ståande, for godt.
+ *
+ * Det gav den verste feilen i verktøyet så langt: eleven trykte Køyr, klassa
+ * vart teken av, aria vart rett, custom propertyen vart rett — og kolonnen
+ * stod på 15px. Teikninga kom aldri fram. Målt på ei fersk side: klassane
+ * skifta som dei skulle, og `gridTemplateColumns` var uendra fire sekund
+ * seinare. Skrur ein av overgangen, kjem breidda med det same.
+ *
+ * Rørsla ligg difor på innhaldet i staden — sjå «glidinga» lenger nede. */
+
 /* Med leksjon: fire spalter når det er plass til dei. */
 @media (min-width: 1280px) {
     .bs-flate:has(> .bs-spalte-leksjon:not([hidden])) {
         grid-template-columns: var(--sp-leksjon) var(--sp-palett) var(--sp-benk) var(--sp-resultat);
-        transition: grid-template-columns .38s cubic-bezier(.4, 0, .2, 1);
     }
 }
 
@@ -449,11 +463,18 @@ body.bs-tema .box5 .box-tab.active { background: var(--bs-start); color: var(--t
 /* ---- glidinga ------------------------------------------------------------
  * Spaltene blir ikkje borte, dei glir. Ei spalte som forsvinn momentant er
  * ei spalte eleven trur han har mist; ei som glir saman til ei farga stripe
- * er ei han ser kvar er — og kan klikke på for å få att. */
+ * er ei han ser kvar er — og kan klikke på for å få att.
+ *
+ * All rørsla ligg her, på innhaldet. Breidda på sjølve spalta skiftar
+ * momentant, fordi ein overgang på `grid-template-columns` frys heile
+ * spaltebreidda for godt når verdien kjem frå ein custom property — sjå
+ * grunngjevinga ved `grid-template-columns` øvst i fila. */
 
 .bs-spalte { transition: padding .3s cubic-bezier(.4, 0, .2, 1); }
-.bs-spalte > .bs-spalteinnhald { transition: opacity .2s ease; }
-.bs-spalte.er-kollapsa > .bs-spalteinnhald { opacity: 0; }
+.bs-spalte > .bs-spalteinnhald {
+    transition: opacity .24s ease, transform .24s cubic-bezier(.4, 0, .2, 1);
+}
+.bs-spalte.er-kollapsa > .bs-spalteinnhald { opacity: 0; transform: translateX(-8px); }
 
 @media (prefers-reduced-motion: reduce) {
     .bs-flate, .bs-spalte, .bs-spalte > .bs-spalteinnhald,

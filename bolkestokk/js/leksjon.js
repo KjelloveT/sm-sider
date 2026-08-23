@@ -33,6 +33,7 @@ const BolkLeksjon = (function () {
         vert.panel.hidden = false;
         if (vert.leksjonOpna) vert.leksjonOpna();
         vert.setPalett(leksjon.palett || null);
+        if (vert.setRutenett) vert.setRutenett(leksjon.rutenett || null);
         teikn();
 
         if (leksjon.startProgram) vert.setProgram(BolkTre.lesInn(leksjon.startProgram));

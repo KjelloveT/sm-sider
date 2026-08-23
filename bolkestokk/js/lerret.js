@@ -21,6 +21,24 @@ const BolkLerret = (function () {
     let lerret = null, ctx = null;
     let siste = { strek: [], tilstand: null };
 
+    /* Rutenettet. `null` er vanleg teiknemodus.
+     *
+     * Er han sett, sluttar flata å tilpasse seg figuren. Det er heile
+     * skilnaden: eit koordinatsystem må stå stille. Skalerte vi som elles,
+     * ville aksane flytta seg kvar gong eleven teikna lenger ut, og då er
+     * ein koordinat ikkje lenger noko å lese av — han er berre ein plass på
+     * ei rute som er i rørsle. */
+    let rutenett = null;
+
+    /**
+     * Slå rutenettet på eller av.
+     * @param {?{min:number, maks:number}} spek ytterpunkta, i ruter
+     */
+    function setRutenett(spek) {
+        rutenett = spek ? { min: spek.min, maks: spek.maks } : null;
+        teiknPaaNytt();
+    }
+
     function init(element) {
         lerret = element;
         ctx = lerret.getContext('2d');
@@ -63,7 +81,7 @@ const BolkLerret = (function () {
         /* Skala og midtpunkt. Vi tek med skilpadda si eiga stilling i
          * omfanget: står ho langt utanfor teikninga (penn opp og av garde),
          * skal ho framleis vere å sjå. */
-        const om = omfang(strek, siste.tilstand);
+        const om = rutenett ? rutenettOmfang() : omfang(strek, siste.tilstand);
         let skala = 1, midtX = 0, midtY = 0;
         if (om) {
             const breidd = Math.max(1, om.x2 - om.x1);
@@ -78,6 +96,9 @@ const BolkLerret = (function () {
         const px = (x) => b / 2 + (x - midtX) * skala;
         const py = (y) => h / 2 - (y - midtY) * skala;
 
+        // Rutenettet ligg under figuren, aldri oppå han.
+        if (rutenett) teiknRutenett(px, py, skala, vanleg);
+
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
         strek.forEach(s => {
@@ -90,6 +111,61 @@ const BolkLerret = (function () {
         });
 
         if (siste.tilstand) teiknSkilpadde(px, py, siste.tilstand, vanleg);
+    }
+
+    /* Ramma rundt rutenettet. Kvadratisk uansett kva form ruta har, så ei
+     * rute er like brei som ho er høg — eit koordinatsystem der (1,0) og
+     * (0,1) ligg ulikt langt frå origo lærer bort noko som ikkje er sant. */
+    function rutenettOmfang() {
+        const R = BolkBlokkar.RUTE;
+        return { x1: rutenett.min * R, y1: rutenett.min * R,
+                 x2: rutenett.maks * R, y2: rutenett.maks * R };
+    }
+
+    /* Rutene, aksane og tala.
+     *
+     * Tala står berre på kvar rute så lenge det er plass til dei. Blir
+     * ruta smalare enn 34px, hoppar vi over annakvart — eit rutenett med
+     * tal som ligg oppå kvarandre er verre å lese enn eit utan tal. */
+    function teiknRutenett(px, py, skala, vanleg) {
+        const R = BolkBlokkar.RUTE;
+        const rutePx = R * skala;
+        const steg = rutePx < 34 ? 2 : 1;
+        const prikk = getComputedStyle(document.body).getPropertyValue('--bs-prikk').trim() || '#ccc';
+
+        ctx.save();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = prikk;
+        ctx.beginPath();
+        for (let i = rutenett.min; i <= rutenett.maks; i++) {
+            ctx.moveTo(px(i * R), py(rutenett.min * R));
+            ctx.lineTo(px(i * R), py(rutenett.maks * R));
+            ctx.moveTo(px(rutenett.min * R), py(i * R));
+            ctx.lineTo(px(rutenett.maks * R), py(i * R));
+        }
+        ctx.stroke();
+
+        // Aksane
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = vanleg;
+        ctx.beginPath();
+        ctx.moveTo(px(rutenett.min * R), py(0));
+        ctx.lineTo(px(rutenett.maks * R), py(0));
+        ctx.moveTo(px(0), py(rutenett.min * R));
+        ctx.lineTo(px(0), py(rutenett.maks * R));
+        ctx.stroke();
+
+        // Tala. Origo får ingen — der ville x-en og y-en stått oppå kvarandre.
+        ctx.fillStyle = vanleg;
+        ctx.font = '600 11px ' + (getComputedStyle(document.body).fontFamily || 'sans-serif');
+        for (let i = rutenett.min; i <= rutenett.maks; i += steg) {
+            if (i === 0) continue;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+            ctx.fillText(String(i), px(i * R), py(0) + 4);
+            ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+            ctx.fillText(String(i), px(0) - 5, py(i * R));
+        }
+        ctx.restore();
     }
 
     function omfang(strek, tilstand) {
@@ -180,5 +256,5 @@ const BolkLerret = (function () {
 
     function tom() { teikn([], null); }
 
-    return { init, teikn, tom, teiknPaaNytt };
+    return { init, teikn, tom, teiknPaaNytt, setRutenett };
 })();

@@ -54,6 +54,22 @@ const BolkBlokkar = (function () {
         { verdi: 'rest',  tekst: 'rest ved deling', py: '%', gjer: (a, b) => b === 0 ? 0 : a % b }
     ];
 
+    /* Samanlikningane. Dei gjev sant eller usant, og i denne motoren er det
+     * 1 og 0 — det er nok, og det sparar oss for ein eigen verditype gjennom
+     * heile treet, tolken og lagringa.
+     *
+     * Teikna er dei same som i matematikkboka: `=`, `≠`, `<`, `>`, `≤`, `≥`.
+     * Python skriv `==` for likskap, og det er ein skilnad eleven møter fyrst
+     * i Ormritaren. Her held vi oss til teiknet han alt kjenner. */
+    const SAMANLIKNINGAR = [
+        { verdi: 'lik',        tekst: '=', py: '==', gjer: (a, b) => a === b },
+        { verdi: 'ulik',       tekst: '≠', py: '!=', gjer: (a, b) => a !== b },
+        { verdi: 'mindre',     tekst: '<', py: '<',  gjer: (a, b) => a < b },
+        { verdi: 'storre',     tekst: '>', py: '>',  gjer: (a, b) => a > b },
+        { verdi: 'mindreLik',  tekst: '≤', py: '<=', gjer: (a, b) => a <= b },
+        { verdi: 'storreLik',  tekst: '≥', py: '>=', gjer: (a, b) => a >= b }
+    ];
+
     /* Blokkfargane.
      *
      * Faste verdiar, ikkje temavariablar. Ei blokk er fylt med fargen sin og
@@ -72,14 +88,28 @@ const BolkBlokkar = (function () {
         tal:   '#FFC93C',   // tal, rekning og utskrift
         boks:  '#FF7A45',   // variablar
         mi:    '#CBAAFF',   // eigne funksjonar
+        /* Grøn for vilkår. Fargen er vald på avstand frå dei andre: 106 i
+         * fargesirkelen, som er 58 gradar frå næraste nabo — den største
+         * luka som var att. Turkisen på «Snu» ligg på 174 og var den einaste
+         * grønaktige frå før, og to grøne som liknar kvarandre ville gjort
+         * paletten vanskelegare å lese, ikkje lettare. Målt 12,65:1 mot #111. */
+        vilkaar: '#93E87A',
         start: '#FFDD57'    // hattar
     };
+
+    /* Éi rute i rutenettet, målt i teikneeiningar. Verdien står her og
+     * ingen annan stad: blokkene reknar med han, lerretet teiknar rutene
+     * etter han, og Python-utskrifta skriv han ut som ein konstant. */
+    const RUTE = 50;
 
     const KATEGORIAR = [
         { id: 'styring',   tittel: 'Styring',          farge: 'lokke' },
         { id: 'skilpadde', tittel: 'Skilpadda',        farge: 'gaa'   },
         { id: 'verdi',     tittel: 'Tal og rekning',   farge: 'tal'   },
         { id: 'variabel',  tittel: 'Variablar',        farge: 'boks'  },
+        { id: 'rutenett',  tittel: 'Rutenettet',       farge: 'gaa'   },
+        { id: 'liste',     tittel: 'Lister',           farge: 'boks'  },
+        { id: 'vilkaar',   tittel: 'Vilkår',           farge: 'vilkaar' },
         { id: 'funksjon',  tittel: 'Eigne funksjonar', farge: 'mi'    }
     ];
 
@@ -94,7 +124,7 @@ const BolkBlokkar = (function () {
         {
             id: 'gjenta', farge: 'lokke', ikon: 'refreshCw', kategori: 'styring', form: 'krop',
             tekst: ['Gjenta', { felt: 'tal', slag: 'tal', standard: 4 }, 'gonger'],
-            /* Taket på 1000 er ikkje ei tryggleiksgrense — utan medan-løkke kan
+            /* Taket på 1000 er ikkje ei tryggleiksgrense — utan medan-lykkje kan
              * eit program uansett ikkje henge. Det er for å hindre at ein elev
              * som skriv 100000 i farta trur maskina er øydelagd. */
             koyr: function* (node, ktx, hj) {
@@ -163,6 +193,29 @@ const BolkBlokkar = (function () {
             /* Python sin turtle startar peikande mot høgre, så retninga
              * må setjast attende til opp. Fleire linjer ut av éi blokk. */
             python: () => ['penup()', 'goto(0, 0)', 'setheading(90)', 'pendown()']
+        },
+
+        {
+            id: 'avstandTilStart', farge: 'gaa', ikon: 'crosshair', kategori: 'skilpadde',
+            form: 'verdi', namn: 'avstanden til start',
+            tekst: ['avstanden til start'],
+            /* Målebandet i verktøyet.
+             *
+             * Med han kan eleven finne diameteren i ein mangekant utan å vite
+             * noko om sinus: han teiknar halve figuren, og då står skilpadda
+             * på det motsette hjørnet. Avstanden derifrå til start ER
+             * diameteren.
+             *
+             * `distance` er ein ekte metode i Python sin turtle. Det er heile
+             * grunnen til at blokka ser slik ut og ikkje måler ei ramme rundt
+             * figuren: ei ramme finst ikkje i turtle, og då måtte vi ha dikta
+             * opp ein hjelpefunksjon. Denne fila skriv Python, ikkje vår
+             * eigen dialekt (sjå toppen av python.js). */
+            verdi: (f, ktx) => {
+                const t = ktx.skilpadde.tilstand;
+                return Math.hypot(t.x, t.y);
+            },
+            python: () => 'distance(0, 0)'
         },
 
         /* ---- tal og rekning --------------------------------------------- */
@@ -235,6 +288,162 @@ const BolkBlokkar = (function () {
             tekst: [{ felt: 'namn', slag: 'val', val: 'variablar', standard: 'lengd' }],
             verdi: (f, ktx) => ktx.variablar[f.namn] || 0,
             python: (f) => f.namn
+        },
+
+        /* ---- rutenettet --------------------------------------------------
+         *
+         * Éi rute er RUTE teikneeiningar. Blokkene reknar om sjølve, så
+         * eleven skriv rutetalet — (3, 4) — og ikkje 150 og 200. Det er
+         * heile poenget: koordinaten skal vere det han les av på aksen.
+         *
+         * Same eining som resten av teikninga, så «Gå framover 50» flyttar
+         * skilpadda nøyaktig éi rute. Det er ingen tilfeldig verdi. */
+        {
+            id: 'gaaTilRute', farge: 'gaa', ikon: 'mapPin', kategori: 'rutenett', form: 'setning',
+            tekst: ['Gå til rute', { felt: 'x', slag: 'tal', standard: 0 },
+                    ',', { felt: 'y', slag: 'tal', standard: 0 }],
+            koyr: function* (node, ktx, hj) {
+                ktx.skilpadde.gaaTil(hj.verdi(node.felt.x, ktx) * RUTE,
+                                     hj.verdi(node.felt.y, ktx) * RUTE);
+            },
+            python: (f, hj) => 'goto(' + hj.uttrykk(f.x) + ' * RUTE, ' + hj.uttrykk(f.y) + ' * RUTE)'
+        },
+        {
+            id: 'lesX', farge: 'gaa', ikon: 'arrowLeftRight', kategori: 'rutenett', form: 'verdi',
+            namn: 'x-koordinaten',
+            tekst: ['x'],
+            verdi: (f, ktx) => Math.round(ktx.skilpadde.tilstand.x / RUTE),
+            python: () => 'round(xcor() / RUTE)'
+        },
+        {
+            id: 'lesY', farge: 'gaa', ikon: 'arrowUp', kategori: 'rutenett', form: 'verdi',
+            namn: 'y-koordinaten',
+            tekst: ['y'],
+            verdi: (f, ktx) => Math.round(ktx.skilpadde.tilstand.y / RUTE),
+            python: () => 'round(ycor() / RUTE)'
+        },
+
+        /* ---- lister ------------------------------------------------------
+         *
+         * Ei liste er mange tal med eitt namn. Ho ligg for seg i tolken og
+         * ikkje blant variablane, av same grunn som ho har eigne blokker:
+         * ein variabel er eitt tal, og blandar vi dei to, kan «Set tala til
+         * 5» øydeleggje eit datasett utan at noko seier frå.
+         *
+         * Alle åtte blokkene har eit ekte motstykke i Python — `append`,
+         * `len`, `sum`, `sort`, `min`, `max` og hakeparentesar. Det er same
+         * kravet som resten av verktøyet held: vi skriv Python, ikkje vår
+         * eigen dialekt.
+         */
+        {
+            id: 'nyListe', farge: 'boks', ikon: 'list', kategori: 'liste', form: 'setning',
+            tekst: ['Lag lista', { felt: 'liste', slag: 'tekst', standard: 'tala' }],
+            koyr: function* (node, ktx) { ktx.lister[node.felt.liste] = []; },
+            python: (f) => f.liste + ' = []'
+        },
+        {
+            id: 'leggIListe', farge: 'boks', ikon: 'plusCircle', kategori: 'liste', form: 'setning',
+            tekst: ['Legg', { felt: 'verdi', slag: 'tal', standard: 0 },
+                    'i lista', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            koyr: function* (node, ktx, hj) {
+                const l = ktx.lister[node.felt.liste] || (ktx.lister[node.felt.liste] = []);
+                /* Same taket som ei lykkje har. Ei liste som veks fritt kunne
+                 * ete minnet på ein skulemaskin, og ingen oppgåve her treng
+                 * meir enn nokre tusen tal. */
+                if (l.length < 5000) l.push(hj.verdi(node.felt.verdi, ktx));
+            },
+            python: (f, hj) => f.liste + '.append(' + hj.uttrykk(f.verdi) + ')'
+        },
+        {
+            id: 'sorterListe', farge: 'boks', ikon: 'arrowDown', kategori: 'liste', form: 'setning',
+            tekst: ['Sorter lista', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            koyr: function* (node, ktx) {
+                const l = ktx.lister[node.felt.liste];
+                if (l) l.sort((a, b) => a - b);
+            },
+            python: (f) => f.liste + '.sort()'
+        },
+        {
+            id: 'listeLengd', farge: 'boks', ikon: 'hash', kategori: 'liste', form: 'verdi',
+            namn: 'talet på tal i ei liste',
+            tekst: ['kor mange tal er i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => (ktx.lister[f.liste] || []).length,
+            python: (f) => 'len(' + f.liste + ')'
+        },
+        {
+            id: 'listeSum', farge: 'boks', ikon: 'digital', kategori: 'liste', form: 'verdi',
+            namn: 'summen av ei liste',
+            tekst: ['summen av', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => (ktx.lister[f.liste] || []).reduce((a, b) => a + b, 0),
+            python: (f) => 'sum(' + f.liste + ')'
+        },
+        {
+            id: 'listeHent', farge: 'boks', ikon: 'pointer', kategori: 'liste', form: 'verdi',
+            namn: 'eitt tal frå ei liste',
+            /* Eleven tel frå 1: «tal nummer 1» er det fyrste. Python tel frå
+             * 0, og difor står det `- 1` i utskrifta. Vi skjuler det ikkje —
+             * det er ein skilnad han møter for alvor i Ormritaren, og betre
+             * å sjå han her enn å bli overraska der. */
+            tekst: ['tal nummer', { felt: 'nr', slag: 'tal', standard: 1 },
+                    'i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx, hj) => {
+                const l = ktx.lister[f.liste] || [];
+                const i = Math.round(hj.verdi(f.nr, ktx)) - 1;
+                return (i >= 0 && i < l.length) ? l[i] : 0;
+            },
+            python: (f, hj) => f.liste + '[' + hj.uttrykk(f.nr) + ' - 1]'
+        },
+        {
+            id: 'listeMinst', farge: 'boks', ikon: 'chevronDown', kategori: 'liste', form: 'verdi',
+            namn: 'det minste talet i ei liste',
+            tekst: ['det minste talet i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => {
+                const l = ktx.lister[f.liste] || [];
+                return l.length ? Math.min.apply(null, l) : 0;
+            },
+            python: (f) => 'min(' + f.liste + ')'
+        },
+        {
+            id: 'listeStorst', farge: 'boks', ikon: 'chevronUp', kategori: 'liste', form: 'verdi',
+            namn: 'det største talet i ei liste',
+            tekst: ['det største talet i', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
+            verdi: (f, ktx) => {
+                const l = ktx.lister[f.liste] || [];
+                return l.length ? Math.max.apply(null, l) : 0;
+            },
+            python: (f) => 'max(' + f.liste + ')'
+        },
+
+        /* ---- vilkår ------------------------------------------------------ */
+        {
+            id: 'samanlikn', farge: 'vilkaar', ikon: 'arrowLeftRight', kategori: 'vilkaar',
+            form: 'verdi', namn: 'samanlikning',
+            tekst: [
+                { felt: 'a', slag: 'tal', standard: 0 },
+                { felt: 'op', slag: 'val', val: SAMANLIKNINGAR, standard: 'storre' },
+                { felt: 'b', slag: 'tal', standard: 0 }
+            ],
+            verdi: (f, ktx, hj) => {
+                const s = SAMANLIKNINGAR.find(r => r.verdi === f.op) || SAMANLIKNINGAR[0];
+                return s.gjer(hj.verdi(f.a, ktx), hj.verdi(f.b, ktx)) ? 1 : 0;
+            },
+            python: (f, hj) => {
+                const s = SAMANLIKNINGAR.find(r => r.verdi === f.op) || SAMANLIKNINGAR[0];
+                return hj.uttrykk(f.a) + ' ' + s.py + ' ' + hj.uttrykk(f.b);
+            }
+        },
+        {
+            id: 'dersom', farge: 'vilkaar', ikon: 'helpCircle', kategori: 'vilkaar', form: 'krop',
+            /* Hòlet er eit vanleg talhòl. Ei samanlikning er ei verdiblokk som
+             * alle andre og passar rett inn, og eleven kan òg skrive eit tal
+             * direkte — 0 er usant, alt anna er sant. Det er den same regelen
+             * Python har, og det sparar oss for ein eigen hòltype som berre
+             * ville teke imot éi einaste blokk. */
+            tekst: ['Dersom', { felt: 'vilkaar', slag: 'tal', standard: 1 }, 'så'],
+            koyr: function* (node, ktx, hj) {
+                if (hj.verdi(node.felt.vilkaar, ktx)) yield* hj.koyrStabel(node.kropp || [], ktx);
+            },
+            python: (f, hj) => 'if ' + hj.uttrykk(f.vilkaar) + ':'
         },
 
         /* ---- eigne funksjonar -------------------------------------------- */
@@ -329,7 +538,7 @@ const BolkBlokkar = (function () {
 
     return {
         DEF, KATEGORIAR, FARGAR, REKNEARTAR,
-        hent, felt, standardFelt, talTekst, fargeHex, lesbar, FARGAR_BLOKK,
+        hent, felt, standardFelt, talTekst, fargeHex, lesbar, FARGAR_BLOKK, SAMANLIKNINGAR, RUTE,
         idar: () => DEF.map(d => d.id)
     };
 })();

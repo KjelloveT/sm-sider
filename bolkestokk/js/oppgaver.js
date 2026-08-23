@@ -8,7 +8,7 @@
  *
  * `les` finst fordi det å lese eit program er noko anna enn å skrive eitt.
  * Ein elev som gjettar seg fram til rett figur ved å prøve tal, har ikkje
- * forstått kva løkka gjer — og det er nettopp den forståinga «kva teiknar
+ * forstått kva lykkja gjer — og det er nettopp den forståinga «kva teiknar
  * dette?» krev.
  */
 const BolkOppgaver = (function () {

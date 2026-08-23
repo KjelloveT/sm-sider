@@ -295,3 +295,13 @@ a.bs-modulkort:hover { transform: translate(-2px, -2px); }
     a.bs-modulkort:hover { transform: none; }
     .bs-framgang-fyll { transition: none; }
 }
+
+/* Kva ein modul byggjer på. Står tett under skildringa, som ein fotnote til
+ * henne og ikkje som eit varsel — det er ei opplysning, ikkje ei åtvaring. */
+.bs-modulkrev {
+    margin: -4px 0 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    opacity: .75;
+}

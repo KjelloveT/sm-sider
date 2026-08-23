@@ -3,6 +3,75 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.21] — 2026-08-23
+
+### Endra
+- **«Lykkje» og ikkje «løkke», i begge appane.** Nynorsk er «lykkje», og det er forma Udir sjølv brukar i kompetansemålet. Etter at måla gjekk over til nynorsk, stod dei to rett ved sida av kvarandre på same kortet — målet sa «lykkjer» og leksjonsteksten under sa «løkke». 167 stader i to appar.
+
+## [1.20] — 2026-08-23
+
+### Lagt til
+- **To leksjonar til i «Rutenett og koordinatar»:** spegling og dreiing, og dei fire kvadrantane. Med parallellforskyvinga som alt låg der, er alle tre kongruensavbildingane no på plass — og kvar av dei er berre ein **regel for koordinatane**: spegling om y-aksen er `(−x, y)`, om x-aksen `(x, −y)`, og ei halv dreiing er `(−x, −y)`. Ein elev som skriv regelen sjølv har forstått avbildinga på ein annan måte enn ein som brettar eit ark.
+- Modulen dekkjer no òg 7. trinn «bruke og utforske negative tal både praktisk og teoretisk», gjennom leksjonen om kvadrantane: det er **forteikna** som avgjer kvar eit punkt ligg, ikkje kor store tala er.
+
+## [1.19] — 2026-08-23
+
+### Lagt til
+- **Lister i blokkspråket.** Åtte nye blokker: lag ei liste, legg tal i henne, sorter, og spør henne om lengd, sum, eit tal på ein bestemt plass, minst og størst. Ei liste ligg for seg og ikkje blant variablane — ein variabel er eitt tal, og blandar ein dei to, kan «Set tala til 5» øydeleggje eit heilt datasett utan at noko seier frå. Alle åtte har eit ekte motstykke i Python: `append`, `len`, `sum`, `sort`, `min`, `max` og hakeparentesar.
+- **Bolkestokk: «Datasett og sentralmål»** — seks leksjonar for 7. trinn. Ni elevar og skulevegen deira: 11, 12, 12, 13, 14, 15, 16, 16 og **62** minutt. Gjennomsnittet blir 19 og medianen 14, og heile modulen handlar om kvifor dei to ikkje er samde. Åtte av ni kjenner seg att i 14. Ingen kjenner seg att i 19.
+- Eleven tel frå 1 i `tal nummer … i lista`, medan Python tel frå 0. Utskrifta viser `- 1` heilt ope — det er ein skilnad han møter att i Ormritaren, og betre å sjå her enn å bli overraska der.
+
+## [1.18] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Likningar og ulikskapar»** — fem leksjonar for 7. trinn, og den fyrste modulen for det trinnet. Eleven løyser ikkje algebraisk: han lèt programmet prøve alle tala i eit område og skrive ut dei som gjer påstanden sann. **Utskrifta er løysingsmengda.** Ei likning er ein påstand som er sann for nokre tal og usann for andre, og det blir synleg på ein måte det ikkje blir når ein flyttar ledd. Ulikskapar fell ut av det same: byt `=` med `≤`, og ruta viser alle svara på ein gong.
+- Siste leksjonen handlar om noko oppgåvebøker sjeldan seier høgt: ei tom rute tyder «ingen løysing **blant dei tala eg prøvde**». Løysinga kan liggje utanfor området, vere eit desimaltal, eller vere negativ — og eit svar som er rett som tal kan framleis vere ugyldig i situasjonen det kom frå.
+
+## [1.17] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Sirkelen og pi»** — fem leksjonar for 6. trinn. Eleven reknar ut vegen rundt, måler vegen tvers over, og deler. Sekskanten gjev **nøyaktig 3**. 36-kanten gjev 3,1376. 90-kanten gjev 3,1410. Pi sluttar å vere eit tal i boka og blir noko maskina finn. Leksjonen «Frå mangekant til sirkel» er **flytt** hit frå «Mangekantar og mønster» — han var kimen til modulen, og to utgåver ville kome i utakt.
+- **Ny blokk: `avstanden til start`.** Målebandet i verktøyet. Teiknar du halve mangekanten, står skilpadda på hjørnet rett imot der ho starta — og avstanden derifrå ER diameteren. Blokka finst i denne forma og ikkje som ei ramme rundt figuren fordi ei ramme ikkje finst i Python sin turtle, medan `distance(0, 0)` er ein ekte metode. Python-fila skriv Python, ikkje vår eigen dialekt.
+
+## [1.16] — 2026-08-23
+
+### Fiksa
+- **Tre kompetansemål i Bolkestokk var feil.** Dei vart skrivne frå hukommelsen og er no henta ordrett frå udir.no. «Beskrive posisjon og flytting i rutenett …» finst ikkje på 5. trinn i det heile — koordinatmodulen byggjer i røynda på 6. trinn «lage kongruensavbildingar med og utan koordinatsystem», som passar betre uansett, sidan leksjonen «Flytte ein figur» *er* ei parallellforskyving. Sannsynsmålet er ekte, men det står på **5. trinn og ikkje 7.**, så «Terningkast og sannsyn» er merkt om. Og modulen viste eit 6.-trinnsmål om geometri, som ikkje har noko i ein sannsynsmodul å gjere.
+- **Grunnkurset hadde ingen kompetansemål på kortet**, medan leksjonane bar geometrimålet for 6. trinn. Det har no dei tre programmeringsmåla for 5., 6. og 7. trinn — som er nøyaktig det grunnkurset er.
+
+### Endra
+- **Alle kompetansemål står no på nynorsk**, i Ormritaren òg. Udir gjev ut læreplanen på begge målformer, så nynorskteksten er like offisiell som bokmålsteksten — det er ikkje ei omsetjing, det er den andre utgåva deira. Før var kompetansemåla den einaste bokmålsteksten i eit grensesnitt som elles er nynorsk (AGENTS.md §1). 30 mål i to appar.
+
+## [1.15] — 2026-08-23
+
+### Fiksa
+- **Resultatspalta i Bolkestokk opna seg aldri att.** Trykte eleven Køyr, vart klassa teken av og alt i JS-en gjorde det rette — og kolonnen stod framleis på 15px. Teikninga kom aldri fram, frå fyrste køyring på ei fersk side. Årsaka var overgangen på `grid-template-columns`: så lenge eigenskapen har ein `transition`, oppdaterer ikkje Chrome den utrekna verdien når endringa kjem frå ein custom property — han lèt den gamle bli ståande, for godt. Overgangen er borte, og rørsla ligg heilt på innhaldet, som toner ut og skyv seg litt til sides medan spalta skiftar breidd momentant. Feilen slapp gjennom tidlegare fordi kontrollane las `textContent`, og tekst finst like fullt i ein kolonne som er null piksel brei.
+
+## [1.14] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Terningkast og sannsyn» er ferdig** — seks leksjonar for 7. trinn. Frå eitt kast, til å telje opp i mange kast, til relativ frekvens som brøk, til at to terningar slett ikkje er som éin, til stolpediagram — og til slutt eit forsøk eleven stiller spørsmålet til sjølv.
+- Med det er alle fire modulane ferdige: grunnkurset, geometri (6. trinn), koordinatar (5. trinn) og sannsyn (7. trinn). 62 oppgåver til saman.
+
+### Endra
+- **«På veg»-gruppa er borte** frå modulsida. Ho var til for å vise kva som var planlagt, og no er ingenting planlagt lenger — alt er skrive.
+
+## [1.13] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Rutenett og koordinatar» er ferdig** — seks leksjonar for 5. trinn. Frå «to tal seier kvar noko er» til figurar av punkt, parallellforskyving, ein variabel som koordinat, `Dersom` med samanlikning, og mønster med to løkker inni kvarandre.
+- **Fast teikneflate med aksar og tal.** Ein leksjon kan be om rutenett, og då sluttar flata å tilpasse seg figuren. Det er heile skilnaden: eit koordinatsystem må stå stille. Skalerte vi som elles, ville aksane flytta seg kvar gong eleven teikna lenger ut, og då er ein koordinat ikkje noko å lese av — han er berre ein plass på ei rute som er i rørsle.
+- **Tre nye blokker:** `Gå til rute (x, y)`, og verdiblokkene `x` og `y` som fortel kvar skilpadda står. Blokkene reknar om frå rutetal til teikneeiningar sjølve, så eleven skriv `(3, 4)` og ikkje `150` og `200` — koordinaten skal vere det han les av på aksen. Éi rute er 50 steg, same eining som resten, så `Gå framover 50` flyttar nøyaktig éi rute.
+- Python-utskrifta skriv `RUTE = 50` som ein namngjeven konstant når rutenettblokkene er i bruk, så `goto(3 * RUTE, 4 * RUTE)` framleis viser trearen og firaren eleven skreiv.
+
+## [1.12] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk har fått eit grunnkurs.** «Fyrste stega» — fire leksjonar om skilpadda, løkka, variabelen og eigne funksjonar. Modulen «Mangekantar og mønster» var to ting på ein gong: fire leksjonar lærte mekanikken og to var geometri. Det gjekk så lenge det fanst berre éin modul, men med fleire på veg måtte kvar av dei anten lære mekanikken om att eller sende ein femteklassing gjennom eit sjetteklasse-opplegg fyrst. Leksjonane er flytta, ikkje skrivne om — dei var alt prøvde.
+- **Tre nye geometri-leksjonar** i «Mangekantar og mønster», som no er rein geometri: kva som skil eit kvadrat frå eit rektangel, mangekanten som blir ein sirkel når `n` veks, og stjerna. Den siste tek regelen «snuingane blir 360 gradar» og viser at ho berre er halve sanninga — figuren lukkar seg ved eit heilt tal rundar, og to rundar på fem hjørne gjev 144 gradar.
+- **Vilkår: `Dersom … så` og ei samanlikningsblokk** med `=`, `≠`, `<`, `>`, `≤` og `≥`. Kompetansemålet modulen viser fram nemner vilkår, og verktøyet hadde dei ikkje. Hòlet i `Dersom` er eit vanleg talhòl — 0 er usant og alt anna er sant, same regel som Python — så ei samanlikning passar rett inn utan ein eigen hòltype som berre kunne ta imot éi blokk. Ny grøn blokkfarge vald på avstand frå dei andre: 58 gradar frå næraste nabo, som var den største luka som var att, og 12,65:1 mot teksten.
+- **Modulkorta seier kva dei byggjer på.** Ein lærar må sjå det før han vel modul, ikkje etter.
+
 ## [1.11] — 2026-08-23
 
 ### Fiksa

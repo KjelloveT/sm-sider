@@ -17,7 +17,7 @@ const OrmForslag = (function () {
         'import': 'hent inn eit bibliotek', 'from': 'hent noko frå eit bibliotek',
         'in': 'er med i', 'not': 'ikkje', 'and': 'og', 'or': 'eller',
         'True': 'sant', 'False': 'usant', 'None': 'ingenting',
-        'break': 'hopp ut av løkka', 'continue': 'hopp til neste runde',
+        'break': 'hopp ut av lykkja', 'continue': 'hopp til neste runde',
         'class': 'lag ein klasse', 'try': 'prøv', 'except': 'om det går gale',
         'finally': 'til slutt uansett', 'with': 'bruk og rydd opp',
         'as': 'gje eit anna namn', 'pass': 'gjer ingenting',

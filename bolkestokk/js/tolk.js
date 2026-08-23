@@ -13,7 +13,7 @@
  */
 const BolkTolk = (function () {
 
-    /* Utan medan-løkke kan eit program ikkje gå i evig løkke, så dette er
+    /* Utan medan-lykkje kan eit program ikkje gå i evig lykkje, så dette er
      * inga tryggingsgrense. Det er ei øvre ramme for kor mykje ein figur kan
      * innehalde før vi heller seier frå enn å teikne i eitt minutt. */
     const MAKS_STEG = 50000;
@@ -24,6 +24,11 @@ const BolkTolk = (function () {
         return {
             skilpadde: (val && val.skilpadde) || BolkSkilpadde(),
             variablar: {},
+            /* Lister ligg for seg og ikkje blant variablane. Ein variabel er
+             * eitt tal, ei liste er mange, og blandar vi dei to i same
+             * oppslagsverket, kan «Set tala til 5» øydeleggje eit datasett
+             * utan at noko seier frå. */
+            lister: {},
             funksjonar,
             utskrift: [],
             steg: 0,

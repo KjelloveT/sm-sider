@@ -8,7 +8,7 @@
       "id": "print",
       "tittel": "Dei fyrste instruksjonane",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -115,7 +115,7 @@
       "id": "variablar",
       "tittel": "Variablar — å lagre ein verdi",
       "kompetansemaal": [
-        "8. trinn: lage og forklare regneuttrykk med tall, variabler og konstanter knyttet til praktiske situasjoner"
+        "8. trinn: lage og forklare rekneuttrykk med tal, variablar og konstantar knytte til praktiske situasjonar"
       ],
       "tekst": [
         {
@@ -234,7 +234,7 @@
       "id": "input",
       "tittel": "Spørje brukaren",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -359,15 +359,15 @@
     },
     {
       "id": "loekker",
-      "tittel": "Gjentaking med løkker",
+      "tittel": "Gjentaking med lykkjer",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
-        "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering",
+        "8. trinn: utforske og generalisere geometriske mønster og tallmønster med eigne ord og algebraisk"
       ],
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "Skal du skrive ut tala frå 1 til 100, vil du ikkje skrive hundre `print`-linjer. Ei **løkke** gjentek dei same instruksjonane så mange gonger du vil."
+          "tekst": "Skal du skrive ut tala frå 1 til 100, vil du ikkje skrive hundre `print`-linjer. Ei **lykkje** gjentek dei same instruksjonane så mange gonger du vil."
         },
         {
           "type": "kode",
@@ -379,7 +379,7 @@
         },
         {
           "type": "merk",
-          "tekst": "Alt som skal gjentakast må rykkjast inn under `for`-linja. Innrykket er ikkje pynt — det er slik Python ser kva som høyrer til løkka. Bruk fire mellomrom."
+          "tekst": "Alt som skal gjentakast må rykkjast inn under `for`-linja. Innrykket er ikkje pynt — det er slik Python ser kva som høyrer til lykkja. Bruk fire mellomrom."
         },
         {
           "type": "avsnitt",
@@ -406,17 +406,17 @@
             "kode": "sum = 0"
           },
           {
-            "tekst": "Så lagar vi ei løkke som går gjennom alle tala frå 1 til 100.",
+            "tekst": "Så lagar vi ei lykkje som går gjennom alle tala frå 1 til 100.",
             "kode": "sum = 0\nfor tal in range(1, 101):\n    print(tal)"
           },
           {
-            "tekst": "I staden for å skrive ut kvart tal, legg vi det til summen. Linja inni løkka blir køyrd hundre gonger.",
+            "tekst": "I staden for å skrive ut kvart tal, legg vi det til summen. Linja inni lykkja blir køyrd hundre gonger.",
             "kode": "sum = 0\nfor tal in range(1, 101):\n    sum = sum + tal"
           },
           {
-            "tekst": "Til slutt skriv vi ut svaret — utanfor løkka, så det berre skjer éin gong.",
+            "tekst": "Til slutt skriv vi ut svaret — utanfor lykkja, så det berre skjer éin gong.",
             "kode": "sum = 0\nfor tal in range(1, 101):\n    sum = sum + tal\nprint(\"Summen er\", sum)",
-            "proev": "Flytt `print`-linja inn i løkka ved å rykkje henne inn. Kva skjer då, og kvifor?"
+            "proev": "Flytt `print`-linja inn i lykkja ved å rykkje henne inn. Kva skjer då, og kvifor?"
           }
         ],
         "maal": "eit program som legg saman alle tala frå 1 til 100"
@@ -426,10 +426,10 @@
           "id": "loekke-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon som heiter `sum_til` og tek imot eit tal `n`. Han skal leggje saman alle heiltala frå 1 til og med `n`, og **returnere** summen.",
-          "startkode": "def sum_til(n):\n    sum = 0\n    # skriv løkka her\n    return sum\n",
+          "startkode": "def sum_til(n):\n    sum = 0\n    # skriv lykkja her\n    return sum\n",
           "hint": [
-            "Løkka skal gå `for tal in range(1, n + 1)` — hugs at `range` sluttar før det siste talet.",
-            "Inni løkka: `sum = sum + tal`"
+            "Lykkja skal gå `for tal in range(1, n + 1)` — hugs at `range` sluttar før det siste talet.",
+            "Inni lykkja: `sum = sum + tal`"
           ],
           "testar": [
             {
@@ -491,13 +491,13 @@
           "loeysing": "for i in range(1, 6):\n    print(i)"
         }
       ],
-      "oppsummering": "Ei `for`-løkke gjentek det som står innrykt under henne. `range(n)` startar på **0** og sluttar **før** n. Innrykket avgjer kva som er inni løkka og kva som er utanfor."
+      "oppsummering": "Ei `for`-lykkje gjentek det som står innrykt under henne. `range(n)` startar på **0** og sluttar **før** n. Innrykket avgjer kva som er inni lykkja og kva som er utanfor."
     },
     {
       "id": "val",
       "tittel": "Val — if, elif og else",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -633,14 +633,14 @@
     },
     {
       "id": "while",
-      "tittel": "Løkker som ikkje veit kor lenge",
+      "tittel": "Lykkjer som ikkje veit kor lenge",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "Ei `for`-løkke veit på førehand kor mange gonger ho skal gå. Men av og til veit du ikkje det — du vil halde fram **så lenge** noko stemmer. Då bruker du `while`."
+          "tekst": "Ei `for`-lykkje veit på førehand kor mange gonger ho skal gå. Men av og til veit du ikkje det — du vil halde fram **så lenge** noko stemmer. Då bruker du `while`."
         },
         {
           "type": "kode",
@@ -648,15 +648,15 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Løkka held fram så lenge `tal` er mindre enn 100. Kvar runde doblar vi, og når `tal` passerer 100 stoppar ho."
+          "tekst": "Lykkja held fram så lenge `tal` er mindre enn 100. Kvar runde doblar vi, og når `tal` passerer 100 stoppar ho."
         },
         {
           "type": "merk",
-          "tekst": "Noko inni løkka **må** endre det som blir sjekka. Gløymer du det, blir vilkåret sant for alltid, og programmet stoppar aldri. Då trykkjer du **Stopp** — koden din blir verande, og du kan rette feilen."
+          "tekst": "Noko inni lykkja **må** endre det som blir sjekka. Gløymer du det, blir vilkåret sant for alltid, og programmet stoppar aldri. Då trykkjer du **Stopp** — koden din blir verande, og du kan rette feilen."
         },
         {
           "type": "avsnitt",
-          "tekst": "Ei løkke som aldri stoppar er ikkje farleg her. Python køyrer i sin eigen tråd, så sida svarar framleis, og Stopp-knappen avbryt henne."
+          "tekst": "Ei lykkje som aldri stoppar er ikkje farleg her. Python køyrer i sin eigen tråd, så sida svarar framleis, og Stopp-knappen avbryt henne."
         }
       ],
       "doeme": {
@@ -671,7 +671,7 @@
             "kode": "kroner = 1\ngonger = 0"
           },
           {
-            "tekst": "Så lagar vi løkka. Ho skal gå så lenge vi har under 1000 kroner.",
+            "tekst": "Så lagar vi lykkja. Ho skal gå så lenge vi har under 1000 kroner.",
             "kode": "kroner = 1\ngonger = 0\nwhile kroner < 1000:\n    kroner = kroner * 2"
           },
           {
@@ -679,7 +679,7 @@
             "kode": "kroner = 1\ngonger = 0\nwhile kroner < 1000:\n    kroner = kroner * 2\n    gonger = gonger + 1"
           },
           {
-            "tekst": "Og skriv ut resultatet når løkka er ferdig.",
+            "tekst": "Og skriv ut resultatet når lykkja er ferdig.",
             "kode": "kroner = 1\ngonger = 0\nwhile kroner < 1000:\n    kroner = kroner * 2\n    gonger = gonger + 1\nprint(\"Etter\", gonger, \"doblingar har du\", kroner, \"kroner\")",
             "proev": "Byt 1000 med 1000000. Kor mange doblingar trengst då? Gjett fyrst, køyr etterpå."
           }
@@ -691,10 +691,10 @@
           "id": "while-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `doblingar` som tek imot eit tal `maal`. Start på 1 og dobl heilt til du er **større eller lik** `maal`. Returner kor mange doblingar det tok.",
-          "startkode": "def doblingar(maal):\n    tal = 1\n    gonger = 0\n    # skriv løkka her\n    return gonger\n",
+          "startkode": "def doblingar(maal):\n    tal = 1\n    gonger = 0\n    # skriv lykkja her\n    return gonger\n",
           "hint": [
             "Vilkåret er `while tal < maal:`",
-            "Inni løkka må både `tal` og `gonger` endre seg."
+            "Inni lykkja må både `tal` og `gonger` endre seg."
           ],
           "testar": [
             {
@@ -736,7 +736,7 @@
             "10\n8\n6\n4"
           ],
           "rett": 0,
-          "forklaring": "Fyrst er `tal` 10 (skriv ut, blir 8), så 8 (skriv ut, blir 6). No er 6 **ikkje** større enn 6, så løkka stoppar før 6 rekk å bli skrive ut."
+          "forklaring": "Fyrst er `tal` 10 (skriv ut, blir 8), så 8 (skriv ut, blir 6). No er 6 **ikkje** større enn 6, så lykkja stoppar før 6 rekk å bli skrive ut."
         },
         {
           "id": "while-3",
@@ -756,14 +756,14 @@
           "loeysing": "tal = 3\nwhile tal >= 1:\n    print(tal)\n    tal = tal - 1"
         }
       ],
-      "oppsummering": "`while` gjentek så lenge vilkåret er sant. Noko inni løkka må endre det som blir sjekka, elles stoppar ho aldri — og då bruker du **Stopp**-knappen."
+      "oppsummering": "`while` gjentek så lenge vilkåret er sant. Noko inni lykkja må endre det som blir sjekka, elles stoppar ho aldri — og då bruker du **Stopp**-knappen."
     },
     {
       "id": "funksjonar",
       "tittel": "Dine eigne kommandoar",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -916,8 +916,8 @@
       "id": "matematikk",
       "tittel": "Matematikk i Python",
       "kompetansemaal": [
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering",
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering",
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -1055,7 +1055,7 @@
       "tittel": "Når noko går gale",
       "kompetansemaal": [
         "10. trinn: lese og forklare tekstbasert programkode i Python",
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -1135,7 +1135,7 @@
           "startkode": "for i in range(1, 4)\nprint(i)",
           "hint": [
             "Den fyrste feilen er på `for`-linja. Kva manglar på slutten?",
-            "Den andre er innrykket: kva skal vere **inni** løkka?"
+            "Den andre er innrykket: kva skal vere **inni** lykkja?"
           ],
           "testar": [
             {

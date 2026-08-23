@@ -45,7 +45,7 @@ const BolkPython = (function () {
 
             if (def.form === 'krop') {
                 const inni = stabel(node.kropp || [], niva + 1);
-                // Ei tom løkke er ikkje gyldig Python. `pass` er òg ærlegare
+                // Ei tom lykkje er ikkje gyldig Python. `pass` er òg ærlegare
                 // enn å skjule at eleven ikkje har lagt noko inni enno.
                 ut.push(inni.length ? inni.join('\n') : pad + INNRYKK + 'pass');
             }
@@ -71,6 +71,14 @@ const BolkPython = (function () {
         ut.push.apply(ut, importar(program));
         ut.push('');
         ut.push('setheading(90)   # i Bolkestokk peikar 0 gradar opp');
+
+        /* Rutenettblokkene reknar om frå rutetal til teikneeiningar. Skriv
+         * vi 150 rett inn i `goto`, forsvinn koordinaten eleven såg. Med ein
+         * namngjeven konstant står `goto(3 * RUTE, 4 * RUTE)` att, og då er
+         * trearen og firaren framleis å sjå i koden. */
+        if (['gaaTilRute', 'lesX', 'lesY'].some(b => BolkTre.brukar(program, b))) {
+            ut.push('RUTE = ' + BolkBlokkar.RUTE + '      # teikneeiningar i éi rute');
+        }
         ut.push('');
 
         (program.funksjonar || []).forEach(k => {
