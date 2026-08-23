@@ -3,6 +3,12 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.10] — 2026-08-23
+
+### Endra
+- **«Funksjon» og ikkje «kommando».** Det heiter funksjon på norsk, og kompetansemålet vi byggjer mot seier det rett ut — «bruke variabler, løkker, vilkår og funksjoner i programmering». Ordet stod alt slik i modulfila, medan verktøyet sa «kommando» rett ved sida av. Ein elev som går vidare til Ormritaren møter `def`, og skal kjenne att ordet han alt har brukt. Endra heilt gjennom, ikkje berre på skjermen: blokkene heiter `lagFunksjon` og `kallFunksjon`, feltet i programmet heiter `funksjonar`. Eit ord som står rett i grensesnittet og feil i koden er ei felle for den som skal endre noko seinare. Program som alt er lagra blir lesne som før — `lesInn` tek imot begge namna.
+- **«Til deg som er lærar» tek halve breidda.** Avsnitta hadde ei linjelengd-grense medan sjølve boksen låg i full breidd, så på ein stor skjerm gjekk ramma tvers over sida med halve seg tom. No ber boksen grensa og avsnitta fyller han — då er det inga luft å bli kvitt, ho kan ikkje oppstå. Same retting i Ormritaren, som hadde nøyaktig same boksen.
+
 ## [1.9] — 2026-08-23
 
 ### Endra
