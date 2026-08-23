@@ -54,6 +54,22 @@ const BolkBlokkar = (function () {
         { verdi: 'rest',  tekst: 'rest ved deling', py: '%', gjer: (a, b) => b === 0 ? 0 : a % b }
     ];
 
+    /* Samanlikningane. Dei gjev sant eller usant, og i denne motoren er det
+     * 1 og 0 — det er nok, og det sparar oss for ein eigen verditype gjennom
+     * heile treet, tolken og lagringa.
+     *
+     * Teikna er dei same som i matematikkboka: `=`, `≠`, `<`, `>`, `≤`, `≥`.
+     * Python skriv `==` for likskap, og det er ein skilnad eleven møter fyrst
+     * i Ormritaren. Her held vi oss til teiknet han alt kjenner. */
+    const SAMANLIKNINGAR = [
+        { verdi: 'lik',        tekst: '=', py: '==', gjer: (a, b) => a === b },
+        { verdi: 'ulik',       tekst: '≠', py: '!=', gjer: (a, b) => a !== b },
+        { verdi: 'mindre',     tekst: '<', py: '<',  gjer: (a, b) => a < b },
+        { verdi: 'storre',     tekst: '>', py: '>',  gjer: (a, b) => a > b },
+        { verdi: 'mindreLik',  tekst: '≤', py: '<=', gjer: (a, b) => a <= b },
+        { verdi: 'storreLik',  tekst: '≥', py: '>=', gjer: (a, b) => a >= b }
+    ];
+
     /* Blokkfargane.
      *
      * Faste verdiar, ikkje temavariablar. Ei blokk er fylt med fargen sin og
@@ -72,6 +88,12 @@ const BolkBlokkar = (function () {
         tal:   '#FFC93C',   // tal, rekning og utskrift
         boks:  '#FF7A45',   // variablar
         mi:    '#CBAAFF',   // eigne funksjonar
+        /* Grøn for vilkår. Fargen er vald på avstand frå dei andre: 106 i
+         * fargesirkelen, som er 58 gradar frå næraste nabo — den største
+         * luka som var att. Turkisen på «Snu» ligg på 174 og var den einaste
+         * grønaktige frå før, og to grøne som liknar kvarandre ville gjort
+         * paletten vanskelegare å lese, ikkje lettare. Målt 12,65:1 mot #111. */
+        vilkaar: '#93E87A',
         start: '#FFDD57'    // hattar
     };
 
@@ -80,6 +102,7 @@ const BolkBlokkar = (function () {
         { id: 'skilpadde', tittel: 'Skilpadda',        farge: 'gaa'   },
         { id: 'verdi',     tittel: 'Tal og rekning',   farge: 'tal'   },
         { id: 'variabel',  tittel: 'Variablar',        farge: 'boks'  },
+        { id: 'vilkaar',   tittel: 'Vilkår',           farge: 'vilkaar' },
         { id: 'funksjon',  tittel: 'Eigne funksjonar', farge: 'mi'    }
     ];
 
@@ -237,6 +260,38 @@ const BolkBlokkar = (function () {
             python: (f) => f.namn
         },
 
+        /* ---- vilkår ------------------------------------------------------ */
+        {
+            id: 'samanlikn', farge: 'vilkaar', ikon: 'arrowLeftRight', kategori: 'vilkaar',
+            form: 'verdi', namn: 'samanlikning',
+            tekst: [
+                { felt: 'a', slag: 'tal', standard: 0 },
+                { felt: 'op', slag: 'val', val: SAMANLIKNINGAR, standard: 'storre' },
+                { felt: 'b', slag: 'tal', standard: 0 }
+            ],
+            verdi: (f, ktx, hj) => {
+                const s = SAMANLIKNINGAR.find(r => r.verdi === f.op) || SAMANLIKNINGAR[0];
+                return s.gjer(hj.verdi(f.a, ktx), hj.verdi(f.b, ktx)) ? 1 : 0;
+            },
+            python: (f, hj) => {
+                const s = SAMANLIKNINGAR.find(r => r.verdi === f.op) || SAMANLIKNINGAR[0];
+                return hj.uttrykk(f.a) + ' ' + s.py + ' ' + hj.uttrykk(f.b);
+            }
+        },
+        {
+            id: 'dersom', farge: 'vilkaar', ikon: 'helpCircle', kategori: 'vilkaar', form: 'krop',
+            /* Hòlet er eit vanleg talhòl. Ei samanlikning er ei verdiblokk som
+             * alle andre og passar rett inn, og eleven kan òg skrive eit tal
+             * direkte — 0 er usant, alt anna er sant. Det er den same regelen
+             * Python har, og det sparar oss for ein eigen hòltype som berre
+             * ville teke imot éi einaste blokk. */
+            tekst: ['Dersom', { felt: 'vilkaar', slag: 'tal', standard: 1 }, 'så'],
+            koyr: function* (node, ktx, hj) {
+                if (hj.verdi(node.felt.vilkaar, ktx)) yield* hj.koyrStabel(node.kropp || [], ktx);
+            },
+            python: (f, hj) => 'if ' + hj.uttrykk(f.vilkaar) + ':'
+        },
+
         /* ---- eigne funksjonar -------------------------------------------- */
         {
             id: 'lagFunksjon', farge: 'mi', ikon: 'sparkles', kategori: 'funksjon', form: 'hatt',
@@ -329,7 +384,7 @@ const BolkBlokkar = (function () {
 
     return {
         DEF, KATEGORIAR, FARGAR, REKNEARTAR,
-        hent, felt, standardFelt, talTekst, fargeHex, lesbar, FARGAR_BLOKK,
+        hent, felt, standardFelt, talTekst, fargeHex, lesbar, FARGAR_BLOKK, SAMANLIKNINGAR,
         idar: () => DEF.map(d => d.id)
     };
 })();

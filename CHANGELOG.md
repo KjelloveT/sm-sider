@@ -3,6 +3,14 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.12] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk har fått eit grunnkurs.** «Fyrste stega» — fire leksjonar om skilpadda, løkka, variabelen og eigne funksjonar. Modulen «Mangekantar og mønster» var to ting på ein gong: fire leksjonar lærte mekanikken og to var geometri. Det gjekk så lenge det fanst berre éin modul, men med fleire på veg måtte kvar av dei anten lære mekanikken om att eller sende ein femteklassing gjennom eit sjetteklasse-opplegg fyrst. Leksjonane er flytta, ikkje skrivne om — dei var alt prøvde.
+- **Tre nye geometri-leksjonar** i «Mangekantar og mønster», som no er rein geometri: kva som skil eit kvadrat frå eit rektangel, mangekanten som blir ein sirkel når `n` veks, og stjerna. Den siste tek regelen «snuingane blir 360 gradar» og viser at ho berre er halve sanninga — figuren lukkar seg ved eit heilt tal rundar, og to rundar på fem hjørne gjev 144 gradar.
+- **Vilkår: `Dersom … så` og ei samanlikningsblokk** med `=`, `≠`, `<`, `>`, `≤` og `≥`. Kompetansemålet modulen viser fram nemner vilkår, og verktøyet hadde dei ikkje. Hòlet i `Dersom` er eit vanleg talhòl — 0 er usant og alt anna er sant, same regel som Python — så ei samanlikning passar rett inn utan ein eigen hòltype som berre kunne ta imot éi blokk. Ny grøn blokkfarge vald på avstand frå dei andre: 58 gradar frå næraste nabo, som var den største luka som var att, og 12,65:1 mot teksten.
+- **Modulkorta seier kva dei byggjer på.** Ein lærar må sjå det før han vel modul, ikkje etter.
+
 ## [1.11] — 2026-08-23
 
 ### Fiksa
