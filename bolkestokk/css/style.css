@@ -31,23 +31,50 @@
     --sp-palett:   minmax(var(--bs-palett), var(--bs-palett));
     --sp-benk:     minmax(280px, 1fr);
     --sp-resultat: minmax(320px, 1fr);
-    --sp-stripe:   minmax(15px, 15px);   /* 10px var for tynt for ein finger */
+    /* Kollapsa breidd — éin verdi per spalte, og det er ikkje overflod.
+     *
+     * `grid-template-columns` blir animert, og ein overgang krev at kvar
+     * track er INTERPOLERBAR mot den han skal bli. Éin felles
+     * `minmax(15px, 15px)` for alle tre gjekk mot `1fr` for resultatet og
+     * `24%` for leksjonen — px mot fr og px mot prosent, som ikkje kan
+     * reknast om til kvarandre.
+     *
+     * Nettlesaren melder ikkje frå om det. Han lèt berre den gamle verdien
+     * bli ståande, og spalta opna seg aldri att: eleven trykte Køyr og fekk
+     * ei 15px stripe der teikninga skulle vore. Klassa vart teken av, alt
+     * anna såg rett ut, og kolonnen var 15px likevel.
+     *
+     * Difor har kvar stripe same TYPE som spalta si eiga maksbreidd.
+     * 0fr og 0% gjev begge null av den ledige plassen, så tracken hamnar på
+     * minimum sitt — nøyaktig same resultat som 15px, men no med ein
+     * overgang som faktisk kan reknast ut. */
+    --sp-stripe:   minmax(15px, 15px);        /* px mot px — paletten */
+    --sp-stripe-fr: minmax(15px, 0fr);        /* fr mot fr — resultatet */
+    --sp-stripe-pst: minmax(15px, 0%);        /* % mot % — leksjonen */
 
     grid-template-columns: var(--sp-palett) var(--sp-benk) var(--sp-resultat);
+
+    /* Overgangen låg før berre på fire-spalte-regelen, så tre-spalte-utgåva
+     * hoppa. Ho høyrer til flata sjølv — det er dei same spaltene. */
+    transition: grid-template-columns .38s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Den som slår av rørsle i systemet, skal ikkje få spaltene til å gli. */
+@media (prefers-reduced-motion: reduce) {
+    .bs-flate { transition: none; }
 }
 
 /* Med leksjon: fire spalter når det er plass til dei. */
 @media (min-width: 1280px) {
     .bs-flate:has(> .bs-spalte-leksjon:not([hidden])) {
         grid-template-columns: var(--sp-leksjon) var(--sp-palett) var(--sp-benk) var(--sp-resultat);
-        transition: grid-template-columns .38s cubic-bezier(.4, 0, .2, 1);
     }
 }
 
 /* Kollapsa spalter. Éi linje kvar, og dei kan kombinerast fritt. */
-.bs-flate.bs-skjul-leksjon  { --sp-leksjon:  var(--sp-stripe); }
+.bs-flate.bs-skjul-leksjon  { --sp-leksjon:  var(--sp-stripe-pst); }
 .bs-flate.bs-skjul-palett   { --sp-palett:   var(--sp-stripe); }
-.bs-flate.bs-skjul-resultat { --sp-resultat: var(--sp-stripe); }
+.bs-flate.bs-skjul-resultat { --sp-resultat: var(--sp-stripe-fr); }
 
 /* Under 1280px er det ikkje plass til fire spalter. Leksjonen legg seg øvst
  * i full breidd, med eiga rulling og tak på høgda. */
