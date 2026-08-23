@@ -3,6 +3,18 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.9] — 2026-08-23
+
+### Endra
+- **Bolkestokk: fargen koplar ruta til blokka.** «Nettopp køyrt» er rosa og «Står for tur» er lys blå — og no ber blokkene på arbeidsbenken dei same to fargane. Før var berre éi blokk merkt, med ein grøn som ikkje fanst i nokon av rutene, så eleven måtte lese seg fram til kva som høyrde saman. Merkinga han sjølv gjer er framleis burgunder; ho betyr noko anna og skal ikkje kunne forvekslast.
+- **Bolkestokk: menysida følgjer temaet att.** Berre arbeidsflata treng den faste paletten — han finst fordi blokkene er fylte med farge og har svart tekst oppå, og den garantien held berre når fargane er kjende på førehand. Menysida har ingen slike flater, så ho brukar «sunset» lyst og «space» mørkt som alle andre innhaldssider.
+- **Bolkestokk: dempa steppeknappar.** 18×20px utan ramme, med eit halvgjennomsiktig mørkt lag oppå blokkfargen. Med 32px breidd og svart ramme kjempa dei om merksemda med sjølve talet, som er det eleven skal sjå.
+
+### Fiksa
+- **Køyremarkeringa forsvann på lyse blokker.** Stripa bytte farge på sjølve venstreramma, og ei lys blå stripe rett mot «Gå framover», som alt er lys blå, var ikkje å sjå. No ligg ho inne i den svarte ramma med ei eiga svart kant på innsida, og les like tydeleg på alle sju blokkfargane.
+- **Fri køyring visste ikkje kva som nettopp køyrde.** Berre stegmodus gjorde det. På høg fart går det mange blokker per bilete, så «nettopp køyrt» er den nest siste i bunken — programmet si rekkjefølgje, ikkje skjermoppdateringa si.
+- **Tre element på Bolkestokk-menysida låg under AA.** Pila på fri-kortet og gruppeteksten brukte `--accent` og `--muted`, som gjev 3,45:1 og 4,30:1. Alt på sida ligg no på 13,7:1 eller betre i begge tema.
+
 ## [1.8] — 2026-08-23
 
 ### Lagt til
