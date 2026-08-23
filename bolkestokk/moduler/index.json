@@ -27,7 +27,11 @@
       "talLeksjonar": 4,
       "klar": true,
       "skildring": "Skilpadda, løkka, variabelen og din eigen funksjon. Fire leksjonar som gjev deg alt du treng for å ta fatt på dei andre modulane.",
-      "kompetansemaal": []
+      "kompetansemaal": [
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ]
     },
     {
       "id": "mangekantar",
@@ -41,9 +45,9 @@
       "klar": true,
       "skildring": "Vinkelen som lukkar ein figur, kva som skil eit kvadrat frå eit rektangel, sirkelen som eigentleg er ein mangekant, og stjerna som går to rundar.",
       "kompetansemaal": [
-        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre",
-        "6. trinn: beskrive og utforske egenskaper ved to- og tredimensjonale figurer og forklare hvilke egenskaper figurene har til felles, og hvilke egenskaper som skiller figurene fra hverandre",
-        "6. trinn: utforske og beskrive symmetri i mønstre"
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
+        "6. trinn: beskrive og utforske eigenskapar ved to- og tredimensjonale figurar og forklare kva for eigenskapar figurane har til felles, og kva for eigenskapar som skil figurane frå kvarandre",
+        "6. trinn: utforske og beskrive symmetri i mønster"
       ],
       "krev": "grunnkurs"
     },
@@ -54,13 +58,13 @@
       "tittel": "Rutenett og koordinatar",
       "ikon": "grid",
       "accent": "accent4",
-      "trinn": "5. trinn",
+      "trinn": "5.–6. trinn",
       "talLeksjonar": 6,
       "klar": true,
-      "skildring": "Kvar noko er, sagt med to tal. Du teiknar figurar av punkt, flyttar dei, og lèt ein variabel styre koordinaten.",
+      "skildring": "Kvar noko er, sagt med to tal. Du teiknar figurar av punkt, flyttar dei utan å endre forma, og lèt ein variabel styre koordinaten.",
       "kompetansemaal": [
-        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy",
-        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker"
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem",
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer"
       ],
       "krev": "grunnkurs"
     },
@@ -71,13 +75,13 @@
       "tittel": "Terningkast og sannsyn",
       "ikon": "diamond",
       "accent": "accent5",
-      "trinn": "7. trinn",
+      "trinn": "5. trinn",
       "talLeksjonar": 6,
       "klar": true,
       "skildring": "Kast tre hundre terningar og tel opp. Frå eitt kast til relativ frekvens, til at to terningar ikkje er som éin — og eit stolpediagram til slutt.",
       "kompetansemaal": [
-        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk",
-        "7. trinn: bruke tabeller og diagrammer til å samle inn, sortere, analysere og presentere data"
+        "5. trinn: utforske og beskrive tilfeldigheit og sannsyn i spel og praktiske situasjonar, og knyte det til brøk",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling"
       ],
       "krev": "grunnkurs"
     }

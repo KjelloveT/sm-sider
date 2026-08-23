@@ -9,7 +9,7 @@
       "id": "to-tal",
       "tittel": "To tal seier kvar noko er",
       "kompetansemaal": [
-        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem"
       ],
       "palett": [
         "pennOpp",
@@ -388,7 +388,7 @@
       "id": "figurar",
       "tittel": "Figurar av punkt",
       "kompetansemaal": [
-        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem"
       ],
       "palett": [
         "pennOpp",
@@ -845,8 +845,8 @@
       "id": "flytte",
       "tittel": "Flytte ein figur",
       "kompetansemaal": [
-        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy",
-        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker"
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem",
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer"
       ],
       "palett": [
         "pennOpp",
@@ -1400,8 +1400,8 @@
       "id": "variabel-koordinat",
       "tittel": "Ein variabel som koordinat",
       "kompetansemaal": [
-        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker",
-        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem"
       ],
       "palett": [
         "pennOpp",
@@ -1898,7 +1898,7 @@
       "id": "vilkaar",
       "tittel": "Gjer det berre dersom",
       "kompetansemaal": [
-        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker"
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer"
       ],
       "palett": [
         "pennOpp",
@@ -2558,8 +2558,8 @@
       "id": "monster",
       "tittel": "Mønster i rutenettet",
       "kompetansemaal": [
-        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker",
-        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem"
       ],
       "palett": [
         "pennOpp",

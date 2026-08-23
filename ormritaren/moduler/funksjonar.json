@@ -8,8 +8,8 @@
       "id": "koordinatsystem",
       "tittel": "Teikn koordinatsystemet sjølv",
       "kompetansemaal": [
-        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "8. trinn: bruke situasjonar, tabellar, grafar og uttrykk til å representere funksjonar og vise samanhengar mellom representasjonane",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -147,8 +147,8 @@
       "id": "tabell",
       "tittel": "Frå situasjon til tabell",
       "kompetansemaal": [
-        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
-        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene"
+        "8. trinn: beskrive, samanlikne og utforske funksjonar knytte til praktiske situasjonar",
+        "8. trinn: bruke situasjonar, tabellar, grafar og uttrykk til å representere funksjonar og vise samanhengar mellom representasjonane"
       ],
       "tekst": [
         {
@@ -295,8 +295,8 @@
       "id": "teikn-graf",
       "tittel": "Frå tabell til graf",
       "kompetansemaal": [
-        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "8. trinn: bruke situasjonar, tabellar, grafar og uttrykk til å representere funksjonar og vise samanhengar mellom representasjonane",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -438,8 +438,8 @@
       "id": "stigningstal",
       "tittel": "Stigningstal og endring per eining",
       "kompetansemaal": [
-        "10. trinn: forklare begrepet endring per enhet og regne ut stigningstallet til lineære funksjoner",
-        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner"
+        "10. trinn: forklare omgrepet endring per eining og rekne ut stigningstalet til lineære funksjonar",
+        "8. trinn: beskrive, samanlikne og utforske funksjonar knytte til praktiske situasjonar"
       ],
       "tekst": [
         {
@@ -519,7 +519,7 @@
                 3,
                 7
               ],
-              "vent": 2.0
+              "vent": 2
             },
             {
               "type": "kall",
@@ -530,7 +530,7 @@
                 2,
                 1
               ],
-              "vent": -2.0
+              "vent": -2
             },
             {
               "type": "kall",
@@ -541,7 +541,7 @@
                 5,
                 4
               ],
-              "vent": 0.0
+              "vent": 0
             }
           ],
           "loeysing": "def stigningstal(x1, y1, x2, y2):\n    return (y2 - y1) / (x2 - x1)"
@@ -579,7 +579,7 @@
                 3,
                 7
               ],
-              "vent": 2.0
+              "vent": 2
             },
             {
               "type": "kall",
@@ -590,7 +590,7 @@
                 2,
                 1
               ],
-              "vent": -2.0
+              "vent": -2
             }
           ],
           "loeysing": "def stigningstal(x1, y1, x2, y2):\n    return (y2 - y1) / (x2 - x1)"
@@ -602,8 +602,8 @@
       "id": "andregrad",
       "tittel": "Når grafen bøyer seg",
       "kompetansemaal": [
-        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "10. trinn: utforske og samanlikne eigenskapar ved lineære funksjonar, eksponentialfunksjonar, brøkfunksjonar og andregradsfunksjonar ved å bruke digitale verktøy",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -681,7 +681,7 @@
                 -4,
                 3
               ],
-              "vent": 2.0
+              "vent": 2
             },
             {
               "type": "kall",
@@ -691,7 +691,7 @@
                 0,
                 0
               ],
-              "vent": 0.0
+              "vent": 0
             },
             {
               "type": "kall",
@@ -701,7 +701,7 @@
                 8,
                 1
               ],
-              "vent": -2.0
+              "vent": -2
             }
           ],
           "loeysing": "def botnpunkt(a, b, c):\n    return -b / (2 * a)"
@@ -764,8 +764,8 @@
       "id": "eksponential",
       "tittel": "Når veksten tek av",
       "kompetansemaal": [
-        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "10. trinn: utforske og samanlikne eigenskapar ved lineære funksjonar, eksponentialfunksjonar, brøkfunksjonar og andregradsfunksjonar ved å bruke digitale verktøy",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -890,7 +890,7 @@
               "args": [
                 0
               ],
-              "vent": 100.0
+              "vent": 100
             },
             {
               "type": "kall",
@@ -910,7 +910,7 @@
       "id": "samanlikne-funksjonar",
       "tittel": "Fire funksjonstypar i same figur",
       "kompetansemaal": [
-        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
+        "10. trinn: utforske og samanlikne eigenskapar ved lineære funksjonar, eksponentialfunksjonar, brøkfunksjonar og andregradsfunksjonar ved å bruke digitale verktøy",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ],
       "tekst": [
@@ -985,7 +985,7 @@
                 200,
                 5
               ],
-              "vent": 40.0
+              "vent": 40
             },
             {
               "type": "kall",
@@ -1038,7 +1038,7 @@
               "args": [
                 2
               ],
-              "vent": 5.0
+              "vent": 5
             },
             {
               "type": "inneheld",
@@ -1055,9 +1055,9 @@
       "id": "eige-problem",
       "tittel": "Modeller noko du lurer på",
       "kompetansemaal": [
-        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
-        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "8. trinn: beskrive, samanlikne og utforske funksjonar knytte til praktiske situasjonar",
+        "10. trinn: utforske og samanlikne eigenskapar ved lineære funksjonar, eksponentialfunksjonar, brøkfunksjonar og andregradsfunksjonar ved å bruke digitale verktøy",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {

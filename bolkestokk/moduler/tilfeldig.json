@@ -9,7 +9,7 @@
       "id": "ein-terning",
       "tittel": "Ein terning i programmet",
       "kompetansemaal": [
-        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk"
+        "5. trinn: utforske og beskrive tilfeldigheit og sannsyn i spel og praktiske situasjonar, og knyte det til brøk"
       ],
       "palett": [
         "tilfeldig",
@@ -287,8 +287,8 @@
       "id": "tel-opp",
       "tittel": "Tel opp kor ofte",
       "kompetansemaal": [
-        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk",
-        "7. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
+        "5. trinn: utforske og beskrive tilfeldigheit og sannsyn i spel og praktiske situasjonar, og knyte det til brøk",
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer"
       ],
       "palett": [
         "tilfeldig",
@@ -938,7 +938,7 @@
       "id": "brok",
       "tittel": "Frå teljing til brøk",
       "kompetansemaal": [
-        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk"
+        "5. trinn: utforske og beskrive tilfeldigheit og sannsyn i spel og praktiske situasjonar, og knyte det til brøk"
       ],
       "palett": [
         "tilfeldig",
@@ -1539,7 +1539,7 @@
       "id": "to-terningar",
       "tittel": "To terningar er ikkje som éin",
       "kompetansemaal": [
-        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk"
+        "5. trinn: utforske og beskrive tilfeldigheit og sannsyn i spel og praktiske situasjonar, og knyte det til brøk"
       ],
       "palett": [
         "tilfeldig",
@@ -2150,7 +2150,7 @@
       "id": "diagram",
       "tittel": "Vis fram tala",
       "kompetansemaal": [
-        "7. trinn: bruke tabeller og diagrammer til å samle inn, sortere, analysere og presentere data"
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling"
       ],
       "palett": [
         "tilfeldig",
@@ -3436,9 +3436,9 @@
       "id": "eige-forsok",
       "tittel": "Ditt eige forsøk",
       "kompetansemaal": [
-        "7. trinn: utforske og beskrive sannsynlighet i spill og praktiske situasjoner og knytte det til brøk",
-        "7. trinn: bruke tabeller og diagrammer til å samle inn, sortere, analysere og presentere data",
-        "7. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
+        "5. trinn: utforske og beskrive tilfeldigheit og sannsyn i spel og praktiske situasjonar, og knyte det til brøk",
+        "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling",
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer"
       ],
       "palett": [
         "tilfeldig",

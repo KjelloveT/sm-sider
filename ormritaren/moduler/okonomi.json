@@ -8,7 +8,7 @@
       "id": "prosent",
       "tittel": "Prosent og vekstfaktor",
       "kompetansemaal": [
-        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner"
+        "10. trinn: utforske og forklare samanhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjonar"
       ],
       "tekst": [
         {
@@ -105,7 +105,7 @@
               "args": [
                 0
               ],
-              "vent": 1.0
+              "vent": 1
             }
           ],
           "loeysing": "def vekstfaktor(prosent):\n    return 1 + prosent / 100"
@@ -148,8 +148,8 @@
       "id": "renters-rente",
       "tittel": "Renters rente",
       "kompetansemaal": [
-        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "10. trinn: utforske og forklare samanhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjonar",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -237,7 +237,7 @@
                 5,
                 1
               ],
-              "vent": 1050.0
+              "vent": 1050
             },
             {
               "type": "kall",
@@ -247,7 +247,7 @@
                 0,
                 20
               ],
-              "vent": 500.0
+              "vent": 500
             }
           ],
           "loeysing": "def spar(belop, prosent, aar):\n    return round(belop * (1 + prosent / 100) ** aar, 2)"
@@ -290,8 +290,8 @@
       "id": "sparing-kvar-maanad",
       "tittel": "Å spare litt kvar månad",
       "kompetansemaal": [
-        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
-        "10. trinn: planlegge, utføre og presentere et utforskende arbeid knyttet til personlig økonomi"
+        "10. trinn: utforske og forklare samanhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjonar",
+        "10. trinn: planleggje, utføre og presentere eit utforskande arbeid knytt til personleg økonomi"
       ],
       "tekst": [
         {
@@ -421,8 +421,8 @@
       "id": "laan",
       "tittel": "Lån og nedbetaling",
       "kompetansemaal": [
-        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over moglege konsekvensar ved kjøp og sal, renter på sparing, lån og kredittkjøp",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -495,7 +495,7 @@
               "fn": "maanader_paa_laan",
               "args": [
                 1000,
-                0.0,
+                0,
                 500
               ],
               "vent": 2
@@ -557,7 +557,7 @@
       "id": "kredittkjoep",
       "tittel": "Kva kostar det å dele opp?",
       "kompetansemaal": [
-        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp"
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over moglege konsekvensar ved kjøp og sal, renter på sparing, lån og kredittkjøp"
       ],
       "tekst": [
         {
@@ -693,8 +693,8 @@
       "id": "samanlikne",
       "tittel": "Samanlikne tilbod",
       "kompetansemaal": [
-        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp",
-        "10. trinn: planlegge, utføre og presentere et utforskende arbeid knyttet til personlig økonomi"
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over moglege konsekvensar ved kjøp og sal, renter på sparing, lån og kredittkjøp",
+        "10. trinn: planleggje, utføre og presentere eit utforskande arbeid knytt til personleg økonomi"
       ],
       "tekst": [
         {
@@ -860,8 +860,8 @@
       "id": "eige-budsjett",
       "tittel": "Ditt eige budsjett",
       "kompetansemaal": [
-        "10. trinn: planlegge, utføre og presentere et utforskende arbeid knyttet til personlig økonomi",
-        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp",
+        "10. trinn: planleggje, utføre og presentere eit utforskande arbeid knytt til personleg økonomi",
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over moglege konsekvensar ved kjøp og sal, renter på sparing, lån og kredittkjøp",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ],
       "tekst": [

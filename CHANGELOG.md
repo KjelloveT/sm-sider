@@ -3,6 +3,15 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.16] — 2026-08-23
+
+### Fiksa
+- **Tre kompetansemål i Bolkestokk var feil.** Dei vart skrivne frå hukommelsen og er no henta ordrett frå udir.no. «Beskrive posisjon og flytting i rutenett …» finst ikkje på 5. trinn i det heile — koordinatmodulen byggjer i røynda på 6. trinn «lage kongruensavbildingar med og utan koordinatsystem», som passar betre uansett, sidan leksjonen «Flytte ein figur» *er* ei parallellforskyving. Sannsynsmålet er ekte, men det står på **5. trinn og ikkje 7.**, så «Terningkast og sannsyn» er merkt om. Og modulen viste eit 6.-trinnsmål om geometri, som ikkje har noko i ein sannsynsmodul å gjere.
+- **Grunnkurset hadde ingen kompetansemål på kortet**, medan leksjonane bar geometrimålet for 6. trinn. Det har no dei tre programmeringsmåla for 5., 6. og 7. trinn — som er nøyaktig det grunnkurset er.
+
+### Endra
+- **Alle kompetansemål står no på nynorsk**, i Ormritaren òg. Udir gjev ut læreplanen på begge målformer, så nynorskteksten er like offisiell som bokmålsteksten — det er ikkje ei omsetjing, det er den andre utgåva deira. Før var kompetansemåla den einaste bokmålsteksten i eit grensesnitt som elles er nynorsk (AGENTS.md §1). 30 mål i to appar.
+
 ## [1.15] — 2026-08-23
 
 ### Fiksa

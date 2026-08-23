@@ -28,8 +28,8 @@
       "klar": true,
       "skildring": "Frå print til funksjonar. Du lærer å lagre verdiar, gjenta ting, velje mellom alternativ og lage dine eigne kommandoar — og å lese ei feilmelding utan å bli skremd.",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
-        "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk",
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering",
+        "8. trinn: utforske og generalisere geometriske mønster og tallmønster med eigne ord og algebraisk",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ]
     },
@@ -45,11 +45,11 @@
       "klar": true,
       "skildring": "Ein bokstav er eit tal du ikkje har bestemt enno. Du sjekkar om to uttrykk er like, ser kvadratsetninga som eit areal du kan teikne, og løyser likningar og likningssett med kode.",
       "kompetansemaal": [
-        "10. trinn: bruke regneregler og generalisere sammenhenger algebraisk",
-        "10. trinn: utforske kvadratsetningene geometrisk og algebraisk og bruke kvadratsetningene som regnestrategier",
-        "10. trinn: lage, løse og forklare ligningssett knyttet til praktiske situasjoner",
-        "10. trinn: modellere situasjoner, presentere resultatene og vurdere hvor gyldige modellene er",
-        "8. trinn: lage og løse ligninger knyttet til praktiske situasjoner og kritisk vurdere løsninger"
+        "10. trinn: bruke reknereglar og generalisere samanhengar algebraisk",
+        "10. trinn: utforske kvadratsetningane geometrisk og algebraisk og bruke kvadratsetningane som reknestrategiar",
+        "10. trinn: lage, løyse og forklare likningssett knytte til praktiske situasjonar",
+        "10. trinn: modellere situasjonar, presentere resultata og vurdere kor gyldige modellane er",
+        "8. trinn: lage og løyse likningar knytte til praktiske situasjonar og kritisk vurdere løysingar"
       ]
     },
     {
@@ -64,8 +64,8 @@
       "klar": true,
       "skildring": "Kast tusen terningar på eit sekund. Du simulerer tilfeldige forsøk, ser at den relative frekvensen nærmar seg det du reknar ut, og møter Monty Hall-problemet.",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
-        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering",
+        "9. trinn: berekne og vurdere sannsyn i statistikk og spel"
       ]
     },
     {
@@ -80,9 +80,9 @@
       "klar": true,
       "skildring": "Rekn ut sentralmål og spreiingsmål på eit datasett klassen din har samla sjølv, teikn diagram — og sjå korleis dei same tala kan framstillast for å fremje kvart sitt syn.",
       "kompetansemaal": [
-        "9. trinn: regne på sentralmål og spredningsmål i egne og reelle datasett og bruke resultatene til å beskrive dataene",
-        "9. trinn: tolke og kritisk vurdere statistiske framstillinger fra media og lokalsamfunnet",
-        "9. trinn: sammenligne og argumentere for hvordan framstillinger av tall og data kan brukes for å fremme ulike synspunkter"
+        "9. trinn: rekne på sentralmål og spreiingsmål i eigne og reelle datasett og bruke resultata til å beskrive dataa",
+        "9. trinn: tolke og kritisk vurdere statistiske framstillingar frå media og lokalsamfunnet",
+        "9. trinn: samanlikne og argumentere for korleis framstillingar av tal og data kan brukast for å fremje ulike synspunkt"
       ]
     },
     {
@@ -97,8 +97,8 @@
       "klar": true,
       "skildring": "Kva kostar eit kredittkjøp eigentleg? Du reknar på vekstfaktor, sparing med renters rente, lån og nedbetaling — og samanliknar tilbod som ser like ut.",
       "kompetansemaal": [
-        "10. trinn: utforske og forklare sammenhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjoner",
-        "10. trinn: hente ut og tolke relevant informasjon og reflektere over mulige konsekvenser ved kjøp og salg, renter på sparing, lån og kredittkjøp"
+        "10. trinn: utforske og forklare samanhengen mellom konstant prosentvis endring, vekstfaktor og eksponentialfunksjonar",
+        "10. trinn: hente ut og tolke relevant informasjon og reflektere over moglege konsekvensar ved kjøp og sal, renter på sparing, lån og kredittkjøp"
       ]
     },
     {
@@ -113,9 +113,9 @@
       "klar": true,
       "skildring": "Teikn koordinatsystemet sjølv med skilpadda, og gå frå situasjon til tabell til graf til uttrykk. Til slutt samanliknar du lineære, andregrads- og eksponentialfunksjonar.",
       "kompetansemaal": [
-        "8. trinn: beskrive, sammenligne og utforske funksjoner knyttet til praktiske situasjoner",
-        "8. trinn: bruke situasjoner, tabeller, grafer og uttrykk til å representere funksjoner og vise sammenhenger mellom representasjonene",
-        "10. trinn: utforske og sammenligne egenskaper ved lineære funksjoner, eksponentialfunksjoner, brøkfunksjoner og andregradsfunksjoner ved å bruke digitale verktøy"
+        "8. trinn: beskrive, samanlikne og utforske funksjonar knytte til praktiske situasjonar",
+        "8. trinn: bruke situasjonar, tabellar, grafar og uttrykk til å representere funksjonar og vise samanhengar mellom representasjonane",
+        "10. trinn: utforske og samanlikne eigenskapar ved lineære funksjonar, eksponentialfunksjonar, brøkfunksjonar og andregradsfunksjonar ved å bruke digitale verktøy"
       ]
     }
   ]

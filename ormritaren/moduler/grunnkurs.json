@@ -8,7 +8,7 @@
       "id": "print",
       "tittel": "Dei fyrste instruksjonane",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -115,7 +115,7 @@
       "id": "variablar",
       "tittel": "Variablar — å lagre ein verdi",
       "kompetansemaal": [
-        "8. trinn: lage og forklare regneuttrykk med tall, variabler og konstanter knyttet til praktiske situasjoner"
+        "8. trinn: lage og forklare rekneuttrykk med tal, variablar og konstantar knytte til praktiske situasjonar"
       ],
       "tekst": [
         {
@@ -234,7 +234,7 @@
       "id": "input",
       "tittel": "Spørje brukaren",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -361,8 +361,8 @@
       "id": "loekker",
       "tittel": "Gjentaking med løkker",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
-        "8. trinn: utforske og generalisere geometriske mønstre og tallmønstre med egne ord og algebraisk"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering",
+        "8. trinn: utforske og generalisere geometriske mønster og tallmønster med eigne ord og algebraisk"
       ],
       "tekst": [
         {
@@ -497,7 +497,7 @@
       "id": "val",
       "tittel": "Val — if, elif og else",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -635,7 +635,7 @@
       "id": "while",
       "tittel": "Løkker som ikkje veit kor lenge",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -762,8 +762,8 @@
       "id": "funksjonar",
       "tittel": "Dine eigne kommandoar",
       "kompetansemaal": [
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering",
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering",
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -916,8 +916,8 @@
       "id": "matematikk",
       "tittel": "Matematikk i Python",
       "kompetansemaal": [
-        "10. trinn: utforske matematiske egenskaper og sammenhenger ved å bruke programmering",
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "10. trinn: utforske matematiske eigenskapar og samanhengar ved å bruke programmering",
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {
@@ -1055,7 +1055,7 @@
       "tittel": "Når noko går gale",
       "kompetansemaal": [
         "10. trinn: lese og forklare tekstbasert programkode i Python",
-        "8. trinn: utforske hvordan algoritmer kan skapes, testes og forbedres ved hjelp av programmering"
+        "8. trinn: utforske korleis algoritmar kan skapast, testast og forbetrast ved hjelp av programmering"
       ],
       "tekst": [
         {

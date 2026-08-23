@@ -8,7 +8,7 @@
       "id": "tilfeldig",
       "tittel": "Tilfeldige tal",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -132,7 +132,7 @@
       "id": "hundre-kast",
       "tittel": "Simulere hundre kast",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering"
       ],
       "tekst": [
         {
@@ -257,8 +257,8 @@
       "id": "store-tal",
       "tittel": "Frå hundre til hundre tusen",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
-        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering",
+        "9. trinn: berekne og vurdere sannsyn i statistikk og spel"
       ],
       "tekst": [
         {
@@ -374,8 +374,8 @@
       "id": "to-terningar",
       "tittel": "To terningar — kvifor 7 kjem oftast",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
-        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering",
+        "9. trinn: berekne og vurdere sannsyn i statistikk og spel"
       ],
       "tekst": [
         {
@@ -482,8 +482,8 @@
       "id": "med-tilbakelegging",
       "tittel": "Kuler i ei eske",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
-        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering",
+        "9. trinn: berekne og vurdere sannsyn i statistikk og spel"
       ],
       "tekst": [
         {
@@ -600,8 +600,8 @@
       "id": "utan-tilbakelegging",
       "tittel": "Utan tilbakelegging",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
-        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering",
+        "9. trinn: berekne og vurdere sannsyn i statistikk og spel"
       ],
       "tekst": [
         {
@@ -719,8 +719,8 @@
       "id": "monty-hall",
       "tittel": "To geiter og ein bil",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
-        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill"
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering",
+        "9. trinn: berekne og vurdere sannsyn i statistikk og spel"
       ],
       "tekst": [
         {
@@ -842,8 +842,8 @@
       "id": "teoretisk-mot-simulert",
       "tittel": "Rekne ut eller prøve seg fram?",
       "kompetansemaal": [
-        "9. trinn: simulere utfall i tilfeldige forsøk og beregne sannsynligheten for at noe skal inntreffe, ved å bruke programmering",
-        "9. trinn: beregne og vurdere sannsynlighet i statistikk og spill",
+        "9. trinn: simulere utfall i tilfeldige forsøk og berekne sannsynet for at noko skal inntreffe, ved å bruke programmering",
+        "9. trinn: berekne og vurdere sannsyn i statistikk og spel",
         "10. trinn: lese og forklare tekstbasert programkode i Python"
       ],
       "tekst": [
