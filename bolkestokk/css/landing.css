@@ -7,23 +7,27 @@
 /* ---- fri programmering ------------------------------------------------
  * Same kortform som modulane under, så framsida har éin type boks. */
 
+/* --text og ikkje --accent: i dei mørke temaa er --accent ein lys neonfarge,
+ * og pila fall til 3,45:1 mot flata (AGENTS.md §3.2). */
 .bs-frikort-pil {
     margin: 0;
     font-size: 13px;
     font-weight: 700;
-    color: var(--accent);
+    color: var(--text);
 }
 
 /* ---- modulgrupper ----------------------------------------------------- */
 
 .bs-modulgruppe { margin-bottom: 32px; }
 
+/* --muted fell til 4,30:1 i «sunset» — like under AA. Gruppeteksten er
+ * ei innleiing ein lærar faktisk les, ikkje pynt. */
 .bs-gruppetekst {
     max-width: 74ch;
     margin: -6px 0 16px;
     font-size: 14px;
     line-height: 1.6;
-    color: var(--muted);
+    color: var(--text);
 }
 
 .bs-modulrutenett {
@@ -268,7 +272,7 @@ a.bs-modulkort:hover { transform: translate(-2px, -2px); }
     margin-top: 24px;
     font-size: 13px;
     line-height: 1.6;
-    color: var(--muted);
+    color: var(--text);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -244,7 +244,7 @@
 .bs-steg {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 6px;
     border: none;
     background: none;
 }
@@ -263,8 +263,21 @@
     border: none;
 }
 
+/* Smale og dempa.
+ *
+ * Fyrst var dei 32px breie med 3px svart ramme, og då kjempa dei om
+ * merksemda med sjølve talet — som er det eleven skal sjå. No er dei berre
+ * eit lag mørkt oppå blokkfargen: ingen ramme, og smalare enn dei er høge.
+ * Overlegget er halvgjennomsiktig, så dei ser like ut på alle sju
+ * blokkfargane utan at nokon av dei må nemnast her.
+ *
+ * `place-items: center` er ikkje pynt. Utan han sat teiknet på ei tekstlinje,
+ * og plusset — som er høgt og symmetrisk — hamna høgare enn minusteiknet,
+ * som er ein lav strek. */
 .bs-steg-knapp {
-    width: 32px;
+    display: grid;
+    place-items: center;
+    width: 18px;                  /* smalare enn høg, så dei les som eit par */
     height: 20px;                 /* 20 + 4 + 20 = 44, same høgd som feltet */
     flex: 0 0 auto;
     padding: 0;
@@ -273,12 +286,13 @@
     font-weight: 800;
     line-height: 1;
     color: var(--text);
-    background: var(--bs-hvit);
-    border: 3px solid var(--border);
+    background: rgba(17, 17, 17, .10);
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
     touch-action: manipulation;
 }
-.bs-steg-knapp:hover { background: var(--bs-start); }
+.bs-steg-knapp:hover { background: rgba(17, 17, 17, .22); }
 .bs-steg-knapp:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
 
 /* ---- statisk talbrikke i paletten ---------------------------------------
@@ -317,7 +331,7 @@
 .bs-hol-fylt > .bs-verdi .bs-felt { font-size: 15px; }
 .bs-hol-fylt > .bs-verdi .bs-steg { gap: 5px; }
 .bs-hol-fylt > .bs-verdi .bs-steg .bs-felt { min-height: 34px; }
-.bs-hol-fylt > .bs-verdi .bs-steg-knapp { width: 26px; height: 15px; font-size: 11px; }
+.bs-hol-fylt > .bs-verdi .bs-steg-knapp { width: 18px; height: 15px; font-size: 11px; border-radius: 5px; }
 
 /* ---- paletten -------------------------------------------------------------- */
 
