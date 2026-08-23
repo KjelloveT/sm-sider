@@ -31,7 +31,7 @@
     --sp-palett:   minmax(var(--bs-palett), var(--bs-palett));
     --sp-benk:     minmax(280px, 1fr);
     --sp-resultat: minmax(320px, 1fr);
-    --sp-stripe:   minmax(10px, 10px);
+    --sp-stripe:   minmax(15px, 15px);   /* 10px var for tynt for ein finger */
 
     grid-template-columns: var(--sp-palett) var(--sp-benk) var(--sp-resultat);
 }
@@ -175,8 +175,8 @@
 
 @media (max-width: 1279px) {
     /* Vassrett band: stripa blir ei linje øvst i staden for ei søyle. */
-    .bs-spalte-leksjon.er-kollapsa { min-height: 10px; }
-    .bs-spalte-leksjon.er-kollapsa > .bs-spaltetopp > .bs-kollaps { min-height: 10px; }
+    .bs-spalte-leksjon.er-kollapsa { min-height: 15px; }
+    .bs-spalte-leksjon.er-kollapsa > .bs-spaltetopp > .bs-kollaps { min-height: 15px; }
 }
 
 /* ---- paletten --------------------------------------------------------------- */
@@ -452,3 +452,72 @@ body.bs-tema .box5 .box-tab.active { background: var(--bs-start); color: var(--t
     .bs-kollapsteikn { transition: none; }
 }
 
+
+/* ---- ikonknappar ------------------------------------------------------------
+ * Verktøyraden hadde fem knappar med tekst og fylte to linjer. Med symbol
+ * åleine går dei på éi. Kvar av dei har `aria-label` og `title` — ein knapp
+ * utan synleg tekst må ha eit namn (AGENTS.md §5.4), og på ei maskin med mus
+ * gjev tittelen det same til den som er usikker. */
+
+.bs-ikonknapp {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+}
+.bs-ikonknapp svg { width: 20px; height: 20px; stroke-width: 2.4; }
+
+/* Fanene over resultatet: penn for teikninga, orm for Python. */
+.bs-fane {
+    display: grid;
+    place-items: center;
+    min-width: 56px;
+    padding: 9px 14px;
+}
+.bs-fane svg { width: 20px; height: 20px; stroke-width: 2.4; }
+
+/* ---- overskrift over utskrifta ------------------------------------------- */
+
+.bs-utskriftstittel {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 14px 0 6px;
+    font-family: var(--bs-font);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text);
+}
+.bs-utskriftstittel svg { stroke-width: 2.4; }
+
+/* Både overskrifta og ruta forsvinn når det ikkje er skrive noko. */
+.bs-utskriftstittel:has(+ .bs-utskrift:empty) { display: none; }
+
+/* ---- rullefelt ---------------------------------------------------------------
+ *
+ * Windows teiknar eit breitt grått felt med pilknappar i kvar ende, og det
+ * drar meir merksemd enn innhaldet det høyrer til. Her er det ein smal,
+ * gjennomsiktig knott som berre er der når han trengst.
+ *
+ * Begge skrivemåtane står: `scrollbar-*` er standarden og verkar i Firefox og
+ * nyare Chrome, ::-webkit-* er den eldre som framleis er den einaste som
+ * verkar i Safari. */
+
+body.bs-tema * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(17, 17, 17, .28) transparent;
+}
+
+body.bs-tema ::-webkit-scrollbar { width: 10px; height: 10px; }
+body.bs-tema ::-webkit-scrollbar-track { background: transparent; }
+body.bs-tema ::-webkit-scrollbar-thumb {
+    background: rgba(17, 17, 17, .28);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+body.bs-tema ::-webkit-scrollbar-thumb:hover { background: rgba(17, 17, 17, .5); background-clip: content-box; }
+body.bs-tema ::-webkit-scrollbar-corner { background: transparent; }

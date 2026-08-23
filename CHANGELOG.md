@@ -3,6 +3,21 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.6] — 2026-08-23
+
+### Endra
+- **Verktøyraden er berre symbol** og går no på éi linje i staden for to. Kvar knapp har `aria-label` og `title` — ein knapp utan synleg tekst må ha eit namn (AGENTS.md §5.4), og tittelen gjev det same til den som er usikker.
+- **Fanene over resultatet** er ein penn og ein orm i staden for orda «Teikning» og «Python».
+- **Navigasjonen nedst i leksjonen** er to pilknappar. Med tekst braut «Førre leksjon» og «Neste leksjon» over to linjer i den smale spalta. Namnet på leksjonen dei ber til står i `aria-label` og `title`.
+- **Hintknappen heiter «Hint»**, og «Vis løysing» når hinta er brukte opp. Det ville vore uryddig å skjule ei heil løysing bak eit ord som seier «hint».
+- **Utskrifta har fått overskrift** med same symbolet som `Skriv ut`-blokka. Både overskrifta og ruta er borte når programmet ikkje har skrive noko.
+- **Kollapsstripa er 15px**, ikkje 10. Ti var for tynt for ein finger.
+- **Eit eige rullefelt.** Windows teiknar eit breitt grått felt med pilknappar som drar meir merksemd enn innhaldet. No er det ein smal, halvgjennomsiktig knott.
+- **Nye symbol for penn opp og penn ned:** ein blyant med ei pil. Før stod det eit viskelær på «Penn opp», og det er feil på to måtar — blokka viskar ikkje ut noko, og eit viskelær får eleven til å tru at han kan fjerne strek han alt har teikna. Ho løftar berre pennen. Ikona ligg i `bolkestokk/js/ikon.js` og blir registrerte i det felles settet ved oppstart; tre ikon som berre eitt verktøy brukar høyrer ikkje heime i ei fil alle 27 appane deler.
+
+### Fiksa
+- **Hintknappen kunne trykkjast i det uendelege.** Klikk-handteraren gøymde knappen etter å ha vist løysinga, men `oppdater()` køyrde rett etterpå og sette han synleg att. Kvart nytt trykk la ut same teksten på nytt **og lasta løysinga inn i arbeidsbenken igjen** — som overskreiv det eleven hadde bygd i mellomtida. Det siste var det verste ved feilen.
+- **Blokkene i velgaren flytta seg på hover** og avdekte ei hårstrek under knasten. No blir dei berre lysare; fyllet får eit lag med kvitt, medan ramma og teksten står urørte.
 ## [1.5] — 2026-08-23
 
 ### Endra

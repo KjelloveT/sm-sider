@@ -130,13 +130,13 @@ const BolkBlokkar = (function () {
             python: (f, hj) => 'left(' + hj.uttrykk(f.grader) + ')'
         },
         {
-            id: 'pennOpp', farge: 'penn', ikon: 'eraser', kategori: 'skilpadde', form: 'setning',
+            id: 'pennOpp', farge: 'penn', ikon: 'pennOpp', kategori: 'skilpadde', form: 'setning',
             tekst: ['Penn opp'],
             koyr: function* (node, ktx) { ktx.skilpadde.penn(false); },
             python: () => 'penup()'
         },
         {
-            id: 'pennNed', farge: 'penn', ikon: 'pencil', kategori: 'skilpadde', form: 'setning',
+            id: 'pennNed', farge: 'penn', ikon: 'pennNed', kategori: 'skilpadde', form: 'setning',
             tekst: ['Penn ned'],
             koyr: function* (node, ktx) { ktx.skilpadde.penn(true); },
             python: () => 'pendown()'

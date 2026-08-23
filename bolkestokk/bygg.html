@@ -8,28 +8,29 @@
 <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
 <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
 <link rel="stylesheet" href="../css/neobrutalisme.css">
-<link rel="stylesheet" href="css/palett.css?v=5">
-<link rel="stylesheet" href="css/style.css?v=5">
-<link rel="stylesheet" href="css/blokk.css?v=5">
-<link rel="stylesheet" href="css/leksjon.css?v=5">
+<link rel="stylesheet" href="css/palett.css?v=6">
+<link rel="stylesheet" href="css/style.css?v=6">
+<link rel="stylesheet" href="css/blokk.css?v=6">
+<link rel="stylesheet" href="css/leksjon.css?v=6">
 <script src="../js/neo-header.js" defer></script>
 <script src="../js/vyrdepil-icons.js" defer></script>
 <script src="../js/vyrdepil-storage.js" defer></script>
-<script src="js/blokkar.js?v=5" defer></script>
-<script src="js/tre.js?v=5" defer></script>
-<script src="js/skilpadde.js?v=5" defer></script>
-<script src="js/tolk.js?v=5" defer></script>
-<script src="js/python.js?v=5" defer></script>
-<script src="js/lerret.js?v=5" defer></script>
-<script src="js/editor.js?v=5" defer></script>
-<script src="js/dra.js?v=5" defer></script>
-<script src="js/test.js?v=5" defer></script>
-<script src="js/tekst.js?v=5" defer></script>
-<script src="js/framgang.js?v=5" defer></script>
-<script src="js/lager.js?v=5" defer></script>
-<script src="js/oppgaver.js?v=5" defer></script>
-<script src="js/leksjon.js?v=5" defer></script>
-<script src="js/app.js?v=5" defer></script>
+<script src="js/ikon.js?v=6" defer></script>
+<script src="js/blokkar.js?v=6" defer></script>
+<script src="js/tre.js?v=6" defer></script>
+<script src="js/skilpadde.js?v=6" defer></script>
+<script src="js/tolk.js?v=6" defer></script>
+<script src="js/python.js?v=6" defer></script>
+<script src="js/lerret.js?v=6" defer></script>
+<script src="js/editor.js?v=6" defer></script>
+<script src="js/dra.js?v=6" defer></script>
+<script src="js/test.js?v=6" defer></script>
+<script src="js/tekst.js?v=6" defer></script>
+<script src="js/framgang.js?v=6" defer></script>
+<script src="js/lager.js?v=6" defer></script>
+<script src="js/oppgaver.js?v=6" defer></script>
+<script src="js/leksjon.js?v=6" defer></script>
+<script src="js/app.js?v=6" defer></script>
 </head>
 <body class="bs-tema" data-light-theme="classic" data-dark-theme="classic" data-theme="classic">
 
@@ -67,13 +68,26 @@
     <!-- Arbeidsbenken -->
     <section class="bs-benk" aria-label="Programmet ditt">
       <div class="bs-verktoyrad">
-        <button type="button" class="btn" id="koyr">Køyr</button>
-        <button type="button" class="btn" id="stopp" disabled>Stopp</button>
-        <button type="button" class="btn bs-btn-steg" id="stegKnapp">
-          <span data-icon="footprints" data-icon-size="15"></span>Steg for steg
+        <button type="button" class="btn bs-ikonknapp" id="koyr"
+                title="Køyr programmet" aria-label="Køyr programmet">
+          <span data-icon="play" data-icon-size="20"></span>
         </button>
-        <button type="button" class="btn" id="toem">Tøm</button>
-        <button type="button" class="btn" id="nyKommando">Ny kommando</button>
+        <button type="button" class="btn bs-ikonknapp" id="stopp" disabled
+                title="Stopp" aria-label="Stopp programmet">
+          <span data-icon="stop" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp bs-btn-steg" id="stegKnapp"
+                title="Steg for steg" aria-label="Køyr steg for steg">
+          <span data-icon="footprints" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp" id="toem"
+                title="Tøm programmet" aria-label="Tøm programmet">
+          <span data-icon="trash" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp" id="nyKommando"
+                title="Ny kommando" aria-label="Lag ein ny kommando">
+          <span data-icon="sparkles" data-icon-size="20"></span>
+        </button>
         <label class="bs-fart">
           Fart
           <input type="range" id="fart" min="1" max="6" value="4"
@@ -116,10 +130,16 @@
 
       <div class="box5">
         <div class="box-tabs" role="tablist">
-          <button type="button" class="box-tab active" id="faneTeikning"
-                  role="tab" aria-selected="true" aria-controls="ruteTeikning">Teikning</button>
-          <button type="button" class="box-tab" id="fanePython"
-                  role="tab" aria-selected="false" aria-controls="rutePython">Python</button>
+          <button type="button" class="box-tab active bs-fane" id="faneTeikning"
+                  role="tab" aria-selected="true" aria-controls="ruteTeikning"
+                  title="Teikning" aria-label="Vis teikninga">
+            <span data-icon="pennNed" data-icon-size="20"></span>
+          </button>
+          <button type="button" class="box-tab bs-fane" id="fanePython"
+                  role="tab" aria-selected="false" aria-controls="rutePython"
+                  title="Python" aria-label="Vis programmet som Python">
+            <span data-icon="orm" data-icon-size="20"></span>
+          </button>
         </div>
         <div class="box-body" style="padding:0">
           <div class="bs-lerretboks" id="ruteTeikning" role="tabpanel" aria-labelledby="faneTeikning">
@@ -133,7 +153,11 @@
       <!-- Variablane og verdiane deira. Skjult til programmet har nokon. -->
       <div class="bs-variablar" id="variablar" aria-label="Variablar" hidden></div>
 
-      <pre class="bs-utskrift" id="utskrift" aria-live="polite"></pre>
+      <h3 class="bs-utskriftstittel" id="utskriftstittel">
+        <span data-icon="text" data-icon-size="16"></span>Utskrift
+      </h3>
+      <pre class="bs-utskrift" id="utskrift" aria-live="polite"
+           aria-labelledby="utskriftstittel"></pre>
       <div class="bs-feil" id="feil" hidden></div>
       </div>
     </aside>

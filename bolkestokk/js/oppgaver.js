@@ -188,6 +188,16 @@ const BolkOppgaver = (function () {
         let vist = 0;
         let harFeila = false;
 
+        /* Har løysinga vore vist, er trappa ferdig.
+         *
+         * Utan dette flagget var det ein feil her: klikk-handteraren sette
+         * `knapp.hidden = true` etter å ha vist løysinga, men `oppdater()`
+         * kjørde rett etterpå og sette han synleg att — og då kunne eleven
+         * trykkje om att i det uendelege. Kvart klikk la ut same teksten på
+         * nytt OG lasta løysinga inn i arbeidsbenken, som overskreiv det han
+         * sjølv hadde bygd i mellomtida. */
+        let loeysingVist = false;
+
         const knapp = document.createElement('button');
         knapp.type = 'button';
         knapp.className = 'btn bs-btn-liten bs-btn-hint';
@@ -195,15 +205,16 @@ const BolkOppgaver = (function () {
         kropp.appendChild(knapp);
 
         function oppdater() {
-            if (!harFeila) { knapp.hidden = true; return; }
-            knapp.hidden = false;
+            if (!harFeila || loeysingVist) { knapp.hidden = true; return; }
             if (vist < hint.length) {
-                knapp.textContent = vist === 0 ? 'Gje meg eit hint' : 'Eitt hint til';
-            } else if (oppgave.loeysing) {
-                knapp.textContent = 'Vis meg ei løysing';
-            } else {
-                knapp.hidden = true;
+                knapp.hidden = false;
+                knapp.textContent = 'Hint';
+                return;
             }
+            /* Hinta er brukte opp. Knappen byter namn her — det ville vore
+             * uryddig å skjule ei heil løysing bak eit ord som seier «hint». */
+            knapp.hidden = !oppgave.loeysing;
+            knapp.textContent = 'Vis løysing';
         }
 
         knapp.addEventListener('click', () => {
@@ -213,14 +224,14 @@ const BolkOppgaver = (function () {
                 BolkTekst.set(p, hint[vist]);
                 boks.appendChild(p);
                 vist++;
-            } else if (oppgave.loeysing) {
+            } else if (oppgave.loeysing && !loeysingVist) {
+                loeysingVist = true;
                 vert.setProgram(BolkTre.lesInn(oppgave.loeysing));
                 const p = document.createElement('p');
                 p.className = 'bs-hinttekst bs-loeysingstekst';
                 p.textContent = 'Ei løysing ligg no i programmet. Køyr han, '
                     + 'og sjå om du forstår kvifor han verkar.';
                 boks.appendChild(p);
-                knapp.hidden = true;
             }
             oppdater();
         });

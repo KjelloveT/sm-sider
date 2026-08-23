@@ -349,7 +349,22 @@
 .bs-palettbolk > .bs-krop-ytre { margin-bottom: 20px; }
 .bs-palettblokk { cursor: pointer; }
 .bs-palettblokk::before { content: none; }
-.bs-palettblokk:hover { transform: translate(-2px, -2px); }
+
+/* Hover lysnar blokka, ho flyttar seg ikkje.
+ *
+ * Fyrste utgåva skuva blokka to piksel opp og til venstre. To ting var gale
+ * med det: heile lista hoppa når peikaren gleid nedover henne, og flyttinga
+ * avdekte ei hårstrek under knasten der blokka hadde stått. Eit lag med kvitt
+ * oppå fyllet gjer det same utan å røre layouten — og det tek berre fyllet,
+ * ikkje ramma eller teksten. */
+.bs-palettblokk:hover {
+    background-image: linear-gradient(rgba(255, 255, 255, .45), rgba(255, 255, 255, .45));
+}
+.bs-palettbolk > .bs-krop-ytre:hover .bs-blokk,
+.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-spine,
+.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-botn {
+    background-image: linear-gradient(rgba(255, 255, 255, .45), rgba(255, 255, 255, .45));
+}
 .bs-palettblokk .bs-felt { pointer-events: none; }
 
 /* Spalta er smal. Med same luft og skriftgrad som på benken braut fjorten
@@ -443,6 +458,4 @@ body.bs-dreg .bs-felt { pointer-events: none; }
     box-shadow: inset 7px 0 0 var(--bs-koyrer);
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .bs-palettblokk:hover { transform: none; }
-}
+

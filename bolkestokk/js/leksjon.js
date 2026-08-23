@@ -323,18 +323,28 @@ const BolkLeksjon = (function () {
         const nav = document.createElement('nav');
         nav.className = 'bs-leksjonsnav';
 
-        const lenkje = (i, tekst, klasse) => {
+        /* Berre piler. Med tekst braut «Førre leksjon» og «Neste leksjon»
+         * over to linjer i den smale spalta. Namnet på leksjonen det ber til
+         * står i aria-label og title, så ingen mistar kva pila gjer. */
+        const lenkje = (i, ikon, klasse) => {
             const a = document.createElement('a');
-            a.className = 'btn ' + klasse;
+            a.className = 'btn bs-ikonknapp ' + klasse;
             a.href = 'bygg.html?modul=' + encodeURIComponent(modul.id)
                    + '&leksjon=' + encodeURIComponent(modul.leksjonar[i].id);
-            a.textContent = tekst;
+            const merke = (i < indeks ? 'Førre leksjon: ' : 'Neste leksjon: ')
+                        + modul.leksjonar[i].tittel;
+            a.setAttribute('aria-label', merke);
+            a.setAttribute('title', merke);
+            const sp = document.createElement('span');
+            sp.dataset.icon = ikon;
+            sp.dataset.iconSize = '20';
+            a.appendChild(sp);
             return a;
         };
 
-        if (indeks > 0) nav.appendChild(lenkje(indeks - 1, '← Førre leksjon', 'bs-nav-foerre'));
+        if (indeks > 0) nav.appendChild(lenkje(indeks - 1, 'arrowLeft', 'bs-nav-foerre'));
         if (indeks < modul.leksjonar.length - 1) {
-            nav.appendChild(lenkje(indeks + 1, 'Neste leksjon →', 'bs-nav-neste'));
+            nav.appendChild(lenkje(indeks + 1, 'arrowRight', 'bs-nav-neste'));
         } else {
             nav.appendChild(bru());
         }
