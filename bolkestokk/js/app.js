@@ -299,7 +299,8 @@
     }
 
     function teiknNo() {
-        BolkLerret.teikn(koyring.ktx.skilpadde.strek, koyring.ktx.skilpadde.tilstand);
+        BolkLerret.teikn(koyring.ktx.skilpadde.strek, koyring.ktx.skilpadde.tilstand,
+                         koyring.ktx.skilpadde.flater);
         if (koyring.ktx.utskrift.length) {
             el.utskrift.textContent = koyring.ktx.utskrift.join('\n');
         }

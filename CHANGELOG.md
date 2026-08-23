@@ -3,6 +3,13 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.22] — 2026-08-23
+
+### Lagt til
+- **Fyll-blokker: `Fyll med …` og `Ferdig fylt`.** Alt skilpadda teiknar imellom blir ei farga flate. `begin_fill()` og `end_fill()` er ekte metodar i Python sin turtle — ei «fyll figuren»-blokk som gjorde alt på ein gong hadde vore enklare å bruke, men ho måtte hatt ein oppdikta hjelpefunksjon i utskrifta. Fyllet blir teikna **under** rutenettet, så rutene framleis er der å telje; legg ein det oppå, dekkjer eit fylt rektangel nettopp dei rutene ein arealleksjon ber eleven telje.
+- **«Areal og oppdeling»** — fem leksjonar for 6. trinn. Heile modulen ligg på rutenettet, fordi areal på dette trinnet er «kor mange ruter dekkjer figuren». Frå å telje ruter, til at same omkrins kan gje ulikt areal, til distributivitet: `a · (b + c) = a · b + a · c` er ikkje ein regel å hugse, det er eitt rektangel delt i to.
+- **«Reknerekkefølgje»** — fire leksjonar for 7. trinn. Er `2 + 3 · 4` lik 14 eller 20? I blokkene finst ikkje tvilen: den som ligg innerst blir rekna fyrst, og eit tvitydig uttrykk lèt seg ikkje byggje i det heile.
+- **«Teikn likninga»** i likningsmodulen, som med det opnar for 5. trinn. Målet seier «bruke tal, tekst, **teikning** og konkret til å løyse likningar» — modulen hadde tal og tekst, men ikkje teikninga. To stolpar, éin for kvar side av likskapsteiknet: er dei like lange, er likninga sann.
 ## [1.21] — 2026-08-23
 
 ### Endra

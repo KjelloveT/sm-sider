@@ -1,0 +1,1315 @@
+{
+  "app": "bolkestokk",
+  "version": 1,
+  "id": "rekkjefolgje",
+  "tittel": "Reknerekkefølgje",
+  "_note": "Ei nøsta «Rekn ut»-blokk ER rekkjefølgja. `2 + 3 · 4` og `(2 + 3) · 4` er to synleg ulike figurar, og eit tvitydig uttrykk lèt seg ikkje byggje. Python-utskrifta set parentes rundt kvart nøsta ledd, òg der regelen aleine hadde halde — fleire parentesar enn ein programmerar ville skrive, men nettopp det leksjonen treng. Alle svara er kontrollerte i byggjeskriptet.",
+  "leksjonar": [
+    {
+      "id": "kva-fyrst",
+      "tittel": "Kva skal reknast fyrst?",
+      "kompetansemaal": [
+        "7. trinn: bruke reglar for reknerekkefølgje i problemløysing og til å lage og løyse samansette rekneuttrykk"
+      ],
+      "palett": [
+        "rekne",
+        "skrivUt"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Kva er `2 + 3 · 4`? Nokre svarar 20, fordi dei reknar frå venstre. Andre svarar 14. Berre det eine er rett — og grunnen er ein **regel** alle er samde om."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Regelen: fyrst det som står i **parentes**, så **gonging og deling**, og til slutt **pluss og minus**. Difor er `2 + 3 · 4` det same som `2 + 12`, altså **14**."
+        },
+        {
+          "type": "merk",
+          "tekst": "I blokkene finst ikkje tvilen. Ei `Rekn ut` inni ei anna blir alltid rekna fyrst — det er den som ligg **innerst** som går fyrst. Du kan ikkje byggje eit uttrykk som tyder to ting."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "To reknestykke med dei same tre tala. Sjå kva som ligg inni kva, og køyr.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 2,
+                    "op": "pluss",
+                    "b": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 3,
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "pluss",
+                        "b": 3
+                      }
+                    },
+                    "op": "gonge",
+                    "b": 4
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Same tala, to svar",
+        "maal": "dei to måtane å setje saman 2, 3 og 4 på, og dei to svara dei gjev",
+        "steg": [
+          {
+            "tekst": "Fyrst `3 · 4` åleine. Svaret er 12.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 3,
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Legg den blokka inni ei `+`-blokk med 2 framfor. No står gongestykket innerst, så det blir rekna fyrst: 2 + 12 = 14.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "pluss",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": 4
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Sjå på Python-ruta. Kvar står parentesane?"
+          },
+          {
+            "tekst": "Og motsett: `2 + 3` innerst, gonga med 4. No blir det 5 · 4 = 20. Same tre tala, heilt ulikt svar.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "pluss",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": 4
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 2,
+                            "op": "pluss",
+                            "b": 3
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kva blokk ligg innerst i kvar av dei to?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "k1",
+          "type": "les",
+          "maal": "Kva er rett?",
+          "tekst": "Reknestykket er `2 + 3 · 4`.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 2,
+                      "op": "pluss",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 3,
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva er svaret?",
+          "alternativ": [
+            "20, fordi du reknar frå venstre",
+            "14, fordi gonging kjem før pluss",
+            "9, fordi du reknar frå høgre"
+          ],
+          "rett": 1,
+          "forklaring": "Gonging kjem før pluss, så `3 · 4` blir rekna fyrst: 2 + 12 = 14. Svaret 20 kjem av å rekne frå venstre, og det er nettopp det regelen finst for å hindre."
+        },
+        {
+          "id": "k2",
+          "type": "bygg",
+          "maal": "Bygg 100 − 3 · 20",
+          "tekst": "Bygg reknestykket `100 − 3 · 20` med blokker, og skriv ut svaret.",
+          "hint": [
+            "Gongestykket skal reknast fyrst, så det må liggje **innerst**.",
+            "Ei `Rekn ut` med `−`, der 100 står i det fyrste hòlet og ei ny `Rekn ut` med `3 × 20` i det andre."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 40
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 100,
+                      "op": "minus",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 3,
+                          "op": "gonge",
+                          "b": 20
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "k3",
+          "type": "bygg",
+          "maal": "Og med parentes",
+          "tekst": "Bygg `(100 − 3) · 20` — altså det same, men med minusen innerst. Skriv ut svaret, og legg merke til kor mykje det skil.",
+          "hint": [
+            "No er det `100 − 3` som skal reknast fyrst, så den blokka skal liggje innerst.",
+            "97 · 20 = 1940, mot 40 i førre oppgåve."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 1940
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 100,
+                          "op": "minus",
+                          "b": 3
+                        }
+                      },
+                      "op": "gonge",
+                      "b": 20
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Fyrst **parentes**, så **gonging og deling**, så **pluss og minus**. I blokkene er regelen bygd inn: den blokka som ligg **innerst** blir rekna fyrst, og eit tvitydig uttrykk lèt seg ikkje byggje."
+    },
+    {
+      "id": "parentesar",
+      "tittel": "Når treng du parentes?",
+      "kompetansemaal": [
+        "7. trinn: bruke reglar for reknerekkefølgje i problemløysing og til å lage og løyse samansette rekneuttrykk"
+      ],
+      "palett": [
+        "rekne",
+        "skrivUt"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Parentesar er ikkje pynt. Dei er der for å **overstyre** regelen når du vil ha ei anna rekkjefølgje enn den vanlege."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "I `2 + 3 · 4` treng du dei ikkje — regelen gjer alt gongestykket fyrst likevel. I `(2 + 3) · 4` må dei vere der, for utan dei ville uttrykket tydd noko anna."
+        },
+        {
+          "type": "merk",
+          "tekst": "Sjå i Python-ruta medan du byggjer. Der står parentesane rundt kvart nøsta ledd, òg der regelen aleine hadde halde. Det er fleire parentesar enn ein programmerar ville skrive — men det viser rekkjefølgja svart på kvitt."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Fire reknestykke med 12, 2 og 4. Sjå kva parentesane gjer.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 12,
+                        "op": "dele",
+                        "b": 2
+                      }
+                    },
+                    "op": "pluss",
+                    "b": 4
+                  }
+                }
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 12,
+                    "op": "dele",
+                    "b": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Same tala, andre parentesar",
+        "maal": "to reknestykke med 12, 2 og 4 som gjev heilt ulike svar",
+        "steg": [
+          {
+            "tekst": "`12 ÷ 2 + 4`. Deling kjem før pluss, så det blir 6 + 4 = 10.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 12,
+                            "op": "dele",
+                            "b": 2
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "`12 ÷ (2 + 4)`. No tvingar parentesen plussen til å kome fyrst: 12 ÷ 6 = 2.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 12,
+                            "op": "dele",
+                            "b": 2
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 12,
+                        "op": "dele",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 2,
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Ti mot to. Kva blokk måtte flyttast for å få den skilnaden?"
+          },
+          {
+            "tekst": "Og eit tredje: `(12 ÷ 2) + 4`. Parentesen står der, men han endrar ingenting — regelen ville gjort det same.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 12,
+                            "op": "dele",
+                            "b": 2
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kvifor er denne parentesen lov, men unødvendig?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "p1",
+          "type": "les",
+          "maal": "Trengst parentesen?",
+          "tekst": "Ein elev vil rekne ut «fem pluss produktet av to og tre».",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 5,
+                      "op": "pluss",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 2,
+                          "op": "gonge",
+                          "b": 3
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva av desse treng parentes for å bety det rette?",
+          "alternativ": [
+            "`5 + 2 · 3` — nei, regelen held",
+            "`5 + 2 · 3` — ja, må skrivast `5 + (2 · 3)`",
+            "Begge tyder det same som `(5 + 2) · 3`"
+          ],
+          "rett": 0,
+          "forklaring": "Gonging kjem før pluss, så `5 + 2 · 3` tyder allereie 5 + 6 = 11. Parentesen er lov, men unødvendig. `(5 + 2) · 3` er derimot 21 — eit heilt anna uttrykk."
+        },
+        {
+          "id": "p2",
+          "type": "bygg",
+          "maal": "Tving fram ei anna rekkjefølgje",
+          "tekst": "Bygg `12 ÷ (2 + 4)` og skriv ut svaret. Her **må** plussen reknast fyrst.",
+          "hint": [
+            "Plussen skal liggje innerst, i det andre hòlet i delinga.",
+            "12 ÷ 6 = 2."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 2
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 12,
+                      "op": "dele",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 2,
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "p3",
+          "type": "rett",
+          "maal": "Parentesen som hamna feil",
+          "tekst": "Dette skulle rekne ut `20 − (4 + 6)`, men svaret blir 22. Hent det inn og finn ut kva som er nøsta feil.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 20,
+                          "op": "minus",
+                          "b": 4
+                        }
+                      },
+                      "op": "pluss",
+                      "b": 6
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Rekn ut begge to i hovudet: `20 − (4 + 6)` og `(20 − 4) + 6`. Kva blir kvar av dei?",
+            "Plussen skal liggje **innerst**, inni minusen — ikkje utanpå han."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 10
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 20,
+                      "op": "minus",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 4,
+                          "op": "pluss",
+                          "b": 6
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Parentesar **overstyrer** regelen. Treng du ikkje overstyre han, treng du dei ikkje — men dei er alltid lov, og dei gjer ofte uttrykket lettare å lese."
+    },
+    {
+      "id": "samansette",
+      "tittel": "Samansette uttrykk",
+      "kompetansemaal": [
+        "7. trinn: bruke reglar for reknerekkefølgje i problemløysing og til å lage og løyse samansette rekneuttrykk",
+        "7. trinn: formulere og løyse problem som har med likningar å gjere"
+      ],
+      "palett": [
+        "rekne",
+        "skrivUt",
+        "settVar",
+        "endreVar",
+        "lesVar"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Eit **samansett rekneuttrykk** har fleire reknestykke i eitt. Med blokker byggjer du det innanfrå og ut: den delen som skal reknast fyrst, legg du innerst."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Står eit tal fleire stader, høyrer det heime i ein **variabel**. Då står det éin stad, og endrar du han, følgjer heile uttrykket med."
+        },
+        {
+          "type": "merk",
+          "tekst": "Bygg alltid det innerste fyrst og dra det inn i det ytre etterpå. Prøver du å byggje utanfrå og inn, må du flytte om på blokker du alt har lagt ut."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Tre bøker til 89 kroner og ei blyant til 15. Uttrykket er `3 · 89 + 15`.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 3,
+                        "op": "gonge",
+                        "b": 89
+                      }
+                    },
+                    "op": "pluss",
+                    "b": 15
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Bygg innanfrå og ut",
+        "maal": "uttrykket 3 · 89 + 15, bygd steg for steg",
+        "steg": [
+          {
+            "tekst": "Innerst fyrst: kva kostar dei tre bøkene? `3 · 89 = 267`.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 3,
+                        "op": "gonge",
+                        "b": 89
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så dreg vi den blokka inn i ei `+`-blokk med blyanten på 15. Til saman 282.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": 89
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 15
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt prisen på boka til 99. Kva blir summen då?"
+          },
+          {
+            "tekst": "Og med prisen i ein variabel står talet berre éin stad — lettare å endre, og lettare å lese.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "bok",
+                    "verdi": 89
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "bok"
+                              }
+                            }
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 15
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "s1",
+          "type": "bygg",
+          "maal": "Kva har du att?",
+          "tekst": "Du har **500 kroner** og kjøper **4 billettar** til **85 kroner** stykket. Bygg uttrykket og skriv ut kor mykje du har att.",
+          "hint": [
+            "Fyrst kva billettane kostar til saman: 4 · 85. Det skal liggje innerst.",
+            "500 − 340 = 160."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 160
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 500,
+                      "op": "minus",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 4,
+                          "op": "gonge",
+                          "b": 85
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "s2",
+          "type": "bygg",
+          "maal": "Del rekninga",
+          "tekst": "Fire vener deler **3 pizzaer** som kostar **129 kroner** kvar. Bygg uttrykket `3 · 129 ÷ 4` og skriv ut kva kvar må betale.",
+          "hint": [
+            "Fyrst kva pizzaene kostar til saman: 3 · 129 = 387. Det ligg innerst.",
+            "Så deler du på 4. Svaret blir ikkje eit heilt kronebeløp."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 96.75,
+              "slingring": 0.01
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 3,
+                          "op": "gonge",
+                          "b": 129
+                        }
+                      },
+                      "op": "dele",
+                      "b": 4
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "s3",
+          "type": "bygg",
+          "maal": "Prisen i ein variabel",
+          "tekst": "Same handelen som i dømet — **3 bøker og ei blyant til 15 kroner** — men med **bokprisen i ein variabel** sett til **99**. Skriv ut summen.",
+          "hint": [
+            "Set variabelen fyrst, og bruk `Les variabel` i gongestykket.",
+            "3 · 99 + 15 = 312."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "lesVar"
+            },
+            {
+              "type": "svar",
+              "vent": 312
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "bok",
+                  "verdi": 99
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 3,
+                          "op": "gonge",
+                          "b": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "bok"
+                            }
+                          }
+                        }
+                      },
+                      "op": "pluss",
+                      "b": 15
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Bygg **innanfrå og ut**: det som skal reknast fyrst, legg du innerst. Står eit tal fleire stader, høyrer det heime i ein **variabel**."
+    },
+    {
+      "id": "problemloysing",
+      "tittel": "Frå oppgåve til uttrykk",
+      "kompetansemaal": [
+        "7. trinn: bruke reglar for reknerekkefølgje i problemløysing og til å lage og løyse samansette rekneuttrykk",
+        "7. trinn: formulere og løyse problem som har med likningar å gjere"
+      ],
+      "palett": [
+        "rekne",
+        "skrivUt",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "samanlikn",
+        "dersom",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Det vanskelegaste er sjeldan å rekne. Det er å gå frå ei oppgåve på norsk til eit uttrykk som svarar på henne."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein framgangsmåte som held: finn kva du blir spurd om, finn kva du veit, og spør deg **kva må reknast fyrst**. Det svaret blir den innerste blokka."
+        },
+        {
+          "type": "merk",
+          "tekst": "Og til slutt: sjå på svaret og spør om det er rimeleg. Eit uttrykk kan vere bygd feil og likevel gje eit tal."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Ein klasse på 28 elevar skal på tur. Bussen tek 48, og turen kostar 3600 kroner delt likt. Kva betaler kvar elev?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 3600,
+                    "op": "dele",
+                    "b": 28
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Tre steg til eit uttrykk",
+        "maal": "eit samansett uttrykk bygd frå ei oppgåve i tekst",
+        "steg": [
+          {
+            "tekst": "Oppgåva: «Ei klasse på 28 kjøper 28 billettar til 85 kroner og betaler 500 i buss. Kva kostar turen?» Fyrst billettane: 28 · 85.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 28,
+                        "op": "gonge",
+                        "b": 85
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så bussen i tillegg. Gongestykket ligg innerst, fordi det må reknast fyrst.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 28,
+                            "op": "gonge",
+                            "b": 85
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 500
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Er svaret rimeleg? Rundt 100 kroner per elev — stemmer det med tala?"
+          },
+          {
+            "tekst": "Og kva kvar elev må betale: heile summen delt på 28.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 28,
+                                "op": "gonge",
+                                "b": 85
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 500
+                          }
+                        },
+                        "op": "dele",
+                        "b": 28
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kvifor kan du ikkje berre dele 500 på 28 og leggje til 85?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "q1",
+          "type": "bygg",
+          "maal": "Kva kostar turen?",
+          "tekst": "**28 elevar** kjøper kvar sin billett til **85 kroner**, og klassa betaler **500 kroner** for buss. Skriv ut kva turen kostar til saman.",
+          "hint": [
+            "Kva må reknast fyrst — billettane eller bussen?",
+            "28 · 85 = 2380, pluss 500 blir 2880."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 2880
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 28,
+                          "op": "gonge",
+                          "b": 85
+                        }
+                      },
+                      "op": "pluss",
+                      "b": 500
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "q2",
+          "type": "les",
+          "maal": "Kva uttrykk svarar på spørsmålet?",
+          "tekst": "Same turen: 28 elevar, billettar til 85 kroner, og 500 kroner i buss. No spør vi kva **kvar elev** må betale.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 28,
+                              "op": "gonge",
+                              "b": 85
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 500
+                        }
+                      },
+                      "op": "dele",
+                      "b": 28
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva uttrykk er rett?",
+          "alternativ": [
+            "`(28 · 85 + 500) ÷ 28`",
+            "`28 · 85 + 500 ÷ 28`",
+            "`28 · (85 + 500) ÷ 28`"
+          ],
+          "rett": 0,
+          "forklaring": "Heile summen må reknast ferdig før du deler. Det andre uttrykket deler berre bussen på 28 og legg til heile billettsummen. Det tredje gjev kvar elev ein billett til 585 kroner."
+        },
+        {
+          "id": "q3",
+          "type": "bygg",
+          "maal": "Kva betaler kvar?",
+          "tekst": "Skriv ut kva **kvar elev** må betale for turen: heile kostnaden delt på **28**.",
+          "hint": [
+            "Heile uttrykket frå førre oppgåve skal liggje innerst i ei deling.",
+            "2880 ÷ 28 ≈ 102,86."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 102.85714285714286,
+              "slingring": 0.01
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 28,
+                              "op": "gonge",
+                              "b": 85
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 500
+                        }
+                      },
+                      "op": "dele",
+                      "b": 28
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Frå tekst til uttrykk: finn kva du blir spurd om, finn kva du veit, og spør **kva må reknast fyrst** — det blir den innerste blokka. Og sjå til slutt om svaret er rimeleg."
+    }
+  ]
+}

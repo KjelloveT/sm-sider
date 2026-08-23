@@ -1,0 +1,4472 @@
+{
+  "app": "bolkestokk",
+  "version": 1,
+  "id": "areal",
+  "tittel": "Areal og oppdeling",
+  "_note": "Heile modulen ligg på rutenettet, fordi areal på 6. trinn er «kor mange ruter dekkjer figuren». I teikneeiningar ville arealet blitt 12000 av noko eleven ikkje har eit namn på. Fyllet blir teikna UNDER rutenettet i lerret.js, så rutene framleis er der å telje — det er ein føresetnad og ikkje ein detalj. Mål 6.8 nemner òg volum; eit todimensjonalt verktøy kan ikkje gjere volum ærleg, og modulen påstår ikkje at han gjer det.",
+  "leksjonar": [
+    {
+      "id": "ruter",
+      "tittel": "Areal er ruter du dekkjer",
+      "kompetansemaal": [
+        "6. trinn: utforske areal og volum i praktiske situasjonar og bruke formålstjenlege måleiningar",
+        "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "startFyll",
+        "sluttFyll",
+        "rekne",
+        "skrivUt"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "**Arealet** til ein figur er kor stor flate han dekkjer. På rutenettet kan du telje det rett av: kor mange ruter ligg inni figuren?"
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ny blokk: `Fyll med`. Alt skilpadda teiknar etter henne og fram til `Ferdig fylt` blir til ei farga flate. Rutenettet ligg oppå fyllet, så du kan framleis telje."
+        },
+        {
+          "type": "merk",
+          "tekst": "Eit rektangel som er 4 ruter breitt og 3 ruter høgt dekkjer 4 × 3 = 12 ruter. Du treng ikkje telje ei og ei — men det er lurt å gjere det éin gong, for å sjå at det stemmer."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Eit rektangel som er 4 ruter breitt og 3 høgt, fylt med gult. Tel rutene inni. Stemmer 4 × 3?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "gul"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 4,
+                    "op": "gonge",
+                    "b": 3
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Tel rutene",
+        "maal": "eit fylt rektangel på 4 × 3 ruter, med arealet skrive ut",
+        "steg": [
+          {
+            "tekst": "Fyrst omrisset: eit rektangel med hjørne i (−2, −2) og (2, 1). Fire ruter brei, tre høg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så fyllet. `Fyll med gul` før figuren, `Ferdig fylt` etter. No ser du flata, og rutenettet ligg framleis oppå.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Tel rutene inni. Kor mange er det?"
+          },
+          {
+            "tekst": "Og til slutt utrekninga: 4 × 3 = 12. Same svaret som du talde deg fram til.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 3
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "r1",
+          "type": "les",
+          "maal": "Kor mange ruter?",
+          "tekst": "Eit rektangel går frå (−3, −1) til (2, 1).",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kor stort er arealet?",
+          "alternativ": [
+            "7 ruter",
+            "10 ruter",
+            "14 ruter"
+          ],
+          "rett": 1,
+          "forklaring": "Frå −3 til 2 er fem ruter breitt, og frå −1 til 1 er to ruter høgt. 5 × 2 = 10. Talet 7 er 5 + 2, og 14 er omkrinsen."
+        },
+        {
+          "id": "r2",
+          "type": "bygg",
+          "maal": "Teikn og fyll",
+          "tekst": "Teikn eit rektangel frå **(−3, −1)** til **(2, 1)**, fyll det med **blå**, og skriv ut arealet.",
+          "hint": [
+            "Legg `Fyll med blå` rett etter at du har hoppa til det fyrste hjørnet, og `Ferdig fylt` etter det siste.",
+            "Fem ruter brei og to høg gjev 5 × 2 = 10."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "startFyll"
+            },
+            {
+              "type": "svar",
+              "vent": 10
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "breidd": 250,
+            "hogd": 100
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 5,
+                      "op": "gonge",
+                      "b": 2
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "r3",
+          "type": "bygg",
+          "maal": "Eit kvadrat",
+          "tekst": "Teikn eit **kvadrat** som er 3 ruter på kvar side, med nedre venstre hjørne i **(−1, −1)**. Fyll det med **grøn** og skriv ut arealet.",
+          "hint": [
+            "Eit kvadrat har like lange sider, så hjørna blir (−1, −1), (2, −1), (2, 2) og (−1, 2).",
+            "Arealet er 3 × 3 = 9."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "startFyll"
+            },
+            {
+              "type": "svar",
+              "vent": 9
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "breidd": 150,
+            "hogd": 150
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "groen"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 3,
+                      "op": "gonge",
+                      "b": 3
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "**Arealet** er talet på ruter figuren dekkjer. For eit rektangel er det **breidd × høgd**, og du kan alltid kontrollere utrekninga ved å telje."
+    },
+    {
+      "id": "areal-og-omkrins",
+      "tittel": "To tal frå dei same sidene",
+      "kompetansemaal": [
+        "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins",
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "startFyll",
+        "sluttFyll",
+        "rekne",
+        "skrivUt",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "**Omkrinsen** er vegen rundt figuren. **Arealet** er flata inni. Begge kjem frå dei same to tala — breidda og høgda — men dei svarar på heilt ulike spørsmål."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "For eit rektangel: `areal = b × h` og `omkrins = 2 · (b + h)`. Eit rektangel på 4 × 3 har areal 12 ruter og omkrins 14 ruter."
+        },
+        {
+          "type": "merk",
+          "tekst": "To rektangel kan ha **same omkrins og ulikt areal**. Det er ikkje ein feil — det er ein av dei mest nyttige tinga å vite om areal."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Eit rektangel på 4 × 3, med både areal og omkrins skrive ut. Fyrst arealet, så omkrinsen.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "gul"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 4,
+                    "op": "gonge",
+                    "b": 3
+                  }
+                }
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 2,
+                    "op": "gonge",
+                    "b": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "pluss",
+                        "b": 3
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Same sider, to svar",
+        "maal": "areal og omkrins for det same rektangelet, rekna ut av programmet",
+        "steg": [
+          {
+            "tekst": "Rektangelet på 4 × 3. Arealet er 4 × 3 = 12 ruter.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 3
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Omkrinsen er vegen rundt: 4 + 3 + 4 + 3, altså 2 · (4 + 3) = 14 ruter.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 3
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "gonge",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 4,
+                            "op": "pluss",
+                            "b": 3
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Følg omrisset med fingeren og tel rutekantane. Blir det 14?"
+          },
+          {
+            "tekst": "Og her er eit rektangel på 6 × 1 ved sida av. Same omkrins — 2 · (6 + 1) = 14 — men arealet er berre 6.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 4
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 4
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 3
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 6,
+                        "op": "gonge",
+                        "b": 1
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kva form gjev størst areal når omkrinsen er den same?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "a1",
+          "type": "bygg",
+          "maal": "Areal og omkrins",
+          "tekst": "Teikn eit rektangel som er **5 ruter breitt og 2 høgt**, med nedre venstre hjørne i **(−3, −1)**. Skriv ut **arealet** og så **omkrinsen**.",
+          "hint": [
+            "Areal er 5 × 2. Omkrins er 2 · (5 + 2).",
+            "To `Skriv ut`-blokker etter kvarandre, arealet fyrst."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": "10\n14"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "breidd": 250,
+            "hogd": 100
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 5,
+                      "op": "gonge",
+                      "b": 2
+                    }
+                  }
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 2,
+                      "op": "gonge",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 5,
+                          "op": "pluss",
+                          "b": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "a2",
+          "type": "les",
+          "maal": "Same omkrins, ulikt areal",
+          "tekst": "Eit rektangel på 4 × 3 og eit på 6 × 1 har begge omkrins 14.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "gul"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 4
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 4
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva er arealet til dei to?",
+          "alternativ": [
+            "Begge er 12",
+            "12 og 6",
+            "Begge er 14"
+          ],
+          "rett": 1,
+          "forklaring": "4 × 3 = 12 og 6 × 1 = 6. Omkrinsen er lik fordi 4 + 3 og 6 + 1 begge er 7, men arealet er dobbelt så stort for det som er mest kvadratisk. Same gjerde, dobbelt så mykje beite."
+        },
+        {
+          "id": "a3",
+          "type": "bygg",
+          "maal": "Sidene i variablar",
+          "tekst": "Teikn eit rektangel der **breidda** og **høgda** står i kvar sin variabel, sette til **5** og **2**. Skriv ut arealet rekna ut frå dei same variablane.",
+          "hint": [
+            "Set variablane før du teiknar, og bruk dei både i koordinatane og i reknestykket.",
+            "Med nedre venstre hjørne i (−3, −1) blir det motsette hjørnet (−3 + breidd, −1 + høgd)."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "lesVar"
+            },
+            {
+              "type": "svar",
+              "vent": 10
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "breidd",
+                  "verdi": 5
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "hogd",
+                  "verdi": 2
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": -3,
+                      "op": "pluss",
+                      "b": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "breidd"
+                        }
+                      }
+                    }
+                  },
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": -3,
+                      "op": "pluss",
+                      "b": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "breidd"
+                        }
+                      }
+                    }
+                  },
+                  "y": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": -1,
+                      "op": "pluss",
+                      "b": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "hogd"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": -1,
+                      "op": "pluss",
+                      "b": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "hogd"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "breidd"
+                        }
+                      },
+                      "op": "gonge",
+                      "b": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "hogd"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "`areal = b × h` og `omkrins = 2 · (b + h)`. Dei kjem frå dei same to tala, men svarar på ulike spørsmål — og to rektangel med **same omkrins** kan ha heilt ulikt **areal**."
+    },
+    {
+      "id": "oppdeling",
+      "tittel": "Del figuren opp",
+      "kompetansemaal": [
+        "6. trinn: utforske praktiske problem med areal ved å bruke oppdeling og distributivitet",
+        "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "startFyll",
+        "sluttFyll",
+        "rekne",
+        "skrivUt",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Deler du eit rektangel i to med ein rett strek, blir arealet til dei to delane **til saman** like stort som heile. Ingenting forsvinn og ingenting kjem til."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det høyrest sjølvsagt ut, men det er ein av dei mest brukte reiskapane i matematikken: er ein figur vanskeleg å rekne på, kan du dele han i bitar som er lette."
+        },
+        {
+          "type": "merk",
+          "tekst": "Fyll dei to delane med kvar sin farge, så ser du oppdelinga i staden for å måtte tru på henne."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Eit rektangel på 4 × 3, delt i eitt på 4 × 1 og eitt på 4 × 2. Tel rutene i kvar farge.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "blaa"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "gul"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -1
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 4,
+                    "op": "gonge",
+                    "b": 1
+                  }
+                }
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 4,
+                    "op": "gonge",
+                    "b": 2
+                  }
+                }
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 1
+                      }
+                    },
+                    "op": "pluss",
+                    "b": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "To delar, éin sum",
+        "maal": "eit rektangel delt i to fylte delar, med areala rekna kvar for seg og til saman",
+        "steg": [
+          {
+            "tekst": "Den nedste delen: 4 ruter brei og 1 høg. Areal 4.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Og den øvste oppå: 4 brei og 2 høg. Areal 8. Saman fyller dei nøyaktig det same som rektangelet på 4 × 3.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Tel rutene i kvar farge. 4 og 8 — kva blir det til saman?"
+          },
+          {
+            "tekst": "Og utrekninga: 4 · 1 + 4 · 2 = 4 + 8 = 12. Det same som 4 · 3.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 4,
+                        "op": "gonge",
+                        "b": 2
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 4,
+                            "op": "gonge",
+                            "b": 1
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 4,
+                            "op": "gonge",
+                            "b": 2
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "o1",
+          "type": "bygg",
+          "maal": "Del rektangelet",
+          "tekst": "Teikn eit rektangel på **4 × 3** frå **(−2, −2)** som **to fylte delar**: ein blå på 4 × 1 nedst, og ein gul på 4 × 2 oppå. Skriv ut det samla arealet.",
+          "hint": [
+            "Den nedste delen går frå (−2, −2) til (2, −1). Den øvste frå (−2, −1) til (2, 1).",
+            "Samla areal er 4 · 1 + 4 · 2 = 12."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "startFyll"
+            },
+            {
+              "type": "svar",
+              "vent": 12
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 8,
+            "breidd": 200,
+            "hogd": 150
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "gul"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 4,
+                          "op": "gonge",
+                          "b": 1
+                        }
+                      },
+                      "op": "pluss",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 4,
+                          "op": "gonge",
+                          "b": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "o2",
+          "type": "les",
+          "maal": "Kva blir summen?",
+          "tekst": "Eit rektangel er delt i ein del på 5 × 2 og ein på 5 × 3.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "gul"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kor stort er heile rektangelet?",
+          "alternativ": [
+            "10 ruter",
+            "15 ruter",
+            "25 ruter"
+          ],
+          "rett": 2,
+          "forklaring": "5 · 2 = 10 og 5 · 3 = 15, til saman 25. Og heile rektangelet er 5 breitt og 2 + 3 = 5 høgt, altså 5 · 5 = 25. Same svaret to vegar."
+        },
+        {
+          "id": "o3",
+          "type": "bygg",
+          "maal": "Del i tre",
+          "tekst": "Teikn eit rektangel på **6 × 2** frå **(−3, −1)** som **tre fylte delar** på 2 × 2 kvar, side om side. Skriv ut det samla arealet.",
+          "hint": [
+            "Dei tre delane startar i (−3, −1), (−1, −1) og (1, −1), og kvar av dei er 2 ruter brei og 2 høg.",
+            "Samla areal er 3 · 4 = 12, som er det same som 6 · 2."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "startFyll"
+            },
+            {
+              "type": "svar",
+              "vent": 12
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 12,
+            "breidd": 300,
+            "hogd": 100
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "gul"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "groen"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 3,
+                      "op": "gonge",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 2,
+                          "op": "gonge",
+                          "b": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Deler du ein figur i bitar, er summen av areala til bitane **lik arealet til heile**. Det er reiskapen du brukar når ein figur er for vanskeleg å rekne på i eitt stykke."
+    },
+    {
+      "id": "distributivitet",
+      "tittel": "Ein figur, to reknestykke",
+      "kompetansemaal": [
+        "6. trinn: utforske praktiske problem med areal ved å bruke oppdeling og distributivitet",
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "startFyll",
+        "sluttFyll",
+        "rekne",
+        "skrivUt",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Eit rektangel som er **2 høgt** og **3 + 4 = 7 breitt** har arealet `2 · 7 = 14`. Men du kan òg dele det i eitt på 2 × 3 og eitt på 2 × 4, og då blir arealet `2 · 3 + 2 · 4 = 6 + 8 = 14`."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Same figur, same areal, to reknestykke: `2 · (3 + 4) = 2 · 3 + 2 · 4`. Det heiter **distributivitet**, og det er ikkje ein regel du må hugse — det er ei oppdeling du kan sjå."
+        },
+        {
+          "type": "merk",
+          "tekst": "Teikn dei to under kvarandre og tel rutene. Blir det 14 begge gonger, har du bevist regelen for akkurat desse tala."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Øvst: eitt rektangel på 2 × 7. Nedst: dei same rutene delte i 2 × 3 og 2 × 4. Tel begge.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "gul"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": 3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 1
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": -3
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "blaa"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": -3
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -3
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "groen"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": -3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -3
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 2,
+                    "op": "gonge",
+                    "b": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 3,
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "skrivUt",
+              "felt": {
+                "verdi": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "gonge",
+                        "b": 3
+                      }
+                    },
+                    "op": "pluss",
+                    "b": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "gonge",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Same rutene, delte på nytt",
+        "maal": "eit rektangel på 2 × 7 og den oppdelte utgåva under, med begge reknestykka",
+        "steg": [
+          {
+            "tekst": "Fyrst heile rektangelet: 2 høgt og 7 breitt. 2 · 7 = 14 ruter.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "gonge",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Under kjem dei same rutene, men delte: ein blå på 2 × 3 og ein grøn på 2 × 4.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "groen"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Er dei to radene like breie? Tel rutene i kvar av dei."
+          },
+          {
+            "tekst": "Og begge reknestykka: 2 · (3 + 4) = 14, og 2 · 3 + 2 · 4 = 14.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "groen"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "gonge",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 2,
+                            "op": "gonge",
+                            "b": 3
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 2,
+                            "op": "gonge",
+                            "b": 4
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt 3 og 4 med to andre tal. Held regelen framleis?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "d1",
+          "type": "bygg",
+          "maal": "Rekn ut på begge måtar",
+          "tekst": "Skriv ut arealet av eit rektangel som er **2 høgt og 3 + 4 breitt**, fyrst som `2 · (3 + 4)` og så som `2 · 3 + 2 · 4`. Dei to skal gje same svar.",
+          "hint": [
+            "Det fyrste er ei `Rekn ut` med `×`, der det andre hòlet er ei ny `Rekn ut` med `+`.",
+            "Det andre er ei `Rekn ut` med `+`, der begge hòla er `Rekn ut` med `×`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": "14\n14"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 2,
+                      "op": "gonge",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 3,
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 2,
+                          "op": "gonge",
+                          "b": 3
+                        }
+                      },
+                      "op": "pluss",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 2,
+                          "op": "gonge",
+                          "b": 4
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "d2",
+          "type": "bygg",
+          "maal": "Teikn oppdelinga",
+          "tekst": "Teikn den oppdelte utgåva: ein **blå** del på **2 × 3** frå **(−4, −3)**, og ein **grøn** del på **2 × 4** rett til høgre for han.",
+          "hint": [
+            "Den blå går frå (−4, −3) til (−1, −1). Den grøne startar der den blå sluttar, i (−1, −3).",
+            "Den grøne er 4 ruter brei, så ho endar i (3, −1)."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "startFyll"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 8,
+            "breidd": 350,
+            "hogd": 100
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -3
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -3
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "groen"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "d3",
+          "type": "les",
+          "maal": "Held regelen?",
+          "tekst": "Ein elev prøver med andre tal: eit rektangel som er 3 høgt og 2 + 5 breitt.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "gul"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 3,
+                      "op": "gonge",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 2,
+                          "op": "pluss",
+                          "b": 5
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva blir `3 · (2 + 5)` og `3 · 2 + 3 · 5`?",
+          "alternativ": [
+            "21 og 21",
+            "21 og 17",
+            "15 og 21"
+          ],
+          "rett": 0,
+          "forklaring": "3 · 7 = 21, og 6 + 15 = 21. Regelen held for alle tal, og grunnen er alltid den same: det er dei same rutene, berre delte på ein annan måte. Talet 17 kjem av å gløyme å gonge 5 med 3."
+        }
+      ],
+      "oppsummering": "`a · (b + c) = a · b + a · c`. Det er **distributivitet**, og på rutenettet er det berre eitt rektangel delt i to — same rutene, to reknestykke."
+    },
+    {
+      "id": "samansett",
+      "tittel": "Figurar som ikkje er rektangel",
+      "kompetansemaal": [
+        "6. trinn: utforske praktiske problem med areal ved å bruke oppdeling og distributivitet",
+        "6. trinn: utforske areal og volum i praktiske situasjonar og bruke formålstjenlege måleiningar",
+        "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "startFyll",
+        "sluttFyll",
+        "rekne",
+        "skrivUt",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "gjenta",
+        "setFarge",
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "kallFunksjon"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Eit rom er sjeldan eit reint rektangel. Ein L-forma figur har ingen formel — men han kan **delast i to rektangel**, og då har kvar del ein formel."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det er heile grepet, og du har alt lært det: del figuren i bitar du kan rekne på, og legg areala saman."
+        },
+        {
+          "type": "merk",
+          "tekst": "Det finst som regel fleire måtar å dele på. Alle gjev same svar — vel den som gjev deg dei enklaste tala."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Ein L-forma figur. Korleis ville du delt han i to rektangel?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -3,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "startFyll",
+              "felt": {
+                "farge": "gul"
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 0
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 0,
+                "y": 2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -3,
+                "y": 2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -3,
+                "y": -2
+              }
+            },
+            {
+              "type": "sluttFyll",
+              "felt": {}
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Del L-en i to",
+        "maal": "ein L-forma figur delt i to rektangel, med areala lagde saman",
+        "steg": [
+          {
+            "tekst": "Heile figuren, fylt med gult. Han er 5 ruter brei nedst og 3 øvst.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "gul"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Ein måte å dele på: eit rektangel nedst på 5 × 2, og eit oppå på 3 × 2.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "groen"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Finn ein annan måte å dele figuren i to rektangel på."
+          },
+          {
+            "tekst": "Og utrekninga: 5 · 2 = 10, 3 · 2 = 6, til saman 16 ruter.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "blaa"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "startFyll",
+                  "felt": {
+                    "farge": "groen"
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "sluttFyll",
+                  "felt": {}
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 5,
+                        "op": "gonge",
+                        "b": 2
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 3,
+                        "op": "gonge",
+                        "b": 2
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 5,
+                            "op": "gonge",
+                            "b": 2
+                          }
+                        },
+                        "op": "pluss",
+                        "b": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": 2
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "l1",
+          "type": "bygg",
+          "maal": "Teikn L-en",
+          "tekst": "Teikn den L-forma figuren med hjørne i **(−3, −2)**, **(2, −2)**, **(2, 0)**, **(0, 0)**, **(0, 2)** og **(−3, 2)**, og fyll han med **gul**.",
+          "hint": [
+            "Hopp til (−3, −2) med pennen oppe, start fyllet, og gå så gjennom hjørna i rekkjefølgje.",
+            "Til slutt tilbake til (−3, −2), og så `Ferdig fylt`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "startFyll"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 6,
+            "breidd": 250,
+            "hogd": 200
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "gul"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "l2",
+          "type": "bygg",
+          "maal": "Del og rekn",
+          "tekst": "Del den same L-en i **to fylte rektangel** — eit blått på 5 × 2 nedst og eit grønt på 3 × 2 oppå — og skriv ut det samla arealet.",
+          "hint": [
+            "Det nedste går frå (−3, −2) til (2, 0). Det øvste frå (−3, 0) til (0, 2).",
+            "5 · 2 + 3 · 2 = 10 + 6 = 16."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "startFyll"
+            },
+            {
+              "type": "svar",
+              "vent": 16
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 8,
+            "breidd": 250,
+            "hogd": 200
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "groen"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 5,
+                          "op": "gonge",
+                          "b": 2
+                        }
+                      },
+                      "op": "pluss",
+                      "b": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 3,
+                          "op": "gonge",
+                          "b": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "l3",
+          "type": "les",
+          "maal": "Ein annan måte å dele på",
+          "tekst": "Ein elev deler den same L-en loddrett i staden: eit rektangel på 3 × 4 til venstre, og eit på 2 × 2 til høgre.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "blaa"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -2
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "startFyll",
+                "felt": {
+                  "farge": "groen"
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -2
+                }
+              },
+              {
+                "type": "sluttFyll",
+                "felt": {}
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva blir arealet med denne oppdelinga?",
+          "alternativ": [
+            "12 ruter",
+            "16 ruter",
+            "20 ruter"
+          ],
+          "rett": 1,
+          "forklaring": "3 · 4 = 12 og 2 · 2 = 4, til saman 16 — nøyaktig det same som med den vassrette oppdelinga. Måten du deler på endrar ikkje arealet, berre kor lette tala blir."
+        }
+      ],
+      "oppsummering": "Ein figur som ikkje er eit rektangel, kan **delast i rektangel**. Legg areala saman, så har du heile. Det finst fleire måtar å dele på, og alle gjev same svar."
+    }
+  ]
+}
