@@ -118,6 +118,16 @@
         tekst.textContent = modul.skildring || '';
         kropp.appendChild(tekst);
 
+        /* Kva modulen byggjer på. Ein lærar som vel ein modul til klassa si
+         * må sjå dette FØR han vel, ikkje etter — elles set han elevane til
+         * ei løkke-oppgåve dei ikkje har fått løkka forklart. */
+        if (modul.krev) {
+            const krev = document.createElement('p');
+            krev.className = 'bs-modulkrev';
+            krev.textContent = 'Byggjer på grunnkurset';
+            kropp.appendChild(krev);
+        }
+
         if (klar) {
             kropp.appendChild(framgangslinje(modul));
             const liste = document.createElement('ol');

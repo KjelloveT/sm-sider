@@ -5,814 +5,6 @@
   "tittel": "Mangekantar og mønster",
   "leksjonar": [
     {
-      "id": "fyrste-steg",
-      "tittel": "Fyrste steg",
-      "kompetansemaal": [
-        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
-      ],
-      "palett": [
-        "framover",
-        "snuHogre",
-        "snuVenstre",
-        "pennOpp",
-        "pennNed"
-      ],
-      "tekst": [
-        {
-          "type": "avsnitt",
-          "tekst": "Midt på det kvite feltet står ei **skilpadde**. Ho har ein penn i halen, og ho gjer nøyaktig det du seier — ikkje meir, og ikkje noko anna."
-        },
-        {
-          "type": "avsnitt",
-          "tekst": "Eit program er ei liste med ordrar. Skilpadda tek dei ovanfrå og ned, éin om gongen. `Gå framover` dreg ein strek. `Snu høgre` snur henne på staden, utan å teikne noko."
-        },
-        {
-          "type": "merk",
-          "tekst": "Skilpadda startar med nasen **rett opp**. Snur du henne 90 gradar til høgre, peikar ho mot høgre kant."
-        }
-      ],
-      "doeme": {
-        "oppmoding": "Dette er tre ordrar: gå, snu, gå. Hent dei inn, trykk **Køyr**, og sjå kva som skjer. Prøv så å endre `90` til `45`.",
-        "program": {
-          "app": "bolkestokk",
-          "version": 1,
-          "start": [
-            {
-              "type": "framover",
-              "felt": {
-                "lengd": 100
-              }
-            },
-            {
-              "type": "snuHogre",
-              "felt": {
-                "grader": 90
-              }
-            },
-            {
-              "type": "framover",
-              "felt": {
-                "lengd": 100
-              }
-            }
-          ],
-          "funksjonar": []
-        }
-      },
-      "loype": {
-        "tittel": "Bygg ein firkant",
-        "maal": "ein firkant med fire like sider — bygd for hand, ordre for ordre",
-        "steg": [
-          {
-            "tekst": "Vi startar med éi side. Skilpadda går rett opp og dreg ein strek på 100 steg.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                }
-              ],
-              "funksjonar": []
-            }
-          },
-          {
-            "tekst": "No snur vi 90 gradar til høgre og går like langt igjen. Legg merke til at snuinga ikkje teiknar noko.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                }
-              ],
-              "funksjonar": []
-            },
-            "proev": "Snu 60 gradar i staden for 90. Kvifor blir hjørnet spissare?"
-          },
-          {
-            "tekst": "To sider til, med same snuing mellom.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                }
-              ],
-              "funksjonar": []
-            }
-          },
-          {
-            "tekst": "Til slutt ei siste snuing. Då står skilpadda akkurat som ho gjorde då ho byrja — og det er sjølve teiknet på at figuren er ferdig.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                }
-              ],
-              "funksjonar": []
-            },
-            "proev": "Tel blokkene. Åtte ordrar for fire sider. Skriv talet ned — vi kjem tilbake til det."
-          }
-        ]
-      },
-      "oppgaver": [
-        {
-          "id": "f1",
-          "type": "les",
-          "maal": "Kva teiknar dette?",
-          "tekst": "Les blokkene under. Ikkje køyr dei — sjå for deg kva skilpadda gjer.",
-          "program": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              }
-            ],
-            "funksjonar": []
-          },
-          "sporsmal": "Kva teiknar dette programmet?",
-          "alternativ": [
-            "Ei rett strek",
-            "Eit hjørne — to strek som møtest",
-            "Ein ferdig firkant"
-          ],
-          "rett": 1,
-          "forklaring": "To `Gå framover` gjev to strek. Snuinga mellom dei gjer at den andre streken går ein annan veg, og då møtest dei i eit hjørne."
-        },
-        {
-          "id": "f2",
-          "type": "bygg",
-          "maal": "Teikn ein firkant",
-          "tekst": "Bygg ein firkant med sider på **100 steg**, slik du gjorde i løypa. Du treng åtte blokker.",
-          "hint": [
-            "Ein firkant har fire sider. Mellom kvar side må skilpadda snu.",
-            "Rekkjefølgja er: gå, snu, gå, snu, gå, snu, gå, snu. Alle snuingane er på 90 gradar."
-          ],
-          "testar": [
-            {
-              "type": "teikning"
-            }
-          ],
-          "venta": {
-            "strek": 4,
-            "lukka": true,
-            "breidd": 100,
-            "hogd": 100
-          },
-          "loeysing": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              }
-            ],
-            "funksjonar": []
-          }
-        },
-        {
-          "id": "f3",
-          "type": "rett",
-          "maal": "Finn feilen i firkanten",
-          "tekst": "Dette programmet skulle teikne ein firkant, men figuren lukkar seg ikkje. Hent det inn, finn feilen og rett han.",
-          "startProgram": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 60
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 60
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 60
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 60
-                }
-              }
-            ],
-            "funksjonar": []
-          },
-          "hint": [
-            "Køyr programmet og sjå på figuren. Blir hjørna for spisse eller for butte?",
-            "Eit hjørne i ein firkant er 90 gradar, ikkje 60."
-          ],
-          "testar": [
-            {
-              "type": "teikning"
-            }
-          ],
-          "venta": {
-            "strek": 4,
-            "lukka": true,
-            "breidd": 100,
-            "hogd": 100
-          },
-          "loeysing": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              },
-              {
-                "type": "framover",
-                "felt": {
-                  "lengd": 100
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 90
-                }
-              }
-            ],
-            "funksjonar": []
-          }
-        }
-      ],
-      "oppsummering": "Skilpadda følgjer ordrane dine **ovanfrå og ned**. `Gå framover` teiknar, `Snu` teiknar ikkje. Ein firkant blir til av fire sider og fire snuingar på 90 gradar."
-    },
-    {
-      "id": "gjenta",
-      "tittel": "Gjenta",
-      "kompetansemaal": [
-        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
-      ],
-      "palett": [
-        "framover",
-        "snuHogre",
-        "snuVenstre",
-        "pennOpp",
-        "pennNed",
-        "gjenta",
-        "bakover"
-      ],
-      "tekst": [
-        {
-          "type": "avsnitt",
-          "tekst": "Sjå på firkanten du bygde. Du skreiv `Gå framover 100` og `Snu høgre 90` **fire gonger etter kvarandre**. Det er nøyaktig same to ordrane, om og om att."
-        },
-        {
-          "type": "avsnitt",
-          "tekst": "Det finst ei blokk for akkurat dette. `Gjenta` har eit rom inni seg, og alt du legg der køyrer så mange gonger du seier."
-        },
-        {
-          "type": "merk",
-          "tekst": "Åtte blokker blir til tre. Og skal du plutseleg ha ein figur med tjue sider, byter du eitt tal — i staden for å leggje ut førti blokker."
-        }
-      ],
-      "doeme": {
-        "oppmoding": "Same firkanten, men med `Gjenta`. Køyr han, og byt så `4` til `3`. Kva skjer?",
-        "program": {
-          "app": "bolkestokk",
-          "version": 1,
-          "start": [
-            {
-              "type": "gjenta",
-              "felt": {
-                "tal": 4
-              },
-              "kropp": [
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                }
-              ]
-            }
-          ],
-          "funksjonar": []
-        }
-      },
-      "loype": {
-        "tittel": "Frå åtte blokker til tre",
-        "maal": "den same firkanten, men med ei løkke i staden for gjentaking",
-        "steg": [
-          {
-            "tekst": "Her er firkanten frå sist. Åtte blokker, og berre to av dei er ulike.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "framover",
-                  "felt": {
-                    "lengd": 100
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                }
-              ],
-              "funksjonar": []
-            }
-          },
-          {
-            "tekst": "Vi tek dei to som går att — `Gå framover` og `Snu høgre` — og legg dei inni ei `Gjenta`-blokk.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "gjenta",
-                  "felt": {
-                    "tal": 1
-                  },
-                  "kropp": [
-                    {
-                      "type": "framover",
-                      "felt": {
-                        "lengd": 100
-                      }
-                    },
-                    {
-                      "type": "snuHogre",
-                      "felt": {
-                        "grader": 90
-                      }
-                    }
-                  ]
-                }
-              ],
-              "funksjonar": []
-            },
-            "proev": "Køyr dette. Kvifor blir det berre éi strek?"
-          },
-          {
-            "tekst": "Så seier vi at det skal skje fire gonger. Tre blokker gjer no jobben til åtte.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "gjenta",
-                  "felt": {
-                    "tal": 4
-                  },
-                  "kropp": [
-                    {
-                      "type": "framover",
-                      "felt": {
-                        "lengd": 100
-                      }
-                    },
-                    {
-                      "type": "snuHogre",
-                      "felt": {
-                        "grader": 90
-                      }
-                    }
-                  ]
-                }
-              ],
-              "funksjonar": []
-            },
-            "proev": "Set talet til 8 og køyr. Kva slags figur får du då?"
-          }
-        ]
-      },
-      "oppgaver": [
-        {
-          "id": "g1",
-          "type": "bygg",
-          "maal": "Firkant med høgst 3 blokker",
-          "tekst": "Teikn den same firkanten med sider på **100 steg** — men denne gongen med **høgst 3 blokker**.",
-          "hint": [
-            "Kva to blokker gjentek seg i firkanten?",
-            "Legg dei inni ei `Gjenta`-blokk, og set talet til 4."
-          ],
-          "testar": [
-            {
-              "type": "maksBlokker",
-              "vent": 3
-            },
-            {
-              "type": "brukar",
-              "blokk": "gjenta"
-            },
-            {
-              "type": "teikning"
-            }
-          ],
-          "venta": {
-            "strek": 4,
-            "lukka": true,
-            "breidd": 100,
-            "hogd": 100
-          },
-          "loeysing": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "gjenta",
-                "felt": {
-                  "tal": 4
-                },
-                "kropp": [
-                  {
-                    "type": "framover",
-                    "felt": {
-                      "lengd": 100
-                    }
-                  },
-                  {
-                    "type": "snuHogre",
-                    "felt": {
-                      "grader": 90
-                    }
-                  }
-                ]
-              }
-            ],
-            "funksjonar": []
-          }
-        },
-        {
-          "id": "g2",
-          "type": "les",
-          "maal": "Kva figur blir dette?",
-          "tekst": "Les blokkene. Kva slags figur blir dette?",
-          "program": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "gjenta",
-                "felt": {
-                  "tal": 3
-                },
-                "kropp": [
-                  {
-                    "type": "framover",
-                    "felt": {
-                      "lengd": 120
-                    }
-                  },
-                  {
-                    "type": "snuHogre",
-                    "felt": {
-                      "grader": 120
-                    }
-                  }
-                ]
-              }
-            ],
-            "funksjonar": []
-          },
-          "sporsmal": "Kva teiknar programmet?",
-          "alternativ": [
-            "Ein trekant",
-            "Ein firkant",
-            "Tre strek som ikkje møtest"
-          ],
-          "rett": 0,
-          "forklaring": "Tre sider og tre snuingar gjev ein trekant. At snuinga er 120 gradar er ikkje tilfeldig — det kjem vi tilbake til i neste leksjon."
-        },
-        {
-          "id": "g3",
-          "type": "bygg",
-          "maal": "Teikn ein trekant",
-          "tekst": "Teikn ein **trekant** med sider på 120 steg. Snuinga skal vere 120 gradar. Høgst 3 blokker.",
-          "hint": [
-            "Same oppskrifta som firkanten, men med tre sider i staden for fire."
-          ],
-          "testar": [
-            {
-              "type": "maksBlokker",
-              "vent": 3
-            },
-            {
-              "type": "brukar",
-              "blokk": "gjenta"
-            },
-            {
-              "type": "teikning"
-            }
-          ],
-          "venta": {
-            "strek": 3,
-            "lukka": true,
-            "breidd": 103.92304845413263,
-            "hogd": 120
-          },
-          "loeysing": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "gjenta",
-                "felt": {
-                  "tal": 3
-                },
-                "kropp": [
-                  {
-                    "type": "framover",
-                    "felt": {
-                      "lengd": 120
-                    }
-                  },
-                  {
-                    "type": "snuHogre",
-                    "felt": {
-                      "grader": 120
-                    }
-                  }
-                ]
-              }
-            ],
-            "funksjonar": []
-          }
-        }
-      ],
-      "oppsummering": "`Gjenta` køyrer blokkene inni seg så mange gonger du seier. Ser du dei same blokkene fleire gonger etter kvarandre, **skal** dei inn i ei løkke."
-    },
-    {
       "id": "vinkelen",
       "tittel": "Vinkelen som lukkar figuren",
       "kompetansemaal": [
@@ -1161,9 +353,10 @@
       "oppsummering": "Ein figur lukkar seg når snuingane til saman blir **360 gradar**. Med `n` kantar er kvar snuing `360 ÷ n`. Rekneblokka kan stå rett i hòlet, så du slepp å rekne sjølv."
     },
     {
-      "id": "variabel",
-      "tittel": "Ein verdi som endrar seg",
+      "id": "eigenskapar",
+      "tittel": "Kva skil den eine firkanten frå den andre",
       "kompetansemaal": [
+        "6. trinn: beskrive og utforske egenskaper ved to- og tredimensjonale figurer og forklare hvilke egenskaper figurene har til felles, og hvilke egenskaper som skiller figurene fra hverandre",
         "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
       ],
       "palett": [
@@ -1175,53 +368,38 @@
         "gjenta",
         "bakover",
         "rekne",
-        "skrivUt",
-        "settVar",
-        "endreVar",
-        "lesVar"
+        "skrivUt"
       ],
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "Til no har alle sidene vore like lange. Ein **variabel** er ein plass å leggje eit tal som skal kunne endre seg medan programmet køyrer."
+          "tekst": "Ein **firkant** er ikkje berre éin figur. Kvadratet og rektangelet er begge firkantar, men dei er ikkje like. Det som skil dei er **sidene** og **vinklane**."
         },
         {
           "type": "avsnitt",
-          "tekst": "Du gjev han eit namn og ein startverdi med `Set`. Deretter kan du bruke namnet der eit tal skulle stått, og du kan `Endre` verdien undervegs."
+          "tekst": "Programmet gjer skilnaden synleg. I eit kvadrat er alle fire `Gå framover` like lange. I eit rektangel er det to lengder som byter på. Snur du 90 gradar kvar gong, er alle hjørna rette same kva lengdene er."
         },
         {
           "type": "merk",
-          "tekst": "Står `Endre lengd med 10` **inni** løkka, veks lengda for kvar runde. Står han utanfor, skjer det berre éin gong."
+          "tekst": "Skilpadda startar med nasen **rett opp**. Den fyrste sida du teiknar blir difor **høgda**, ikkje breidda."
         }
       ],
       "doeme": {
-        "oppmoding": "Ein firkantspiral. Sida veks med 10 steg for kvar gong. Køyr han, og byt så `10` til `25`.",
+        "oppmoding": "Dette er eit rektangel som er 150 høgt og 80 breitt. Køyr det, og byt så `80` til `150`. Kva figur får du då?",
         "program": {
           "app": "bolkestokk",
           "version": 1,
           "start": [
             {
-              "type": "settVar",
-              "felt": {
-                "namn": "lengd",
-                "verdi": 20
-              }
-            },
-            {
               "type": "gjenta",
               "felt": {
-                "tal": 12
+                "tal": 2
               },
               "kropp": [
                 {
                   "type": "framover",
                   "felt": {
-                    "lengd": {
-                      "type": "lesVar",
-                      "felt": {
-                        "namn": "lengd"
-                      }
-                    }
+                    "lengd": 150
                   }
                 },
                 {
@@ -1231,10 +409,15 @@
                   }
                 },
                 {
-                  "type": "endreVar",
+                  "type": "framover",
                   "felt": {
-                    "namn": "lengd",
-                    "med": 10
+                    "lengd": 80
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
                   }
                 }
               ]
@@ -1244,11 +427,429 @@
         }
       },
       "loype": {
-        "tittel": "Bygg ein spiral",
-        "maal": "ein firkant som veks utover for kvar runde",
+        "tittel": "Frå kvadrat til rektangel",
+        "maal": "eit rektangel på 150 × 80 — bygd med ei løkke som gjentek eit sidepar",
         "steg": [
           {
-            "tekst": "Vi startar med ein vanleg firkantfigur der sida er 20 steg.",
+            "tekst": "Her er kvadratet frå grunnkurset: fire like sider, fire rette hjørne. Alle `Gå framover` har same tal.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 4
+                  },
+                  "kropp": [
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 100
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Eit rektangel har to lengder. Vi skriv ut eitt heilt sidepar — ei lang side, eit hjørne, ei kort side, eit hjørne.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 150
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 80
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Køyr dette åleine. Kvifor er ikkje figuren ferdig?"
+          },
+          {
+            "tekst": "Sideparet er halve rektangelet. Den andre halvdelen er nøyaktig det same om att, så vi legg det inni ei `Gjenta 2`.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 2
+                  },
+                  "kropp": [
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 150
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    },
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 80
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `Gjenta 2` til `Gjenta 3`. Kva skjer, og kvifor?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "e1",
+          "type": "les",
+          "maal": "Kva slags firkant?",
+          "tekst": "Les blokkene under. Ikkje køyr dei — tenk deg kva skilpadda teiknar.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 4
+                },
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 120
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva figur blir dette?",
+          "alternativ": [
+            "Eit rektangel som er breiare enn det er høgt",
+            "Eit kvadrat",
+            "Ein firkant utan rette hjørne"
+          ],
+          "rett": 1,
+          "forklaring": "Alle fire sidene er 120, og alle fire snuingane er 90 gradar. Ein firkant med fire like sider og fire rette hjørne er eit kvadrat. Kvadratet er eit rektangel — men eit rektangel treng ikkje vere eit kvadrat."
+        },
+        {
+          "id": "e2",
+          "type": "bygg",
+          "maal": "Teikn eit rektangel",
+          "tekst": "Teikn eit rektangel som er **150 høgt og 80 breitt**. Du får bruke **høgst 5 blokker**, så du må finne sideparet som gjentek seg.",
+          "hint": [
+            "Eit rektangel har to lange sider og to korte. Kva er den minste biten som gjentek seg?",
+            "Sideparet er: gå 150, snu 90, gå 80, snu 90. Det paret skal køyre to gonger."
+          ],
+          "testar": [
+            {
+              "type": "maksBlokker",
+              "vent": 5
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "lukka": true,
+            "breidd": 80,
+            "hogd": 150
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 2
+                },
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 150
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 80
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "e3",
+          "type": "rett",
+          "maal": "Rektangelet som ikkje lukkar seg",
+          "tekst": "Dette skulle bli eit rektangel, men figuren lukkar seg ikkje. Hent det inn, køyr det, og finn kva som er gale.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 2
+                },
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 150
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 80
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 80
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Tel opp snuingane. Kor mange gradar snur skilpadda til saman?",
+            "Fire hjørne à 90 gradar blir 360. Her er to av dei 80, og då blir summen berre 340."
+          ],
+          "testar": [
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "lukka": true,
+            "breidd": 80,
+            "hogd": 150
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 2
+                },
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 150
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 80
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Kvadrat og rektangel har begge **fire rette hjørne**. Skilnaden ligg i sidene: kvadratet har fire like, rektangelet har to par. Ei `Gjenta 2` rundt eitt sidepar er nok til å teikne heile rektangelet."
+    },
+    {
+      "id": "sirkel",
+      "tittel": "Frå mangekant til sirkel",
+      "kompetansemaal": [
+        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre",
+        "6. trinn: beskrive og utforske egenskaper ved to- og tredimensjonale figurer og forklare hvilke egenskaper figurene har til felles, og hvilke egenskaper som skiller figurene fra hverandre"
+      ],
+      "palett": [
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "pennOpp",
+        "pennNed",
+        "gjenta",
+        "bakover",
+        "rekne",
+        "skrivUt"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Du veit at ein figur lukkar seg når snuingane til saman blir 360 gradar, og at kvar snuing difor er `360 ÷ n`. No skal vi sjå kva som skjer når `n` blir stort."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ein trekant har tydelege hjørne. Ein tikant har mindre hjørne. Ein 90-kant har hjørne du ikkje ser. Figuren blir aldri ein ekte sirkel — men han blir så nær at auget ikkje ser skilnaden."
+        },
+        {
+          "type": "merk",
+          "tekst": "Held du sidelengda fast og aukar `n`, blir figuren **større**. Skal han halde storleiken, må sidene bli kortare når du legg til fleire."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Dette er ein tolvkant. Køyr han, og byt så `12` til `36` og `30` til `10`. Ser du framleis hjørna?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 12
+              },
+              "kropp": [
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 50
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 30
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Fleire og fleire kantar",
+        "maal": "ein 36-kant som ser ut som ein sirkel — same oppskrifta som mangekanten, berre med større n",
+        "steg": [
+          {
+            "tekst": "Ein sekskant: seks sider, og 360 ÷ 6 = 60 gradar i kvar snuing. Hjørna er godt synlege.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 6
+                  },
+                  "kropp": [
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 80
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 60
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Tolv kantar. 360 ÷ 12 = 30. Vi kortar sidene til 50, elles blir figuren dobbelt så stor.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -1257,6 +858,37 @@
                   "type": "gjenta",
                   "felt": {
                     "tal": 12
+                  },
+                  "kropp": [
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 50
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 30
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Lat sidene stå på 80 og køyr. Kvifor renn figuren ut av ruta?"
+          },
+          {
+            "tekst": "36 kantar, 360 ÷ 36 = 10 gradar, og sider på berre 20 steg. Blokkene er dei same tre — det er berre tala som har endra seg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 36
                   },
                   "kropp": [
                     {
@@ -1268,49 +900,7 @@
                     {
                       "type": "snuHogre",
                       "felt": {
-                        "grader": 90
-                      }
-                    }
-                  ]
-                }
-              ],
-              "funksjonar": []
-            }
-          },
-          {
-            "tekst": "No lagar vi ein variabel som heiter `lengd` og set han til 20. I staden for talet 20 i `Gå framover` brukar vi variabelen.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "settVar",
-                  "felt": {
-                    "namn": "lengd",
-                    "verdi": 20
-                  }
-                },
-                {
-                  "type": "gjenta",
-                  "felt": {
-                    "tal": 12
-                  },
-                  "kropp": [
-                    {
-                      "type": "framover",
-                      "felt": {
-                        "lengd": {
-                          "type": "lesVar",
-                          "felt": {
-                            "namn": "lengd"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "type": "snuHogre",
-                      "felt": {
-                        "grader": 90
+                        "grader": 10
                       }
                     }
                   ]
@@ -1318,183 +908,97 @@
               ],
               "funksjonar": []
             },
-            "proev": "Køyr. Figuren ser lik ut — for lengda endrar seg ikkje enno."
-          },
-          {
-            "tekst": "Til slutt legg vi `Endre lengd med 10` **inni** løkka. No blir kvar side lenger enn den førre.",
-            "program": {
-              "app": "bolkestokk",
-              "version": 1,
-              "start": [
-                {
-                  "type": "settVar",
-                  "felt": {
-                    "namn": "lengd",
-                    "verdi": 20
-                  }
-                },
-                {
-                  "type": "gjenta",
-                  "felt": {
-                    "tal": 12
-                  },
-                  "kropp": [
-                    {
-                      "type": "framover",
-                      "felt": {
-                        "lengd": {
-                          "type": "lesVar",
-                          "felt": {
-                            "namn": "lengd"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "type": "snuHogre",
-                      "felt": {
-                        "grader": 90
-                      }
-                    },
-                    {
-                      "type": "endreVar",
-                      "felt": {
-                        "namn": "lengd",
-                        "med": 10
-                      }
-                    }
-                  ]
-                }
-              ],
-              "funksjonar": []
-            },
-            "proev": "Flytt `Endre`-blokka ut av løkka og køyr. Kva skjer, og kvifor?"
+            "proev": "Prøv 90 kantar med 4 gradar og sider på 8 steg."
           }
         ]
       },
       "oppgaver": [
         {
-          "id": "r1",
-          "type": "les",
-          "maal": "Kva skjer utan Endre?",
-          "tekst": "Sjå på spiralen under. Tenk deg at nokon fjernar `Endre lengd med 10`.",
-          "program": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "settVar",
-                "felt": {
-                  "namn": "lengd",
-                  "verdi": 20
-                }
-              },
-              {
-                "type": "gjenta",
-                "felt": {
-                  "tal": 12
-                },
-                "kropp": [
-                  {
-                    "type": "framover",
-                    "felt": {
-                      "lengd": {
-                        "type": "lesVar",
-                        "felt": {
-                          "namn": "lengd"
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "type": "snuHogre",
-                    "felt": {
-                      "grader": 90
-                    }
-                  },
-                  {
-                    "type": "endreVar",
-                    "felt": {
-                      "namn": "lengd",
-                      "med": 10
-                    }
-                  }
-                ]
-              }
-            ],
-            "funksjonar": []
-          },
-          "sporsmal": "Kva teiknar programmet då?",
-          "alternativ": [
-            "Den same spiralen",
-            "Den same vesle firkanten om og om att",
-            "Ingenting"
-          ],
-          "rett": 1,
-          "forklaring": "Utan `Endre` står `lengd` på 20 heile vegen. Skilpadda teiknar då den same firkanten tolv gonger oppå seg sjølv."
-        },
-        {
-          "id": "r2",
+          "id": "s1",
           "type": "bygg",
-          "maal": "Bygg ein spiral",
-          "tekst": "Bygg spiralen sjølv: start med `lengd` på **20**, gjenta **12** gonger, gå framover `lengd`, snu 90 gradar, og auk `lengd` med **10** kvar runde.",
+          "maal": "Vinkelen i ein 36-kant",
+          "tekst": "Før du teiknar: la programmet rekne ut kor mange gradar skilpadda må snu i kvart hjørne av ein **36-kant**, og skrive svaret ut.",
           "hint": [
-            "Du treng `Set lengd til 20` **før** løkka.",
-            "Inni løkka: `Gå framover` med variabelen i hòlet, `Snu høgre 90`, og `Endre lengd med 10`."
+            "Snuingane skal til saman bli 360 gradar, fordelte likt på 36 hjørne.",
+            "Legg ei `Rekn ut`-blokk med 360 delt på 36 inni `Skriv ut`."
           ],
           "testar": [
             {
               "type": "brukar",
-              "blokk": "endreVar",
-              "inni": "gjenta"
+              "blokk": "rekne"
+            },
+            {
+              "type": "svar",
+              "vent": 10
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 360,
+                      "op": "dele",
+                      "b": 36
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "s2",
+          "type": "bygg",
+          "maal": "Teikn ein 36-kant",
+          "tekst": "Teikn ein 36-kant med sider på **20 steg**. Bruk svaret frå oppgåva over. Du får **høgst 3 blokker**.",
+          "hint": [
+            "Tre blokker er `Gjenta` og dei to som ligg inni han.",
+            "`Gjenta 36` med `Gå framover 20` og `Snu høgre 10` inni."
+          ],
+          "testar": [
+            {
+              "type": "maksBlokker",
+              "vent": 3
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
             },
             {
               "type": "teikning"
             }
           ],
           "venta": {
-            "strek": 12,
-            "lukka": false
+            "strek": 36,
+            "lukka": true
           },
           "loeysing": {
             "app": "bolkestokk",
             "version": 1,
             "start": [
               {
-                "type": "settVar",
-                "felt": {
-                  "namn": "lengd",
-                  "verdi": 20
-                }
-              },
-              {
                 "type": "gjenta",
                 "felt": {
-                  "tal": 12
+                  "tal": 36
                 },
                 "kropp": [
                   {
                     "type": "framover",
                     "felt": {
-                      "lengd": {
-                        "type": "lesVar",
-                        "felt": {
-                          "namn": "lengd"
-                        }
-                      }
+                      "lengd": 20
                     }
                   },
                   {
                     "type": "snuHogre",
                     "felt": {
-                      "grader": 90
-                    }
-                  },
-                  {
-                    "type": "endreVar",
-                    "felt": {
-                      "namn": "lengd",
-                      "med": 10
+                      "grader": 10
                     }
                   }
                 ]
@@ -1504,49 +1008,30 @@
           }
         },
         {
-          "id": "r3",
-          "type": "rett",
-          "maal": "Spiralen som ikkje veks",
-          "tekst": "Dette skulle vere ein spiral, men figuren veks ikkje. Hent det inn, finn ut kvifor, og rett det.",
-          "startProgram": {
+          "id": "s3",
+          "type": "les",
+          "maal": "Kva er rundast?",
+          "tekst": "Programmet under teiknar ein åttekant.",
+          "program": {
             "app": "bolkestokk",
             "version": 1,
             "start": [
               {
-                "type": "settVar",
-                "felt": {
-                  "namn": "lengd",
-                  "verdi": 20
-                }
-              },
-              {
                 "type": "gjenta",
                 "felt": {
-                  "tal": 12
+                  "tal": 8
                 },
                 "kropp": [
                   {
                     "type": "framover",
                     "felt": {
-                      "lengd": {
-                        "type": "lesVar",
-                        "felt": {
-                          "namn": "lengd"
-                        }
-                      }
+                      "lengd": 60
                     }
                   },
                   {
                     "type": "snuHogre",
                     "felt": {
-                      "grader": 90
-                    }
-                  },
-                  {
-                    "type": "endreVar",
-                    "felt": {
-                      "namn": "lengd",
-                      "med": 0
+                      "grader": 45
                     }
                   }
                 ]
@@ -1554,74 +1039,24 @@
             ],
             "funksjonar": []
           },
-          "hint": [
-            "Køyr programmet. Blir sidene lengre?",
-            "Sjå på talet i `Endre lengd med`. Kva skjer når du aukar noko med 0?"
+          "sporsmal": "Eit anna program har `Gjenta 30` med `Snu høgre 12`. Kva av dei to ser mest ut som ein sirkel?",
+          "alternativ": [
+            "Åttekanten, fordi sidene er lengre",
+            "30-kanten, fordi kvart hjørne bøyer mindre",
+            "Dei ser like ut"
           ],
-          "testar": [
-            {
-              "type": "teikning"
-            }
-          ],
-          "venta": {
-            "strek": 12,
-            "lukka": false
-          },
-          "loeysing": {
-            "app": "bolkestokk",
-            "version": 1,
-            "start": [
-              {
-                "type": "settVar",
-                "felt": {
-                  "namn": "lengd",
-                  "verdi": 20
-                }
-              },
-              {
-                "type": "gjenta",
-                "felt": {
-                  "tal": 12
-                },
-                "kropp": [
-                  {
-                    "type": "framover",
-                    "felt": {
-                      "lengd": {
-                        "type": "lesVar",
-                        "felt": {
-                          "namn": "lengd"
-                        }
-                      }
-                    }
-                  },
-                  {
-                    "type": "snuHogre",
-                    "felt": {
-                      "grader": 90
-                    }
-                  },
-                  {
-                    "type": "endreVar",
-                    "felt": {
-                      "namn": "lengd",
-                      "med": 10
-                    }
-                  }
-                ]
-              }
-            ],
-            "funksjonar": []
-          }
+          "rett": 1,
+          "forklaring": "360 ÷ 30 = 12 gradar. Ei snuing på 12 gradar er mykje mindre enn ei på 45, så bøyen i kvart hjørne blir mindre og kanten jamnare. Jo fleire kantar, jo nærare sirkelen."
         }
       ],
-      "oppsummering": "Ein **variabel** er eit namn på eit tal som kan endre seg. `Set` gjev han ein startverdi, `Endre` justerer han undervegs. Ligg `Endre` inni løkka, skjer det kvar runde."
+      "oppsummering": "Ein sirkel er ein mangekant med så mange kantar at hjørna forsvinn. Oppskrifta er den same heile vegen: `Gjenta n` med `Snu høgre 360 ÷ n`. Aukar du `n`, må du korte sidene for at figuren skal halde storleiken."
     },
     {
-      "id": "funksjon",
-      "tittel": "Din eigen funksjon",
+      "id": "stjerne",
+      "tittel": "Stjerner — når figuren går fleire rundar",
       "kompetansemaal": [
-        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
+        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre",
+        "6. trinn: beskrive og utforske egenskaper ved to- og tredimensjonale figurer og forklare hvilke egenskaper figurene har til felles, og hvilke egenskaper som skiller figurene fra hverandre"
       ],
       "palett": [
         "framover",
@@ -1632,79 +1067,58 @@
         "gjenta",
         "bakover",
         "rekne",
-        "skrivUt",
-        "settVar",
-        "endreVar",
-        "lesVar",
-        "kallFunksjon",
-        "setFarge"
+        "skrivUt"
       ],
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "Du har bygd firkanten mange gonger no. I staden for å byggje han om att kvar gong, kan du gje han eit **namn**."
+          "tekst": "Regelen har vore at snuingane til saman blir **360 gradar**. Det er sant for mangekantar — men det er ikkje heile sanninga."
         },
         {
           "type": "avsnitt",
-          "tekst": "Trykk **Ny funksjon** over arbeidsbenken. Du får ein ny stabel med si eiga hatt. Skriv eit namn i feltet, og legg blokkene som skal høyre til der."
+          "tekst": "Ein figur lukkar seg når skilpadda er tilbake der ho starta **og peikar same vegen**. Det skjer når snuingane blir 360 gradar, eller 720, eller 1080. Går ho **to** rundar før ho er heime, får du ei **stjerne** i staden for ein mangekant."
         },
         {
           "type": "merk",
-          "tekst": "Etterpå dukkar namnet opp i `Bruk`-blokka. Ein funksjon du har laga sjølv, verkar akkurat som dei blokkene som følgde med."
-        },
-        {
-          "type": "avsnitt",
-          "tekst": "Dette er det programmerarar kallar **å lage ein funksjon**: du gjev ei samling ordrar eitt namn, og så treng du berre hugse namnet."
+          "tekst": "Fem snuingar à 144 gradar blir 720 — to heile rundar. Difor har femtakka stjerner nettopp den vinkelen."
         }
       ],
       "doeme": {
-        "oppmoding": "Ein funksjon som heiter `firkant`, og eit program som brukar han. Sjå på begge stablane i arbeidsbenken.",
+        "oppmoding": "Fem sider og 144 gradar. Køyr det, og byt så 144 til 72. Kva blir figuren då, og kvifor?",
         "program": {
           "app": "bolkestokk",
           "version": 1,
           "start": [
             {
-              "type": "kallFunksjon",
+              "type": "gjenta",
               "felt": {
-                "namn": "firkant"
-              }
-            }
-          ],
-          "funksjonar": [
-            {
-              "namn": "firkant",
+                "tal": 5
+              },
               "kropp": [
                 {
-                  "type": "gjenta",
+                  "type": "framover",
                   "felt": {
-                    "tal": 4
-                  },
-                  "kropp": [
-                    {
-                      "type": "framover",
-                      "felt": {
-                        "lengd": 60
-                      }
-                    },
-                    {
-                      "type": "snuHogre",
-                      "felt": {
-                        "grader": 90
-                      }
-                    }
-                  ]
+                    "lengd": 150
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 144
+                  }
                 }
               ]
             }
-          ]
+          ],
+          "funksjonar": []
         }
       },
       "loype": {
-        "tittel": "Gje figuren eit namn",
-        "maal": "ein funksjon du kan bruke om og om att",
+        "tittel": "Ei stjerne med fem takkar",
+        "maal": "ei femtakka stjerne — same tre blokkene som mangekanten, med ein vinkel som gjev to rundar",
         "steg": [
           {
-            "tekst": "Her er firkanten som ein vanleg løkke, slik du kjenner han.",
+            "tekst": "Fem sider med 360 ÷ 5 = 72 gradar gjev ein vanleg femkant. Éin rund, ingen takkar.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -1712,19 +1126,19 @@
                 {
                   "type": "gjenta",
                   "felt": {
-                    "tal": 4
+                    "tal": 5
                   },
                   "kropp": [
                     {
                       "type": "framover",
                       "felt": {
-                        "lengd": 60
+                        "lengd": 150
                       }
                     },
                     {
                       "type": "snuHogre",
                       "felt": {
-                        "grader": 90
+                        "grader": 72
                       }
                     }
                   ]
@@ -1734,247 +1148,240 @@
             }
           },
           {
-            "tekst": "No er dei same blokkene flytta inn i ein funksjon som heiter `firkant`. Programmet under hatta seier berre `Bruk firkant`.",
+            "tekst": "Vi doblar snuinga: 720 ÷ 5 = 144. No går skilpadda to rundar på dei same fem sidene, og sidene kryssar kvarandre.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
               "start": [
                 {
-                  "type": "kallFunksjon",
+                  "type": "gjenta",
                   "felt": {
-                    "namn": "firkant"
-                  }
-                }
-              ],
-              "funksjonar": [
-                {
-                  "namn": "firkant",
+                    "tal": 5
+                  },
                   "kropp": [
                     {
-                      "type": "gjenta",
+                      "type": "framover",
                       "felt": {
-                        "tal": 4
-                      },
-                      "kropp": [
-                        {
-                          "type": "framover",
-                          "felt": {
-                            "lengd": 60
-                          }
-                        },
-                        {
-                          "type": "snuHogre",
-                          "felt": {
-                            "grader": 90
-                          }
-                        }
-                      ]
+                        "lengd": 150
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 144
+                      }
                     }
                   ]
                 }
-              ]
+              ],
+              "funksjonar": []
             },
-            "proev": "Køyr. Figuren er den same — men programmet er éi blokk langt."
+            "proev": "Tel takkane. Er det framleis berre fem sider?"
           },
           {
-            "tekst": "Og no er nytta tydeleg: to firkantar med ei sving mellom, utan å byggje firkanten to gonger.",
+            "tekst": "Sju sider og 720 ÷ 7 ≈ 103 gradar gjev ei sjutakka stjerne. Regelen held: to rundar fordelte på like mange hjørne.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
               "start": [
                 {
-                  "type": "kallFunksjon",
+                  "type": "gjenta",
                   "felt": {
-                    "namn": "firkant"
-                  }
-                },
-                {
-                  "type": "snuHogre",
-                  "felt": {
-                    "grader": 90
-                  }
-                },
-                {
-                  "type": "kallFunksjon",
-                  "felt": {
-                    "namn": "firkant"
-                  }
-                }
-              ],
-              "funksjonar": [
-                {
-                  "namn": "firkant",
+                    "tal": 7
+                  },
                   "kropp": [
                     {
-                      "type": "gjenta",
+                      "type": "framover",
                       "felt": {
-                        "tal": 4
-                      },
-                      "kropp": [
-                        {
-                          "type": "framover",
-                          "felt": {
-                            "lengd": 60
-                          }
-                        },
-                        {
-                          "type": "snuHogre",
-                          "felt": {
-                            "grader": 90
-                          }
-                        }
-                      ]
+                        "lengd": 120
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 103
+                      }
                     }
                   ]
                 }
-              ]
-            }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Prøv 7 sider med 154 gradar. Det er tre rundar — kva slags stjerne blir det?"
           }
         ]
       },
       "oppgaver": [
         {
-          "id": "k1",
+          "id": "t1",
           "type": "les",
-          "maal": "Kor mange strek?",
-          "tekst": "Under ser du både funksjonen og programmet som brukar han.",
+          "maal": "Kor mange rundar?",
+          "tekst": "Les blokkene under. Rekn i hovudet før du køyrer.",
           "program": {
             "app": "bolkestokk",
             "version": 1,
             "start": [
               {
-                "type": "kallFunksjon",
+                "type": "gjenta",
                 "felt": {
-                  "namn": "firkant"
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 45
-                }
-              },
-              {
-                "type": "kallFunksjon",
-                "felt": {
-                  "namn": "firkant"
-                }
-              }
-            ],
-            "funksjonar": [
-              {
-                "namn": "firkant",
+                  "tal": 5
+                },
                 "kropp": [
                   {
-                    "type": "gjenta",
+                    "type": "framover",
                     "felt": {
-                      "tal": 4
-                    },
-                    "kropp": [
-                      {
-                        "type": "framover",
-                        "felt": {
-                          "lengd": 60
-                        }
-                      },
-                      {
-                        "type": "snuHogre",
-                        "felt": {
-                          "grader": 90
-                        }
-                      }
-                    ]
+                      "lengd": 150
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 144
+                    }
                   }
                 ]
               }
-            ]
+            ],
+            "funksjonar": []
           },
-          "sporsmal": "Kor mange strek teiknar dette programmet til saman?",
+          "sporsmal": "Kor mange heile rundar snur skilpadda til saman i dette programmet?",
           "alternativ": [
-            "4",
-            "8",
-            "9"
+            "Éin rund",
+            "To rundar",
+            "Fem rundar"
           ],
           "rett": 1,
-          "fasitFraStrek": true,
-          "forklaring": "`firkant` teiknar fire strek. Han blir brukt to gonger, altså 4 + 4 = 8. Snuinga mellom dei teiknar ingenting."
+          "forklaring": "Fem snuingar à 144 gradar blir 720 gradar. 720 ÷ 360 = 2, altså to heile rundar. Det er nettopp difor figuren blir ei stjerne og ikkje ein femkant."
         },
         {
-          "id": "k2",
+          "id": "t2",
           "type": "bygg",
-          "maal": "Lag funksjonen trekant",
-          "tekst": "Lag ein funksjon som heiter **trekant** og teiknar ein trekant med sider på 100 steg. Bruk han så **to gonger**, med ei sving på **180 gradar** mellom.",
+          "maal": "Teikn ei femtakka stjerne",
+          "tekst": "Teikn ei femtakka stjerne med sider på **150 steg**. Du får **høgst 3 blokker**.",
           "hint": [
-            "Trykk **Ny funksjon**, og skriv `trekant` i namnefeltet.",
-            "Inni funksjonen: `Gjenta 3` med `Gå framover 100` og `Snu høgre 120`.",
-            "I hovudprogrammet: `Bruk trekant`, `Snu høgre 180`, `Bruk trekant`."
+            "Ei stjerne er bygd som ein mangekant — same tre blokkene. Det er berre vinkelen som er annleis.",
+            "To rundar er 720 gradar. Fordelt på fem hjørne blir det 720 ÷ 5 = 144."
           ],
           "testar": [
             {
+              "type": "maksBlokker",
+              "vent": 3
+            },
+            {
               "type": "brukar",
-              "blokk": "kallFunksjon"
+              "blokk": "gjenta"
             },
             {
               "type": "teikning"
             }
           ],
           "venta": {
-            "strek": 6
+            "strek": 5,
+            "lukka": true
           },
           "loeysing": {
             "app": "bolkestokk",
             "version": 1,
             "start": [
               {
-                "type": "kallFunksjon",
+                "type": "gjenta",
                 "felt": {
-                  "namn": "trekant"
-                }
-              },
-              {
-                "type": "snuHogre",
-                "felt": {
-                  "grader": 180
-                }
-              },
-              {
-                "type": "kallFunksjon",
-                "felt": {
-                  "namn": "trekant"
-                }
-              }
-            ],
-            "funksjonar": [
-              {
-                "namn": "trekant",
+                  "tal": 5
+                },
                 "kropp": [
                   {
-                    "type": "gjenta",
+                    "type": "framover",
                     "felt": {
-                      "tal": 3
-                    },
-                    "kropp": [
-                      {
-                        "type": "framover",
-                        "felt": {
-                          "lengd": 100
-                        }
-                      },
-                      {
-                        "type": "snuHogre",
-                        "felt": {
-                          "grader": 120
-                        }
-                      }
-                    ]
+                      "lengd": 150
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 144
+                    }
                   }
                 ]
               }
-            ]
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "t3",
+          "type": "rett",
+          "maal": "Stjerna som blei ein femkant",
+          "tekst": "Dette skulle bli ei femtakka stjerne, men det blei ein vanleg femkant. Hent det inn og rett vinkelen.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 5
+                },
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 150
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 72
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Figuren lukkar seg — men skilpadda gjekk berre éin rund. Ei stjerne krev to.",
+            "Byt 72 til 144. Då blir summen 720 i staden for 360."
+          ],
+          "testar": [
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 5,
+            "lukka": true
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 5
+                },
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 150
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 144
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
           }
         }
       ],
-      "oppsummering": "Ein **eigen funksjon** er ei samling blokker med eit namn. Du byggjer han éin gong og brukar han så mange gonger du vil. Programmerarar kallar det ein **funksjon**."
+      "oppsummering": "Ein figur lukkar seg når snuingane blir **eit heilt tal rundar** — 360, 720 eller 1080 gradar. Éin rund gjev ein mangekant. To rundar på like mange hjørne gjev ei **stjerne**."
     },
     {
       "id": "moenster",
