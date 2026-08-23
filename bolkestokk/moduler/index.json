@@ -102,6 +102,24 @@
         "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling"
       ],
       "krev": "grunnkurs"
+    },
+    {
+      "id": "likningar",
+      "gruppe": "geometri",
+      "fil": "likningar.json",
+      "tittel": "Likningar og ulikskapar",
+      "ikon": "scaling",
+      "accent": "accent5",
+      "trinn": "7. trinn",
+      "talLeksjonar": 5,
+      "klar": true,
+      "krev": "grunnkurs",
+      "skildring": "Ei likning er ein påstand som er sann for nokre tal og usann for andre. Lat maskina prøve alle, så blir utskrifta løysinga sjølv.",
+      "kompetansemaal": [
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige",
+        "7. trinn: formulere og løyse problem som har med likningar å gjere",
+        "7. trinn: bruke tal, tekst, teikning og konkret til å løyse ulikskapar og teste og forklare løysingar"
+      ]
     }
   ]
 }

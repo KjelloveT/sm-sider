@@ -3,6 +3,12 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.18] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Likningar og ulikskapar»** — fem leksjonar for 7. trinn, og den fyrste modulen for det trinnet. Eleven løyser ikkje algebraisk: han lèt programmet prøve alle tala i eit område og skrive ut dei som gjer påstanden sann. **Utskrifta er løysingsmengda.** Ei likning er ein påstand som er sann for nokre tal og usann for andre, og det blir synleg på ein måte det ikkje blir når ein flyttar ledd. Ulikskapar fell ut av det same: byt `=` med `≤`, og ruta viser alle svara på ein gong.
+- Siste leksjonen handlar om noko oppgåvebøker sjeldan seier høgt: ei tom rute tyder «ingen løysing **blant dei tala eg prøvde**». Løysinga kan liggje utanfor området, vere eit desimaltal, eller vere negativ — og eit svar som er rett som tal kan framleis vere ugyldig i situasjonen det kom frå.
+
 ## [1.17] — 2026-08-23
 
 ### Lagt til

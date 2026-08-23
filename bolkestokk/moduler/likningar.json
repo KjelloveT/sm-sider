@@ -1,0 +1,2904 @@
+{
+  "app": "bolkestokk",
+  "version": 1,
+  "id": "likningar",
+  "tittel": "Likningar og ulikskapar",
+  "_note": "Eleven løyser ikkje algebraisk — han lèt programmet prøve alle tala i eit område og skrive ut dei som gjer påstanden sann. Utskrifta ER løysingsmengda. Ingenting er tilfeldig her, så alle oppgåvene har svar-testar med fasit rekna i hovudet.",
+  "leksjonar": [
+    {
+      "id": "er-det-sant",
+      "tittel": "Ei likning er ein påstand",
+      "kompetansemaal": [
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige"
+      ],
+      "palett": [
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "samanlikn",
+        "dersom"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei likning som `3 · x + 4 = 19` ser ut som ei oppgåve, men ho er eigentleg ein **påstand**: «tre gonger x, pluss fire, er nitten». Set du inn eit tal for x, blir påstanden anten sann eller usann."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Set inn x = 4: `3 · 4 + 4 = 16`. Usant. Set inn x = 5: `3 · 5 + 4 = 19`. Sant. Det talet som gjer påstanden sann, heiter **løysinga**."
+        },
+        {
+          "type": "merk",
+          "tekst": "`Dersom`-blokka gjer nøyaktig det same som du gjer i hovudet: ho prøver eitt tal og sjekkar om det stemmer."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Her blir x = 5 prøvd i likninga 3 · x + 4 = 19. Blir talet skrive ut, var påstanden sann. Byt til 4 og køyr igjen.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "x",
+                "verdi": 5
+              }
+            },
+            {
+              "type": "dersom",
+              "felt": {
+                "vilkaar": {
+                  "type": "samanlikn",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    },
+                    "op": "lik",
+                    "b": 19
+                  }
+                }
+              },
+              "kropp": [
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "x"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Prøv eitt tal",
+        "maal": "ein test som skriv ut x berre når 3 · x + 4 = 19 er sann",
+        "steg": [
+          {
+            "tekst": "Fyrst venstresida åleine. Set x til 5 og rekn ut 3 · x + 4.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 5
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Svaret vart 19, som er nettopp høgresida. Då kan vi la programmet samanlikne i staden for oss.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 5
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "lik",
+                        "b": 19
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt x til 6. Kvifor kjem det ingenting ut?"
+          },
+          {
+            "tekst": "Kjem det ingenting ut, var påstanden usann. Ei tom utskrift er eit svar, det òg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 6
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "lik",
+                        "b": 19
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "l1",
+          "type": "les",
+          "maal": "Kva er ei løysing?",
+          "tekst": "Likninga er `4 · x − 3 = 17`.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 5
+                }
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": 4,
+                          "op": "gonge",
+                          "b": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      },
+                      "op": "minus",
+                      "b": 3
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva tal gjer påstanden sann?",
+          "alternativ": [
+            "x = 4",
+            "x = 5",
+            "x = 6"
+          ],
+          "rett": 1,
+          "forklaring": "4 · 5 = 20, og 20 − 3 = 17. Med x = 4 blir det 13, og med x = 6 blir det 21 — begge usanne."
+        },
+        {
+          "id": "l2",
+          "type": "bygg",
+          "maal": "Prøv eit tal i likninga",
+          "tekst": "Likninga er `4 · x − 3 = 17`. Set **x til 5** og la programmet skrive ut x **berre dersom** påstanden er sann.",
+          "hint": [
+            "Bygg venstresida med to `Rekn ut`-blokker: fyrst 4 gonge x, så minus 3.",
+            "Legg heile venstresida i samanlikninga mot 17, og `Skriv ut x` inni `Dersom`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "svar",
+              "vent": 5
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 5
+                }
+              },
+              {
+                "type": "dersom",
+                "felt": {
+                  "vilkaar": {
+                    "type": "samanlikn",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 4,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "minus",
+                          "b": 3
+                        }
+                      },
+                      "op": "lik",
+                      "b": 17
+                    }
+                  }
+                },
+                "kropp": [
+                  {
+                    "type": "skrivUt",
+                    "felt": {
+                      "verdi": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "x"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "l3",
+          "type": "rett",
+          "maal": "Likninga som ikkje vil stemme",
+          "tekst": "Dette skulle prøve om x = 5 løyser `4 · x − 3 = 17`, men utskriftsruta blir ståande tom. Hent det inn og finn kvifor.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 5
+                }
+              },
+              {
+                "type": "dersom",
+                "felt": {
+                  "vilkaar": {
+                    "type": "samanlikn",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 4,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 3
+                        }
+                      },
+                      "op": "lik",
+                      "b": 17
+                    }
+                  }
+                },
+                "kropp": [
+                  {
+                    "type": "skrivUt",
+                    "felt": {
+                      "verdi": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "x"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Rekn ut venstresida i hovudet med x = 5, og samanlikn med det programmet gjer.",
+            "Likninga seier `4 · x − 3`, men i blokka står det `+`. Då blir 23 og ikkje 17."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            },
+            {
+              "type": "svar",
+              "vent": 5
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 5
+                }
+              },
+              {
+                "type": "dersom",
+                "felt": {
+                  "vilkaar": {
+                    "type": "samanlikn",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 4,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "minus",
+                          "b": 3
+                        }
+                      },
+                      "op": "lik",
+                      "b": 17
+                    }
+                  }
+                },
+                "kropp": [
+                  {
+                    "type": "skrivUt",
+                    "felt": {
+                      "verdi": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "x"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ei likning er ein **påstand** som er sann for nokre tal og usann for andre. Talet som gjer han sann, er **løysinga**. `Dersom` prøver eitt tal om gongen, akkurat som du gjer i hovudet."
+    },
+    {
+      "id": "proev-alle",
+      "tittel": "Lat maskina prøve alle",
+      "kompetansemaal": [
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige"
+      ],
+      "palett": [
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "samanlikn",
+        "dersom",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Å prøve eitt tal om gongen er treigt for deg, men ikkje for maskina. Legg testen inni ei **løkke** som tel oppover, så prøver ho alle tala i eit område på eit augeblink."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Utskrifta blir då **løysinga sjølv**: dei tala som slapp gjennom `Dersom`. Er ruta tom, finst det inga løysing i det området du prøvde."
+        },
+        {
+          "type": "merk",
+          "tekst": "Dette er ein ekte strategi og ikkje juks — han heiter å prøve seg fram, og han er den einaste som viser deg *alle* løysingane med ein gong."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Alle tal frå 1 til 20 blir prøvde i 3 · x + 4 = 19. Køyr, og sjå kva som kjem ut.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "x",
+                "verdi": 1
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 20
+              },
+              "kropp": [
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "lik",
+                        "b": 19
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "x",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Frå eitt tal til tjue",
+        "maal": "løysinga på 3 · x + 4 = 19, funnen ved å prøve alle tal frå 1 til 20",
+        "steg": [
+          {
+            "tekst": "Testen frå førre leksjon, med x = 1. Ingenting kjem ut — 3 · 1 + 4 er 7, ikkje 19.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "lik",
+                        "b": 19
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "No legg vi testen inni ei løkke og aukar x med 1 for kvar runde. Fem gonger er ikkje nok, men du ser mønsteret.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 5
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": {
+                                  "type": "rekne",
+                                  "felt": {
+                                    "a": 3,
+                                    "op": "gonge",
+                                    "b": {
+                                      "type": "lesVar",
+                                      "felt": {
+                                        "namn": "x"
+                                      }
+                                    }
+                                  }
+                                },
+                                "op": "pluss",
+                                "b": 4
+                              }
+                            },
+                            "op": "lik",
+                            "b": 19
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kor mange rundar må til før du finn løysinga?"
+          },
+          {
+            "tekst": "Tjue rundar. Talet 5 kjem ut, og berre det — dei nitten andre gjorde påstanden usann.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 20
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": {
+                                  "type": "rekne",
+                                  "felt": {
+                                    "a": 3,
+                                    "op": "gonge",
+                                    "b": {
+                                      "type": "lesVar",
+                                      "felt": {
+                                        "namn": "x"
+                                      }
+                                    }
+                                  }
+                                },
+                                "op": "pluss",
+                                "b": 4
+                              }
+                            },
+                            "op": "lik",
+                            "b": 19
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt høgresida frå 19 til 20. Kva skjer, og kva fortel det deg?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "p1",
+          "type": "bygg",
+          "maal": "Finn løysinga",
+          "tekst": "Løys `7 · x − 5 = 44` ved å prøve alle heiltal frå **1 til 20**.",
+          "hint": [
+            "Set x til 1 før løkka. Inni: `Dersom` med testen, `Skriv ut x`, og så `Endre x med 1`.",
+            "Venstresida er 7 gonge x, minus 5. Samanlikn med 44."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "svar",
+              "vent": 7
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 20
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": {
+                                "type": "rekne",
+                                "felt": {
+                                  "a": 7,
+                                  "op": "gonge",
+                                  "b": {
+                                    "type": "lesVar",
+                                    "felt": {
+                                      "namn": "x"
+                                    }
+                                  }
+                                }
+                              },
+                              "op": "minus",
+                              "b": 5
+                            }
+                          },
+                          "op": "lik",
+                          "b": 44
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "p2",
+          "type": "les",
+          "maal": "Tom utskrift",
+          "tekst": "Ein elev prøver alle tal frå 1 til 20 i likninga `2 · x = 45`, og utskriftsruta blir ståande tom.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 20
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 2,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "lik",
+                          "b": 45
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva fortel den tomme ruta?",
+          "alternativ": [
+            "At programmet er feil bygd",
+            "At ingen heiltal frå 1 til 20 løyser likninga",
+            "At likninga ikkje har noka løysing i det heile"
+          ],
+          "rett": 1,
+          "forklaring": "Ruta seier berre noko om dei tala som vart prøvde. `2 · x = 45` har løysinga x = 22,5 — ho er verken eit heiltal eller mellom 1 og 20, så ho kunne ikkje dukke opp."
+        },
+        {
+          "id": "p3",
+          "type": "bygg",
+          "maal": "To likningar på ein gong",
+          "tekst": "Prøv alle tal frå **1 til 30** og skriv ut dei som løyser `x + x = 24`. Kor mange svar ventar du?",
+          "hint": [
+            "`x + x` er ei `Rekn ut`-blokk med `+` og variabelen i begge hòla.",
+            "Berre eitt tal kan løyse henne: 12."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "svar",
+              "vent": 12
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 30
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              },
+                              "op": "pluss",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "lik",
+                          "b": 24
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Legg testen inni ei **løkke** som tel oppover, så prøver maskina alle tala i området. **Utskrifta er løysinga.** Ei tom rute tyder at det ikkje fanst noko svar *blant dei tala du prøvde*."
+    },
+    {
+      "id": "frå-tekst",
+      "tittel": "Frå tekst til likning",
+      "kompetansemaal": [
+        "7. trinn: formulere og løyse problem som har med likningar å gjere",
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige"
+      ],
+      "palett": [
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "samanlikn",
+        "dersom",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Det vanskelegaste med likningar er sjeldan å løyse dei. Det er å **skrive dei ned**: å gå frå ei setning på norsk til ein påstand med tal og ein x."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Oppskrifta er alltid den same. Finn det du ikkje veit, og kall det **x**. Skriv så det du veit som eit reknestykke der x er med. Set eit **likskapsteikn** mellom det og talet du kjenner."
+        },
+        {
+          "type": "merk",
+          "tekst": "«Tre like bøker og ei blyant til 15 kr kostar 240 kr» blir `3 · x + 15 = 240`. Boka er det du ikkje veit, så ho er x."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Tre bøker og ei blyant til 15 kr kostar 240 kr til saman. Kva kostar ei bok? Alle prisar frå 1 til 100 blir prøvde.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "x",
+                "verdi": 1
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 100
+              },
+              "kropp": [
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 15
+                          }
+                        },
+                        "op": "lik",
+                        "b": 240
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "x",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Kva kostar ei bok?",
+        "maal": "prisen på ei bok, funnen frå setninga «tre bøker og ei blyant til 15 kr kostar 240 kr»",
+        "steg": [
+          {
+            "tekst": "Fyrst set vi opp reknestykket med ein pris vi gjettar på. x = 50 gjev 3 · 50 + 15 = 165. For lite.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 50
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 15
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "x = 80 gjev 255. No er vi forbi. Svaret må liggje mellom 50 og 80.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 80
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 15
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Gjett sjølv eit tal mellom 50 og 80 og prøv det."
+          },
+          {
+            "tekst": "Eller lat maskina prøve alle prisar frå 1 til 100. Svaret er 75.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 100
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": {
+                                  "type": "rekne",
+                                  "felt": {
+                                    "a": 3,
+                                    "op": "gonge",
+                                    "b": {
+                                      "type": "lesVar",
+                                      "felt": {
+                                        "namn": "x"
+                                      }
+                                    }
+                                  }
+                                },
+                                "op": "pluss",
+                                "b": 15
+                              }
+                            },
+                            "op": "lik",
+                            "b": 240
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "t1",
+          "type": "les",
+          "maal": "Kva blir likninga?",
+          "tekst": "«Ein billett kostar x kroner. Fem billettar og eit gebyr på 20 kroner kostar 245 kroner til saman.»",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 100
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": {
+                                "type": "rekne",
+                                "felt": {
+                                  "a": 5,
+                                  "op": "gonge",
+                                  "b": {
+                                    "type": "lesVar",
+                                    "felt": {
+                                      "namn": "x"
+                                    }
+                                  }
+                                }
+                              },
+                              "op": "pluss",
+                              "b": 20
+                            }
+                          },
+                          "op": "lik",
+                          "b": 245
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva likning passar til setninga?",
+          "alternativ": [
+            "5 · x + 20 = 245",
+            "5 · x − 20 = 245",
+            "x + 20 = 245"
+          ],
+          "rett": 0,
+          "forklaring": "Fem billettar er 5 · x. Gebyret kjem i tillegg, så det skal leggjast til. Til saman er 245, og det er høgresida."
+        },
+        {
+          "id": "t2",
+          "type": "bygg",
+          "maal": "Finn billettprisen",
+          "tekst": "Fem billettar og eit gebyr på **20 kroner** kostar **245 kroner** til saman. Finn prisen på éin billett ved å prøve alle prisar frå **1 til 100**.",
+          "hint": [
+            "Likninga er `5 · x + 20 = 245`.",
+            "Same oppskrifta som før: sett x til 1, løkke på 100, `Dersom` med testen, og auk x."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "svar",
+              "vent": 45
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 100
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": {
+                                "type": "rekne",
+                                "felt": {
+                                  "a": 5,
+                                  "op": "gonge",
+                                  "b": {
+                                    "type": "lesVar",
+                                    "felt": {
+                                      "namn": "x"
+                                    }
+                                  }
+                                }
+                              },
+                              "op": "pluss",
+                              "b": 20
+                            }
+                          },
+                          "op": "lik",
+                          "b": 245
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "t3",
+          "type": "bygg",
+          "maal": "Alderen til søstera",
+          "tekst": "«Om fire år er eg dobbelt så gammal som eg var for tre år sidan.» Skriv det som `x + 4 = 2 · (x − 3)` og finn alderen ved å prøve alle tal frå **1 til 40**.",
+          "hint": [
+            "Høgresida er ei `Rekn ut` med `×`, der det andre hòlet er ei ny `Rekn ut` med `−`.",
+            "Bygg venstresida og høgresida kvar for seg, og legg dei i kvar sitt hòl i samanlikninga."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            },
+            {
+              "type": "svar",
+              "vent": 10
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 40
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              },
+                              "op": "pluss",
+                              "b": 4
+                            }
+                          },
+                          "op": "lik",
+                          "b": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 2,
+                              "op": "gonge",
+                              "b": {
+                                "type": "rekne",
+                                "felt": {
+                                  "a": {
+                                    "type": "lesVar",
+                                    "felt": {
+                                      "namn": "x"
+                                    }
+                                  },
+                                  "op": "minus",
+                                  "b": 3
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Kall det du ikkje veit for **x**, skriv det du veit som eit reknestykke med x i, og set likskapsteikn mellom det og talet du kjenner. Så kan maskina prøve seg fram."
+    },
+    {
+      "id": "ulikskapar",
+      "tittel": "Når det er meir enn eitt svar",
+      "kompetansemaal": [
+        "7. trinn: bruke tal, tekst, teikning og konkret til å løyse ulikskapar og teste og forklare løysingar",
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige"
+      ],
+      "palett": [
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "samanlikn",
+        "dersom",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Byt `=` med `<`, `>`, `≤` eller `≥`, og påstanden blir ein **ulikskap**. Alt anna er likt — men no kan det finnast mange tal som gjer han sann."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "«Ein pose kostar 12 kr, og du har 100 kr» blir `12 · x ≤ 100`. Programmet skriv ut alle svara: 1, 2, 3, 4, 5, 6, 7 og 8. Åtte posar går, ni gjer det ikkje."
+        },
+        {
+          "type": "merk",
+          "tekst": "Utskriftsruta viser heile **løysingsmengda** på ein gong. Det er noko av det programmering gjer betre enn blyant og papir."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Kor mange posar til 12 kr får du for 100 kr? Alle tal frå 1 til 15 blir prøvde.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "x",
+                "verdi": 1
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 15
+              },
+              "kropp": [
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 12,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "mindreLik",
+                        "b": 100
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "x",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Kor mange posar?",
+        "maal": "alle tal på posar som held seg innanfor 100 kroner",
+        "steg": [
+          {
+            "tekst": "Fyrst med likskap: nøyaktig 100 kroner. Ingenting kjem ut — 12 går ikkje opp i 100.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 15
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 12,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "lik",
+                            "b": 100
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Med `≤` spør vi i staden om det held seg innanfor. No kjem det åtte svar.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 15
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 12,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "mindreLik",
+                            "b": 100
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt til `<`. Endrar svaret seg? Kvifor ikkje?"
+          },
+          {
+            "tekst": "Og med `>` får du det motsette: alle tal som er for dyre.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 15
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 12,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "storre",
+                            "b": 100
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "u1",
+          "type": "bygg",
+          "maal": "Alle som held seg innanfor",
+          "tekst": "Ein billett kostar **35 kroner** og du har **200 kroner**. Skriv ut alle tal på billettar du har råd til. Prøv tal frå **1 til 10**.",
+          "hint": [
+            "Ulikskapen er `35 · x ≤ 200`.",
+            "Same oppskrifta som ei likning — berre eit anna teikn i samanlikninga."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            },
+            {
+              "type": "svar",
+              "vent": "1\n2\n3\n4\n5"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 10
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 35,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "mindreLik",
+                          "b": 200
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "u2",
+          "type": "les",
+          "maal": "Kvifor er svaret det same?",
+          "tekst": "To program prøver tal frå 1 til 15. Det eine har `12 · x ≤ 100`, det andre `12 · x < 100`. Begge skriv ut 1 til 8.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 15
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 12,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "mindreLik",
+                          "b": 100
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kvifor gjev `≤` og `<` same svaret her?",
+          "alternativ": [
+            "Fordi `≤` og `<` alltid tyder det same",
+            "Fordi ingen av tala gjev nøyaktig 100, så det er ingen skilnad å sjå",
+            "Fordi programmet berre reknar med heiltal"
+          ],
+          "rett": 1,
+          "forklaring": "Skilnaden mellom `≤` og `<` gjeld berre det talet som treffer grensa nøyaktig. 12 · 8 = 96 og 12 · 9 = 108 — ingen av dei er 100, så dei to teikna gjev same løysingsmengd. Hadde posen kosta 10 kr, ville x = 10 skilt dei."
+        },
+        {
+          "id": "u3",
+          "type": "bygg",
+          "maal": "Mellom to grenser",
+          "tekst": "Skriv ut alle tal frå **1 til 30** der `4 · x` er **større enn 20** og **mindre enn 60**. Du treng to `Dersom`-blokker inni kvarandre.",
+          "hint": [
+            "Legg den eine `Dersom` inni den andre. Då må begge vere sanne for at talet skal bli skrive ut.",
+            "Fyrst `4 · x > 20`, og inni han `4 · x < 60` med `Skriv ut x`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom",
+              "inni": "dersom"
+            },
+            {
+              "type": "svar",
+              "vent": "6\n7\n8\n9\n10\n11\n12\n13\n14"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 30
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 4,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "storre",
+                          "b": 20
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "dersom",
+                        "felt": {
+                          "vilkaar": {
+                            "type": "samanlikn",
+                            "felt": {
+                              "a": {
+                                "type": "rekne",
+                                "felt": {
+                                  "a": 4,
+                                  "op": "gonge",
+                                  "b": {
+                                    "type": "lesVar",
+                                    "felt": {
+                                      "namn": "x"
+                                    }
+                                  }
+                                }
+                              },
+                              "op": "mindre",
+                              "b": 60
+                            }
+                          }
+                        },
+                        "kropp": [
+                          {
+                            "type": "skrivUt",
+                            "felt": {
+                              "verdi": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ein **ulikskap** er same påstanden med `<`, `>`, `≤` eller `≥` i staden for `=`. Han kan ha **mange** løysingar, og utskriftsruta viser heile mengda på ein gong. To `Dersom` inni kvarandre krev at begge er sanne."
+    },
+    {
+      "id": "gyldig",
+      "tittel": "Er svaret gyldig?",
+      "kompetansemaal": [
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige",
+        "7. trinn: formulere og løyse problem som har med likningar å gjere"
+      ],
+      "palett": [
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "samanlikn",
+        "dersom",
+        "gjenta"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei tom utskriftsrute betyr ikkje at likninga er uløyseleg. Ho betyr at det ikkje fanst noko svar **blant dei tala du prøvde** — og det er to heilt ulike ting."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Tre grunnar til at eit svar kan mangle: du prøvde for få tal, løysinga er ikkje eit heiltal, eller løysinga er negativ. Programmet ditt prøver berre 1, 2, 3 og oppover."
+        },
+        {
+          "type": "merk",
+          "tekst": "Og somme svar er tal utan å vere gyldige. Løyser du «kor mange bussar treng vi?» og får 3,5, er svaret 4 — for ein halv buss finst ikkje."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "`2 · x = 45` blir prøvd frå 1 til 20, og ruta blir tom. Utvid løkka til 100 og køyr igjen. Kjem svaret då?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "x",
+                "verdi": 1
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 20
+              },
+              "kropp": [
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 2,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "lik",
+                        "b": 45
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "x",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Kvar vart svaret av?",
+        "maal": "ei forklaring på kvifor 2 · x = 45 aldri gjev noko svar, same kor mange tal du prøver",
+        "steg": [
+          {
+            "tekst": "Prøv 1 til 20. Ingenting. Kanskje området var for lite?",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 20
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 2,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "lik",
+                            "b": 45
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Prøv 1 til 100. Framleis ingenting. No er det ikkje området som er problemet.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 100
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 2,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "lik",
+                            "b": 45
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "x",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Skriv ut 2 · x for x = 22 og x = 23. Kva ligg imellom?"
+          },
+          {
+            "tekst": "Her ser du kvifor: 2 · 22 = 44 og 2 · 23 = 46. Talet 45 hoppar vi rett over. Løysinga er 22,5, og ho er ikkje eit heiltal.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 22
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "gonge",
+                        "b": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 23
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 2,
+                        "op": "gonge",
+                        "b": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "x"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "g1",
+          "type": "les",
+          "maal": "Kvifor kom det ingenting?",
+          "tekst": "Ein elev prøver alle heiltal frå 1 til 100 i `3 · x = 50`, og får ingenting ut.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 100
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "lik",
+                          "b": 50
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva er grunnen?",
+          "alternativ": [
+            "Området var for lite — han må prøve fleire tal",
+            "Løysinga er ikkje eit heiltal, så ho kan ikkje dukke opp",
+            "Likninga er feil skriven"
+          ],
+          "rett": 1,
+          "forklaring": "50 delt på 3 er 16,67. Programmet prøver berre heiltal, så det hoppar frå 3 · 16 = 48 til 3 · 17 = 51 og treffer aldri 50. Å utvide området hjelper ikkje det minste."
+        },
+        {
+          "id": "g2",
+          "type": "bygg",
+          "maal": "Utvid området",
+          "tekst": "Likninga `6 · x − 40 = 200` har ei løysing, men ikkje blant dei tjue fyrste tala. Prøv **1 til 60** og finn henne.",
+          "hint": [
+            "Venstresida er 6 gonge x, minus 40.",
+            "6 · 40 = 240, og 240 − 40 = 200. Svaret er 40, så løkka må vere lang nok til å nå dit."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "svar",
+              "vent": 40
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 60
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": {
+                                "type": "rekne",
+                                "felt": {
+                                  "a": 6,
+                                  "op": "gonge",
+                                  "b": {
+                                    "type": "lesVar",
+                                    "felt": {
+                                      "namn": "x"
+                                    }
+                                  }
+                                }
+                              },
+                              "op": "minus",
+                              "b": 40
+                            }
+                          },
+                          "op": "lik",
+                          "b": 200
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "g3",
+          "type": "bygg",
+          "maal": "Kor mange bussar?",
+          "tekst": "Ein buss tek **48 elevar**, og **150 elevar** skal på tur. Skriv ut alle tal på bussar frå **1 til 10** som er **nok**. Det minste av dei er svaret.",
+          "hint": [
+            "Nok tyder at plassane er minst like mange som elevane: `48 · x ≥ 150`.",
+            "Tre bussar gjev 144 plassar — for lite. Fire gjev 192, og det held."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            },
+            {
+              "type": "svar",
+              "vent": "4\n5\n6\n7\n8\n9\n10"
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 10
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 48,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "storreLik",
+                          "b": 150
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ei tom rute tyder «ingen løysing **blant dei tala eg prøvde**». Løysinga kan liggje utanfor området, vere eit desimaltal, eller vere negativ. Og eit svar som er rett som tal, kan framleis vere ugyldig i den situasjonen det kom frå."
+    }
+  ]
+}
