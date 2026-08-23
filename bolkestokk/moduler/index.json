@@ -76,13 +76,14 @@
       "tittel": "Rutenett og koordinatar",
       "ikon": "grid",
       "accent": "accent4",
-      "trinn": "5.–6. trinn",
-      "talLeksjonar": 6,
+      "trinn": "5.–7. trinn",
+      "talLeksjonar": 8,
       "klar": true,
-      "skildring": "Kvar noko er, sagt med to tal. Du teiknar figurar av punkt, flyttar dei utan å endre forma, og lèt ein variabel styre koordinaten.",
+      "skildring": "Kvar noko er, sagt med to tal. Du teiknar figurar av punkt, flyttar og speglar dei utan å endre forma, og lèt ein variabel styre koordinaten.",
       "kompetansemaal": [
         "6. trinn: lage kongruensavbildingar med og utan koordinatsystem",
-        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer"
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
+        "7. trinn: bruke og utforske negative tal både praktisk og teoretisk"
       ],
       "krev": "grunnkurs"
     },

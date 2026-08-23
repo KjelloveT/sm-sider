@@ -3,6 +3,12 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.20] — 2026-08-23
+
+### Lagt til
+- **To leksjonar til i «Rutenett og koordinatar»:** spegling og dreiing, og dei fire kvadrantane. Med parallellforskyvinga som alt låg der, er alle tre kongruensavbildingane no på plass — og kvar av dei er berre ein **regel for koordinatane**: spegling om y-aksen er `(−x, y)`, om x-aksen `(x, −y)`, og ei halv dreiing er `(−x, −y)`. Ein elev som skriv regelen sjølv har forstått avbildinga på ein annan måte enn ein som brettar eit ark.
+- Modulen dekkjer no òg 7. trinn «bruke og utforske negative tal både praktisk og teoretisk», gjennom leksjonen om kvadrantane: det er **forteikna** som avgjer kvar eit punkt ligg, ikkje kor store tala er.
+
 ## [1.19] — 2026-08-23
 
 ### Lagt til

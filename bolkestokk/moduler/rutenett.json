@@ -1397,6 +1397,1496 @@
       "oppsummering": "Legg du det **same talet** til alle x-koordinatane, flyttar figuren seg sidelengs. Gjer du det med y-ane, flyttar han seg opp eller ned. Forma er den same — det er ei parallellforskyving."
     },
     {
+      "id": "spegling",
+      "tittel": "Spegling og dreiing",
+      "kompetansemaal": [
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem",
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Å flytte ein figur endra ikkje forma hans. Det gjer heller ikkje å **spegle** han eller **dreie** han. Alle tre heiter **kongruensavbildingar** — figuren blir liggjande ein annan stad, men er nøyaktig like stor og har nøyaktig same form."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "På rutenettet er kvar av dei berre ein **regel** for koordinatane. Speglar du om y-aksen, byter x forteikn: `(x, y)` blir `(−x, y)`. Speglar du om x-aksen, er det y som byter: `(x, y)` blir `(x, −y)`."
+        },
+        {
+          "type": "merk",
+          "tekst": "Ei **dreiing** ein halv omgang rundt origo byter begge: `(x, y)` blir `(−x, −y)`. Det er det same som å spegle to gonger, éin gong om kvar akse."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Ein trekant og speglinga hans om y-aksen. Samanlikn koordinatane i dei to — kva er endra, og kva står?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 4,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 1
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Same trekanten, spegla",
+        "maal": "ein trekant og speglingsbiletet hans om y-aksen",
+        "steg": [
+          {
+            "tekst": "Originalen: hjørne i (1, 1), (4, 1) og (1, 3). Han ligg heilt i fyrste kvadrant, oppe til høgre.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "No same trekanten med minus framfor kvar x. (1, 1) blir (−1, 1), (4, 1) blir (−4, 1), og (1, 3) blir (−1, 3). Alle y-ane står urørte.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Legg eit ark langs y-aksen. Fell dei to trekantane over kvarandre?"
+          },
+          {
+            "tekst": "Og spegla om x-aksen i staden: no er det y som byter forteikn, og figuren hamnar under.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": -1
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kva regel må til for å få trekanten ned til venstre?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "sp1",
+          "type": "les",
+          "maal": "Kva blir koordinatane?",
+          "tekst": "Eit punkt ligg i (3, 2).",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kvar hamnar punktet når du speglar det om **y-aksen**?",
+          "alternativ": [
+            "(3, −2)",
+            "(−3, 2)",
+            "(−3, −2)"
+          ],
+          "rett": 1,
+          "forklaring": "Y-aksen er den loddrette. Speglar du om henne, er det avstanden til sides som snur — altså x. Y-verdien står urørt. (3, −2) er spegling om x-aksen, og (−3, −2) er ei dreiing."
+        },
+        {
+          "id": "sp2",
+          "type": "bygg",
+          "maal": "Spegl trekanten",
+          "tekst": "Teikn trekanten med hjørne i **(1, 1)**, **(4, 1)** og **(1, 3)**, og så **speglingsbiletet hans om y-aksen**.",
+          "hint": [
+            "Den andre trekanten har same tala, men med minus framfor kvar x.",
+            "(1, 1) blir (−1, 1). (4, 1) blir (−4, 1). (1, 3) blir (−1, 3). Hugs `Penn opp` mellom dei to figurane."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gaaTilRute"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 6,
+            "breidd": 400,
+            "hogd": 100
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "sp3",
+          "type": "bygg",
+          "maal": "Dreii ein halv omgang",
+          "tekst": "Teikn den same trekanten og så **dreiinga hans ein halv omgang rundt origo**. Då byter **begge** koordinatane forteikn.",
+          "hint": [
+            "Regelen er `(x, y)` blir `(−x, −y)`.",
+            "(1, 1) blir (−1, −1), (4, 1) blir (−4, −1), og (1, 3) blir (−1, −3)."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gaaTilRute"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 6,
+            "breidd": 400,
+            "hogd": 300
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ei **kongruensavbilding** flyttar figuren utan å endre form eller storleik. På rutenettet er kvar av dei ein regel: spegling om y-aksen er `(−x, y)`, om x-aksen `(x, −y)`, og ei halv dreiing er `(−x, −y)`."
+    },
+    {
+      "id": "kvadrantar",
+      "tittel": "Dei fire kvadrantane",
+      "kompetansemaal": [
+        "7. trinn: bruke og utforske negative tal både praktisk og teoretisk",
+        "6. trinn: lage kongruensavbildingar med og utan koordinatsystem"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Aksane deler rutenettet i fire felt, og dei heiter **kvadrantar**. Kva for eit punktet ligg i, blir bestemt av **forteikna** til dei to tala — ikkje av kor store dei er."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Oppe til høgre er begge positive: `(+, +)`. Oppe til venstre er x negativ: `(−, +)`. Nede til venstre er begge negative: `(−, −)`. Nede til høgre er y negativ: `(+, −)`."
+        },
+        {
+          "type": "merk",
+          "tekst": "Eit negativt tal er ikkje «mindre viktig» enn eit positivt. −4 ligg like langt frå origo som 4 — berre på den andre sida."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Same trekanten i alle fire kvadrantane. Sjå på forteikna i kvar av dei fire.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 4,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 1
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": -1
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": -1
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 4,
+                "y": -1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": -3
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": -1
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Ein trekant i kvar kvadrant",
+        "maal": "den same trekanten teikna fire gonger, éin gong i kvar kvadrant",
+        "steg": [
+          {
+            "tekst": "Fyrste kvadrant, oppe til høgre. Begge tala er positive.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Andre kvadrant, oppe til venstre: x er negativ, y er positiv.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kva ville du gjort for å få han nede til venstre?"
+          },
+          {
+            "tekst": "Og alle fire. Fjerde kvadrant, nede til høgre, har positiv x og negativ y.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": -1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": -1
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "kv1",
+          "type": "les",
+          "maal": "Kva kvadrant?",
+          "tekst": "Eit punkt ligg i (−3, 4).",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -1
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kvar i rutenettet ligg punktet?",
+          "alternativ": [
+            "Oppe til venstre",
+            "Nede til venstre",
+            "Nede til høgre"
+          ],
+          "rett": 0,
+          "forklaring": "x er −3, altså tre til venstre. y er 4, altså fire opp. Til venstre og opp er oppe til venstre — den andre kvadranten."
+        },
+        {
+          "id": "kv2",
+          "type": "bygg",
+          "maal": "Trekanten i alle fire",
+          "tekst": "Teikn trekanten med hjørne i **(1, 1)**, **(4, 1)** og **(1, 3)** i **alle fire kvadrantane**. Bruk forteikna til å flytte han.",
+          "hint": [
+            "Oppe til venstre: minus på x. Nede til venstre: minus på begge. Nede til høgre: minus på y.",
+            "Hugs `Penn opp` mellom kvar trekant, elles blir dei bundne saman med strek."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gaaTilRute"
+            },
+            {
+              "type": "brukar",
+              "blokk": "pennOpp"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 12,
+            "breidd": 400,
+            "hogd": 300
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": -1
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "kv3",
+          "type": "bygg",
+          "maal": "Ei linje gjennom origo",
+          "tekst": "Teikn ein strek frå **(−4, −4)** til **(4, 4)**. Han går gjennom origo og gjennom både tredje og fyrste kvadrant.",
+          "hint": [
+            "Hopp til (−4, −4) med pennen oppe, sett han ned, og gå til (4, 4).",
+            "Alle punkta på denne linja har x lik y — òg dei negative."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gaaTilRute"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 1,
+            "lukka": false,
+            "breidd": 400,
+            "hogd": 400
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -4
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 4,
+                  "y": 4
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Aksane deler rutenettet i fire **kvadrantar**, og det er **forteikna** som avgjer kva for ein eit punkt ligg i. Eit negativt tal ligg like langt frå origo som det tilsvarande positive — berre på den andre sida."
+    },
+    {
       "id": "variabel-koordinat",
       "tittel": "Ein variabel som koordinat",
       "kompetansemaal": [
