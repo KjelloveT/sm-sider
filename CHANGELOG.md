@@ -3,6 +3,11 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.15] — 2026-08-23
+
+### Fiksa
+- **Resultatspalta i Bolkestokk opna seg aldri att.** Trykte eleven Køyr, vart klassa teken av og alt i JS-en gjorde det rette — og kolonnen stod framleis på 15px. Teikninga kom aldri fram, frå fyrste køyring på ei fersk side. Årsaka var overgangen på `grid-template-columns`: så lenge eigenskapen har ein `transition`, oppdaterer ikkje Chrome den utrekna verdien når endringa kjem frå ein custom property — han lèt den gamle bli ståande, for godt. Overgangen er borte, og rørsla ligg heilt på innhaldet, som toner ut og skyv seg litt til sides medan spalta skiftar breidd momentant. Feilen slapp gjennom tidlegare fordi kontrollane las `textContent`, og tekst finst like fullt i ein kolonne som er null piksel brei.
+
 ## [1.14] — 2026-08-23
 
 ### Lagt til
