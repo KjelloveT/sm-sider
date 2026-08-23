@@ -465,9 +465,22 @@ body.bs-dreg .bs-felt { pointer-events: none; }
     box-shadow: inset 7px 0 0 var(--bs-merkt);
 }
 
+/* Dei to køyremarkeringane er lyse, og ei lys stripe rett mot ei lys
+ * blokkflate forsvinn — lyseblått på «Gå framover», som alt er lyseblå, ville
+ * knapt vore å sjå. Difor får stripa ei svart kant på innsida òg.
+ *
+ * Rekkjefølgja i box-shadow er malingsrekkjefølgja: den fyrste ligg øvst. 12px
+ * farge, så 2px svart under han som stikk fram som ei kant. Teksten startar
+ * 18px inne (4px ramme + 14px padding), så stripa kjem aldri nær han.
+ *
+ * Dei står etter `.er-vald` med vilje. Ei blokk kan vere både merkt og under
+ * køyring, og då er det køyringa som skjer no. */
+.bs-blokk.er-gjort {
+    box-shadow: inset 12px 0 0 var(--bs-gjort), inset 14px 0 0 var(--border);
+}
+
 .bs-blokk.er-koyrande {
-    border-left-color: var(--bs-koyrer);
-    box-shadow: inset 7px 0 0 var(--bs-koyrer);
+    box-shadow: inset 12px 0 0 var(--bs-tur), inset 14px 0 0 var(--border);
 }
 
 /* Ei gjenta-blokk er meir enn hovudet sitt. Merkjer vi henne, skal heile
@@ -477,10 +490,13 @@ body.bs-dreg .bs-felt { pointer-events: none; }
     border-left-color: var(--bs-merkt);
     box-shadow: inset 7px 0 0 var(--bs-merkt);
 }
+.bs-stabelpost:has(> .bs-blokk.er-gjort) > .bs-krop-midt > .bs-krop-spine,
+.bs-stabelpost:has(> .bs-blokk.er-gjort) > .bs-krop-botn {
+    box-shadow: inset 12px 0 0 var(--bs-gjort), inset 14px 0 0 var(--border);
+}
 .bs-stabelpost:has(> .bs-blokk.er-koyrande) > .bs-krop-midt > .bs-krop-spine,
 .bs-stabelpost:has(> .bs-blokk.er-koyrande) > .bs-krop-botn {
-    border-left-color: var(--bs-koyrer);
-    box-shadow: inset 7px 0 0 var(--bs-koyrer);
+    box-shadow: inset 12px 0 0 var(--bs-tur), inset 14px 0 0 var(--border);
 }
 
 

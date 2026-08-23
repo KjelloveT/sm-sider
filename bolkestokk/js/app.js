@@ -217,7 +217,8 @@
 
         const ktx = BolkTolk.nyKontekst(program);
         const g = BolkTolk.koyr(program, { ktx });
-        koyring = { g, ktx, id: null, naarFerdig, sist: null, rest: 0, sisteBlokk: null };
+        koyring = { g, ktx, id: null, naarFerdig, sist: null, rest: 0,
+                    sisteBlokk: null, foerreBlokk: null };
 
         el.stopp.disabled = false;
         el.koyr.disabled = true;
@@ -250,12 +251,20 @@
             koyring.rest -= aa;
         }
 
+        /* Vi held på den førre blokka òg, ikkje berre den som står for tur.
+         * På høg fart går det mange blokker per bilete, og då er `foerre` den
+         * nest siste i bunken — ikkje den som stod her i førre biletet. Det er
+         * rett: markeringa skal seie kva som nettopp skjedde i programmet. */
         let siste = koyring.sisteBlokk;
+        let foerre = koyring.foerreBlokk;
         try {
             for (let n = 0; n < aa; n++) {
                 const r = koyring.g.next();
                 if (r.done) return ferdig(null);
-                if (r.value && r.value.blokk) siste = r.value.blokk;
+                if (r.value && r.value.blokk && r.value.blokk !== siste) {
+                    foerre = siste;
+                    siste = r.value.blokk;
+                }
             }
         } catch (f) {
             return ferdig(f.message || String(f));
@@ -263,7 +272,8 @@
 
         if (siste !== koyring.sisteBlokk) {
             koyring.sisteBlokk = siste;
-            BolkEditor.markerKoyrande(siste);
+            koyring.foerreBlokk = foerre;
+            BolkEditor.markerKoyrande(siste, foerre);
         }
         if (aa) teiknNo();
         koyring.id = requestAnimationFrame(steg);
@@ -401,7 +411,7 @@
         koyring.teljar++;
         const id = r.value && r.value.blokk;
         koyring.venteBlokk = id;
-        BolkEditor.markerKoyrande(id);
+        BolkEditor.markerKoyrande(id, gjort);
         visStegblokk(id, gjort);
         visVariablar(koyring.ktx.variablar);
         teiknNo();

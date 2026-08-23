@@ -456,13 +456,25 @@ const BolkEditor = (function () {
         if (vert.paaVal) vert.paaVal(id);
     }
 
-    /** Blokka som køyrer no. Kalla mange gonger i sekundet — rører berre klassar. */
-    function markerKoyrande(id) {
-        el.arbeid.querySelectorAll('.bs-blokk.er-koyrande')
-            .forEach(b => b.classList.remove('er-koyrande'));
-        if (!id) return;
-        const b = el.arbeid.querySelector('.bs-blokk[data-id="' + id + '"]');
-        if (b) b.classList.add('er-koyrande');
+    /**
+     * Dei to køyremarkeringane: blokka som står for tur, og den som nettopp
+     * køyrde. Kalla mange gonger i sekundet — rører berre klassar.
+     *
+     * @param {?string} id     står for tur
+     * @param {?string} gjortId køyrde nettopp
+     */
+    function markerKoyrande(id, gjortId) {
+        el.arbeid.querySelectorAll('.bs-blokk.er-koyrande, .bs-blokk.er-gjort')
+            .forEach(b => b.classList.remove('er-koyrande', 'er-gjort'));
+
+        /* «Nettopp køyrt» blir sett fyrst. Er det same blokka begge stader —
+         * ei løkke som gjentek seg sjølv med éi blokk inni — skal ho vise
+         * fargen for det som skjer no. */
+        const finn = (x) => x ? el.arbeid.querySelector('.bs-blokk[data-id="' + x + '"]') : null;
+        const g = finn(gjortId);
+        if (g) g.classList.add('er-gjort');
+        const b = finn(id);
+        if (b) { b.classList.remove('er-gjort'); b.classList.add('er-koyrande'); }
     }
 
     return {

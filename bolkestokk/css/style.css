@@ -422,13 +422,15 @@
     border-left-width: var(--bs-ramme);
     box-shadow: none;
 }
-.bs-stegblokk { background: var(--bs-gaa); }
-
 /* Ruta for det som nettopp køyrde står over den for det som står for tur —
- * lesest ovanfrå og ned blir det fortid, så framtid. Ho er dempa, så det
- * er lett å sjå kva av dei to som gjeld no. */
-.bs-stegblokk-gjort { background: var(--bs-hvit); }
-.bs-stegblokk-gjort .bs-stegblokk-merke { opacity: .8; }
+ * lesest ovanfrå og ned blir det fortid, så framtid.
+ *
+ * Fargen på ruta er den same som stripa på blokka ho snakkar om. Det er den
+ * einaste koplinga eleven treng: ser han rosa i ruta, finn han den rosa
+ * blokka på benken utan å lese eit ord. Difor er dei to fargane definerte
+ * éin stad (palett.css) og brukte to. */
+.bs-stegblokk { background: var(--bs-tur); }
+.bs-stegblokk-gjort { background: var(--bs-gjort); }
 .bs-stegblokk-tekst { font-family: var(--bs-font); font-weight: 800; }
 
 .bs-variabel {

@@ -59,11 +59,22 @@ body.bs-tema {
     --bs-stopp: #FF9B8E;
     --bs-gaa-ja: #6FDE4F;       /* «køyr»-grøn */
 
-    /* Markering av blokker. Burgunder for den som er merkt, grøn for den som
-     * køyrer — same grønen som Køyr-knappen, så samanhengen er å sjå. Begge
-     * er faste av same grunn som blokkfargane. */
+    /* Markering av blokker.
+     *
+     * Burgunder for den eleven har MERKT — det er han som peikar, og det
+     * skal ikkje kunne forvekslast med noko køyringa gjer.
+     *
+     * Dei to andre er par med kvar si rute ved teikninga: rosa for blokka
+     * som nettopp køyrde, lys blå for den som står for tur. Fargen er
+     * heile koplinga — eleven ser den same rosa i ruta og på benken og
+     * treng ikkje lese seg fram til at det er same blokka.
+     *
+     * Dei er lyse med vilje. Ei sterk markering ville teke merksemda frå
+     * blokkfargen, som er det som fortel kva blokka gjer. Alle tre er
+     * faste av same grunn som blokkfargane. */
     --bs-merkt:  #8B1E3F;
-    --bs-koyrer: #1E7A2E;
+    --bs-gjort:  #FFD9E8;
+    --bs-tur:    #DCEEFF;
 
     /* ---- aksentar for dei delte komponentane ---- */
     --accent:  #FFB833;
