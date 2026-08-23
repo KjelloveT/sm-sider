@@ -3,6 +3,14 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.13] — 2026-08-23
+
+### Lagt til
+- **Bolkestokk: «Rutenett og koordinatar» er ferdig** — seks leksjonar for 5. trinn. Frå «to tal seier kvar noko er» til figurar av punkt, parallellforskyving, ein variabel som koordinat, `Dersom` med samanlikning, og mønster med to løkker inni kvarandre.
+- **Fast teikneflate med aksar og tal.** Ein leksjon kan be om rutenett, og då sluttar flata å tilpasse seg figuren. Det er heile skilnaden: eit koordinatsystem må stå stille. Skalerte vi som elles, ville aksane flytta seg kvar gong eleven teikna lenger ut, og då er ein koordinat ikkje noko å lese av — han er berre ein plass på ei rute som er i rørsle.
+- **Tre nye blokker:** `Gå til rute (x, y)`, og verdiblokkene `x` og `y` som fortel kvar skilpadda står. Blokkene reknar om frå rutetal til teikneeiningar sjølve, så eleven skriv `(3, 4)` og ikkje `150` og `200` — koordinaten skal vere det han les av på aksen. Éi rute er 50 steg, same eining som resten, så `Gå framover 50` flyttar nøyaktig éi rute.
+- Python-utskrifta skriv `RUTE = 50` som ein namngjeven konstant når rutenettblokkene er i bruk, så `goto(3 * RUTE, 4 * RUTE)` framleis viser trearen og firaren eleven skreiv.
+
 ## [1.12] — 2026-08-23
 
 ### Lagt til

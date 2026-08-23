@@ -97,11 +97,17 @@ const BolkBlokkar = (function () {
         start: '#FFDD57'    // hattar
     };
 
+    /* Éi rute i rutenettet, målt i teikneeiningar. Verdien står her og
+     * ingen annan stad: blokkene reknar med han, lerretet teiknar rutene
+     * etter han, og Python-utskrifta skriv han ut som ein konstant. */
+    const RUTE = 50;
+
     const KATEGORIAR = [
         { id: 'styring',   tittel: 'Styring',          farge: 'lokke' },
         { id: 'skilpadde', tittel: 'Skilpadda',        farge: 'gaa'   },
         { id: 'verdi',     tittel: 'Tal og rekning',   farge: 'tal'   },
         { id: 'variabel',  tittel: 'Variablar',        farge: 'boks'  },
+        { id: 'rutenett',  tittel: 'Rutenettet',       farge: 'gaa'   },
         { id: 'vilkaar',   tittel: 'Vilkår',           farge: 'vilkaar' },
         { id: 'funksjon',  tittel: 'Eigne funksjonar', farge: 'mi'    }
     ];
@@ -260,6 +266,39 @@ const BolkBlokkar = (function () {
             python: (f) => f.namn
         },
 
+        /* ---- rutenettet --------------------------------------------------
+         *
+         * Éi rute er RUTE teikneeiningar. Blokkene reknar om sjølve, så
+         * eleven skriv rutetalet — (3, 4) — og ikkje 150 og 200. Det er
+         * heile poenget: koordinaten skal vere det han les av på aksen.
+         *
+         * Same eining som resten av teikninga, så «Gå framover 50» flyttar
+         * skilpadda nøyaktig éi rute. Det er ingen tilfeldig verdi. */
+        {
+            id: 'gaaTilRute', farge: 'gaa', ikon: 'mapPin', kategori: 'rutenett', form: 'setning',
+            tekst: ['Gå til rute', { felt: 'x', slag: 'tal', standard: 0 },
+                    ',', { felt: 'y', slag: 'tal', standard: 0 }],
+            koyr: function* (node, ktx, hj) {
+                ktx.skilpadde.gaaTil(hj.verdi(node.felt.x, ktx) * RUTE,
+                                     hj.verdi(node.felt.y, ktx) * RUTE);
+            },
+            python: (f, hj) => 'goto(' + hj.uttrykk(f.x) + ' * RUTE, ' + hj.uttrykk(f.y) + ' * RUTE)'
+        },
+        {
+            id: 'lesX', farge: 'gaa', ikon: 'arrowLeftRight', kategori: 'rutenett', form: 'verdi',
+            namn: 'x-koordinaten',
+            tekst: ['x'],
+            verdi: (f, ktx) => Math.round(ktx.skilpadde.tilstand.x / RUTE),
+            python: () => 'round(xcor() / RUTE)'
+        },
+        {
+            id: 'lesY', farge: 'gaa', ikon: 'arrowUp', kategori: 'rutenett', form: 'verdi',
+            namn: 'y-koordinaten',
+            tekst: ['y'],
+            verdi: (f, ktx) => Math.round(ktx.skilpadde.tilstand.y / RUTE),
+            python: () => 'round(ycor() / RUTE)'
+        },
+
         /* ---- vilkår ------------------------------------------------------ */
         {
             id: 'samanlikn', farge: 'vilkaar', ikon: 'arrowLeftRight', kategori: 'vilkaar',
@@ -384,7 +423,7 @@ const BolkBlokkar = (function () {
 
     return {
         DEF, KATEGORIAR, FARGAR, REKNEARTAR,
-        hent, felt, standardFelt, talTekst, fargeHex, lesbar, FARGAR_BLOKK, SAMANLIKNINGAR,
+        hent, felt, standardFelt, talTekst, fargeHex, lesbar, FARGAR_BLOKK, SAMANLIKNINGAR, RUTE,
         idar: () => DEF.map(d => d.id)
     };
 })();

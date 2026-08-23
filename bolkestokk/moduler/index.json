@@ -54,16 +54,19 @@
     },
     {
       "id": "rutenett",
-      "gruppe": "kjem",
+      "gruppe": "geometri",
       "fil": "rutenett.json",
       "tittel": "Rutenett og koordinatar",
       "ikon": "grid",
       "accent": "accent4",
       "trinn": "5. trinn",
       "talLeksjonar": 6,
-      "klar": false,
-      "skildring": "Flytt ein robot i eit rutenett. Her kjem vilkår inn: gjer noko berre dersom noko er sant.",
-      "kompetansemaal": [],
+      "klar": true,
+      "skildring": "Kvar noko er, sagt med to tal. Du teiknar figurar av punkt, flyttar dei, og lèt ein variabel styre koordinaten.",
+      "kompetansemaal": [
+        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy",
+        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker"
+      ],
       "krev": "grunnkurs"
     },
     {

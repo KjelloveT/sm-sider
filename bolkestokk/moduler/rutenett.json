@@ -1,0 +1,3379 @@
+{
+  "app": "bolkestokk",
+  "version": 1,
+  "id": "rutenett",
+  "tittel": "Rutenett og koordinatar",
+  "_note": "Koordinatmodulen. Leksjonane set `rutenett` og får då ei FAST teikneflate med akser og tal — ikkje den vanlege som skalerer seg etter figuren. Eit koordinatsystem som flyttar seg er ikkje eit koordinatsystem.",
+  "leksjonar": [
+    {
+      "id": "to-tal",
+      "tittel": "To tal seier kvar noko er",
+      "kompetansemaal": [
+        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+      ],
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Bak skilpadda ligg det eit **rutenett** med to strekar gjennom midten. Den vassrette heiter **x-aksen**, den loddrette **y-aksen**, og der dei kryssar kvarandre er **origo** — punktet (0, 0)."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Kvar rute i nettet har ei adresse med to tal: `Gå til rute 3, 2` tyder **tre til høgre og to opp**. Rekkjefølgja er alltid den same — fyrst x, så y."
+        },
+        {
+          "type": "merk",
+          "tekst": "Negative tal går andre vegen. `-3` er tre til **venstre**, og `-2` er to **ned**."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Skilpadda hoppar til (3, 2) utan å teikne, og dreg så ein strek til (3, -2). Køyr det, og byt så tala og sjå kva som skjer.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": 2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": -2
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Frå origo og ut",
+        "maal": "ein strek frå (-3, 0) til (3, 0) — tvers over x-aksen",
+        "steg": [
+          {
+            "tekst": "Skilpadda står i origo. Vi dreg ein strek rett ut til (3, 0). Legg merke til at y er 0 heile vegen — streken held seg på x-aksen.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 0
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "No vil vi starte på venstre sida i staden. `Penn opp` gjer at flyttinga ikkje set strek, og `Penn ned` slår teikninga på att.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 0
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Ta bort `Penn opp`. Kva strek kjem då i tillegg, og kvifor?"
+          },
+          {
+            "tekst": "Same figuren, men loddrett: frå (0, -3) til (0, 3). Det einaste som er bytt er kva for eit av dei to tala som endrar seg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": -3
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 3
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kan du lage begge to, så det blir eit kryss?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "k1",
+          "type": "les",
+          "maal": "Kvar hamnar skilpadda?",
+          "tekst": "Les blokkene under. Bruk rutenettet til å finne svaret utan å køyre.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": 3
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kvar står skilpadda når programmet er ferdig?",
+          "alternativ": [
+            "To til høgre og tre opp",
+            "To til venstre og tre opp",
+            "Tre til venstre og to opp"
+          ],
+          "rett": 1,
+          "forklaring": "Det fyrste talet er x og det andre er y. `-2` er to til venstre fordi talet er negativt, og `3` er tre opp."
+        },
+        {
+          "id": "k2",
+          "type": "bygg",
+          "maal": "Teikn eit kryss",
+          "tekst": "Teikn eit kryss som er sett saman av to strek: éin frå **(-3, 0) til (3, 0)**, og éin frå **(0, -3) til (0, 3)**. Bruk `Penn opp` når skilpadda skal flytte seg utan å teikne.",
+          "hint": [
+            "Start med den vassrette streken. Hopp til (-3, 0) med pennen oppe, sett han ned, og gå til (3, 0).",
+            "Før den loddrette streken må pennen opp igjen — elles blir det ein strek på skrå frå (3, 0) og bort til (0, -3)."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gaaTilRute"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 2,
+            "breidd": 300,
+            "hogd": 300
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -3
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 3
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "k3",
+          "type": "rett",
+          "maal": "Krysset med ein strek for mykje",
+          "tekst": "Dette skulle bli eit kryss, men det kom ein strek på skrå i tillegg. Hent det inn, køyr det, og finn ut kvar den skrå streken kjem frå.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 3
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Skilpadda står i (3, 0) når den vassrette streken er ferdig. Kva gjer ho så?",
+            "Ho må løfte pennen før ho flyttar seg til (0, -3). Legg inn `Penn opp` og `Penn ned` rundt den flyttinga."
+          ],
+          "testar": [
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 2,
+            "breidd": 300,
+            "hogd": 300
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -3
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 3
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ein koordinat er **to tal**: fyrst x — til høgre eller venstre — så y — opp eller ned. `(0, 0)` er origo, der aksane kryssar. Negative tal går motsett veg."
+    },
+    {
+      "id": "figurar",
+      "tittel": "Figurar av punkt",
+      "kompetansemaal": [
+        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+      ],
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "framover",
+        "snuHogre",
+        "snuVenstre"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ein figur er ikkje anna enn ei rekkje punkt bundne saman med strek. Skriv du ned koordinatane til hjørna, har du skrive ned heile figuren."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det er ein annan måte å teikne på enn den du kjenner frå grunnkurset. Der sa du kor **langt** og kva **veg** skilpadda skulle. Her seier du kvar ho skal **hamne**, og lèt henne finne vegen sjølv."
+        },
+        {
+          "type": "merk",
+          "tekst": "Skal figuren lukke seg, må siste punktet vere det same som det fyrste. Skilpadda finn ikkje vegen heim av seg sjølv."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Eit kvadrat med hjørne i (-2, -2), (2, -2), (2, 2) og (-2, 2). Køyr det, og prøv så å flytte eitt av hjørna.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": 2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Ein trekant av tre punkt",
+        "maal": "ein trekant med hjørne i (-2, -2), (2, -2) og (0, 2)",
+        "steg": [
+          {
+            "tekst": "Vi hoppar til det fyrste hjørnet og dreg botnen: frå (-2, -2) til (2, -2).",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Opp til toppunktet i (0, 2). Legg merke til at x er 0 — toppen ligg midt mellom dei to nedste hjørna.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 2
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt toppunktet til (2, 2). Kva slags trekant blir det då?"
+          },
+          {
+            "tekst": "Til slutt attende til der vi starta. Utan den siste blokka står figuren open.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "f1",
+          "type": "bygg",
+          "maal": "Teikn trekanten",
+          "tekst": "Teikn ein trekant med hjørne i **(-2, -2)**, **(2, -2)** og **(0, 2)**. Hugs at siste punktet må vere det same som det fyrste for at figuren skal lukke seg.",
+          "hint": [
+            "Hopp til det fyrste hjørnet med pennen oppe. Så tre `Gå til rute` etter kvarandre.",
+            "Rekkjefølgja er (-2, -2) → (2, -2) → (0, 2) → (-2, -2)."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gaaTilRute"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 3,
+            "breidd": 200,
+            "hogd": 200
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "f2",
+          "type": "les",
+          "maal": "Kva figur er dette?",
+          "tekst": "Punkta i programmet under er hjørna i ein figur.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": -1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 1
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva figur teiknar dette?",
+          "alternativ": [
+            "Eit kvadrat",
+            "Eit rektangel som er breiare enn det er høgt",
+            "Ein trekant"
+          ],
+          "rett": 1,
+          "forklaring": "x går frå -3 til 3, altså seks ruter. y går frå -1 til 1, altså to. Seks brei og to høg er eit rektangel — eit kvadrat måtte hatt like mange ruter begge vegar."
+        },
+        {
+          "id": "f3",
+          "type": "rett",
+          "maal": "Kvadratet som ikkje lukkar seg",
+          "tekst": "Dette skulle vere eit kvadrat med hjørne i (-2, -2), (2, -2), (2, 2) og (-2, 2). Hent det inn og finn ut kva som manglar.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": 2
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Tel strekane. Ein firkant har fire sider — kor mange er det her?",
+            "Skilpadda står i (-2, 2) og kom aldri heim. Legg til `Gå til rute -2, -2` heilt til slutt."
+          ],
+          "testar": [
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "breidd": 200,
+            "hogd": 200
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": 2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ein figur kan skrivast som ei liste med **hjørnekoordinatar**. Siste punktet må vere det same som det fyrste dersom figuren skal lukke seg."
+    },
+    {
+      "id": "flytte",
+      "tittel": "Flytte ein figur",
+      "kompetansemaal": [
+        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy",
+        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker"
+      ],
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "gjenta"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Legg du **det same talet** til alle x-koordinatane i ein figur, flyttar heile figuren seg sidelengs. Legg du det til alle y-ane, flyttar han seg opp eller ned. Figuren endrar ikkje form — han berre skiftar plass."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det heiter ei **parallellforskyving**, og det er den enklaste av flyttingane i matematikken. På rutenettet er det lett å sjå: tel like mange ruter for kvart einaste hjørne."
+        },
+        {
+          "type": "merk",
+          "tekst": "`Gå framover 50` flyttar skilpadda nøyaktig **éi rute**. Éi rute er 50 steg, og det er difor dei to måtane å flytte på passar saman."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "To like trekantar, den eine flytt fire ruter til høgre. Sjå etter kva som er ulikt i tala.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": -2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -3,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 0,
+                "y": -2
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": -2
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 0,
+                "y": -2
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Same trekanten to stader",
+        "maal": "ein trekant teikna to gonger, der den andre ligg fire ruter til høgre for den fyrste",
+        "steg": [
+          {
+            "tekst": "Fyrst trekanten med hjørne i (-4, -2), (-2, -2) og (-3, 1).",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -2
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "No den same trekanten om att, men med 4 lagt til kvar einaste x. (-4) blir 0, (-2) blir 2, (-3) blir 1. Alle y-ane står urørte.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": -2
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": -2
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Legg 3 til alle y-ane i staden. Kva veg flyttar figuren seg då?"
+          },
+          {
+            "tekst": "Ei trapp, bygd med `Gjenta`. Kvart steg er éi rute opp og éi til høgre — og éi rute er 50 steg framover.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -4
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 4
+                  },
+                  "kropp": [
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 50
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    },
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 50
+                      }
+                    },
+                    {
+                      "type": "snuVenstre",
+                      "felt": {
+                        "grader": 90
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `Gjenta 4` til `Gjenta 8`. Kvar hamnar skilpadda då?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "v1",
+          "type": "les",
+          "maal": "Kva veg flyttar figuren seg?",
+          "tekst": "Ein figur har hjørne i (1, 1), (3, 1) og (2, 3). Alle tre blir endra til (1, -2), (3, -2) og (2, 0).",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": 3
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva har skjedd med figuren?",
+          "alternativ": [
+            "Han er flytt tre ruter ned",
+            "Han er flytt tre ruter til venstre",
+            "Han er blitt mindre"
+          ],
+          "rett": 0,
+          "forklaring": "Alle x-ane står urørte, så figuren har ikkje flytt seg sidelengs. Alle y-ane har mist 3 — 1 blei -2, og 3 blei 0. Det er tre ruter ned."
+        },
+        {
+          "id": "v2",
+          "type": "bygg",
+          "maal": "Bygg ei trapp",
+          "tekst": "Start i **(-4, -4)** og bygg ei trapp med **fire steg**. Kvart steg er éi rute opp og så éi rute til høgre. Du får **høgst 8 blokker**, så du må bruke `Gjenta`.",
+          "hint": [
+            "Éi rute er 50 steg. Eitt trappesteg er: framover 50, snu høgre 90, framover 50, snu venstre 90.",
+            "Legg dei fire blokkene inni ei `Gjenta 4`. Saman med hoppet til startpunktet blir det åtte blokker."
+          ],
+          "testar": [
+            {
+              "type": "maksBlokker",
+              "vent": 8
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 8,
+            "breidd": 200,
+            "hogd": 200
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -4
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 4
+                },
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 50
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 50
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "v3",
+          "type": "bygg",
+          "maal": "Flytt trekanten",
+          "tekst": "Teikn trekanten med hjørne i **(-4, -2)**, **(-2, -2)** og **(-3, 1)** — og så den same trekanten ein gong til, **flytt fire ruter til høgre**.",
+          "hint": [
+            "Den andre trekanten har same form. Legg 4 til kvar einaste x og lat y-ane stå.",
+            "(-4) + 4 = 0, (-2) + 4 = 2, og (-3) + 4 = 1."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "gaaTilRute"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 6,
+            "breidd": 300,
+            "hogd": 150
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -3,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -2
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 2,
+                  "y": -2
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 1,
+                  "y": 1
+                }
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": 0,
+                  "y": -2
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Legg du det **same talet** til alle x-koordinatane, flyttar figuren seg sidelengs. Gjer du det med y-ane, flyttar han seg opp eller ned. Forma er den same — det er ei parallellforskyving."
+    },
+    {
+      "id": "variabel-koordinat",
+      "tittel": "Ein variabel som koordinat",
+      "kompetansemaal": [
+        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker",
+        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+      ],
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Til no har du skrive faste tal i `Gå til rute`. Men eit hòl som tek imot eit tal, tek òg imot ein **variabel** — og då kan koordinaten endre seg medan programmet køyrer."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Set du same variabelen i begge hòla, får du punkt der x og y alltid er like: (-4, -4), (-3, -3), (-2, -2) og så vidare. Alle desse ligg på ei **rett linje** gjennom origo."
+        },
+        {
+          "type": "merk",
+          "tekst": "Ein variabel i eit hòl blir lesen på nytt kvar gong blokka køyrer. Det er nettopp difor figuren veks i staden for å stå stille."
+        },
+        {
+          "type": "merk",
+          "tekst": "Når ei oppgåve set eit **tak på talet blokker**, tel ei blokk i eit hòl som si eiga. `Gå til rute (n, n)` er difor **tre** blokker: sjølve blokka og dei to variablane inni henne."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Ni punkt der x og y er like store. Køyr det steg for steg, og sjå på `n` medan det går.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": -4
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "n",
+                "verdi": -4
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 9
+              },
+              "kropp": [
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "n"
+                      }
+                    },
+                    "y": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "n"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "n",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Ei linje der x er lik y",
+        "maal": "ein strek frå (-4, -4) til (4, 4), bygd av ni punkt med ein variabel",
+        "steg": [
+          {
+            "tekst": "Fyrst variabelen. `n` startar på -4, og vi skriv han ut for å sjå at han er der.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": -4
+                  }
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "n"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "No set vi `n` i begge hòla i `Gå til rute`. Skilpadda hamnar i (-4, -4) — same tal begge vegar.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -4
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": -4
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "n"
+                      }
+                    },
+                    "y": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "n"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Og til slutt ei løkke som aukar `n` med 1 kvar gong. Ni gonger, frå -4 til 4.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": -4
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": -4
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 9
+                  },
+                  "kropp": [
+                    {
+                      "type": "gaaTilRute",
+                      "felt": {
+                        "x": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "n"
+                          }
+                        },
+                        "y": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "n"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "n",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `Endre n med 1` til 2. Kor mange punkt får du bruk for då?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "d1",
+          "type": "bygg",
+          "maal": "Teikn linja der x er lik y",
+          "tekst": "Bruk ein variabel til å teikne ein strek gjennom alle punkta der **x og y er like**, frå **(-4, -4)** til **(4, 4)**. Du får **høgst 9 blokker**.",
+          "hint": [
+            "Set ein variabel til -4 før løkka. Inni løkka: gå til rute (n, n), og auk så n med 1.",
+            "Frå -4 til 4 er ni tal når du tel med begge endane. Løkka skal difor gå ni gonger."
+          ],
+          "testar": [
+            {
+              "type": "maksBlokker",
+              "vent": 9
+            },
+            {
+              "type": "brukar",
+              "blokk": "lesVar"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 8,
+            "breidd": 400,
+            "hogd": 400
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -4
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": -4
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "gaaTilRute",
+                    "felt": {
+                      "x": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      },
+                      "y": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "d2",
+          "type": "les",
+          "maal": "Kva punkt kjem ut?",
+          "tekst": "Programmet under set ein variabel og skriv han ut tre gonger.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": 2
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 3
+                },
+                "kropp": [
+                  {
+                    "type": "skrivUt",
+                    "felt": {
+                      "verdi": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 3
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kva tal blir skrivne ut?",
+          "alternativ": [
+            "2, 3 og 4",
+            "2, 5 og 8",
+            "3, 6 og 9"
+          ],
+          "rett": 1,
+          "forklaring": "`n` startar på 2 og blir skriven ut med ein gong. Så blir 3 lagt til, og 5 skriven ut. Så 3 til, og 8 skriven ut. Utskrifta kjem **før** endringa i kvar runde."
+        },
+        {
+          "id": "d3",
+          "type": "bygg",
+          "maal": "Linja der y er dobbelt så stor som x",
+          "tekst": "Teikn ein strek gjennom punkta der **y er dobbelt så stor som x**, frå **(-2, -4)** til **(2, 4)**. Du får **høgst 10 blokker**.",
+          "hint": [
+            "Sett `n` som x-en. Då må y vere `n` gonge 2 — bruk ei `Rekn ut`-blokk i y-hòlet.",
+            "Frå -2 til 2 er fem tal. Løkka går fem gonger, og `n` aukar med 1."
+          ],
+          "testar": [
+            {
+              "type": "maksBlokker",
+              "vent": 10
+            },
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "breidd": 200,
+            "hogd": 400
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -2,
+                  "y": -4
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": -2
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 5
+                },
+                "kropp": [
+                  {
+                    "type": "gaaTilRute",
+                    "felt": {
+                      "x": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      },
+                      "y": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "gonge",
+                          "b": 2
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ein **variabel** kan stå i eit koordinathòl, og då endrar punktet seg medan programmet køyrer. Set du same variabelen begge stader, får du linja der `x = y`. Reknar du på han, får du andre linjer."
+    },
+    {
+      "id": "vilkaar",
+      "tittel": "Gjer det berre dersom",
+      "kompetansemaal": [
+        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker"
+      ],
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "lesX",
+        "lesY",
+        "dersom",
+        "samanlikn"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei `Gjenta`-løkke gjer det same kvar runde. Med ei **`Dersom`-blokk** kan programmet velje: blokkene inni køyrer berre når vilkåret er sant."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Vilkåret er ei **samanlikning** — `x > 0`, `n = 3`, `y ≤ -2`. Ho er sann eller usann, og `Dersom` gjer ingenting når ho er usann."
+        },
+        {
+          "type": "merk",
+          "tekst": "To nye verdiblokker fortel kvar skilpadda står: `x` og `y`. Dei kan brukast i ei samanlikning som alle andre tal."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Skilpadda går frå venstre til høgre, men pennen kjem ikkje ned før ho har passert origo. Køyr det steg for steg.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 0
+              }
+            },
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "n",
+                "verdi": -4
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 9
+              },
+              "kropp": [
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "n"
+                          }
+                        },
+                        "op": "storre",
+                        "b": 0
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "pennNed",
+                      "felt": {}
+                    }
+                  ]
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "n"
+                      }
+                    },
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "n",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Teikn berre på høgre sida",
+        "maal": "ein strek som berre finst der x er større enn 0 — resten av vegen går skilpadda med pennen oppe",
+        "steg": [
+          {
+            "tekst": "Fyrst utan vilkår: skilpadda går heile vegen frå (-4, 0) til (4, 0), og teiknar overalt.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 4,
+                    "y": 0
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Ei `Dersom` som seier frå når vi har passert origo. `Skriv ut` viser kva rundar som slepp gjennom.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": -4
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 9
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "n"
+                              }
+                            },
+                            "op": "storre",
+                            "b": 0
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "skrivUt",
+                          "felt": {
+                            "verdi": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "n"
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "n",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `>` til `≥`. Kor mange tal blir skrivne ut då?"
+          },
+          {
+            "tekst": "No set vi `Penn ned` inni `Dersom` i staden. Skilpadda flyttar seg heile vegen, men set berre strek etter at ho har passert origo.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": -4
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 9
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "n"
+                              }
+                            },
+                            "op": "storre",
+                            "b": 0
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "pennNed",
+                          "felt": {}
+                        }
+                      ]
+                    },
+                    {
+                      "type": "gaaTilRute",
+                      "felt": {
+                        "x": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "n"
+                          }
+                        },
+                        "y": 0
+                      }
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "n",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "w1",
+          "type": "les",
+          "maal": "Kor mange gonger?",
+          "tekst": "Les blokkene under.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 6
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "storre",
+                          "b": 3
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kor mange tal blir skrivne ut?",
+          "alternativ": [
+            "To",
+            "Tre",
+            "Seks"
+          ],
+          "rett": 1,
+          "forklaring": "`n` er 1, 2, 3, 4, 5 og 6 gjennom dei seks rundane. Vilkåret `n > 3` er sant for 4, 5 og 6 — altså tre gonger. At 3 ikkje er med, er fordi `>` tyder større enn, ikkje større eller lik."
+        },
+        {
+          "id": "w2",
+          "type": "bygg",
+          "maal": "Teikn berre til høgre for origo",
+          "tekst": "Lat skilpadda gå frå **(-4, 0)** til **(4, 0)** eitt steg om gongen, men **berre teikne der x er større enn 0**. Bruk `Dersom` med ei samanlikning.",
+          "hint": [
+            "Start med pennen oppe. Inni løkka: `Dersom n > 0` med `Penn ned` inni, så `Gå til rute n, 0`, og til slutt `Endre n med 1`.",
+            "Vilkåret skal vere `n > 0`. Då slår pennen seg ned fyrst i runden der n er 1."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "breidd": 200,
+            "hogd": 0
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 0
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": -4
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "storre",
+                          "b": 0
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "pennNed",
+                        "felt": {}
+                      }
+                    ]
+                  },
+                  {
+                    "type": "gaaTilRute",
+                    "felt": {
+                      "x": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      },
+                      "y": 0
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "w3",
+          "type": "rett",
+          "maal": "Vilkåret som slepp gjennom for mykje",
+          "tekst": "Dette skulle teikne berre der x er større enn 0, men streken startar for langt til venstre. Hent det inn og rett vilkåret.",
+          "startProgram": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": -4
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "storre",
+                          "b": -2
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "pennNed",
+                        "felt": {}
+                      }
+                    ]
+                  },
+                  {
+                    "type": "gaaTilRute",
+                    "felt": {
+                      "x": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      },
+                      "y": 0
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "hint": [
+            "Køyr det og sjå kvar streken byrjar. Kva tal blir samanlikna med?",
+            "Vilkåret seier `n > -2`, men det skal vere `n > 0`."
+          ],
+          "testar": [
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4,
+            "breidd": 200,
+            "hogd": 0
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 0
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": -4
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 9
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "storre",
+                          "b": 0
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "pennNed",
+                        "felt": {}
+                      }
+                    ]
+                  },
+                  {
+                    "type": "gaaTilRute",
+                    "felt": {
+                      "x": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "n"
+                        }
+                      },
+                      "y": 0
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "`Dersom` køyrer blokkene inni seg **berre når vilkåret er sant**. Vilkåret er ei samanlikning, og `x` og `y` fortel kvar skilpadda står akkurat no."
+    },
+    {
+      "id": "monster",
+      "tittel": "Mønster i rutenettet",
+      "kompetansemaal": [
+        "5. trinn: lage og programmere algoritmer med bruk av variabler, vilkår og løkker",
+        "5. trinn: beskrive posisjon og flytting i rutenett, på kart og i koordinatsystemer, med og uten digitale verktøy"
+      ],
+      "palett": [
+        "pennOpp",
+        "pennNed",
+        "gaaTilRute",
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "gjenta",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "lesX",
+        "lesY",
+        "dersom",
+        "samanlikn",
+        "setFarge",
+        "tilStart",
+        "setTjukn",
+        "kallFunksjon"
+      ],
+      "rutenett": {
+        "min": -5,
+        "maks": 5
+      },
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "No har du alt du treng: koordinatar, løkker, variablar og vilkår. Sett saman blir dei til **mønster** — figurar som gjentek seg etter ein regel du sjølv har skrive."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Ei løkke inni ei anna løkke går gjennom heile rutenettet: den ytre tel radene, den indre tel rutene i kvar rad. Det er slik eit rutenett blir gjennomgått, same kva ein skal gjere med det."
+        },
+        {
+          "type": "merk",
+          "tekst": "Ein eigen funksjon er nyttig her. Byggjer du «teikn ei rute» éin gong, kan du bruke han så mange gonger du vil."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Fire ruter i ei rad, med ei tom rute imellom. Køyr det, og prøv så å endre kor mykje `x` aukar.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 0
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -3,
+                "y": 0
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -3,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -4,
+                "y": 0
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": 0
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 0
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -1,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": -2,
+                "y": 0
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 0
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 1,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 0,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 0
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": 0
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 3,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 1
+              }
+            },
+            {
+              "type": "gaaTilRute",
+              "felt": {
+                "x": 2,
+                "y": 0
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Ei rad med ruter",
+        "maal": "fire kvadrat på ei rad, med ei tom rute mellom kvart",
+        "steg": [
+          {
+            "tekst": "Fyrst éi rute: eit kvadrat på éi gonger éi, med nedre venstre hjørne i (-4, 0).",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så den neste, to ruter lenger til høgre. Legg merke til at alle fire tala i den andre ruta er dei same, berre med 2 lagt til kvar x.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 0
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Legg til ei tredje rute sjølv. Kva x-verdiar må ho ha?"
+          },
+          {
+            "tekst": "Fire ruter på rad. Her ser du kvifor ein eigen funksjon er verdt arbeidet: det same står fire gonger.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -4,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": -2,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 1,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 0,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 0
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 3,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 1
+                  }
+                },
+                {
+                  "type": "gaaTilRute",
+                  "felt": {
+                    "x": 2,
+                    "y": 0
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "m1",
+          "type": "bygg",
+          "maal": "Fire punkt med luke imellom",
+          "tekst": "Lat skilpadda gå til **(-4, 0)**, **(-2, 0)**, **(0, 0)** og **(2, 0)** — fire punkt med **to ruters** avstand. Bruk ein variabel og ei løkke, og **høgst 8 blokker**.",
+          "hint": [
+            "Set ein variabel til -4. Inni løkka: gå til rute (x, 0), og auk x med 2.",
+            "Fire punkt tyder `Gjenta 4`, og avstanden på to ruter tyder `Endre x med 2`."
+          ],
+          "testar": [
+            {
+              "type": "maksBlokker",
+              "vent": 8
+            },
+            {
+              "type": "brukar",
+              "blokk": "gjenta"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 3,
+            "breidd": 300,
+            "hogd": 0
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": 0
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": -4
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 4
+                },
+                "kropp": [
+                  {
+                    "type": "gaaTilRute",
+                    "felt": {
+                      "x": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "x"
+                        }
+                      },
+                      "y": 0
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "x",
+                      "med": 2
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "m2",
+          "type": "les",
+          "maal": "Kor mange punkt?",
+          "tekst": "To løkker inni kvarandre går gjennom eit rutenett.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "y",
+                  "verdi": -1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 3
+                },
+                "kropp": [
+                  {
+                    "type": "settVar",
+                    "felt": {
+                      "namn": "x",
+                      "verdi": -1
+                    }
+                  },
+                  {
+                    "type": "gjenta",
+                    "felt": {
+                      "tal": 3
+                    },
+                    "kropp": [
+                      {
+                        "type": "skrivUt",
+                        "felt": {
+                          "verdi": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "x"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "x",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "y",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kor mange tal blir skrivne ut til saman?",
+          "alternativ": [
+            "Tre",
+            "Seks",
+            "Ni"
+          ],
+          "rett": 2,
+          "forklaring": "Den ytre løkka går tre gonger, og for kvar av dei går den indre tre gonger til. 3 × 3 = 9. Det er slik ein går gjennom eit rutenett med tre rader og tre søyler."
+        },
+        {
+          "id": "m3",
+          "type": "bygg",
+          "maal": "Ei trapp med funksjon",
+          "tekst": "Lag ein **eigen funksjon** som heiter `steg` og som teiknar eitt trappesteg — éi rute opp og éi rute til høgre. Bruk han så fire gonger i ei løkke, med start i **(-4, -4)**.",
+          "hint": [
+            "Éi rute er 50 steg. Funksjonen skal innehalde: framover 50, snu høgre 90, framover 50, snu venstre 90.",
+            "I hovudprogrammet: hopp til (-4, -4), og legg `Bruk steg` inni ei `Gjenta 4`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "kallFunksjon"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 8,
+            "breidd": 200,
+            "hogd": 200
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "gaaTilRute",
+                "felt": {
+                  "x": -4,
+                  "y": -4
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 4
+                },
+                "kropp": [
+                  {
+                    "type": "kallFunksjon",
+                    "felt": {
+                      "namn": "steg"
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": [
+              {
+                "namn": "steg",
+                "kropp": [
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 50
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 50
+                    }
+                  },
+                  {
+                    "type": "snuVenstre",
+                    "felt": {
+                      "grader": 90
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "oppsummering": "Eit **mønster** er ein regel som gjentek seg. Ein variabel som veks med same talet kvar runde gjev jamn avstand, ei løkke inni ei anna går gjennom heile rutenettet, og ein eigen funksjon lèt deg byggje biten éin gong og bruke han mange."
+    }
+  ]
+}

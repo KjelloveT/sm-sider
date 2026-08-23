@@ -36,6 +36,22 @@ function BolkSkilpadde() {
         x = nx; y = ny;
     }
 
+    /* Rett til ein stad, utan å snu.
+     *
+     * Skilpadda held retninga si — det er slik `goto` i Python sin turtle
+     * verkar, og det er den einaste varianten som gjer at «Gå til (3,4)» og
+     * så «Gå framover 100» framleis går den vegen eleven venta.
+     *
+     * Vegen blir lagd til `gaatt`, så luffene padlar like langt som ho
+     * faktisk flytta seg. */
+    function gaaTil(nyX, nyY) {
+        const nx = Number(nyX) || 0, ny = Number(nyY) || 0;
+        const d = Math.hypot(nx - x, ny - y);
+        if (nede && d > 0) strek.push({ x1: x, y1: y, x2: nx, y2: ny, farge, tjukn });
+        gaatt += d;
+        x = nx; y = ny;
+    }
+
     function snu(grader) {
         vinkel = (vinkel + (Number(grader) || 0)) % 360;
         if (vinkel < 0) vinkel += 360;
@@ -62,7 +78,7 @@ function BolkSkilpadde() {
     }
 
     return {
-        gaa, snu, tilStart, setTjukn, setFarge, penn, omfang,
+        gaa, gaaTil, snu, tilStart, setTjukn, setFarge, penn, omfang,
         get strek() { return strek; },
         get tilstand() { return { x, y, vinkel, nede, farge, tjukn, gaatt }; }
     };

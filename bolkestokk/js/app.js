@@ -523,6 +523,11 @@
             setProgram,
             hentProgram: () => program,
             setPalett: (liste) => { BolkEditor.setPalett(liste); BolkEditor.teiknPalett(); },
+            /* Ein leksjon kan be om rutenett i staden for fri teikneflate.
+             * Det er ei eigenskap ved leksjonen og ikkje ved programmet:
+             * dei same blokkene teiknar det same anten rutene er der eller
+             * ikkje, det er berre eleven som ser meir. */
+            setRutenett: (spek) => BolkLerret.setRutenett(spek || null),
             koyr,
             /* Retting går utanom animasjonen: han skal svare med ein gong,
              * ikkje vente på at figuren blir teikna ferdig. */
