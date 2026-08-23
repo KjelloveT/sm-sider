@@ -29,7 +29,7 @@
     document.addEventListener('DOMContentLoaded', start);
 
     function start() {
-        ['palett', 'arbeid', 'koyr', 'stopp', 'toem', 'nyKommando', 'fart', 'status',
+        ['palett', 'arbeid', 'koyr', 'stopp', 'toem', 'nyFunksjon', 'fart', 'status',
          'lerret', 'utskrift', 'feil', 'faneTeikning', 'fanePython',
          'ruteTeikning', 'rutePython', 'leksjonspanel',
          'stegKnapp', 'stegrad', 'nesteSteg', 'spelAv', 'stegInfo',
@@ -54,7 +54,7 @@
         el.koyr.addEventListener('click', () => koyr());
         el.stopp.addEventListener('click', stopp);
         el.toem.addEventListener('click', toem);
-        el.nyKommando.addEventListener('click', nyKommando);
+        el.nyFunksjon.addEventListener('click', nyFunksjon);
         el.faneTeikning.addEventListener('click', () => fane('teikning'));
         el.fanePython.addEventListener('click', () => fane('python'));
         el.stegKnapp.addEventListener('click', startStegmodus);
@@ -129,11 +129,11 @@
         setProgram(BolkTre.nyttProgram());
     }
 
-    function nyKommando() {
-        const brukte = BolkTre.kommandonamn(program);
+    function nyFunksjon() {
+        const brukte = BolkTre.funksjonsnamn(program);
         let namn = 'firkant', n = 2;
         while (brukte.indexOf(namn) >= 0) namn = 'firkant' + (n++);
-        program.kommandoar.push({ namn, kropp: [] });
+        program.funksjonar.push({ namn, kropp: [] });
         BolkEditor.teikn();
         endra();
     }

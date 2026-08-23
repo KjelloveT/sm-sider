@@ -9,7 +9,7 @@
  * om fleire steg; det finst ingen tråd å drepe.
  *
  * Verdiar blir rekna ut synkront, utan yield. Ei verdiblokk kan ikkje endre
- * skilpadda eller kalle ein kommando, så ho har ingenting å stoppe midt i.
+ * skilpadda eller kalle ein funksjon, så ho har ingenting å stoppe midt i.
  */
 const BolkTolk = (function () {
 
@@ -19,12 +19,12 @@ const BolkTolk = (function () {
     const MAKS_STEG = 50000;
 
     function nyKontekst(program, val) {
-        const kommandoar = {};
-        (program.kommandoar || []).forEach(k => { if (k.namn) kommandoar[k.namn] = k.kropp || []; });
+        const funksjonar = {};
+        (program.funksjonar || []).forEach(k => { if (k.namn) funksjonar[k.namn] = k.kropp || []; });
         return {
             skilpadde: (val && val.skilpadde) || BolkSkilpadde(),
             variablar: {},
-            kommandoar,
+            funksjonar,
             utskrift: [],
             steg: 0,
             djupn: 0,

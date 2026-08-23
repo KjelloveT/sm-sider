@@ -230,7 +230,7 @@ const BolkDra = (function () {
     function stabelFor(nokkel) {
         if (nokkel === 'start') return program.start;
         if (nokkel.indexOf('kmd:') === 0) {
-            const k = program.kommandoar[Number(nokkel.slice(4))];
+            const k = program.funksjonar[Number(nokkel.slice(4))];
             return k ? k.kropp : null;
         }
         if (nokkel.indexOf('krop:') === 0) {

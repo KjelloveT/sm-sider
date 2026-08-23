@@ -253,18 +253,18 @@ const BolkOppgaver = (function () {
             rute.setAttribute('aria-label', 'Programmet du skal lese');
             const p = BolkTre.lesInn(oppgave.program);
 
-            /* Kommandoane må vere med. Eit spørsmål om kor mange strek
+            /* Funksjonane må vere med. Eit spørsmål om kor mange strek
              * «Bruk firkant» teiknar er umogleg å svare på om eleven ikkje
              * får sjå kva `firkant` er. */
-            (p.kommandoar || []).forEach(k => {
+            (p.funksjonar || []).forEach(k => {
                 const tittel = document.createElement('p');
                 tittel.className = 'bs-leshatt';
-                tittel.textContent = 'Lag kommandoen ' + k.namn;
+                tittel.textContent = 'Lag funksjonen ' + k.namn;
                 rute.appendChild(tittel);
                 (k.kropp || []).forEach(n => rute.appendChild(BolkEditor.blokk(n)));
             });
 
-            if ((p.kommandoar || []).length && p.start.length) {
+            if ((p.funksjonar || []).length && p.start.length) {
                 const tittel = document.createElement('p');
                 tittel.className = 'bs-leshatt';
                 tittel.textContent = 'Når eg trykkjer Køyr';

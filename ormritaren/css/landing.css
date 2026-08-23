@@ -242,13 +242,28 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
 
 /* ---- lærartekst og botn ----------------------------------------------- */
 
-.orm-larartekst { margin-top: 8px; }
+/* Boksen er like brei som den lengste linja får lov å bli, og ikkje breiare.
+ *
+ * Før var det avsnitta som hadde `max-width: 74ch` medan boksen låg i full
+ * breidd. På ein stor skjerm gav det ei ramme som gjekk tvers over sida med
+ * halve seg tom — teksten stoppa der han skulle, men boksen heldt fram.
+ *
+ * No ber boksen grensa, og avsnitta fyller han. Då er det inga luft å bli
+ * kvitt: ho kan ikkje oppstå. `min()` gjer at han framleis krympar med sida
+ * i staden for å stikke ut når det er mindre enn 74ch å ta av. */
+.orm-larartekst {
+    margin-top: 8px;
+    max-width: min(100%, 74ch);
+}
 
 .orm-larartekst p {
-    max-width: 74ch;
     font-size: 14px;
     line-height: 1.65;
+    margin: 0 0 11px;
 }
+
+/* Siste avsnittet skal ikkje leggje att ei tom linje mot botnramma. */
+.orm-larartekst p:last-child { margin-bottom: 0; }
 
 .orm-landing-lasting {
     font-size: 14px;

@@ -71,7 +71,7 @@ const BolkBlokkar = (function () {
         lokke: '#FFB833',   // gjenta
         tal:   '#FFC93C',   // tal, rekning og utskrift
         boks:  '#FF7A45',   // variablar
-        mi:    '#CBAAFF',   // eigne kommandoar
+        mi:    '#CBAAFF',   // eigne funksjonar
         start: '#FFDD57'    // hattar
     };
 
@@ -80,7 +80,7 @@ const BolkBlokkar = (function () {
         { id: 'skilpadde', tittel: 'Skilpadda',        farge: 'gaa'   },
         { id: 'verdi',     tittel: 'Tal og rekning',   farge: 'tal'   },
         { id: 'variabel',  tittel: 'Variablar',        farge: 'boks'  },
-        { id: 'kommando',  tittel: 'Eigne kommandoar', farge: 'mi'    }
+        { id: 'funksjon',  tittel: 'Eigne funksjonar', farge: 'mi'    }
     ];
 
     const DEF = [
@@ -237,22 +237,22 @@ const BolkBlokkar = (function () {
             python: (f) => f.namn
         },
 
-        /* ---- eigne kommandoar -------------------------------------------- */
+        /* ---- eigne funksjonar -------------------------------------------- */
         {
-            id: 'lagKommando', farge: 'mi', ikon: 'sparkles', kategori: 'kommando', form: 'hatt',
-            tekst: ['Lag kommandoen', { felt: 'namn', slag: 'tekst', standard: 'firkant' }],
+            id: 'lagFunksjon', farge: 'mi', ikon: 'sparkles', kategori: 'funksjon', form: 'hatt',
+            tekst: ['Lag funksjonen', { felt: 'namn', slag: 'tekst', standard: 'firkant' }],
             python: (f) => 'def ' + f.namn + '():'
         },
         {
-            id: 'kallKommando', farge: 'mi', ikon: 'sparkle', kategori: 'kommando', form: 'setning',
-            tekst: ['Bruk', { felt: 'namn', slag: 'val', val: 'kommandoar', standard: '' }],
-            /* Djupna på 20 finst fordi ein kommando kan kalle seg sjølv. Det er
+            id: 'kallFunksjon', farge: 'mi', ikon: 'sparkle', kategori: 'funksjon', form: 'setning',
+            tekst: ['Bruk', { felt: 'namn', slag: 'val', val: 'funksjonar', standard: '' }],
+            /* Djupna på 20 finst fordi ein funksjon kan kalle seg sjølv. Det er
              * ikkje forbode — ein spiral laga med rekursjon er eit fint syn —
              * men utan grense ville det tømt stakken i staden for å seie frå. */
             koyr: function* (node, ktx, hj) {
-                const kom = ktx.kommandoar[node.felt.namn];
+                const kom = ktx.funksjonar[node.felt.namn];
                 if (!kom) return;
-                if (ktx.djupn >= 20) throw new Error('Kommandoen brukar seg sjølv for mange gonger.');
+                if (ktx.djupn >= 20) throw new Error('Funksjonen brukar seg sjølv for mange gonger.');
                 ktx.djupn++;
                 try { yield* hj.koyrStabel(kom, ktx); } finally { ktx.djupn--; }
             },

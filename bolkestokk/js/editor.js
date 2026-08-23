@@ -135,9 +135,9 @@ const BolkEditor = (function () {
         el.arbeid.appendChild(stabelboks(
             BolkBlokkar.hent('start'), program.start, 'start', null));
 
-        (program.kommandoar || []).forEach((k, i) => {
+        (program.funksjonar || []).forEach((k, i) => {
             el.arbeid.appendChild(stabelboks(
-                BolkBlokkar.hent('lagKommando'), k.kropp, 'kmd:' + i, k));
+                BolkBlokkar.hent('lagFunksjon'), k.kropp, 'kmd:' + i, k));
         });
 
         el.arbeid.scrollTop = rulla;
@@ -145,7 +145,7 @@ const BolkEditor = (function () {
     }
 
     /** Ein hatt med stabelen sin under. */
-    function stabelboks(def, stabel, nokkel, kommando) {
+    function stabelboks(def, stabel, nokkel, funksjon) {
         const boks = document.createElement('div');
         boks.className = 'bs-stabelboks';
         boks.dataset.stabel = nokkel;
@@ -154,7 +154,7 @@ const BolkEditor = (function () {
         hatt.className = 'bs-blokk bs-hatt';
         hatt.dataset.form = 'hatt';
         hatt.dataset.farge = def.farge;
-        hatt.appendChild(blokkrad(kommando ? { felt: kommando } : null, def, false, nokkel));
+        hatt.appendChild(blokkrad(funksjon ? { felt: funksjon } : null, def, false, nokkel));
         boks.appendChild(hatt);
 
         boks.appendChild(stabelliste(stabel, nokkel, def.farge));
@@ -388,9 +388,9 @@ const BolkEditor = (function () {
         felt.addEventListener('input', () => {
             const ny = spek.slag === 'tal' ? (felt.value === '' ? '' : Number(felt.value)) : felt.value;
             if (node) node.felt[spek.felt] = ny;
-            // Namnet på ein kommando bur i kommando-posten, ikkje i ein node.
+            // Namnet på ein funksjon bur i funksjonsposten, ikkje i ein node.
             else if (stabelNokkel && stabelNokkel.indexOf('kmd:') === 0) {
-                program.kommandoar[Number(stabelNokkel.slice(4))].namn = String(ny).trim();
+                program.funksjonar[Number(stabelNokkel.slice(4))].namn = String(ny).trim();
             }
             if (vert.paaEndring) vert.paaEndring();
         });
@@ -429,8 +429,8 @@ const BolkEditor = (function () {
             return (program ? BolkTre.variablar(program) : BolkTre.GRUNNVARIABLAR)
                 .map(n => ({ verdi: n, tekst: n }));
         }
-        if (spek.val === 'kommandoar') {
-            const namn = program ? BolkTre.kommandonamn(program) : [];
+        if (spek.val === 'funksjonar') {
+            const namn = program ? BolkTre.funksjonsnamn(program) : [];
             return namn.length ? namn.map(n => ({ verdi: n, tekst: n }))
                                : [{ verdi: '', tekst: '(ingen enno)' }];
         }

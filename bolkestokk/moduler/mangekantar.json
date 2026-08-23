@@ -56,7 +56,7 @@
               }
             }
           ],
-          "kommandoar": []
+          "funksjonar": []
         }
       },
       "loype": {
@@ -76,7 +76,7 @@
                   }
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             }
           },
           {
@@ -104,7 +104,7 @@
                   }
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Snu 60 gradar i staden for 90. Kvifor blir hjørnet spissare?"
           },
@@ -157,7 +157,7 @@
                   }
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             }
           },
           {
@@ -215,7 +215,7 @@
                   }
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Tel blokkene. Åtte ordrar for fire sider. Skriv talet ned — vi kjem tilbake til det."
           }
@@ -250,7 +250,7 @@
                 }
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           },
           "sporsmal": "Kva teiknar dette programmet?",
           "alternativ": [
@@ -334,7 +334,7 @@
                 }
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         },
         {
@@ -395,7 +395,7 @@
                 }
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           },
           "hint": [
             "Køyr programmet og sjå på figuren. Blir hjørna for spisse eller for butte?",
@@ -465,7 +465,7 @@
                 }
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         }
       ],
@@ -527,7 +527,7 @@
               ]
             }
           ],
-          "kommandoar": []
+          "funksjonar": []
         }
       },
       "loype": {
@@ -589,7 +589,7 @@
                   }
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             }
           },
           {
@@ -619,7 +619,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Køyr dette. Kvifor blir det berre éi strek?"
           },
@@ -650,7 +650,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Set talet til 8 og køyr. Kva slags figur får du då?"
           }
@@ -710,7 +710,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         },
         {
@@ -743,7 +743,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           },
           "sporsmal": "Kva teiknar programmet?",
           "alternativ": [
@@ -806,7 +806,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         }
       ],
@@ -890,7 +890,7 @@
               ]
             }
           ],
-          "kommandoar": []
+          "funksjonar": []
         }
       },
       "loype": {
@@ -931,7 +931,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Køyr han. Blir det den same firkanten som før?"
           },
@@ -969,7 +969,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             }
           },
           {
@@ -1006,7 +1006,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Prøv 36 kantar med sider på 15 steg."
           }
@@ -1050,7 +1050,7 @@
                 }
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         },
         {
@@ -1113,7 +1113,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         },
         {
@@ -1146,7 +1146,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           },
           "sporsmal": "Kva figur blir dette?",
           "alternativ": [
@@ -1240,7 +1240,7 @@
               ]
             }
           ],
-          "kommandoar": []
+          "funksjonar": []
         }
       },
       "loype": {
@@ -1274,7 +1274,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             }
           },
           {
@@ -1316,7 +1316,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Køyr. Figuren ser lik ut — for lengda endrar seg ikkje enno."
           },
@@ -1366,7 +1366,7 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             },
             "proev": "Flytt `Endre`-blokka ut av løkka og køyr. Kva skjer, og kvifor?"
           }
@@ -1422,7 +1422,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           },
           "sporsmal": "Kva teiknar programmet då?",
           "alternativ": [
@@ -1500,7 +1500,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         },
         {
@@ -1552,7 +1552,7 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           },
           "hint": [
             "Køyr programmet. Blir sidene lengre?",
@@ -1611,15 +1611,15 @@
                 ]
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         }
       ],
       "oppsummering": "Ein **variabel** er eit namn på eit tal som kan endre seg. `Set` gjev han ein startverdi, `Endre` justerer han undervegs. Ligg `Endre` inni løkka, skjer det kvar runde."
     },
     {
-      "id": "kommando",
-      "tittel": "Din eigen kommando",
+      "id": "funksjon",
+      "tittel": "Din eigen funksjon",
       "kompetansemaal": [
         "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre"
       ],
@@ -1636,7 +1636,7 @@
         "settVar",
         "endreVar",
         "lesVar",
-        "kallKommando",
+        "kallFunksjon",
         "setFarge"
       ],
       "tekst": [
@@ -1646,11 +1646,11 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Trykk **Ny kommando** over arbeidsbenken. Du får ein ny stabel med si eiga hatt. Skriv eit namn i feltet, og legg blokkene som skal høyre til der."
+          "tekst": "Trykk **Ny funksjon** over arbeidsbenken. Du får ein ny stabel med si eiga hatt. Skriv eit namn i feltet, og legg blokkene som skal høyre til der."
         },
         {
           "type": "merk",
-          "tekst": "Etterpå dukkar namnet opp i `Bruk`-blokka. Ein kommando du har laga sjølv, verkar akkurat som dei blokkene som følgde med."
+          "tekst": "Etterpå dukkar namnet opp i `Bruk`-blokka. Ein funksjon du har laga sjølv, verkar akkurat som dei blokkene som følgde med."
         },
         {
           "type": "avsnitt",
@@ -1658,19 +1658,19 @@
         }
       ],
       "doeme": {
-        "oppmoding": "Ein kommando som heiter `firkant`, og eit program som brukar han. Sjå på begge stablane i arbeidsbenken.",
+        "oppmoding": "Ein funksjon som heiter `firkant`, og eit program som brukar han. Sjå på begge stablane i arbeidsbenken.",
         "program": {
           "app": "bolkestokk",
           "version": 1,
           "start": [
             {
-              "type": "kallKommando",
+              "type": "kallFunksjon",
               "felt": {
                 "namn": "firkant"
               }
             }
           ],
-          "kommandoar": [
+          "funksjonar": [
             {
               "namn": "firkant",
               "kropp": [
@@ -1701,7 +1701,7 @@
       },
       "loype": {
         "tittel": "Gje figuren eit namn",
-        "maal": "ein kommando du kan bruke om og om att",
+        "maal": "ein funksjon du kan bruke om og om att",
         "steg": [
           {
             "tekst": "Her er firkanten som ein vanleg løkke, slik du kjenner han.",
@@ -1730,23 +1730,23 @@
                   ]
                 }
               ],
-              "kommandoar": []
+              "funksjonar": []
             }
           },
           {
-            "tekst": "No er dei same blokkene flytta inn i ein kommando som heiter `firkant`. Programmet under hatta seier berre `Bruk firkant`.",
+            "tekst": "No er dei same blokkene flytta inn i ein funksjon som heiter `firkant`. Programmet under hatta seier berre `Bruk firkant`.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
               "start": [
                 {
-                  "type": "kallKommando",
+                  "type": "kallFunksjon",
                   "felt": {
                     "namn": "firkant"
                   }
                 }
               ],
-              "kommandoar": [
+              "funksjonar": [
                 {
                   "namn": "firkant",
                   "kropp": [
@@ -1783,7 +1783,7 @@
               "version": 1,
               "start": [
                 {
-                  "type": "kallKommando",
+                  "type": "kallFunksjon",
                   "felt": {
                     "namn": "firkant"
                   }
@@ -1795,13 +1795,13 @@
                   }
                 },
                 {
-                  "type": "kallKommando",
+                  "type": "kallFunksjon",
                   "felt": {
                     "namn": "firkant"
                   }
                 }
               ],
-              "kommandoar": [
+              "funksjonar": [
                 {
                   "namn": "firkant",
                   "kropp": [
@@ -1837,13 +1837,13 @@
           "id": "k1",
           "type": "les",
           "maal": "Kor mange strek?",
-          "tekst": "Under ser du både kommandoen og programmet som brukar han.",
+          "tekst": "Under ser du både funksjonen og programmet som brukar han.",
           "program": {
             "app": "bolkestokk",
             "version": 1,
             "start": [
               {
-                "type": "kallKommando",
+                "type": "kallFunksjon",
                 "felt": {
                   "namn": "firkant"
                 }
@@ -1855,13 +1855,13 @@
                 }
               },
               {
-                "type": "kallKommando",
+                "type": "kallFunksjon",
                 "felt": {
                   "namn": "firkant"
                 }
               }
             ],
-            "kommandoar": [
+            "funksjonar": [
               {
                 "namn": "firkant",
                 "kropp": [
@@ -1902,17 +1902,17 @@
         {
           "id": "k2",
           "type": "bygg",
-          "maal": "Lag kommandoen trekant",
-          "tekst": "Lag ein kommando som heiter **trekant** og teiknar ein trekant med sider på 100 steg. Bruk han så **to gonger**, med ei sving på **180 gradar** mellom.",
+          "maal": "Lag funksjonen trekant",
+          "tekst": "Lag ein funksjon som heiter **trekant** og teiknar ein trekant med sider på 100 steg. Bruk han så **to gonger**, med ei sving på **180 gradar** mellom.",
           "hint": [
-            "Trykk **Ny kommando**, og skriv `trekant` i namnefeltet.",
-            "Inni kommandoen: `Gjenta 3` med `Gå framover 100` og `Snu høgre 120`.",
+            "Trykk **Ny funksjon**, og skriv `trekant` i namnefeltet.",
+            "Inni funksjonen: `Gjenta 3` med `Gå framover 100` og `Snu høgre 120`.",
             "I hovudprogrammet: `Bruk trekant`, `Snu høgre 180`, `Bruk trekant`."
           ],
           "testar": [
             {
               "type": "brukar",
-              "blokk": "kallKommando"
+              "blokk": "kallFunksjon"
             },
             {
               "type": "teikning"
@@ -1926,7 +1926,7 @@
             "version": 1,
             "start": [
               {
-                "type": "kallKommando",
+                "type": "kallFunksjon",
                 "felt": {
                   "namn": "trekant"
                 }
@@ -1938,13 +1938,13 @@
                 }
               },
               {
-                "type": "kallKommando",
+                "type": "kallFunksjon",
                 "felt": {
                   "namn": "trekant"
                 }
               }
             ],
-            "kommandoar": [
+            "funksjonar": [
               {
                 "namn": "trekant",
                 "kropp": [
@@ -1974,7 +1974,7 @@
           }
         }
       ],
-      "oppsummering": "Ein **eigen kommando** er ei samling blokker med eit namn. Du byggjer han éin gong og brukar han så mange gonger du vil. Programmerarar kallar det ein **funksjon**."
+      "oppsummering": "Ein **eigen funksjon** er ei samling blokker med eit namn. Du byggjer han éin gong og brukar han så mange gonger du vil. Programmerarar kallar det ein **funksjon**."
     },
     {
       "id": "moenster",
@@ -1996,7 +1996,7 @@
         "settVar",
         "endreVar",
         "lesVar",
-        "kallKommando",
+        "kallFunksjon",
         "setFarge",
         "tilStart",
         "setTjukn",
@@ -2005,7 +2005,7 @@
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "No har du alt du treng: ei løkke, ein vinkel som lukkar, ein variabel, og din eigen kommando. Set dei saman, så får du mønster."
+          "tekst": "No har du alt du treng: ei løkke, ein vinkel som lukkar, ein variabel, og din eigen funksjon. Set dei saman, så får du mønster."
         },
         {
           "type": "avsnitt",
@@ -2033,7 +2033,7 @@
               },
               "kropp": [
                 {
-                  "type": "kallKommando",
+                  "type": "kallFunksjon",
                   "felt": {
                     "namn": "firkant"
                   }
@@ -2047,7 +2047,7 @@
               ]
             }
           ],
-          "kommandoar": [
+          "funksjonar": [
             {
               "namn": "firkant",
               "kropp": [
@@ -2081,19 +2081,19 @@
         "maal": "tolv firkantar dreidde rundt same midtpunkt",
         "steg": [
           {
-            "tekst": "Vi startar med kommandoen `firkant` og brukar han éin gong.",
+            "tekst": "Vi startar med funksjonen `firkant` og brukar han éin gong.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
               "start": [
                 {
-                  "type": "kallKommando",
+                  "type": "kallFunksjon",
                   "felt": {
                     "namn": "firkant"
                   }
                 }
               ],
-              "kommandoar": [
+              "funksjonar": [
                 {
                   "namn": "firkant",
                   "kropp": [
@@ -2135,7 +2135,7 @@
                   },
                   "kropp": [
                     {
-                      "type": "kallKommando",
+                      "type": "kallFunksjon",
                       "felt": {
                         "namn": "firkant"
                       }
@@ -2149,7 +2149,7 @@
                   ]
                 }
               ],
-              "kommandoar": [
+              "funksjonar": [
                 {
                   "namn": "firkant",
                   "kropp": [
@@ -2192,7 +2192,7 @@
                   },
                   "kropp": [
                     {
-                      "type": "kallKommando",
+                      "type": "kallFunksjon",
                       "felt": {
                         "namn": "firkant"
                       }
@@ -2206,7 +2206,7 @@
                   ]
                 }
               ],
-              "kommandoar": [
+              "funksjonar": [
                 {
                   "namn": "firkant",
                   "kropp": [
@@ -2275,22 +2275,22 @@
                 }
               }
             ],
-            "kommandoar": []
+            "funksjonar": []
           }
         },
         {
           "id": "m2",
           "type": "bygg",
           "maal": "Bygg rosetten",
-          "tekst": "Bygg rosetten: ein kommando `firkant` med sider på **60 steg**, brukt **12 gonger** med **30 gradar** mellom kvar.",
+          "tekst": "Bygg rosetten: ein funksjon `firkant` med sider på **60 steg**, brukt **12 gonger** med **30 gradar** mellom kvar.",
           "hint": [
-            "Lag kommandoen fyrst, med `Gjenta 4` inni.",
+            "Lag funksjonen fyrst, med `Gjenta 4` inni.",
             "I hovudprogrammet: `Gjenta 12` med `Bruk firkant` og `Snu høgre 30` inni."
           ],
           "testar": [
             {
               "type": "brukar",
-              "blokk": "kallKommando",
+              "blokk": "kallFunksjon",
               "inni": "gjenta"
             },
             {
@@ -2312,7 +2312,7 @@
                 },
                 "kropp": [
                   {
-                    "type": "kallKommando",
+                    "type": "kallFunksjon",
                     "felt": {
                       "namn": "firkant"
                     }
@@ -2326,7 +2326,7 @@
                 ]
               }
             ],
-            "kommandoar": [
+            "funksjonar": [
               {
                 "namn": "firkant",
                 "kropp": [
@@ -2362,7 +2362,7 @@
           "tekst": "Lag ditt eige mønster med **åtte trekantar** rundt eit midtpunkt. Trekanten skal ha sider på 100 steg, og du må rekne ut snuinga mellom dei med ei rekneblokk.",
           "hint": [
             "Åtte figurar heile vegen rundt: 360 ÷ 8.",
-            "Lag kommandoen `trekant` med `Gjenta 3`, `Gå framover 100`, `Snu høgre 120`."
+            "Lag funksjonen `trekant` med `Gjenta 3`, `Gå framover 100`, `Snu høgre 120`."
           ],
           "testar": [
             {
@@ -2371,7 +2371,7 @@
             },
             {
               "type": "brukar",
-              "blokk": "kallKommando",
+              "blokk": "kallFunksjon",
               "inni": "gjenta"
             },
             {
@@ -2393,7 +2393,7 @@
                 },
                 "kropp": [
                   {
-                    "type": "kallKommando",
+                    "type": "kallFunksjon",
                     "felt": {
                       "namn": "trekant"
                     }
@@ -2414,7 +2414,7 @@
                 ]
               }
             ],
-            "kommandoar": [
+            "funksjonar": [
               {
                 "namn": "trekant",
                 "kropp": [
@@ -2444,7 +2444,7 @@
           }
         }
       ],
-      "oppsummering": "Legg ein eigen kommando **inni ei løkke** med ei lita sving etter, så får du eit mønster. Skal det lukke seg heile vegen rundt, må snuingane bli **360 gradar** til saman."
+      "oppsummering": "Legg ein eigen funksjon **inni ei løkke** med ei lita sving etter, så får du eit mønster. Skal det lukke seg heile vegen rundt, må snuingane bli **360 gradar** til saman."
     }
   ]
 }

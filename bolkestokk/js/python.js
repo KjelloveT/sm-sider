@@ -63,7 +63,7 @@ const BolkPython = (function () {
 
     /**
      * Heile programmet som Python-tekst.
-     * Kommandoane kjem fyrst, slik Python krev: ein funksjon må vere
+     * Funksjonane kjem fyrst, slik Python krev: ein funksjon må vere
      * definert før han blir kalla.
      */
     function tekst(program) {
@@ -73,7 +73,7 @@ const BolkPython = (function () {
         ut.push('setheading(90)   # i Bolkestokk peikar 0 gradar opp');
         ut.push('');
 
-        (program.kommandoar || []).forEach(k => {
+        (program.funksjonar || []).forEach(k => {
             if (!k.namn) return;
             ut.push('def ' + k.namn + '():');
             const kropp = stabel(k.kropp || [], 1);

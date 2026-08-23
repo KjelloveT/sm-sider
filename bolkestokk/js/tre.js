@@ -10,7 +10,7 @@
  * som treng vite om det.
  *
  * Programmet:
- *   { app, version, start: [node,...], kommandoar: [{namn, kropp:[node,...]}] }
+ *   { app, version, start: [node,...], funksjonar: [{namn, kropp:[node,...]}] }
  *
  * Toppnivået følgjer AGENTS.md §5.2 så eit lagra program kan skiljast frå
  * andre appar sine filer når nokon importerer dei.
@@ -34,7 +34,7 @@ const BolkTre = (function () {
     }
 
     function nyttProgram() {
-        return { app: 'bolkestokk', version: 1, start: [], kommandoar: [] };
+        return { app: 'bolkestokk', version: 1, start: [], funksjonar: [] };
     }
 
     /** Djup kopi med ferske id-ar. Brukt av palett-drag og av rettemotoren,
@@ -53,7 +53,7 @@ const BolkTre = (function () {
         return {
             app: 'bolkestokk', version: 1,
             start: (p.start || []).map(klone),
-            kommandoar: (p.kommandoar || []).map(k => ({
+            funksjonar: (p.funksjonar || []).map(k => ({
                 namn: k.namn, kropp: (k.kropp || []).map(klone)
             }))
         };
@@ -73,9 +73,9 @@ const BolkTre = (function () {
         return ut;
     }
 
-    /** Dei sjølvstendige stablane: hovudprogrammet og kvar kommandokropp. */
+    /** Dei sjølvstendige stablane: hovudprogrammet og kvar funksjonskropp. */
     function stablar(program) {
-        return [program.start || []].concat((program.kommandoar || []).map(k => k.kropp || []));
+        return [program.start || []].concat((program.funksjonar || []).map(k => k.kropp || []));
     }
 
     /**
@@ -131,8 +131,8 @@ const BolkTre = (function () {
     /**
      * Tal blokker eleven har lagt ut.
      *
-     * Hattar tel ikkje med: `start` ligg der frå før, og `lag kommandoen` er
-     * ramma rundt ein kommando, ikkje eit steg i han. Eit tal skrive rett i
+     * Hattar tel ikkje med: `start` ligg der frå før, og `lag funksjonen` er
+     * ramma rundt ein funksjon, ikkje eit steg i han. Eit tal skrive rett i
      * eit hòl tel heller ikkje — det er ein verdi, ikkje ei blokk. Difor er
      * «teikn ein sekskant med høgst 5 blokker» eit ærleg krav: det er dei
      * fem blokkene eleven faktisk drog ut.
@@ -161,7 +161,7 @@ const BolkTre = (function () {
         return stablar(program).some(s => s.some(n => leit(n, false)));
     }
 
-    /* ---- variablar og kommandoar ------------------------------------------ */
+    /* ---- variablar og funksjonar ------------------------------------------ */
 
     const GRUNNVARIABLAR = ['lengd', 'vinkel', 'tal'];
 
@@ -177,8 +177,8 @@ const BolkTre = (function () {
         return [...sett];
     }
 
-    function kommandonamn(program) {
-        return (program.kommandoar || []).map(k => k.namn).filter(Boolean);
+    function funksjonsnamn(program) {
+        return (program.funksjonar || []).map(k => k.namn).filter(Boolean);
     }
 
     /* ---- lagring ---------------------------------------------------------- */
@@ -197,7 +197,7 @@ const BolkTre = (function () {
         return {
             app: 'bolkestokk', version: 1,
             start: (program.start || []).map(reins),
-            kommandoar: (program.kommandoar || []).map(k => ({
+            funksjonar: (program.funksjonar || []).map(k => ({
                 namn: k.namn, kropp: (k.kropp || []).map(reins)
             }))
         };
@@ -209,6 +209,10 @@ const BolkTre = (function () {
      * Ukjende blokktypar blir kasta stille. Ei fil kan vere skriven av ei
      * nyare utgåve enn den som opnar henne, og då er det betre å opne det
      * som går an enn å nekte heile programmet.
+     *
+     * `kommandoar` blir lese som `funksjonar`. Feltet heitte det til vi
+     * retta ordet, og eit program ein elev har lagra skal ikkje miste
+     * arbeidet sitt fordi vi fann ut at vi hadde brukt feil namn.
      */
     function lesInn(data) {
         const bygg = (d) => {
@@ -225,7 +229,7 @@ const BolkTre = (function () {
         return {
             app: 'bolkestokk', version: 1,
             start: ((data && data.start) || []).map(bygg).filter(Boolean),
-            kommandoar: ((data && data.kommandoar) || []).map(k => ({
+            funksjonar: ((data && (data.funksjonar || data.kommandoar)) || []).map(k => ({
                 namn: k.namn, kropp: (k.kropp || []).map(bygg).filter(Boolean)
             }))
         };
@@ -235,7 +239,7 @@ const BolkTre = (function () {
         nyNode, nyttProgram, klone, kloneProgram,
         alle, stablar, finn, loys, inni,
         tel, brukar, brukarInni,
-        variablar, kommandonamn, GRUNNVARIABLAR,
+        variablar, funksjonsnamn, GRUNNVARIABLAR,
         serialiser, lesInn
     };
 })();
