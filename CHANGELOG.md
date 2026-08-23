@@ -3,6 +3,11 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.11] — 2026-08-23
+
+### Fiksa
+- **«Bruk»-blokka peika på ingenting medan ho viste eit funksjonsnamn.** Blokka blir laga med tomt namn, og nedtrekket har berre dei funksjonane som finst — eit `<select>` utan treff på verdien sin viser fyrste alternativet likevel, og det er nettlesaren sin regel og ikkje vår. Blokka *såg* difor ut til å peike på «firkant» medan ho i røynda peika på `''`: køyringa slo opp eit namn som ikkje fanst og gjekk vidare utan å teikne. Eit program som ser rett ut og ikkje gjer noko er den verste sorten feil. No blir det synlege valet skrive inn i blokka med ein gong ho blir teikna, så det som står på skjermen alltid er det programmet køyrer. Feilen råka berre blokker eleven sjølv drog inn — fasitane i modulfila har namnet skrive ut, og difor gjekk verifikatoren rein heile tida.
+
 ## [1.10] — 2026-08-23
 
 ### Endra
