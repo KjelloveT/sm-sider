@@ -137,7 +137,7 @@
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "Éin terningkast seier lite. Hundre kast byrjar å seie noko. Med ei løkke kan du gjere det på eit augeblink."
+          "tekst": "Éin terningkast seier lite. Hundre kast byrjar å seie noko. Med ei lykkje kan du gjere det på eit augeblink."
         },
         {
           "type": "kode",
@@ -188,7 +188,7 @@
           "id": "hundre-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `tel_seksarar` som tek imot eit tal `n`, kastar terningen `n` gonger og returnerer kor mange seksarar det vart.",
-          "startkode": "import random\n\ndef tel_seksarar(n):\n    treff = 0\n    # skriv løkka her\n    return treff\n",
+          "startkode": "import random\n\ndef tel_seksarar(n):\n    treff = 0\n    # skriv lykkja her\n    return treff\n",
           "hint": [
             "`for i in range(n):` og så ein `if` inni",
             "`if random.randint(1, 6) == 6:` og då `treff = treff + 1`"
@@ -235,7 +235,7 @@
           "startkode": "import random\n\ndef tel_seksarar(n):\n    for i in range(n):\n        treff = 0\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff",
           "hint": [
             "Sjå kvar `treff = 0` står. Kor mange gonger blir den linja køyrd?",
-            "Teljaren må settast til 0 **før** løkka, ikkje inni."
+            "Teljaren må settast til 0 **før** lykkja, ikkje inni."
           ],
           "testar": [
             {
@@ -251,7 +251,7 @@
           "loeysing": "import random\n\ndef tel_seksarar(n):\n    treff = 0\n    for i in range(n):\n        if random.randint(1, 6) == 6:\n            treff = treff + 1\n    return treff"
         }
       ],
-      "oppsummering": "Med ei løkke kan du gjenta eit tilfeldig forsøk så mange gonger du vil, og telje opp utfalla. Teljaren må settast til 0 **før** løkka."
+      "oppsummering": "Med ei lykkje kan du gjenta eit tilfeldig forsøk så mange gonger du vil, og telje opp utfalla. Teljaren må settast til 0 **før** lykkja."
     },
     {
       "id": "store-tal",
@@ -314,9 +314,9 @@
           "id": "store-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `andel_seksarar` som tek imot `n`, kastar terningen `n` gonger, og returnerer **delen** som vart seksarar — altså eit tal mellom 0 og 1.",
-          "startkode": "import random\n\ndef andel_seksarar(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "startkode": "import random\n\ndef andel_seksarar(n):\n    treff = 0\n    # skriv lykkja her\n    return treff / n\n",
           "hint": [
-            "Same løkka som før — det er berre siste linja som er annleis.",
+            "Same lykkja som før — det er berre siste linja som er annleis.",
             "`return treff / n` gjev delen i staden for talet."
           ],
           "testar": [
@@ -424,9 +424,9 @@
           "id": "to-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `andel_sju` som kastar to terningar `n` gonger og returnerer delen som gav summen 7.",
-          "startkode": "import random\n\ndef andel_sju(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "startkode": "import random\n\ndef andel_sju(n):\n    treff = 0\n    # skriv lykkja her\n    return treff / n\n",
           "hint": [
-            "Du treng to kall til `randint` inni løkka.",
+            "Du treng to kall til `randint` inni lykkja.",
             "`if random.randint(1, 6) + random.randint(1, 6) == 7:`"
           ],
           "testar": [
@@ -539,7 +539,7 @@
           "id": "med-1",
           "type": "skriv",
           "tekst": "Ei eske har fire raude og éi blå kule. Lag ein funksjon `andel_blaa` som trekkjer `n` gonger **med** tilbakelegging og returnerer delen blå.",
-          "startkode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"raud\", \"blaa\"]\n\ndef andel_blaa(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "startkode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"raud\", \"blaa\"]\n\ndef andel_blaa(n):\n    treff = 0\n    # skriv lykkja her\n    return treff / n\n",
           "hint": [
             "`random.choice(eske)` trekkjer éi kule.",
             "Éi av fem kuler er blå, så svaret skal liggje kring 0,2."
@@ -569,7 +569,7 @@
             "9"
           ],
           "rett": 2,
-          "forklaring": "Lista startar med tre element. `append` legg til eitt for kvar runde i løkka, og løkka går tre gonger. Til slutt er det 3 pluss 3, altså **6**."
+          "forklaring": "Lista startar med tre element. `append` legg til eitt for kvar runde i lykkja, og lykkja går tre gonger. Til slutt er det 3 pluss 3, altså **6**."
         },
         {
           "id": "med-3",
@@ -653,7 +653,7 @@
           "id": "utan-1",
           "type": "skriv",
           "tekst": "Esken har tre raude og to blå. Lag ein funksjon `to_blaa` som trekkjer to kuler **utan** tilbakelegging `n` gonger, og returnerer delen der begge vart blå.",
-          "startkode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\n\ndef to_blaa(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "startkode": "import random\n\neske = [\"raud\", \"raud\", \"raud\", \"blaa\", \"blaa\"]\n\ndef to_blaa(n):\n    treff = 0\n    # skriv lykkja her\n    return treff / n\n",
           "hint": [
             "`trekk = random.sample(eske, 2)` gjev ei liste med to kuler.",
             "Sjekk `trekk[0]` og `trekk[1]`. Teoretisk er svaret 2/5 gonger 1/4, altså 0,1."
@@ -781,7 +781,7 @@
           "id": "monty-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `vinn_ved_byte` som simulerer `n` rundar av Monty Hall og returnerer delen som blir vunnen dersom deltakaren **alltid byter**.",
-          "startkode": "import random\n\ndef vinn_ved_byte(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "startkode": "import random\n\ndef vinn_ved_byte(n):\n    treff = 0\n    # skriv lykkja her\n    return treff / n\n",
           "hint": [
             "Plasser bilen og gjer fyrstevalet med kvar sin `random.randint(1, 3)`.",
             "Byter du, vinn du når `valt != bil`."
@@ -884,13 +884,13 @@
             "kode": "import random\n\nkron = 0\nfor kast in range(4):\n    if random.choice([\"kron\", \"mynt\"]) == \"kron\":\n        kron = kron + 1\nprint(kron)"
           },
           {
-            "tekst": "Så pakkar vi det inn i ei ytre løkke og tel kor ofte det vart nøyaktig to.",
+            "tekst": "Så pakkar vi det inn i ei ytre lykkje og tel kor ofte det vart nøyaktig to.",
             "kode": "import random\n\ntreff = 0\nfor i in range(10000):\n    kron = 0\n    for kast in range(4):\n        if random.choice([\"kron\", \"mynt\"]) == \"kron\":\n            kron = kron + 1\n    if kron == 2:\n        treff = treff + 1\n\nprint(treff / 10000)"
           },
           {
             "tekst": "Og samanliknar med utrekninga.",
             "kode": "import random\n\ntreff = 0\nfor i in range(10000):\n    kron = 0\n    for kast in range(4):\n        if random.choice([\"kron\", \"mynt\"]) == \"kron\":\n            kron = kron + 1\n    if kron == 2:\n        treff = treff + 1\n\nprint(\"Simulert: \", round(treff / 10000, 4))\nprint(\"Teoretisk:\", round(6 / 16, 4))",
-            "proev": "Ei løkke inni ei anna løkke: den indre går fire gonger for kvar runde i den ytre. Kor mange myntkast blir det til saman?"
+            "proev": "Ei lykkje inni ei anna lykkje: den indre går fire gonger for kvar runde i den ytre. Kor mange myntkast blir det til saman?"
           }
         ],
         "maal": "ei simulering som sjekkar ei utrekning du har gjort på papiret"
@@ -900,7 +900,7 @@
           "id": "teo-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `minst_ein_seksar` som kastar **to** terningar `n` gonger og returnerer delen der minst éin av dei vart seksar. Teoretisk er svaret `1 - (5/6)**2`, altså kring 0,306.",
-          "startkode": "import random\n\ndef minst_ein_seksar(n):\n    treff = 0\n    # skriv løkka her\n    return treff / n\n",
+          "startkode": "import random\n\ndef minst_ein_seksar(n):\n    treff = 0\n    # skriv lykkja her\n    return treff / n\n",
           "hint": [
             "Kast to terningar og bruk `or` mellom dei to samanlikningane.",
             "`if random.randint(1,6) == 6 or random.randint(1,6) == 6:`"

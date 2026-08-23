@@ -536,7 +536,7 @@
       },
       "loype": {
         "tittel": "Frå åtte blokker til tre",
-        "maal": "den same firkanten, men med ei løkke i staden for gjentaking",
+        "maal": "den same firkanten, men med ei lykkje i staden for gjentaking",
         "steg": [
           {
             "tekst": "Her er firkanten frå sist. Åtte blokker, og berre to av dei er ulike.",
@@ -814,7 +814,7 @@
           }
         }
       ],
-      "oppsummering": "`Gjenta` køyrer blokkene inni seg så mange gonger du seier. Ser du dei same blokkene fleire gonger etter kvarandre, **skal** dei inn i ei løkke."
+      "oppsummering": "`Gjenta` køyrer blokkene inni seg så mange gonger du seier. Ser du dei same blokkene fleire gonger etter kvarandre, **skal** dei inn i ei lykkje."
     },
     {
       "id": "variabel",
@@ -849,7 +849,7 @@
         },
         {
           "type": "merk",
-          "tekst": "Står `Endre lengd med 10` **inni** løkka, veks lengda for kvar runde. Står han utanfor, skjer det berre éin gong."
+          "tekst": "Står `Endre lengd med 10` **inni** lykkja, veks lengda for kvar runde. Står han utanfor, skjer det berre éin gong."
         },
         {
           "type": "avsnitt",
@@ -983,7 +983,7 @@
             "proev": "Køyr. Figuren ser lik ut — for lengda endrar seg ikkje enno."
           },
           {
-            "tekst": "Til slutt legg vi `Endre lengd med 10` **inni** løkka. No blir kvar side lenger enn den førre.",
+            "tekst": "Til slutt legg vi `Endre lengd med 10` **inni** lykkja. No blir kvar side lenger enn den førre.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -1030,7 +1030,7 @@
               ],
               "funksjonar": []
             },
-            "proev": "Flytt `Endre`-blokka ut av løkka og køyr. Kva skjer, og kvifor?"
+            "proev": "Flytt `Endre`-blokka ut av lykkja og køyr. Kva skjer, og kvifor?"
           }
         ]
       },
@@ -1101,8 +1101,8 @@
           "maal": "Bygg ein spiral",
           "tekst": "Bygg spiralen sjølv: start med `lengd` på **20**, gjenta **12** gonger, gå framover `lengd`, snu 90 gradar, og auk `lengd` med **10** kvar runde.",
           "hint": [
-            "Du treng `Set lengd til 20` **før** løkka.",
-            "Inni løkka: `Gå framover` med variabelen i hòlet, `Snu høgre 90`, og `Endre lengd med 10`."
+            "Du treng `Set lengd til 20` **før** lykkja.",
+            "Inni lykkja: `Gå framover` med variabelen i hòlet, `Snu høgre 90`, og `Endre lengd med 10`."
           ],
           "testar": [
             {
@@ -1277,7 +1277,7 @@
           }
         }
       ],
-      "oppsummering": "Ein **variabel** er eit namn på eit tal som kan endre seg. `Set` gjev han ein startverdi, `Endre` justerer han undervegs. Ligg `Endre` inni løkka, skjer det kvar runde."
+      "oppsummering": "Ein **variabel** er eit namn på eit tal som kan endre seg. `Set` gjev han ein startverdi, `Endre` justerer han undervegs. Ligg `Endre` inni lykkja, skjer det kvar runde."
     },
     {
       "id": "funksjon",
@@ -1372,7 +1372,7 @@
         "maal": "ein funksjon du kan bruke om og om att",
         "steg": [
           {
-            "tekst": "Her er firkanten som ein vanleg løkke, slik du kjenner han.",
+            "tekst": "Her er firkanten som ein vanleg lykkje, slik du kjenner han.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -1645,5 +1645,5 @@
       "oppsummering": "Ein **eigen funksjon** er ei samling blokker med eit namn. Du byggjer han éin gong og brukar han så mange gonger du vil. Programmerarar kallar det ein **funksjon**."
     }
   ],
-  "_note": "Grunnkurset. Dei fire leksjonane lærer mekanikken — skilpadda, løkka, variabelen og eigne funksjonar — og dei andre modulane byggjer på dei. Leksjonane 1, 2, 4 og 5 kom frå «Mangekantar og mønster», som no er rein geometri."
+  "_note": "Grunnkurset. Dei fire leksjonane lærer mekanikken — skilpadda, lykkja, variabelen og eigne funksjonar — og dei andre modulane byggjer på dei. Leksjonane 1, 2, 4 og 5 kom frå «Mangekantar og mønster», som no er rein geometri."
 }

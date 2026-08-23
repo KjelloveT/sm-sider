@@ -580,10 +580,10 @@
         {
           "id": "s3",
           "type": "bygg",
-          "maal": "Ei liste bygd av ei løkke",
-          "tekst": "Lag ei liste med **tala 1 til 10**, og skriv ut summen. Bruk ei løkke og ein variabel i staden for ti blokker.",
+          "maal": "Ei liste bygd av ei lykkje",
+          "tekst": "Lag ei liste med **tala 1 til 10**, og skriv ut summen. Bruk ei lykkje og ein variabel i staden for ti blokker.",
           "hint": [
-            "Set ein variabel til 1. Inni løkka: legg variabelen i lista, og auk han med 1.",
+            "Set ein variabel til 1. Inni lykkja: legg variabelen i lista, og auk han med 1.",
             "Summen av 1 til 10 er 55 — bruk det til å sjekke at du har fått rett."
           ],
           "testar": [
@@ -3114,9 +3114,9 @@
           "id": "v3",
           "type": "bygg",
           "maal": "Kor mange ligg under gjennomsnittet?",
-          "tekst": "Tel kor mange av dei ni elevane som brukar **mindre enn 19 minutt** — altså mindre enn gjennomsnittet. Bruk ei løkke som går gjennom lista.",
+          "tekst": "Tel kor mange av dei ni elevane som brukar **mindre enn 19 minutt** — altså mindre enn gjennomsnittet. Bruk ei lykkje som går gjennom lista.",
           "hint": [
-            "Set ein teljar til 0 og ein posisjon til 1. Inni løkka: hent `tal nummer posisjon`, samanlikn med 19, og auk posisjonen.",
+            "Set ein teljar til 0 og ein posisjon til 1. Inni lykkja: hent `tal nummer posisjon`, samanlikn med 19, og auk posisjonen.",
             "Svaret er 8. Berre éin av dei ni ligg over gjennomsnittet."
           ],
           "testar": [
@@ -3327,7 +3327,7 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "No treng du ikkje skrive høgdene inn for hand. Ei løkke går gjennom lista med `tal nummer … i`, og teiknar ein stolpe for kvart tal."
+          "tekst": "No treng du ikkje skrive høgdene inn for hand. Ei lykkje går gjennom lista med `tal nummer … i`, og teiknar ein stolpe for kvart tal."
         },
         {
           "type": "merk",
@@ -3519,7 +3519,7 @@
       },
       "loype": {
         "tittel": "Ein stolpe for kvart tal",
-        "maal": "ni stolpar, ein for kvart tal i datasettet, teikna av ei løkke",
+        "maal": "ni stolpar, ein for kvart tal i datasettet, teikna av ei lykkje",
         "steg": [
           {
             "tekst": "Éin stolpe fyrst, med det fyrste talet i lista: 11 gonge 4 = 44 steg opp.",
@@ -3768,7 +3768,7 @@
             "proev": "Kva skjer om du gløymer `Penn opp` før du går ned att?"
           },
           {
-            "tekst": "Og så alle ni i ei løkke, der `i` tel seg oppover og hentar eitt tal om gongen.",
+            "tekst": "Og så alle ni i ei lykkje, der `i` tel seg oppover og hentar eitt tal om gongen.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -3958,9 +3958,9 @@
           "id": "d1",
           "type": "bygg",
           "maal": "Teikn stolpediagrammet",
-          "tekst": "Teikn dei ni skulevegs-tala som stolpar. Gong kvar høgd med **4**, og flytt **30 steg** til høgre mellom stolpane. Bruk ei løkke og `tal nummer … i`.",
+          "tekst": "Teikn dei ni skulevegs-tala som stolpar. Gong kvar høgd med **4**, og flytt **30 steg** til høgre mellom stolpane. Bruk ei lykkje og `tal nummer … i`.",
           "hint": [
-            "Set ein variabel `i` til 1 før løkka, og auk han med 1 heilt til slutt inni henne.",
+            "Set ein variabel `i` til 1 før lykkja, og auk han med 1 heilt til slutt inni henne.",
             "Éin stolpe er: penn ned, framover (tal nummer i × 4), penn opp, bakover like langt, snu høgre 90, framover 30, snu venstre 90."
           ],
           "testar": [
@@ -4362,7 +4362,7 @@
           "maal": "Sorter før du teiknar",
           "tekst": "Teikn det same diagrammet, men **sorter lista fyrst**. Då stig stolpane jamt frå venstre mot høgre.",
           "hint": [
-            "Legg `Sorter lista` rett etter at alle tala er lagde inn, og før løkka som teiknar.",
+            "Legg `Sorter lista` rett etter at alle tala er lagde inn, og før lykkja som teiknar.",
             "Alt anna er likt."
           ],
           "testar": [
@@ -4567,7 +4567,7 @@
           }
         }
       ],
-      "oppsummering": "Eit **stolpediagram** gjer tal samanliknbare med ein gong. Ei løkke med `tal nummer … i` teiknar ein stolpe for kvart tal i lista, same kor mange dei er. Diagram er gode til å samanlikne, og dårlege til å lese av nøyaktige verdiar."
+      "oppsummering": "Eit **stolpediagram** gjer tal samanliknbare med ein gong. Ei lykkje med `tal nummer … i` teiknar ein stolpe for kvart tal i lista, same kor mange dei er. Diagram er gode til å samanlikne, og dårlege til å lese av nøyaktige verdiar."
     },
     {
       "id": "eige-datasett",
@@ -5607,7 +5607,7 @@
           "maal": "Analysen din",
           "tekst": "Hent inn eit datasett du har samla sjølv, eller bruk skulevegs-tala. Programmet skal skrive ut **gjennomsnittet** og **medianen**, og teikne **diagrammet**. Skriv i tillegg ned éi setning om kvifor du valde det sentralmålet du meiner er best.",
           "hint": [
-            "Bruk malen frå løypa: liste, gjennomsnitt, sorter, median, og så løkka som teiknar.",
+            "Bruk malen frå løypa: liste, gjennomsnitt, sorter, median, og så lykkja som teiknar.",
             "Hugs at `Sorter lista` må kome før medianen, men helst etter at gjennomsnittet er rekna — elles blir det lett rot i rekkjefølgja."
           ],
           "testar": [

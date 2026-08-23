@@ -55,7 +55,7 @@
             "kode": "import turtle\nturtle.speed(0)\n\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)\n\nturtle.penup()\nturtle.goto(0, -150)\nturtle.pendown()\nturtle.goto(0, 150)"
           },
           {
-            "tekst": "No set vi merke langs x-aksen med ei løkke. Kvart merke er ein liten strek opp og ned.",
+            "tekst": "No set vi merke langs x-aksen med ei lykkje. Kvart merke er ein liten strek opp og ned.",
             "kode": "import turtle\nturtle.speed(0)\n\nturtle.penup()\nturtle.goto(-200, 0)\nturtle.pendown()\nturtle.goto(200, 0)\n\nturtle.penup()\nturtle.goto(0, -150)\nturtle.pendown()\nturtle.goto(0, 150)\n\nfor x in range(-200, 201, 20):\n    turtle.penup()\n    turtle.goto(x, -5)\n    turtle.pendown()\n    turtle.goto(x, 5)"
           },
           {
@@ -193,7 +193,7 @@
             "kode": "def pris(minutt):\n    return 20 + 3 * minutt\n\nprint(pris(10))"
           },
           {
-            "tekst": "Så køyrer vi han for fleire verdiar med ei løkke.",
+            "tekst": "Så køyrer vi han for fleire verdiar med ei lykkje.",
             "kode": "def pris(minutt):\n    return 20 + 3 * minutt\n\nfor m in range(0, 31, 5):\n    print(m, pris(m))"
           },
           {
@@ -356,7 +356,7 @@
           "id": "graf-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `y_verdiar` som tek imot ei liste med x-verdiar og returnerer ei liste med `3x - 2` for kvar av dei.",
-          "startkode": "def y_verdiar(x_liste):\n    y = []\n    # skriv løkka her\n    return y\n",
+          "startkode": "def y_verdiar(x_liste):\n    y = []\n    # skriv lykkja her\n    return y\n",
           "hint": [
             "`for x in x_liste:` og så `y.append(3 * x - 2)`"
           ],
@@ -412,7 +412,7 @@
             "[0, 2, 4]"
           ],
           "rett": 1,
-          "forklaring": "Løkka går over 0, 1 og 2, og legg til kvadratet av kvart: 0, 1 og 4. Dette er dei fyrste punkta på ein andregradsgraf."
+          "forklaring": "Lykkja går over 0, 1 og 2, og legg til kvadratet av kvart: 0, 1 og 4. Dette er dei fyrste punkta på ein andregradsgraf."
         },
         {
           "id": "graf-3",
@@ -824,10 +824,10 @@
           "id": "eks-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `tek_att` som tek imot eit stigningstal `a` og eit grunntal `g`, og returnerer den fyrste heiltals-`x` der `100 * g ** x` er større enn `100 + a * x`. Prøv `x` frå 0 og oppover.",
-          "startkode": "def tek_att(a, g):\n    x = 0\n    # skriv løkka her\n    return x\n",
+          "startkode": "def tek_att(a, g):\n    x = 0\n    # skriv lykkja her\n    return x\n",
           "hint": [
             "`while 100 * g ** x <= 100 + a * x:` og så `x = x + 1`",
-            "Løkka stoppar av seg sjølv fordi eksponentiell vekst alltid tek att."
+            "Lykkja stoppar av seg sjølv fordi eksponentiell vekst alltid tek att."
           ],
           "testar": [
             {
@@ -1029,7 +1029,7 @@
           "startkode": "def f(x):\n    return 10 / x\n\ny = []\nfor x in range(0, 11):\n    y.append(f(x))",
           "hint": [
             "Kva skjer når `x` er 0?",
-            "La løkka starte på 1 i staden."
+            "La lykkja starte på 1 i staden."
           ],
           "testar": [
             {
@@ -1043,7 +1043,7 @@
             {
               "type": "inneheld",
               "vent": "range(1,",
-              "grunn": "Løkka må starte på 1, ikkje 0"
+              "grunn": "Lykkja må starte på 1, ikkje 0"
             }
           ],
           "loeysing": "def f(x):\n    return 10 / x\n\ny = []\nfor x in range(1, 11):\n    y.append(f(x))"
@@ -1118,7 +1118,7 @@
           "id": "modell-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `minutt_til_full` som tek imot startmengd, påfyll per minutt og kor mykje bassenget tek, og returnerer kor mange heile minutt det tek å fylle det.",
-          "startkode": "def minutt_til_full(start, per_minutt, kapasitet):\n    minutt = 0\n    # skriv løkka her\n    return minutt\n",
+          "startkode": "def minutt_til_full(start, per_minutt, kapasitet):\n    minutt = 0\n    # skriv lykkja her\n    return minutt\n",
           "hint": [
             "`while start < kapasitet:` og legg til `per_minutt` kvar runde.",
             "Hugs å telje minutta."

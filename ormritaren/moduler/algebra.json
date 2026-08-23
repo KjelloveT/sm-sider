@@ -845,7 +845,7 @@
         },
         {
           "type": "merk",
-          "tekst": "Men han har to veikskapar, og begge er verdt å kjenne. Han finn berre svar som ligg i området du leitar i, og han finn berre **heile** tal. Er svaret 4,5, går løkka rett forbi det."
+          "tekst": "Men han har to veikskapar, og begge er verdt å kjenne. Han finn berre svar som ligg i området du leitar i, og han finn berre **heile** tal. Er svaret 4,5, går lykkja rett forbi det."
         },
         {
           "type": "avsnitt",
@@ -886,7 +886,7 @@
           "tekst": "Skriv funksjonen `loys` som finn det heile talet `x` mellom −100 og 100 som gjer at `5x - 3` blir lik `maal`. Returner `None` om du ikkje finn noko.",
           "startkode": "def loys(maal):\n    for x in range(-100, 101):\n        # sjekk om 5 * x - 3 er lik maal\n        pass\n    return None\n",
           "hint": [
-            "Inne i løkka: `if 5 * x - 3 == maal:`",
+            "Inne i lykkja: `if 5 * x - 3 == maal:`",
             "Når du finn talet, skal du `return x` med ein gong.",
             "Hugs to likskapsteikn: `==` spør, `=` lagrar."
           ],
@@ -938,7 +938,7 @@
             "treff: 3"
           ],
           "rett": 0,
-          "forklaring": "Likninga `2x = x + 3` har løysinga `x = 3`, og 3 ligg i `range(0, 6)`. Så programmet skriv **treff: 3**. `print(\"ferdig\")` står utanfor løkka og køyrer uansett."
+          "forklaring": "Likninga `2x = x + 3` har løysinga `x = 3`, og 3 ligg i `range(0, 6)`. Så programmet skriv **treff: 3**. `print(\"ferdig\")` står utanfor lykkja og køyrer uansett."
         },
         {
           "id": "lik6-3",
@@ -1038,7 +1038,7 @@
           "hint": [
             "Talet bein er `2 * hoener + 4 * sauer`.",
             "`if 2 * hoener + 4 * sauer == bein:` og så `return hoener`.",
-            "Hugs at `return None` skal stå heilt til slutt, utanfor løkka."
+            "Hugs at `return None` skal stå heilt til slutt, utanfor lykkja."
           ],
           "testar": [
             {

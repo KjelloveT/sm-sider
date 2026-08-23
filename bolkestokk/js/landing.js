@@ -120,7 +120,7 @@
 
         /* Kva modulen byggjer på. Ein lærar som vel ein modul til klassa si
          * må sjå dette FØR han vel, ikkje etter — elles set han elevane til
-         * ei løkke-oppgåve dei ikkje har fått løkka forklart. */
+         * ei lykkje-oppgåve dei ikkje har fått lykkja forklart. */
         if (modul.krev) {
             const krev = document.createElement('p');
             krev.className = 'bs-modulkrev';

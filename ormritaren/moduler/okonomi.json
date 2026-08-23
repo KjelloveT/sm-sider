@@ -158,7 +158,7 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Med vekstfaktor er det ei enkel løkke:"
+          "tekst": "Med vekstfaktor er det ei enkel lykkje:"
         },
         {
           "type": "kode",
@@ -170,7 +170,7 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Same svaret kan reknast direkte med potens, utan løkke:"
+          "tekst": "Same svaret kan reknast direkte med potens, utan lykkje:"
         },
         {
           "type": "kode",
@@ -178,7 +178,7 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Løkka viser kva som skjer år for år. Potensen gjev svaret med ein gong. Begge er nyttige — den eine forklarer, den andre reknar."
+          "tekst": "Lykkja viser kva som skjer år for år. Potensen gjev svaret med ein gong. Begge er nyttige — den eine forklarer, den andre reknar."
         }
       ],
       "doeme": {
@@ -194,7 +194,7 @@
             "kode": "sparing = 10000\nmaal = 20000\naar = 0"
           },
           {
-            "tekst": "Så lagar vi ei løkke som held fram til vi er framme.",
+            "tekst": "Så lagar vi ei lykkje som held fram til vi er framme.",
             "kode": "sparing = 10000\nmaal = 20000\naar = 0\n\nwhile sparing < maal:\n    sparing = sparing * 1.03"
           },
           {
@@ -284,7 +284,7 @@
           "loeysing": "sparing = 10000\nfor aar in range(5):\n    sparing = sparing * 1.05\nprint(round(sparing, 2))"
         }
       ],
-      "oppsummering": "Renters rente er vekstfaktoren brukt om att. Ei løkke viser året-for-året, `**` gjev svaret direkte. Verdien må lagrast tilbake, elles startar kvar runde på nytt."
+      "oppsummering": "Renters rente er vekstfaktoren brukt om att. Ei lykkje viser året-for-året, `**` gjev svaret direkte. Verdien må lagrast tilbake, elles startar kvar runde på nytt."
     },
     {
       "id": "sparing-kvar-maanad",
@@ -347,10 +347,10 @@
           "id": "maaned-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `maanader_til` som tek imot eit mål og eit månadleg innskot, og returnerer kor mange månader du må spare. Rekn **utan** rente.",
-          "startkode": "def maanader_til(maal, innskot):\n    sparing = 0\n    maanader = 0\n    # skriv løkka her\n    return maanader\n",
+          "startkode": "def maanader_til(maal, innskot):\n    sparing = 0\n    maanader = 0\n    # skriv lykkja her\n    return maanader\n",
           "hint": [
             "`while sparing < maal:` og så legg du til innskotet",
-            "Hugs å telje månadene inni løkka."
+            "Hugs å telje månadene inni lykkja."
           ],
           "testar": [
             {
@@ -403,7 +403,7 @@
           "tekst": "Programmet skal spare 500 i månaden i to år, men sluttsummen blir altfor låg. Rett feilen.",
           "startkode": "sparing = 0\nfor maanad in range(24):\n    sparing = 500\nprint(sparing)",
           "hint": [
-            "Sjå nøye på linja inni løkka. Legg ho til, eller set ho ein ny verdi?",
+            "Sjå nøye på linja inni lykkja. Legg ho til, eller set ho ein ny verdi?",
             "Du vil **leggje til**: `sparing = sparing + 500`"
           ],
           "testar": [
@@ -439,7 +439,7 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "For å sjå heile nedbetalinga køyrer vi ei løkke til gjelda er borte, og tel kor mykje vi har betalt til saman."
+          "tekst": "For å sjå heile nedbetalinga køyrer vi ei lykkje til gjelda er borte, og tel kor mykje vi har betalt til saman."
         }
       ],
       "doeme": {
@@ -474,7 +474,7 @@
           "id": "laan-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `maanader_paa_laan` som tek imot gjeld, månadsrente (som desimaltal) og terminbeløp, og returnerer kor mange månader det tek å betale ned.",
-          "startkode": "def maanader_paa_laan(gjeld, rente, terming):\n    maanader = 0\n    # skriv løkka her\n    return maanader\n",
+          "startkode": "def maanader_paa_laan(gjeld, rente, terming):\n    maanader = 0\n    # skriv lykkja her\n    return maanader\n",
           "hint": [
             "Kvar runde: legg til renta, trekk frå terminbeløpet, tel opp.",
             "`while gjeld > 0:`"
@@ -524,7 +524,7 @@
           "startkode": "def maanader_paa_laan(gjeld, rente, terming):\n    maanader = 0\n    while gjeld > 0:\n        gjeld = gjeld - terming\n        maanader = maanader + 1\n    return maanader",
           "hint": [
             "Kvar månad veks gjelda med renta **før** du betalar.",
-            "Legg inn `gjeld = gjeld + gjeld * rente` fyrst i løkka."
+            "Legg inn `gjeld = gjeld + gjeld * rente` fyrst i lykkja."
           ],
           "testar": [
             {
@@ -754,7 +754,7 @@
           "id": "saml-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `billegast` som tek imot ei liste med tilbod og returnerer **namnet** på det som kostar minst i alt. Kvart tilbod er ei ordbok med `namn`, `terming`, `maanader` og `gebyr`.",
-          "startkode": "def billegast(tilbod):\n    beste = None\n    beste_total = 0\n    # skriv løkka her\n    return beste\n",
+          "startkode": "def billegast(tilbod):\n    beste = None\n    beste_total = 0\n    # skriv lykkja her\n    return beste\n",
           "hint": [
             "Totalen er `t[\"terming\"] * t[\"maanader\"] + t[\"gebyr\"]`",
             "Fyrste runde må alltid bli den beste så langt: `if beste is None or total < beste_total:`"

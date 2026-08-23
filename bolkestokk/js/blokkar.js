@@ -124,7 +124,7 @@ const BolkBlokkar = (function () {
         {
             id: 'gjenta', farge: 'lokke', ikon: 'refreshCw', kategori: 'styring', form: 'krop',
             tekst: ['Gjenta', { felt: 'tal', slag: 'tal', standard: 4 }, 'gonger'],
-            /* Taket på 1000 er ikkje ei tryggleiksgrense — utan medan-løkke kan
+            /* Taket på 1000 er ikkje ei tryggleiksgrense — utan medan-lykkje kan
              * eit program uansett ikkje henge. Det er for å hindre at ein elev
              * som skriv 100000 i farta trur maskina er øydelagd. */
             koyr: function* (node, ktx, hj) {
@@ -347,7 +347,7 @@ const BolkBlokkar = (function () {
                     'i lista', { felt: 'liste', slag: 'val', val: 'lister', standard: 'tala' }],
             koyr: function* (node, ktx, hj) {
                 const l = ktx.lister[node.felt.liste] || (ktx.lister[node.felt.liste] = []);
-                /* Same taket som ei løkke har. Ei liste som veks fritt kunne
+                /* Same taket som ei lykkje har. Ei liste som veks fritt kunne
                  * ete minnet på ein skulemaskin, og ingen oppgåve her treng
                  * meir enn nokre tusen tal. */
                 if (l.length < 5000) l.push(hj.verdi(node.felt.verdi, ktx));

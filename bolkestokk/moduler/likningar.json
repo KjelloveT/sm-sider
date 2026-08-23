@@ -562,7 +562,7 @@
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "Å prøve eitt tal om gongen er treigt for deg, men ikkje for maskina. Legg testen inni ei **løkke** som tel oppover, så prøver ho alle tala i eit område på eit augeblink."
+          "tekst": "Å prøve eitt tal om gongen er treigt for deg, men ikkje for maskina. Legg testen inni ei **lykkje** som tel oppover, så prøver ho alle tala i eit område på eit augeblink."
         },
         {
           "type": "avsnitt",
@@ -717,7 +717,7 @@
             }
           },
           {
-            "tekst": "No legg vi testen inni ei løkke og aukar x med 1 for kvar runde. Fem gonger er ikkje nok, men du ser mønsteret.",
+            "tekst": "No legg vi testen inni ei lykkje og aukar x med 1 for kvar runde. Fem gonger er ikkje nok, men du ser mønsteret.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -881,7 +881,7 @@
           "maal": "Finn løysinga",
           "tekst": "Løys `7 · x − 5 = 44` ved å prøve alle heiltal frå **1 til 20**.",
           "hint": [
-            "Set x til 1 før løkka. Inni: `Dersom` med testen, `Skriv ut x`, og så `Endre x med 1`.",
+            "Set x til 1 før lykkja. Inni: `Dersom` med testen, `Skriv ut x`, og så `Endre x med 1`.",
             "Venstresida er 7 gonge x, minus 5. Samanlikn med 44."
           ],
           "testar": [
@@ -1147,7 +1147,7 @@
           }
         }
       ],
-      "oppsummering": "Legg testen inni ei **løkke** som tel oppover, så prøver maskina alle tala i området. **Utskrifta er løysinga.** Ei tom rute tyder at det ikkje fanst noko svar *blant dei tala du prøvde*."
+      "oppsummering": "Legg testen inni ei **lykkje** som tel oppover, så prøver maskina alle tala i området. **Utskrifta er løysinga.** Ei tom rute tyder at det ikkje fanst noko svar *blant dei tala du prøvde*."
     },
     {
       "id": "frå-tekst",
@@ -1521,7 +1521,7 @@
           "tekst": "Fem billettar og eit gebyr på **20 kroner** kostar **245 kroner** til saman. Finn prisen på éin billett ved å prøve alle prisar frå **1 til 100**.",
           "hint": [
             "Likninga er `5 · x + 20 = 245`.",
-            "Same oppskrifta som før: sett x til 1, løkke på 100, `Dersom` med testen, og auk x."
+            "Same oppskrifta som før: sett x til 1, lykkje på 100, `Dersom` med testen, og auk x."
           ],
           "testar": [
             {
@@ -2358,7 +2358,7 @@
         }
       ],
       "doeme": {
-        "oppmoding": "`2 · x = 45` blir prøvd frå 1 til 20, og ruta blir tom. Utvid løkka til 100 og køyr igjen. Kjem svaret då?",
+        "oppmoding": "`2 · x = 45` blir prøvd frå 1 til 20, og ruta blir tom. Utvid lykkja til 100 og køyr igjen. Kjem svaret då?",
         "program": {
           "app": "bolkestokk",
           "version": 1,
@@ -2723,7 +2723,7 @@
           "tekst": "Likninga `6 · x − 40 = 200` har ei løysing, men ikkje blant dei tjue fyrste tala. Prøv **1 til 60** og finn henne.",
           "hint": [
             "Venstresida er 6 gonge x, minus 40.",
-            "6 · 40 = 240, og 240 − 40 = 200. Svaret er 40, så løkka må vere lang nok til å nå dit."
+            "6 · 40 = 240, og 240 − 40 = 200. Svaret er 40, så lykkja må vere lang nok til å nå dit."
           ],
           "testar": [
             {

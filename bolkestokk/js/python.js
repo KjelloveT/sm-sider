@@ -45,7 +45,7 @@ const BolkPython = (function () {
 
             if (def.form === 'krop') {
                 const inni = stabel(node.kropp || [], niva + 1);
-                // Ei tom løkke er ikkje gyldig Python. `pass` er òg ærlegare
+                // Ei tom lykkje er ikkje gyldig Python. `pass` er òg ærlegare
                 // enn å skjule at eleven ikkje har lagt noko inni enno.
                 ut.push(inni.length ? inni.join('\n') : pad + INNRYKK + 'pass');
             }

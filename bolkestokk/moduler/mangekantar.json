@@ -428,7 +428,7 @@
       },
       "loype": {
         "tittel": "Frå kvadrat til rektangel",
-        "maal": "eit rektangel på 150 × 80 — bygd med ei løkke som gjentek eit sidepar",
+        "maal": "eit rektangel på 150 × 80 — bygd med ei lykkje som gjentek eit sidepar",
         "steg": [
           {
             "tekst": "Her er kvadratet frå grunnkurset: fire like sider, fire rette hjørne. Alle `Gå framover` har same tal.",
@@ -1113,11 +1113,11 @@
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "No har du alt du treng: ei løkke, ein vinkel som lukkar, ein variabel, og din eigen funksjon. Set dei saman, så får du mønster."
+          "tekst": "No har du alt du treng: ei lykkje, ein vinkel som lukkar, ein variabel, og din eigen funksjon. Set dei saman, så får du mønster."
         },
         {
           "type": "avsnitt",
-          "tekst": "Trikset er å leggje `Bruk`-blokka **inni** ei løkke, med ei lita sving etter. Då blir den same figuren teikna om og om att, litt dreidd kvar gong."
+          "tekst": "Trikset er å leggje `Bruk`-blokka **inni** ei lykkje, med ei lita sving etter. Då blir den same figuren teikna om og om att, litt dreidd kvar gong."
         },
         {
           "type": "merk",
@@ -1231,7 +1231,7 @@
             }
           },
           {
-            "tekst": "Så legg vi han inni ei løkke, med ei sving på 30 gradar etter. Køyr med to gjentak fyrst.",
+            "tekst": "Så legg vi han inni ei lykkje, med ei sving på 30 gradar etter. Køyr med to gjentak fyrst.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -1552,7 +1552,7 @@
           }
         }
       ],
-      "oppsummering": "Legg ein eigen funksjon **inni ei løkke** med ei lita sving etter, så får du eit mønster. Skal det lukke seg heile vegen rundt, må snuingane bli **360 gradar** til saman."
+      "oppsummering": "Legg ein eigen funksjon **inni ei lykkje** med ei lita sving etter, så får du eit mønster. Skal det lukke seg heile vegen rundt, må snuingane bli **360 gradar** til saman."
     }
   ]
 }

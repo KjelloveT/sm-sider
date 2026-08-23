@@ -6,7 +6,7 @@
 const OrmRunner = (function () {
 
     const STDIN_BYTES = 1 << 20;   // 1 MB held til alt ein elev skriv inn
-    const TREG_MS = 5000;          // når vi spør om det er ei uendeleg løkke
+    const TREG_MS = 5000;          // når vi spør om det er ei uendeleg lykkje
 
     let worker = null;
     let klar = false;
@@ -192,7 +192,7 @@ const OrmRunner = (function () {
 
     /* Kor lenge ei retting får lov til å ta før vi drep workeren.
      *
-     * Ein elev kan skrive ei løkke som aldri sluttar, og trykkje «Sjekk
+     * Ein elev kan skrive ei lykkje som aldri sluttar, og trykkje «Sjekk
      * svaret». Utan denne grensa heng workeren, og einaste utvegen er
      * Stopp-knappen — som eleven ikkje har nokon grunn til å tenkje på når
      * han nettopp bad om å få svaret retta. */
@@ -220,7 +220,7 @@ const OrmRunner = (function () {
                 lagWorker();
                 cb.onStoppa?.();
                 svar([{ ok: false, melding:
-                    'Rettinga brukte for lang tid. Har koden ei løkke som aldri sluttar?' }]);
+                    'Rettinga brukte for lang tid. Har koden ei lykkje som aldri sluttar?' }]);
             }, TEST_GRENSE_MS);
 
             ventandeTestar.set(id, (resultat) => { clearTimeout(klokke); svar(resultat); });

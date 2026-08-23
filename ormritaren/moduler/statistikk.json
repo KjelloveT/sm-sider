@@ -584,8 +584,8 @@
           "tekst": "Programmet skal leggje tre tal i lista, men lista er tom til slutt. Rett feilen.",
           "startkode": "tal = []\nfor x in [38, 41, 39]:\n    tal = []\n    tal.append(x)\nprint(tal)",
           "hint": [
-            "Sjå kva som skjer inni løkka for kvar runde.",
-            "Lista skal lagast **éin** gong, før løkka."
+            "Sjå kva som skjer inni lykkja for kvar runde.",
+            "Lista skal lagast **éin** gong, før lykkja."
           ],
           "testar": [
             {
@@ -596,7 +596,7 @@
           "loeysing": "tal = []\nfor x in [38, 41, 39]:\n    tal.append(x)\nprint(tal)"
         }
       ],
-      "oppsummering": "Eit datasett frå din eigen klasse gjer statistikken konkret. `append` byggjer opp ei liste bit for bit — men lista må lagast før løkka, ikkje inni."
+      "oppsummering": "Eit datasett frå din eigen klasse gjer statistikken konkret. `append` byggjer opp ei liste bit for bit — men lista må lagast før lykkja, ikkje inni."
     },
     {
       "id": "diagram",
@@ -939,7 +939,7 @@
           "id": "kritisk-1",
           "type": "skriv",
           "tekst": "Lag ein funksjon `del_over` som tek imot ei liste med tal og ei grense, og returnerer kor stor **prosentdel** av tala som er større enn grensa. Rund av til éin desimal.",
-          "startkode": "def del_over(tal, grense):\n    over = 0\n    # skriv løkka her\n    return round(over / len(tal) * 100, 1)\n",
+          "startkode": "def del_over(tal, grense):\n    over = 0\n    # skriv lykkja her\n    return round(over / len(tal) * 100, 1)\n",
           "hint": [
             "`for x in tal:` og `if x > grense:`",
             "Hugs at det er **strengt større enn**, ikkje større eller lik."

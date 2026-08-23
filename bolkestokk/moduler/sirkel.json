@@ -631,7 +631,7 @@
           "maal": "Sidelengda i ein variabel",
           "tekst": "Teikn ein **36-kant** der sidelengda står i ein **variabel** sett til **25**, og skriv ut omkrinsen rekna ut frå den same variabelen.",
           "hint": [
-            "Set variabelen før løkka, og legg `Les variabel` både i `Gå framover` og i reknestykket.",
+            "Set variabelen før lykkja, og legg `Les variabel` både i `Gå framover` og i reknestykket.",
             "Omkrinsen er 36 gonge variabelen."
           ],
           "testar": [

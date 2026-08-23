@@ -115,7 +115,7 @@
             "proev": "Køyr fem gonger. Hende det at dei to tala vart like?"
           },
           {
-            "tekst": "Fem kast med ei løkke. No er det éi blokk som gjer jobben til fem.",
+            "tekst": "Fem kast med ei lykkje. No er det éi blokk som gjer jobben til fem.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -185,7 +185,7 @@
           "id": "e2",
           "type": "bygg",
           "maal": "Kast ein tjuesidig terning",
-          "tekst": "Skriv ut **fem kast** med ein terning som har **tjue sider**. Bruk ei løkke.",
+          "tekst": "Skriv ut **fem kast** med ein terning som har **tjue sider**. Bruk ei lykkje.",
           "hint": [
             "Ein tjuesidig terning er `tilfeldig tal frå 1 til 20`.",
             "Legg `Skriv ut` med terningen inni ei `Gjenta 5`."
@@ -308,7 +308,7 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Det treng tre ting du alt kan: ei **løkke** som kastar, ein **variabel** som held teljinga, og eit **vilkår** som avgjer om denne teljinga skal auke."
+          "tekst": "Det treng tre ting du alt kan: ei **lykkje** som kastar, ein **variabel** som held teljinga, og eit **vilkår** som avgjer om denne teljinga skal auke."
         },
         {
           "type": "merk",
@@ -499,7 +499,7 @@
             "proev": "Køyr seks gonger. Kor mange av dei gav 1?"
           },
           {
-            "tekst": "Og til slutt seksti kast i ei løkke. Teljaren blir sett éin gong FØR løkka — set du han inni, byrjar du på null kvar runde.",
+            "tekst": "Og til slutt seksti kast i ei lykkje. Teljaren blir sett éin gong FØR lykkja — set du han inni, byrjar du på null kvar runde.",
             "program": {
               "app": "bolkestokk",
               "version": 1,
@@ -584,8 +584,8 @@
           "maal": "Tel seksarane",
           "tekst": "Kast terningen **60 gonger** og skriv ut kor mange av kasta som vart **seksarar**.",
           "hint": [
-            "Set ein teljar til 0 før løkka. Inni løkka: legg kastet i ein variabel, og bruk `Dersom kast = 6` til å auke teljaren.",
-            "Skriv ut teljaren etter at løkka er ferdig, ikkje inni henne."
+            "Set ein teljar til 0 før lykkja. Inni lykkja: legg kastet i ein variabel, og bruk `Dersom kast = 6` til å auke teljaren.",
+            "Skriv ut teljaren etter at lykkja er ferdig, ikkje inni henne."
           ],
           "testar": [
             {
@@ -680,7 +680,7 @@
           "id": "t2",
           "type": "les",
           "maal": "Kvar skal teljaren setjast?",
-          "tekst": "To program tel seksarar. Det eine har `Set seksarar til 0` **før** løkka, det andre har henne **inni**.",
+          "tekst": "To program tel seksarar. Det eine har `Set seksarar til 0` **før** lykkja, det andre har henne **inni**.",
           "program": {
             "app": "bolkestokk",
             "version": 1,
@@ -754,7 +754,7 @@
             ],
             "funksjonar": []
           },
-          "sporsmal": "Kva skjer dersom `Set seksarar til 0` blir flytt inn i løkka?",
+          "sporsmal": "Kva skjer dersom `Set seksarar til 0` blir flytt inn i lykkja?",
           "alternativ": [
             "Ingenting — svaret blir det same",
             "Svaret blir alltid 0 eller 1, fordi teljinga startar på nytt kvar runde",
@@ -842,7 +842,7 @@
             "funksjonar": []
           },
           "hint": [
-            "Kor mange gonger blir terningen kasta i kvar runde av løkka?",
+            "Kor mange gonger blir terningen kasta i kvar runde av lykkja?",
             "Det er to `tilfeldig`-blokker, altså to ulike kast. Legg kastet i ein variabel fyrst, og samanlikn variabelen."
           ],
           "testar": [
@@ -932,7 +932,7 @@
           }
         }
       ],
-      "oppsummering": "For å finne ut kor ofte noko skjer: ein **teljar** sett til 0 før løkka, eit **kast lagt i ein variabel**, og eit **vilkår** som avgjer om teljaren skal auke. Teljaren må setjast før løkka, ikkje inni."
+      "oppsummering": "For å finne ut kor ofte noko skjer: ein **teljar** sett til 0 før lykkja, eit **kast lagt i ein variabel**, og eit **vilkår** som avgjer om teljaren skal auke. Teljaren må setjast før lykkja, ikkje inni."
     },
     {
       "id": "brok",
@@ -1526,7 +1526,7 @@
           "sporsmal": "Kva bør han gjere for at svara skal sprike mindre?",
           "alternativ": [
             "Køyre programmet fleire gonger",
-            "Auke talet kast i løkka",
+            "Auke talet kast i lykkja",
             "Bruke ein terning med fleire sider"
           ],
           "rett": 1,
@@ -3463,7 +3463,7 @@
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "No har du alt: ein terning, ei løkke som kastar mange gonger, eit vilkår som tel opp, ein brøk som gjer teljinga samanliknbar, og eit diagram som viser fram svaret."
+          "tekst": "No har du alt: ein terning, ei lykkje som kastar mange gonger, eit vilkår som tel opp, ein brøk som gjer teljinga samanliknbar, og eit diagram som viser fram svaret."
         },
         {
           "type": "avsnitt",
@@ -3963,7 +3963,7 @@
           "maal": "Ditt eige spørsmål",
           "tekst": "Still ditt eige spørsmål om terningkast, og bygg forsøket som svarar på det. Skriv ned kva du **ventar** før du køyrer. Døme: kor ofte er summen eit partal? Kor ofte er begge terningane over 4?",
           "hint": [
-            "Bruk oppskrifta: teljar til 0, løkke som kastar, kast i variabel, `Dersom` med vilkåret ditt, teljar opp, og del på talet kast til slutt.",
+            "Bruk oppskrifta: teljar til 0, lykkje som kastar, kast i variabel, `Dersom` med vilkåret ditt, teljar opp, og del på talet kast til slutt.",
             "Er du usikker på kva du ventar: tel opp kor mange av dei 36 kombinasjonane som passar, og del på 36."
           ],
           "testar": [
@@ -4075,7 +4075,7 @@
           }
         }
       ],
-      "oppsummering": "Eit forsøk er fem ting sette saman: **kast**, **løkke**, **vilkår**, **teljar** og **brøk**. Og eitt steg til som ikkje er programmering — å seie kva du ventar før du køyrer."
+      "oppsummering": "Eit forsøk er fem ting sette saman: **kast**, **lykkje**, **vilkår**, **teljar** og **brøk**. Og eitt steg til som ikkje er programmering — å seie kva du ventar før du køyrer."
     }
   ]
 }

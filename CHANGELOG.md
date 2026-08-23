@@ -3,6 +3,11 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.21] — 2026-08-23
+
+### Endra
+- **«Lykkje» og ikkje «løkke», i begge appane.** Nynorsk er «lykkje», og det er forma Udir sjølv brukar i kompetansemålet. Etter at måla gjekk over til nynorsk, stod dei to rett ved sida av kvarandre på same kortet — målet sa «lykkjer» og leksjonsteksten under sa «løkke». 167 stader i to appar.
+
 ## [1.20] — 2026-08-23
 
 ### Lagt til

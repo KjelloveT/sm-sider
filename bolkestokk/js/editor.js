@@ -484,7 +484,7 @@ const BolkEditor = (function () {
             .forEach(b => b.classList.remove('er-koyrande', 'er-gjort'));
 
         /* «Nettopp køyrt» blir sett fyrst. Er det same blokka begge stader —
-         * ei løkke som gjentek seg sjølv med éi blokk inni — skal ho vise
+         * ei lykkje som gjentek seg sjølv med éi blokk inni — skal ho vise
          * fargen for det som skjer no. */
         const finn = (x) => x ? el.arbeid.querySelector('.bs-blokk[data-id="' + x + '"]') : null;
         const g = finn(gjortId);

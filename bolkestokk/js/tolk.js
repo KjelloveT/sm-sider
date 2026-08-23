@@ -13,7 +13,7 @@
  */
 const BolkTolk = (function () {
 
-    /* Utan medan-løkke kan eit program ikkje gå i evig løkke, så dette er
+    /* Utan medan-lykkje kan eit program ikkje gå i evig lykkje, så dette er
      * inga tryggingsgrense. Det er ei øvre ramme for kor mykje ein figur kan
      * innehalde før vi heller seier frå enn å teikne i eitt minutt. */
     const MAKS_STEG = 50000;

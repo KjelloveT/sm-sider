@@ -15,7 +15,7 @@
      *
      * Skalaen strekkjer seg heilt ned til éi blokk annakvart sekund. Det
      * verkar absurd sakte til ein set seg ved sida av ein elev som ikkje har
-     * skjøna kva løkka gjer: der er det nettopp den farten som trengst, og
+     * skjøna kva lykkja gjer: der er det nettopp den farten som trengst, og
      * to i sekundet — som var det tregaste i fyrste utgåva — ligg no midt på
      * skalaen. Øvste hakket hoppar over animasjonen heilt, for den som berre
      * vil sjå figuren. */
@@ -288,7 +288,7 @@
             for (;;) {
                 const r = koyring.g.next();
                 if (r.done) break;
-                // Same taket som tolken har, så ei uventa stor løkke ikkje
+                // Same taket som tolken har, så ei uventa stor lykkje ikkje
                 // låser tråden i staden for å seie frå.
                 if (++n > BolkTolk.MAKS_STEG) throw new Error('Programmet vart for langt.');
             }
