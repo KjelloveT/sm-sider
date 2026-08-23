@@ -3,6 +3,14 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.8] — 2026-08-23
+
+### Lagt til
+- **Stegmodus viser no både kva som nettopp køyrde og kva som står for tur.** Begge trengst: den utheva blokka på arbeidsbenken er den som skal køyre, for det er den eleven skal gjette på før han trykkjer — men når streken dukkar opp på lerretet, er det den FØRRE blokka som laga han. Utan ei rute som seier det, måtte eleven hugse eitt steg tilbake sjølv.
+
+### Endra
+- **To vanlege knappar over resultatet** i staden for faner. Ei fanerad seier «her er to sider av same ting»; to knappar seier «vel kva du vil sjå», og det er det dette er. Teikninga har fått ein vanleg blyant, ikkje «penn ned».
+- **Ny orm til Python-knappen.** Den førre var ein bølgje med ein liten ball i enden og las som ein krusedull. Denne har eit eige, rundt hovud med auge og tunge. Hovudet er ein `circle` og ikkje ein boge nettopp fordi det er den delen som må overleve nedskaleringa — kontrollert i 20px, den storleiken han faktisk blir vist i.
 ## [1.7] — 2026-08-23
 
 ### Endra

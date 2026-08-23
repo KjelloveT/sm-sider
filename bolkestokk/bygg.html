@@ -8,29 +8,29 @@
 <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
 <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
 <link rel="stylesheet" href="../css/neobrutalisme.css">
-<link rel="stylesheet" href="css/palett.css?v=7">
-<link rel="stylesheet" href="css/style.css?v=7">
-<link rel="stylesheet" href="css/blokk.css?v=7">
-<link rel="stylesheet" href="css/leksjon.css?v=7">
+<link rel="stylesheet" href="css/palett.css?v=9">
+<link rel="stylesheet" href="css/style.css?v=9">
+<link rel="stylesheet" href="css/blokk.css?v=9">
+<link rel="stylesheet" href="css/leksjon.css?v=9">
 <script src="../js/neo-header.js" defer></script>
 <script src="../js/vyrdepil-icons.js" defer></script>
 <script src="../js/vyrdepil-storage.js" defer></script>
-<script src="js/ikon.js?v=7" defer></script>
-<script src="js/blokkar.js?v=7" defer></script>
-<script src="js/tre.js?v=7" defer></script>
-<script src="js/skilpadde.js?v=7" defer></script>
-<script src="js/tolk.js?v=7" defer></script>
-<script src="js/python.js?v=7" defer></script>
-<script src="js/lerret.js?v=7" defer></script>
-<script src="js/editor.js?v=7" defer></script>
-<script src="js/dra.js?v=7" defer></script>
-<script src="js/test.js?v=7" defer></script>
-<script src="js/tekst.js?v=7" defer></script>
-<script src="js/framgang.js?v=7" defer></script>
-<script src="js/lager.js?v=7" defer></script>
-<script src="js/oppgaver.js?v=7" defer></script>
-<script src="js/leksjon.js?v=7" defer></script>
-<script src="js/app.js?v=7" defer></script>
+<script src="js/ikon.js?v=9" defer></script>
+<script src="js/blokkar.js?v=9" defer></script>
+<script src="js/tre.js?v=9" defer></script>
+<script src="js/skilpadde.js?v=9" defer></script>
+<script src="js/tolk.js?v=9" defer></script>
+<script src="js/python.js?v=9" defer></script>
+<script src="js/lerret.js?v=9" defer></script>
+<script src="js/editor.js?v=9" defer></script>
+<script src="js/dra.js?v=9" defer></script>
+<script src="js/test.js?v=9" defer></script>
+<script src="js/tekst.js?v=9" defer></script>
+<script src="js/framgang.js?v=9" defer></script>
+<script src="js/lager.js?v=9" defer></script>
+<script src="js/oppgaver.js?v=9" defer></script>
+<script src="js/leksjon.js?v=9" defer></script>
+<script src="js/app.js?v=9" defer></script>
 </head>
 <body class="bs-tema" data-light-theme="classic" data-dark-theme="classic" data-theme="classic">
 
@@ -123,30 +123,35 @@
            det som gjer at eleven kan gjette kva som skjer før han trykkjer.
            Står her, rett over teikninga, så han kan følgje skilpadda utan
            å sjå bort på arbeidsbenken. -->
+      <div class="bs-stegblokk bs-stegblokk-gjort" id="stegGjort" hidden>
+        <span class="bs-stegblokk-merke">Nettopp køyrt</span>
+        <code class="bs-stegblokk-tekst" id="stegGjortTekst"></code>
+      </div>
+
       <div class="bs-stegblokk" id="stegblokk" hidden>
         <span class="bs-stegblokk-merke">Står for tur</span>
         <code class="bs-stegblokk-tekst" id="stegblokkTekst"></code>
       </div>
 
+      <div class="bs-resultatknappar">
+        <button type="button" class="btn bs-ikonknapp bs-resknapp active" id="faneTeikning"
+                aria-pressed="true" aria-controls="ruteTeikning"
+                title="Teikning" aria-label="Vis teikninga">
+          <span data-icon="pencil" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp bs-resknapp" id="fanePython"
+                aria-pressed="false" aria-controls="rutePython"
+                title="Python" aria-label="Vis programmet som Python">
+          <span data-icon="orm" data-icon-size="20"></span>
+        </button>
+      </div>
+
       <div class="box5">
-        <div class="box-tabs" role="tablist">
-          <button type="button" class="box-tab active bs-fane" id="faneTeikning"
-                  role="tab" aria-selected="true" aria-controls="ruteTeikning"
-                  title="Teikning" aria-label="Vis teikninga">
-            <span data-icon="pennNed" data-icon-size="20"></span>
-          </button>
-          <button type="button" class="box-tab bs-fane" id="fanePython"
-                  role="tab" aria-selected="false" aria-controls="rutePython"
-                  title="Python" aria-label="Vis programmet som Python">
-            <span data-icon="orm" data-icon-size="20"></span>
-          </button>
-        </div>
         <div class="box-body" style="padding:0">
-          <div class="bs-lerretboks" id="ruteTeikning" role="tabpanel" aria-labelledby="faneTeikning">
+          <div class="bs-lerretboks" id="ruteTeikning" aria-labelledby="faneTeikning">
             <canvas class="bs-lerret" id="lerret"></canvas>
           </div>
-          <pre class="bs-pythonrute" id="rutePython" role="tabpanel"
-               aria-labelledby="fanePython" hidden></pre>
+          <pre class="bs-pythonrute" id="rutePython" aria-labelledby="fanePython" hidden></pre>
         </div>
       </div>
 

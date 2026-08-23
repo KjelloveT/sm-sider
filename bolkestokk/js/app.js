@@ -33,7 +33,7 @@
          'lerret', 'utskrift', 'feil', 'faneTeikning', 'fanePython',
          'ruteTeikning', 'rutePython', 'leksjonspanel',
          'stegKnapp', 'stegrad', 'nesteSteg', 'spelAv', 'stegInfo',
-         'stegblokk', 'stegblokkTekst', 'variablar',
+         'stegblokk', 'stegblokkTekst', 'stegGjort', 'stegGjortTekst', 'variablar',
          'flate', 'spalteLeksjon', 'spaltePalett', 'spalteResultat',
          'kollapsLeksjon', 'kollapsPalett', 'kollapsResultat']
             .forEach(id => { el[id] = document.getElementById(id); });
@@ -120,6 +120,7 @@
         el.feil.hidden = true;
         el.variablar.hidden = true;
         el.stegblokk.hidden = true;
+        el.stegGjort.hidden = true;
         ulagra = true;
     }
 
@@ -334,6 +335,7 @@
         stansAvspeling();
         el.stegrad.hidden = true;
         el.stegblokk.hidden = true;
+        el.stegGjort.hidden = true;
         el.stegKnapp.disabled = false;
         el.stopp.disabled = true;
         el.koyr.disabled = false;
@@ -359,7 +361,7 @@
 
         const ktx = BolkTolk.nyKontekst(program);
         const g = BolkTolk.koyr(program, { ktx });
-        koyring = { g, ktx, id: null, stegvis: true, teljar: 0, naarFerdig: null };
+        koyring = { g, ktx, id: null, stegvis: true, teljar: 0, naarFerdig: null, venteBlokk: null };
 
         el.stegrad.hidden = false;
         el.stegKnapp.disabled = true;
@@ -379,18 +381,28 @@
     function eittSteg() {
         if (!koyring || !koyring.stegvis) return;
 
+        /* Blokka som stod for tur, er den som blir utført av dette kallet.
+         * Generatoren stoppar FØR kvar blokk, så `next()` gjer to ting på ein
+         * gong: han køyrer den som venta, og melder frå om den neste. */
+        const gjort = koyring.venteBlokk || null;
+
         let r;
         try {
             r = koyring.g.next();
         } catch (f) {
             return ferdig(f.message || String(f));
         }
-        if (r.done) return ferdig(null);
+        if (r.done) {
+            // Siste blokka køyrde nettopp. Vis henne, og at det ikkje er meir.
+            visStegblokk(null, gjort);
+            return ferdig(null);
+        }
 
         koyring.teljar++;
         const id = r.value && r.value.blokk;
+        koyring.venteBlokk = id;
         BolkEditor.markerKoyrande(id);
-        visStegblokk(id);
+        visStegblokk(id, gjort);
         visVariablar(koyring.ktx.variablar);
         teiknNo();
 
@@ -403,11 +415,32 @@
     /* Blokka blir gjenteken som tekst rett over teikninga. Utan det måtte
      * eleven som følgjer skilpadda sjå bort på arbeidsbenken for kvart steg
      * — og då ser han ikkje streken bli teikna, som var heile poenget. */
-    function visStegblokk(id) {
-        const stad = id ? BolkTre.finn(program, id) : null;
-        if (!stad) { el.stegblokk.hidden = true; return; }
-        el.stegblokkTekst.textContent = BolkBlokkar.lesbar(stad.node);
-        el.stegblokk.hidden = false;
+    /**
+     * Dei to rutene ved sida av teikninga: kva som nettopp køyrde, og kva som
+     * står for tur.
+     *
+     * Begge trengst. Utheva blokk på arbeidsbenken er den som skal køyre, for
+     * det er den eleven skal gjette på før han trykkjer. Men når streken
+     * dukkar opp på lerretet, er det den FØRRE blokka som laga han — og utan
+     * ei rute som seier det, må eleven hugse eitt steg tilbake sjølv.
+     *
+     * @param {?string} id     blokka som står for tur, eller null når det er slutt
+     * @param {?string} gjortId blokka som nettopp køyrde
+     */
+    function visStegblokk(id, gjortId) {
+        const tekst = (bid) => {
+            const stad = bid ? BolkTre.finn(program, bid) : null;
+            return stad ? BolkBlokkar.lesbar(stad.node) : null;
+        };
+
+        const gjort = tekst(gjortId);
+        el.stegGjort.hidden = !gjort;
+        if (gjort) el.stegGjortTekst.textContent = gjort;
+
+        const neste = tekst(id);
+        el.stegblokk.hidden = !neste;
+        if (neste) el.stegblokkTekst.textContent = neste;
+
         el.stegInfo.textContent = 'Steg ' + koyring.teljar;
     }
 
@@ -463,8 +496,8 @@
         el.rutePython.hidden = !py;
         el.faneTeikning.classList.toggle('active', !py);
         el.fanePython.classList.toggle('active', py);
-        el.faneTeikning.setAttribute('aria-selected', String(!py));
-        el.fanePython.setAttribute('aria-selected', String(py));
+        el.faneTeikning.setAttribute('aria-pressed', String(!py));
+        el.fanePython.setAttribute('aria-pressed', String(py));
         if (py) visPython();
         else BolkLerret.teiknPaaNytt();
     }

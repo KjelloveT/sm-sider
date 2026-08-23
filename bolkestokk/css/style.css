@@ -423,6 +423,12 @@
     box-shadow: none;
 }
 .bs-stegblokk { background: var(--bs-gaa); }
+
+/* Ruta for det som nettopp køyrde står over den for det som står for tur —
+ * lesest ovanfrå og ned blir det fortid, så framtid. Ho er dempa, så det
+ * er lett å sjå kva av dei to som gjeld no. */
+.bs-stegblokk-gjort { background: var(--bs-hvit); }
+.bs-stegblokk-gjort .bs-stegblokk-merke { opacity: .8; }
 .bs-stegblokk-tekst { font-family: var(--bs-font); font-weight: 800; }
 
 .bs-variabel {
@@ -528,3 +534,13 @@ body.bs-tema ::-webkit-scrollbar-thumb {
 }
 body.bs-tema ::-webkit-scrollbar-thumb:hover { background: rgba(17, 17, 17, .5); background-clip: content-box; }
 body.bs-tema ::-webkit-scrollbar-corner { background: transparent; }
+
+/* ---- knappane over resultatet ---------------------------------------------
+ * To vanlege knappar, ikkje faner. Ei fanerad seier «her er to sider av same
+ * ting»; to knappar seier «vel kva du vil sjå», og det er det dette er. */
+
+.bs-resultatknappar { display: flex; gap: 8px; margin-bottom: 10px; }
+
+.bs-resknapp.active {
+    background: var(--bs-start);
+}

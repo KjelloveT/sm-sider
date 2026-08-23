@@ -38,12 +38,20 @@
             '<path d="M20 20V9"/>' +
             '<path d="m16.8 12.2 3.2-3.2 3.2 3.2"/>',
 
-        /* Orm — til Python-fana. Namnet på Python kjem frå Monty Python og
+        /* Orm — til Python-knappen. Namnet på Python kjem frå Monty Python og
          * ikkje frå slangen, men slangen er det språket blir kjent på, og
-         * det er han Ormritaren har namnet sitt frå. */
-        orm: '<path d="M2.5 17.5c2.5 0 2.5-5 5-5s2.5 5 5 5 2.5-5 5-5"/>' +
-             '<circle cx="19.3" cy="9.6" r="2.2"/>' +
-             '<path d="M21.4 8.7 23.2 8"/>'
+         * det er han Ormritaren har namnet sitt frå.
+         *
+         * Fyrste utgåva var ein bølgje med ein liten ball i enden, og han
+         * las som ein krusedull. Denne har eit eige, rundt hovud med auge og
+         * tunge, og ein kropp som kveilar seg ned til ein hale. Hovudet er
+         * ein `circle` og ikkje ein boge nettopp fordi det er den delen som
+         * må overleve nedskaleringa: kontrollert i 20px, den storleiken han
+         * faktisk blir vist i. */
+        orm: '<path d="M3.5 20.5h10.5a4.2 4.2 0 0 0 0-8.4H9.5a3.6 3.6 0 0 1 0-7.2h2"/>' +
+             '<circle cx="14.5" cy="5" r="3.4"/>' +
+             '<circle cx="15.6" cy="4.2" r="1" fill="currentColor" stroke="none"/>' +
+             '<path d="m17.9 3.1 2.4-1.1"/>'
     };
 
     Object.keys(NYE).forEach(namn => {
