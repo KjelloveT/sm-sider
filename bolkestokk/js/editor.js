@@ -415,6 +415,19 @@ const BolkEditor = (function () {
 
         if (erPalett) { veljar.tabIndex = -1; veljar.disabled = true; return veljar; }
 
+        /* Eit <select> utan treff på verdien sin viser fyrste alternativet
+         * likevel — det er nettlesaren sin regel, ikkje vår. Blokka «Bruk»
+         * blir laga med tomt namn, så ho SÅG ut til å peike på funksjonen
+         * medan ho i røynda peika på ingenting: køyringa slo opp '' og gjekk
+         * vidare utan å teikne noko. Ei blokk som ikkje gjer det ho viser er
+         * verre enn ei som seier frå.
+         *
+         * Difor skriv vi det synlege valet inn i noden med ein gong. Det som
+         * står på skjermen er då alltid det programmet køyrer. */
+        if (node && veljar.value !== verdi && veljar.value !== '') {
+            node.felt[spek.felt] = veljar.value;
+        }
+
         veljar.addEventListener('change', () => {
             if (node) node.felt[spek.felt] = veljar.value;
             if (vert.paaEndring) vert.paaEndring();
