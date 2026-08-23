@@ -1,0 +1,150 @@
+/* Bolkestokk — fargeprofil og typografi.
+ *
+ * EIT MEDVITE UNNTAK FRÅ §3.3
+ *
+ * Resten av Vyrdepil skiftar utsjånad med temavelgaren: 21 tema, og kvart
+ * verktøy set eit lyst og eit mørkt. Bolkestokk gjer ikkje det. Verktøyet
+ * har ein fast, lys profil, teikna for målgruppa i eit eige designarbeid,
+ * og temavelgaren rører han ikkje.
+ *
+ * Grunnen er at blokkene er FYLTE med farge og har svart tekst oppå. Det
+ * er motsett av grepet §3.2 skisserer, og det held berre så lenge fargen
+ * er kjend på førehand: alle sju blokkfargane er målte til minst 7,30:1
+ * mot #111, og flatene til minst 13,4:1. Lot vi temaet byte fargane, ville
+ * den garantien forsvinne — og eit tema som «hacker» eller «neon» ville
+ * gjort ein palett laga for tolvåringar til noko heilt anna.
+ *
+ * Vi overstyrer difor temavariablane i staden for å ignorere dei. Då får
+ * dei delte komponentane frå neobrutalisme.css (.box4, .btn, .box5) rett
+ * utsjånad utan at kvar einaste av dei må teiknast på nytt her.
+ *
+ * `body.bs-tema` er (0,1,1) og vinn dermed over `[data-theme="…"]` som er
+ * (0,1,0). Utan klassa på body ville temaet vunne.
+ *
+ * Fargane er henta ordrett frå «Block Coding UI»-mockupen.
+ */
+
+body.bs-tema {
+    /* ---- flater ---- */
+    --bg: #E8E2D4;              /* sida rundt */
+    --surface: #FFF6E2;         /* arbeidsflate og kort */
+    --text: #111111;
+    --border: #111111;
+    --muted: #5B5344;           /* målt 6,28:1 mot palettflata — godt over AA */
+
+    /* Designet er flatt: 4px svarte rammer og ingen skugge. Å nulle
+     * --shadow gjer at dei delte komponentane blir flate òg, i staden for
+     * at halve grensesnittet har skugge og halve ikkje. */
+    --shadow: transparent;
+
+    /* ---- eigne flater ---- */
+    --bs-palettflate: #F2E9D2;
+    --bs-rail: #E4D9BE;
+    --bs-prikk: #C9BE9F;
+    --bs-hvit: #FFFFFF;
+    --bs-ramme: 4px;
+
+    /* ---- blokkfargar ----
+     * Same verdiar som FARGAR_BLOKK i js/blokkar.js. Dei står to stader
+     * fordi lerretet treng dei i JS og blokkene treng dei i CSS; endrar du
+     * ein, må du endre begge. */
+    --bs-gaa:   #8CC2FF;
+    --bs-snu:   #2FD4C4;
+    --bs-penn:  #FF6FB5;
+    --bs-lokke: #FFB833;
+    --bs-tal:   #FFC93C;
+    --bs-boks:  #FF7A45;
+    --bs-mi:    #CBAAFF;
+    --bs-start: #FFDD57;
+    --bs-stopp: #FF9B8E;
+    --bs-gaa-ja: #6FDE4F;       /* «køyr»-grøn */
+
+    /* Markering av blokker.
+     *
+     * Burgunder for den eleven har MERKT — det er han som peikar, og det
+     * skal ikkje kunne forvekslast med noko køyringa gjer.
+     *
+     * Dei to andre er par med kvar si rute ved teikninga: rosa for blokka
+     * som nettopp køyrde, lys blå for den som står for tur. Fargen er
+     * heile koplinga — eleven ser den same rosa i ruta og på benken og
+     * treng ikkje lese seg fram til at det er same blokka.
+     *
+     * Dei er lyse med vilje. Ei sterk markering ville teke merksemda frå
+     * blokkfargen, som er det som fortel kva blokka gjer. Alle tre er
+     * faste av same grunn som blokkfargane. */
+    --bs-merkt:  #8B1E3F;
+    --bs-gjort:  #FFD9E8;
+    --bs-tur:    #DCEEFF;
+
+    /* ---- aksentar for dei delte komponentane ---- */
+    --accent:  #FFB833;
+    --accent2: #8CC2FF;
+    --accent3: #CBAAFF;
+    --accent4: #FFDD57;
+    --accent5: #2FD4C4;
+
+    /* Alle blokkfargane er lyse, så svart er rett tekstfarge på kvar
+     * einaste av dei. Det er heile grunnen til at paletten held. */
+    --text-on-accent: #111111;
+    --text-on-light-accent: #111111;
+
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--bs-font);
+}
+
+/* ---- typografi -----------------------------------------------------------
+ *
+ * Mockupen brukar Baloo 2 og Space Grotesk frå Google Fonts. AGENTS.md §5.6
+ * er kategorisk: «Vi skal aldri bruke eksterne font-bibliotek — bruk alltid
+ * system-fontar med passande fallbackar.» Så vi tek uttrykket, ikkje fila.
+ *
+ * `ui-rounded` er nøkkelen: på iPad og Mac gjev han SF Pro Rounded, som
+ * ligg tett på Baloo 2 sitt runde, tunge preg. Skulen sine iPadar får
+ * dermed nesten mockupen. Windows fell til Segoe UI Variable Display, og
+ * resten til system-ui. Tyngda gjer meir for uttrykket enn bokstavforma. */
+body.bs-tema {
+    --bs-font: ui-rounded, 'Segoe UI Variable Display', 'Segoe UI',
+               system-ui, -apple-system, 'Trebuchet MS', sans-serif;
+}
+
+/* Etikettar i verktøyet er korte, versale og tettstilte, som i mockupen. */
+.bs-etikett {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--muted);
+}
+
+/* ---- flat, ikkje opphøgd -------------------------------------------------
+ * Designet har ingen skuggar. --shadow er alt gjennomsiktig, men nokre
+ * komponentar i neobrutalisme.css set eigne skuggar med faste verdiar. */
+body.bs-tema .box1,
+body.bs-tema .box2,
+body.bs-tema .box4,
+body.bs-tema .box5,
+body.bs-tema .btn { box-shadow: none; }
+
+body.bs-tema .box1,
+body.bs-tema .box2,
+body.bs-tema .box4,
+body.bs-tema .box5 { border-width: var(--bs-ramme); }
+
+/* Knappane er flate klossar med tjukk ramme. */
+body.bs-tema .btn {
+    border: var(--bs-ramme) solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--bs-font);
+    font-weight: 800;
+    letter-spacing: .01em;
+}
+body.bs-tema .btn:hover { background: var(--bs-start); transform: none; }
+body.bs-tema .btn:disabled { opacity: .45; }
+
+/* Køyr og Stopp ber si eiga meining, og fargane er faste av same grunn
+ * som blokkfargane: svart tekst på ein kjend lys farge. */
+body.bs-tema #koyr { background: var(--bs-gaa-ja); }
+body.bs-tema #stopp { background: var(--bs-stopp); }
+body.bs-tema #stegKnapp { background: var(--bs-lokke); }

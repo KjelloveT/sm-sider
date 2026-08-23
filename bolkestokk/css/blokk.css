@@ -1,0 +1,502 @@
+/* Bolkestokk — blokkene.
+ *
+ * FORMA, OG KVIFOR HO ER SLIK
+ *
+ * Fyrste utgåva var flate kort på --surface med kategorifargen i ei stripe
+ * til venstre. Det var det AGENTS.md §3.2 legg opp til, og det heldt
+ * kontrasten i alle 21 tema — men det såg ut som eit skjema, ikkje som
+ * blokker eit barn vil ta på.
+ *
+ * No er blokka FYLT med fargen sin, med svart tekst og 4px svart ramme.
+ * Det er motsett av §3.2, og det held berre fordi fargane er faste og
+ * målte: 7,30:1 i verste fall. Sjå css/palett.css for heile grunngjevinga.
+ *
+ * Knastane er ekte. Kvar blokk har eit hakk i toppen og ein tapp i botnen,
+ * begge 46×15px. Hakket er måla i fargen til blokka OVER — den fargen kjem
+ * inn som --bs-over frå editor.js — slik at tappen ovanfrå ser ut til å
+ * fylle hakket. Er blokka øvst i ein stabel, er --bs-over flata bak.
+ *
+ * Gjenta-blokka er ei open C-form: eit hovud, ein farga ryggsøyle på 30px
+ * ned venstresida, og ein fot. Kroppen ligg mellom dei, og då er det ikkje
+ * til å ta feil av kva som er inni løkka og kva som kjem etter.
+ */
+
+/* ---- felles blokkform ---------------------------------------------------- */
+
+.bs-blokk {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-family: var(--bs-font);
+    color: var(--text);
+    background: var(--bs-f, var(--bs-gaa));
+    border: var(--bs-ramme) solid var(--border);
+    box-shadow: none;
+    cursor: grab;
+
+    /* Utan dette rullar sida under fingeren i staden for at blokka blir
+     * dregen. Det er den einaste eigenskapen som skil ein blokkeditor som
+     * verkar på nettbrett frå ein som ikkje gjer det. */
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.bs-blokk:active { cursor: grabbing; }
+
+/* Stabla blokker deler ramme, så det blir éi svart strek og ikkje to. */
+.bs-stabel > * + * { margin-top: calc(-1 * var(--bs-ramme)); }
+
+/* Hatten er søsken til stabelen, ikkje barn, så regelen over nådde aldri
+ * overgangen hatt → fyrste blokk. Utan dette ligg to 4px-rammer oppå
+ * kvarandre og gjev eit 8px svart band under hatten. */
+.bs-stabelboks > .bs-stabel { margin-top: calc(-1 * var(--bs-ramme)); }
+
+/* Fargen kjem frå data-farge og blir liggjande som ein variabel, så
+ * knastane og C-forma kan arve han. */
+.bs-blokk[data-farge="gaa"],   .bs-krop-ytre[data-farge="gaa"]   { --bs-f: var(--bs-gaa);   }
+.bs-blokk[data-farge="snu"],   .bs-krop-ytre[data-farge="snu"]   { --bs-f: var(--bs-snu);   }
+.bs-blokk[data-farge="penn"],  .bs-krop-ytre[data-farge="penn"]  { --bs-f: var(--bs-penn);  }
+.bs-blokk[data-farge="lokke"], .bs-krop-ytre[data-farge="lokke"] { --bs-f: var(--bs-lokke); }
+.bs-blokk[data-farge="tal"],   .bs-krop-ytre[data-farge="tal"]   { --bs-f: var(--bs-tal);   }
+.bs-blokk[data-farge="boks"],  .bs-krop-ytre[data-farge="boks"]  { --bs-f: var(--bs-boks);  }
+.bs-blokk[data-farge="mi"],    .bs-krop-ytre[data-farge="mi"]    { --bs-f: var(--bs-mi);    }
+.bs-blokk[data-farge="start"], .bs-krop-ytre[data-farge="start"] { --bs-f: var(--bs-start); }
+
+.bs-rad {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;                 /* romsleg treffflate for ein finger */
+    padding: 10px 14px;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.bs-ord { white-space: nowrap; }
+
+/* Symbolet står først og gjer blokka lesbar før eleven har lese orda. */
+.bs-symbol {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    color: var(--text);
+}
+.bs-symbol svg { width: 24px; height: 24px; stroke-width: 2.6; }
+
+/* ---- knastar --------------------------------------------------------------
+ * 46px brei, 15px høg, 22px inn frå venstre — som i mockupen. */
+
+.bs-blokk::before,
+.bs-blokk::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    width: 46px;
+    height: 15px;
+    box-sizing: border-box;
+    border: var(--bs-ramme) solid var(--border);
+    border-top: none;
+    pointer-events: none;
+}
+
+/* Hakket i toppen: måla i fargen til blokka over, så tappen ovanfrå ser ut
+ * til å gli ned i det. */
+.bs-blokk::before {
+    top: calc(-1 * var(--bs-ramme));
+    background: var(--bs-over, var(--surface));
+}
+
+/* Tappen i botnen: eigen farge, og han skal ligge oppå blokka under. */
+.bs-blokk::after {
+    bottom: -15px;
+    background: var(--bs-f);
+    z-index: 2;
+}
+
+/* Verdiblokker ligg i hòl og har ingen knastar. */
+.bs-verdi::before, .bs-verdi::after { content: none; }
+
+/* Hattar har ingenting over seg, så dei har ikkje hakk. */
+.bs-hatt::before { content: none; }
+
+/* ---- hattar --------------------------------------------------------------- */
+
+.bs-hatt {
+    cursor: default;
+    border-radius: 26px 26px 0 0;
+    --bs-f: var(--bs-start);
+}
+.bs-hatt .bs-rad { text-transform: uppercase; letter-spacing: .05em; }
+
+/* ---- gjenta: open C-form --------------------------------------------------- */
+
+.bs-krop-ytre { position: relative; display: flex; flex-direction: column; }
+
+/* Hovudet har ramme heile vegen rundt bortsett frå under, og tappen sit på
+ * foten i staden. */
+.bs-krop-ytre > .bs-blokk { border-bottom: none; }
+.bs-krop-ytre > .bs-blokk::after { content: none; }
+
+.bs-krop-midt { display: flex; align-items: stretch; }
+
+/* Ryggsøyla ned venstresida. */
+.bs-krop-spine {
+    flex: 0 0 30px;
+    background: var(--bs-f);
+    border-left: var(--bs-ramme) solid var(--border);
+    border-right: var(--bs-ramme) solid var(--border);
+    box-sizing: border-box;
+}
+
+/* Ingen padding. Det er ikkje ei innstramming, det er sjolve verkemaaten:
+ *
+ *  - i toppen ligg fyrste blokk klemt mot border-top, sa knasten hennar
+ *    (mala i lokkefargen) punkterer den svarte streken og les som eit hol.
+ *    Med luft der flaut knasten i staden i eit kremgult tomrom.
+ *  - i botnen ligg siste blokk klemt mot foten, og tappen hennar heng ned i
+ *    han. Same verkemaaten som i Scratch.
+ *  - til hogre blir indre blokker fluste med lokkehovudets hogrekant,
+ *    nøyaktig som i mockupen (indre 346px + spine 30px - 4px overlapp = 372px). */
+.bs-kropp {
+    flex: 1;
+    min-width: 0;
+    min-height: 46px;
+    padding: 0;
+    margin-left: calc(-1 * var(--bs-ramme));
+    border-top: var(--bs-ramme) solid var(--border);
+    box-sizing: border-box;
+}
+
+/* Kroppen har border-top for at ei TOM lokke skal ha ei strek under hovudet.
+ * Er ho ikkje tom, skal fyrste blokk dele den streken i staden for a leggje
+ * si eiga rett under — elles blir det 8px svart der det skal vere 4. */
+.bs-kropp > .bs-stabelpost:first-child { margin-top: calc(-1 * var(--bs-ramme)); }
+
+/* Foten som lukkar C-en, med tappen under. */
+.bs-krop-botn {
+    position: relative;
+    height: 26px;
+    background: var(--bs-f);
+    border: var(--bs-ramme) solid var(--border);
+    border-top: none;
+    box-sizing: border-box;
+}
+.bs-krop-botn::after {
+    content: '';
+    position: absolute;
+    left: 22px;
+    bottom: -15px;
+    width: 46px;
+    height: 15px;
+    box-sizing: border-box;
+    background: var(--bs-f);
+    border: var(--bs-ramme) solid var(--border);
+    border-top: none;
+    z-index: 2;
+}
+
+/* ---- hòl og felt ----------------------------------------------------------- */
+
+.bs-hol { display: inline-flex; align-items: center; }
+
+.bs-felt {
+    font-family: var(--bs-font);
+    font-weight: 800;
+    font-size: 17px;
+    color: var(--text);
+    background: var(--bs-hvit);
+    border: 3px solid var(--border);
+    padding: 4px 8px;
+    min-height: 34px;
+    box-sizing: border-box;
+    -moz-appearance: textfield;
+}
+.bs-felt::-webkit-outer-spin-button,
+.bs-felt::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* Runde kantar der det skal tal inn, mjukt avrunda der det er tekst eller
+ * nedtrekk. Skiljet er med vilje: forma fortel kva slag verdi som høyrer til. */
+.bs-felt-tal { width: 3.4em; text-align: center; border-radius: 999px; }
+.bs-felt-tekst { width: 6.5em; border-radius: 10px; }
+.bs-felt-val { padding-right: 4px; max-width: 9.5em; font-size: 14px; border-radius: 10px; }
+
+.bs-felt:focus-visible,
+.bs-blokk:focus-visible { outline: 4px solid var(--border); outline-offset: 3px; }
+
+/* ---- talfelt med + og − -----------------------------------------------------
+ *
+ * Feltet er avrunda, knappane er firkanta og står for seg sjølve til høgre.
+ * Runde kantar er signalet om at her skal det eit TAL inn — same signalet som
+ * verdiblokkene ber, så ei rund blokk og eit rundt hòl kjenner kvarandre att.
+ *
+ * Knappane har fast høgd. Før hadde dei `flex: 1 1 50%`, og då tok kvar av dei
+ * høgda til teiknet sitt: minus er ein lav strek og pluss eit høgt kryss, så
+ * dei vart ulike. */
+
+.bs-steg {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: none;
+}
+
+.bs-steg .bs-felt {
+    border: 3px solid var(--border);
+    border-radius: 999px;
+    min-height: 44px;
+}
+
+.bs-steg-kolonne {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap: 4px;
+    border: none;
+}
+
+/* Smale og dempa.
+ *
+ * Fyrst var dei 32px breie med 3px svart ramme, og då kjempa dei om
+ * merksemda med sjølve talet — som er det eleven skal sjå. No er dei berre
+ * eit lag mørkt oppå blokkfargen: ingen ramme, og smalare enn dei er høge.
+ * Overlegget er halvgjennomsiktig, så dei ser like ut på alle sju
+ * blokkfargane utan at nokon av dei må nemnast her.
+ *
+ * `place-items: center` er ikkje pynt. Utan han sat teiknet på ei tekstlinje,
+ * og plusset — som er høgt og symmetrisk — hamna høgare enn minusteiknet,
+ * som er ein lav strek. */
+.bs-steg-knapp {
+    display: grid;
+    place-items: center;
+    width: 18px;                  /* smalare enn høg, så dei les som eit par */
+    height: 20px;                 /* 20 + 4 + 20 = 44, same høgd som feltet */
+    flex: 0 0 auto;
+    padding: 0;
+    font-family: var(--bs-font);
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text);
+    background: rgba(17, 17, 17, .10);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+.bs-steg-knapp:hover { background: rgba(17, 17, 17, .22); }
+.bs-steg-knapp:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
+
+/* ---- statisk talbrikke i paletten ---------------------------------------
+ * Palettblokkene er døme ein plukkar frå, ikkje noko ein stiller inn — felta
+ * der har alltid vore readOnly. Difor blir talet ei brikke utan knappar, og
+ * blokka slepp plass ho ikkje har bruk for. */
+.bs-brikke {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.2em;
+    padding: 4px 10px;
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--bs-hvit);
+    border: 3px solid var(--border);
+    border-radius: 999px;
+}
+
+/* Hòlet som er i ferd med å ta imot ei verdiblokk. */
+.bs-hol.er-maal { outline: 3px dashed var(--border); outline-offset: 3px; }
+
+/* Verdiblokker er runde. Ei rund blokk høyrer til i eit rundt hòl, og det
+ * er heile forklaringa eleven treng for kvar ho kan sleppast. */
+.bs-verdi { border-radius: 999px; }
+.bs-verdi .bs-rad { padding-left: 14px; padding-right: 14px; }
+
+.bs-hol[data-tak-verdi] { border-radius: 999px; }
+
+/* Ei verdiblokk som ligg i eit hòl er smalare. */
+.bs-hol-fylt > .bs-verdi { width: auto; border-width: 3px; }
+.bs-hol-fylt > .bs-verdi .bs-rad { min-height: 34px; padding: 3px 8px; gap: 6px; font-size: 14px; }
+.bs-hol-fylt > .bs-verdi .bs-symbol { width: 18px; height: 18px; }
+.bs-hol-fylt > .bs-verdi .bs-symbol svg { width: 16px; height: 16px; }
+.bs-hol-fylt > .bs-verdi .bs-felt { font-size: 15px; }
+.bs-hol-fylt > .bs-verdi .bs-steg { gap: 5px; }
+.bs-hol-fylt > .bs-verdi .bs-steg .bs-felt { min-height: 34px; }
+.bs-hol-fylt > .bs-verdi .bs-steg-knapp { width: 18px; height: 15px; font-size: 11px; border-radius: 5px; }
+
+/* ---- paletten -------------------------------------------------------------- */
+
+.bs-palettbolk { margin-bottom: 20px; }
+
+.bs-paletttittel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text);
+}
+
+.bs-katbrikke {
+    flex: 0 0 auto;
+    width: 16px; height: 16px;
+    border: 3px solid var(--border);
+    background: var(--bs-kat, var(--bs-gaa));
+}
+.bs-paletttittel[data-farge="gaa"]   { --bs-kat: var(--bs-gaa);   }
+.bs-paletttittel[data-farge="snu"]   { --bs-kat: var(--bs-snu);   }
+.bs-paletttittel[data-farge="penn"]  { --bs-kat: var(--bs-penn);  }
+.bs-paletttittel[data-farge="lokke"] { --bs-kat: var(--bs-lokke); }
+.bs-paletttittel[data-farge="tal"]   { --bs-kat: var(--bs-tal);   }
+.bs-paletttittel[data-farge="boks"]  { --bs-kat: var(--bs-boks);  }
+.bs-paletttittel[data-farge="mi"]    { --bs-kat: var(--bs-mi);    }
+
+/* I paletten står blokkene som frittståande døme, med luft til tappen.
+ *
+ * MÅ vere barne-kombinator. Med etterkomar-veljar traff marginen òg hovudet
+ * inni C-forma til Gjenta, og reiv det 20px frå sin eigen kropp og fot — det
+ * såg ut som to laushengande orange bitar med eit hol mellom. */
+.bs-palettbolk > .bs-blokk,
+.bs-palettbolk > .bs-krop-ytre { margin-bottom: 20px; }
+.bs-palettblokk { cursor: pointer; }
+.bs-palettblokk::before { content: none; }
+
+/* Hover lysnar blokka, ho flyttar seg ikkje.
+ *
+ * Fyrste utgåva skuva blokka to piksel opp og til venstre. To ting var gale
+ * med det: heile lista hoppa når peikaren gleid nedover henne, og flyttinga
+ * avdekte ei hårstrek under knasten der blokka hadde stått. Eit lag med kvitt
+ * oppå fyllet gjer det same utan å røre layouten — og det tek berre fyllet,
+ * ikkje ramma eller teksten. */
+.bs-palettblokk:hover,
+.bs-palettblokk:hover::after,
+.bs-palettbolk > .bs-krop-ytre:hover .bs-blokk,
+.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-spine,
+.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-botn,
+.bs-palettbolk > .bs-krop-ytre:hover .bs-krop-botn::after {
+    /* Knasten er eit pseudoelement med eigen bakgrunn, så han må lysnast
+     * for seg — elles blir tappen ståande mørk under ei lys blokk. */
+    background-image: linear-gradient(rgba(255, 255, 255, .45), rgba(255, 255, 255, .45));
+}
+.bs-palettblokk .bs-felt { pointer-events: none; }
+
+/* Spalta er smal. Med same luft og skriftgrad som på benken braut fjorten
+ * av sytten blokker over fleire linjer, så her strammar vi inn. */
+.bs-palettbolk .bs-rad { gap: 5px; font-size: 13.5px; min-height: 46px; padding: 8px 9px; }
+.bs-palettbolk .bs-symbol { width: 22px; height: 22px; }
+.bs-palettbolk .bs-symbol svg { width: 21px; height: 21px; }
+.bs-palettbolk .bs-felt-val { max-width: 5.4em; font-size: 12.5px; min-height: 30px; }
+.bs-palettbolk .bs-felt-tekst { width: 5.5em; font-size: 14px; min-height: 30px; }
+
+/* Gjenta i paletten treng berre vise at ho HAR eit rom, ikkje kor stort det
+ * kan bli. Full høgd gjorde henne til ein 219px orange kloss. */
+.bs-palettbolk .bs-kropp { min-height: 22px; }
+.bs-palettbolk .bs-krop-botn { height: 20px; }
+
+/* Paletten blir til ei søppelbøtte medan ein dreg. */
+.bs-spalte.er-soppel, .bs-palett.er-soppel { outline: 4px dashed var(--border); outline-offset: -8px; background: var(--bs-stopp); }
+
+/* ---- stablar og markør -------------------------------------------------------- */
+
+.bs-stabel { min-height: 34px; }
+
+.bs-tom {
+    margin: 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--surface);
+    border: 3px dashed var(--border);
+}
+.bs-tom-inni { margin: 8px; padding: 6px 10px; font-size: 12px; }
+
+.bs-markor {
+    height: 10px;
+    margin: 3px 0;
+    background: var(--bs-gaa-ja);
+    border: 3px solid var(--border);
+}
+
+/* ---- blokka som blir dregen ---------------------------------------------------- */
+
+.bs-drag {
+    position: fixed;
+    z-index: 900;
+    /* Må vere gjennomsiktig for peikaren, elles finn elementFromPoint berre
+     * skyggen sjølv og aldri det han ligg over. */
+    pointer-events: none;
+    opacity: .95;
+    transform: rotate(-2deg) scale(1.04);
+}
+
+body.bs-dreg { cursor: grabbing; }
+body.bs-dreg .bs-felt { pointer-events: none; }
+
+/* ---- merkt og køyrande ----------------------------------------------------
+ *
+ * Ei farga stripe heilt til venstre, ikkje ei ramme rundt.
+ *
+ * Fyrste utgåva la ein `outline` rundt heile blokka og skuva ho 4px til
+ * sida medan ho køyrde. Ramma vart ei hard svart strek oppå ei blokk som
+ * allereie har ei, og flyttinga gjorde at heile stabelen skalv seg nedover
+ * for kvar blokk som køyrde.
+ *
+ * No blir venstrekanten farga i staden. Blokka har alt ein 4px kant der, så
+ * vi byter berre farge på han og legg ein inset-skugge innanfor. Korkje
+ * `border-color` eller `box-shadow` tek plass i layouten, så blokka står
+ * bikkefast — det var heile poenget.
+ */
+
+.bs-blokk.er-vald {
+    border-left-color: var(--bs-merkt);
+    box-shadow: inset 7px 0 0 var(--bs-merkt);
+}
+
+/* Dei to køyremarkeringane er lyse, og ei lys stripe rett mot ei lys
+ * blokkflate forsvinn — lyseblått på «Gå framover», som alt er lyseblå, ville
+ * knapt vore å sjå. Difor får stripa ei svart kant på innsida òg.
+ *
+ * Rekkjefølgja i box-shadow er malingsrekkjefølgja: den fyrste ligg øvst. 12px
+ * farge, så 2px svart under han som stikk fram som ei kant. Teksten startar
+ * 18px inne (4px ramme + 14px padding), så stripa kjem aldri nær han.
+ *
+ * Dei står etter `.er-vald` med vilje. Ei blokk kan vere både merkt og under
+ * køyring, og då er det køyringa som skjer no. */
+.bs-blokk.er-gjort {
+    box-shadow: inset 12px 0 0 var(--bs-gjort), inset 14px 0 0 var(--border);
+}
+
+.bs-blokk.er-koyrande {
+    box-shadow: inset 12px 0 0 var(--bs-tur), inset 14px 0 0 var(--border);
+}
+
+/* Ei gjenta-blokk er meir enn hovudet sitt. Merkjer vi henne, skal heile
+ * venstrekanten — ryggsøyla og foten med — bere fargen. */
+.bs-stabelpost:has(> .bs-blokk.er-vald) > .bs-krop-midt > .bs-krop-spine,
+.bs-stabelpost:has(> .bs-blokk.er-vald) > .bs-krop-botn {
+    border-left-color: var(--bs-merkt);
+    box-shadow: inset 7px 0 0 var(--bs-merkt);
+}
+.bs-stabelpost:has(> .bs-blokk.er-gjort) > .bs-krop-midt > .bs-krop-spine,
+.bs-stabelpost:has(> .bs-blokk.er-gjort) > .bs-krop-botn {
+    box-shadow: inset 12px 0 0 var(--bs-gjort), inset 14px 0 0 var(--border);
+}
+.bs-stabelpost:has(> .bs-blokk.er-koyrande) > .bs-krop-midt > .bs-krop-spine,
+.bs-stabelpost:has(> .bs-blokk.er-koyrande) > .bs-krop-botn {
+    box-shadow: inset 12px 0 0 var(--bs-tur), inset 14px 0 0 var(--border);
+}
+
+

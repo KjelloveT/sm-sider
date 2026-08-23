@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bygg — Bolkestokk</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+<link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/palett.css?v=13">
+<link rel="stylesheet" href="css/style.css?v=13">
+<link rel="stylesheet" href="css/blokk.css?v=13">
+<link rel="stylesheet" href="css/leksjon.css?v=13">
+<script src="../js/neo-header.js" defer></script>
+<script src="../js/vyrdepil-icons.js" defer></script>
+<script src="../js/vyrdepil-storage.js" defer></script>
+<script src="js/ikon.js?v=13" defer></script>
+<script src="js/blokkar.js?v=13" defer></script>
+<script src="js/tre.js?v=13" defer></script>
+<script src="js/skilpadde.js?v=13" defer></script>
+<script src="js/tolk.js?v=13" defer></script>
+<script src="js/python.js?v=13" defer></script>
+<script src="js/lerret.js?v=13" defer></script>
+<script src="js/editor.js?v=13" defer></script>
+<script src="js/dra.js?v=13" defer></script>
+<script src="js/test.js?v=13" defer></script>
+<script src="js/tekst.js?v=13" defer></script>
+<script src="js/framgang.js?v=13" defer></script>
+<script src="js/lager.js?v=13" defer></script>
+<script src="js/oppgaver.js?v=13" defer></script>
+<script src="js/leksjon.js?v=13" defer></script>
+<script src="js/app.js?v=13" defer></script>
+</head>
+<body class="bs-tema" data-light-theme="classic" data-dark-theme="classic" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content main-wide">
+
+  <div class="bs-flate" id="flate">
+
+    <!-- Leksjonen. Tom i fri bygging, og då fell heile spalta bort. -->
+    <aside class="bs-spalte bs-spalte-leksjon" id="spalteLeksjon" hidden>
+      <header class="bs-spaltetopp">
+        <h2 class="bs-spaltetittel">Leksjon</h2>
+        <button type="button" class="bs-kollaps" id="kollapsLeksjon"
+                aria-expanded="true" title="Skjul leksjonen" aria-label="Skjul leksjonen">
+          <span class="bs-kollapsteikn" aria-hidden="true"></span>
+        </button>
+      </header>
+      <div class="bs-spalteinnhald bs-leksjonspanel" id="leksjonspanel"></div>
+    </aside>
+
+    <!-- Blokkvelgaren -->
+    <aside class="bs-spalte bs-spalte-palett" id="spaltePalett">
+      <header class="bs-spaltetopp">
+        <h2 class="bs-spaltetittel">Kodeblokker</h2>
+        <button type="button" class="bs-kollaps" id="kollapsPalett"
+                aria-expanded="true" title="Skjul kodeblokkene" aria-label="Skjul kodeblokkene">
+          <span class="bs-kollapsteikn" aria-hidden="true"></span>
+        </button>
+      </header>
+      <div class="bs-spalteinnhald bs-palett" id="palett" aria-label="Blokker du kan bruke"></div>
+    </aside>
+
+    <!-- Arbeidsbenken -->
+    <section class="bs-benk" aria-label="Programmet ditt">
+      <div class="bs-verktoyrad">
+        <button type="button" class="btn bs-ikonknapp" id="koyr"
+                title="Køyr programmet" aria-label="Køyr programmet">
+          <span data-icon="play" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp" id="stopp" disabled
+                title="Stopp" aria-label="Stopp programmet">
+          <span data-icon="stop" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp bs-btn-steg" id="stegKnapp"
+                title="Steg for steg" aria-label="Køyr steg for steg">
+          <span data-icon="footprints" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp" id="toem"
+                title="Tøm programmet" aria-label="Tøm programmet">
+          <span data-icon="trash" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp" id="nyFunksjon"
+                title="Ny funksjon" aria-label="Lag ein ny funksjon">
+          <span data-icon="sparkles" data-icon-size="20"></span>
+        </button>
+        <label class="bs-fart">
+          Fart
+          <input type="range" id="fart" min="1" max="6" value="4"
+                 aria-label="Kor fort programmet køyrer">
+        </label>
+      </div>
+
+      <!-- Stegkontrollar. Kjem fram når stegvis køyring er i gang. -->
+      <div class="bs-stegrad" id="stegrad" hidden>
+        <button type="button" class="btn bs-btn-liten" id="nesteSteg">
+          <span data-icon="chevR" data-icon-size="14"></span>Neste blokk
+        </button>
+        <button type="button" class="btn bs-btn-liten" id="spelAv">Spel av</button>
+        <span class="bs-steginfo" id="stegInfo" aria-live="polite"></span>
+      </div>
+
+      <div class="bs-arbeid" id="arbeid" tabindex="0"></div>
+      <p class="bs-status" id="status" role="status"></p>
+    </section>
+
+    <!-- Teikninga og koden -->
+    <aside class="bs-spalte bs-spalte-resultat" id="spalteResultat">
+      <header class="bs-spaltetopp">
+        <h2 class="bs-spaltetittel">Resultat</h2>
+        <button type="button" class="bs-kollaps" id="kollapsResultat"
+                aria-expanded="true" title="Skjul resultatet" aria-label="Skjul resultatet">
+          <span class="bs-kollapsteikn" aria-hidden="true"></span>
+        </button>
+      </header>
+      <div class="bs-spalteinnhald bs-utflate">
+
+      <!-- Blokka som står for tur. Ho har ikkje køyrt enno — det er nettopp
+           det som gjer at eleven kan gjette kva som skjer før han trykkjer.
+           Står her, rett over teikninga, så han kan følgje skilpadda utan
+           å sjå bort på arbeidsbenken. -->
+      <div class="bs-stegblokk bs-stegblokk-gjort" id="stegGjort" hidden>
+        <span class="bs-stegblokk-merke">Nettopp køyrt</span>
+        <code class="bs-stegblokk-tekst" id="stegGjortTekst"></code>
+      </div>
+
+      <div class="bs-stegblokk" id="stegblokk" hidden>
+        <span class="bs-stegblokk-merke">Står for tur</span>
+        <code class="bs-stegblokk-tekst" id="stegblokkTekst"></code>
+      </div>
+
+      <div class="bs-resultatknappar">
+        <button type="button" class="btn bs-ikonknapp bs-resknapp active" id="faneTeikning"
+                aria-pressed="true" aria-controls="ruteTeikning"
+                title="Teikning" aria-label="Vis teikninga">
+          <span data-icon="pencil" data-icon-size="20"></span>
+        </button>
+        <button type="button" class="btn bs-ikonknapp bs-resknapp" id="fanePython"
+                aria-pressed="false" aria-controls="rutePython"
+                title="Python" aria-label="Vis programmet som Python">
+          <span data-icon="orm" data-icon-size="20"></span>
+        </button>
+      </div>
+
+      <div class="box5">
+        <div class="box-body" style="padding:0">
+          <div class="bs-lerretboks" id="ruteTeikning" aria-labelledby="faneTeikning">
+            <canvas class="bs-lerret" id="lerret"></canvas>
+          </div>
+          <pre class="bs-pythonrute" id="rutePython" aria-labelledby="fanePython" hidden></pre>
+        </div>
+      </div>
+
+      <!-- Variablane og verdiane deira. Skjult til programmet har nokon. -->
+      <div class="bs-variablar" id="variablar" aria-label="Variablar" hidden></div>
+
+      <h3 class="bs-utskriftstittel" id="utskriftstittel">
+        <span data-icon="text" data-icon-size="16"></span>Utskrift
+      </h3>
+      <pre class="bs-utskrift" id="utskrift" aria-live="polite"
+           aria-labelledby="utskriftstittel"></pre>
+      <div class="bs-feil" id="feil" hidden></div>
+      </div>
+    </aside>
+
+  </div>
+
+  <p class="bs-hjelp">
+    Dra ei blokk frå paletten inn i programmet — eller trykk på henne, så
+    hamnar ho etter den blokka som er merkt. Vil du bli kvitt ei blokk, dreg
+    du henne tilbake til paletten. Er ei blokk merkt, kan du òg slette henne
+    med Delete-tasten.
+  </p>
+
+</main>
+</div>
+
+</body>
+</html>

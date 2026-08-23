@@ -1,4 +1,4 @@
-/* Ormritaren — landingssida. Utvidar css/neobrutalisme.css.
+/* Bolkestokk — landingssida. Utvidar css/neobrutalisme.css.
  *
  * Dette er ei innhaldsside, ikkje ei arbeidsflate, så ho brukar ikkje
  * .main-wide (AGENTS.md §3.1.1).
@@ -7,26 +7,30 @@
 /* ---- fri programmering ------------------------------------------------
  * Same kortform som modulane under, så framsida har éin type boks. */
 
-.orm-frikort-pil {
+/* --text og ikkje --accent: i dei mørke temaa er --accent ein lys neonfarge,
+ * og pila fall til 3,45:1 mot flata (AGENTS.md §3.2). */
+.bs-frikort-pil {
     margin: 0;
     font-size: 13px;
     font-weight: 700;
-    color: var(--accent);
+    color: var(--text);
 }
 
 /* ---- modulgrupper ----------------------------------------------------- */
 
-.orm-modulgruppe { margin-bottom: 32px; }
+.bs-modulgruppe { margin-bottom: 32px; }
 
-.orm-gruppetekst {
+/* --muted fell til 4,30:1 i «sunset» — like under AA. Gruppeteksten er
+ * ei innleiing ein lærar faktisk les, ikkje pynt. */
+.bs-gruppetekst {
     max-width: 74ch;
     margin: -6px 0 16px;
     font-size: 14px;
     line-height: 1.6;
-    color: var(--muted);
+    color: var(--text);
 }
 
-.orm-modulrutenett {
+.bs-modulrutenett {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 16px;
@@ -35,18 +39,18 @@
 
 /* ---- modulkort -------------------------------------------------------- */
 
-.orm-modulkort {
+.bs-modulkort {
     display: block;
     margin: 0;
     text-decoration: none;
     color: var(--text);
 }
 
-a.orm-modulkort:hover { transform: translate(-2px, -2px); }
+a.bs-modulkort:hover { transform: translate(-2px, -2px); }
 
-.orm-modulkort-kjem { opacity: .72; }
+.bs-modulkort-kjem { opacity: .72; }
 
-.orm-modultopp {
+.bs-modultopp {
     display: flex;
     align-items: center;
     gap: 9px;
@@ -66,10 +70,10 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
  * som no er invertert (--text/--surface). Overstyringa her står likevel: eit
  * modulkort skal ha eit flatt hovud med fargen i brikka, ikkje eit svart band.
  *
- * Selektoren må vere .orm-modulkort .orm-modultopp: designsystemet set
+ * Selektoren må vere .bs-modulkort .bs-modultopp: designsystemet set
  * `.box4 .box-header` med to klassar, og ein enkeltklasse taper den kampen
  * utan at det synest på anna vis enn at fargane blir ståande. */
-.orm-modulkort .orm-modultopp {
+.bs-modulkort .bs-modultopp {
     background: var(--surface);
     color: var(--text);
 }
@@ -80,7 +84,7 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
  * (accent3/4/5) då blir borte mot den kvite flata i dei lyse temaa — nede i
  * 1,1:1. Ei brikke med si eiga ramme er avgrensa uansett kor lys fargen er,
  * og teksten er heilt utanfor problemet. */
-.orm-modulbrikke {
+.bs-modulbrikke {
     flex: 0 0 auto;
     width: 16px;
     height: 16px;
@@ -88,15 +92,15 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     background: var(--accent);
 }
 
-.orm-modultopp[data-accent="accent"]  .orm-modulbrikke { background: var(--accent); }
-.orm-modultopp[data-accent="accent2"] .orm-modulbrikke { background: var(--accent2); }
-.orm-modultopp[data-accent="accent3"] .orm-modulbrikke { background: var(--accent3); }
-.orm-modultopp[data-accent="accent4"] .orm-modulbrikke { background: var(--accent4); }
-.orm-modultopp[data-accent="accent5"] .orm-modulbrikke { background: var(--accent5); }
+.bs-modultopp[data-accent="accent"]  .bs-modulbrikke { background: var(--accent); }
+.bs-modultopp[data-accent="accent2"] .bs-modulbrikke { background: var(--accent2); }
+.bs-modultopp[data-accent="accent3"] .bs-modulbrikke { background: var(--accent3); }
+.bs-modultopp[data-accent="accent4"] .bs-modulbrikke { background: var(--accent4); }
+.bs-modultopp[data-accent="accent5"] .bs-modulbrikke { background: var(--accent5); }
 
-.orm-modulnamn { flex: 1; min-width: 0; }
+.bs-modulnamn { flex: 1; min-width: 0; }
 
-.orm-modultrinn {
+.bs-modultrinn {
     flex: 0 0 auto;
     font-size: 11px;
     font-weight: 700;
@@ -104,16 +108,16 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     opacity: .85;
 }
 
-.orm-modulkropp { padding: 14px 16px; }
+.bs-modulkropp { padding: 14px 16px; }
 
-.orm-modultekst {
+.bs-modultekst {
     margin: 0 0 12px;
     max-width: 60ch;
     font-size: 14px;
     line-height: 1.6;
 }
 
-.orm-modulkjem {
+.bs-modulkjem {
     margin: 0 0 10px;
     font-size: 13px;
     font-weight: 700;
@@ -122,14 +126,14 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
 
 /* ---- framgang --------------------------------------------------------- */
 
-.orm-framgang {
+.bs-framgang {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
 }
 
-.orm-framgang-spor {
+.bs-framgang-spor {
     flex: 1;
     height: 12px;
     background: var(--bg);
@@ -137,13 +141,13 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     overflow: hidden;
 }
 
-.orm-framgang-fyll {
+.bs-framgang-fyll {
     height: 100%;
     background: var(--accent);
     transition: width .3s ease;
 }
 
-.orm-framgang-tal {
+.bs-framgang-tal {
     flex: 0 0 auto;
     font-size: 12px;
     font-weight: 700;
@@ -152,16 +156,16 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
 
 /* ---- leksjonsliste ---------------------------------------------------- */
 
-.orm-leksjonsliste {
+.bs-leksjonsliste {
     list-style: none;
     margin: 0 0 12px;
     padding: 0;
     counter-reset: leksjon;
 }
 
-.orm-leksjonspost { margin-bottom: 2px; }
+.bs-leksjonspost { margin-bottom: 2px; }
 
-.orm-leksjonslenkje {
+.bs-leksjonslenkje {
     display: flex;
     align-items: center;
     gap: 9px;
@@ -173,13 +177,13 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     line-height: 1.35;
 }
 
-.orm-leksjonslenkje:hover {
+.bs-leksjonslenkje:hover {
     background: var(--accent3);
     color: var(--text-on-light-accent);
     border-color: var(--border);
 }
 
-.orm-leksjonsmerke {
+.bs-leksjonsmerke {
     flex: 0 0 auto;
     display: grid;
     place-items: center;
@@ -192,25 +196,25 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     border: 2px solid var(--border);
 }
 
-.orm-leksjonstittel { flex: 1; min-width: 0; }
+.bs-leksjonstittel { flex: 1; min-width: 0; }
 
 /* Ferdig: hake i aksentfargen, og tittelen dempa så det uferdige står fram. */
-.er-ferdig .orm-leksjonsmerke {
+.er-ferdig .bs-leksjonsmerke {
     background: var(--accent);
     color: var(--text-on-accent);
 }
 
-.er-ferdig .orm-leksjonstittel { color: var(--muted); }
+.er-ferdig .bs-leksjonstittel { color: var(--muted); }
 
 /* Der eleven skal halde fram. Både ramme, feit skrift og ordet «held fram
  * her» — status skal ikkje kvile på farge åleine. */
-.er-neste .orm-leksjonslenkje {
+.er-neste .bs-leksjonslenkje {
     border-color: var(--border);
     background: var(--surface);
     font-weight: 700;
 }
 
-.orm-leksjonsher {
+.bs-leksjonsher {
     flex: 0 0 auto;
     font-size: 11px;
     font-weight: 700;
@@ -219,26 +223,26 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     color: var(--accent);
 }
 
-.orm-leksjonslenkje:hover .orm-leksjonsher { color: var(--text-on-light-accent); }
+.bs-leksjonslenkje:hover .bs-leksjonsher { color: var(--text-on-light-accent); }
 
 /* ---- kompetansemål ---------------------------------------------------- */
 
-.orm-maal { font-size: 12.5px; }
+.bs-maal { font-size: 12.5px; }
 
-.orm-maal summary {
+.bs-maal summary {
     cursor: pointer;
     font-weight: 700;
     color: var(--muted);
 }
 
-.orm-maalliste {
+.bs-maalliste {
     margin: 8px 0 0;
     padding-left: 18px;
     line-height: 1.55;
     color: var(--muted);
 }
 
-.orm-maalliste li { margin-bottom: 5px; }
+.bs-maalliste li { margin-bottom: 5px; }
 
 /* ---- lærartekst og botn ----------------------------------------------- */
 
@@ -251,26 +255,26 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
  * No ber boksen grensa, og avsnitta fyller han. Då er det inga luft å bli
  * kvitt: ho kan ikkje oppstå. `min()` gjer at han framleis krympar med sida
  * i staden for å stikke ut når det er mindre enn 74ch å ta av. */
-.orm-larartekst {
+.bs-larartekst {
     margin-top: 8px;
     max-width: min(100%, 74ch);
 }
 
-.orm-larartekst p {
+.bs-larartekst p {
     font-size: 14px;
     line-height: 1.65;
     margin: 0 0 11px;
 }
 
 /* Siste avsnittet skal ikkje leggje att ei tom linje mot botnramma. */
-.orm-larartekst p:last-child { margin-bottom: 0; }
+.bs-larartekst p:last-child { margin-bottom: 0; }
 
-.orm-landing-lasting {
+.bs-landing-lasting {
     font-size: 14px;
     color: var(--muted);
 }
 
-.orm-landing-feil {
+.bs-landing-feil {
     padding: 10px 14px;
     background: var(--accent4);
     color: var(--text-on-light-accent);
@@ -278,16 +282,16 @@ a.orm-modulkort:hover { transform: translate(-2px, -2px); }
     max-width: 74ch;
 }
 
-.orm-botntekst {
+.bs-botntekst {
     max-width: 78ch;
     margin-top: 24px;
     font-size: 13px;
     line-height: 1.6;
-    color: var(--muted);
+    color: var(--text);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .orm-frikort:hover,
-    a.orm-modulkort:hover { transform: none; }
-    .orm-framgang-fyll { transition: none; }
+    .bs-frikort:hover,
+    a.bs-modulkort:hover { transform: none; }
+    .bs-framgang-fyll { transition: none; }
 }

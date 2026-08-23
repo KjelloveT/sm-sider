@@ -1,0 +1,63 @@
+{
+  "app": "bolkestokk",
+  "version": 1,
+  "_note": "Katalog over modular. Same mønster som ormritaren/moduler/index.json. Modular med klar:false blir viste som «kjem snart» — det er med vilje, så ein lærar ser kva som er på veg.",
+  "_kompetansemaal": "Henta ordrett frå udir.no/lk20/mat01-06 (gjeldande læreplan), august 2026. Blir viste både på modulkortet og i leksjonen, så læraren ser kva mål opplegget svarar på.",
+  "grupper": [
+    {
+      "id": "geometri",
+      "tittel": "Geometri og mønster",
+      "skildring": "Programmering som verktøy for å utforske figurar. Du treng ikkje ha programmert før — modulen startar heilt frå byrjinga."
+    },
+    {
+      "id": "kjem",
+      "tittel": "På veg",
+      "skildring": "Desse modulane er planlagde, men ikkje skrivne enno."
+    }
+  ],
+  "modular": [
+    {
+      "id": "mangekantar",
+      "gruppe": "geometri",
+      "fil": "mangekantar.json",
+      "tittel": "Mangekantar og mønster",
+      "ikon": "shapes",
+      "accent": "accent2",
+      "trinn": "6. trinn",
+      "talLeksjonar": 6,
+      "klar": true,
+      "skildring": "Frå éi strek til ein rosett. Du lærer løkker, den vinkelen som lukkar ein figur, variablar som veks, og korleis du lagar din eigen funksjon.",
+      "kompetansemaal": [
+        "6. trinn: bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre",
+        "6. trinn: beskrive og utforske egenskaper ved to- og tredimensjonale figurer og forklare hvilke egenskaper figurene har til felles, og hvilke egenskaper som skiller figurene fra hverandre",
+        "6. trinn: utforske og beskrive symmetri i mønstre"
+      ]
+    },
+    {
+      "id": "rutenett",
+      "gruppe": "kjem",
+      "fil": "rutenett.json",
+      "tittel": "Rutenett og koordinatar",
+      "ikon": "grid",
+      "accent": "accent4",
+      "trinn": "5. trinn",
+      "talLeksjonar": 6,
+      "klar": false,
+      "skildring": "Flytt ein robot i eit rutenett. Her kjem vilkår inn: gjer noko berre dersom noko er sant.",
+      "kompetansemaal": []
+    },
+    {
+      "id": "tilfeldig",
+      "gruppe": "kjem",
+      "fil": "tilfeldig.json",
+      "tittel": "Terningkast og sannsyn",
+      "ikon": "diamond",
+      "accent": "accent5",
+      "trinn": "7. trinn",
+      "talLeksjonar": 6,
+      "klar": false,
+      "skildring": "Kast tusen terningar og tel opp. Ein smakebit på det Ormritaren gjer med Python på ungdomstrinnet.",
+      "kompetansemaal": []
+    }
+  ]
+}

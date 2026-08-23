@@ -1,0 +1,548 @@
+/* Bolkestokk — arbeidsflata. Utvidar css/neobrutalisme.css.
+ *
+ * Dette ER ei arbeidsflate, så sida brukar .main-wide (AGENTS.md §3.1.1):
+ * paletten, blokkene og teikninga skal alle vere synlege samtidig, og kvar
+ * piksel breidd går til det. Tekstblokkene i leksjonspanelet held si eiga
+ * breiddegrense uansett, slik same paragraf krev.
+ */
+
+/* ---- flata og spaltene ------------------------------------------------------
+ *
+ * Fire spalter: leksjon, kodeblokker, arbeidsbenk, resultat. Tre av dei kan
+ * kollapsast til ei 10px stripe som ein klikkar på for å få dei att.
+ *
+ * Kvar spalte er definert som ein eigen variabel, så ein kollaps er éi linje
+ * og ikkje ein ny kombinasjon av heile track-lista. Alle fire er skrivne som
+ * minmax() av same grunn: Chrome kan interpolere mellom to minmax-spor og
+ * dermed animere breidda, men ikkje mellom minmax og ei bar lengd.
+ *
+ * Spaltene har ingen svart ramme. Dei ber ein dus bakgrunnsfarge i staden —
+ * rosa for leksjonen, blå for kodeblokkene — så flata er delt opp utan at
+ * skjermen blir eit rutenett av svarte strekar.
+ */
+
+.bs-flate {
+    display: grid;
+    gap: 14px;
+    align-items: start;
+
+    --bs-palett: clamp(260px, 19vw, 360px);
+    --sp-leksjon:  minmax(330px, 24%);
+    --sp-palett:   minmax(var(--bs-palett), var(--bs-palett));
+    --sp-benk:     minmax(280px, 1fr);
+    --sp-resultat: minmax(320px, 1fr);
+    --sp-stripe:   minmax(15px, 15px);   /* 10px var for tynt for ein finger */
+
+    grid-template-columns: var(--sp-palett) var(--sp-benk) var(--sp-resultat);
+}
+
+/* Med leksjon: fire spalter når det er plass til dei. */
+@media (min-width: 1280px) {
+    .bs-flate:has(> .bs-spalte-leksjon:not([hidden])) {
+        grid-template-columns: var(--sp-leksjon) var(--sp-palett) var(--sp-benk) var(--sp-resultat);
+        transition: grid-template-columns .38s cubic-bezier(.4, 0, .2, 1);
+    }
+}
+
+/* Kollapsa spalter. Éi linje kvar, og dei kan kombinerast fritt. */
+.bs-flate.bs-skjul-leksjon  { --sp-leksjon:  var(--sp-stripe); }
+.bs-flate.bs-skjul-palett   { --sp-palett:   var(--sp-stripe); }
+.bs-flate.bs-skjul-resultat { --sp-resultat: var(--sp-stripe); }
+
+/* Under 1280px er det ikkje plass til fire spalter. Leksjonen legg seg øvst
+ * i full breidd, med eiga rulling og tak på høgda. */
+@media (max-width: 1279px) {
+    .bs-spalte-leksjon { grid-column: 1 / -1; }
+    .bs-spalte-leksjon .bs-spalteinnhald { max-height: 46vh; overflow-y: auto; }
+    .bs-flate.bs-skjul-leksjon .bs-spalte-leksjon { --sp-leksjon: auto; }
+}
+
+/* Under 1100px har det ikkje plass til tre spalter heller. Då flyttar
+ * resultatet OPP over kodeblokkene og blir klistra til toppen. */
+@media (max-width: 1100px) {
+    .bs-flate { grid-template-columns: var(--sp-palett) minmax(0, 1fr); }
+    .bs-spalte-leksjon { order: -2; }
+    .bs-spalte-resultat {
+        order: -1;
+        grid-column: 1 / -1;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+    }
+    .bs-lerretboks { height: clamp(200px, 34vh, 380px); }
+}
+
+@media (max-width: 700px) {
+    .bs-flate { grid-template-columns: 1fr; --bs-palett: 1fr; }
+    .bs-spalte-resultat { grid-column: auto; }
+    .bs-spalte-leksjon .bs-spalteinnhald { max-height: 40vh; }
+}
+
+/* ---- spaltene sjølve ----------------------------------------------------- */
+
+.bs-spalte {
+    position: relative;
+    min-width: 0;
+    background: var(--sp-bg, var(--surface));
+    padding: 10px 12px 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.bs-spalte-leksjon  { --sp-bg: #FBE6EE; }   /* dus rosa */
+.bs-spalte-palett   { --sp-bg: #DCEBFF; }   /* dus blå — henta frå mockupen */
+.bs-spalte-resultat { --sp-bg: #E4F5DF; }   /* dus grøn */
+
+@media (min-width: 1280px) {
+    .bs-spalte-leksjon, .bs-spalte-palett {
+        position: sticky;
+        top: 8px;
+        max-height: calc(100vh - 24px);
+    }
+    .bs-spalte-leksjon .bs-spalteinnhald,
+    .bs-spalte-palett .bs-spalteinnhald { overflow-y: auto; max-height: calc(100vh - 76px); }
+}
+
+.bs-spaltetopp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.bs-spaltetittel {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--bs-font);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--text);
+}
+
+/* Kollapsknappen. Berre eit teikn, ingen tekst — han står ved sida av ei
+ * overskrift som allereie seier kva spalta er. */
+.bs-kollaps {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: var(--bs-hvit);
+    border: 3px solid var(--border);
+    cursor: pointer;
+    color: var(--text);
+}
+.bs-kollaps:hover { background: var(--bs-start); }
+.bs-kollaps:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
+
+/* Teiknet er to vinklar som peikar innover — «fald saman». Rein CSS, så det
+ * kan snu utan at vi må teikne ikonet på nytt. */
+.bs-kollapsteikn {
+    width: 9px; height: 9px;
+    border-left: 3px solid currentColor;
+    border-bottom: 3px solid currentColor;
+    transform: rotate(45deg) translate(1px, -1px);
+    transition: transform .2s ease;
+}
+
+/* ---- kollapsa: ei 10px stripe ein klikkar på ------------------------------ */
+
+/* Rutenettet har `align-items: start`, så ei spalte tek berre høgda til
+ * innhaldet sitt. Kollapsa skal stripa derimot gå heile vegen ned, elles
+ * blir ho ein liten knott midt i lufta. */
+.bs-spalte.er-kollapsa { padding: 0; align-self: stretch; }
+.bs-spalte.er-kollapsa > .bs-spaltetopp > .bs-spaltetittel,
+.bs-spalte.er-kollapsa > .bs-spalteinnhald { display: none; }
+
+.bs-spalte.er-kollapsa > .bs-spaltetopp { margin: 0; height: 100%; }
+
+/* Knappen blir sjølve stripa. Heile spalta er då eitt trykkfelt, som er
+ * det einaste som gjev meining på 10px. */
+.bs-spalte.er-kollapsa > .bs-spaltetopp > .bs-kollaps {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--sp-bg);
+}
+.bs-spalte.er-kollapsa > .bs-spaltetopp > .bs-kollaps:hover { background: var(--bs-start); }
+.bs-spalte.er-kollapsa .bs-kollapsteikn { transform: rotate(-135deg) translate(1px, -1px); }
+
+@media (max-width: 1279px) {
+    /* Vassrett band: stripa blir ei linje øvst i staden for ei søyle. */
+    .bs-spalte-leksjon.er-kollapsa { min-height: 15px; }
+    .bs-spalte-leksjon.er-kollapsa > .bs-spaltetopp > .bs-kollaps { min-height: 15px; }
+}
+
+/* ---- paletten --------------------------------------------------------------- */
+
+
+/* ---- arbeidsbenken ------------------------------------------------------------ */
+
+.bs-benk { min-width: 0; }
+
+.bs-verktoyrad {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.bs-fart {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+}
+
+.bs-fart input { width: 108px; accent-color: var(--accent); }
+
+.bs-arbeid {
+    min-height: 340px;
+    max-height: calc(100vh - 120px);
+    overflow: auto;
+    padding: 14px;
+    background: var(--bg);
+    border: 3px solid var(--border);
+    box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.bs-stabelboks { margin-bottom: 22px; }
+
+/* ---- teikninga ------------------------------------------------------------------ */
+
+.bs-utflate { min-width: 0; }
+
+/* Ingen aspect-ratio.
+ *
+ * Fyrste utgåva var `aspect-ratio: 1/1` saman med `max-height`. Når taket slo
+ * inn, krympa nettlesaren BREIDDA for å halde kvadratet — og då stod det att
+ * opp til 516px kremfarga flate til høgre inne i same ruta. Det var det gule
+ * feltet ved sida av det kvite.
+ *
+ * Ei fast høgd fyller ruta heilt uansett kor brei spalta blir, og teikninga
+ * skalerer seg til det som finst av plass. */
+.bs-lerretboks {
+    position: relative;
+    width: 100%;
+    height: clamp(240px, 50vh, 560px);
+    background: var(--bs-hvit);
+}
+
+.bs-lerret { display: block; width: 100%; height: 100%; }
+
+.bs-pythonrute {
+    margin: 0;
+    padding: 12px 14px;
+    max-height: 52vh;
+    overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    white-space: pre;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.bs-utskrift {
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    background: var(--surface);
+    border: 2px solid var(--border);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.bs-utskrift:empty { display: none; }
+
+.bs-feil {
+    margin: 10px 0 0;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    background: var(--surface);
+    color: var(--text);
+    border: 3px solid var(--accent2);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+
+/* ---- statuslinje ------------------------------------------------------------------ */
+
+/* Statuslinja er role="status" og melder frå om køyringa. Ho må vere lesbar
+ * — difor --text, ikkje --muted (som fell til 3,2:1 i lyse tema). */
+.bs-status {
+    margin: 8px 0 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    min-height: 1.2em;
+}
+
+/* ---- hjelpetekst ------------------------------------------------------------------- */
+
+/* Forklarer korleis ein dreg og slettar blokker. Det er ikkje pynt for ein
+ * sjetteklassing som opnar verktøyet for fyrste gong. */
+.bs-hjelp {
+    max-width: 78ch;
+    margin: 18px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+/* ---- steg for steg ------------------------------------------------------------ */
+
+.bs-stegrad {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-left: 8px solid var(--accent);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.bs-btn-liten { font-size: 12px; padding: 6px 12px; }
+
+.bs-btn-steg,
+.bs-stegrad .btn { display: inline-flex; align-items: center; gap: 6px; }
+
+.bs-steginfo {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    color: var(--text);
+}
+
+/* Blokka som køyrer, gjenteken rett over teikninga. Aksentfargen ligg i
+ * kantstripa, ikkje under teksten (AGENTS.md §3.2). */
+.bs-stegblokk {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 9px;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-left: 8px solid var(--accent2);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.bs-stegblokk-merke {
+    font-size: 10.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    /* Ingen opacity her. Ho ville dempa kontrasten under det getComputedStyle
+     * rapporterer, og dermed under AA i dei svakaste temaa utan at ei måling
+     * fanga det. */
+    color: var(--text);
+}
+
+.bs-stegblokk-tekst {
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 700;
+}
+
+/* ---- variablar ----------------------------------------------------------------- */
+
+.bs-variablar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.bs-variabel {
+    padding: 4px 10px;
+    font-size: 13px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-left: 6px solid var(--accent5);
+    box-shadow: 2px 2px 0 var(--shadow);
+}
+
+/* ===========================================================================
+   NY UTSJÅNAD — sjå css/palett.css for fargeprofilen og grunngjevinga.
+   =========================================================================== */
+
+/* Arbeidsbenken har prikkeraster, som i mockupen. Det gjev flata eit golv
+ * å ligge på, og gjer at ei blokk som blir dregen har noko å bli dregen
+ * OVER i staden for å sveve i tomrom. */
+.bs-arbeid {
+    background-color: var(--surface);
+    background-image: radial-gradient(var(--bs-prikk) 2px, transparent 2px);
+    background-size: 28px 28px;
+    border-width: var(--bs-ramme);
+    box-shadow: none;
+    padding: 26px 22px;
+}
+
+
+/* Teikneflata er kvit. Figuren er elevens arbeid, og han skal ikkje ligge
+ * på ei tona flate som gjer fargane hans til noko anna enn dei er. */
+
+.bs-verktoyrad { gap: 9px; }
+
+.bs-fart { color: var(--text); font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.bs-fart input { accent-color: var(--bs-boks); }
+
+.bs-status { font-weight: 700; }
+
+.bs-pythonrute, .bs-utskrift { background: var(--bs-hvit); border-width: 3px; box-shadow: none; }
+.bs-feil { background: var(--bs-stopp); border: var(--bs-ramme) solid var(--border); box-shadow: none; }
+
+.bs-stegrad, .bs-stegblokk {
+    background: var(--bs-start);
+    border: var(--bs-ramme) solid var(--border);
+    border-left-width: var(--bs-ramme);
+    box-shadow: none;
+}
+/* Ruta for det som nettopp køyrde står over den for det som står for tur —
+ * lesest ovanfrå og ned blir det fortid, så framtid.
+ *
+ * Fargen på ruta er den same som stripa på blokka ho snakkar om. Det er den
+ * einaste koplinga eleven treng: ser han rosa i ruta, finn han den rosa
+ * blokka på benken utan å lese eit ord. Difor er dei to fargane definerte
+ * éin stad (palett.css) og brukte to. */
+.bs-stegblokk { background: var(--bs-tur); }
+.bs-stegblokk-gjort { background: var(--bs-gjort); }
+.bs-stegblokk-tekst { font-family: var(--bs-font); font-weight: 800; }
+
+.bs-variabel {
+    background: var(--bs-boks);
+    border: 3px solid var(--border);
+    border-left-width: 3px;
+    box-shadow: none;
+    font-family: var(--bs-font);
+    font-weight: 800;
+}
+
+/* Fanene over teikninga følgjer same profil: fylt farge, svart tekst. */
+body.bs-tema .box5 .box-tab { font-family: var(--bs-font); font-weight: 800; background: var(--bs-palettflate); color: var(--text); }
+body.bs-tema .box5 .box-tab.active { background: var(--bs-start); color: var(--text); }
+
+/* ---- glidinga ------------------------------------------------------------
+ * Spaltene blir ikkje borte, dei glir. Ei spalte som forsvinn momentant er
+ * ei spalte eleven trur han har mist; ei som glir saman til ei farga stripe
+ * er ei han ser kvar er — og kan klikke på for å få att. */
+
+.bs-spalte { transition: padding .3s cubic-bezier(.4, 0, .2, 1); }
+.bs-spalte > .bs-spalteinnhald { transition: opacity .2s ease; }
+.bs-spalte.er-kollapsa > .bs-spalteinnhald { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+    .bs-flate, .bs-spalte, .bs-spalte > .bs-spalteinnhald,
+    .bs-kollapsteikn { transition: none; }
+}
+
+
+/* ---- ikonknappar ------------------------------------------------------------
+ * Verktøyraden hadde fem knappar med tekst og fylte to linjer. Med symbol
+ * åleine går dei på éi. Kvar av dei har `aria-label` og `title` — ein knapp
+ * utan synleg tekst må ha eit namn (AGENTS.md §5.4), og på ei maskin med mus
+ * gjev tittelen det same til den som er usikker. */
+
+.bs-ikonknapp {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    padding: 0;
+}
+.bs-ikonknapp svg { width: 20px; height: 20px; stroke-width: 2.4; }
+
+/* Eit <svg> er inline av natur og står difor på ei tekstlinje. Spanet rundt
+ * vart då 24px høgt for eit 20px ikon — dei fire ekstra pikslane er rom til
+ * underlengder — og ikonet hamna 2px for høgt i knappen. `display: block`
+ * tek det bort. Gjeld alle ikon i verktøyet, ikkje berre knappane. */
+body.bs-tema [data-icon] { display: grid; place-items: center; line-height: 0; }
+body.bs-tema [data-icon] > svg { display: block; }
+
+/* Fanene over resultatet: penn for teikninga, orm for Python. */
+.bs-fane {
+    display: grid;
+    place-items: center;
+    min-width: 56px;
+    padding: 9px 14px;
+}
+.bs-fane svg { width: 20px; height: 20px; stroke-width: 2.4; }
+
+/* ---- overskrift over utskrifta ------------------------------------------- */
+
+.bs-utskriftstittel {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 14px 0 6px;
+    font-family: var(--bs-font);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text);
+}
+.bs-utskriftstittel svg { stroke-width: 2.4; }
+
+/* Både overskrifta og ruta forsvinn når det ikkje er skrive noko. */
+.bs-utskriftstittel:has(+ .bs-utskrift:empty) { display: none; }
+
+/* ---- rullefelt ---------------------------------------------------------------
+ *
+ * Windows teiknar eit breitt grått felt med pilknappar i kvar ende, og det
+ * drar meir merksemd enn innhaldet det høyrer til. Her er det ein smal,
+ * gjennomsiktig knott som berre er der når han trengst.
+ *
+ * Begge skrivemåtane står: `scrollbar-*` er standarden og verkar i Firefox og
+ * nyare Chrome, ::-webkit-* er den eldre som framleis er den einaste som
+ * verkar i Safari. */
+
+body.bs-tema * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(17, 17, 17, .28) transparent;
+}
+
+body.bs-tema ::-webkit-scrollbar { width: 10px; height: 10px; }
+body.bs-tema ::-webkit-scrollbar-track { background: transparent; }
+body.bs-tema ::-webkit-scrollbar-thumb {
+    background: rgba(17, 17, 17, .28);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+body.bs-tema ::-webkit-scrollbar-thumb:hover { background: rgba(17, 17, 17, .5); background-clip: content-box; }
+body.bs-tema ::-webkit-scrollbar-corner { background: transparent; }
+
+/* ---- knappane over resultatet ---------------------------------------------
+ * To vanlege knappar, ikkje faner. Ei fanerad seier «her er to sider av same
+ * ting»; to knappar seier «vel kva du vil sjå», og det er det dette er. */
+
+.bs-resultatknappar { display: flex; gap: 8px; margin-bottom: 10px; }
+
+.bs-resknapp.active {
+    background: var(--bs-start);
+}

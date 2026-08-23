@@ -3,6 +3,135 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.11] — 2026-08-23
+
+### Fiksa
+- **«Bruk»-blokka peika på ingenting medan ho viste eit funksjonsnamn.** Blokka blir laga med tomt namn, og nedtrekket har berre dei funksjonane som finst — eit `<select>` utan treff på verdien sin viser fyrste alternativet likevel, og det er nettlesaren sin regel og ikkje vår. Blokka *såg* difor ut til å peike på «firkant» medan ho i røynda peika på `''`: køyringa slo opp eit namn som ikkje fanst og gjekk vidare utan å teikne. Eit program som ser rett ut og ikkje gjer noko er den verste sorten feil. No blir det synlege valet skrive inn i blokka med ein gong ho blir teikna, så det som står på skjermen alltid er det programmet køyrer. Feilen råka berre blokker eleven sjølv drog inn — fasitane i modulfila har namnet skrive ut, og difor gjekk verifikatoren rein heile tida.
+
+## [1.10] — 2026-08-23
+
+### Endra
+- **«Funksjon» og ikkje «kommando».** Det heiter funksjon på norsk, og kompetansemålet vi byggjer mot seier det rett ut — «bruke variabler, løkker, vilkår og funksjoner i programmering». Ordet stod alt slik i modulfila, medan verktøyet sa «kommando» rett ved sida av. Ein elev som går vidare til Ormritaren møter `def`, og skal kjenne att ordet han alt har brukt. Endra heilt gjennom, ikkje berre på skjermen: blokkene heiter `lagFunksjon` og `kallFunksjon`, feltet i programmet heiter `funksjonar`. Eit ord som står rett i grensesnittet og feil i koden er ei felle for den som skal endre noko seinare. Program som alt er lagra blir lesne som før — `lesInn` tek imot begge namna.
+- **«Til deg som er lærar» tek halve breidda.** Avsnitta hadde ei linjelengd-grense medan sjølve boksen låg i full breidd, så på ein stor skjerm gjekk ramma tvers over sida med halve seg tom. No ber boksen grensa og avsnitta fyller han — då er det inga luft å bli kvitt, ho kan ikkje oppstå. Same retting i Ormritaren, som hadde nøyaktig same boksen.
+
+## [1.9] — 2026-08-23
+
+### Endra
+- **Bolkestokk: fargen koplar ruta til blokka.** «Nettopp køyrt» er rosa og «Står for tur» er lys blå — og no ber blokkene på arbeidsbenken dei same to fargane. Før var berre éi blokk merkt, med ein grøn som ikkje fanst i nokon av rutene, så eleven måtte lese seg fram til kva som høyrde saman. Merkinga han sjølv gjer er framleis burgunder; ho betyr noko anna og skal ikkje kunne forvekslast.
+- **Bolkestokk: menysida følgjer temaet att.** Berre arbeidsflata treng den faste paletten — han finst fordi blokkene er fylte med farge og har svart tekst oppå, og den garantien held berre når fargane er kjende på førehand. Menysida har ingen slike flater, så ho brukar «sunset» lyst og «space» mørkt som alle andre innhaldssider.
+- **Bolkestokk: dempa steppeknappar.** 18×20px utan ramme, med eit halvgjennomsiktig mørkt lag oppå blokkfargen. Med 32px breidd og svart ramme kjempa dei om merksemda med sjølve talet, som er det eleven skal sjå.
+
+### Fiksa
+- **Køyremarkeringa forsvann på lyse blokker.** Stripa bytte farge på sjølve venstreramma, og ei lys blå stripe rett mot «Gå framover», som alt er lys blå, var ikkje å sjå. No ligg ho inne i den svarte ramma med ei eiga svart kant på innsida, og les like tydeleg på alle sju blokkfargane.
+- **Fri køyring visste ikkje kva som nettopp køyrde.** Berre stegmodus gjorde det. På høg fart går det mange blokker per bilete, så «nettopp køyrt» er den nest siste i bunken — programmet si rekkjefølgje, ikkje skjermoppdateringa si.
+- **Tre element på Bolkestokk-menysida låg under AA.** Pila på fri-kortet og gruppeteksten brukte `--accent` og `--muted`, som gjev 3,45:1 og 4,30:1. Alt på sida ligg no på 13,7:1 eller betre i begge tema.
+
+## [1.8] — 2026-08-23
+
+### Lagt til
+- **Stegmodus viser no både kva som nettopp køyrde og kva som står for tur.** Begge trengst: den utheva blokka på arbeidsbenken er den som skal køyre, for det er den eleven skal gjette på før han trykkjer — men når streken dukkar opp på lerretet, er det den FØRRE blokka som laga han. Utan ei rute som seier det, måtte eleven hugse eitt steg tilbake sjølv.
+
+### Endra
+- **To vanlege knappar over resultatet** i staden for faner. Ei fanerad seier «her er to sider av same ting»; to knappar seier «vel kva du vil sjå», og det er det dette er. Teikninga har fått ein vanleg blyant, ikkje «penn ned».
+- **Ny orm til Python-knappen.** Den førre var ein bølgje med ein liten ball i enden og las som ein krusedull. Denne har eit eige, rundt hovud med auge og tunge. Hovudet er ein `circle` og ikkje ein boge nettopp fordi det er den delen som må overleve nedskaleringa — kontrollert i 20px, den storleiken han faktisk blir vist i.
+## [1.7] — 2026-08-23
+
+### Endra
+- **Resultatspalta er lukka til fyrste køyring.** Ei tom kvit teikneflate og ei tom utskriftsrute fortel ingenting, og dei tok ein fjerdedel av flata frå blokkene eleven skal byggje med. Køyr opnar spalta i same augeblink som leksjonen gjer plass — og så blir ho ståande. Ein elev er sjeldan ferdig med å sjå på figuren i det programmet stoppar, så berre leksjonen kjem att av seg sjølv. Vil han lukke resultatet, gjer han det sjølv.
+- **Resultatspalta er lysegrøn.**
+- **Runde kantar der det skal tal inn.** Talfelt og verdiblokker er begge pilleforma, så ei rund blokk og eit rundt hòl kjenner kvarandre att — det er heile forklaringa eleven treng for kvar ei verdiblokk kan sleppast.
+- **+ og − står til høgre for feltet** med luft imellom, i staden for å dele ramme med det.
+
+### Fiksa
+- **Symbola stod 2px for høgt i knappane.** Eit `<svg>` er inline av natur og står difor på ei tekstlinje: spanet rundt vart 24px høgt for eit 20px ikon, og dei fire ekstra pikslane er rom til underlengder. `display: block` tek det bort. Målt 0px avvik frå sentrum på alle åtte ikonknappane no.
+- **+ og − var ikkje like store.** Dei hadde `flex: 1 1 50%`, og då tok kvar av dei høgda til teiknet sitt — minus er ein lav strek og pluss eit høgt kryss. Begge er 32×20px no.
+- **Knasten lysna ikkje saman med blokka på hover.** Han er eit pseudoelement med eigen bakgrunn og måtte takast med i regelen; elles stod tappen mørk under ei lys blokk.
+## [1.6] — 2026-08-23
+
+### Endra
+- **Verktøyraden er berre symbol** og går no på éi linje i staden for to. Kvar knapp har `aria-label` og `title` — ein knapp utan synleg tekst må ha eit namn (AGENTS.md §5.4), og tittelen gjev det same til den som er usikker.
+- **Fanene over resultatet** er ein penn og ein orm i staden for orda «Teikning» og «Python».
+- **Navigasjonen nedst i leksjonen** er to pilknappar. Med tekst braut «Førre leksjon» og «Neste leksjon» over to linjer i den smale spalta. Namnet på leksjonen dei ber til står i `aria-label` og `title`.
+- **Hintknappen heiter «Hint»**, og «Vis løysing» når hinta er brukte opp. Det ville vore uryddig å skjule ei heil løysing bak eit ord som seier «hint».
+- **Utskrifta har fått overskrift** med same symbolet som `Skriv ut`-blokka. Både overskrifta og ruta er borte når programmet ikkje har skrive noko.
+- **Kollapsstripa er 15px**, ikkje 10. Ti var for tynt for ein finger.
+- **Eit eige rullefelt.** Windows teiknar eit breitt grått felt med pilknappar som drar meir merksemd enn innhaldet. No er det ein smal, halvgjennomsiktig knott.
+- **Nye symbol for penn opp og penn ned:** ein blyant med ei pil. Før stod det eit viskelær på «Penn opp», og det er feil på to måtar — blokka viskar ikkje ut noko, og eit viskelær får eleven til å tru at han kan fjerne strek han alt har teikna. Ho løftar berre pennen. Ikona ligg i `bolkestokk/js/ikon.js` og blir registrerte i det felles settet ved oppstart; tre ikon som berre eitt verktøy brukar høyrer ikkje heime i ei fil alle 27 appane deler.
+
+### Fiksa
+- **Hintknappen kunne trykkjast i det uendelege.** Klikk-handteraren gøymde knappen etter å ha vist løysinga, men `oppdater()` køyrde rett etterpå og sette han synleg att. Kvart nytt trykk la ut same teksten på nytt **og lasta løysinga inn i arbeidsbenken igjen** — som overskreiv det eleven hadde bygd i mellomtida. Det siste var det verste ved feilen.
+- **Blokkene i velgaren flytta seg på hover** og avdekte ei hårstrek under knasten. No blir dei berre lysare; fyllet får eit lag med kvitt, medan ramma og teksten står urørte.
+## [1.5] — 2026-08-23
+
+### Endra
+- **Dei tre sidespaltene har fått overskrift og ein kollapsknapp**, og kan foldast saman til ei 10px farga stripe som ein klikkar på for å få dei att. Det gjeld leksjonen, kodeblokkene og resultatet. Knappen i verktøyraden er borte — han hadde ingenting å gjere i fri bygging, der det ikkje finst nokon leksjon å skjule, og eit sett knappar midt på flata er dessutan vanskelegare å lese enn ein knapp der spalta faktisk er.
+- **Spaltene har mist den svarte ramma** og ber ein dus bakgrunnsfarge i staden: rosa for leksjonen, blå for kodeblokkene, sand for resultatet. Skjermen var i ferd med å bli eit rutenett av svarte strekar.
+- **Markeringa av ei blokk er flytta til venstrekanten.** Før låg det ein `outline` rundt heile blokka, og ei blokk som køyrde vart dessutan skuva 4px til sida — så heile stabelen skalv seg nedover medan programmet gjekk. No blir venstrekanten farga: burgunder for den som er merkt, grøn for den som køyrer. Korkje `border-color` eller `box-shadow` tek plass i layouten, så blokka står **bikkefast** — målt til 0px flytting i x, y og breidd.
+
+### Fiksa
+- **Skilpadda var ein ugjennomsiktig firkant.** GIF-en ho er bygd frå kjem frå `gif.ski` og har inga transparens i det heile — han har kvit bakgrunn. Sprite-arket arva den kvite flata, så skilpadda drog med seg ein 96×96 boks som dekte strekane under henne. Bakgrunnen blir no nøkla ut med flomfyll frå kantane, slik at eventuelle kvite flater *inne i* teikninga overlever. Arket er 27,9 kB mot 25,4 før, og 68,6% av det er gjennomsiktig.
+- **Teikneruta hadde to bakgrunnsfargar.** `aspect-ratio: 1/1` saman med `max-height` fekk nettlesaren til å krympe **breidda** for å halde kvadratet, og då stod det att opp til 516px kremfarga flate til høgre inne i same ruta. Ruta har no fast høgd og fyller spalta.
+- **Rekneblokka sitt ikon** er ei nøytral talskjerm og ikkje eit plussteikn (sjå [1.4]) — plusset er heilt borte no òg frå den siste staden det stod.
+## [1.4] — 2026-08-22
+
+### Lagt til
+- **Leksjonen glir vekk medan programmet køyrer.** Leksjonsspalta tek ein fjerdedel av flata, og medan koden køyrer er det teikninga og blokkene eleven ser på, ikkje teksten. Spalta glir difor ut mot venstre når han trykkjer Køyr, og kjem att 1,6 sekund etter at programmet er ferdig. Arbeidsbenken veks frå 404 til 586px medan ho er borte.
+  - Ho **glir** — ho blir ikkje borte. Eit panel som forsvinn momentant er eit panel eleven trur han har mist; eit som glir ut mot venstre er eit han veit kvar er.
+  - Ein knapp i verktøyraden tvingar fram vising eller skjuling. Har eleven sjølv gøymt leksjonen, kjem ho ikkje att av seg sjølv etter neste køyring — det ville vore å overprøve han.
+  - Over 1280px er det spaltebreidda som blir animert, under er det høgda. `prefers-reduced-motion` slår av glidinga.
+
+### Fiksa
+- **Det tomme mellomrommet i blokkvelgaren.** Marginen som skil palettblokkene frå kvarandre var skriven med etterkomar-veljar og traff difor òg hovudet **inne i** C-forma til `Gjenta`. Hovudet vart rive 20px frå sin eigen kropp og fot, og blokka såg ut som to laushengande orange bitar med eit hol mellom. Barne-kombinator retta det; `Gjenta` gjekk frå 114px til 94px.
+- **Rekneblokka hadde eit plussteikn som ikon.** På ei blokk som kan gjere alle fem rekneartane fortalde det eleven at dette er addisjonsblokka, og at dei andre måtte liggje ein annan stad. Ikonet er no ei nøytral talskjerm; kva rekneart det er, står i nedtrekket midt i blokka.
+## [1.3] — 2026-08-22
+
+### Fiksa
+- **Blokkgeometrien i Bolkestokk.** Formene frå mockupen var rette, men fire detaljar i utrekninga var det ikkje, og resultatet var synleg gale både på arbeidsbenken og i blokkvelgaren.
+  - **Tre av dei kom frå éi CSS-regel.** `.bs-kropp` hadde `padding: 9px 9px 9px 0`. Dei ni pikslane i toppen (pluss 4px ramme) gjorde at knasten på fyrste blokk i ei løkke flaut i eit kremgult tomrom i staden for å møte løkkehovudet; dei ni i botnen la ei lys stripe tvers over løkka rett over foten; og dei ni til høgre gav ein sliver langs kanten. Mockupen har inga luft der i det heile: fyrste blokk skal klemmast mot `border-top` slik at knasten punkterer den svarte streken, og siste blokk skal klemmast mot foten slik at tappen heng ned i han.
+  - **Den fjerde var eit 8px svart band under START-hatten.** Regelen som slår saman rammene gjeld berre mellom søsken inne i ein stabel, og hatten står utanfor. Overgangen hatt → fyrste blokk var difor aldri dekt, og to 4px-rammer låg oppå kvarandre.
+  - Fyrste blokk i ei løkke deler no `border-top` med kroppen. Kroppen har framleis den kanten, for det er han som gjev ei tom løkke ei strek under hovudet.
+  - Markeringa femner no om heile gjenta-blokka og ikkje berre om hovudet.
+- **Blokkvelgaren fekk ein eigen, kompakt variant.** Med 220px indre breidd og ei steppegruppe på 128px braut **fjorten av sytten** blokker over to eller tre linjer, og `Gjenta` vart ein 219px orange kloss. Felta i paletten har alltid vore `readOnly` — ein stiller inn på benken, ikkje i menyen — så talet blir no ei statisk brikke utan knappar. Saman med strammare luft og eit kortare nedtrekk gjev det **alle sytten blokkene på éi linje** (53–57px), og `Gjenta` på 115px.
+- **+ og − står no over kvarandre** til høgre for talet i staden for på kvar si side. Gruppa gjekk frå 128px til 94px. Prisen er at kvar knapp blir kring 32×21px, altså under dei 44px som elles gjeld for treffflater her; talfeltet er framleis direkte redigerbart, så knappane er ei snarveg og ikkje den einaste vegen inn.
+## [1.2] — 2026-08-22
+
+### Endra
+- **Bolkestokk har fått eit eige, barnevendt utsjånad.** Fargeprofilen kjem frå eit designarbeid i Claude Design og er teken inn ordrett. Blokkene er ikkje lenger flate kort med ei fargestripe — dei er **fylte med kategorifargen sin**, med svart tekst, 4px svarte rammer, ekte puslespelknastar og ei open C-form rundt gjenta-blokka.
+  - **Det er motsett av det AGENTS.md §3.2 skisserer**, og det held berre fordi fargane er faste. Alle sju blokkfargane er målte til minst **7,30:1** mot svart, flatene til minst 13,4:1, og den dempa teksten til 6,28:1 — mot 3,21:1 for `--muted` i førre utgåve. Der §3.2 legg fargen ved sida av teksten, garanterer denne paletten kontrasten ved å halde fargane lyse og teksten svart.
+  - **Eit medvite unntak frå §3.3:** temavelgaren rører ikkje Bolkestokk. Ein palett teikna for tolvåringar ville blitt noko heilt anna i «hacker» eller «neon», og garantien over ville falle bort. Verktøyet overstyrer difor temavariablane i staden for å ignorere dei, slik at dei delte komponentane (`.box4`, `.btn`, `.box5`) får rett utsjånad utan å teiknast på nytt. Sjå `bolkestokk/css/palett.css`.
+  - **Systemfontar, ikkje Google Fonts.** Mockupen brukar Baloo 2 og Space Grotesk; §5.6 er kategorisk imot eksterne font-bibliotek. `ui-rounded` gjev SF Pro Rounded på iPad og Mac, som ligg tett på uttrykket, med Segoe UI Variable Display og system-ui bak.
+  - **Kvar blokk har fått eit symbol** i tillegg til teksten — Lucide, ikkje emoji (§3.2). Ei pil, ein penn eller ein sirkelpil seier kva blokka er lenge før eit barn har lese ferdig ordet, og på ei blokk som er dregen i full fart er symbolet det einaste som rekk fram.
+  - **Talfelta har fått − og +.** Å treffe eit lite felt, vente på tastaturet og skrive om eit tal er tungt på nettbrett. Knappane flyttar verdien i steg som betyr noko: 15 gradar om gongen, 10 steg om gongen, ikkje éin.
+- **Leksjonen er kollapsa når sida opnar.** Døme, løype, kvar oppgåve og oppsummeringa er `<details>`, og berre «Prøv sjølv» står open. Før møtte ein sjetteklassing som opna sida ein vegg av tekst før han hadde gjort noko. Målet med kvar oppgåve står i sjølve samandraget, så han ser kva dei går ut på utan å opne dei. `<details>` og ikkje eigen JS: tastatur, skjermlesar og Ctrl+F følgjer med.
+- **Skilpadda er animert.** Ho padlar med luffene medan ho teiknar, og står heilt stille når programmet står stille.
+  - Sprite-ark på **24 rammer à 96px, 25 kB**, bygd frå den teikna GIF-en. GIF-en sjølv er 1,44 MB og ville lege i historikka for alltid i eit repo utan LFS; han kan heller ikkje pausast; og MP4-en manglar alfakanal og ville fått ein synleg firkant rundt seg.
+  - Rammene går fram etter kor langt skilpadda har **gått**, ikkje etter klokka. Då padlar ho i takt med farten eleven sjølv har valt, utan ei einaste ny innstilling.
+  - Målt over alle 69 GIF-rammene: retninga held seg mellom 44 og 53 gradar med sum rotasjon 0 — ho svaiar, ho spinn ikkje. Nasen peikar 46 gradar frå rett opp, og det blir trekt frå når ho blir rotert, så ho peikar dit ho faktisk går.
+## [1.1] — 2026-08-21
+
+### Lagt til
+- **Bolkestokk — blokkprogrammering spissa mot matematikk** under Aktivitetar i klasserommet (`bolkestokk/`). Ormritaren dekkjer 8.–10. trinn med tekstbasert Python. Under det trinnet fanst ingenting: samlinga har sju mattespel, men alle er drill rundt ferdiggenererte reknestykke, og ingen av dei lèt eleven *lage* matematikk. LK20 har eigne programmeringsmål frå 2. til 7. trinn som til no var udekte.
+  - **Spissa mot matematikk, ikkje mot spel og robotar.** Det er her verktøyet skil seg frå MakeCode og Scratch. Hendingar («når tast trykt»), sprites, kostyme, lyd og kollisjon er utelatne med vilje — dei er sjølve spelparadigmet, og ingen av dei ber matematikk. Eitt program, éin tråd, éin start.
+  - **Modulen «Mangekantar og mønster» — seks leksjonar** mot kompetansemålet for 6. trinn, som nemner programmering eksplisitt: *«bruke variabler, løkker, vilkår og funksjoner i programmering til å utforske geometriske figurer og mønstre»*. Frå éi strek til ein rosett med tolv figurar, via den innsikta alt heng på: snuingane rundt ein figur blir 360 gradar, så med `n` kantar er kvar snuing `360 ÷ n`.
+  - **Blokktaket er den viktigaste testtypen.** «Teikn ein sekskant med høgst fire blokker» er ikkje ei innstramming av oppgåva — det *er* oppgåva. Utan taket løyser eleven ein sekskant med seks par kopierte blokker og lærer ingenting om gjentaking. Verifisert i nettlesaren: den utrulla firkanten på åtte blokker blir avvist med ei melding som peikar mot innsikta («Er det noko du gjer fleire gonger etter kvarandre?»), og den same figuren med løkke på tre blokker går gjennom.
+  - **Paletten opnar seg leksjon for leksjon.** Den fyrste viser fem blokker, den siste sytten. Ein elev som ser heile paletten fyrste timen, leitar i staden for å byggje, og «Set farge til» er ikkje svar på noka oppgåve han har fått enno. Kva som er synleg står i leksjonsfila, ikkje i koden.
+  - **Eigen tolk i staden for Pyodide.** Blokkene blir tolka direkte, utan `eval` og utan nedlasta motor. Ormritaren betaler 13 MB og ei eiga COOP/COEP-rute for å køyre ekte Python; det er rett der, men feil pris for ein sjetteklassing på iPad. Tolken er ein generator der kvart `yield` er eitt utført steg — det gjev stegvis køyring, utheving av blokka som arbeider, og ein fartsknapp utan at nokon av dei treng eigen kode. Å stoppe er berre å slutte å be om fleire steg; det finst ingen tråd å drepe.
+  - **Ingen `medan`-løkke.** Med berre `Gjenta N` *kan* eit elevprogram ikkje henge. Det fjernar ein heil klasse frustrasjon utan å koste noko i geometri — vilkår og medan-løkke høyrer heime i rutenettmodulen som kjem seinare.
+  - **Eigen blokkeditor, ikkje Blockly.** Blockly ville vore ein ekstern avhengnad på kring ein megabyte (§5.6), med sitt eige designspråk og ei norsk omsetjing som uansett måtte overstyrast til nynorsk.
+  - **Blokkene er DOM, ikkje SVG, og flate i staden for puslespelbrikker.** Ei Scratch-brikke er fylt med kategorifargen sin og har kvit tekst oppå — nøyaktig det §3.2 forbyr, sidan kvit tekst på `--accent` fell til 2,4–4,5:1 i dei sju mørke temaa. Her står flata på `--surface` med `--text`, og fargen ligg i ei kantstripe, same grepet som `.orm-modulbrikke`. Målt over alle 21 tema ligg blokktekst, hattar, talfelt, svarboksar og merknadar på **8,59:1 eller betre**. At blokkene er DOM gjev dessutan ekte `<input type="number">` og `<select>`, altså systemet sitt eige taltastatur og nedtrekk på nettbrett — og tekst som bryt, slik at «Gjenta 4 gonger» får plass same kor lang omsetjinga blir.
+  - **Dra-og-slepp på Pointer Events**, ikkje HTML5 sitt drag-and-drop-API, som i praksis ikkje finst på iPad — og halve klassen sit på iPad. `touch-action: none` på blokkene er det som skil ein blokkeditor som verkar på nettbrett frå ein som ikkje gjer det. Blokka blir teken ut av treet med ein gong draget startar, så han *kan* ikkje sleppast inni seg sjølv; det er ingen sjekk, det er ein tilstand som ikkje finst.
+  - **Trykk-for-å-setje er likestilt med dragging.** Palettblokkene er `<button>`, så tabbing, Enter og skjermlesar følgjer med. Er ei gjenta-blokk merkt, hamnar den nye inni henne — det er nesten alltid det ein vil rett etter å ha lagt ut ei løkke. Merkte blokker kan slettast med Delete.
+  - **Skilpadda startar peikande opp**, ikkje mot høgre som Python sin turtle. Det er slik Scratch gjer det, og den einaste varianten ein sjetteklassing gjettar rett på fyrste forsøk. Python-fana rettar det opp med eit `setheading(90)`.
+  - **Python-fana viser ekte turtle-kode**, ikkje nynorske hjelpefunksjonar. `forward(80)` og `right(60)`, altså nøyaktig det som står i modulen eleven møter i Ormritaren. Prisen er at han må bru eitt ord; gevinsten er at koden faktisk køyrer der. Fana køyrer sjølv ingenting — ho skriv berre ut.
+  - **Innhaldet er verifisert ved å køyrast** (`node bolkestokk/verifiser.mjs`). Skriptet les rettemotoren i `js/` som han er, ikkje ein kopi. Det slår fast at alle 17 løysingsforslag passerer sine eigne testar, at kvart startprogram feilar minst éin test, at ingen oppgåve krev ei blokk som ikkje ligg i paletten for leksjonen, og at blokktaka er stramme.
+  - **Ein `teikning`-test kan ikkje kontrollere sin eigen fasit.** Han samanliknar elevens figur med løysingsforslaget, så fasiten blir samanlikna med seg sjølv og går alltid gjennom — ei oppgåve der teksten seier «sider på 100 steg» medan fasiten teiknar 80, ville passert. Kvar teikneoppgåve har difor ei `venta`-skildring skriven for hand ut frå oppgåveteksten og geometrien: tal strek, om figuren lukkar seg, og kor brei og høg han er. Den andre kjelda fanga med ein gong at trekanten i leksjon 2 står på høgkant, sidan skilpadda startar peikande opp.
+  - **Fire spalter på ein brei skjerm:** leksjon, palett, arbeidsbenk og teikning ved sida av kvarandre. Leksjonen har eiga rulling og følgjer med når ein rullar i blokkene. Under 1280px legg leksjonen seg øvst med tak på høgda, og under 1100px flyttar teikninga seg opp over paletten og blir klistra til toppen — ho er det eleven arbeider mot, og difor det siste som skal ut av synet.
+  - **Farten blir rekna i blokker per sekund**, ikkje i animasjonsbilete. Skalaen går frå éi blokk annakvart sekund til 15 i sekundet, pluss eit øvste hakk som teiknar alt med ein gong. Det tregaste verkar absurd sakte til ein set seg ved sida av ein elev som ikkje har skjøna kva løkka gjer — der er det nettopp den farten som trengst. Kvar blokk kostar nøyaktig eitt steg: blokka lyser opp, og fyrst i neste steg gjer ho arbeidet, slik at eleven ser kva som er i ferd med å skje før skilpadda flyttar seg.
+  - **Steg for steg**, som i Ormritaren. Ei eiga stegrad med «Neste blokk» og «Spel av», og blokka som står for tur blir gjenteken med ord rett over teikninga — utan det måtte eleven sjå bort på arbeidsbenken for kvart steg, og då ser han ikkje streken bli teikna. Den utheva blokka har **ikkje** køyrt enno; det er same semantikken `sys.settrace` gjev Ormritaren, og den som let eleven gjette kva som skjer før han trykkjer.
+  - **Variablane og verdiane deira** blir viste ved sida av teikninga, både stegvis og i vanleg køyring. Det er dette som gjer skilnaden mellom ein spiral og ein figur som veks synleg: på steg 5 står `lengd = 20`, på steg 6 står han `30`.
+  - **Eit program som køyrer medan fana ligg i bakgrunnen, blir teikna ferdig med ein gong.** Nettlesaren pausar `requestAnimationFrame` i ei skjult fane, så eit program eleven starta og så bytte vekk frå, ville elles stått fryst midt i figuren med Køyr-knappen deaktivert til han lasta sida på nytt.
+  - Programmet og framgangen blir lagra lokalt gjennom `VyrdepilStorage`. Framgangen er elevens eiga — ikkje ei vurdering, og ikkje noko læraren kan hente inn.
+  - Verktøyet har **ingen eksterne avhengnader** og treng korkje ny CSP-oppføring eller COOP/COEP-rute. Det er ein direkte gevinst av å skrive tolken sjølv.
 ## [1.0] — 2026-08-20
 
 ### Lagt til
