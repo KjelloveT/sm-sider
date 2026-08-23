@@ -6,114 +6,181 @@
  * breiddegrense uansett, slik same paragraf krev.
  */
 
-/* ---- flata -----------------------------------------------------------------
+/* ---- flata og spaltene ------------------------------------------------------
  *
- * Fire ting skal helst vere synlege samtidig: leksjonen, paletten, blokkene
- * og teikninga. Fyrste utgåva la leksjonen som eit fullbreitt band over
- * resten, og på ein stor skjerm skuva ein lang leksjonstekst då både
- * arbeidsbenken og lerretet ned under skjermkanten — eleven måtte rulle for
- * å sjå det han bygde. No er leksjonen ei spalte som alle dei andre.
+ * Fire spalter: leksjon, kodeblokker, arbeidsbenk, resultat. Tre av dei kan
+ * kollapsast til ei 10px stripe som ein klikkar på for å få dei att.
  *
- * Paletten er breiare enn han var. «tilfeldig tal frå [1] til [6]» og
- * «Set farge til [oransje]» er ikkje smale blokker, og på 210px braut dei
- * over tre linjer kvar.
+ * Kvar spalte er definert som ein eigen variabel, så ein kollaps er éi linje
+ * og ikkje ein ny kombinasjon av heile track-lista. Alle fire er skrivne som
+ * minmax() av same grunn: Chrome kan interpolere mellom to minmax-spor og
+ * dermed animere breidda, men ikkje mellom minmax og ei bar lengd.
+ *
+ * Spaltene har ingen svart ramme. Dei ber ein dus bakgrunnsfarge i staden —
+ * rosa for leksjonen, blå for kodeblokkene — så flata er delt opp utan at
+ * skjermen blir eit rutenett av svarte strekar.
  */
 
 .bs-flate {
     display: grid;
-    grid-template-columns: var(--bs-palett) minmax(300px, 1fr) minmax(330px, 1fr);
     gap: 14px;
     align-items: start;
 
-    /* Veks med skjermen, men stoppar før paletten blir eit landskap. */
     --bs-palett: clamp(260px, 19vw, 360px);
+    --sp-leksjon:  minmax(330px, 24%);
+    --sp-palett:   minmax(var(--bs-palett), var(--bs-palett));
+    --sp-benk:     minmax(280px, 1fr);
+    --sp-resultat: minmax(320px, 1fr);
+    --sp-stripe:   minmax(10px, 10px);
+
+    grid-template-columns: var(--sp-palett) var(--sp-benk) var(--sp-resultat);
 }
 
-/* Med leksjon: han får ei eiga spalte når det er plass til fire. */
+/* Med leksjon: fire spalter når det er plass til dei. */
 @media (min-width: 1280px) {
-    .bs-flate:has(> .bs-leksjonspanel:not([hidden])) {
-        grid-template-columns: minmax(330px, 24%) var(--bs-palett) minmax(280px, 1fr) minmax(320px, 1fr);
+    .bs-flate:has(> .bs-spalte-leksjon:not([hidden])) {
+        grid-template-columns: var(--sp-leksjon) var(--sp-palett) var(--sp-benk) var(--sp-resultat);
+        transition: grid-template-columns .38s cubic-bezier(.4, 0, .2, 1);
     }
 }
 
-/* Under 1280px er det ikkje plass til fire spalter. Leksjonen legg seg
- * øvst i full breidd, men med eiga rulling og tak på høgda — elles er vi
- * tilbake til at han skuvar arbeidsflata ut av synet. */
+/* Kollapsa spalter. Éi linje kvar, og dei kan kombinerast fritt. */
+.bs-flate.bs-skjul-leksjon  { --sp-leksjon:  var(--sp-stripe); }
+.bs-flate.bs-skjul-palett   { --sp-palett:   var(--sp-stripe); }
+.bs-flate.bs-skjul-resultat { --sp-resultat: var(--sp-stripe); }
+
+/* Under 1280px er det ikkje plass til fire spalter. Leksjonen legg seg øvst
+ * i full breidd, med eiga rulling og tak på høgda. */
 @media (max-width: 1279px) {
-    .bs-leksjonspanel {
-        grid-column: 1 / -1;
-        max-height: 46vh;
-        overflow-y: auto;
-    }
+    .bs-spalte-leksjon { grid-column: 1 / -1; }
+    .bs-spalte-leksjon .bs-spalteinnhald { max-height: 46vh; overflow-y: auto; }
+    .bs-flate.bs-skjul-leksjon .bs-spalte-leksjon { --sp-leksjon: auto; }
 }
 
 /* Under 1100px har det ikkje plass til tre spalter heller. Då flyttar
- * teikninga OPP over paletten og blir klistra til toppen.
- *
- * La han bli liggjande nedanfor, hamna han eit par skjermhøgder ned så snart
- * leksjonen stod over — og då bygde eleven blindt. Teikninga er det han
- * arbeider mot, så ho er det siste som skal ut av synet. */
+ * resultatet OPP over kodeblokkene og blir klistra til toppen. */
 @media (max-width: 1100px) {
-    .bs-flate { grid-template-columns: var(--bs-palett) minmax(0, 1fr); }
-    .bs-leksjonspanel { order: -2; }
-    .bs-utflate {
+    .bs-flate { grid-template-columns: var(--sp-palett) minmax(0, 1fr); }
+    .bs-spalte-leksjon { order: -2; }
+    .bs-spalte-resultat {
         order: -1;
         grid-column: 1 / -1;
         position: sticky;
         top: 0;
         z-index: 5;
-        background: var(--bg);
     }
-    .bs-lerretboks { max-height: 38vh; }
+    .bs-lerretboks { height: clamp(200px, 34vh, 380px); }
 }
 
-/* På telefon er alt under kvarandre. */
 @media (max-width: 700px) {
     .bs-flate { grid-template-columns: 1fr; --bs-palett: 1fr; }
-    .bs-utflate { grid-column: auto; }
-    .bs-leksjonspanel { max-height: 40vh; }
+    .bs-spalte-resultat { grid-column: auto; }
+    .bs-spalte-leksjon .bs-spalteinnhald { max-height: 40vh; }
 }
 
-/* ---- leksjonspanelet --------------------------------------------------------- */
+/* ---- spaltene sjølve ----------------------------------------------------- */
 
-/* --bg og ikkje --surface: oppgåvekorta er .box4, som står på --surface.
- * Same farge bak dei ville gjort at korta forsvann inn i panelet. */
-.bs-leksjonspanel {
+.bs-spalte {
+    position: relative;
     min-width: 0;
-    padding: 16px 18px;
-    background: var(--bg);
-    color: var(--text);
-    border: 3px solid var(--border);
-    box-shadow: 4px 4px 0 var(--shadow);
+    background: var(--sp-bg, var(--surface));
+    padding: 10px 12px 12px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Som eiga spalte følgjer han med når ein rullar i blokkene, og har si
- * eiga rulling så ein lang leksjon ikkje gjer sida uendeleg høg. */
+.bs-spalte-leksjon  { --sp-bg: #FBE6EE; }   /* dus rosa */
+.bs-spalte-palett   { --sp-bg: #DCEBFF; }   /* dus blå — henta frå mockupen */
+.bs-spalte-resultat { --sp-bg: #F4EEE0; }   /* dus sand, så teikninga står fram */
+
 @media (min-width: 1280px) {
-    .bs-leksjonspanel {
+    .bs-spalte-leksjon, .bs-spalte-palett {
         position: sticky;
         top: 8px;
         max-height: calc(100vh - 24px);
-        overflow-y: auto;
     }
+    .bs-spalte-leksjon .bs-spalteinnhald,
+    .bs-spalte-palett .bs-spalteinnhald { overflow-y: auto; max-height: calc(100vh - 76px); }
+}
+
+.bs-spaltetopp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.bs-spaltetittel {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-family: var(--bs-font);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--text);
+}
+
+/* Kollapsknappen. Berre eit teikn, ingen tekst — han står ved sida av ei
+ * overskrift som allereie seier kva spalta er. */
+.bs-kollaps {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: var(--bs-hvit);
+    border: 3px solid var(--border);
+    cursor: pointer;
+    color: var(--text);
+}
+.bs-kollaps:hover { background: var(--bs-start); }
+.bs-kollaps:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
+
+/* Teiknet er to vinklar som peikar innover — «fald saman». Rein CSS, så det
+ * kan snu utan at vi må teikne ikonet på nytt. */
+.bs-kollapsteikn {
+    width: 9px; height: 9px;
+    border-left: 3px solid currentColor;
+    border-bottom: 3px solid currentColor;
+    transform: rotate(45deg) translate(1px, -1px);
+    transition: transform .2s ease;
+}
+
+/* ---- kollapsa: ei 10px stripe ein klikkar på ------------------------------ */
+
+/* Rutenettet har `align-items: start`, så ei spalte tek berre høgda til
+ * innhaldet sitt. Kollapsa skal stripa derimot gå heile vegen ned, elles
+ * blir ho ein liten knott midt i lufta. */
+.bs-spalte.er-kollapsa { padding: 0; align-self: stretch; }
+.bs-spalte.er-kollapsa > .bs-spaltetopp > .bs-spaltetittel,
+.bs-spalte.er-kollapsa > .bs-spalteinnhald { display: none; }
+
+.bs-spalte.er-kollapsa > .bs-spaltetopp { margin: 0; height: 100%; }
+
+/* Knappen blir sjølve stripa. Heile spalta er då eitt trykkfelt, som er
+ * det einaste som gjev meining på 10px. */
+.bs-spalte.er-kollapsa > .bs-spaltetopp > .bs-kollaps {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--sp-bg);
+}
+.bs-spalte.er-kollapsa > .bs-spaltetopp > .bs-kollaps:hover { background: var(--bs-start); }
+.bs-spalte.er-kollapsa .bs-kollapsteikn { transform: rotate(-135deg) translate(1px, -1px); }
+
+@media (max-width: 1279px) {
+    /* Vassrett band: stripa blir ei linje øvst i staden for ei søyle. */
+    .bs-spalte-leksjon.er-kollapsa { min-height: 10px; }
+    .bs-spalte-leksjon.er-kollapsa > .bs-spaltetopp > .bs-kollaps { min-height: 10px; }
 }
 
 /* ---- paletten --------------------------------------------------------------- */
 
-.bs-palett {
-    position: sticky;
-    top: 8px;
-    max-height: calc(100vh - 24px);
-    overflow-y: auto;
-    padding: 12px 10px;
-    background: var(--surface);
-    border: 3px solid var(--border);
-    box-shadow: 4px 4px 0 var(--shadow);
-}
-
-@media (max-width: 700px) {
-    .bs-palett { position: static; max-height: none; }
-}
 
 /* ---- arbeidsbenken ------------------------------------------------------------ */
 
@@ -155,11 +222,20 @@
 
 .bs-utflate { min-width: 0; }
 
+/* Ingen aspect-ratio.
+ *
+ * Fyrste utgåva var `aspect-ratio: 1/1` saman med `max-height`. Når taket slo
+ * inn, krympa nettlesaren BREIDDA for å halde kvadratet — og då stod det att
+ * opp til 516px kremfarga flate til høgre inne i same ruta. Det var det gule
+ * feltet ved sida av det kvite.
+ *
+ * Ei fast høgd fyller ruta heilt uansett kor brei spalta blir, og teikninga
+ * skalerer seg til det som finst av plass. */
 .bs-lerretboks {
     position: relative;
-    aspect-ratio: 1 / 1;
-    max-height: 60vh;
-    background: var(--surface);
+    width: 100%;
+    height: clamp(240px, 50vh, 560px);
+    background: var(--bs-hvit);
 }
 
 .bs-lerret { display: block; width: 100%; height: 100%; }
@@ -326,22 +402,9 @@
     padding: 26px 22px;
 }
 
-.bs-palett {
-    background: var(--bs-palettflate);
-    border-width: var(--bs-ramme);
-    box-shadow: none;
-    padding: 16px 14px;
-}
-
-.bs-leksjonspanel {
-    background: var(--bs-palettflate);
-    border-width: var(--bs-ramme);
-    box-shadow: none;
-}
 
 /* Teikneflata er kvit. Figuren er elevens arbeid, og han skal ikkje ligge
  * på ei tona flate som gjer fargane hans til noko anna enn dei er. */
-.bs-lerretboks { background: var(--bs-hvit); }
 
 .bs-verktoyrad { gap: 9px; }
 
@@ -375,69 +438,17 @@
 body.bs-tema .box5 .box-tab { font-family: var(--bs-font); font-weight: 800; background: var(--bs-palettflate); color: var(--text); }
 body.bs-tema .box5 .box-tab.active { background: var(--bs-start); color: var(--text); }
 
-/* ---- leksjonen glir vekk medan programmet køyrer ---------------------------
- *
- * Spalta blir ikkje borte, ho glir. Eit panel som forsvinn momentant er eit
- * panel eleven trur han har mist; eit som glir ut mot venstre er eit han veit
- * kvar er — og knappen i verktøyraden hentar det att.
- *
- * Over 1280px er leksjonen ei eiga spalte, så det er spaltebreidda som skal
- * animerast. Chrome kan animere grid-template-columns; skulle ein nettlesar
- * ikkje kunne det, skjer det same, berre utan glidinga. */
+/* ---- glidinga ------------------------------------------------------------
+ * Spaltene blir ikkje borte, dei glir. Ei spalte som forsvinn momentant er
+ * ei spalte eleven trur han har mist; ei som glir saman til ei farga stripe
+ * er ei han ser kvar er — og kan klikke på for å få att. */
 
-@media (min-width: 1280px) {
-    .bs-flate:has(> .bs-leksjonspanel:not([hidden])) {
-        transition: grid-template-columns .38s cubic-bezier(.4, 0, .2, 1);
-    }
-    .bs-flate.bs-leksjon-borte:has(> .bs-leksjonspanel:not([hidden])) {
-        grid-template-columns: 0 var(--bs-palett) minmax(280px, 1fr) minmax(320px, 1fr);
-    }
-    .bs-leksjonspanel {
-        transition: opacity .22s ease,
-                    transform .38s cubic-bezier(.4, 0, .2, 1),
-                    padding .38s cubic-bezier(.4, 0, .2, 1),
-                    border-width .38s cubic-bezier(.4, 0, .2, 1);
-    }
-    .bs-leksjon-borte > .bs-leksjonspanel {
-        opacity: 0;
-        transform: translateX(-24px);
-        padding-left: 0;
-        padding-right: 0;
-        border-left-width: 0;
-        border-right-width: 0;
-        pointer-events: none;
-    }
-}
-
-/* Under 1280px ligg leksjonen som eit band øvst, og då er det høgda som
- * skal gje etter. */
-@media (max-width: 1279px) {
-    .bs-leksjonspanel {
-        transition: max-height .38s cubic-bezier(.4, 0, .2, 1),
-                    opacity .22s ease,
-                    padding .38s cubic-bezier(.4, 0, .2, 1),
-                    border-width .38s cubic-bezier(.4, 0, .2, 1),
-                    margin .38s cubic-bezier(.4, 0, .2, 1);
-    }
-    .bs-leksjon-borte > .bs-leksjonspanel {
-        max-height: 0;
-        opacity: 0;
-        padding-top: 0;
-        padding-bottom: 0;
-        border-top-width: 0;
-        border-bottom-width: 0;
-        pointer-events: none;
-    }
-}
-
-/* Panelet må klippe innhaldet sitt medan det krympar, elles stikk teksten
- * ut av spalta på veg vekk. */
-.bs-leksjon-borte > .bs-leksjonspanel { overflow: hidden; }
-
-/* Knappen ber same fargen som leksjonspanelet er lagt på. */
-body.bs-tema #leksjonKnapp { background: var(--bs-mi); }
+.bs-spalte { transition: padding .3s cubic-bezier(.4, 0, .2, 1); }
+.bs-spalte > .bs-spalteinnhald { transition: opacity .2s ease; }
+.bs-spalte.er-kollapsa > .bs-spalteinnhald { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
-    .bs-flate,
-    .bs-leksjonspanel { transition: none; }
+    .bs-flate, .bs-spalte, .bs-spalte > .bs-spalteinnhald,
+    .bs-kollapsteikn { transition: none; }
 }
+

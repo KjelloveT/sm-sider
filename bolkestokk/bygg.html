@@ -8,28 +8,28 @@
 <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
 <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
 <link rel="stylesheet" href="../css/neobrutalisme.css">
-<link rel="stylesheet" href="css/palett.css?v=4">
-<link rel="stylesheet" href="css/style.css?v=4">
-<link rel="stylesheet" href="css/blokk.css?v=4">
-<link rel="stylesheet" href="css/leksjon.css?v=4">
+<link rel="stylesheet" href="css/palett.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/blokk.css?v=5">
+<link rel="stylesheet" href="css/leksjon.css?v=5">
 <script src="../js/neo-header.js" defer></script>
 <script src="../js/vyrdepil-icons.js" defer></script>
 <script src="../js/vyrdepil-storage.js" defer></script>
-<script src="js/blokkar.js?v=4" defer></script>
-<script src="js/tre.js?v=4" defer></script>
-<script src="js/skilpadde.js?v=4" defer></script>
-<script src="js/tolk.js?v=4" defer></script>
-<script src="js/python.js?v=4" defer></script>
-<script src="js/lerret.js?v=4" defer></script>
-<script src="js/editor.js?v=4" defer></script>
-<script src="js/dra.js?v=4" defer></script>
-<script src="js/test.js?v=4" defer></script>
-<script src="js/tekst.js?v=4" defer></script>
-<script src="js/framgang.js?v=4" defer></script>
-<script src="js/lager.js?v=4" defer></script>
-<script src="js/oppgaver.js?v=4" defer></script>
-<script src="js/leksjon.js?v=4" defer></script>
-<script src="js/app.js?v=4" defer></script>
+<script src="js/blokkar.js?v=5" defer></script>
+<script src="js/tre.js?v=5" defer></script>
+<script src="js/skilpadde.js?v=5" defer></script>
+<script src="js/tolk.js?v=5" defer></script>
+<script src="js/python.js?v=5" defer></script>
+<script src="js/lerret.js?v=5" defer></script>
+<script src="js/editor.js?v=5" defer></script>
+<script src="js/dra.js?v=5" defer></script>
+<script src="js/test.js?v=5" defer></script>
+<script src="js/tekst.js?v=5" defer></script>
+<script src="js/framgang.js?v=5" defer></script>
+<script src="js/lager.js?v=5" defer></script>
+<script src="js/oppgaver.js?v=5" defer></script>
+<script src="js/leksjon.js?v=5" defer></script>
+<script src="js/app.js?v=5" defer></script>
 </head>
 <body class="bs-tema" data-light-theme="classic" data-dark-theme="classic" data-theme="classic">
 
@@ -40,11 +40,29 @@
 
   <div class="bs-flate" id="flate">
 
-    <!-- Leksjonen. Tom i fri bygging, og då fell spalta heilt bort. -->
-    <div class="bs-leksjonspanel" id="leksjonspanel" hidden></div>
+    <!-- Leksjonen. Tom i fri bygging, og då fell heile spalta bort. -->
+    <aside class="bs-spalte bs-spalte-leksjon" id="spalteLeksjon" hidden>
+      <header class="bs-spaltetopp">
+        <h2 class="bs-spaltetittel">Leksjon</h2>
+        <button type="button" class="bs-kollaps" id="kollapsLeksjon"
+                aria-expanded="true" title="Skjul leksjonen" aria-label="Skjul leksjonen">
+          <span class="bs-kollapsteikn" aria-hidden="true"></span>
+        </button>
+      </header>
+      <div class="bs-spalteinnhald bs-leksjonspanel" id="leksjonspanel"></div>
+    </aside>
 
-    <!-- Paletten -->
-    <aside class="bs-palett" id="palett" aria-label="Blokker du kan bruke"></aside>
+    <!-- Blokkvelgaren -->
+    <aside class="bs-spalte bs-spalte-palett" id="spaltePalett">
+      <header class="bs-spaltetopp">
+        <h2 class="bs-spaltetittel">Kodeblokker</h2>
+        <button type="button" class="bs-kollaps" id="kollapsPalett"
+                aria-expanded="true" title="Skjul kodeblokkene" aria-label="Skjul kodeblokkene">
+          <span class="bs-kollapsteikn" aria-hidden="true"></span>
+        </button>
+      </header>
+      <div class="bs-spalteinnhald bs-palett" id="palett" aria-label="Blokker du kan bruke"></div>
+    </aside>
 
     <!-- Arbeidsbenken -->
     <section class="bs-benk" aria-label="Programmet ditt">
@@ -53,9 +71,6 @@
         <button type="button" class="btn" id="stopp" disabled>Stopp</button>
         <button type="button" class="btn bs-btn-steg" id="stegKnapp">
           <span data-icon="footprints" data-icon-size="15"></span>Steg for steg
-        </button>
-        <button type="button" class="btn bs-btn-leksjon" id="leksjonKnapp" hidden aria-expanded="true" aria-controls="leksjonspanel">
-          <span data-icon="book" data-icon-size="15"></span><span id="leksjonKnappTekst">Skjul leksjon</span>
         </button>
         <button type="button" class="btn" id="toem">Tøm</button>
         <button type="button" class="btn" id="nyKommando">Ny kommando</button>
@@ -80,7 +95,15 @@
     </section>
 
     <!-- Teikninga og koden -->
-    <section class="bs-utflate" aria-label="Resultat">
+    <aside class="bs-spalte bs-spalte-resultat" id="spalteResultat">
+      <header class="bs-spaltetopp">
+        <h2 class="bs-spaltetittel">Resultat</h2>
+        <button type="button" class="bs-kollaps" id="kollapsResultat"
+                aria-expanded="true" title="Skjul resultatet" aria-label="Skjul resultatet">
+          <span class="bs-kollapsteikn" aria-hidden="true"></span>
+        </button>
+      </header>
+      <div class="bs-spalteinnhald bs-utflate">
 
       <!-- Blokka som står for tur. Ho har ikkje køyrt enno — det er nettopp
            det som gjer at eleven kan gjette kva som skjer før han trykkjer.
@@ -112,7 +135,8 @@
 
       <pre class="bs-utskrift" id="utskrift" aria-live="polite"></pre>
       <div class="bs-feil" id="feil" hidden></div>
-    </section>
+      </div>
+    </aside>
 
   </div>
 

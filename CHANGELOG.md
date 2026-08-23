@@ -3,6 +3,17 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.5] — 2026-08-23
+
+### Endra
+- **Dei tre sidespaltene har fått overskrift og ein kollapsknapp**, og kan foldast saman til ei 10px farga stripe som ein klikkar på for å få dei att. Det gjeld leksjonen, kodeblokkene og resultatet. Knappen i verktøyraden er borte — han hadde ingenting å gjere i fri bygging, der det ikkje finst nokon leksjon å skjule, og eit sett knappar midt på flata er dessutan vanskelegare å lese enn ein knapp der spalta faktisk er.
+- **Spaltene har mist den svarte ramma** og ber ein dus bakgrunnsfarge i staden: rosa for leksjonen, blå for kodeblokkene, sand for resultatet. Skjermen var i ferd med å bli eit rutenett av svarte strekar.
+- **Markeringa av ei blokk er flytta til venstrekanten.** Før låg det ein `outline` rundt heile blokka, og ei blokk som køyrde vart dessutan skuva 4px til sida — så heile stabelen skalv seg nedover medan programmet gjekk. No blir venstrekanten farga: burgunder for den som er merkt, grøn for den som køyrer. Korkje `border-color` eller `box-shadow` tek plass i layouten, så blokka står **bikkefast** — målt til 0px flytting i x, y og breidd.
+
+### Fiksa
+- **Skilpadda var ein ugjennomsiktig firkant.** GIF-en ho er bygd frå kjem frå `gif.ski` og har inga transparens i det heile — han har kvit bakgrunn. Sprite-arket arva den kvite flata, så skilpadda drog med seg ein 96×96 boks som dekte strekane under henne. Bakgrunnen blir no nøkla ut med flomfyll frå kantane, slik at eventuelle kvite flater *inne i* teikninga overlever. Arket er 27,9 kB mot 25,4 før, og 68,6% av det er gjennomsiktig.
+- **Teikneruta hadde to bakgrunnsfargar.** `aspect-ratio: 1/1` saman med `max-height` fekk nettlesaren til å krympe **breidda** for å halde kvadratet, og då stod det att opp til 516px kremfarga flate til høgre inne i same ruta. Ruta har no fast høgd og fyller spalta.
+- **Rekneblokka sitt ikon** er ei nøytral talskjerm og ikkje eit plussteikn (sjå [1.4]) — plusset er heilt borte no òg frå den siste staden det stod.
 ## [1.4] — 2026-08-22
 
 ### Lagt til

@@ -126,8 +126,14 @@ const BolkDra = (function () {
         const under = document.elementFromPoint(x, y);
         if (!under) return null;
 
-        // Over paletten? Då er dette ei sletting.
-        if (el.palett.contains(under)) return { slett: true };
+        /* Over blokkvelgaren? Då er dette ei sletting.
+         *
+         * Vi ser etter heile SPALTA, ikkje berre lista med blokker. Etter at
+         * velgaren fekk overskrift og eiga flate, ville eit slepp på toppen
+         * av spalta elles ikkje telt som ei sletting — og blokka hadde blitt
+         * liggjande att utan at eleven skjøna kvifor. */
+        const velgar = el.palett.closest('.bs-spalte') || el.palett;
+        if (velgar.contains(under)) return { slett: true };
 
         const erVerdi = BolkBlokkar.hent(drag.node.type).form === 'verdi';
 
@@ -166,7 +172,8 @@ const BolkDra = (function () {
      * laga før han slepper — ikkje berre ei linje som lovar noko. */
     function visMaal(maal) {
         fjernMarkor();
-        el.palett.classList.toggle('er-soppel', !!(maal && maal.slett));
+        const velgar = el.palett.closest('.bs-spalte') || el.palett;
+        velgar.classList.toggle('er-soppel', !!(maal && maal.slett));
         if (!maal || maal.slett) return;
 
         if (maal.hol) { maal.hol.classList.add('er-maal'); markor = maal.hol; return; }
@@ -235,7 +242,8 @@ const BolkDra = (function () {
 
     function avsluttDrag() {
         fjernMarkor();
-        el.palett.classList.remove('er-soppel');
+        const velgar = el.palett.closest('.bs-spalte') || el.palett;
+        velgar.classList.remove('er-soppel');
         drag.skygge.remove();
         document.body.classList.remove('bs-dreg');
         drag = null;

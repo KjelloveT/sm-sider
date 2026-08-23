@@ -34,7 +34,8 @@
          'ruteTeikning', 'rutePython', 'leksjonspanel',
          'stegKnapp', 'stegrad', 'nesteSteg', 'spelAv', 'stegInfo',
          'stegblokk', 'stegblokkTekst', 'variablar',
-         'flate', 'leksjonKnapp', 'leksjonKnappTekst']
+         'flate', 'spalteLeksjon', 'spaltePalett', 'spalteResultat',
+         'kollapsLeksjon', 'kollapsPalett', 'kollapsResultat']
             .forEach(id => { el[id] = document.getElementById(id); });
 
         program = BolkLager.hentSiste() || nyttProgram();
@@ -59,7 +60,8 @@
         el.stegKnapp.addEventListener('click', startStegmodus);
         el.nesteSteg.addEventListener('click', () => { stansAvspeling(); eittSteg(); });
         el.spelAv.addEventListener('click', vekselAvspeling);
-        el.leksjonKnapp.addEventListener('click', vekselLeksjon);
+        SPALTER.forEach(sp => el[sp.knapp].addEventListener(
+            'click', () => vekselSpalte(sp, true)));
 
         // Ei uferdig teikning er ikkje verdt å miste fordi ein fane vart lukka.
         window.addEventListener('beforeunload', lagre);
@@ -127,55 +129,68 @@
         endra();
     }
 
-    /* ---- leksjonen gjer plass medan programmet køyrer -----------------------
+    /* ---- spaltene kan kollapsast --------------------------------------------
      *
-     * Leksjonsspalta tek ein fjerdedel av flata. Medan programmet køyrer er
-     * det teikninga og blokkene eleven ser på, ikkje teksten, så spalta
-     * glir vekk og kjem att litt etter at programmet er ferdig.
+     * Kvar av dei tre sidespaltene har ei overskrift med ein kollapsknapp.
+     * Kollapsa blir spalta ei 10px farga stripe som er eitt stort trykkfelt
+     * — det einaste som gjev meining på den breidda.
      *
-     * Ho GLIR — ho blir ikkje borte. Eit panel som forsvinn momentant er eit
-     * panel eleven trur han har mist; eit som glir ut mot venstre er eit han
-     * veit kvar er.
-     *
-     * Knappen overstyrer alltid. Har eleven sjølv gøymt leksjonen, kjem ho
-     * ikkje att av seg sjølv — det ville vore å overprøve han. */
+     * Medan programmet køyrer gjer leksjonen plass av seg sjølv, for då er
+     * det teikninga og blokkene eleven ser på. Ho kjem att litt etterpå.
+     * Har eleven sjølv kollapsa henne, kjem ho ikkje att av seg sjølv — det
+     * ville vore å overprøve han. */
+
+    const SPALTER = [
+        { id: 'leksjon',  spalte: 'spalteLeksjon',  knapp: 'kollapsLeksjon',
+          opne: 'Vis leksjonen',    lukke: 'Skjul leksjonen',   klasse: 'bs-skjul-leksjon' },
+        { id: 'palett',   spalte: 'spaltePalett',   knapp: 'kollapsPalett',
+          opne: 'Vis kodeblokkene', lukke: 'Skjul kodeblokkene', klasse: 'bs-skjul-palett' },
+        { id: 'resultat', spalte: 'spalteResultat', knapp: 'kollapsResultat',
+          opne: 'Vis resultatet',   lukke: 'Skjul resultatet',   klasse: 'bs-skjul-resultat' }
+    ];
 
     const VENT_FOER_VISING = 1600;
-    let brukarSkjult = false;
+    let brukarSkjultLeksjon = false;
     let visTimer = null;
 
-    const harLeksjon = () => el.leksjonspanel && !el.leksjonspanel.hidden;
+    const harLeksjon = () => el.spalteLeksjon && !el.spalteLeksjon.hidden;
+    const erKollapsa = (sp) => el[sp.spalte].classList.contains('er-kollapsa');
+
+    function setSpalte(sp, kollapsa) {
+        el[sp.spalte].classList.toggle('er-kollapsa', kollapsa);
+        el.flate.classList.toggle(sp.klasse, kollapsa);
+        const knapp = el[sp.knapp];
+        const tekst = kollapsa ? sp.opne : sp.lukke;
+        knapp.setAttribute('aria-expanded', String(!kollapsa));
+        knapp.setAttribute('aria-label', tekst);
+        knapp.setAttribute('title', tekst);
+    }
+
+    /** @param {boolean} frivilja true når det er eleven som trykte */
+    function vekselSpalte(sp, frivilja) {
+        const skalKollapse = !erKollapsa(sp);
+        if (sp.id === 'leksjon' && frivilja) brukarSkjultLeksjon = skalKollapse;
+        if (frivilja) clearTimeout(visTimer);
+        setSpalte(sp, skalKollapse);
+    }
+
+    const LEKSJON = SPALTER[0];
 
     function leksjonOpna() {
-        el.leksjonKnapp.hidden = false;
-        setLeksjonSynleg(true);
-    }
-
-    function setLeksjonSynleg(synleg) {
-        el.flate.classList.toggle('bs-leksjon-borte', !synleg);
-        el.leksjonKnapp.setAttribute('aria-expanded', String(synleg));
-        el.leksjonKnappTekst.textContent = synleg ? 'Skjul leksjon' : 'Vis leksjon';
-    }
-
-    const leksjonSynleg = () => !el.flate.classList.contains('bs-leksjon-borte');
-
-    function vekselLeksjon() {
-        clearTimeout(visTimer);
-        const skalVise = !leksjonSynleg();
-        brukarSkjult = !skalVise;
-        setLeksjonSynleg(skalVise);
+        el.spalteLeksjon.hidden = false;
+        setSpalte(LEKSJON, false);
     }
 
     function gjemLeksjonMedanKoyrer() {
-        if (!harLeksjon()) return;
+        if (!harLeksjon() || erKollapsa(LEKSJON)) return;
         clearTimeout(visTimer);
-        setLeksjonSynleg(false);
+        setSpalte(LEKSJON, true);
     }
 
     function hentLeksjonAtt() {
-        if (!harLeksjon() || brukarSkjult) return;
+        if (!harLeksjon() || brukarSkjultLeksjon) return;
         clearTimeout(visTimer);
-        visTimer = setTimeout(() => setLeksjonSynleg(true), VENT_FOER_VISING);
+        visTimer = setTimeout(() => setSpalte(LEKSJON, false), VENT_FOER_VISING);
     }
 
     /* ---- køyring --------------------------------------------------------- */
