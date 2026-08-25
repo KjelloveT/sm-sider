@@ -7,11 +7,14 @@
 
     document.addEventListener('DOMContentLoaded', start);
 
+    /* Katalogen ligg her og ikkje inne i `start`, fordi kortteikninga må slå
+     * opp i han for å finne tittelen på modulen eit kort byggjer på. */
+    let katalog = null;
+
     async function start() {
         const boks = document.getElementById('modulgrupper');
         const melding = document.getElementById('lasteMelding');
 
-        let katalog;
         try {
             const svar = await fetch('moduler/index.json');
             if (!svar.ok) throw new Error('status ' + svar.status);
@@ -31,9 +34,16 @@
 
         if (window.hydrateIcons) hydrateIcons(document);
 
-        // Leksjonslistene kjem etterpå, i parallell. Modulfilene er små —
-        // nokre titals kilobyte kvar — og sida er allereie teikna, så dette
-        // rører ikkje ved poenget med at landingssida skal opne fort.
+        /* Leksjonslistene kjem etterpå, i parallell, og sida er allereie
+         * teikna når dei kjem.
+         *
+         * Filene er ikkje små lenger. Til saman er dei ~840 kB ukomprimert,
+         * og den største er 165. Over nett er det uproblematisk — gzip tek
+         * det under 90 kB — men nettlesaren PARSAR alt, og det kostar på ei
+         * svak skulemaskin. Vi hentar dei likevel, fordi lista over leksjonar
+         * er det læraren skummar for å velje modul. Blir det for tungt, er
+         * rette grepet eit `leksjonar`-felt i katalogen — ikkje å hente heile
+         * modulen for å lese ut fem titlar. */
         hentLeksjonar((katalog.modular || []).filter(m => m.klar !== false));
     }
 
@@ -120,11 +130,17 @@
 
         /* Kva modulen byggjer på. Ein lærar som vel ein modul til klassa si
          * må sjå dette FØR han vel, ikkje etter — elles set han elevane til
-         * ei lykkje-oppgåve dei ikkje har fått lykkja forklart. */
+         * ei oppgåve dei manglar føresetnadene for.
+         *
+         * Teksten var hardkoda til «grunnkurset» heilt til gjennomgangen
+         * fann at arealmodulen i røynda byggjer på rutenettet: han teiknar
+         * kvar einaste figur med `Gå til rute`, som grunnkurset ikkje lærer
+         * bort. No blir tittelen slegen opp i katalogen. */
         if (modul.krev) {
+            const kjelde = (katalog.modular || []).find(x => x.id === modul.krev);
             const krev = document.createElement('p');
             krev.className = 'bs-modulkrev';
-            krev.textContent = 'Byggjer på grunnkurset';
+            krev.textContent = kjelde ? 'Byggjer på «' + kjelde.tittel + '»' : 'Byggjer på grunnkurset';
             kropp.appendChild(krev);
         }
 

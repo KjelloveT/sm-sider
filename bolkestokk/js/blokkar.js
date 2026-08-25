@@ -218,6 +218,32 @@ const BolkBlokkar = (function () {
             python: () => 'distance(0, 0)'
         },
 
+        /* ---- fylte flater ------------------------------------------------
+         *
+         * `begin_fill` og `end_fill` er ekte metodar i Python sin turtle, og
+         * det er grunnen til at blokkene ser slik ut. Ei «fyll figuren»-blokk
+         * som fylte alt på ein gong hadde vore enklare å bruke, men ho måtte
+         * hatt ein oppdikta hjelpefunksjon i utskrifta.
+         *
+         * Fargen står på startblokka. Turtle skil mellom pennefarge og
+         * fyllfarge, så `fillcolor` må setjast for seg — og då er det ærlegare
+         * at eleven ser det valet enn at vi arvar pennefargen i det stille. */
+        {
+            id: 'startFyll', farge: 'penn', ikon: 'droplets', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Fyll med', { felt: 'farge', slag: 'val', val: FARGAR, standard: 'gul' }],
+            koyr: function* (node, ktx) { ktx.skilpadde.startFyll(node.felt.farge); },
+            python: (f) => {
+                const v = FARGAR.find(x => x.verdi === f.farge) || FARGAR[0];
+                return ['fillcolor("' + v.py + '")', 'begin_fill()'];
+            }
+        },
+        {
+            id: 'sluttFyll', farge: 'penn', ikon: 'check', kategori: 'skilpadde', form: 'setning',
+            tekst: ['Ferdig fylt'],
+            koyr: function* (node, ktx) { ktx.skilpadde.sluttFyll(); },
+            python: () => 'end_fill()'
+        },
+
         /* ---- tal og rekning --------------------------------------------- */
         /* Det finst med vilje inga «tal»-blokk. Kvart tal-hòl har eit felt
          * eleven kan skrive rett i, så ei eiga blokk for å halde eit tal

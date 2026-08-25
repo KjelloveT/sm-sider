@@ -16,6 +16,17 @@
 function BolkSkilpadde() {
 
     const strek = [];
+
+    /* Fylte flater. Kvar av dei er ei liste med punkt og ein farge, samla
+     * mellom «Fyll med» og «Ferdig fylt».
+     *
+     * Dei ligg for seg og ikkje i streklista, fordi rettemotoren samanliknar
+     * strek for strek: ei flate er noko anna enn ein strek, og å blande dei
+     * ville gjort at ein elev som fylte figuren sin fekk «feil tal strek».
+     */
+    const flater = [];
+    let fyller = null;
+
     let x = 0, y = 0, vinkel = 0;
     let nede = true, farge = 'vanleg', tjukn = 3;
 
@@ -34,6 +45,7 @@ function BolkSkilpadde() {
         if (nede && d !== 0) strek.push({ x1: x, y1: y, x2: nx, y2: ny, farge, tjukn });
         gaatt += Math.abs(d);
         x = nx; y = ny;
+        if (fyller) fyller.punkt.push({ x, y });
     }
 
     /* Rett til ein stad, utan å snu.
@@ -50,6 +62,7 @@ function BolkSkilpadde() {
         if (nede && d > 0) strek.push({ x1: x, y1: y, x2: nx, y2: ny, farge, tjukn });
         gaatt += d;
         x = nx; y = ny;
+        if (fyller) fyller.punkt.push({ x, y });
     }
 
     function snu(grader) {
@@ -57,7 +70,25 @@ function BolkSkilpadde() {
         if (vinkel < 0) vinkel += 360;
     }
 
-    function tilStart() { x = 0; y = 0; vinkel = 0; }
+    function tilStart() {
+        x = 0; y = 0; vinkel = 0;
+        if (fyller) fyller.punkt.push({ x, y });
+    }
+
+    /* Fyllinga.
+     *
+     * `startFyll` byrjar å samle punkt frå der skilpadda står. `sluttFyll`
+     * lukkar flata og legg henne bak i lista. Er det færre enn tre punkt,
+     * finst det ingen flate å fylle, og då blir ho kasta i staden for å
+     * teiknast som ein usynleg strek. */
+    function startFyll(f) {
+        fyller = { punkt: [{ x, y }], farge: f || farge };
+    }
+
+    function sluttFyll() {
+        if (fyller && fyller.punkt.length >= 3) flater.push(fyller);
+        fyller = null;
+    }
 
     /* Tjukn under 1 ville gjeve ein strek som forsvinn heilt på nokre
      * skjermar, og over 40 dekkjer han figuren sin eigen. */
@@ -68,18 +99,26 @@ function BolkSkilpadde() {
 
     /** Ytterkantane av teikninga. null når ingenting er teikna. */
     function omfang() {
-        if (!strek.length) return null;
+        if (!strek.length && !flater.length) return null;
         let vx1 = Infinity, vy1 = Infinity, vx2 = -Infinity, vy2 = -Infinity;
         strek.forEach(s => {
             vx1 = Math.min(vx1, s.x1, s.x2); vx2 = Math.max(vx2, s.x1, s.x2);
             vy1 = Math.min(vy1, s.y1, s.y2); vy2 = Math.max(vy2, s.y1, s.y2);
         });
+        /* Ei flate teikna med pennen oppe har ingen strek, men han fyller
+         * framleis plass på arket og skal vere med i ramma. */
+        flater.forEach(f => f.punkt.forEach(p => {
+            vx1 = Math.min(vx1, p.x); vx2 = Math.max(vx2, p.x);
+            vy1 = Math.min(vy1, p.y); vy2 = Math.max(vy2, p.y);
+        }));
         return { x1: vx1, y1: vy1, x2: vx2, y2: vy2 };
     }
 
     return {
         gaa, gaaTil, snu, tilStart, setTjukn, setFarge, penn, omfang,
+        startFyll, sluttFyll,
         get strek() { return strek; },
+        get flater() { return flater; },
         get tilstand() { return { x, y, vinkel, nede, farge, tjukn, gaatt }; }
     };
 }

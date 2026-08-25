@@ -3,6 +3,28 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.23] — 2026-08-23
+
+### Lagt til
+- **Vilkårsleksjon i grunnkurset.** Grunnkurset opna fjorten blokker men ingen vilkår, medan fire modular treng dei og kompetansemåla for alle tre trinna nemner dei. «Gjer det berre dersom» viser dei **to** mønstera modulane etterpå brukar: eit vilkår som endrar kva som blir teikna, og eit vilkår som avgjer om ein teljar skal auke.
+- **Talfeltet seier frå om namn Python alt brukar.** Skriv eleven `sum`, `len`, `distance` eller eit av dei femti andre, får feltet ei bølgja understreking og ei forklaring. Ingenting blir hindra — det er elevens program, og namnet verkar fint her — men Python-utskrifta er lova å køyre i Ormritaren.
+
+### Fiksa
+- **«Terningkast og sannsyn» sa til femteklassingar at dei alt kunne noko dei aldri hadde møtt.** «Tre ting du alt kan: ei lykkje, ein variabel, og eit vilkår» — og så vart `Dersom` brukt sju gonger utan at blokka vart vist. Teksten er retta, og no er påstanden sann.
+- **«Sannsyn» kom for seint.** Ordet står i modultittelen, men vart fyrst brukt i leksjon 3 som noko kjent, og einaste definisjonen stod i forklaringa til ei fleirvalsoppgåve — tekst eleven ser *etter* at han har svart. No blir det innført i leksjon 1.
+- **«Areal og oppdeling» sa at han bygde på grunnkurset.** Han byggjer på rutenettet: kvar einaste figur blir teikna med `Gå til rute`, og fyrste oppgåva ber om eit rektangel frå (−3, −1) til (2, 1). Teksten på modulkortet er ikkje lenger hardkoda — han slår opp tittelen i katalogen.
+- **Ein variabel som heitte `sum`** skugga den innebygde `sum` i Python-utskrifta. Programmet køyrde, men eleven som gjekk vidare til statistikkmodulen ville fått `print(sum(sum))` og TypeError — nøyaktig den vegen modulane er meinte å gå. Han heiter `augesum` no.
+
+### Endra
+- **`spalter.js` skild ut frå `app.js`**, som gjorde køyring, fart, stegmodus og spaltekoreografi i eitt. 539 → 467 linjer, og dei tre kalla app.js treng er alt han treng.
+- Kommentaren i `landing.js` sa at modulfilene var «nokre titals kilobyte kvar». Målt no: 840 kB til saman, den største 165.
+## [1.22] — 2026-08-23
+
+### Lagt til
+- **Fyll-blokker: `Fyll med …` og `Ferdig fylt`.** Alt skilpadda teiknar imellom blir ei farga flate. `begin_fill()` og `end_fill()` er ekte metodar i Python sin turtle — ei «fyll figuren»-blokk som gjorde alt på ein gong hadde vore enklare å bruke, men ho måtte hatt ein oppdikta hjelpefunksjon i utskrifta. Fyllet blir teikna **under** rutenettet, så rutene framleis er der å telje; legg ein det oppå, dekkjer eit fylt rektangel nettopp dei rutene ein arealleksjon ber eleven telje.
+- **«Areal og oppdeling»** — fem leksjonar for 6. trinn. Heile modulen ligg på rutenettet, fordi areal på dette trinnet er «kor mange ruter dekkjer figuren». Frå å telje ruter, til at same omkrins kan gje ulikt areal, til distributivitet: `a · (b + c) = a · b + a · c` er ikkje ein regel å hugse, det er eitt rektangel delt i to.
+- **«Reknerekkefølgje»** — fire leksjonar for 7. trinn. Er `2 + 3 · 4` lik 14 eller 20? I blokkene finst ikkje tvilen: den som ligg innerst blir rekna fyrst, og eit tvitydig uttrykk lèt seg ikkje byggje i det heile.
+- **«Teikn likninga»** i likningsmodulen, som med det opnar for 5. trinn. Målet seier «bruke tal, tekst, **teikning** og konkret til å løyse likningar» — modulen hadde tal og tekst, men ikkje teikninga. To stolpar, éin for kvar side av likskapsteiknet: er dei like lange, er likninga sann.
 ## [1.22] — 2026-08-25
 
 ### Endra

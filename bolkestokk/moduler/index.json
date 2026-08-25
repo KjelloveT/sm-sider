@@ -24,9 +24,9 @@
       "ikon": "footprints",
       "accent": "accent",
       "trinn": "5.–7. trinn",
-      "talLeksjonar": 4,
+      "talLeksjonar": 5,
       "klar": true,
-      "skildring": "Skilpadda, lykkja, variabelen og din eigen funksjon. Fire leksjonar som gjev deg alt du treng for å ta fatt på dei andre modulane.",
+      "skildring": "Skilpadda, lykkja, variabelen, vilkåret og din eigen funksjon. Fem leksjonar som gjev deg alt du treng for å ta fatt på dei andre modulane.",
       "kompetansemaal": [
         "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
         "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
@@ -67,6 +67,24 @@
         "6. trinn: måle radius, diameter og omkrins i sirklar og utforske og forklare samanhengen mellom pi og diameteren i ein sirkel",
         "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins",
         "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster"
+      ]
+    },
+    {
+      "id": "areal",
+      "gruppe": "geometri",
+      "fil": "areal.json",
+      "tittel": "Areal og oppdeling",
+      "ikon": "grid",
+      "accent": "accent2",
+      "trinn": "6. trinn",
+      "talLeksjonar": 5,
+      "klar": true,
+      "krev": "rutenett",
+      "skildring": "Areal er kor mange ruter figuren dekkjer. Du fyller flatene med farge, deler dei opp, og oppdagar at same rutene kan reknast ut på to måtar.",
+      "kompetansemaal": [
+        "6. trinn: utforske praktiske problem med areal ved å bruke oppdeling og distributivitet",
+        "6. trinn: bruke og utforske strategiar for å måle og rekne ut areal og omkrins",
+        "6. trinn: utforske areal og volum i praktiske situasjonar og bruke formålstjenlege måleiningar"
       ]
     },
     {
@@ -111,12 +129,13 @@
       "tittel": "Likningar og ulikskapar",
       "ikon": "scaling",
       "accent": "accent5",
-      "trinn": "7. trinn",
-      "talLeksjonar": 5,
+      "trinn": "5.–7. trinn",
+      "talLeksjonar": 6,
       "klar": true,
       "krev": "grunnkurs",
-      "skildring": "Ei likning er ein påstand som er sann for nokre tal og usann for andre. Lat maskina prøve alle, så blir utskrifta løysinga sjølv.",
+      "skildring": "Ei likning er ein påstand som er sann for nokre tal og usann for andre. Teikn dei to sidene som stolpar, eller lat maskina prøve alle tal — då blir utskrifta løysinga sjølv.",
       "kompetansemaal": [
+        "5. trinn: bruke tal, tekst, teikning og konkret til å løyse likningar og teste og forklare løysingar",
         "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige",
         "7. trinn: formulere og løyse problem som har med likningar å gjere",
         "7. trinn: bruke tal, tekst, teikning og konkret til å løyse ulikskapar og teste og forklare løysingar"
@@ -138,6 +157,22 @@
         "7. trinn: rekne sentralmål i eigne og andre sine datasett og velje formålstenleg sentralmål",
         "7. trinn: logge, sortere, lese av og presentere data i tabellar og diagram og forklare valet av framstilling",
         "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ]
+    },
+    {
+      "id": "rekkjefolgje",
+      "gruppe": "geometri",
+      "fil": "rekkjefolgje.json",
+      "tittel": "Reknerekkefølgje",
+      "ikon": "layers",
+      "accent": "accent3",
+      "trinn": "7. trinn",
+      "talLeksjonar": 4,
+      "klar": true,
+      "krev": "grunnkurs",
+      "skildring": "Er 2 + 3 · 4 lik 14 eller 20? I blokkene finst ikkje tvilen — den som ligg innerst blir rekna fyrst, og eit tvitydig uttrykk lèt seg ikkje byggje.",
+      "kompetansemaal": [
+        "7. trinn: bruke reglar for reknerekkefølgje i problemløysing og til å lage og løyse samansette rekneuttrykk"
       ]
     }
   ]

@@ -9,7 +9,8 @@
       "id": "er-det-sant",
       "tittel": "Ei likning er ein påstand",
       "kompetansemaal": [
-        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige"
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige",
+        "5. trinn: bruke tal, tekst, teikning og konkret til å løyse likningar og teste og forklare løysingar"
       ],
       "palett": [
         "settVar",
@@ -544,10 +545,1001 @@
       "oppsummering": "Ei likning er ein **påstand** som er sann for nokre tal og usann for andre. Talet som gjer han sann, er **løysinga**. `Dersom` prøver eitt tal om gongen, akkurat som du gjer i hovudet."
     },
     {
+      "id": "teikn-likninga",
+      "tittel": "Teikn likninga",
+      "kompetansemaal": [
+        "5. trinn: bruke tal, tekst, teikning og konkret til å løyse likningar og teste og forklare løysingar",
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige"
+      ],
+      "palett": [
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "rekne",
+        "skrivUt",
+        "samanlikn",
+        "dersom",
+        "framover",
+        "bakover",
+        "snuHogre",
+        "snuVenstre",
+        "pennOpp",
+        "pennNed",
+        "setFarge"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei likning seier at to ting er **like store**. Då kan du teikne dei: éin stolpe for venstresida og éin for høgresida, rett under kvarandre."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Set du inn eit tal som er for lite, blir den øvste stolpen kortare enn den nedste. Er talet for stort, blir han lengre. Og er talet **rett**, blir dei nøyaktig like lange — det er heile likninga, teikna."
+        },
+        {
+          "type": "merk",
+          "tekst": "Lengdene blir gonga med 10 så stolpane blir store nok til å sjåast. Det endrar ikkje kva som er likt — begge blir gonga med det same."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Likninga er 3 · x + 4 = 19, og her er x sett til 5. Sjå på dei to stolpane. Byt så x til 4 og køyr igjen.",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "x",
+                "verdi": 5
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    },
+                    "op": "gonge",
+                    "b": 10
+                  }
+                }
+              }
+            },
+            {
+              "type": "pennOpp",
+              "felt": {}
+            },
+            {
+              "type": "bakover",
+              "felt": {
+                "lengd": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": 3,
+                            "op": "gonge",
+                            "b": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "x"
+                              }
+                            }
+                          }
+                        },
+                        "op": "pluss",
+                        "b": 4
+                      }
+                    },
+                    "op": "gonge",
+                    "b": 10
+                  }
+                }
+              }
+            },
+            {
+              "type": "snuHogre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": 40
+              }
+            },
+            {
+              "type": "snuVenstre",
+              "felt": {
+                "grader": 90
+              }
+            },
+            {
+              "type": "pennNed",
+              "felt": {}
+            },
+            {
+              "type": "framover",
+              "felt": {
+                "lengd": {
+                  "type": "rekne",
+                  "felt": {
+                    "a": 19,
+                    "op": "gonge",
+                    "b": 10
+                  }
+                }
+              }
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "To stolpar som skal bli like",
+        "maal": "venstresida og høgresida i 3 · x + 4 = 19 teikna som to stolpar under kvarandre",
+        "steg": [
+          {
+            "tekst": "Fyrst venstresida åleine, med x = 4. 3 · 4 + 4 = 16, altså ein stolpe på 160 steg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 4
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 10
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "Så høgresida under: 19, altså 190 steg. Den nedste stolpen stikk tydeleg lenger ut — talet 4 var for lite.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 4
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 10
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 10
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 19,
+                        "op": "gonge",
+                        "b": 10
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kor mykje for kort er den øvste stolpen? Kva tyder det for x?"
+          },
+          {
+            "tekst": "Og med x = 5: 3 · 5 + 4 = 19. Dei to stolpane blir nøyaktig like lange, og då er likninga sann.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "x",
+                    "verdi": 5
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 10
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "pennOpp",
+                  "felt": {}
+                },
+                {
+                  "type": "bakover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": {
+                          "type": "rekne",
+                          "felt": {
+                            "a": {
+                              "type": "rekne",
+                              "felt": {
+                                "a": 3,
+                                "op": "gonge",
+                                "b": {
+                                  "type": "lesVar",
+                                  "felt": {
+                                    "namn": "x"
+                                  }
+                                }
+                              }
+                            },
+                            "op": "pluss",
+                            "b": 4
+                          }
+                        },
+                        "op": "gonge",
+                        "b": 10
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 40
+                  }
+                },
+                {
+                  "type": "snuVenstre",
+                  "felt": {
+                    "grader": 90
+                  }
+                },
+                {
+                  "type": "pennNed",
+                  "felt": {}
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": {
+                      "type": "rekne",
+                      "felt": {
+                        "a": 19,
+                        "op": "gonge",
+                        "b": 10
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Prøv x = 6. Kva stolpe er lengst no?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "b1",
+          "type": "les",
+          "maal": "Kva fortel stolpane?",
+          "tekst": "Programmet teiknar venstresida og høgresida i `3 · x + 4 = 19`, med x = 4.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 4
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      },
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      },
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 19,
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Den øvste stolpen er kortare enn den nedste. Kva tyder det?",
+          "alternativ": [
+            "Talet du sette inn er for lite",
+            "Talet du sette inn er for stort",
+            "Likninga har inga løysing"
+          ],
+          "rett": 0,
+          "forklaring": "Den øvste stolpen er venstresida. Er han for kort, er venstresida mindre enn høgresida — og då må du prøve eit større tal for x. Med x = 5 blir dei like."
+        },
+        {
+          "id": "b2",
+          "type": "bygg",
+          "maal": "Teikn dei to sidene",
+          "tekst": "Teikn `3 · x + 4 = 19` som to stolpar med **x = 5**. Gong lengdene med **10**, og legg den nedste stolpen **40 steg** under den øvste.",
+          "hint": [
+            "Snu høgre 90 fyrst, så blir stolpane vassrette. Teikn venstresida, gå tilbake med pennen oppe, flytt 40 ned, og teikn høgresida.",
+            "Venstresida er `Rekn ut` med 3 gonge x, pluss 4 — og heile det svaret gonga med 10."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "rekne"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 2,
+            "breidd": 190,
+            "hogd": 40
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 5
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      },
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      },
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 19,
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "b3",
+          "type": "bygg",
+          "maal": "Teikn og test på ein gong",
+          "tekst": "Teikn dei to stolpane med **x = 5**, og la programmet i tillegg **skrive ut x** dersom sidene verkeleg er like store.",
+          "hint": [
+            "Teikninga er den same som i førre oppgåve. Legg `Dersom` med samanlikninga til slutt.",
+            "Samanlikn venstresida med 19, og legg `Skriv ut x` inni `Dersom`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "svar",
+              "vent": 5
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 2,
+            "breidd": 190,
+            "hogd": 40
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "x",
+                  "verdi": 5
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      },
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              },
+              {
+                "type": "pennOpp",
+                "felt": {}
+              },
+              {
+                "type": "bakover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      },
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              },
+              {
+                "type": "snuHogre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": 40
+                }
+              },
+              {
+                "type": "snuVenstre",
+                "felt": {
+                  "grader": 90
+                }
+              },
+              {
+                "type": "pennNed",
+                "felt": {}
+              },
+              {
+                "type": "framover",
+                "felt": {
+                  "lengd": {
+                    "type": "rekne",
+                    "felt": {
+                      "a": 19,
+                      "op": "gonge",
+                      "b": 10
+                    }
+                  }
+                }
+              },
+              {
+                "type": "dersom",
+                "felt": {
+                  "vilkaar": {
+                    "type": "samanlikn",
+                    "felt": {
+                      "a": {
+                        "type": "rekne",
+                        "felt": {
+                          "a": {
+                            "type": "rekne",
+                            "felt": {
+                              "a": 3,
+                              "op": "gonge",
+                              "b": {
+                                "type": "lesVar",
+                                "felt": {
+                                  "namn": "x"
+                                }
+                              }
+                            }
+                          },
+                          "op": "pluss",
+                          "b": 4
+                        }
+                      },
+                      "op": "lik",
+                      "b": 19
+                    }
+                  }
+                },
+                "kropp": [
+                  {
+                    "type": "skrivUt",
+                    "felt": {
+                      "verdi": {
+                        "type": "lesVar",
+                        "felt": {
+                          "namn": "x"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "Ei likning seier at to ting er **like store**, og det kan teiknast: éin stolpe for kvar side. Er den øvste for kort, er talet for lite. Er dei like lange, er likninga sann."
+    },
+    {
       "id": "proev-alle",
       "tittel": "Lat maskina prøve alle",
       "kompetansemaal": [
-        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige"
+        "7. trinn: bruke ulike strategiar for å løyse likningar og vurdere om løysingar er gyldige",
+        "5. trinn: bruke tal, tekst, teikning og konkret til å løyse likningar og teste og forklare løysingar"
       ],
       "palett": [
         "settVar",

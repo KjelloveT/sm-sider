@@ -63,8 +63,8 @@ const BolkLerret = (function () {
         return { b: r.width, h: r.height, dpr };
     }
 
-    function teikn(strek, tilstand) {
-        siste = { strek: strek || [], tilstand: tilstand || null };
+    function teikn(strek, tilstand, flater) {
+        siste = { strek: strek || [], tilstand: tilstand || null, flater: flater || [] };
         teiknPaaNytt();
     }
 
@@ -96,7 +96,22 @@ const BolkLerret = (function () {
         const px = (x) => b / 2 + (x - midtX) * skala;
         const py = (y) => h / 2 - (y - midtY) * skala;
 
-        // Rutenettet ligg under figuren, aldri oppå han.
+        /* Rekkjefølgja nedanfrå og opp: fyll, så rutenett, så strek.
+         *
+         * Fyllet må liggje under rutenettet. Legg ein det oppå, dekkjer eit
+         * fylt rektangel nettopp dei rutene eleven skal telje — og då er
+         * arealleksjonen øydelagd av si eiga illustrasjon. Strekane ligg
+         * øvst, så omrisset står skarpt i staden for å bli halvvegs dekt. */
+        (siste.flater || []).forEach(f => {
+            if (f.punkt.length < 3) return;
+            ctx.beginPath();
+            ctx.moveTo(px(f.punkt[0].x), py(f.punkt[0].y));
+            f.punkt.slice(1).forEach(p => ctx.lineTo(px(p.x), py(p.y)));
+            ctx.closePath();
+            ctx.fillStyle = BolkBlokkar.fargeHex(f.farge) || vanleg;
+            ctx.fill();
+        });
+
         if (rutenett) teiknRutenett(px, py, skala, vanleg);
 
         ctx.lineCap = 'round';
@@ -254,7 +269,7 @@ const BolkLerret = (function () {
         ctx.restore();
     }
 
-    function tom() { teikn([], null); }
+    function tom() { teikn([], null, []); }
 
     return { init, teikn, tom, teiknPaaNytt, setRutenett };
 })();
