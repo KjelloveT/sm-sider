@@ -127,8 +127,13 @@ def main():
     A = L.append
 
     A('# Ljodstigen — innspelingsliste\n')
-    A('> Generert av `_kjelder/lag_innspelingsliste.py`. Ikkje rediger for hand —')
+    A('> Generert av `lag_ljodstigen_lydliste.py`. Ikkje rediger for hand —')
     A('> endre `ljodstigen/js/letters.js` eller `words.js` og køyr skriptet på nytt.\n')
+
+    # Statustabellen høyrer heime her, men tala finst ikkje enno:
+    # manifest blir fylt lenger nede medan dokumentet blir skrive.
+    # Vi merkjer av plassen og set inn innhaldet til slutt.
+    status_at = len(L)
 
     A('## Slik gjer du det\n')
     A('**Éin fil per klipp.** Filnamnet er id-en i tabellane under, med `.wav`')
@@ -218,6 +223,20 @@ def main():
     A('Rekna som ~0,8 s i snitt og 48 kbps mono blir det kring **%d kB** ferdig'
       % int(total * 0.8 * 6))
     A('pakka — godt innanfor det repoet toler.\n')
+
+    # No er manifest fullt, og statusen kan reknast.
+    raa = os.path.join(ROT, '_kjelder', 'ljodstigen-lyd')
+    status = ['## Status', '', '| Bank | Treng | Spelt inn | Står att |', '|---|---|---|---|']
+    for b in ('fonem', 'namn', 'ord', 'ros'):
+        d = os.path.join(raa, b)
+        har = len([f for f in os.listdir(d) if f.lower().endswith('.wav')]) if os.path.isdir(d) else 0
+        vil = len(manifest[b])
+        att = '**%d**' % (vil - har) if har < vil else 'ingen'
+        status.append('| %s | %d | %d | %s |' % (b, vil, har, att))
+    status += ['', 'Bygg banken på nytt når nye klipp er på plass:', '',
+               '```', 'python bygg_ljodstigen_lydbank.py', '```', '',
+               'Skriptet tek med det som finst og seier frå om kva som manglar.', '']
+    L[status_at:status_at] = status
 
     md = os.path.join(APP, 'INNSPELING.md')
     io.open(md, 'w', encoding='utf-8', newline='\n').write('\n'.join(L))

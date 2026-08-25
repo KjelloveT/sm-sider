@@ -32,10 +32,16 @@
     ros:   { type: 'square',   base: 520, ms: 300 }
   };
 
+  /* Bankar der ein plasshaldartone er BETRE enn stille, fordi lyden ber
+     informasjon oppgåva treng: utan noko å høyre er Ordbyggjaren umogleg
+     å prøve i det heile. Ros er derimot pynt — der er stille langt betre
+     enn eit pip midt i ekte tale. */
+  const TONE_WHEN_MISSING = { fonem: true, namn: true, ord: true, ros: false };
+
   let ctx = null;
   const buffers = {};     // bank -> AudioBuffer
   const maps = {};        // bank -> { id: [startSek, lengdSek] }
-  const missing = [];     // bankar utan ekte lyd
+  const missing = new Set();   // bankar utan ekte lyd
   let ready = false;
   let playing = [];       // aktive kjelder, så stop() faktisk stoppar
 
@@ -95,7 +101,7 @@
       buffers[bank] = r[1];
     }).catch(function (err) {
       /* Ikkje ein feil å bråke om: banken finst berre ikkje enno. */
-      missing.push(bank);
+      missing.add(bank);
       console.info('[Ljodstigen] «' + bank + '» manglar lyd, brukar plasshaldartone. (' + err.message + ')');
     });
   }
@@ -106,7 +112,7 @@
    */
   function load(onProgress) {
     if (!context()) {
-      missing.push.apply(missing, BANKS);
+      BANKS.forEach(function (b) { missing.add(b); });
       ready = true;
       return Promise.resolve({ ok: false, missing: BANKS.slice() });
     }
@@ -118,7 +124,7 @@
       });
     })).then(function () {
       ready = true;
-      return { ok: missing.length === 0, missing: missing.slice() };
+      return { ok: missing.size === 0, missing: BANKS.filter(function (b) { return missing.has(b); }) };
     });
   }
 
@@ -178,7 +184,13 @@
     const bank = bankOf(id);
     const map = maps[bank];
     const buf = buffers[bank];
-    if (!map || !buf || !map[id]) return playTone(id);
+    if (!map || !buf || !map[id]) {
+      /* Manglar banken, spelar vi tone berre der lyden ber informasjon.
+         Elles teier vi: eit syntetisk pip etter kvart einaste svar,
+         blanda inn mellom ekte innspelt tale, høyrest ut som ein feil. */
+      if (!TONE_WHEN_MISSING[bank]) return Promise.resolve();
+      return playTone(id);
+    }
 
     const c = context();
     const at = map[id][0], dur = map[id][1];
@@ -226,7 +238,7 @@
     stop: stop,
     isReady: function () { return ready; },
     /* Kva bankar som køyrer på plasshaldartone. Menyen viser dette. */
-    missingBanks: function () { return missing.slice(); },
-    hasRealAudio: function () { return ready && missing.length === 0; }
+    missingBanks: function () { return BANKS.filter(function (b) { return missing.has(b); }); },
+    hasRealAudio: function () { return ready && missing.size === 0; }
   };
 })(window);

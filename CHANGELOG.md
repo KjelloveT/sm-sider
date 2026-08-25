@@ -3,6 +3,20 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.27] — 2026-08-25
+
+### Lagt til
+- **Bokstavlydane og bokstavnamna er spelte inn.** 58 klipp, innspelte i eitt sett, bygde til to lydsprites på til saman 167 kB. Ordbanken og rosen står att.
+- **`bygg_ljodstigen_lydbank.py`** byggjer spritene frå råopptaka i `_kjelder/ljodstigen-lyd/`. Skriptet trimmar til fast innleiing, jamnar styrken delvis og skøyter klippa saman med 60 ms stille imellom.
+  - **Delvis styrkejamning, ikkje full.** Opptaka kom toppnormaliserte til −1 dBFS, men topp er ikkje det øyret høyrer: spennet i RMS var **12 dB**. I Bokstavropet skal eleven velje mellom to lydar, og då kan ikkje «den høgaste» vere eit utilsikta hint. Kvart klipp blir flytt halvvegs mot median, ikkje heilt — /t/ *er* naturleg svakare enn /m/, og full utjamning høyrest kunstig ut.
+- **Statustabell i `INNSPELING.md`** som blir lesen av disk, ikkje halden oppdatert for hand.
+
+### Fiksa
+- **Stille-detektoren i byggjeskriptet lét seg lure av eit einsleg blaff.** Fleire råklipp har ein munnlyd eller eit klikk på kring −40 dB tidleg, og ein detektor som ser på eitt vindauge om gongen trur lyden byrjar der. Resultatet var **160 ms daud luft framfor /y/** — som eleven ventar på i ei oppgåve som måler responstid. Detektoren krev no at nivået *held seg* oppe over 25 ms. Innleiinga gjekk frå eit spenn på 35–180 ms til **35–65 ms** på alle 58 klippa.
+- **Plasshaldartonen spelte etter kvart einaste svar.** Rosen er ikkje spelt inn enno, så kvar rett og kvar feil utløyste eit syntetisk pip — blanda inn mellom ekte innspelt tale. Ein plasshaldartone er forsvarleg når lyden ber informasjon oppgåva treng, ikkje når han er pynt: manglande **ros er no stille**, medan manglande **ord framleis gjev tone**, sidan Ordbyggjaren er umogleg å prøve utan noko å høyre.
+- **`missing`-lista dupliserte seg** ved gjentekne `LjodAudio.load()`-kall, som ville gitt meldinga «orda, rosen, orda og rosen». Han er eit `Set` no.
+- **Meldinga om manglande lyd sa feil.** Ho sa «du høyrer tonar» om bankar som no er stille. Ho seier kva som manglar, ikkje kva du høyrer — kva ein manglande bank *gjer* er eit val i `audio.js`, og ei melding som gjettar på det blir ståande feil neste gong valet endrar seg.
+
 ## [1.26] — 2026-08-25
 
 ### Lagt til
