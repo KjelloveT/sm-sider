@@ -201,6 +201,13 @@ Ein `CHANGELOG.md` på rot skal vedlikehaldast med eit fast format per versjon:
 
 Oppdater CHANGELOG når du legg til nye spel/verktøy, gjer brytande endringar eller fiksar feil som påverkar brukaropplevinga.
 
+**Notatet på framsida skal følgje CHANGELOG.** Gul-lappen i `index.html` (`aside.hero-postit`) har eit versjonsnummer, og det skal vere det same som øvste versjonen i `CHANGELOG.md`. Legg du til ein ny versjon i endringsloggen, skal du i same pull request:
+
+- setje versjonsnummeret i notatet til den nye versjonen, og
+- vurdere om innhaldet i notatet framleis stemmer — notatet skal seie kva som er nytt og verdt å sjå på no, ikkje vere ei oppsamling. Er eit punkt blitt gammalt, tek du det bort i staden for å leggje til enda eit.
+
+Notatet er det einaste stadet ein besøkjande ser at sida lever. Står det same versjonsnummeret der i mange veker medan endringsloggen veks, tyder det ikkje lenger noko.
+
 ### 6.3 Nettlesartesting
 Verifiser i **Chrome** før merge til `main`. Sjekk:
 - Sida lastar utan konsollfeil

@@ -29,6 +29,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **«Areal og oppdeling»** — fem leksjonar for 6. trinn. Heile modulen ligg på rutenettet, fordi areal på dette trinnet er «kor mange ruter dekkjer figuren». Frå å telje ruter, til at same omkrins kan gje ulikt areal, til distributivitet: `a · (b + c) = a · b + a · c` er ikkje ein regel å hugse, det er eitt rektangel delt i to.
 - **«Reknerekkefølgje»** — fire leksjonar for 7. trinn. Er `2 + 3 · 4` lik 14 eller 20? I blokkene finst ikkje tvilen: den som ligg innerst blir rekna fyrst, og eit tvitydig uttrykk lèt seg ikkje byggje i det heile.
 - **«Teikn likninga»** i likningsmodulen, som med det opnar for 5. trinn. Målet seier «bruke tal, tekst, **teikning** og konkret til å løyse likningar» — modulen hadde tal og tekst, men ikkje teikninga. To stolpar, éin for kvar side av likskapsteiknet: er dei like lange, er likninga sann.
+## [1.22] — 2026-08-25
+
+### Endra
+- **Notatet på framsida er oppdatert til versjon 1.22.** Punktet om Vyrde-maskoten er teke bort — han har stått der sidan han var ny, og alle som er innom ser han uansett øvst på sida. I staden står **Bolkestokk** først, som det nyaste verktøyet: blokkprogrammering spissa mot matematikk. Ormritaren, Duldord og Handsam bilete står framleis.
+- Notatet følgjer no versjonsnummeret i denne fila. Det stod «Versjon 1.0» medan endringsloggen var komen til 1.21, og eit versjonsnummer som ikkje tyder noko er verre enn ingen — ein lesar som kjem att kan ikkje sjå om noko har hendt sidan sist.
+
 ## [1.21] — 2026-08-23
 
 ### Endra
