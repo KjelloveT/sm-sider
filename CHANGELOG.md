@@ -3,6 +3,15 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.27] — 2026-08-25
+
+### Lagt til
+- **Ljodbanken** (`ljodbanken/`) — ei avgreining av Lydskurd for den som skal spele inn mange korte klipp etter ei liste. Heile lista står på skjermen med tekst og rettleiing for kvart klipp, og kvar rad har sin eigen opptaksknapp med nedteljing på tre. Mikrofonen blir verande på mellom klippa, og «Gå automatisk vidare» tek deg til det neste som manglar — 141 klipp let seg ikkje gjere med eitt løyve per opptak.
+- **Verktøyet foreslår sjølv kvar lyden byrjar og sluttar** etter kvart opptak, og skjer bort stilla i endane. Blei klippet for langt, dreg du handtaka innover i «Skjer til». Lyden blir aldri kasta — utsnittet er to tal, så grensene kan dragast ut att.
+- **Alt kan lastast ned som éi zip-fil**, med ei mappe per bank, `innhald.json` og rettleiingane som tekstfil. Same zip-fila kan hentast inn att seinare, så ei økt kan delast over fleire dagar. Klipp som blir henta inn og ikkje rørte, blir lagde uendra inn i neste zip — ei mp3 som blir dekoda og enkoda på nytt for kvar dag taper lyd kvar gong. Zip-skrivinga er vår eigen, utan nytt bibliotek.
+- **Innebygd liste for Ljodstigen** med alle 141 klippa — bokstavlydar, bokstavnamn, ord og ros — henta frå `INNSPELING.md`. Du kan òg lage dine eigne lister i verktøyet, og lagre og opne dei som `.json`-filer.
+- Verktøyet er **skjult** (`hidden: true` i `json/apps.json`) på same vis som Etikktesten: det står korkje på framsida eller i toppmenyen, men `ljodbanken/index.html` verkar for den som har lenkja. Notatet på framsida nemner det difor ikkje — berre versjonsnummeret følgjer med.
+
 ## [1.26] — 2026-08-25
 
 ### Lagt til
