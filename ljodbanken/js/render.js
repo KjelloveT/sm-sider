@@ -213,7 +213,15 @@ LB.render = (function () {
     row.status.appendChild(meta);
   }
 
+  /* Ikonet blir berre bytt når det FAKTISK endrar seg.
+     Den aktive rada blir teikna om for kvar ramme, og bygde vi innhaldet
+     i knappen på nytt kvar gong, ville SVG-en under fingeren bli bytt ut
+     mellom mousedown og mouseup. Då finst det ikkje lenger noko felles
+     opphav for dei to hendingane, nettlesaren fyrer aldri `click`, og
+     stoppknappen let seg ikkje trykkje. */
   function setRecIcon(btn, iconName, title) {
+    if (btn.dataset.icon === iconName && btn.title === title) return;
+    btn.dataset.icon = iconName;
     btn.textContent = '';
     const span = LB.util.el('span');
     span.innerHTML = ICON(iconName, 16);
@@ -286,9 +294,17 @@ LB.render = (function () {
     updateAll();
   }
 
+  /* Rullar berre når rada faktisk er utanfor synsfeltet.
+     Rullar vi kvar gong, flyttar knappane seg under handa til den som
+     står klar til å trykkje stopp — og eit klikk som byrjar på ein knapp
+     og endar ein annan stad blir ikkje til noko klikk. */
   function scrollTo(id) {
     const row = rows.get(id);
-    if (row && !row.root.hidden) row.root.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    if (!row || row.root.hidden) return;
+    const box = row.root.getBoundingClientRect();
+    const height = window.innerHeight || document.documentElement.clientHeight;
+    if (box.top >= 80 && box.bottom <= height - 20) return;
+    row.root.scrollIntoView({ block: 'center', behavior: 'smooth' });
   }
 
   function setup() {

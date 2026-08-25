@@ -13,6 +13,7 @@ window.LB = window.LB || {};
   let micBtn = null;
   let micSelect = null;
   let autoBox = null;
+  let nextBtn = null;
   let frame = 0;
 
   /* ──────────────── Teiknesløyfa ──────────────── */
@@ -30,6 +31,7 @@ window.LB = window.LB || {};
   function onSessionChange() {
     LB.render.updateAll();
     syncMic();
+    syncNextBtn();
     const active = LB.session.state();
     if (active.id) {
       if (!frame) frame = requestAnimationFrame(loop);
@@ -45,6 +47,44 @@ window.LB = window.LB || {};
     micBtn.appendChild(span);
     micBtn.appendChild(document.createTextNode(on ? 'Mikrofonen er på' : 'Slå på mikrofonen'));
     micBtn.classList.toggle('lb-mic-on', on);
+  }
+
+  /* ──────────────── Tastatur ──────────────── */
+
+  /* Mellomrom startar og stoppar opptaket, Escape avbryt.
+     Poenget er handa: skal du gjennom hundre klipp, vil du ikkje flytte
+     musepeikaren ned til neste rad mellom kvart. Med mellomrom kan du
+     halde blikket på teksten og late fingeren stå.
+
+     To stader held vi oss unna: skriv du i eit felt, er mellomrom eit
+     mellomrom, og står du på ein knapp, trykkjer nettlesaren han sjølv. */
+  function onKey(event) {
+    if (event.key !== ' ' && event.key !== 'Escape') return;
+    if (event.ctrlKey || event.altKey || event.metaKey) return;
+
+    const target = event.target;
+    const tag = (target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || target.isContentEditable) return;
+    if (document.querySelector('.modal-overlay.open')) return;   // Escape lukkar modalen
+
+    if (event.key === 'Escape') {
+      if (!LB.session.isBusy()) return;
+      event.preventDefault();
+      stopEverything();
+      LB.util.toast('Opptaket blei avbrote.');
+      return;
+    }
+
+    if (tag === 'button') return;
+
+    event.preventDefault();
+    const active = LB.session.state();
+    if (active.id) {
+      if (active.phase === 'opptak') LB.session.finish();
+      else stopEverything();
+      return;
+    }
+    nextMissing();
   }
 
   /* ──────────────── Kva mikrofon ──────────────── */
@@ -80,6 +120,40 @@ window.LB = window.LB || {};
       .catch((err) => { micBtn.disabled = false; syncMic(); LB.util.toast(err.message); });
   }
 
+  /* Knappen i verktøyraden blir til ein stoppknapp medan opptaket går.
+     Han står stille på skjermen same kor lista rullar, og er difor det
+     eine stoppmålet du alltid finn att — særleg når «gå automatisk
+     vidare» flyttar den aktive rada for deg. */
+  function syncNextBtn() {
+    const active = LB.session.state();
+    const busy = !!active.id;
+    nextBtn.textContent = '';
+    const span = LB.util.el('span');
+    span.innerHTML = ICON(busy ? 'stop' : 'play', 16);
+    nextBtn.appendChild(span);
+    nextBtn.appendChild(document.createTextNode(
+      busy ? (active.phase === 'opptak' ? 'Stopp opptaket' : 'Avbryt') : 'Ta neste som manglar'));
+    nextBtn.classList.toggle('lb-rec-live', busy && active.phase === 'opptak');
+  }
+
+  function onNextBtn() {
+    const active = LB.session.state();
+    if (!active.id) { nextMissing(); return; }
+    if (active.phase === 'opptak') LB.session.finish();
+    else stopEverything();
+  }
+
+  /* Escape og «Avbryt» skal stoppe heile økta, ikkje berre klippet:
+     står automatikken på, ville neste opptak elles byrje av seg sjølv
+     eit sekund etter at du bad om å få stoppe. */
+  function stopEverything() {
+    LB.session.cancel();
+    if (LB.session.isAuto()) {
+      LB.session.setAuto(false);
+      autoBox.checked = false;
+    }
+  }
+
   function nextMissing() {
     const id = LB.state.nextMissing(null);
     if (!id) { LB.util.toast('Alle klippa er spelte inn.'); return; }
@@ -100,6 +174,7 @@ window.LB = window.LB || {};
     micBtn = document.getElementById('micBtn');
     micSelect = document.getElementById('micSelect');
     autoBox = document.getElementById('autoAdvance');
+    nextBtn = document.getElementById('nextBtn');
 
     if (!LB.record.isSupported()) {
       micBtn.disabled = true;
@@ -116,7 +191,7 @@ window.LB = window.LB || {};
       navigator.mediaDevices.addEventListener('devicechange', fillInputs);
     }
     autoBox.addEventListener('change', () => LB.session.setAuto(autoBox.checked));
-    document.getElementById('nextBtn').addEventListener('click', nextMissing);
+    nextBtn.addEventListener('click', onNextBtn);
     document.getElementById('filterSelect').addEventListener('change', (e) => LB.render.setFilter(e.target.value));
 
     document.getElementById('exportBtn').addEventListener('click', LB.uiExport.open);
@@ -151,11 +226,13 @@ window.LB = window.LB || {};
     document.getElementById('tipsDone').addEventListener('click', () => LB.util.closeModal(tipsOverlay));
     LB.util.bindOverlayClose(tipsOverlay);
 
+    document.addEventListener('keydown', onKey);
     LB.session.setOnChange(onSessionChange);
     LB.state.subscribe(() => LB.render.updateAll());
 
     LB.list.use(LB.list.normalize(LB.builtinList), true);
     syncMic();
+    syncNextBtn();
     fillInputs();
 
     /* Opptaka ligg berre i minnet. Går fana, går dei — så vi seier frå.

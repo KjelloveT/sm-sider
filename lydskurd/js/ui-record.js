@@ -250,6 +250,26 @@ LS.uiRecord = (function () {
     timerLabel.textContent = '0:00,0';
   }
 
+  /* ──────────────── Tastatur ──────────────── */
+
+  /* Mellomrom startar og stoppar opptaket medan dialogen står open.
+     Tidslinja brukar same tasten til å spele av, men medan dialogen er
+     framme er det opptaket som gjeld — og avspeling er stoppa uansett.
+
+     Skriv du i eit felt eller står på ein knapp, held vi oss unna:
+     der har mellomrom si eiga meining frå før. */
+  function onKey(e) {
+    if (!overlay.classList.contains('open')) return;
+    if (e.key !== ' ') return;
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || tag === 'button') return;
+    if (!LS.record.isOpen()) return;
+    e.preventDefault();
+    e.stopPropagation();
+    toggleRecord();
+  }
+
   /* ──────────────── Oppstart ──────────────── */
 
   function setup() {
@@ -284,6 +304,10 @@ LS.uiRecord = (function () {
     closeBtn.addEventListener('click', close);
     doneBtn.addEventListener('click', close);
     LS.util.bindOverlayClose(overlay);
+
+    // Fanga i capture-fasen, så tidslinja si eiga mellomrom-snarvegen ikkje
+    // spelar av bak dialogen.
+    document.addEventListener('keydown', onKey, true);
 
     // Lukkar brukaren fana midt i eit opptak, skal mikrofonen likevel sleppast.
     window.addEventListener('pagehide', () => LS.record.closeMic());

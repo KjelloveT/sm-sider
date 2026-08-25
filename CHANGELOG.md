@@ -10,6 +10,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **`serve.ps1` svarte 404 på mappe-URL-ar.** Lokalt måtte ein skrive `/lydskurd/index.html` heilt ut. No serverer han `index.html` frå mappa, og sender `/lydskurd` vidare til `/lydskurd/` — same åtferd som i produksjon, så feilen over ikkje kan gøyme seg til han er ute.
 
 ### Lagt til
+- **Mellomrom startar og stoppar opptaket** — i Ljodbanken frå lista, i Lydskurd medan opptaksdialogen står open. **Escape** avbryt utan å lagre, og slår samstundes av «gå automatisk vidare»: bad du om å få stoppe, skal ikkje neste opptak byrje av seg sjølv eit sekund seinare. Skriv du i eit felt eller står på ein knapp, held snarvegen seg unna — der har mellomrom si eiga meining frå før.
+- **Knappen i verktøyraden i Ljodbanken blir til ein stoppknapp** medan opptaket går. Han står stille på skjermen same kor lista rullar, og er difor det eine stoppmålet du alltid finn att.
+
+### Fiksa
+- **Stoppknappen i Ljodbanken var vanskeleg å treffe.** Den aktive rada blir teikna om for kvar ramme, og ikonet i knappen blei bygd på nytt kvar gong. SVG-en under fingeren blei difor bytt ut mellom `mousedown` og `mouseup`, og då finst det ikkje lenger noko felles opphav for dei to hendingane — nettlesaren fyrer aldri `click`. Ikonet blir no berre bytt når det faktisk endrar seg.
+- **Lista rullar ikkje lenger når rada alt er synleg.** Ho rulla ved kvar tilstandsendring, så knappane flytta seg under handa til den som stod klar til å trykkje stopp.
+
+### Lagt til
 - **Val av mikrofon i Lydskurd og Ljodbanken.** Maskina har gjerne fleire lydinngangar — den innebygde i skjermen, headsettet, og eit lydkort — og nettlesaren vel sjølv kva for ein han tek. Det oppdagar ein typisk etter tjue klipp med feil mikrofon. Lista står no i opptaksdialogen i Lydskurd og i verktøyraden i Ljodbanken.
   - Namna på mikrofonane er tomme før løyvet er gjeve — nettlesaren vil ikkje at ei side skal kunne kjenne att maskina på lista over lydkort. Lista blir difor fylt på nytt straks mikrofonen er open, og når nokon koplar til eller frå ei eining medan økta går.
   - Valet blir sett med `deviceId: { exact: … }`. Er mikrofonen kopla frå, får du ei feilmelding i staden for eit stille opptak frå ein annan inngang.
