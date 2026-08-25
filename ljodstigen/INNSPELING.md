@@ -1,7 +1,24 @@
 # Ljodstigen — innspelingsliste
 
-> Generert av `_kjelder/lag_innspelingsliste.py`. Ikkje rediger for hand —
+> Generert av `lag_ljodstigen_lydliste.py`. Ikkje rediger for hand —
 > endre `ljodstigen/js/letters.js` eller `words.js` og køyr skriptet på nytt.
+
+## Status
+
+| Bank | Treng | Spelt inn | Står att |
+|---|---|---|---|
+| fonem | 29 | 29 | ingen |
+| namn | 29 | 29 | ingen |
+| ord | 70 | 0 | **70** |
+| ros | 13 | 0 | **13** |
+
+Bygg banken på nytt når nye klipp er på plass:
+
+```
+python bygg_ljodstigen_lydbank.py
+```
+
+Skriptet tek med det som finst og seier frå om kva som manglar.
 
 ## Slik gjer du det
 

@@ -76,11 +76,21 @@
     R().clear(host);
     host.appendChild(frame.root);
 
-    /* Køyrer vi på plasshaldartonar, skal det stå. Ein lærar som ikkje
-       veit det vil tru at appen er øydelagd. */
+    /* Køyrer vi på plasshaldartonar, skal det stå — og det skal stå KVA
+       som manglar. Ei melding om at «lyden manglar» når bokstavlydane
+       faktisk er innspelte, får ein lærar til å tru at heile appen er
+       øydelagd. */
     if (audioRes && audioRes.missing.length) {
+      const NAMES = { fonem: 'bokstavlydane', namn: 'bokstavnamna', ord: 'orda', ros: 'rosen' };
+      const list = audioRes.missing.map(function (b) { return NAMES[b] || b; });
+      const what = list.length > 1
+        ? list.slice(0, -1).join(', ') + ' og ' + list[list.length - 1]
+        : list[0];
+      /* Sei kva som manglar, ikkje kva du høyrer. Kva ein manglande bank
+         gjer — tone eller stille — er eit val i audio.js, og ei melding
+         som gjettar på det blir ståande feil neste gong valet endrar seg. */
       const note = R().h('p', 'ljod-audio-note',
-        'Lyden er ikkje spelt inn enno — du høyrer tonar i staden for bokstavlydar.');
+        'Ikkje alt er spelt inn enno: ' + what + ' manglar.');
       frame.head.appendChild(note);
     }
 
