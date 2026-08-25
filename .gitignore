@@ -32,3 +32,9 @@ _kjelder/
 # Python-bytekode frå verifiser_ormritaren.py
 __pycache__/
 *.pyc
+
+# Råopptak til lydbanken i Ljodstigen. Éin fil per klipp, lese inn etter
+# ljodstigen/INNSPELING.md. Berre den ferdig bygde spriten i
+# ljodstigen/lyd/ blir commita — råklippa ligg lokalt så banken kan
+# byggjast på nytt utan å spele inn alt att.
+_kjelder/ljodstigen-lyd/
