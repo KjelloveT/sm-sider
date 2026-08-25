@@ -196,13 +196,17 @@
           if (s.ch === word.letters[i]) { s.node.classList.add('is-right'); }
           else { s.node.classList.add('is-wrong'); }
         });
-        LjodAudio.play(R().nudgeId()).then(play);
-        setTimeout(function () {
+        /* Brikkene kjem tilbake når oppmuntringa er ferdig snakka, ikkje
+           etter ei fast klokke: klippa er frå 1,4 til 2,4 sekund lange,
+           så eit fast tal ville anten avbrote henne eller late eleven
+           sitje og vente. Så høyrer han ordet om att og kan prøve på ny. */
+        R().feedback(false, []).then(function () {
           slots.forEach(function (s, i) {
             if (s.ch !== word.letters[i]) pullTile(i);
             else s.node.classList.remove('is-wrong');
           });
-        }, 1400);
+          return play();
+        });
       }
 
       tiles.forEach(function (t) {

@@ -65,18 +65,18 @@
         if (correct) {
           R().markCorrect(node);
           R().setMood('happy');
-          LjodAudio.play(R().praiseId());
         } else {
           R().markWrong(node);
           R().revealAnswer(grid, q.ch);
           R().setMood('think');
-          LjodAudio.play(R().nudgeId())
-            .then(function () { return LjodAudio.play('f_' + q.ch); });
         }
 
-        setTimeout(function () {
+        /* Her er fasiten ein LYD, ikkje ein bokstav, så det å spele han
+           om att er sjølve rettinga: eleven høyrer kva han skulle valt.
+           Han kjem etter oppmuntringa, ikkje oppå neste oppgåve. */
+        R().feedback(correct, correct ? [] : ['f_' + q.ch]).then(function () {
           resolve({ ch: q.ch, correct: correct, latencyMs: latency, chosen: correct ? null : key });
-        }, correct ? 900 : 1900);
+        });
       });
 
       body.appendChild(grid);

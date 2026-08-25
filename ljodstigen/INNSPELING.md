@@ -9,8 +9,8 @@
 |---|---|---|---|
 | fonem | 29 | 29 | ingen |
 | namn | 29 | 29 | ingen |
-| ord | 70 | 0 | **70** |
-| ros | 13 | 0 | **13** |
+| ord | 70 | 70 | ingen |
+| ros | 13 | 13 | ingen |
 
 Bygg banken på nytt når nye klipp er på plass:
 

@@ -102,8 +102,15 @@
     R().clear(host);
     if (!current) return;
 
-    const open = LjodAdaptive.unlockedModes(current.adaptive).map(function (m) { return m.id; });
+    const allOpen = LjodState.read().allModes;
+    const open = allOpen
+      ? LjodAdaptive.MODES.map(function (m) { return m.id; })
+      : LjodAdaptive.unlockedModes(current.adaptive).map(function (m) { return m.id; });
     const suggested = LjodAdaptive.suggestMode(current.adaptive);
+    /* Kva som er opna av eleven sjølv, uavhengig av brytaren. Ein modus
+       som berre er open fordi alt er opna skal ikkje sjå ut som noko
+       eleven har fortent. */
+    const earned = LjodAdaptive.unlockedModes(current.adaptive).map(function (m) { return m.id; });
 
     LjodAdaptive.MODES.forEach(function (m) {
       const def = window['LjodMode_' + m.id];
@@ -116,7 +123,9 @@
       card.appendChild(R().h('span', 'ljod-mode-title', m.label));
       card.appendChild(R().h('span', 'ljod-mode-blurb', def ? def.blurb : ''));
 
-      if (unlocked && m.id === suggested) {
+      if (unlocked && earned.indexOf(m.id) === -1) {
+        card.appendChild(R().h('span', 'ljod-mode-flag ljod-flag-open', 'Opna av lærar'));
+      } else if (unlocked && m.id === suggested) {
         /* Appen foreslår, eleven vel. Forslaget er ei brikke, ikkje ein
            låst veg — autonomi er halve motivasjonen på dette trinnet. */
         card.appendChild(R().h('span', 'ljod-mode-flag', 'Framlegg'));
@@ -195,8 +204,31 @@
     });
   }
 
+  /* ──────────────── Opne alle modusane ──────────────── */
+
+  function wireAllModes() {
+    const host = $('allmodes');
+    if (!host) return;
+    const box = R().h('input');
+    box.type = 'checkbox';
+    box.id = 'allModesBox';
+    box.checked = LjodState.read().allModes;
+    box.addEventListener('change', function () {
+      const s = LjodState.read();
+      s.allModes = box.checked;
+      LjodState.write(s);
+      refresh();
+    });
+    const lab = R().h('label', 'ljod-check');
+    lab.htmlFor = 'allModesBox';
+    lab.appendChild(box);
+    lab.appendChild(R().h('span', null, 'Opne alle modusane'));
+    host.appendChild(lab);
+  }
+
   function init() {
     wireFont();
+    wireAllModes();
     wireTabs();
     const s = LjodState.read();
     if (s.lastProfile) current = LjodState.getProfile(s.lastProfile);

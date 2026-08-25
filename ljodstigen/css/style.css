@@ -176,6 +176,30 @@ body[data-font="lesefont"] .ljod-bed-letter {
   color: var(--surface);
 }
 
+/* Merket på ein modus som er open fordi læraren opna alt, ikkje fordi
+   eleven kom dit. Det skal ikkje sjå ut som noko han har fortent. */
+.ljod-mode-flag.ljod-flag-open {
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-weight: 700;
+}
+
+.ljod-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+}
+.ljod-check input { width: 22px; height: 22px; cursor: pointer; }
+.ljod-check:focus-within { outline: 4px solid var(--accent2); outline-offset: 3px; }
+
 /* ──────────────── Oppgåveflate ──────────────── */
 
 .ljod-play { margin-top: 10px; }

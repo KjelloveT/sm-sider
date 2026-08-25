@@ -3,6 +3,24 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.29] — 2026-08-25
+
+### Fiksa
+- **Tilbakemelding frå ei oppgåve spelte oppå den neste.** Svarte eleven feil i Bokstavropet, kom det ein bokstavlyd i tillegg til oppmuntringa — og når neste bokstav dukka opp, spelte lyden frå den *førre* oppgåva. Årsaka var ikkje lyden, men stoppeklokka: modusane venta ei fast tid før dei gjekk vidare — 900 ms på rett svar, 1900 ms på feil. Dei tala vart gissa medan all lyd var syntetiske tonar på 300 ms, og vart aldri revurderte då ekte tale kom inn. **Tre av fire oppmuntringsklipp er lengre enn 1900 ms** (`r_nesten` 2420, `r_vanskeleg` 2145, `r_saman` 2025) og **to av åtte rosklipp lengre enn 900 ms**, så neste oppgåve rakk å teikne seg medan tilbakemeldinga framleis gjekk. Alle fire modusane følgjer no lyden i staden for klokka, gjennom ein felles `LjodRender.feedback()`. I tillegg blir lyd som måtte henge att stoppa når ei ny oppgåve startar.
+- Same feil i Ordbyggjaren: brikkene kom tilbake etter faste 1400 ms medan oppmuntringa framleis snakka. Dei kjem no tilbake når ho er ferdig.
+
+### Lagt til
+- **«Opne alle modusane»** under Skrift på framsida i Ljodstigen. Normalt opnar modusane seg etter kvart som eleven meistrar bokstavar; med denne kan ein lærar opne alle med ein gong — for å prøve spelet, eller la ein elev sjå kva som kjem. Progresjonen blir ikkje rørt, og modusar som er opna slik blir merkte «Opna av lærar», så dei ikkje ser ut som noko eleven har fortent. Innstillinga ligg på eininga, ikkje på profilen.
+
+## [1.28] — 2026-08-25
+
+### Lagt til
+- **Heile lydbanken til Ljodstigen er spelt inn.** 70 ord og 13 ros- og oppmuntringsklipp kom til, så alle **141** klippa er på plass. Alle fire modusane har no ekte tale, og plasshaldartonane er ute av bruk. Samla 720 kB i fire lydsprites.
+- **Ordbyggjaren og «Første lyd» er spelbare for første gong.** Begge treng eit opplese ord for å fungere i det heile.
+
+### Fiksa
+- **Stille-detektoren i byggjeskriptet gjekk ut frå toppnivået åleine**, og det held ikkje når opptaka kjem frå ulike rom. Ord- og ros-klippa har eit støygolv på −34 til −44 dB mot −50 til −58 for bokstavlydane. Med toppen på −11 dB hamna terskelen på −41 dB — altså **under romtona** — og då blei heile klippet rekna som lyd: «pose» kom ut som 550 ms tale med **800 ms romtone framfor og 600 ms etter**. Detektoren måler no støygolvet i kvart klipp for seg (10. persentil av vindaugsnivåa) og krev at lyden ligg minst 12 dB over det. Ordbanken gjekk frå 71,2 til **52,4 sekund** — nitten sekund romtone borte — medan bokstavlydane er uendra, sidan dei alt var tekne opp i eit stille rom.
+
 ## [1.27] — 2026-08-25
 
 ### Lagt til
