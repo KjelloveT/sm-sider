@@ -1,4 +1,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* `hidden` skal faktisk skjule.
+ *
+ * Attributtet får `display: none` frå nettlesaren sitt eige stilsett, og
+ * forfattarstilar vinn alltid over det. `.btn` set `display: inline-flex`,
+ * så kvar einaste knapp med klassa har vore SYNLEG sjølv om HTML-en eller
+ * JS-en sa `hidden`. Seks appar hadde feilen: hintknappen i Bolkestokk låg
+ * framme før eleven hadde prøvd, og «Opne arkivet», «Tøm namn» og
+ * «Hald fram» stod ute i duldord, leitekryss, livslina, lydskurd og ordkryss.
+ *
+ * `!important` er nødvendig og ikkje latskap: `[hidden]` og `.btn` har same
+ * spesifisitet, så utan han avgjer rekkjefølgja i fila — og då ville kvar ny
+ * display-regel lenger nede kunne slå attributtet ut på nytt. */
+[hidden] { display: none !important; }
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
   background: var(--bg); color: var(--text); line-height: 1.6;

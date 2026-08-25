@@ -3,6 +3,10 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.24] — 2026-08-23
+
+### Fiksa
+- **`hidden` skjulte ikkje knappar.** Attributtet får `display: none` frå nettlesaren sitt eige stilsett, og forfattarstilar vinn alltid over det — `.btn` set `display: inline-flex`, så kvar einaste knapp med den klassa har vore synleg sjølv om HTML-en eller JS-en sa `hidden`. **Seks appar** hadde feilen: hintknappen i Bolkestokk låg framme som ei tom rute før eleven hadde prøvd på oppgåva, og han verka — så ein kunne hente hint utan å prøve fyrst. I duldord, leitekryss, livslina, lydskurd og ordkryss stod «Opne arkivet», «Tøm namn» og «Hald fram» ute frå starten. Retta éin stad, i det delte stilarket.
 ## [1.23] — 2026-08-23
 
 ### Lagt til
