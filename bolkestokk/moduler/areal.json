@@ -31,6 +31,10 @@
           "tekst": "**Arealet** til ein figur er kor stor flate han dekkjer. På rutenettet kan du telje det rett av: kor mange ruter ligg inni figuren?"
         },
         {
+          "type": "merk",
+          "tekst": "Denne modulen brukar **rutenettet** frå «Rutenett og koordinatar». Hugsar du det: `Gå til rute 3, 2` tyder tre ruter til høgre og to opp. Fyrst x, så y — og negative tal går andre vegen."
+        },
+        {
           "type": "avsnitt",
           "tekst": "Ny blokk: `Fyll med`. Alt skilpadda teiknar etter henne og fram til `Ferdig fylt` blir til ei farga flate. Rutenettet ligg oppå fyllet, så du kan framleis telje."
         },

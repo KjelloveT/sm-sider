@@ -24,7 +24,11 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Køyrer du det same programmet to gonger, får du to ulike svar. Det er ikkje ein feil. Det er heile poenget, og det er den eine tingen som skil eit tilfeldig forsøk frå alt anna du har programmert til no."
+          "tekst": "Køyrer du det same programmet to gonger, får du to ulike svar. Det er ikkje ein feil — det er heile poenget. Ingenting anna du har programmert oppfører seg slik."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Du kan ikkje vite kva **eitt** kast blir. Men du veit noko om **mange**: ein sekstal kjem opp omtrent kvar sjette gong. Det er det **sannsynet** fortel — kor stor del av kasta som blir eit bestemt utfall. For ein seksar er det `1 av 6`."
         },
         {
           "type": "merk",
@@ -281,7 +285,7 @@
           }
         }
       ],
-      "oppsummering": "Ein terning i programmet er `tilfeldig tal frå 1 til 6`. Han gjev eit nytt heiltal kvar gong han blir lesen, og det er difor same programmet ikkje gjev same svaret to gonger."
+      "oppsummering": "Ein terning i programmet er `tilfeldig tal frå 1 til 6`. Han gjev eit nytt heiltal kvar gong han blir lesen. Difor gjev det same programmet ulikt svar kvar gong. **Sannsynet** seier kor stor del av kasta som blir eit bestemt utfall — for ein seksar er det `1 av 6`."
     },
     {
       "id": "tel-opp",
@@ -308,7 +312,7 @@
         },
         {
           "type": "avsnitt",
-          "tekst": "Det treng tre ting du alt kan: ei **lykkje** som kastar, ein **variabel** som held teljinga, og eit **vilkår** som avgjer om denne teljinga skal auke."
+          "tekst": "Til det treng du tre ting frå grunnkurset. Ei **lykkje** som kastar mange gonger. Ein **variabel** som held teljinga. Og ei **`Dersom`** som avgjer om teljinga skal auke."
         },
         {
           "type": "merk",
@@ -932,7 +936,7 @@
           }
         }
       ],
-      "oppsummering": "For å finne ut kor ofte noko skjer: ein **teljar** sett til 0 før lykkja, eit **kast lagt i ein variabel**, og eit **vilkår** som avgjer om teljaren skal auke. Teljaren må setjast før lykkja, ikkje inni."
+      "oppsummering": "Oppskrifta for å telje: sett ein **teljar til 0 før lykkja**, legg **kastet i ein variabel**, og lat ei **`Dersom`** avgjere om teljaren skal auke. Set du teljaren inni lykkja, byrjar han på null kvar runde."
     },
     {
       "id": "brok",
@@ -1588,7 +1592,7 @@
                 {
                   "type": "settVar",
                   "felt": {
-                    "namn": "sum",
+                    "namn": "augesum",
                     "verdi": {
                       "type": "rekne",
                       "felt": {
@@ -1620,7 +1624,7 @@
                         "a": {
                           "type": "lesVar",
                           "felt": {
-                            "namn": "sum"
+                            "namn": "augesum"
                           }
                         },
                         "op": "lik",
@@ -1668,7 +1672,7 @@
                 {
                   "type": "settVar",
                   "felt": {
-                    "namn": "sum",
+                    "namn": "augesum",
                     "verdi": {
                       "type": "rekne",
                       "felt": {
@@ -1697,7 +1701,7 @@
                     "verdi": {
                       "type": "lesVar",
                       "felt": {
-                        "namn": "sum"
+                        "namn": "augesum"
                       }
                     }
                   }
@@ -1722,7 +1726,7 @@
                 {
                   "type": "settVar",
                   "felt": {
-                    "namn": "sum",
+                    "namn": "augesum",
                     "verdi": {
                       "type": "rekne",
                       "felt": {
@@ -1754,7 +1758,7 @@
                         "a": {
                           "type": "lesVar",
                           "felt": {
-                            "namn": "sum"
+                            "namn": "augesum"
                           }
                         },
                         "op": "lik",
@@ -1809,7 +1813,7 @@
                     {
                       "type": "settVar",
                       "felt": {
-                        "namn": "sum",
+                        "namn": "augesum",
                         "verdi": {
                           "type": "rekne",
                           "felt": {
@@ -1841,7 +1845,7 @@
                             "a": {
                               "type": "lesVar",
                               "felt": {
-                                "namn": "sum"
+                                "namn": "augesum"
                               }
                             },
                             "op": "lik",
@@ -1970,7 +1974,7 @@
                   {
                     "type": "settVar",
                     "felt": {
-                      "namn": "sum",
+                      "namn": "augesum",
                       "verdi": {
                         "type": "rekne",
                         "felt": {
@@ -2002,7 +2006,7 @@
                           "a": {
                             "type": "lesVar",
                             "felt": {
-                              "namn": "sum"
+                              "namn": "augesum"
                             }
                           },
                           "op": "lik",
@@ -2076,7 +2080,7 @@
                   {
                     "type": "settVar",
                     "felt": {
-                      "namn": "sum",
+                      "namn": "augesum",
                       "verdi": {
                         "type": "rekne",
                         "felt": {
@@ -2108,7 +2112,7 @@
                           "a": {
                             "type": "lesVar",
                             "felt": {
-                              "namn": "sum"
+                              "namn": "augesum"
                             }
                           },
                           "op": "lik",
@@ -3260,7 +3264,7 @@
             "Éinaren er defekt fordi han berre kom åtte gonger"
           ],
           "rett": 1,
-          "forklaring": "60 kast fordelte på seks sider gjev 10 i snitt. Å få 8 eller 12 i staden for nøyaktig 10 er heilt vanleg med så få kast — det skal mykje meir til før ein kan seie at ein terning er skeiv."
+          "forklaring": "60 kast fordelte på seks sider gjev 10 i snitt. Å få 8 eller 12 i staden for nøyaktig 10 er heilt vanleg når ein kastar så få gonger. Det skal mykje meir til før ein kan seie at ein terning er skeiv."
         },
         {
           "id": "d3",
@@ -3463,7 +3467,7 @@
       "tekst": [
         {
           "type": "avsnitt",
-          "tekst": "No har du alt: ein terning, ei lykkje som kastar mange gonger, eit vilkår som tel opp, ein brøk som gjer teljinga samanliknbar, og eit diagram som viser fram svaret."
+          "tekst": "No har du heile verktøykassa. Ein terning som kastar. Ei lykkje som gjentek kastet. Ei `Dersom` som tel opp. Ein brøk som gjer teljinga samanliknbar. Og eit diagram som viser fram svaret."
         },
         {
           "type": "avsnitt",
@@ -3581,7 +3585,7 @@
                 {
                   "type": "settVar",
                   "felt": {
-                    "namn": "sum",
+                    "namn": "augesum",
                     "verdi": {
                       "type": "rekne",
                       "felt": {
@@ -3610,7 +3614,7 @@
                     "verdi": {
                       "type": "lesVar",
                       "felt": {
-                        "namn": "sum"
+                        "namn": "augesum"
                       }
                     }
                   }
@@ -3635,7 +3639,7 @@
                 {
                   "type": "settVar",
                   "felt": {
-                    "namn": "sum",
+                    "namn": "augesum",
                     "verdi": {
                       "type": "rekne",
                       "felt": {
@@ -3667,7 +3671,7 @@
                         "a": {
                           "type": "lesVar",
                           "felt": {
-                            "namn": "sum"
+                            "namn": "augesum"
                           }
                         },
                         "op": "storre",
@@ -3723,7 +3727,7 @@
                     {
                       "type": "settVar",
                       "felt": {
-                        "namn": "sum",
+                        "namn": "augesum",
                         "verdi": {
                           "type": "rekne",
                           "felt": {
@@ -3755,7 +3759,7 @@
                             "a": {
                               "type": "lesVar",
                               "felt": {
-                                "namn": "sum"
+                                "namn": "augesum"
                               }
                             },
                             "op": "storre",
@@ -4000,7 +4004,7 @@
                   {
                     "type": "settVar",
                     "felt": {
-                      "namn": "sum",
+                      "namn": "augesum",
                       "verdi": {
                         "type": "rekne",
                         "felt": {
@@ -4032,7 +4036,7 @@
                           "a": {
                             "type": "lesVar",
                             "felt": {
-                              "namn": "sum"
+                              "namn": "augesum"
                             }
                           },
                           "op": "storre",

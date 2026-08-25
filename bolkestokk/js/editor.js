@@ -385,6 +385,12 @@ const BolkEditor = (function () {
         // Ei blokk i paletten er eit døme, ikkje noko ein skriv i.
         if (erPalett) { felt.tabIndex = -1; felt.readOnly = true; return felt; }
 
+        /* Namnefelt: sei frå med ein gong dersom namnet kolliderer med Python. */
+        if (spek.slag === 'tekst') {
+            merkPythonord(felt, verdi);
+            felt.addEventListener('input', () => merkPythonord(felt, felt.value));
+        }
+
         felt.addEventListener('input', () => {
             const ny = spek.slag === 'tal' ? (felt.value === '' ? '' : Number(felt.value)) : felt.value;
             if (node) node.felt[spek.felt] = ny;
@@ -398,6 +404,19 @@ const BolkEditor = (function () {
         // å setje skrivemerket.
         felt.addEventListener('pointerdown', (e) => e.stopPropagation());
         return felt;
+    }
+
+    /** Set eller fjernar åtvaringa om at namnet kolliderer med Python. */
+    function merkPythonord(felt, namn) {
+        const kolliderer = BolkPython.ORD.has(String(namn || '').trim());
+        felt.classList.toggle('bs-namn-kolliderer', kolliderer);
+        if (kolliderer) {
+            felt.title = '«' + namn + '» tyder alt noko i Python. '
+                + 'Programmet ditt verkar her, men Python-utskrifta kan ryke. '
+                + 'Vel gjerne eit anna namn.';
+        } else if (felt.title && /tyder alt noko i Python/.test(felt.title)) {
+            felt.removeAttribute('title');
+        }
     }
 
     function nedtrekk(node, spek, verdi, erPalett) {

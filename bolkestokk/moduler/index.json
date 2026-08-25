@@ -24,9 +24,9 @@
       "ikon": "footprints",
       "accent": "accent",
       "trinn": "5.–7. trinn",
-      "talLeksjonar": 4,
+      "talLeksjonar": 5,
       "klar": true,
-      "skildring": "Skilpadda, lykkja, variabelen og din eigen funksjon. Fire leksjonar som gjev deg alt du treng for å ta fatt på dei andre modulane.",
+      "skildring": "Skilpadda, lykkja, variabelen, vilkåret og din eigen funksjon. Fem leksjonar som gjev deg alt du treng for å ta fatt på dei andre modulane.",
       "kompetansemaal": [
         "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
         "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
@@ -79,7 +79,7 @@
       "trinn": "6. trinn",
       "talLeksjonar": 5,
       "klar": true,
-      "krev": "grunnkurs",
+      "krev": "rutenett",
       "skildring": "Areal er kor mange ruter figuren dekkjer. Du fyller flatene med farge, deler dei opp, og oppdagar at same rutene kan reknast ut på to måtar.",
       "kompetansemaal": [
         "6. trinn: utforske praktiske problem med areal ved å bruke oppdeling og distributivitet",

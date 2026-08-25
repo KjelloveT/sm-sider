@@ -96,5 +96,26 @@ const BolkPython = (function () {
         return ut.join('\n') + '\n';
     }
 
-    return { tekst, uttrykk };
+    /* Namn Python alt brukar — både innebygde og dei `from turtle import *`
+     * dreg inn.
+     *
+     * Utskrifta her er ekte Python og skal kunne limast inn i Ormritaren. Ein
+     * elev som kallar lista si `sum`, får `sum = []` — lovleg Python, men det
+     * skuggar den innebygde `sum`, og då krasjar `summen av`-blokka hans neste
+     * time. Gjennomgangen fann eitt slikt namn i publisert innhald.
+     *
+     * Lista bur her og ikkje i editoren, fordi ho er kunnskap om Python.
+     * Editoren berre slår opp i henne. Vi hindrar ingenting — det er elevens
+     * program, og namnet verkar fint i Bolkestokk — men feltet seier frå. */
+    const ORD = new Set([
+        'sum', 'len', 'min', 'max', 'list', 'dict', 'set', 'str', 'int', 'float',
+        'print', 'round', 'range', 'abs', 'type', 'input', 'next', 'filter', 'map',
+        'forward', 'backward', 'right', 'left', 'goto', 'home', 'clear', 'reset',
+        'penup', 'pendown', 'pensize', 'pencolor', 'fillcolor', 'color', 'circle',
+        'dot', 'speed', 'shape', 'width', 'heading', 'position', 'distance',
+        'towards', 'xcor', 'ycor', 'setheading', 'write', 'mode', 'pen', 'title',
+        'RUTE'
+    ]);
+
+    return { tekst, uttrykk, ORD };
 })();

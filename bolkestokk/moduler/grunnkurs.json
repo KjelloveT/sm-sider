@@ -1280,6 +1280,590 @@
       "oppsummering": "Ein **variabel** er eit namn på eit tal som kan endre seg. `Set` gjev han ein startverdi, `Endre` justerer han undervegs. Ligg `Endre` inni lykkja, skjer det kvar runde."
     },
     {
+      "id": "vilkaar",
+      "tittel": "Gjer det berre dersom",
+      "kompetansemaal": [
+        "5. trinn: lage og programmere algoritmar med bruk av variablar, vilkår og lykkjer",
+        "6. trinn: bruke variablar, lykkjer, vilkår og funksjonar i programmering til å utforske geometriske figurar og mønster",
+        "7. trinn: bruke programmering til å utforske data i tabellar og datasett"
+      ],
+      "palett": [
+        "framover",
+        "snuHogre",
+        "snuVenstre",
+        "pennOpp",
+        "pennNed",
+        "gjenta",
+        "bakover",
+        "rekne",
+        "skrivUt",
+        "settVar",
+        "endreVar",
+        "lesVar",
+        "dersom",
+        "samanlikn"
+      ],
+      "tekst": [
+        {
+          "type": "avsnitt",
+          "tekst": "Ei `Gjenta`-lykkje gjer det same kvar runde. Med ei **`Dersom`-blokk** kan programmet velje. Blokkene inni henne køyrer **berre når noko er sant** — elles hoppar programmet rett over dei."
+        },
+        {
+          "type": "avsnitt",
+          "tekst": "Det som skal vere sant, heiter eit **vilkår**, og du byggjer det med ei **samanlikning**: `n > 4` tyder «er n større enn fire?». Du kan velje mellom `=`, `≠`, `<`, `>`, `≤` og `≥`."
+        },
+        {
+          "type": "merk",
+          "tekst": "Samanlikninga er anten sann eller usann — aldri noko midt imellom. Er ho usann, gjer `Dersom` ingenting i det heile."
+        }
+      ],
+      "doeme": {
+        "oppmoding": "Ein åttekant der pennen blir løfta etter fire sider. Køyr, og byt så `4` til `6`. Kor mange sider blir teikna då?",
+        "program": {
+          "app": "bolkestokk",
+          "version": 1,
+          "start": [
+            {
+              "type": "settVar",
+              "felt": {
+                "namn": "n",
+                "verdi": 1
+              }
+            },
+            {
+              "type": "gjenta",
+              "felt": {
+                "tal": 8
+              },
+              "kropp": [
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "n"
+                          }
+                        },
+                        "op": "storre",
+                        "b": 4
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "pennOpp",
+                      "felt": {}
+                    }
+                  ]
+                },
+                {
+                  "type": "framover",
+                  "felt": {
+                    "lengd": 80
+                  }
+                },
+                {
+                  "type": "snuHogre",
+                  "felt": {
+                    "grader": 45
+                  }
+                },
+                {
+                  "type": "endreVar",
+                  "felt": {
+                    "namn": "n",
+                    "med": 1
+                  }
+                }
+              ]
+            }
+          ],
+          "funksjonar": []
+        }
+      },
+      "loype": {
+        "tittel": "Frå eitt vilkår til to bruksmåtar",
+        "maal": "ein halvteikna åttekant, og ei teljing — dei to måtane du kjem til å bruke `Dersom` på",
+        "steg": [
+          {
+            "tekst": "Fyrst berre samanlikninga. `n` er 5, og vilkåret spør om han er større enn 4. Det er sant, så talet blir skrive ut.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": 5
+                  }
+                },
+                {
+                  "type": "dersom",
+                  "felt": {
+                    "vilkaar": {
+                      "type": "samanlikn",
+                      "felt": {
+                        "a": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "n"
+                          }
+                        },
+                        "op": "storre",
+                        "b": 4
+                      }
+                    }
+                  },
+                  "kropp": [
+                    {
+                      "type": "skrivUt",
+                      "felt": {
+                        "verdi": {
+                          "type": "lesVar",
+                          "felt": {
+                            "namn": "n"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            }
+          },
+          {
+            "tekst": "No inni ei lykkje som teiknar. Dei fire fyrste sidene blir teikna, og så løftar vilkåret pennen — resten av åttekanten er usynleg.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 8
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "n"
+                              }
+                            },
+                            "op": "storre",
+                            "b": 4
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "pennOpp",
+                          "felt": {}
+                        }
+                      ]
+                    },
+                    {
+                      "type": "framover",
+                      "felt": {
+                        "lengd": 80
+                      }
+                    },
+                    {
+                      "type": "snuHogre",
+                      "felt": {
+                        "grader": 45
+                      }
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "n",
+                        "med": 1
+                      }
+                    }
+                  ]
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Byt `>` til `≥`. Kvifor blir det éi side mindre?"
+          },
+          {
+            "tekst": "Og den andre bruksmåten: her teiknar vi ingenting, men lèt vilkåret avgjere om ein **teljar** skal auke. Svaret er 4 — tala 5, 6, 7 og 8 er større enn 4.",
+            "program": {
+              "app": "bolkestokk",
+              "version": 1,
+              "start": [
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "n",
+                    "verdi": 1
+                  }
+                },
+                {
+                  "type": "settVar",
+                  "felt": {
+                    "namn": "store",
+                    "verdi": 0
+                  }
+                },
+                {
+                  "type": "gjenta",
+                  "felt": {
+                    "tal": 8
+                  },
+                  "kropp": [
+                    {
+                      "type": "dersom",
+                      "felt": {
+                        "vilkaar": {
+                          "type": "samanlikn",
+                          "felt": {
+                            "a": {
+                              "type": "lesVar",
+                              "felt": {
+                                "namn": "n"
+                              }
+                            },
+                            "op": "storre",
+                            "b": 4
+                          }
+                        }
+                      },
+                      "kropp": [
+                        {
+                          "type": "endreVar",
+                          "felt": {
+                            "namn": "store",
+                            "med": 1
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "endreVar",
+                      "felt": {
+                        "namn": "n",
+                        "med": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "skrivUt",
+                  "felt": {
+                    "verdi": {
+                      "type": "lesVar",
+                      "felt": {
+                        "namn": "store"
+                      }
+                    }
+                  }
+                }
+              ],
+              "funksjonar": []
+            },
+            "proev": "Kva blir svaret om grensa er 6 i staden?"
+          }
+        ]
+      },
+      "oppgaver": [
+        {
+          "id": "v1",
+          "type": "les",
+          "maal": "Kor mange gonger er det sant?",
+          "tekst": "Lykkja tel `n` frå 1 til 8, og vilkåret spør om `n > 4`.",
+          "program": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "store",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 8
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "storre",
+                          "b": 4
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "store",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "store"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          },
+          "sporsmal": "Kor mange av dei åtte rundane er vilkåret sant?",
+          "alternativ": [
+            "Tre gonger",
+            "Fire gonger",
+            "Fem gonger"
+          ],
+          "rett": 1,
+          "forklaring": "`n` er 1, 2, 3, 4, 5, 6, 7 og 8. Berre 5, 6, 7 og 8 er større enn 4 — altså fire gonger. Talet 4 er ikkje med, for `>` tyder større enn, ikkje større eller lik."
+        },
+        {
+          "id": "v2",
+          "type": "bygg",
+          "maal": "Teikn den halve åttekanten",
+          "tekst": "Teikn ein åttekant med sider på **80 steg**, men lat pennen bli løfta når `n` er **større enn 4**. Då blir berre halve figuren teikna.",
+          "hint": [
+            "Set `n` til 1 før lykkja, og auk han med 1 heilt til slutt inni henne.",
+            "Inni lykkja: `Dersom n > 4` med `Penn opp` inni, så `Gå framover 80` og `Snu høgre 45`."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "brukar",
+              "blokk": "samanlikn"
+            },
+            {
+              "type": "teikning"
+            }
+          ],
+          "venta": {
+            "strek": 4
+          },
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 8
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "storre",
+                          "b": 4
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "pennOpp",
+                        "felt": {}
+                      }
+                    ]
+                  },
+                  {
+                    "type": "framover",
+                    "felt": {
+                      "lengd": 80
+                    }
+                  },
+                  {
+                    "type": "snuHogre",
+                    "felt": {
+                      "grader": 45
+                    }
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              }
+            ],
+            "funksjonar": []
+          }
+        },
+        {
+          "id": "v3",
+          "type": "bygg",
+          "maal": "Tel dei som er store nok",
+          "tekst": "Lat `n` telje frå **1 til 8**, og tel opp kor mange av dei som er **større enn 6**. Skriv ut svaret til slutt.",
+          "hint": [
+            "Du treng to variablar: `n` som tel, og ein teljar som startar på 0.",
+            "Teljaren skal setjast **før** lykkja. Set du han inni, byrjar han på null kvar runde."
+          ],
+          "testar": [
+            {
+              "type": "brukar",
+              "blokk": "dersom"
+            },
+            {
+              "type": "svar",
+              "vent": 2
+            }
+          ],
+          "loeysing": {
+            "app": "bolkestokk",
+            "version": 1,
+            "start": [
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "n",
+                  "verdi": 1
+                }
+              },
+              {
+                "type": "settVar",
+                "felt": {
+                  "namn": "store",
+                  "verdi": 0
+                }
+              },
+              {
+                "type": "gjenta",
+                "felt": {
+                  "tal": 8
+                },
+                "kropp": [
+                  {
+                    "type": "dersom",
+                    "felt": {
+                      "vilkaar": {
+                        "type": "samanlikn",
+                        "felt": {
+                          "a": {
+                            "type": "lesVar",
+                            "felt": {
+                              "namn": "n"
+                            }
+                          },
+                          "op": "storre",
+                          "b": 6
+                        }
+                      }
+                    },
+                    "kropp": [
+                      {
+                        "type": "endreVar",
+                        "felt": {
+                          "namn": "store",
+                          "med": 1
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "endreVar",
+                    "felt": {
+                      "namn": "n",
+                      "med": 1
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "skrivUt",
+                "felt": {
+                  "verdi": {
+                    "type": "lesVar",
+                    "felt": {
+                      "namn": "store"
+                    }
+                  }
+                }
+              }
+            ],
+            "funksjonar": []
+          }
+        }
+      ],
+      "oppsummering": "`Dersom` køyrer blokkene inni seg **berre når vilkåret er sant**. Vilkåret er ei samanlikning — `=`, `≠`, `<`, `>`, `≤` eller `≥`. Du kjem til å bruke det til to ting: å endre kva som blir **teikna**, og å avgjere om ein **teljar** skal auke."
+    },
+    {
       "id": "funksjon",
       "tittel": "Din eigen funksjon",
       "kompetansemaal": [
@@ -1301,7 +1885,9 @@
         "endreVar",
         "lesVar",
         "kallFunksjon",
-        "setFarge"
+        "setFarge",
+        "dersom",
+        "samanlikn"
       ],
       "tekst": [
         {

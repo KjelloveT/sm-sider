@@ -60,8 +60,7 @@
         el.stegKnapp.addEventListener('click', startStegmodus);
         el.nesteSteg.addEventListener('click', () => { stansAvspeling(); eittSteg(); });
         el.spelAv.addEventListener('click', vekselAvspeling);
-        SPALTER.forEach(sp => el[sp.knapp].addEventListener(
-            'click', () => vekselSpalte(sp, true)));
+        BolkSpalter.init(el);
 
         // Ei uferdig teikning er ikkje verdt å miste fordi ein fane vart lukka.
         window.addEventListener('beforeunload', lagre);
@@ -86,7 +85,6 @@
          * dei tek ein fjerdedel av flata frå blokkene eleven skal byggje med.
          * Fyrste Køyr opnar spalta, og då blir ho ståande — det er der han
          * skal sjå etter frå då av. */
-        setSpalte(RESULTAT, true);
 
         if (typeof BolkLeksjon !== 'undefined') BolkLeksjon.start(vertsapi());
     }
@@ -138,76 +136,6 @@
         endra();
     }
 
-    /* ---- spaltene kan kollapsast --------------------------------------------
-     *
-     * Kvar av dei tre sidespaltene har ei overskrift med ein kollapsknapp.
-     * Kollapsa blir spalta ei 10px farga stripe som er eitt stort trykkfelt
-     * — det einaste som gjev meining på den breidda.
-     *
-     * Medan programmet køyrer gjer leksjonen plass av seg sjølv, for då er
-     * det teikninga og blokkene eleven ser på. Ho kjem att litt etterpå.
-     * Har eleven sjølv kollapsa henne, kjem ho ikkje att av seg sjølv — det
-     * ville vore å overprøve han. */
-
-    const SPALTER = [
-        { id: 'leksjon',  spalte: 'spalteLeksjon',  knapp: 'kollapsLeksjon',
-          opne: 'Vis leksjonen',    lukke: 'Skjul leksjonen',   klasse: 'bs-skjul-leksjon' },
-        { id: 'palett',   spalte: 'spaltePalett',   knapp: 'kollapsPalett',
-          opne: 'Vis kodeblokkene', lukke: 'Skjul kodeblokkene', klasse: 'bs-skjul-palett' },
-        { id: 'resultat', spalte: 'spalteResultat', knapp: 'kollapsResultat',
-          opne: 'Vis resultatet',   lukke: 'Skjul resultatet',   klasse: 'bs-skjul-resultat' }
-    ];
-
-    const VENT_FOER_VISING = 1600;
-    let brukarSkjultLeksjon = false;
-    let visTimer = null;
-
-    const harLeksjon = () => el.spalteLeksjon && !el.spalteLeksjon.hidden;
-    const erKollapsa = (sp) => el[sp.spalte].classList.contains('er-kollapsa');
-
-    function setSpalte(sp, kollapsa) {
-        el[sp.spalte].classList.toggle('er-kollapsa', kollapsa);
-        el.flate.classList.toggle(sp.klasse, kollapsa);
-        const knapp = el[sp.knapp];
-        const tekst = kollapsa ? sp.opne : sp.lukke;
-        knapp.setAttribute('aria-expanded', String(!kollapsa));
-        knapp.setAttribute('aria-label', tekst);
-        knapp.setAttribute('title', tekst);
-    }
-
-    /** @param {boolean} frivilja true når det er eleven som trykte */
-    function vekselSpalte(sp, frivilja) {
-        const skalKollapse = !erKollapsa(sp);
-        if (sp.id === 'leksjon' && frivilja) brukarSkjultLeksjon = skalKollapse;
-        if (frivilja) clearTimeout(visTimer);
-        setSpalte(sp, skalKollapse);
-    }
-
-    const LEKSJON = SPALTER[0];
-    const RESULTAT = SPALTER[2];
-
-    function leksjonOpna() {
-        el.spalteLeksjon.hidden = false;
-        setSpalte(LEKSJON, false);
-    }
-
-    function gjemLeksjonMedanKoyrer() {
-        // Resultatet kjem fram i same augeblink som leksjonen gjer plass.
-        if (erKollapsa(RESULTAT)) setSpalte(RESULTAT, false);
-        if (!harLeksjon() || erKollapsa(LEKSJON)) return;
-        clearTimeout(visTimer);
-        setSpalte(LEKSJON, true);
-    }
-
-    /* Berre leksjonen kjem att av seg sjølv. Resultatet blir ståande til
-     * eleven lukkar det sjølv — han er som regel ikkje ferdig med å sjå på
-     * figuren i det programmet stoppar. */
-    function hentLeksjonAtt() {
-        if (!harLeksjon() || brukarSkjultLeksjon) return;
-        clearTimeout(visTimer);
-        visTimer = setTimeout(() => setSpalte(LEKSJON, false), VENT_FOER_VISING);
-    }
-
     /* ---- køyring --------------------------------------------------------- */
 
     function koyr(naarFerdig) {
@@ -223,7 +151,7 @@
         el.stopp.disabled = false;
         el.koyr.disabled = true;
         melding('Køyrer …');
-        gjemLeksjonMedanKoyrer();
+        BolkSpalter.medanKoyrer();
 
         // Ligg fana alt i bakgrunnen, får vi aldri eit animasjonsbilete å
         // steppe på. Då teiknar vi ferdig med det same.
@@ -326,7 +254,7 @@
         } else {
             melding('Ferdig — ' + ktx.skilpadde.strek.length + ' strek teikna.');
         }
-        hentLeksjonAtt();
+        BolkSpalter.hentLeksjonAtt();
         if (kall) kall({ ktx, feil });
     }
 
@@ -336,7 +264,7 @@
         BolkEditor.markerKoyrande(null);
         avslutt();
         melding('Stoppa.');
-        hentLeksjonAtt();
+        BolkSpalter.hentLeksjonAtt();
     }
 
     /* Ingen worker å terminere: å stoppe er berre å slutte å be generatoren
@@ -520,7 +448,7 @@
     function vertsapi() {
         return {
             panel: el.leksjonspanel,
-            leksjonOpna,
+            leksjonOpna: BolkSpalter.leksjonOpna,
             setProgram,
             hentProgram: () => program,
             setPalett: (liste) => { BolkEditor.setPalett(liste); BolkEditor.teiknPalett(); },
