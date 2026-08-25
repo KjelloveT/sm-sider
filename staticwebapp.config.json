@@ -25,6 +25,13 @@
       }
     },
     {
+      "_kommentar": "Andika er versjonspinna til 7.000 og skal ikkje endre seg. Byter vi versjon, skal han i ei ny mappe (_libs/andika-8/), ikkje som nytt innhald her: filnamnet er det same, og immutable-cachen ville elles late elevmaskiner sitje att med den gamle fonten.",
+      "route": "/_libs/andika/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
       "route": "/_libs/codemirror/*",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"

@@ -140,7 +140,13 @@ Alle spel/verktøy følgjer same struktur:
 Felles ressursar (logoar, ikon, lyd) ligg i `_resources/` på rot, eller i spelets eiga mappe når dei er spel-spesifikke.
 
 ### 5.6 Eksterne avhengnader
-Nye avhengnader (bibliotek, CDN-script, fontar, ikon-pakkar) krev **eksplisitt godkjenning frå brukaren** før dei blir lagt til. **Vi skal aldri bruke eksterne font-bibliotek** — bruk alltid system-fontar med passande fallbackar. Når andre avhengnader er godkjende, skal dei anten:
+Nye avhengnader (bibliotek, CDN-script, fontar, ikon-pakkar) krev **eksplisitt godkjenning frå brukaren** før dei blir lagt til. **Vi skal aldri bruke eksterne font-tenester** — Google Fonts, Adobe Fonts og liknande. Kvar sidevising ville då meldt frå til ein tredjepart at ein elev opna sida, og det bryt lovnaden på framsida.
+
+Standardvalet er framleis **system-fontar med passande fallbackar**. Ein **sjølv-hosta font i `_libs/`** er ikkje det same som ei fontteneste og er tillaten når det finst ein reell grunn — men han krev godkjenning som alle andre avhengnader, og grunnen skal stå i `_libs/CREDITS.md`. Så langt er det gjort éin gong: Andika i **Ljodstigen**, fordi `Segoe UI` teiknar stor `I` og liten `l` som to nesten identiske strekar (målt breidd 82 mot 80 einingar), og appen går ut på å kjenne att bokstavformer.
+
+**Fontlisensar har ein felle systematisk:** SIL Open Font License brukar *reserverte fontnamn*. Subsettar eller konverterer du fonten slik at han ikkje lenger er *Functionally Equivalent* med originalen, er resultatet ein Modified Version som **ikkje får bere det opphavlege namnet**. Det er difor heile Andika ligg i repoet på 287 kB i staden for eit subsett på 21 kB — sjå grunngjevinga i `_libs/CREDITS.md`. Les lisensen før du optimaliserer ein font.
+
+Når andre avhengnader er godkjende, skal dei anten:
 - **Sjølv-hostast** i `_libs/` på rot (foretrekt for ekte offline-støtte), eller
 - **Dokumenterast** i personvernseksjonen på framsida med kjelde og kva data som kan synast (t.d. IP-adresse i CDN-loggar).
 

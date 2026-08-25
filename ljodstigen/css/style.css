@@ -9,17 +9,26 @@
    pastell med var(--text-on-light-accent).
    ══════════════════════════════════════════════ */
 
-:root {
-  /* MELLOMBELS LESEFONT.
-     Verdana er valt fordi stor I har tverrstrekar øvst og nedst, og
-     difor ikkje er identisk med liten l — det er han i Segoe UI,
-     Roboto og SF Pro, som alle er standard i denne stakken. Verdana
-     finst på Windows, macOS og iPad.
+/* Andika 7.000, SIL Global, OFL 1.1. Sjølv-hosta i _libs/andika/.
+   Sjå _libs/CREDITS.md for versjon, sjekksummar og kvifor heile fonten
+   ligg der i staden for eit subsett.
 
-     Dette er ei mellombels løysing. Den rette er ein subsetta OFL-font
-     laga for lesebegynnarar (Andika) i _libs/, men han krev eksplisitt
-     godkjenning etter §5.6 og er ikkje lagd inn enno. */
-  --ljod-font-read: Verdana, Geneva, "DejaVu Sans", Tahoma, sans-serif;
+   Verdana står som fallback fordi han er den einaste breitt tilgjengelege
+   systemfonten som skil stor I frå liten l omtrent like godt som Andika
+   (målt: I/l = 3,1x mot Andika sin 3,0x, medan Segoe UI ligg på 1,0x).
+   Rekk ikkje fonten fram, er bokstavane framleis til å skilje. */
+@font-face {
+  font-family: 'Andika';
+  src: url('../../_libs/andika/Andika-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  /* swap, ikkje block: ein elev skal aldri sjå ei tom bokstavflate.
+     Verdana i eit halvsekund er betre enn ingenting i eit halvsekund. */
+  font-display: swap;
+}
+
+:root {
+  --ljod-font-read: 'Andika', Verdana, Geneva, "DejaVu Sans", Tahoma, sans-serif;
 
   /* Faste lyse pastellar. Trygge under var(--text-on-light-accent) i
      alle 21 tema, fordi dei ikkje endrar seg med temaet. */
@@ -49,7 +58,10 @@ body[data-font="lesefont"] .ljod-bed-letter {
 }
 
 .ljod-sample {
-  font-weight: 700;
+  /* 400 av same grunn som .ljod-glyph: dette er nettopp prøven som skal
+     vise at I og l er til å skilje, og då kan han ikkje vere forvrengd. */
+  font-weight: 400;
+  font-size: 1.15em;
   padding: 0 2px;
   border-bottom: 2px solid var(--border);
 }
@@ -259,7 +271,10 @@ body[data-font="lesefont"] .ljod-bed-letter {
 
 .ljod-glyph {
   font-size: clamp(2.4rem, 11vw, 4.4rem);
-  font-weight: 700;
+  /* 400, ikkje 700. Vi lastar berre Andika Regular, så feit skrift ville
+     blitt syntetisk fortjukka av nettlesaren — og det er formene eleven
+     skal lære, ikkje ei forvrengd utgåve av dei. */
+  font-weight: 400;
   line-height: 1;
 }
 .ljod-tile-md .ljod-glyph { font-size: clamp(1.6rem, 7vw, 2.6rem); }

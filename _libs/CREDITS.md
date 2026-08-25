@@ -96,6 +96,66 @@ mappenamn (t.d. `_libs/pyodide-315/`) i staden for å byte innhald.
 
 Godkjend av brukaren under planlegginga av Ormritaren.
 
+## Andika 7.000 — `andika/`
+
+Lesefonten i **Ljodstigen**. Laga av SIL for lesebegynnarar og for
+literacy-arbeid, der bokstavformene er tydeleg skilde frå kvarandre.
+
+Grunnen til at vi treng han: `css/neobrutalisme.css` set `Segoe UI`, og
+der er stor `I` **82 einingar** brei og liten `l` **80** — to nakne
+loddrette strekar, praktisk talt umoglege å skilje. I Andika er dei
+**330 mot 110**, altså tre gonger så brei `I`, fordi han har tverrstrekar
+øvst og nedst. I ein app som går ut på å kjenne att bokstavformer er det
+ikkje ein detalj.
+
+| | |
+|---|---|
+| Prosjekt | [Andika](https://software.sil.org/andika/) av SIL Global |
+| Lisens | SIL Open Font License 1.1 — sjå `OFL.txt` |
+| Versjon | 7.000 (2025-06-02) |
+| Henta frå | [`silnrsi/font-andika`, utgåve v7.000](https://github.com/silnrsi/font-andika/releases/tag/v7.000) |
+| Endra av oss | Berre komprimert frå TTF til WOFF2 — sjå under |
+
+| Fil | Byte | SHA-256 |
+|---|---|---|
+| `Andika-Regular.woff2` | 293 820 | `6f03b9f9b537b04bccaa5405f4115eabdda2d71238e29ccf710568fe608345cb` |
+| `OFL.txt` | 4 501 | `fd0f044f061aa463fa1675a71fa0c229a067e2062c321c89e5f20965883f23b2` |
+| `FONTLOG.txt` | 37 988 | `2a789c40e44d9b29bfbad138fee19debbe3d91da0caf29fc3df8ce79d9c6f624` |
+
+Kjeldearkivet `Andika-7.000.zip` har SHA-256
+`88ba6ea41ef4a8e5214b090df8fa2983be1babe4843efaa99cdb6078b0e2c070`.
+
+### Kvifor heile fonten og ikkje eit subsett
+
+Vi treng kring 100 teikn og kunne fått fila ned frå 287 kB til **20,6 kB**
+ved å subsette. Vi gjer det likevel ikkje, og grunnen er lisensen.
+
+OFL-en har **reserverte fontnamn**: «Andika» og «SIL». SIL sin eigen FAQ,
+punkt 2.6, er utvitydig — *«Is subsetting a webfont considered
+modification? Yes. […] This is permitted by the OFL but would not normally
+allow the use of RFNs.»* Eit subsett er altså ein **Modified Version** og
+måtte fått eit anna namn. Subsettinga vår droppa i tillegg `Silt`,
+SIL sin smart-font-tabell, som bryt kravet om uendra smart-font-åtferd.
+
+Punkt 2.7–2.8 opnar derimot for at ein webfont som er **Functionally
+Equivalent** får halde namnet. Fila her er nettopp det: rein, tapsfri
+WOFF2-komprimering av `Andika-Regular.ttf`, med
+- same teikndekning (2 660 teikn),
+- `Silt`, `GSUB` og `GPOS` uendra,
+- ingen endring i bokstavformene,
+- og heile copyright-, lisens- og RFN-metadataen i behald.
+
+265 kB ekstra er ein eingongskostnad: fila ligg under
+`Cache-Control: immutable`, så ei elevmaskin lastar han éin gong. Til
+gjengjeld slepp vi å distribuere ein omdøypt avleiar av andre sitt arbeid,
+og ein lærar som inspiserer fonten ser kven som har laga han.
+
+Berre `Regular` er med. Bokstavflatene i spelet set med vilje
+`font-weight: 400`: feit skrift fortjukkar og forvrengjer formene, og det
+er formene eleven skal lære.
+
+Godkjend av brukaren under planlegginga av Ljodstigen.
+
 ## CodeMirror 5.65.21 — `codemirror/`
 
 Kodeeditoren i **Ormritaren**: syntaksfarging, linjenummer, innrykk og
