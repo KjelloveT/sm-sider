@@ -1,0 +1,150 @@
+/* ==========================================================================
+   Endringar — utvidingar av neobrutalisme.css
+
+   Fargebruk: ingen av merka eller typane fyller ei flate med --accent og
+   legg tekst oppå (AGENTS.md §3.2). Anten er flata snudd mot
+   --text/--surface, som er motsetnader i kvart einaste tema, eller så ligg
+   aksentfargen i ei kantstripe ved sida av teksten.
+   ========================================================================== */
+
+.endr-ingress {
+  color: var(--muted);
+  margin-top: -8px;
+  margin-bottom: 8px;
+  max-width: 70ch;
+}
+
+/* --- Filterrad ---------------------------------------------------------- */
+
+.endr-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0 12px;
+}
+.endr-filter .btn {
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+/* Vald filter er snudd — flatefargen som tekst og tekstfargen som flate.
+   Standard .btn.active fyller med --accent og legg kvit tekst oppå, som
+   fell under AA i dei mørke temaa. */
+.endr-filter .btn.active,
+.endr-filter .btn.active:hover {
+  background: var(--text);
+  color: var(--surface);
+}
+
+.endr-tal {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 16px;
+  min-height: 1.2em;
+}
+
+/* --- Ei utgåve ---------------------------------------------------------- */
+
+.endr-versjon { margin-bottom: 20px; }
+
+.endr-hovud {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-bottom: 3px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.endr-nr {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 900;
+  color: var(--text);
+  margin: 0;
+}
+.endr-dato {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+.endr-samandrag {
+  flex-basis: 100%;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin: 0;
+  max-width: 78ch;
+}
+
+/* --- Punkta ------------------------------------------------------------- */
+
+.endr-punkt {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+/* Stripa er --border og ikkje ein aksentfarge: dei lyse pastellane
+   accent3–5 ligg på 1,13–1,9:1 mot flata i dei lyse temaa, og ei stripe
+   ingen ser er ikkje ei stripe. Fargen ber typebrikka i staden, der han er
+   ei flate med mørk tekst oppå — den bruken pastellane er laga for. */
+.endr-punkt li {
+  border-left: 5px solid var(--border);
+  padding-left: 12px;
+  max-width: 78ch;
+}
+
+.endr-linje1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.endr-kva {
+  font-weight: 800;
+  color: var(--text);
+}
+.endr-tekst {
+  margin: 0;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* --- Type- og merkebrikker ---------------------------------------------- */
+
+.endr-type,
+.endr-merke {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  padding: 3px 8px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  white-space: nowrap;
+}
+/* Typebrikkene er fylte med kvar sin pastell og har mørk tekst oppå —
+   --text-on-light-accent, slik AGENTS.md §3.2 føreskriv for accent3–5.
+   Målt i alle 21 tema: lågast 6,79:1 (accent4 i «slate»). accent3 er den
+   blekaste av dei tre i fleire tema, og han er med vilje gjeven til «Fiksa»:
+   rettingar er det det er flest av, og dei skal ikkje rope høgast på sida. */
+.endr-type-nytt { background: var(--accent5); color: var(--text-on-light-accent); }
+.endr-type-endra { background: var(--accent4); color: var(--text-on-light-accent); }
+.endr-type-fiksa { background: var(--accent3); color: var(--text-on-light-accent); }
+
+/* Same snudde paringa som «Nytt»-merket på framsidekorta: --border og
+   --surface følgjast alltid åt i temaa, så merket er lesbart i alle 21. */
+.endr-merke-verktoy {
+  background: var(--border);
+  color: var(--surface);
+  border-color: var(--border);
+}
+/* Eksperiment skil seg på ramma i staden for på fyllet. */
+.endr-merke-eksperiment {
+  border-color: var(--accent2);
+  border-width: 3px;
+}
