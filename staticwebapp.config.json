@@ -6,6 +6,182 @@
   },
   "routes": [
     {
+      "_kommentar": "Ein mappe-URL utan skråstrek på slutten — /lydskurd — blir servert med index.html frå mappa, men UTAN at nettlesaren blir sendt vidare til /lydskurd/. Då står nettlesaren framleis på rota, og kvar relative sti i sida peikar eitt hakk for høgt: css/style.css blir henta frå /css/style.css og js/main.js frå /js/main.js. Fila finst ikkje der, navigationFallback svarar med index.html, og nettlesaren nektar å køyre HTML som skript. Sida lastar halvvegs og ser ut som ein feil i appen. Difor sender vi kvar mappe-URL vidare til seg sjølv med skråstrek. LEGG TIL EI LINJE HER NÅR DU LAGAR EIN NY APP.",
+      "route": "/baretevling",
+      "redirect": "/baretevling/",
+      "statusCode": 301
+    },
+    {
+      "route": "/bildebehandling",
+      "redirect": "/bildebehandling/",
+      "statusCode": 301
+    },
+    {
+      "route": "/biletflett",
+      "redirect": "/biletflett/",
+      "statusCode": 301
+    },
+    {
+      "route": "/bolkestokk",
+      "redirect": "/bolkestokk/",
+      "statusCode": 301
+    },
+    {
+      "route": "/dagsvegen",
+      "redirect": "/dagsvegen/",
+      "statusCode": 301
+    },
+    {
+      "route": "/duldord",
+      "redirect": "/duldord/",
+      "statusCode": 301
+    },
+    {
+      "route": "/eikekveik",
+      "redirect": "/eikekveik/",
+      "statusCode": 301
+    },
+    {
+      "route": "/etikk-test",
+      "redirect": "/etikk-test/",
+      "statusCode": 301
+    },
+    {
+      "route": "/flokkdeilar",
+      "redirect": "/flokkdeilar/",
+      "statusCode": 301
+    },
+    {
+      "route": "/fotocolours",
+      "redirect": "/fotocolours/",
+      "statusCode": 301
+    },
+    {
+      "route": "/frodebrett",
+      "redirect": "/frodebrett/",
+      "statusCode": 301
+    },
+    {
+      "route": "/frodekapp",
+      "redirect": "/frodekapp/",
+      "statusCode": 301
+    },
+    {
+      "route": "/frødesams",
+      "redirect": "/frødesams/",
+      "statusCode": 301
+    },
+    {
+      "route": "/heimsank",
+      "redirect": "/heimsank/",
+      "statusCode": 301
+    },
+    {
+      "route": "/heite_stavrim",
+      "redirect": "/heite_stavrim/",
+      "statusCode": 301
+    },
+    {
+      "route": "/klassekart",
+      "redirect": "/klassekart/",
+      "statusCode": 301
+    },
+    {
+      "route": "/kludre_klodrian",
+      "redirect": "/kludre_klodrian/",
+      "statusCode": 301
+    },
+    {
+      "route": "/leitekryss",
+      "redirect": "/leitekryss/",
+      "statusCode": 301
+    },
+    {
+      "route": "/livslina",
+      "redirect": "/livslina/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ljodbanken",
+      "redirect": "/ljodbanken/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ljodstigen",
+      "redirect": "/ljodstigen/",
+      "statusCode": 301
+    },
+    {
+      "route": "/lydskurd",
+      "redirect": "/lydskurd/",
+      "statusCode": 301
+    },
+    {
+      "route": "/neobrutalisme_test",
+      "redirect": "/neobrutalisme_test/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ordaklok",
+      "redirect": "/ordaklok/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ordkryss",
+      "redirect": "/ordkryss/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ordskodde",
+      "redirect": "/ordskodde/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ordsmia",
+      "redirect": "/ordsmia/",
+      "statusCode": 301
+    },
+    {
+      "route": "/ormritaren",
+      "redirect": "/ormritaren/",
+      "statusCode": 301
+    },
+    {
+      "route": "/reknedaesj",
+      "redirect": "/reknedaesj/",
+      "statusCode": 301
+    },
+    {
+      "route": "/rettslause_raud",
+      "redirect": "/rettslause_raud/",
+      "statusCode": 301
+    },
+    {
+      "route": "/rissverk",
+      "redirect": "/rissverk/",
+      "statusCode": 301
+    },
+    {
+      "route": "/talsmia",
+      "redirect": "/talsmia/",
+      "statusCode": 301
+    },
+    {
+      "route": "/tidvis",
+      "redirect": "/tidvis/",
+      "statusCode": 301
+    },
+    {
+      "route": "/vidfaren",
+      "redirect": "/vidfaren/",
+      "statusCode": 301
+    },
+    {
+      "route": "/wikidata-tester",
+      "redirect": "/wikidata-tester/",
+      "statusCode": 301
+    },
+    {
       "route": "/fotocolours/*",
       "serve": "/fotocolours/index.html"
     },

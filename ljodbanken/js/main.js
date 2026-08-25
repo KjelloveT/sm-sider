@@ -11,6 +11,7 @@ window.LB = window.LB || {};
   'use strict';
 
   let micBtn = null;
+  let micSelect = null;
   let autoBox = null;
   let frame = 0;
 
@@ -46,13 +47,36 @@ window.LB = window.LB || {};
     micBtn.classList.toggle('lb-mic-on', on);
   }
 
+  /* ──────────────── Kva mikrofon ──────────────── */
+
+  /* Lista blir fylt tre gonger: ved oppstart, etter at løyvet er gjeve
+     (då først kjem namna fram), og når nokon koplar til eller frå ein
+     mikrofon medan økta går. */
+  function fillInputs() {
+    const chosen = micSelect.value;
+    LB.record.inputs().then((list) => {
+      micSelect.textContent = '';
+      const auto = LB.util.el('option', null, 'Standard');
+      auto.value = '';
+      micSelect.appendChild(auto);
+      list.forEach((input) => {
+        const option = LB.util.el('option', null, input.label);
+        option.value = input.deviceId;
+        micSelect.appendChild(option);
+      });
+      // Held valet om mikrofonen framleis finst; elles fell vi til standard.
+      micSelect.value = list.some(i => i.deviceId === chosen) ? chosen : '';
+      if (micSelect.value !== chosen) LB.record.useDevice(micSelect.value);
+    });
+  }
+
   /* ──────────────── Verktøyraden ──────────────── */
 
   function toggleMic() {
     if (LB.session.micOn()) { LB.session.closeMic(); return; }
     micBtn.disabled = true;
     LB.session.openMic()
-      .then(() => { micBtn.disabled = false; syncMic(); })
+      .then(() => { micBtn.disabled = false; syncMic(); fillInputs(); })
       .catch((err) => { micBtn.disabled = false; syncMic(); LB.util.toast(err.message); });
   }
 
@@ -74,6 +98,7 @@ window.LB = window.LB || {};
     LB.list.setup();
 
     micBtn = document.getElementById('micBtn');
+    micSelect = document.getElementById('micSelect');
     autoBox = document.getElementById('autoAdvance');
 
     if (!LB.record.isSupported()) {
@@ -82,6 +107,14 @@ window.LB = window.LB || {};
     }
 
     micBtn.addEventListener('click', toggleMic);
+    micSelect.addEventListener('change', () => {
+      LB.session.useDevice(micSelect.value).then(() => {
+        if (micSelect.value) LB.util.toast('Mikrofonen er bytt. Ta ein prøve før du held fram.');
+      });
+    });
+    if (navigator.mediaDevices && 'ondevicechange' in navigator.mediaDevices) {
+      navigator.mediaDevices.addEventListener('devicechange', fillInputs);
+    }
     autoBox.addEventListener('change', () => LB.session.setAuto(autoBox.checked));
     document.getElementById('nextBtn').addEventListener('click', nextMissing);
     document.getElementById('filterSelect').addEventListener('change', (e) => LB.render.setFilter(e.target.value));
@@ -123,6 +156,7 @@ window.LB = window.LB || {};
 
     LB.list.use(LB.list.normalize(LB.builtinList), true);
     syncMic();
+    fillInputs();
 
     /* Opptaka ligg berre i minnet. Går fana, går dei — så vi seier frå.
        Nettlesaren viser si eiga tekst; vår er berre eit signal om at

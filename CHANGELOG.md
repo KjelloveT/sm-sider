@@ -3,6 +3,17 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.28] — 2026-08-25
+
+### Fiksa
+- **Ein mappe-URL utan skråstrek lasta sida halvvegs.** `…/ljodbanken` (utan `/` til slutt) blir servert med `index.html` frå mappa, men Azure sender ikkje nettlesaren vidare til `…/ljodbanken/`. Nettlesaren står då framleis på rota, og kvar relativ sti i sida peikar eitt hakk for høgt: `css/style.css` blir henta frå `/css/style.css` og `js/main.js` frå `/js/main.js`. Fila finst ikkje der, `navigationFallback` svarar med `index.html`, og nettlesaren nektar å køyre HTML som skript — «Refused to execute script … MIME type ('text/html')». Feilen har vore der for **alle** appane heile tida; ho blir berre synleg når adressa blir skriven eller bokmerkt for hand i staden for å bli klikka på framsida. `staticwebapp.config.json` sender no kvar av dei 35 mappe-URL-ane vidare til seg sjølv med skråstrek (301). **Ny app må ha ei ny linje der.**
+- **`serve.ps1` svarte 404 på mappe-URL-ar.** Lokalt måtte ein skrive `/lydskurd/index.html` heilt ut. No serverer han `index.html` frå mappa, og sender `/lydskurd` vidare til `/lydskurd/` — same åtferd som i produksjon, så feilen over ikkje kan gøyme seg til han er ute.
+
+### Lagt til
+- **Val av mikrofon i Lydskurd og Ljodbanken.** Maskina har gjerne fleire lydinngangar — den innebygde i skjermen, headsettet, og eit lydkort — og nettlesaren vel sjølv kva for ein han tek. Det oppdagar ein typisk etter tjue klipp med feil mikrofon. Lista står no i opptaksdialogen i Lydskurd og i verktøyraden i Ljodbanken.
+  - Namna på mikrofonane er tomme før løyvet er gjeve — nettlesaren vil ikkje at ei side skal kunne kjenne att maskina på lista over lydkort. Lista blir difor fylt på nytt straks mikrofonen er open, og når nokon koplar til eller frå ei eining medan økta går.
+  - Valet blir sett med `deviceId: { exact: … }`. Er mikrofonen kopla frå, får du ei feilmelding i staden for eit stille opptak frå ein annan inngang.
+
 ## [1.27] — 2026-08-25
 
 ### Lagt til

@@ -21,6 +21,7 @@ LB.record = (function () {
   let analyser = null;
   let sourceNode = null;
   let startedAt = 0;
+  let wantedDevice = '';        // '' = la nettlesaren velje sjølv
 
   function isSupported() {
     return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia
@@ -33,6 +34,60 @@ LB.record = (function () {
   /** Kor lenge opptaket har vart, i sekund. */
   function elapsed() {
     return startedAt ? (performance.now() - startedAt) / 1000 : 0;
+  }
+
+  /* ──────────────── Kva mikrofon ──────────────── */
+
+  /**
+   * Mikrofonane maskina har.
+   *
+   * Namna er tomme før brukaren har gjeve løyve til opptak — nettlesaren
+   * vil ikkje at ei side skal kunne kjenne att maskina di på lista over
+   * lydkort. Vi kallar difor denne på nytt etter at mikrofonen er opna,
+   * og då står namna der.
+   *
+   * @returns {Promise<Array<{deviceId: string, label: string}>>}
+   */
+  function inputs() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+      return Promise.resolve([]);
+    }
+    return navigator.mediaDevices.enumerateDevices()
+      .then(list => list.filter(d => d.kind === 'audioinput').map((d, i) => ({
+        deviceId: d.deviceId,
+        label: d.label || ('Mikrofon ' + (i + 1))
+      })))
+      .catch(() => []);
+  }
+
+  function device() { return wantedDevice; }
+
+  /**
+   * Vel mikrofon. Er han alt open, må straumen takast opp att — ein
+   * MediaStream kan ikkje byte kjelde undervegs.
+   * @returns {Promise<void>}
+   */
+  function useDevice(id) {
+    if (id === wantedDevice) return Promise.resolve();
+    wantedDevice = id || '';
+    if (!stream) return Promise.resolve();
+    closeMic();
+    return openMic();
+  }
+
+  function constraints() {
+    const audio = {
+      // Så rå lyd som råd. Nettlesaren si støydemping er laga for tale
+      // i møte, og ho et byrjinga av korte lydar som /k/ og /t/.
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: false
+    };
+    /* `exact` gjer at vi får ein feil i staden for ein annan mikrofon om
+       den valde er kopla frå. Ei stille innspeling frå feil mikrofon er
+       verre enn ei feilmelding. */
+    if (wantedDevice) audio.deviceId = { exact: wantedDevice };
+    return { audio: audio };
   }
 
   /* Nettlesarane er ikkje samde om kva MediaRecorder kan skrive. Vi tek
@@ -60,15 +115,7 @@ LB.record = (function () {
       return Promise.reject(new Error('Nettlesaren din støttar ikkje opptak frå mikrofon.'));
     }
 
-    return navigator.mediaDevices.getUserMedia({
-      audio: {
-        // Så rå lyd som råd. Nettlesaren si støydemping er laga for tale
-        // i møte, og ho et byrjinga av korte lydar som /k/ og /t/.
-        echoCancellation: false,
-        noiseSuppression: false,
-        autoGainControl: false
-      }
-    }).then((granted) => {
+    return navigator.mediaDevices.getUserMedia(constraints()).then((granted) => {
       stream = granted;
       const ctx = LB.audio.context();
       if (ctx) {
@@ -95,6 +142,9 @@ LB.record = (function () {
     }
     if (name === 'NotReadableError') {
       return 'Mikrofonen er i bruk av eit anna program.';
+    }
+    if (name === 'OverconstrainedError') {
+      return 'Den valde mikrofonen finst ikkje lenger. Vel ein annan i lista.';
     }
     return (err && err.message) || 'Klarte ikkje opne mikrofonen.';
   }
@@ -179,6 +229,7 @@ LB.record = (function () {
 
   return {
     isSupported, isOpen, isRecording, elapsed,
+    inputs, device, useDevice,
     openMic, closeMic, level, start, stop
   };
 })();
