@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ljodstigen — Spel</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="../css/vyrde.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../js/vyrde.js" defer></script>
+    <script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic" class="ljod-playing">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+    <div class="ljod-playbar">
+        <a href="index.html" class="btn ljod-back">Tilbake</a>
+        <span class="vyrde" data-vyrde="think" aria-hidden="true"></span>
+    </div>
+
+    <!-- Alt spelinnhald blir bygd av js/main.js -->
+    <div id="play" class="ljod-play" aria-live="polite"></div>
+
+</main>
+</div>
+
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="js/letters.js"></script>
+<script src="js/words.js"></script>
+<script src="js/adaptive.js"></script>
+<script src="js/shapes.js"></script>
+<script src="js/state.js"></script>
+<script src="js/merke.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/hage.js"></script>
+<script src="js/modes/lydfangst.js"></script>
+<script src="js/modes/bokstavropet.js"></script>
+<script src="js/modes/forstelyd.js"></script>
+<script src="js/modes/ordbyggjar.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

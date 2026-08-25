@@ -3,6 +3,27 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.26] — 2026-08-25
+
+### Lagt til
+- **Ljodstigen** — nytt verktøy for 1.–2. trinn som knyter skriftlege bokstavar til bokstavlydar og byggjer vidare til heile ord. Namnet er mellombels. Appen er **ikkje** ført opp på framsida eller i personvernoversikta enno; ho er berre tilgjengeleg på direktelenkje medan ho blir prøvd ut.
+  - Fire modusar i denne utgåva: **Lydfangst** (høyr lyden, finn bokstaven), **Bokstavropet** (motsett veg), **Første lyd** (kva byrjar ordet på) og **Ordbyggjaren** (bygg ordet du høyrer). Ti modusar til er spesifiserte i planen og kjem seinare.
+  - **Adaptiv progresjon med to klokker.** Ordaklok sin Leitner har berre eit dagsintervall, og kortaste steg er eitt døgn — ein elev møter difor aldri same bokstav to gonger i same økt. Ljodstigen legg ei øktklokke ved sida av: eit element kjem att etter 3, 6, 12 eller 25 mellomliggjande oppgåver, og må passere begge klokkene for å reknast som meistra.
+  - **Fart tel med i meistringa.** Eit rett svar som tok meir enn fire sekund flyttar ikkje bokstaven opp. Målet er automatisering, ikkje at eleven greier å resonnere seg fram.
+  - **Frustrasjonsvakt.** To feil på rad tvingar fram ei oppgåve eleven garantert klarer; tre på rad senkar vanskegraden utan å seie frå. Siste oppgåva i kvar økt er alltid ein siger — kva eleven ser sist avgjer om appen blir opna i morgon.
+  - **Forvekslingsbokstavar blir haldne frå kvarandre.** `b/d/p/q`, `m/n`, `u/y`, `o/ø` og sju sett til blir aldri sette opp mot kvarandre før begge sit kvar for seg. Elles trenar ein inn forvekslinga i staden for bokstaven.
+  - **Bokstavhagen i staden for poeng.** Under adaptiv vanskegrad er treffsikkerheit ubrukeleg som mål — motoren siktar mot same treffrate for alle. Overskriftstalet er difor kor mange bokstavar som har vakse, og det går berre opp. **Hagen visnar aldri:** ein plante som gjekk tilbake fordi eleven bomma ville vore ein straffemekanisme retta mot nøyaktig dei elevane appen er til for.
+  - **Dagsstjerner tente på innsats, ikkje treff:** spelt i dag, prøvd noko nytt, kome att. Ingen av dei kan mistast ved å svare feil. Elleve merke, alle utforma så alle kan nå alle — ingen krev feilfri rekkje eller fart, og to av dei premierer at eleven tek seg god tid.
+  - **Læraroversikt** per profil, med kva bokstavar som sit, snittid og kva forvekslingar som går att. Kan skrivast ut.
+  - **Fleire profilar per eining**, sidan same nettbrett blir brukt av fleire elevar. Profilnamn blir **valde frå ei fast liste**, ikkje skrivne, så eit elevnamn ikkje kan hamne i localStorage.
+  - **Ordbyggjaren brukar trykk, ikkje dra-og-slepp.** Dra krev at ein seksåring held fingeren nede og treffer eit mål samtidig, og feilar oftast for dei elevane som alt strevar mest. Her legg brikka seg i neste ledige rute, og eit trykk på ei fylt rute sender henne tilbake. Er ordet feil, blir dei rette bokstavane ståande — eleven mistar aldri det han fekk til.
+  - **Grafikken er reine geometriske former** som plasshaldarar, med vilje. Ingen tid er brukt på uttrykk før spelet er prøvt med elevar.
+- **`lag_ljodstigen_lydliste.py`** genererer innspelingslista (`ljodstigen/INNSPELING.md`, 141 klipp) frå bokstav- og orddataen i appen. Lista er generert og ikkje handskriven, fordi ei handskriven liste før eller seinare kjem ut av takt med koden — og då manglar det ei lydfil som ingen oppdagar før ein elev sit framfor ei stum oppgåve.
+
+### Endra
+- **`navigationFallback.exclude`** i `staticwebapp.config.json` dekkjer no `/_resources/*` og `/ljodstigen/lyd/*`. Ein sti som ikkje traff ei fil blei skriven om til `index.html` med status **200**, ikkje 404. For ei lydfil tyder det at `decodeAudioData()` får ein HTML-body og feilar med «Unable to decode audio data» utan å seie kvifor.
+- **`Cache-Control: immutable`** på `/ljodstigen/lyd/*`, same grunngjeving som Pyodide-ruta: banken er versjonspinna, og utan dette lastar elevane heile lydbanken på nytt kvar time.
+
 ## [1.25] — 2026-08-25
 
 ### Fiksa

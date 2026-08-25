@@ -1,7 +1,8 @@
 {
+  "_kommentar_fallback": "Ein sti som ikkje treffer ei fil blir skriven om til index.html med status 200 — ikkje 404. Ei lydfil med skrivefeil i stien gjev då ein HTML-body, og decodeAudioData feilar med «Unable to decode audio data» utan å seie kvifor. Difor står lyd- og ressursmappene her.",
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/_resources/*", "/ljodstigen/lyd/*"]
   },
   "routes": [
     {
@@ -25,6 +26,13 @@
     },
     {
       "route": "/_libs/codemirror/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "_kommentar": "Lydbanken til Ljodstigen er versjonspinna og endrar seg aldri utan at mappa byttar namn. Utan dette lastar elevane heile banken på nytt kvar time. Ny innspeling skal difor leggjast i ei NY mappe (lyd-v2/), ikkje som nytt innhald i den gamle: filnamna er dei same, og immutable-cachen ville elles late elevmaskiner sitje att med gammal lyd.",
+      "route": "/ljodstigen/lyd/*",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
       }

@@ -1,0 +1,481 @@
+/* ══════════════════════════════════════════════
+   LJODSTIGEN — utvidar css/neobrutalisme.css
+
+   KONTRAST (AGENTS.md §3.2): ingen flate her blir fylt med
+   var(--accent)/var(--accent2) med tekst oppå. I dei sju mørke temaa er
+   dei lyse neonfargar der kvit tekst fell under 4,5:1. Der vi treng
+   farge bak tekst, brukar vi anten inverteringa
+   (background: var(--text); color: var(--surface)) eller ein fast lys
+   pastell med var(--text-on-light-accent).
+   ══════════════════════════════════════════════ */
+
+:root {
+  /* MELLOMBELS LESEFONT.
+     Verdana er valt fordi stor I har tverrstrekar øvst og nedst, og
+     difor ikkje er identisk med liten l — det er han i Segoe UI,
+     Roboto og SF Pro, som alle er standard i denne stakken. Verdana
+     finst på Windows, macOS og iPad.
+
+     Dette er ei mellombels løysing. Den rette er ein subsetta OFL-font
+     laga for lesebegynnarar (Andika) i _libs/, men han krev eksplisitt
+     godkjenning etter §5.6 og er ikkje lagd inn enno. */
+  --ljod-font-read: Verdana, Geneva, "DejaVu Sans", Tahoma, sans-serif;
+
+  /* Faste lyse pastellar. Trygge under var(--text-on-light-accent) i
+     alle 21 tema, fordi dei ikkje endrar seg med temaet. */
+  --ljod-right: #BAFCA2;
+  --ljod-wrong: #FFC2C2;
+  --ljod-answer: #FFD166;
+}
+
+body[data-font="lesefont"] .ljod-glyph,
+body[data-font="lesefont"] .ljod-sample,
+body[data-font="lesefont"] .ljod-td-letter,
+body[data-font="lesefont"] .ljod-bed-letter {
+  font-family: var(--ljod-font-read);
+}
+
+/* ──────────────── Framside ──────────────── */
+
+.ljod-hero { align-items: center; }
+.ljod-hero .vyrde { width: 90px; height: 90px; flex: none; }
+
+.ljod-alpha { margin-bottom: 20px; }
+.ljod-alpha p { max-width: 78ch; margin: 0; }
+
+.ljod-hint {
+  color: var(--muted);
+  max-width: 78ch;
+}
+
+.ljod-sample {
+  font-weight: 700;
+  padding: 0 2px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* Profilar */
+.ljod-profiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.ljod-profile {
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  min-width: 130px;
+}
+
+.ljod-profile.is-active {
+  box-shadow: 6px 6px 0 var(--border);
+  /* Aksenten ber ingen tekst — han ligg som kant. Sjå kontrastnota. */
+  border-color: var(--accent);
+}
+
+.ljod-profile-pick {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 12px 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  font-family: inherit;
+}
+
+.ljod-profile-name { font-weight: 800; font-size: 1.05rem; }
+.ljod-profile-sum  { font-size: 0.8rem; color: var(--muted); }
+
+.ljod-profile-del {
+  border: none;
+  border-top: 2px solid var(--border);
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.75rem;
+  padding: 6px;
+  cursor: pointer;
+}
+.ljod-profile-del:hover { background: var(--ljod-wrong); color: var(--text-on-light-accent); }
+
+.ljod-newprofile { flex: 1 1 100%; margin-top: 6px; }
+.ljod-avatar-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.ljod-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+}
+.ljod-avatar:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--border); }
+.ljod-avatar-name { font-size: 0.75rem; font-weight: 700; }
+
+/* Modusar */
+.ljod-modes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ljod-mode {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  position: relative;
+}
+.ljod-mode:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--border); }
+.ljod-mode.is-locked { opacity: 0.5; }
+.ljod-mode.is-locked:hover { transform: none; box-shadow: none; }
+
+.ljod-mode-title { font-weight: 800; font-size: 1.15rem; }
+.ljod-mode-blurb { font-size: 0.85rem; color: var(--muted); }
+.ljod-mode-flag {
+  align-self: flex-start;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  /* Invertering: motsetnader i kvart einaste tema, så kontrasten held
+     per konstruksjon utan måling. */
+  background: var(--text);
+  color: var(--surface);
+}
+
+/* ──────────────── Oppgåveflate ──────────────── */
+
+.ljod-play { margin-top: 10px; }
+
+.ljod-playbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.ljod-playbar .vyrde { width: 56px; height: 56px; }
+
+.ljod-task { display: flex; flex-direction: column; gap: 16px; }
+
+.ljod-prompt {
+  font-size: clamp(1.1rem, 3.4vw, 1.6rem);
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+}
+
+.ljod-audio-note {
+  font-size: 0.85rem;
+  color: var(--text-on-light-accent);
+  background: var(--ljod-answer);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  text-align: center;
+  max-width: 78ch;
+  margin: 8px auto 0;
+}
+
+.ljod-task-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* Lydknapp — stor med vilje. Han er oppgåva, ikkje ein hjelpefunksjon. */
+.ljod-replay {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: clamp(1rem, 2.6vw, 1.2rem);
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--border);
+}
+.ljod-replay:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--border); }
+.ljod-replay:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--border); }
+.ljod-replay.is-playing { background: var(--ljod-answer); color: var(--text-on-light-accent); }
+
+/* Bokstavbrikker og svarrutenett */
+.ljod-options {
+  display: grid;
+  gap: clamp(10px, 2.2vw, 18px);
+  width: 100%;
+  max-width: 760px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.ljod-options-4 { grid-template-columns: repeat(2, 1fr); }
+.ljod-options-6 { grid-template-columns: repeat(3, 1fr); }
+
+@media (min-width: 700px) {
+  .ljod-options-4 { grid-template-columns: repeat(4, 1fr); }
+  .ljod-options-6 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.ljod-tile, .ljod-plate, .ljod-slot, .ljod-listen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 var(--border);
+  transition: transform 0.08s, box-shadow 0.08s, background 0.12s;
+}
+
+.ljod-tile-lg { aspect-ratio: 1 / 1; min-height: 92px; }
+.ljod-tile-md { aspect-ratio: 1 / 1; min-height: 66px; width: clamp(58px, 15vw, 84px); }
+
+.ljod-glyph {
+  font-size: clamp(2.4rem, 11vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1;
+}
+.ljod-tile-md .ljod-glyph { font-size: clamp(1.6rem, 7vw, 2.6rem); }
+
+.ljod-tile:hover:not(:disabled) { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--border); }
+.ljod-tile:active:not(:disabled) { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--border); }
+.ljod-tile:disabled { cursor: default; }
+
+.ljod-plate {
+  cursor: default;
+  width: clamp(120px, 40vw, 200px);
+  aspect-ratio: 1 / 1;
+}
+
+/* Svarstatus. Faste pastellar med mørk tekst — trygge i alle 21 tema. */
+.is-right  { background: var(--ljod-right)  !important; color: var(--text-on-light-accent) !important; }
+.is-wrong  { background: var(--ljod-wrong)  !important; color: var(--text-on-light-accent) !important; }
+.is-answer { background: var(--ljod-answer) !important; color: var(--text-on-light-accent) !important; }
+
+/* Lyttebrikker (Bokstavropet) */
+.ljod-listen {
+  flex-direction: column;
+  gap: 4px;
+  min-height: 88px;
+  padding: 12px;
+}
+.ljod-listen-num { font-weight: 800; font-size: 1.2rem; }
+.ljod-listen.is-heard { border-style: dashed; }
+
+/* Ordbyggjaren */
+.ljod-slots, .ljod-tray {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(8px, 2vw, 14px);
+}
+.ljod-slots { margin-top: 4px; }
+
+.ljod-slot {
+  width: clamp(58px, 15vw, 84px);
+  aspect-ratio: 1 / 1;
+  border-style: dashed;
+  box-shadow: none;
+}
+.ljod-slot.is-filled { border-style: solid; box-shadow: 5px 5px 0 var(--border); }
+.ljod-tray { margin-top: 6px; }
+.ljod-tile.is-used { opacity: 0.25; box-shadow: none; }
+
+/* Framdrift */
+.ljod-progress {
+  height: 12px;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.ljod-progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);   /* ingen tekst oppå — trygt */
+  transition: width 0.3s;
+}
+
+.ljod-loading { display: flex; flex-direction: column; gap: 14px; padding: 40px 0; }
+
+/* ──────────────── Hagen ──────────────── */
+
+.ljod-garden {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.ljod-bed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px 6px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+.ljod-bed.is-locked { opacity: 0.3; }
+.ljod-bed-letter { font-weight: 800; font-size: 1.1rem; }
+
+.ljod-garden-sum { font-weight: 700; max-width: 78ch; }
+
+/* Stjerner */
+.ljod-stars { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+.ljod-star {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  opacity: 0.55;
+}
+.ljod-star.is-earned { opacity: 1; box-shadow: 4px 4px 0 var(--border); }
+.ljod-star-label { font-size: 0.85rem; font-weight: 700; }
+.ljod-streak { font-weight: 700; }
+
+/* Merke */
+.ljod-badges, .ljod-won {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(170px, 100%), 1fr));
+  gap: 12px;
+}
+.ljod-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 12px 10px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  opacity: 0.5;
+}
+.ljod-badge.is-earned { opacity: 1; box-shadow: 4px 4px 0 var(--border); }
+.ljod-badge-title { font-weight: 800; }
+.ljod-badge-hint { font-size: 0.78rem; color: var(--muted); }
+
+/* ──────────────── Slutten på økta ──────────────── */
+
+.ljod-done { position: relative; padding: 24px; text-align: center; }
+.ljod-done .ljod-garden, .ljod-done .ljod-stars { justify-content: center; }
+
+.ljod-confetti {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  color: var(--accent);
+}
+
+.ljod-btn-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; }
+
+/* ──────────────── Læraroversikt ──────────────── */
+
+.ljod-laerar-head h2 { margin-bottom: 2px; }
+.ljod-muted { color: var(--muted); max-width: 78ch; }
+
+.ljod-laerar-sum {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.ljod-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.ljod-stat-num { font-size: 1.6rem; font-weight: 800; }
+.ljod-stat-label { font-size: 0.75rem; color: var(--muted); }
+
+.ljod-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.ljod-table th, .ljod-table td {
+  border: 2px solid var(--border);
+  padding: 6px 8px;
+  text-align: left;
+}
+.ljod-table th { background: var(--text); color: var(--surface); }
+.ljod-table tr.is-weak td { background: var(--ljod-wrong); color: var(--text-on-light-accent); }
+.ljod-td-letter { font-weight: 800; font-size: 1.1rem; }
+
+.ljod-trouble { max-width: 78ch; }
+.ljod-trouble li { margin-bottom: 4px; }
+
+/* Tabellen må kunne skrollast for seg på mobil, ikkje dra sida sidelengs. */
+[data-pane="laerar"] { overflow-x: auto; }
+
+/* ──────────────── Fokus og rørsle ──────────────── */
+
+.ljod-tile:focus-visible,
+.ljod-slot:focus-visible,
+.ljod-listen:focus-visible,
+.ljod-replay:focus-visible,
+.ljod-avatar:focus-visible,
+.ljod-profile-pick:focus-visible,
+.ljod-profile-del:focus-visible,
+.ljod-mode:focus-visible,
+.ljod-fontbtn:focus-visible {
+  outline: 4px solid var(--accent2);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ljod-tile, .ljod-replay, .ljod-mode, .ljod-avatar, .ljod-progress-fill {
+    transition: none;
+  }
+  .ljod-tile:hover, .ljod-replay:hover, .ljod-mode:hover, .ljod-avatar:hover {
+    transform: none;
+  }
+}
+
+/* ──────────────── Utskrift ──────────────── */
+
+@media print {
+  neo-header, .ljod-hero, .ljod-alpha, .box-tabs, #printLaerar,
+  .ljod-settings, #profiles, #modes, #stars, .ljod-playbar { display: none !important; }
+  .box5, .box4 { border: none; box-shadow: none; }
+  .ljod-table th { background: none; color: #000; }
+  .ljod-table tr.is-weak td { background: none; font-weight: 700; }
+  body { background: #fff; color: #000; }
+}

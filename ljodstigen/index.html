@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ljodstigen — Frå bokstavlyd til ord</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="../css/vyrde.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../js/vyrde.js" defer></script>
+    <script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+    <!-- Hero. Ingen logo enno: plasshaldarane skal ikkje sjå ferdige ut. -->
+    <div class="box2 hero-box ljod-hero">
+        <div class="hero-text">
+            <h1>Ljodstigen</h1>
+            <p>Frå éin bokstavlyd til heile ord — i ditt eige tempo.</p>
+        </div>
+        <span class="vyrde" data-vyrde="wave" aria-hidden="true"></span>
+    </div>
+
+    <div class="box1 ljod-alpha">
+        <p><strong>Dette er ei tidleg utgåve.</strong> Figurane er enkle former som står
+        på plass til vi veit at spelet fungerer, og bokstavlydane er ikkje spelte inn
+        enno — du høyrer tonar i staden for tale. Alt anna verkar.</p>
+    </div>
+
+    <!-- Profilar -->
+    <section class="box4">
+        <div class="box-header"><h2>Kven speler?</h2></div>
+        <div class="box-body">
+            <p class="ljod-hint">Same nettbrett kan brukast av fleire. Vel figuren din —
+            han hugsar kor langt du er komen.</p>
+            <div id="profiles" class="ljod-profiles"></div>
+        </div>
+    </section>
+
+    <!-- Spelarpanel -->
+    <section id="player" class="ljod-player" hidden>
+
+        <div class="box4">
+            <div class="box-header"><h2 id="playerName">Spelar</h2></div>
+            <div class="box-body">
+                <div id="stars"></div>
+                <h3 class="heading4">Kva vil du spele?</h3>
+                <div id="modes" class="ljod-modes"></div>
+            </div>
+        </div>
+
+        <div class="box5">
+            <div class="box-tabs" role="tablist">
+                <button class="box-tab active" data-tab="hage" role="tab" aria-selected="true">Hagen</button>
+                <button class="box-tab" data-tab="merke" role="tab" aria-selected="false">Merke</button>
+                <button class="box-tab" data-tab="laerar" role="tab" aria-selected="false">For læraren</button>
+            </div>
+            <div class="box-body">
+                <div data-pane="hage">
+                    <p class="ljod-hint">Kvar bokstav er ein plante. Di betre du kan han,
+                    di større veks han. Planter visnar aldri.</p>
+                    <div id="garden"></div>
+                </div>
+                <div data-pane="merke" hidden>
+                    <div id="badges"></div>
+                </div>
+                <div data-pane="laerar" hidden>
+                    <div id="laerar"></div>
+                    <button class="btn" id="printLaerar" type="button">Skriv ut</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Innstillingar -->
+    <section class="box1 ljod-settings">
+        <h2 class="heading4 no-mt">Skrift</h2>
+        <p class="ljod-hint">Lesefonten skil tydeleg mellom store <span class="ljod-sample">I</span>
+        og små <span class="ljod-sample">l</span>. Systemfonten på mange maskiner gjer det ikkje.</p>
+        <div id="fontpick" class="ljod-btn-row"></div>
+    </section>
+
+</main>
+</div>
+
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="js/letters.js"></script>
+<script src="js/words.js"></script>
+<script src="js/adaptive.js"></script>
+<script src="js/shapes.js"></script>
+<script src="js/state.js"></script>
+<script src="js/merke.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/hage.js"></script>
+<script src="js/laerar.js"></script>
+<script src="js/modes/lydfangst.js"></script>
+<script src="js/modes/bokstavropet.js"></script>
+<script src="js/modes/forstelyd.js"></script>
+<script src="js/modes/ordbyggjar.js"></script>
+<script src="js/meny.js"></script>
+
+</body>
+</html>
