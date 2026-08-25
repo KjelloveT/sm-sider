@@ -3,6 +3,21 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.30] — 2026-08-25
+
+### Lagt til
+- **Ei eiga side med alle endringane** (`endringar.html`), lenka frå notatet på framsida og frå botnteksten. Notatet har plass til tre setningar, og alt anna som er gjort har til no berre stått i denne fila — som ein lærar korkje finn eller har grunn til å leite i. Sida viser **éi kort linje per punkt** i loggen: 187 punkt i 31 utgåver, nyaste øvst.
+  - **Kva som er eksperiment står no svart på kvitt.** Ljodstigen, Ljodbanken, Livslina, Listesmia og Etikktesten er ikkje førte opp på framsida, men er nemnde i loggen — og ein lesar hadde ingen måte å sjå skilnaden på dei og det som faktisk er publisert. Merket «Eksperiment» seier at verktøyet verkar for den som har lenkja, men kan endre seg eller forsvinne.
+  - **Merket «Nytt verktøy»** står på dei fjorten punkta der eit spel eller verktøy vart sleppt til sida. Det er den einaste hendingstypen i loggen ein lesar utanfrå kjem tilbake for å sjå etter, og han drukna elles mellom rettingar og tekstendringar.
+  - Filterknappar for nye verktøy, eksperiment og dei tre typane. Talet under raden seier kor mange punkt utvalet gav.
+  - Teksten ligg i `json/endringslogg.json` og blir rendra av `js/endringar.js`, same mønsteret som `json/apps.json` og framsida. Oppsummeringane er skrivne for hand: ein generator som skar til fyrste setning i kvart punkt ville gjeve att grunngjevinga og ikkje endringa.
+  - **Utgåver med same nummer blir slegne saman.** Denne fila har to `## [1.27]` og to `## [1.28]`, fordi to greiner fekk same nummeret kvar for seg. Sida viser dei som éi utgåve i staden for to like nummer etter kvarandre — men nummera i fila bør ryddast, og det er ikkje gjort her.
+  - **Ingen aksentfyll med tekst oppå** (§3.2). Typebrikkene er fylte med `--accent3/4/5` og har mørk tekst — lågast **6,79:1** målt i alle 21 tema. Merket «Nytt verktøy» brukar den snudde `--border`/`--surface`-paringa, og «Eksperiment» skil seg på ramma. Stripa til venstre for kvart punkt er `--border` og ikkje ein pastell: accent3–5 ligg på **1,13–1,90:1** mot flata i dei lyse temaa, og ei stripe ingen ser er ikkje ei stripe.
+  - Vald filterknapp er snudd mot `--text`/`--surface` i staden for standard `.btn.active`, som fyller med `--accent` og legg kvit tekst oppå.
+
+### Endra
+- **Notatet på framsida er oppdatert til versjon 1.30** og har fått lenkja til endringssida.
+
 ## [1.29] — 2026-08-25
 
 ### Fiksa

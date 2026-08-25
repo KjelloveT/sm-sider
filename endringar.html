@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Endringar — Vyrdepil</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="stylesheet" href="css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/endringar.css">
+    <script src="js/neo-header.js" defer></script>
+    <script src="js/endringar.js" defer></script>
+    <script src="js/neobrutalisme.js"></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+    <main class="main-content">
+
+        <h1 class="heading1">Endringar</h1>
+        <p class="endr-ingress">Kort oppsummering av kvart punkt i endringsloggen, nyaste øvst. Den fulle loggen med grunngjevingar og målingar ligg i <code>CHANGELOG.md</code> i kjeldekoden.</p>
+
+        <div class="endr-filter" id="endrFilter" role="group" aria-label="Vis berre">
+            <button type="button" class="btn active" data-filter="alle" aria-pressed="true">Alt</button>
+            <button type="button" class="btn" data-filter="verktoy" aria-pressed="false">Nye verktøy</button>
+            <button type="button" class="btn" data-filter="eksperiment" aria-pressed="false">Eksperiment</button>
+            <button type="button" class="btn" data-filter="nytt" aria-pressed="false">Nytt</button>
+            <button type="button" class="btn" data-filter="endra" aria-pressed="false">Endra</button>
+            <button type="button" class="btn" data-filter="fiksa" aria-pressed="false">Fiksa</button>
+        </div>
+        <p class="endr-tal" id="endrTal" aria-live="polite"></p>
+
+        <div id="endrListe"></div>
+
+    </main>
+</div>
+
+<footer class="site-footer">
+    <p><svg width="16" height="16" style="vertical-align:-2px;margin-right:4px;" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Laga for grunnskulen — open kjeldekode, ingen sporing.</p>
+    <p class="footer-links"><a href="index.html">Framsida</a> · <a href="personvern.html">Personvernerklæring</a></p>
+</footer>
+
+</body>
+</html>

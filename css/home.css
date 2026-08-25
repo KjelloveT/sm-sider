@@ -73,3 +73,15 @@
     align-self: stretch;
   }
 }
+
+/* Lenkja til endringssida ligg i den gule lappen, altså på ein lys
+   pastellbakgrunn med mørk tekst. Han arvar difor fargen frå lappen og skil
+   seg ut på understrekinga, ikkje på ein eigen lenkjefarge som ville hatt
+   sin eigen kontrast å svare for. */
+.postit-lenke {
+  display: inline-block;
+  font-weight: 900;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

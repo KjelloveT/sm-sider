@@ -1,0 +1,1219 @@
+{
+  "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
+  "versjonar": [
+    {
+      "versjon": "1.30",
+      "dato": "2026-08-25",
+      "samandrag": "Denne sida: kort oppsummering av alle punkta i endringsloggen.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Endringar",
+          "tekst": "Ei eiga side med éi kort linje per punkt i endringsloggen, lenka frå notatet på framsida og frå botnteksten. Notatet har plass til tre setningar; resten stod berre i loggfila i kjeldekoden."
+        },
+        {
+          "t": "nytt",
+          "kva": "Endringar",
+          "tekst": "Verktøy som ikkje er publiserte på framsida er merkte som eksperiment, og dei fjorten punkta der eit nytt spel eller verktøy vart sleppt til sida har fått sitt eige merke."
+        },
+        {
+          "t": "nytt",
+          "kva": "Endringar",
+          "tekst": "Filterknappar for nye verktøy, eksperiment og dei tre typane, med tal på kor mange punkt utvalet gav."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Notatet er oppdatert til versjon 1.29 og har fått lenkja til endringssida."
+        }
+      ]
+    },
+    {
+      "versjon": "1.29",
+      "dato": "2026-08-25",
+      "samandrag": "Tilbakemeldinga får snakke ferdig før neste oppgåve kjem.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Tilbakemeldinga frå ei oppgåve spelte oppå den neste: modusane venta ei fast tid som var gissa medan all lyd var korte tonar, og tre av fire oppmuntringsklipp er lengre enn ho. Alle fire modusane følgjer no lyden i staden for klokka.",
+          "merke": [
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Same feil i Ordbyggjaren: brikkene kom tilbake etter fast tid medan oppmuntringa framleis snakka. Dei kjem no tilbake når ho er ferdig."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "«Opne alle modusane» let ein lærar opne alt med ein gong. Progresjonen blir ikkje rørt, og modusar opna slik blir merkte «Opna av lærar», så dei ikkje ser ut som noko eleven har fortent."
+        }
+      ]
+    },
+    {
+      "versjon": "1.28",
+      "dato": "2026-08-25",
+      "samandrag": "Heile lydbanken til Ljodstigen er spelt inn, og mappe-adresser utan skråstrek verkar.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Heile lydbanken er spelt inn: 70 ord og 13 ros- og oppmuntringsklipp kom til, så alle 141 klippa er på plass. Alle fire modusane har no ekte tale.",
+          "merke": [
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Ordbyggjaren og «Første lyd» er spelbare for fyrste gong — begge treng eit opplese ord for å fungere i det heile."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Stille-detektoren gjekk ut frå toppnivået åleine, og då blei romtona rekna som tale: «pose» kom ut med 800 ms romtone framfor. Han måler no støygolvet i kvart klipp for seg, og ordbanken gjekk frå 71,2 til 52,4 sekund."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Heile nettstaden",
+          "tekst": "Ei adresse utan skråstrek til slutt (t.d. /ljodbanken) lasta sida halvvegs, fordi alle relative stiar då peika eitt hakk for høgt. Adressa blir no normalisert for alle appar."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Lokal tenar",
+          "tekst": "Utviklingstenaren serverer mappe-adresser på same vis som produksjon, så same feilen ikkje kan gøyme seg lokalt."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodbanken og Lydskurd",
+          "tekst": "Mellomrom startar og stoppar opptaket. Escape avbryt utan å lagre, og slår samstundes av «gå automatisk vidare»."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodbanken",
+          "tekst": "Knappen i verktøyraden blir ein stoppknapp medan opptaket går, og står i ro på skjermen same kor lista rullar."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodbanken",
+          "tekst": "Stoppknappen var vanskeleg å treffe: ikonet vart bygd på nytt kvar ramme, så nettlesaren fyrte aldri eit klikk. Det blir no berre bytt når det endrar seg."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodbanken",
+          "tekst": "Lista rullar ikkje lenger når rada alt er synleg, så knappane flyttar seg ikkje under handa."
+        },
+        {
+          "t": "nytt",
+          "kva": "Lydskurd og Ljodbanken",
+          "tekst": "Val av mikrofon, med namn som blir fylte inn så snart løyvet er gjeve, og feilmelding i staden for eit stille opptak om eininga er kopla frå."
+        }
+      ]
+    },
+    {
+      "versjon": "1.27",
+      "dato": "2026-08-25",
+      "samandrag": "Ljodbanken kom til, og dei fyrste lydane til Ljodstigen er spelte inn.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodbanken",
+          "tekst": "Nytt opptaksverktøy for mange korte klipp etter ei liste — heile lista på skjermen, opptaksknapp per rad, og mikrofonen står på mellom klippa.",
+          "merke": [
+            "verktoy",
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodbanken",
+          "tekst": "Verktøyet foreslår sjølv kvar lyden byrjar og sluttar og skjer bort stilla. Utsnittet er berre to tal, så grensene kan dragast ut att."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodbanken",
+          "tekst": "Alt kan lastast ned som éi zip-fil og hentast inn att seinare, så ei økt kan delast over fleire dagar. Urørte klipp blir aldri koda om."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodbanken",
+          "tekst": "Innebygd liste med alle 141 klippa til Ljodstigen. Eigne lister kan lagast i verktøyet og lagrast som filer."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavlydane og bokstavnamna er spelte inn — 58 klipp bygde til to lydsprites på 167 kB. Ordbanken og rosen står att.",
+          "merke": [
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Nytt byggjeskript lagar lydfilene frå råopptaka, med delvis styrkejamning så «den høgaste lyden» ikkje blir eit utilsikta hint i Bokstavropet."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Statustabellen over innspelingane blir lesen av disk i staden for å haldast oppdatert for hand."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Stille-detektoren lét seg lure av eit einsleg klikk og la opptil 160 ms daud luft framfor lyden — i ei oppgåve som måler responstid. Innleiinga er no 35–65 ms på alle 58 klippa."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Ein plasshaldartone spelte etter kvart einaste svar. Manglande ros er no stille, medan manglande ord framleis gjev tone, sidan oppgåva treng lyden."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Lista over manglande lyd dupliserte seg ved gjentekne kall og ville sagt «orda, rosen, orda og rosen»."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Meldinga om manglande lyd sa at du høyrer tonar frå bankar som no er stille. Ho seier no kva som manglar, ikkje kva du høyrer."
+        }
+      ]
+    },
+    {
+      "versjon": "1.26",
+      "dato": "2026-08-25",
+      "samandrag": "Ljodstigen — nytt verktøy for bokstavlyd på 1.–2. trinn, framleis under utprøving.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Nytt verktøy for 1.–2. trinn som knyter bokstav til bokstavlyd og byggjer vidare til heile ord. Fire modusar i denne utgåva; ti til er planlagde.",
+          "merke": [
+            "verktoy",
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Adaptiv progresjon med to klokker — ei dagsklokke og ei øktklokke — så same bokstav kan kome att i same økta. Fart tel med: eit rett svar som tok meir enn fire sekund flyttar ikkje bokstaven opp."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Frustrasjonsvakt som sikrar ei oppgåve eleven klarer etter to feil på rad, og siste oppgåva i økta er alltid ein siger."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Forvekslingsbokstavar som b/d/p/q og m/n blir aldri sette opp mot kvarandre før begge sit kvar for seg."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavhagen i staden for poeng: talet viser kor mange bokstavar som har vakse, og hagen visnar aldri. Dagsstjerner blir tente på innsats, ikkje på treff."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Læraroversikt per profil med kva bokstavar som sit, snittid og forvekslingar som går att. Fleire profilar per eining, med namn valde frå ei fast liste."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Ordbyggjaren brukar trykk i staden for dra-og-slepp, og dei rette bokstavane blir ståande når ordet er feil."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Lesefonten Andika er teken inn sjølv-hosta: i standardfonten er stor I og liten l to like strekar, og i ein app om bokstavformer er ikkje det ein detalj."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Innspelingslista på 141 klipp blir generert frå bokstav- og orddataen i appen, ikkje skriven for hand."
+        },
+        {
+          "t": "endra",
+          "kva": "Drift",
+          "tekst": "Lyd- og biletmapper er tekne ut av fallback-ruta, så ei fil som manglar gjev 404 i staden for ei HTML-side lyddekodaren ikkje skjønar."
+        },
+        {
+          "t": "endra",
+          "kva": "Drift",
+          "tekst": "Lydbanken og fontmappa blir mellomlagra som uforanderlege, så elevane ikkje lastar heile lydbanken på nytt kvar time."
+        },
+        {
+          "t": "endra",
+          "kva": "Retningslinjer",
+          "tekst": "Fontregelen er presisert: forbodet gjeld eksterne font-tenester, ikkje sjølv-hosta fontar — med ei åtvaring om reserverte fontnamn i OFL-lisensen."
+        }
+      ]
+    },
+    {
+      "versjon": "1.25",
+      "dato": "2026-08-25",
+      "samandrag": "Skjulte knappar var synlege i seks appar.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Heile nettstaden",
+          "tekst": "Knappar som skulle vere skjulte stod framme i seks appar — mellom anna kunne ein hente hint i Bolkestokk utan å ha prøvt på oppgåva. Retta éin stad, i det delte stilarket."
+        }
+      ]
+    },
+    {
+      "versjon": "1.24",
+      "dato": "2026-08-25",
+      "samandrag": "Vilkår inn i grunnkurset, og fire tekstfeil i Bolkestokk retta.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Vilkårsleksjon i grunnkurset: fire modular treng vilkår, og kompetansemåla for alle tre trinna nemner dei."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Talfeltet seier frå når eleven brukar eit namn Python alt har, utan å hindre noko."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Sannsynsmodulen sa til femteklassingar at dei alt kunne vilkår, medan blokka aldri var vist. Teksten er retta."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Ordet «sannsyn» vart fyrst forklart etter at eleven hadde svara på ei oppgåve om det. No blir det innført i leksjon 1."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Arealmodulen sa at han bygde på grunnkurset, men byggjer på rutenettet. Teksten på modulkortet er ikkje lenger hardkoda."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Ein variabel som heitte sum ville gjeve eleven ein feil i statistikkmodulen etterpå."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Køyring, fart og stegmodus er skilde ut i eiga fil, 539 → 467 linjer."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Ein kommentar om filstorleik var utdatert og er målt på nytt."
+        }
+      ]
+    },
+    {
+      "versjon": "1.23",
+      "dato": "2026-08-25",
+      "samandrag": "Fyll-blokker og tre nye modular i Bolkestokk.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Fyll-blokker som gjer alt skilpadda teiknar imellom til ei farga flate. Fyllet ligg under rutenettet, så rutene framleis er der å telje."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Modulen «Areal og oppdeling» — fem leksjonar for 6. trinn, heilt på rutenettet, fram til at eit rektangel delt i to er distributivitet."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Modulen «Reknerekkefølgje» — fire leksjonar for 7. trinn, der eit tvitydig uttrykk ikkje lèt seg byggje i det heile."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Leksjonen «Teikn likninga» opnar likningsmodulen for 5. trinn: to stolpar, éin for kvar side av likskapsteiknet."
+        }
+      ]
+    },
+    {
+      "versjon": "1.22",
+      "dato": "2026-08-25",
+      "samandrag": "Notatet på framsida følgjer versjonsnummeret i endringsloggen.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Notatet er oppdatert: Bolkestokk står først som det nyaste verktøyet, og punktet om Vyrde-maskoten er teke bort."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Notatet følgjer no versjonsnummeret i endringsloggen. Før stod det «Versjon 1.0» medan loggen var komen til 1.21."
+        }
+      ]
+    },
+    {
+      "versjon": "1.21",
+      "dato": "2026-08-23",
+      "samandrag": "«Lykkje», ikkje «løkke».",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Bolkestokk og Ormritaren",
+          "tekst": "Nynorskforma «lykkje» er brukt overalt — 167 stader — så kompetansemålet og leksjonsteksten ikkje seier kvar sitt ord rett ved sida av kvarandre."
+        }
+      ]
+    },
+    {
+      "versjon": "1.20",
+      "dato": "2026-08-23",
+      "samandrag": "Spegling, dreiing og dei fire kvadrantane.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "To leksjonar til i koordinatmodulen: spegling og dreiing, og dei fire kvadrantane. Alle tre kongruensavbildingane er berre reglar for koordinatane."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Modulen dekkjer med det òg 7. trinn sitt mål om negative tal, gjennom forteikna som avgjer kvar eit punkt ligg."
+        }
+      ]
+    },
+    {
+      "versjon": "1.19",
+      "dato": "2026-08-23",
+      "samandrag": "Lister i blokkspråket og ein statistikkmodul.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Åtte listeblokker: lag ei liste, legg til, sorter, lengd, sum, element, minst og størst. Lister ligg for seg og ikkje blant variablane."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Modulen «Datasett og sentralmål» — seks leksjonar for 7. trinn om kvifor gjennomsnitt og median ikkje er samde."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Eleven tel frå 1 i lista medan Python tel frå 0, og Python-utskrifta viser skilnaden heilt ope."
+        }
+      ]
+    },
+    {
+      "versjon": "1.18",
+      "dato": "2026-08-23",
+      "samandrag": "Likningar og ulikskapar — utskrifta er løysingsmengda.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Modulen «Likningar og ulikskapar» — fem leksjonar for 7. trinn. Programmet prøver alle tala i eit område og skriv ut dei som gjer påstanden sann."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Siste leksjonen handlar om at ei tom rute berre tyder «ingen løysing blant dei tala eg prøvde»."
+        }
+      ]
+    },
+    {
+      "versjon": "1.17",
+      "dato": "2026-08-23",
+      "samandrag": "Sirkelen og pi — eleven finn pi sjølv.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Modulen «Sirkelen og pi» — fem leksjonar for 6. trinn, frå sekskanten som gjev nøyaktig 3 til 90-kanten som gjev 3,1410."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Ny blokk «avstanden til start» — målebandet i verktøyet, med eit ekte motstykke i Python."
+        }
+      ]
+    },
+    {
+      "versjon": "1.16",
+      "dato": "2026-08-23",
+      "samandrag": "Kompetansemåla er henta ordrett frå udir.no, på nynorsk.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Tre kompetansemål var skrivne frå hukommelsen og delvis feil. Dei er henta ordrett frå udir.no, og sannsynsmodulen er merkt om til 5. trinn."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Grunnkurset hadde ingen kompetansemål på kortet, og har no dei tre programmeringsmåla for 5.–7. trinn."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk og Ormritaren",
+          "tekst": "Alle 30 kompetansemåla står no på nynorsk, henta frå Udir si eiga nynorskutgåve av læreplanen."
+        }
+      ]
+    },
+    {
+      "versjon": "1.15",
+      "dato": "2026-08-23",
+      "samandrag": "Resultatspalta opna seg aldri att.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Teikninga kom aldri fram frå fyrste køyring på ei fersk side: ein overgang på spaltebreidda gjorde at nettlesaren heldt på den gamle verdien. Overgangen er borte."
+        }
+      ]
+    },
+    {
+      "versjon": "1.14",
+      "dato": "2026-08-23",
+      "samandrag": "Alle fire modulane er ferdige — 62 oppgåver.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "«Terningkast og sannsyn» er ferdig — seks leksjonar for 7. trinn, frå eitt kast til eit forsøk eleven stiller spørsmålet til sjølv."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Med det er grunnkurset, geometri, koordinatar og sannsyn ferdige — 62 oppgåver til saman."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "«På veg»-gruppa er borte frå modulsida, sidan ingenting står att som berre planlagt."
+        }
+      ]
+    },
+    {
+      "versjon": "1.13",
+      "dato": "2026-08-23",
+      "samandrag": "Rutenett og koordinatar for 5. trinn.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "«Rutenett og koordinatar» er ferdig — seks leksjonar for 5. trinn, frå «to tal seier kvar noko er» til mønster med to lykkjer inni kvarandre."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Fast teikneflate med aksar og tal: eit koordinatsystem må stå stille, elles er ein koordinat ikkje noko å lese av."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Tre nye blokker: «Gå til rute (x, y)» og verdiblokkene x og y. Eleven skriv rutetalet, ikkje teikneeininga."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Python-utskrifta skriv rutestorleiken som ein namngjeven konstant, så tala eleven skreiv framleis er synlege."
+        }
+      ]
+    },
+    {
+      "versjon": "1.12",
+      "dato": "2026-08-23",
+      "samandrag": "Grunnkurs, tre geometri-leksjonar og vilkår.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Grunnkurset «Fyrste stega» — fire leksjonar om skilpadda, lykkja, variabelen og eigne funksjonar, flytte ut frå geometrimodulen."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Tre nye geometri-leksjonar: kvadrat mot rektangel, mangekanten som blir ein sirkel, og stjerna som lukkar seg etter to rundar."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Vilkår: «Dersom … så» og ei samanlikningsblokk med seks operatorar, i ein ny grøn blokkfarge vald på avstand frå dei andre."
+        },
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Modulkorta seier kva dei byggjer på — ein lærar må sjå det før han vel modul, ikkje etter."
+        }
+      ]
+    },
+    {
+      "versjon": "1.11",
+      "dato": "2026-08-23",
+      "samandrag": "Ei blokk som såg rett ut og ikkje gjorde noko.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "«Bruk»-blokka viste eit funksjonsnamn men peika på ingenting, så programmet gjekk vidare utan å teikne. Det synlege valet blir no skrive inn i blokka med ein gong."
+        }
+      ]
+    },
+    {
+      "versjon": "1.10",
+      "dato": "2026-08-23",
+      "samandrag": "«Funksjon» og ikkje «kommando».",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Blokkene heiter funksjon, både på skjermen og i koden, så eleven kjenner att ordet når han møter def i Ormritaren. Lagra program blir lesne som før."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk og Ormritaren",
+          "tekst": "«Til deg som er lærar»-boksen tok halve breidda med halve seg tom. No ber boksen linjelengd-grensa og avsnitta fyller han."
+        }
+      ]
+    },
+    {
+      "versjon": "1.9",
+      "dato": "2026-08-23",
+      "samandrag": "Fargane koplar rute til blokk, og kontrasten er retta.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "«Nettopp køyrt» og «står for tur» har same fargar på blokkene som i rutene, så eleven ser kva som høyrer saman."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Menysida følgjer temaet att; berre arbeidsflata treng den faste paletten."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Dempa steppeknappar, så dei ikkje kjempar om merksemda med sjølve talet."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Køyremarkeringa forsvann på lyse blokker. Ho ligg no innanfor den svarte ramma og les like tydeleg på alle sju blokkfargane."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Fri køyring visste ikkje kva som nettopp køyrde — berre stegmodus gjorde det."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Tre element på menysida låg under AA-kravet for kontrast. Alt ligg no på 13,7:1 eller betre i begge tema."
+        }
+      ]
+    },
+    {
+      "versjon": "1.8",
+      "dato": "2026-08-23",
+      "samandrag": "Stegmodus viser både det som køyrde og det som står for tur.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Stegmodus viser både kva som nettopp køyrde og kva som står for tur — utan det måtte eleven hugse eitt steg tilbake sjølv."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "To vanlege knappar over resultatet i staden for faner: dette er eit val om kva du vil sjå, ikkje to sider av same ting."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Ny orm på Python-knappen, med eit rundt hovud som overlever nedskaleringa til 20 px."
+        }
+      ]
+    },
+    {
+      "versjon": "1.7",
+      "dato": "2026-08-23",
+      "samandrag": "Resultatspalta er lukka til fyrste køyring.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Resultatspalta er lukka til fyrste køyring — ei tom teikneflate fortel ingenting og tok ein fjerdedel av plassen frå blokkene."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Resultatspalta er lysegrøn."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Runde kantar der det skal tal inn, så ei rund verdiblokk og eit rundt hòl kjenner kvarandre att."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Pluss og minus står til høgre for talfeltet med luft imellom, i staden for å dele ramme med det."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Symbola stod 2 px for høgt i knappane. Målt 0 px avvik frå sentrum på alle åtte ikonknappane no."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Pluss og minus var ikkje like store. Begge er 32×20 px no."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Knasten på blokkene lysna ikkje saman med blokka når musa var over henne."
+        }
+      ]
+    },
+    {
+      "versjon": "1.6",
+      "dato": "2026-08-23",
+      "samandrag": "Verktøyraden er reine symbol, og hintknappen kunne overskrive arbeidet ditt.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Verktøyraden er berre symbol og går på éi linje. Kvar knapp har namn for skjermlesar og hjelpetekst."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Fanene over resultatet er ein penn og ein orm i staden for orda «Teikning» og «Python»."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Navigasjonen nedst i leksjonen er to pilknappar, sidan tekstvarianten braut over to linjer i den smale spalta."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Hintknappen heiter «Hint», og «Vis løysing» når hinta er brukte opp."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Utskrifta har fått overskrift, og både ho og ruta er borte når programmet ikkje har skrive noko."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Kollapsstripa er 15 px, ikkje 10 — ti var for tynt for ein finger."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Eit eige, smalt rullefelt i staden for det breie grå Windows teiknar."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Nye symbol for penn opp og penn ned: eit viskelêr fekk eleven til å tru at han kunne fjerne strek han alt hadde teikna."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Hintknappen kunne trykkjast i det uendelege, og kvart trykk lasta løysinga inn i arbeidsbenken på nytt — som overskreiv det eleven hadde bygd."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Blokkene i velgaren flytta seg når musa var over dei og avdekte ei hårstrek under knasten."
+        }
+      ]
+    },
+    {
+      "versjon": "1.5",
+      "dato": "2026-08-23",
+      "samandrag": "Sidespaltene kan foldast saman, og blokkene står i ro.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Dei tre sidespaltene har fått overskrift og ein kollapsknapp, og kan foldast saman til ei farga stripe."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Spaltene har mist den svarte ramma og ber ein dus bakgrunnsfarge i staden — skjermen var i ferd med å bli eit rutenett av svarte strekar."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Markeringa av ei blokk er flytt til venstrekanten, så stabelen ikkje lenger skalv nedover medan programmet gjekk. Målt 0 px flytting."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Skilpadda var ein ugjennomsiktig firkant som dekte strekane under henne. Bakgrunnen er no nøkla ut."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Teikneruta hadde to bakgrunnsfargar, fordi kravet om kvadrat krympa breidda. Ruta har no fast høgd og fyller spalta."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Plussteiknet på rekneblokka er borte frå den siste staden det stod."
+        }
+      ]
+    },
+    {
+      "versjon": "1.4",
+      "dato": "2026-08-22",
+      "samandrag": "Leksjonen glir vekk medan programmet køyrer.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Leksjonsspalta glir ut mot venstre når eleven trykkjer Køyr og kjem att etterpå, så arbeidsbenken veks frå 404 til 586 px. Ho glir, ho blir ikkje borte."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Eit tomt mellomrom i blokkvelgaren reiv hovudet på «Gjenta» 20 px frå sin eigen kropp."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Rekneblokka hadde eit plussteikn som ikon, sjølv om ho kan gjere alle fem rekneartane. Ikonet er no ei nøytral talskjerm."
+        }
+      ]
+    },
+    {
+      "versjon": "1.3",
+      "dato": "2026-08-22",
+      "samandrag": "Blokkgeometrien og ein kompakt blokkvelgar.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Fire feil i blokkgeometrien gjorde at knastar flaut i tomrom og lyse striper låg tvers over lykkjene. Blokkene klemmer no mot kvarandre slik dei skal."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Blokkvelgaren fekk ein eigen, kompakt variant: fjorten av sytten blokker braut før over fleire linjer, no får alle sytten plass på éi."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Bolkestokk",
+          "tekst": "Pluss og minus står over kvarandre til høgre for talet, så gruppa gjekk frå 128 px til 94."
+        }
+      ]
+    },
+    {
+      "versjon": "1.2",
+      "dato": "2026-08-22",
+      "samandrag": "Bolkestokk fekk eit eige, barnevendt uttrykk.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Blokkene er fylte med kategorifargen sin, med svart tekst, tjukke rammer og ekte puslespelknastar. Eit medvite unntak frå designsystemet, mogleg fordi alle fargane er faste og målte. Skilpadda er animert med eit sprite-ark på 25 kB."
+        },
+        {
+          "t": "endra",
+          "kva": "Bolkestokk",
+          "tekst": "Leksjonen er kollapsa når sida opnar, så ein sjetteklassing ikkje møter ein vegg av tekst før han har gjort noko."
+        }
+      ]
+    },
+    {
+      "versjon": "1.1",
+      "dato": "2026-08-21",
+      "samandrag": "Bolkestokk — blokkprogrammering spissa mot matematikk.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Bolkestokk",
+          "tekst": "Nytt verktøy for 5.–7. trinn: blokkprogrammering spissa mot matematikk, ikkje mot spel og robotar. Eigen blokkeditor og eigen tolk, ingen eksterne avhengnader, og dra-og-slepp som verkar på nettbrett. Fyrste modul er «Mangekantar og mønster» med seks leksjonar, og blokktaket — «teikn ein sekskant med høgst fire blokker» — er den viktigaste testtypen.",
+          "merke": [
+            "verktoy"
+          ]
+        }
+      ]
+    },
+    {
+      "versjon": "1.0",
+      "dato": "2026-08-20",
+      "samandrag": "Fyrste nummererte utgåva: Ormritaren, Duldord, Rissverk, ny maskot — og alt som låg til grunn.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ormritaren",
+          "tekst": "Nytt verktøy: ekte Python i nettlesaren for ungdomstrinnet, utan installasjon eller konto. Elevkoden køyrer i ein eigen tråd så eit uendeleg program ikkje frys fana, feilmeldingane er forklarte på nynorsk, og koden forlèt aldri maskina.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ormritaren",
+          "tekst": "Opplæringsdel med grunnkurs (ni leksjonar) og sannsyn (åtte leksjonar), tre oppgåvetypar og automatisk retting. Alt innhaldet er verifisert ved å køyrast."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ormritaren",
+          "tekst": "Bibliotek og grafikk: numpy og matplotlib ligg ferdigbygde på vår eigen tenar, og turtle er skriven frå grunnen av så skilpadda går synleg over flata."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ormritaren",
+          "tekst": "Symbolrad over tastaturet på nettbrett, forslag medan eleven skriv, og filer som blir lagra lokalt og kan lastast ned som .py."
+        },
+        {
+          "t": "nytt",
+          "kva": "Duldord",
+          "tekst": "Nytt spel: den daglege ordgåta på nynorsk. Eitt dult ord på fem bokstavar kvar dag, seks freistnader, arkiv over tidlegare dagar, og statistikk som kan delast som ei rutestripe i tekst.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Rissverk",
+          "tekst": "Nytt vektorteikneprogram: penn- og punktverktøy, lag og grupper, snapping, gradientar, tekst, symbol, masker, samanslåing av former, SVG-import og eksport til SVG og PNG.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Lydskurd",
+          "tekst": "Nytt verktøy for lydredigering på ei tidslinje med fleire spor: ikkje-destruktiv klipping, angre og gjer om, fade og sporvolum, opptak frå mikrofon og eksport til WAV og MP3. Ingenting blir lagra — lyden forlèt aldri maskina.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Leitekryss",
+          "tekst": "Nytt verktøy for å lage leitekryss: eigne ordlister eller ferdige døme, tre vanskegradar, utskrift på A4 med fasit, og eitt ferdig namngjeve ark per elev.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ordkryss",
+          "tekst": "Nytt verktøy for å lage kryssord: flettealgoritme som vel oppsettet med flest kryss, utskrift med nummererte forklaringar og fasit, og eitt ark per elev.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ordskodde",
+          "tekst": "Ny ordsky-generator: lim inn ein tekst, få dei vanlegaste orda størst. Tre former, seks tema og eksport som PNG og SVG.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Tidvis",
+          "tekst": "Nytt klokkespel for å øve på å lese tid, med analog urskive, digital tid og tekst på nynorsk, fire vanskegradar og fire spelmodusar.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Flokkdeilar",
+          "tekst": "Nytt verktøy for tilfeldige elevgrupper: lagra klasselister, storskjerm-trekk, låsing av enkeltgrupper, fråvær — og «aldri saman»-par bak PIN.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Ordaklok",
+          "tekst": "Nytt verktøy for gloseøving: fire spelmodusar, liste-editor med masseinnliming, deling av lister via lenkje og spaced repetition for ord eleven strevar med.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Dagsvegen",
+          "tekst": "Ny dagsplan-skjerm for klasserommet: tidsstyrt dagsplan, plan for timen med fleksibel tid, nedteljar, stoppeklokke, trafikklys, ro-modus og teiknelag over heile skjermen.",
+          "merke": [
+            "verktoy"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Livslina",
+          "tekst": "Økonomisk livssimulator, fase 1 (vidaregåande, 16–19 år): karakterskapar, budsjettkort, hendingskort, 18-årsdag og sluttrapport. Spelbar, men enno ikkje lenka frå framsida.",
+          "merke": [
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Listesmia",
+          "tekst": "Verktøy som finn kortlister til Heimsank frå Wikidata utan at ein treng kunne spørjespråk: søk etter emne, vel krav og kolonnar, og eksporter ferdig oppsett.",
+          "merke": [
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "nytt",
+          "kva": "Vyrde",
+          "tekst": "Ny maskot og logo for heile nettstaden, med tolv ansiktsuttrykk i eitt sprite-ark. Hero-boksen på framsida er bygd om, og versjonsnotatet er flytt ut i ein gul lapp."
+        },
+        {
+          "t": "nytt",
+          "kva": "Heile nettstaden",
+          "tekst": "Favicon: sidene hadde aldri hatt eit eige ikon i fanelinja. Vyrde ligg no der, i fire storleikar, med eigne ikon for iOS-heimskjerm."
+        },
+        {
+          "t": "nytt",
+          "kva": "Heimsank",
+          "tekst": "Progresjonssystem med poeng som valuta, 29 merke og nye kategori-forsider — og tre nye kortkategoriar laga med Listesmia."
+        },
+        {
+          "t": "nytt",
+          "kva": "BiletFlett",
+          "tekst": "Malane er pussa opp med sjølv-hosta skrifttypar, eit fargesystem med token, vektorpynt teikna på lerretet, komponerte bakgrunnar og ei ny malgruppe for ungdomssteget."
+        },
+        {
+          "t": "nytt",
+          "kva": "Framsida",
+          "tekst": "Kort for spel og verktøy kan få eit merke i hjørnet — «Nytt» eller «Oppdatert» — som forsvinn av seg sjølv etter 45 dagar."
+        },
+        {
+          "t": "nytt",
+          "kva": "Drift",
+          "tekst": "Mikrofon er opna for nettstaden så Lydskurd kan ta opp lyd. Kamera, posisjon, betaling og USB er framleis stengde."
+        },
+        {
+          "t": "nytt",
+          "kva": "Drift",
+          "tekst": "Ny mappe for sjølv-hosta tredjepartsbibliotek, med versjon, kjelde, sjekksum og lisens dokumenterte. Fyrste oppføring er MP3-enkodaren Lydskurd brukar."
+        },
+        {
+          "t": "endra",
+          "kva": "Handsam bilete",
+          "tekst": "Verktøyet er bygd om, og Reinskore bilete er flytt inn i det. Avhukinga styrer alt, arbeidet går i tre steg, og beskjeringa skjer rett på biletet. «Bruk på alle» er teken bort, og namn som laug er retta."
+        },
+        {
+          "t": "endra",
+          "kva": "Handsam bilete",
+          "tekst": "Reinskorne bilete kan lastast ned som SVG — eit bilete med få flate fargar er alt nesten ei teikning."
+        },
+        {
+          "t": "endra",
+          "kva": "Frødesams",
+          "tekst": "Full migrering til designsystemet: felles topptekst og tema, felles lagring, oppdelt kode og tastaturnavigasjon. Quiz-master og storskjerm er slegne saman."
+        },
+        {
+          "t": "endra",
+          "kva": "Frødebrett",
+          "tekst": "Full migrering til designsystemet, felles lagring, oppdelt kode og tastaturnavigasjon — og standardfrødene har fått eit versjonsnummer, så oppdateringar faktisk når fram til dei som har spelt før."
+        },
+        {
+          "t": "endra",
+          "kva": "Frødekapp",
+          "tekst": "Oppgradert til designsystemet — det siste verktøyet som stod att — med felles lagring, ikon i staden for emoji og eit eige eksportformat med versjonsfelt."
+        },
+        {
+          "t": "endra",
+          "kva": "Dagsvegen",
+          "tekst": "Ombygd layout etter tilbakemeldingar frå klasserommet: samanleggbar venstremeny, flyttbare panel, skalerbare tekstboksar og ei ny snøggøkt."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Spel- og verktøylista er delt opp i samanfaldbare seksjonar med eiga temafarge per kategori, og ny kategori «Bilete og media»."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Lengre skildringar av alle 24 spel og verktøy, retta mot ein lærar som ikkje kjenner verktøyet frå før."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Ny rekkjefølgje på spel og verktøy, og plasshaldaren «Fleire verktøy — kjem snart» er teken bort."
+        },
+        {
+          "t": "endra",
+          "kva": "Etikktesten",
+          "tekst": "Teken ut av framsida og toppmenyen: forteljingane kan vere sterk kost for dei yngste og bør veljast bevisst av ein lærar. Verktøyet verkar framleis for den som har lenkja.",
+          "merke": [
+            "eksperiment"
+          ]
+        },
+        {
+          "t": "endra",
+          "kva": "Toppmenyen",
+          "tekst": "Bygd om til éin meny for alle skjermbreidder, med kategorifargar, logo per app og markering av sida du står på."
+        },
+        {
+          "t": "endra",
+          "kva": "Heile nettstaden",
+          "tekst": "Alle app-logoane er komprimerte, 3,06 MB → 434 kB. Ei underside lastar no 224 kB i staden for 3,3 MB."
+        },
+        {
+          "t": "endra",
+          "kva": "Heile nettstaden",
+          "tekst": "All bruk av Google Fonts er fjerna, så ingen fontfiler blir lasta frå eksterne tenarar."
+        },
+        {
+          "t": "endra",
+          "kva": "Heile nettstaden",
+          "tekst": "Full skjermbreidd for redigeringsverktøy: ei tidslinje eller eit lerret blir berre betre av meir plass. Lydskurd er den fyrste som brukar det."
+        },
+        {
+          "t": "endra",
+          "kva": "Drift",
+          "tekst": "Endringar går no gjennom pull request med eige testmiljø i staden for rett på produksjon — ein utesta endring kan velte ei undervisningsøkt."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Kortare KI-tekst: setninga om KI-symbolet og avsnittet om KI-merka er tekne bort. Sjølve merka står som før."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ormritaren",
+          "tekst": "Python starta ikkje på iPad, og sjølvdiagnosen sa at alt var i orden. Diagnosen gjer no dei ekte oppstartsstega kvart for seg, og feilrapporten seier kva fase oppstarten stod i."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ormritaren",
+          "tekst": "Skilpadda teikna ikkje ved låg fart: streken vart viska ut av markøren med det same."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ormritaren",
+          "tekst": "Standardfarten er sett ned frå 6 til 2 — på ei tavle går det for fort til at elevane rekk å følgje med."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Heile nettstaden",
+          "tekst": "Boksehovud og aktive fanar var uleselege i dei mørke temaa. Begge er no snudde mot tekst- og flatefargen, som er motsetnader i kvart einaste tema. Råka åtte appar."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Frødekapp",
+          "tekst": "Live-quizen verkar att: den offentlege signaltenesta hadde slutta å svare, så vi køyrer no vår eiga, med automatisk fallback og tidsavbrot-vakt."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Frødekapp",
+          "tekst": "Verktøyet vart merkt «I ustand» på framsida medan signaltenesta var nede, så ingen sette i gang ein time i den trua at det verka."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Frødebrett",
+          "tekst": "Mellomrom i eit lagnamn la til eit nytt lag i staden for eit mellomrom. Tastatursnarvegane hoppar no over skrivefelt."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ordsmia",
+          "tekst": "Ord med æ, ø og å blir endeleg godtekne — ordlista var rein ASCII, så ein spelar som trekte ein ø kunne aldri danne eit gyldig ord. Lista er bygd på nytt."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ordkryss",
+          "tekst": "Rutenettet står beint: delte linjer og ytterkantar hamna 2 px frå kvarandre og gav eit synleg hakk."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ordaklok",
+          "tekst": "«Lagre» i liste-editoren spurde om du verkeleg ville forlate sida, sjølv om lista alt var lagra."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ordaklok",
+          "tekst": "I Tevling hamna ord og uttrykk utanfor ringen og var umoglege å klikke ved lange lister. Ringen veks no med innhaldet."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ordaklok",
+          "tekst": "Lange omgrep og setningar sprengde boksane i alle fire modus. Innført lengdebasert skalering og ordbryting."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ordaklok",
+          "tekst": "Tydeleg varsel når QR-koden ikkje kan lagast fordi lista er for lang, i staden for ei tom rute utan forklaring."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Spel i liggjande format",
+          "tekst": "Kludre Klodrian, Reknedæsj og Rettslause Raud blir ikkje lenger klipte av URL-feltet på mobil, menyskjermane kan rullast, og ein fullskjerm-knapp låser orienteringa."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Kludre Klodrian",
+          "tekst": "Spelflata var 0 × 0 og heile spelet usynleg."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Framsida",
+          "tekst": "Stort tomrom midt i hero-banneret på mobil: på ein 375 px-skjerm blei tekstspalta 475 px høg med 160 px innhald. Gjeld alle sider med hero-banner."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Heile nettstaden",
+          "tekst": "Modalar med topptekst kunne ikkje rullast, så botnen av eit langt innhald var utilgjengeleg. Merkast tydelegast i Dagsvegen."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Klassekart",
+          "tekst": "Doble ikon på alle knappane."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Global topptekst",
+          "tekst": "Menyen reknar no ut rett basissti for sider som ligg meir enn eitt mappenivå ned."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Dagsvegen",
+          "tekst": "Økter byter ikkje lenger plass medan ein framleis skriv i starttid-feltet."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Heimsank",
+          "tekst": "Tilt-effekten på samlekorta gjev ikkje lenger unødig layout-arbeid for kvar mus-piksel."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Handsam bilete",
+          "tekst": "Ein kort notis når filer som ikkje er bilete blir hoppa over ved opplasting, i staden for å avvise dei utan tilbakemelding."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Drift",
+          "tekst": "Oppryddinga av testmiljø etter kvar pull request har aldri fungert — det mangla eit token. Miljøa blir no sletta av seg sjølve, så kvota ikkje går full."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Drift",
+          "tekst": "Døde rutar og feilplasserte filer er rydda bort, mellom anna ei gammal bokmålsside som hadde hamna inne i arbeidsflyt-mappa."
+        }
+      ]
+    }
+  ]
+}
