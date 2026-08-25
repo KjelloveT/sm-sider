@@ -68,21 +68,18 @@
         if (correct) {
           R().markCorrect(node);
           R().setMood('happy');
-          LjodAudio.play(R().praiseId());
         } else {
           R().markWrong(node);
           R().revealAnswer(grid, q.ch);
           R().setMood('think');
-          /* Vis og spel samanhengen: lyden først, så ordet. Eleven skal
-             høyre at /s/ ligg fremst i «sol». */
-          LjodAudio.play(R().nudgeId())
-            .then(function () { return LjodAudio.play('f_' + q.ch); })
-            .then(function () { return LjodAudio.play(q.word.sound); });
         }
 
-        setTimeout(function () {
+        /* Spel samanhengen: lyden først, så ordet. Eleven skal høyre at
+           /s/ ligg fremst i «sol». Kjeda er lang — opp mot fem sekund —
+           og nettopp difor kan ho ikkje styrast av ei stoppeklokke. */
+        R().feedback(correct, correct ? [] : ['f_' + q.ch, q.word.sound]).then(function () {
           resolve({ ch: q.ch, correct: correct, latencyMs: latency, chosen: correct ? null : key });
-        }, correct ? 900 : 2400);
+        });
       });
 
       body.appendChild(grid);

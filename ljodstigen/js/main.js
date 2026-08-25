@@ -104,6 +104,13 @@
       /* Siste oppgåva skal eleven klare. */
       ctx.guarantee = (n === TASKS_PER_SESSION - 1);
 
+      /* Sikring: ingen lyd frå førre oppgåve skal leve inn i denne.
+         Tilbakemeldinga blir venta ut i R().feedback, så dette skal
+         normalt vere eit no-op — men det kostar ingenting, og alternativet
+         er at ein elev høyrer fasiten på førre bokstav medan han ser på
+         den neste. */
+      LjodAudio.stop();
+
       const p = mode.run(frame, ctx);
       if (!p) { finish(host, profile, newStars); return; }
 

@@ -165,6 +165,31 @@
   function praiseId()  { return PRAISE[Math.floor(Math.random() * PRAISE.length)]; }
   function nudgeId()   { return NUDGE[Math.floor(Math.random() * NUDGE.length)]; }
 
+  /**
+   * Spelar tilbakemelding og resolvar når ho FAKTISK er ferdig.
+   *
+   * Modusane venta før på ei fast tid — 900 ms på rett, 1900 ms på feil.
+   * Dei tala vart gissa medan all lyd var syntetiske tonar på 300 ms, og
+   * heldt ikkje då ekte tale kom inn: tre av fire oppmuntringsklipp er
+   * lengre enn 1900 ms, og to av åtte rosklipp lengre enn 900 ms. Neste
+   * oppgåve rakk å teikne seg, og så kom den lenka bokstavlyden frå den
+   * FØRRE oppgåva oppå henne. Det var ikkje eit lydproblem, det var eit
+   * stoppeklokkeproblem.
+   *
+   * Difor: ingen stoppeklokke. Vi følgjer lyden.
+   *
+   * @param correct  var svaret rett
+   * @param after    lyd-id-ar som skal spelast etter ros/oppmuntring
+   *                 (typisk fasiten, så eleven får høyre kva som var rett)
+   */
+  function feedback(correct, after) {
+    const chain = [correct ? praiseId() : nudgeId()].concat(after || []);
+    return LjodAudio.playSeq(chain, 180).then(function () {
+      /* Ein liten pust før neste oppgåve, så det ikkje kjem brått. */
+      return new Promise(function (r) { setTimeout(r, correct ? 350 : 500); });
+    });
+  }
+
   /* Vyrde reagerer på svaret. Gjenbruk av den globale maskoten —
      ingen ny figur er teikna for dette spelet. */
   function setMood(mood) {
@@ -179,7 +204,7 @@
     optionGrid: optionGrid, lock: lock,
     markCorrect: markCorrect, markWrong: markWrong, revealAnswer: revealAnswer,
     taskFrame: taskFrame,
-    praiseId: praiseId, nudgeId: nudgeId,
+    praiseId: praiseId, nudgeId: nudgeId, feedback: feedback,
     PRAISE: PRAISE, NUDGE: NUDGE,
     setMood: setMood
   };

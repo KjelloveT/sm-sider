@@ -50,7 +50,8 @@
   /* ──────────────── Rot ──────────────── */
 
   function blank() {
-    return { app: APP_ID, version: VERSION, profiles: [], lastProfile: null, font: 'lesefont' };
+    return { app: APP_ID, version: VERSION, profiles: [], lastProfile: null,
+             font: 'lesefont', allModes: false };
   }
 
   function read() {
@@ -61,6 +62,11 @@
     s.profiles = Array.isArray(raw.profiles) ? raw.profiles.map(hydrateProfile) : [];
     s.lastProfile = raw.lastProfile || null;
     s.font = raw.font === 'system' ? 'system' : 'lesefont';
+    /* Opnar alle modusane uavhengig av kor langt eleven er komen.
+       Innstillinga ligg på eininga, ikkje på profilen: ho handlar om
+       kven som brukar maskina, ikkje om kva eleven kan. Progresjonen
+       blir ikkje rørt — motoren reknar vidare som før. */
+    s.allModes = raw.allModes === true;
     return s;
   }
 
