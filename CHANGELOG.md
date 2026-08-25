@@ -6,7 +6,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 ## [1.22] — 2026-08-25
 
 ### Endra
-- **Notatet på framsida er oppdatert til versjon 1.1.** Punktet om Vyrde-maskoten er teke bort — han har stått der sidan han var ny, og alle som er innom ser han uansett øvst på sida. I staden står **Bolkestokk** først, som det nyaste verktøyet: blokkprogrammering spissa mot matematikk. Ormritaren, Duldord og Handsam bilete står framleis.
+- **Notatet på framsida er oppdatert til versjon 1.22.** Punktet om Vyrde-maskoten er teke bort — han har stått der sidan han var ny, og alle som er innom ser han uansett øvst på sida. I staden står **Bolkestokk** først, som det nyaste verktøyet: blokkprogrammering spissa mot matematikk. Ormritaren, Duldord og Handsam bilete står framleis.
+- Notatet følgjer no versjonsnummeret i denne fila. Det stod «Versjon 1.0» medan endringsloggen var komen til 1.21, og eit versjonsnummer som ikkje tyder noko er verre enn ingen — ein lesar som kjem att kan ikkje sjå om noko har hendt sidan sist.
 
 ## [1.21] — 2026-08-23
 
