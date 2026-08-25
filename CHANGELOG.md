@@ -3,7 +3,11 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
-## [1.23] — 2026-08-23
+## [1.25] — 2026-08-25
+
+### Fiksa
+- **`hidden` skjulte ikkje knappar.** Attributtet får `display: none` frå nettlesaren sitt eige stilsett, og forfattarstilar vinn alltid over det — `.btn` set `display: inline-flex`, så kvar einaste knapp med den klassa har vore synleg sjølv om HTML-en eller JS-en sa `hidden`. **Seks appar** hadde feilen: hintknappen i Bolkestokk låg framme som ei tom rute før eleven hadde prøvd på oppgåva, og han verka — så ein kunne hente hint utan å prøve fyrst. I duldord, leitekryss, livslina, lydskurd og ordkryss stod «Opne arkivet», «Tøm namn» og «Hald fram» ute frå starten. Retta éin stad, i det delte stilarket.
+## [1.24] — 2026-08-25
 
 ### Lagt til
 - **Vilkårsleksjon i grunnkurset.** Grunnkurset opna fjorten blokker men ingen vilkår, medan fire modular treng dei og kompetansemåla for alle tre trinna nemner dei. «Gjer det berre dersom» viser dei **to** mønstera modulane etterpå brukar: eit vilkår som endrar kva som blir teikna, og eit vilkår som avgjer om ein teljar skal auke.
@@ -18,7 +22,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 ### Endra
 - **`spalter.js` skild ut frå `app.js`**, som gjorde køyring, fart, stegmodus og spaltekoreografi i eitt. 539 → 467 linjer, og dei tre kalla app.js treng er alt han treng.
 - Kommentaren i `landing.js` sa at modulfilene var «nokre titals kilobyte kvar». Målt no: 840 kB til saman, den største 165.
-## [1.22] — 2026-08-23
+## [1.23] — 2026-08-25
 
 ### Lagt til
 - **Fyll-blokker: `Fyll med …` og `Ferdig fylt`.** Alt skilpadda teiknar imellom blir ei farga flate. `begin_fill()` og `end_fill()` er ekte metodar i Python sin turtle — ei «fyll figuren»-blokk som gjorde alt på ein gong hadde vore enklare å bruke, men ho måtte hatt ein oppdikta hjelpefunksjon i utskrifta. Fyllet blir teikna **under** rutenettet, så rutene framleis er der å telje; legg ein det oppå, dekkjer eit fylt rektangel nettopp dei rutene ein arealleksjon ber eleven telje.
