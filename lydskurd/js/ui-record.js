@@ -8,6 +8,7 @@ LS.uiRecord = (function () {
 
   let overlay = null;
   let trackSelect = null;
+  let deviceSelect = null;
   let startAtLabel = null;
   let meterFill = null;
   let statusLine = null;
@@ -61,9 +62,50 @@ LS.uiRecord = (function () {
     recBtn.classList.toggle('ls-rec-active', rec);
 
     trackSelect.disabled = rec;
+    deviceSelect.disabled = rec;
     closeBtn.disabled = rec;
     doneBtn.disabled = rec;
     overlay.classList.toggle('ls-recording', rec);
+  }
+
+  /* Lista over mikrofonar blir fylt når dialogen blir opna, og på nytt
+     når løyvet er gjeve — namna er tomme før det, av di nettlesaren ikkje
+     vil at ei side skal kunne kjenne att maskina på lydkorta sine. */
+  function fillDevices() {
+    const chosen = deviceSelect.value;
+    LS.record.inputs().then((list) => {
+      deviceSelect.textContent = '';
+      const auto = document.createElement('option');
+      auto.value = '';
+      auto.textContent = 'Standard';
+      deviceSelect.appendChild(auto);
+      list.forEach((input) => {
+        const option = document.createElement('option');
+        option.value = input.deviceId;
+        option.textContent = input.label;
+        deviceSelect.appendChild(option);
+      });
+      // Held valet om mikrofonen framleis finst; elles fell vi til standard.
+      deviceSelect.value = list.some(i => i.deviceId === chosen) ? chosen : '';
+      if (deviceSelect.value !== chosen) LS.record.useDevice(deviceSelect.value);
+    });
+  }
+
+  function changeDevice() {
+    if (LS.record.isRecording()) return;
+    setStatus('Byter mikrofon …', null);
+    LS.record.useDevice(deviceSelect.value).then(() => {
+      syncButtons();
+      if (LS.record.isOpen()) {
+        setStatus('Mikrofonen er bytt. Snakk litt og sjå at målaren rører seg.', 'live');
+        startTicking();
+      } else {
+        setStatus('Mikrofonen er av. Trykk «Slå på mikrofonen» for å sjekke lyden før du tek opp.', null);
+      }
+    }).catch((err) => {
+      setStatus(err.message, 'error');
+      syncButtons();
+    });
   }
 
   function fillTracks() {
@@ -93,6 +135,7 @@ LS.uiRecord = (function () {
     if (LS.audio.isPlaying()) LS.uiToolbar.pause();
 
     fillTracks();
+    fillDevices();
     syncStartAt();
     meterFill.style.width = '0%';
     timerLabel.textContent = '0:00,0';
@@ -122,6 +165,7 @@ LS.uiRecord = (function () {
       setStatus('Mikrofonen er på. Snakk litt og sjå at målaren rører seg.', 'live');
       syncButtons();
       startTicking();
+      fillDevices();
     }).catch((err) => {
       micBtn.disabled = false;
       setStatus(err.message, 'error');
@@ -206,11 +250,32 @@ LS.uiRecord = (function () {
     timerLabel.textContent = '0:00,0';
   }
 
+  /* ──────────────── Tastatur ──────────────── */
+
+  /* Mellomrom startar og stoppar opptaket medan dialogen står open.
+     Tidslinja brukar same tasten til å spele av, men medan dialogen er
+     framme er det opptaket som gjeld — og avspeling er stoppa uansett.
+
+     Skriv du i eit felt eller står på ein knapp, held vi oss unna:
+     der har mellomrom si eiga meining frå før. */
+  function onKey(e) {
+    if (!overlay.classList.contains('open')) return;
+    if (e.key !== ' ') return;
+    if (e.ctrlKey || e.altKey || e.metaKey) return;
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || tag === 'button') return;
+    if (!LS.record.isOpen()) return;
+    e.preventDefault();
+    e.stopPropagation();
+    toggleRecord();
+  }
+
   /* ──────────────── Oppstart ──────────────── */
 
   function setup() {
     overlay = document.getElementById('recordOverlay');
     trackSelect = document.getElementById('recordTrack');
+    deviceSelect = document.getElementById('recordDevice');
     startAtLabel = document.getElementById('recordStartAt');
     meterFill = document.getElementById('recordMeterFill');
     statusLine = document.getElementById('recordStatus');
@@ -229,10 +294,20 @@ LS.uiRecord = (function () {
 
     openBtn.addEventListener('click', open);
     micBtn.addEventListener('click', turnOnMic);
+    deviceSelect.addEventListener('change', changeDevice);
+    if (navigator.mediaDevices && 'ondevicechange' in navigator.mediaDevices) {
+      navigator.mediaDevices.addEventListener('devicechange', () => {
+        if (overlay.classList.contains('open')) fillDevices();
+      });
+    }
     recBtn.addEventListener('click', toggleRecord);
     closeBtn.addEventListener('click', close);
     doneBtn.addEventListener('click', close);
     LS.util.bindOverlayClose(overlay);
+
+    // Fanga i capture-fasen, så tidslinja si eiga mellomrom-snarvegen ikkje
+    // spelar av bak dialogen.
+    document.addEventListener('keydown', onKey, true);
 
     // Lukkar brukaren fana midt i eit opptak, skal mikrofonen likevel sleppast.
     window.addEventListener('pagehide', () => LS.record.closeMic());

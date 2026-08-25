@@ -31,7 +31,23 @@ while ($listener.IsListening) {
     $local = $req.Url.LocalPath.TrimStart('/')
     if ($local -eq '') { $local = 'index.html' }
     $path = Join-Path $root $local
-    if ([System.IO.File]::Exists($path)) {
+    # Ei mappe-URL skal oppføre seg som i produksjon: /lydskurd sender
+    # nettlesaren vidare til /lydskurd/, og /lydskurd/ serverer index.html
+    # derifra. Utan vidaresendinga peikar kvar relativ sti i sida eitt hakk
+    # for høgt, og sida lastar utan stilark og skript.
+    $redirected = $false
+    if ([System.IO.Directory]::Exists($path)) {
+      if ($req.Url.LocalPath.EndsWith('/')) {
+        $path = Join-Path $path 'index.html'
+      } else {
+        $res.StatusCode = 301
+        $res.RedirectLocation = $req.Url.LocalPath + '/'
+        $redirected = $true
+      }
+    }
+    if ($redirected) {
+      # Ingen kropp — nettlesaren skal berre gå til den nye adressa.
+    } elseif ([System.IO.File]::Exists($path)) {
       $ext = [System.IO.Path]::GetExtension($path)
       $res.ContentType = if ($mimeTypes[$ext]) { $mimeTypes[$ext] } else { 'application/octet-stream' }
       $bytes = [System.IO.File]::ReadAllBytes($path)

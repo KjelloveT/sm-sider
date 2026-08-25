@@ -1,18 +1,18 @@
 /* ══════════════════════════════════════════════
    RECORD.JS — Opptak frå mikrofon
 
-   Mikrofonen blir slått på når brukaren ber om det, og slått AV att med
-   ein gong han er ferdig. Det er ikkje berre høflegheit: så lenge ein
-   MediaStreamTrack lever, viser nettlesaren opptaksmerket i fana og
-   operativsystemet reknar mikrofonen som i bruk. Vi slepper han difor
-   i alle utgangar — også når noko går gale.
+   Mikrofonen blir slått på når brukaren ber om det, og han blir
+   verande på mellom klippa. Det er poenget med heile verktøyet: skal
+   du ta opp 141 klipp på rad, kan du ikkje gje løyve og vente på ein
+   ny straum for kvart av dei. Han blir sløkt når du slår han av, når
+   sida blir lukka, og når noko går gale.
 
-   Lyden blir aldri sendt nokon stad. Han går rett frå mikrofonen inn i
-   minnet, og blir eit klipp på tidslinja som alle andre.
+   Lyden går rett frå mikrofonen inn i minnet. Han blir aldri sendt
+   nokon stad.
    ══════════════════════════════════════════════ */
-window.LS = window.LS || {};
+window.LB = window.LB || {};
 
-LS.record = (function () {
+LB.record = (function () {
   'use strict';
 
   let stream = null;
@@ -77,24 +77,22 @@ LS.record = (function () {
 
   function constraints() {
     const audio = {
-      // Vi vil ha lyden så rå som råd. Nettlesaren sin ekkokansellering
-      // er laga for tale i møte og kan gjere musikk og song stygg.
+      // Så rå lyd som råd. Nettlesaren si støydemping er laga for tale
+      // i møte, og ho et byrjinga av korte lydar som /k/ og /t/.
       echoCancellation: false,
       noiseSuppression: false,
       autoGainControl: false
     };
     /* `exact` gjer at vi får ein feil i staden for ein annan mikrofon om
-       den valde er kopla frå. Eit opptak frå feil mikrofon er verre enn
-       ei feilmelding. */
+       den valde er kopla frå. Ei stille innspeling frå feil mikrofon er
+       verre enn ei feilmelding. */
     if (wantedDevice) audio.deviceId = { exact: wantedDevice };
     return { audio: audio };
   }
 
-  /* ──────────────── Format ──────────────── */
-
   /* Nettlesarane er ikkje samde om kva MediaRecorder kan skrive. Vi tek
-     det første dei godtek, og lèt nettlesaren velje sjølv om ingen av dei
-     slår til. Opus i webm er det vanlege i Chrome og Edge, ogg i Firefox. */
+     det første dei godtek. Formatet har lite å seie her — vi dekodar
+     opptaket til rå lyd med ein gong det er ferdig. */
   function pickMimeType() {
     const candidates = [
       'audio/webm;codecs=opus',
@@ -111,11 +109,6 @@ LS.record = (function () {
 
   /* ──────────────── Mikrofonen ──────────────── */
 
-  /**
-   * Ber om tilgang og held straumen open, så nivåmålaren kan vise at
-   * mikrofonen faktisk fangar lyd før opptaket byrjar.
-   * @returns {Promise<void>}
-   */
   function openMic() {
     if (stream) return Promise.resolve();
     if (!isSupported()) {
@@ -124,7 +117,7 @@ LS.record = (function () {
 
     return navigator.mediaDevices.getUserMedia(constraints()).then((granted) => {
       stream = granted;
-      const ctx = LS.audio.context();
+      const ctx = LB.audio.context();
       if (ctx) {
         sourceNode = ctx.createMediaStreamSource(stream);
         analyser = ctx.createAnalyser();
@@ -190,7 +183,7 @@ LS.record = (function () {
   /* ──────────────── Opptaket ──────────────── */
 
   function start() {
-    if (!stream) return Promise.reject(new Error('Mikrofonen er ikkje open.'));
+    if (!stream) return Promise.reject(new Error('Mikrofonen er ikkje på.'));
     if (isRecording()) return Promise.resolve();
 
     chunks = [];
@@ -209,9 +202,9 @@ LS.record = (function () {
   }
 
   /**
-   * Stoppar opptaket og gjer det om til ei kjelde i lydregisteret.
-   * Mikrofonen blir IKKJE sleppt her — brukaren kan ville ta opp meir.
-   * @returns {Promise<object|null>} kjelda, eller null om opptaket var tomt
+   * Stoppar opptaket og gjer det om til rå lyd.
+   * Mikrofonen blir IKKJE sleppt — neste klipp skal takast med det same.
+   * @returns {Promise<AudioBuffer|null>} null når opptaket blei tomt
    */
   function stop() {
     if (!recorder || recorder.state === 'inactive') return Promise.resolve(null);
@@ -225,21 +218,13 @@ LS.record = (function () {
 
         if (!blob.size) { resolve(null); return; }
 
-        const ctx = LS.audio.context();
         blob.arrayBuffer()
-          .then(ab => ctx.decodeAudioData(ab))
-          .then(buffer => LS.audio.addBuffer(newName(), buffer))
+          .then(ab => LB.audio.decode(ab))
           .then(resolve)
           .catch(() => reject(new Error('Klarte ikkje lese opptaket.')));
       };
       try { recorder.stop(); } catch (err) { reject(new Error('Klarte ikkje stoppe opptaket.')); }
     });
-  }
-
-  /** Opptak 1, Opptak 2 … ut frå kva som alt finst. */
-  function newName() {
-    const taken = LS.audio.allSources().filter(s => /^Opptak \d+$/.test(s.name)).length;
-    return 'Opptak ' + (taken + 1);
   }
 
   return {

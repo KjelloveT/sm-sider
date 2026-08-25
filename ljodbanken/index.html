@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Ljodbanken — innspelingsliste for lydklipp</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+<link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content main-wide">
+
+  <!-- Hero -->
+  <div class="box2 hero-box">
+    <img src="../_resources/ljodbanken.png" alt="Ljodbanken" class="hero-logo">
+    <div class="hero-text">
+      <h1>Ljodbanken</h1>
+      <p>Spel inn ein heil liste med lydklipp på rad. Kvart klipp har sin eigen knapp, si eiga rettleiing og si eiga nedteljing — og kan skjerast til når det blei for langt. Til slutt lastar du ned alt som éi zip-fil. Lyden ligg berre i din eigen nettlesar, og blir aldri sendt nokon stad.</p>
+    </div>
+  </div>
+
+  <!-- Lista som ligg framme -->
+  <section class="box1" aria-labelledby="listHeading">
+    <div class="lb-section-head">
+      <h2 class="heading3 no-mt" id="listHeading"><span id="listName">Lydliste</span></h2>
+      <button class="btn lb-btn-small" id="tipsBtn" type="button"><span data-icon="lightbulb"></span>Slik gjer du det</button>
+    </div>
+    <p class="lb-list-note" id="listNote" hidden></p>
+
+    <div class="lb-toolbar" role="toolbar" aria-label="Verktøy for innspelinga">
+      <div class="lb-btn-group">
+        <button class="btn lb-mic-btn" id="micBtn" type="button"><span data-icon="micOff"></span>Slå på mikrofonen</button>
+        <button class="btn" id="nextBtn" type="button" title="Mellomrom gjer det same"><span data-icon="play"></span>Ta neste som manglar</button>
+        <label class="lb-check">
+          <span>Mikrofon</span>
+          <select class="lb-input lb-select" id="micSelect" aria-label="Vel mikrofon">
+            <option value="">Standard</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="lb-btn-group">
+        <label class="lb-check">
+          <input type="checkbox" id="autoAdvance">
+          <span>Gå automatisk vidare</span>
+        </label>
+        <label class="lb-check">
+          <span>Vis</span>
+          <select class="lb-input lb-select" id="filterSelect" aria-label="Vis klipp">
+            <option value="alle">alle klipp</option>
+            <option value="manglar">berre dei som manglar</option>
+            <option value="ferdige">berre dei ferdige</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="lb-btn-group lb-btn-group-end">
+        <button class="btn" id="exportBtn" type="button"><span data-icon="download"></span>Last ned zip</button>
+        <button class="btn" id="importZipBtn" type="button"><span data-icon="upload"></span>Hent zip</button>
+        <input type="file" id="zipFile" accept=".zip,application/zip" hidden>
+      </div>
+    </div>
+
+    <div class="lb-progress" role="group" aria-label="Framdrift">
+      <div class="lb-progress-track"><div class="lb-progress-fill" id="progressFill"></div></div>
+      <output class="lb-progress-label" id="progressLabel" aria-live="polite">0 av 0 klipp er spelte inn</output>
+    </div>
+
+    <div class="lb-toolbar lb-toolbar-lists">
+      <span class="lb-toolbar-title">Lister:</span>
+      <button class="btn lb-btn-small" id="listBuiltinBtn" type="button"><span data-icon="library"></span>Ljodstigen</button>
+      <button class="btn lb-btn-small" id="listNewBtn" type="button"><span data-icon="plus"></span>Ny liste</button>
+      <button class="btn lb-btn-small" id="listEditBtn" type="button"><span data-icon="edit"></span>Endre denne</button>
+      <button class="btn lb-btn-small" id="listOpenBtn" type="button"><span data-icon="folderOpen"></span>Hent liste</button>
+      <button class="btn lb-btn-small" id="listSaveBtn" type="button"><span data-icon="save"></span>Lagre liste</button>
+      <input type="file" id="listFile" accept=".json,application/json" hidden>
+    </div>
+  </section>
+
+  <!-- Sjølve lista -->
+  <div id="lbList"></div>
+
+  <p class="lb-footnote">Opptaka ligg berre i minnet til fana. Lukkar du henne, er dei borte — last ned zip-fila før du går, og hent henne inn att når du skal halde fram.</p>
+
+</main>
+</div>
+
+<!-- Modal: skjer til -->
+<div class="modal-overlay" id="trimOverlay" role="dialog" aria-modal="true" aria-labelledby="trimTitle" data-onclose="stopAudio">
+  <div class="modal4">
+    <button class="btn lb-icon-btn modal-close" id="trimClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="trimTitle">Skjer til</h2>
+    <p class="lb-muted" id="trimHint"></p>
+
+    <canvas id="trimCanvas" class="lb-trim-canvas" role="img" aria-label="Lydkurve med utsnittet markert"></canvas>
+
+    <div class="lb-trim-fields">
+      <label class="lb-field lb-field-inline">
+        <span class="lb-field-label">Start</span>
+        <input class="lb-input" id="trimStart" type="number" min="0" step="0.01" inputmode="decimal">
+      </label>
+      <label class="lb-field lb-field-inline">
+        <span class="lb-field-label">Slutt</span>
+        <input class="lb-input" id="trimEnd" type="number" min="0" step="0.01" inputmode="decimal">
+      </label>
+      <p class="lb-trim-length">Lengd: <strong id="trimLength">0 s</strong></p>
+    </div>
+
+    <div class="lb-btn-row">
+      <button class="btn" id="trimPlay" type="button"><span data-icon="play"></span>Spel utsnittet</button>
+      <button class="btn" id="trimPlayAll" type="button"><span data-icon="waves"></span>Spel heile</button>
+      <button class="btn" id="trimAuto" type="button"><span data-icon="crosshair"></span>Finn lyden sjølv</button>
+      <button class="btn" id="trimWhole" type="button"><span data-icon="undo"></span>Heile klippet</button>
+      <button class="btn" id="trimDone" type="button"><span data-icon="check"></span>Ferdig</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: last ned zip -->
+<div class="modal-overlay" id="exportOverlay" role="dialog" aria-modal="true" aria-labelledby="exportHeading">
+  <div class="modal1">
+    <button class="btn lb-icon-btn modal-close" id="exportClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="exportHeading">Last ned alle klippa</h2>
+    <p class="lb-muted" id="exportInfo"></p>
+
+    <label class="lb-field">
+      <span class="lb-field-label">Format</span>
+      <select class="lb-input" id="exportFormat">
+        <option value="mp3">MP3 — lita fil, passar i eit repo</option>
+        <option value="wav">WAV — ukomprimert, byrjar på rett sample</option>
+      </select>
+    </label>
+
+    <label class="lb-field" id="exportBitrateRow">
+      <span class="lb-field-label">Kvalitet</span>
+      <select class="lb-input" id="exportBitrate">
+        <option value="48">48 kbps — tale, minst mogleg</option>
+        <option value="96" selected>96 kbps — tale, trygt val</option>
+        <option value="128">128 kbps</option>
+        <option value="192">192 kbps — song og musikk</option>
+      </select>
+    </label>
+
+    <label class="lb-check">
+      <input type="checkbox" id="exportNormalize" checked>
+      <span>Jamn ut styrken på klippa</span>
+    </label>
+    <label class="lb-check">
+      <input type="checkbox" id="exportMono" checked>
+      <span>Lagre i mono</span>
+    </label>
+
+    <p class="lb-muted lb-small">Klipp du har henta inn frå ei zip-fil og ikkje rørt, blir lagde inn uendra. Då taper dei ikkje lyd på ein ny runde med komprimering.</p>
+
+    <div class="lb-progress" id="exportProgress" hidden>
+      <div class="lb-progress-track"><div class="lb-progress-fill" id="exportProgressFill"></div></div>
+      <output class="lb-progress-label" id="exportProgressLabel" aria-live="polite"></output>
+    </div>
+
+    <div class="lb-btn-row">
+      <button class="btn" id="exportStart" type="button"><span data-icon="download"></span>Lag zip-fila</button>
+      <button class="btn" id="exportCancel" type="button">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: lag eller endre lista -->
+<div class="modal-overlay" id="listOverlay" role="dialog" aria-modal="true" aria-labelledby="listEditHeading">
+  <div class="modal4 lb-list-modal">
+    <button class="btn lb-icon-btn modal-close" id="listEditClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="listEditHeading">Lydlista</h2>
+    <p class="lb-muted">Ein bank blir ei mappe i zip-fila, og kvart klipp ei fil som heiter <code>id.mp3</code>. Skriv eitt klipp per linje: <code>id | tekst | merkelapp | instruks</code> — berre id og tekst må vere med.</p>
+
+    <div class="lb-edit-grid">
+      <label class="lb-field">
+        <span class="lb-field-label">Namn på lista</span>
+        <input class="lb-input" id="listEditName" type="text" placeholder="Ljodstigen">
+      </label>
+      <label class="lb-field">
+        <span class="lb-field-label">Id (blir filnamnet)</span>
+        <input class="lb-input" id="listEditId" type="text" placeholder="ljodstigen">
+      </label>
+    </div>
+
+    <label class="lb-field">
+      <span class="lb-field-label">Felles rettleiing</span>
+      <textarea class="lb-input" id="listEditNote" rows="2" placeholder="Same stemme, same mikrofon og same rom for heile settet."></textarea>
+    </label>
+
+    <div id="listEditBanks"></div>
+
+    <div class="lb-btn-row">
+      <button class="btn" id="listAddBank" type="button"><span data-icon="plus"></span>Legg til bank</button>
+      <button class="btn" id="listApply" type="button"><span data-icon="check"></span>Bruk lista</button>
+      <button class="btn" id="listSave" type="button"><span data-icon="save"></span>Lagre som fil</button>
+      <button class="btn" id="listCancel" type="button">Avbryt</button>
+    </div>
+    <p class="lb-status" id="listEditStatus" role="status"></p>
+  </div>
+</div>
+
+<!-- Modal: slik gjer du det -->
+<div class="modal-overlay" id="tipsOverlay" role="dialog" aria-modal="true" aria-labelledby="tipsHeading">
+  <div class="modal4">
+    <button class="btn lb-icon-btn modal-close" id="tipsClose" type="button" aria-label="Lukk"><span data-icon="x"></span></button>
+    <h2 id="tipsHeading">Slik gjer du det</h2>
+
+    <h3 class="heading4 no-mt">Før du byrjar</h3>
+    <ul class="lb-tips">
+      <li>Slå på mikrofonen og sjekk at målaren rører seg når du snakkar. Ligg utslaget heilt i botn, står feil mikrofon vald i systemet.</li>
+      <li>Same stemme, same mikrofon og same rom for heile settet. Byter noko av det midt i lista, høyrer du det med ein gong klippa blir spelte etter kvarandre.</li>
+      <li>Slå av vifter, varsel og alt anna som lagar lyd. Eit klipp på under eitt sekund toler lite.</li>
+    </ul>
+
+    <h3 class="heading4">Under opptaket</h3>
+    <ul class="lb-tips">
+      <li>Trykk på mikrofonknappen i rada. Nedteljinga gir deg tre korte sekund før opptaket byrjar — bruk dei til å puste inn.</li>
+      <li>Trykk på same knappen for å stoppe. Verktøyet foreslår sjølv kvar lyden byrjar og sluttar, og skjer bort stilla i endane.</li>
+      <li><strong>Mellomrom</strong> startar neste klipp som manglar, og stoppar opptaket som går. <strong>Escape</strong> avbryt utan å lagre. Då slepp du å flytte handa til musa mellom kvart klipp.</li>
+      <li>Slå på «Gå automatisk vidare» når du er varm i trøya. Då kjem neste klipp av seg sjølv, og du slepp å flytte handa mellom kvar.</li>
+      <li>Blei klippet for langt, opnar du saksa i rada og dreg handtaka innover. Lyden blir ikkje kasta — du kan alltid dra dei ut att.</li>
+    </ul>
+
+    <h3 class="heading4">Når du er ferdig</h3>
+    <ul class="lb-tips">
+      <li>«Last ned zip» gir deg ei mappe per bank, ei fil per klipp, og rettleiingane som tekstfil ved sida av.</li>
+      <li>Zip-fila kan hentast inn att her seinare — det er slik du tek pause. Ingenting blir lagra i nettlesaren.</li>
+      <li>MP3 legg om lag 23 ms stille framfor kvart klipp. Skal klippa skøytast saman til ein lydsprite der millisekundane tel, vel du WAV.</li>
+    </ul>
+
+    <div class="lb-btn-row">
+      <button class="btn" id="tipsDone" type="button">Lukk</button>
+    </div>
+  </div>
+</div>
+
+<script src="../_libs/lamejs.min.js"></script>
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="js/util.js"></script>
+<script src="js/zip.js"></script>
+<script src="js/liste.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/encode.js"></script>
+<script src="js/state.js"></script>
+<script src="js/record.js"></script>
+<script src="js/session.js"></script>
+<script src="js/render.js"></script>
+<script src="js/trim.js"></script>
+<script src="js/uiexport.js"></script>
+<script src="js/uilist.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

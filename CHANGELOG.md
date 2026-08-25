@@ -16,6 +16,33 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **Plasshaldartonen spelte etter kvart einaste svar.** Rosen er ikkje spelt inn enno, så kvar rett og kvar feil utløyste eit syntetisk pip — blanda inn mellom ekte innspelt tale. Ein plasshaldartone er forsvarleg når lyden ber informasjon oppgåva treng, ikkje når han er pynt: manglande **ros er no stille**, medan manglande **ord framleis gjev tone**, sidan Ordbyggjaren er umogleg å prøve utan noko å høyre.
 - **`missing`-lista dupliserte seg** ved gjentekne `LjodAudio.load()`-kall, som ville gitt meldinga «orda, rosen, orda og rosen». Han er eit `Set` no.
 - **Meldinga om manglande lyd sa feil.** Ho sa «du høyrer tonar» om bankar som no er stille. Ho seier kva som manglar, ikkje kva du høyrer — kva ein manglande bank *gjer* er eit val i `audio.js`, og ei melding som gjettar på det blir ståande feil neste gong valet endrar seg.
+## [1.28] — 2026-08-25
+
+### Fiksa
+- **Ein mappe-URL utan skråstrek lasta sida halvvegs.** `…/ljodbanken` (utan `/` til slutt) blir servert med `index.html` frå mappa, men Azure sender ikkje nettlesaren vidare til `…/ljodbanken/`. Nettlesaren står då framleis på rota, og kvar relativ sti i sida peikar eitt hakk for høgt: `css/style.css` blir henta frå `/css/style.css` og `js/main.js` frå `/js/main.js`. Fila finst ikkje der, `navigationFallback` svarar med `index.html`, og nettlesaren nektar å køyre HTML som skript — «Refused to execute script … MIME type ('text/html')». Feilen har vore der for **alle** appane heile tida; ho blir berre synleg når adressa blir skriven eller bokmerkt for hand i staden for å bli klikka på framsida. `staticwebapp.config.json` set no `trailingSlash: "auto"`, som normaliserer adressa før sida blir servert: mapper får skråstrek (301), filer får det ikkje. Redirect-ruter var det første forsøket, men dei slo aldri inn — Azure løyser `/ljodbanken` til index-dokumentet i mappa før rutetabellen blir vurdert. `"always"` verka òg, men la ein 301 på kvar einaste asset-URL: `/css/neobrutalisme.css` blei send vidare til `…css/`. Innstillinga gjeld heile nettstaden, så ein ny app treng ikkje hugse noko.
+- **`serve.ps1` svarte 404 på mappe-URL-ar.** Lokalt måtte ein skrive `/lydskurd/index.html` heilt ut. No serverer han `index.html` frå mappa, og sender `/lydskurd` vidare til `/lydskurd/` — same åtferd som i produksjon, så feilen over ikkje kan gøyme seg til han er ute.
+
+### Lagt til
+- **Mellomrom startar og stoppar opptaket** — i Ljodbanken frå lista, i Lydskurd medan opptaksdialogen står open. **Escape** avbryt utan å lagre, og slår samstundes av «gå automatisk vidare»: bad du om å få stoppe, skal ikkje neste opptak byrje av seg sjølv eit sekund seinare. Skriv du i eit felt eller står på ein knapp, held snarvegen seg unna — der har mellomrom si eiga meining frå før.
+- **Knappen i verktøyraden i Ljodbanken blir til ein stoppknapp** medan opptaket går. Han står stille på skjermen same kor lista rullar, og er difor det eine stoppmålet du alltid finn att.
+
+### Fiksa
+- **Stoppknappen i Ljodbanken var vanskeleg å treffe.** Den aktive rada blir teikna om for kvar ramme, og ikonet i knappen blei bygd på nytt kvar gong. SVG-en under fingeren blei difor bytt ut mellom `mousedown` og `mouseup`, og då finst det ikkje lenger noko felles opphav for dei to hendingane — nettlesaren fyrer aldri `click`. Ikonet blir no berre bytt når det faktisk endrar seg.
+- **Lista rullar ikkje lenger når rada alt er synleg.** Ho rulla ved kvar tilstandsendring, så knappane flytta seg under handa til den som stod klar til å trykkje stopp.
+
+### Lagt til
+- **Val av mikrofon i Lydskurd og Ljodbanken.** Maskina har gjerne fleire lydinngangar — den innebygde i skjermen, headsettet, og eit lydkort — og nettlesaren vel sjølv kva for ein han tek. Det oppdagar ein typisk etter tjue klipp med feil mikrofon. Lista står no i opptaksdialogen i Lydskurd og i verktøyraden i Ljodbanken.
+  - Namna på mikrofonane er tomme før løyvet er gjeve — nettlesaren vil ikkje at ei side skal kunne kjenne att maskina på lista over lydkort. Lista blir difor fylt på nytt straks mikrofonen er open, og når nokon koplar til eller frå ei eining medan økta går.
+  - Valet blir sett med `deviceId: { exact: … }`. Er mikrofonen kopla frå, får du ei feilmelding i staden for eit stille opptak frå ein annan inngang.
+
+## [1.27] — 2026-08-25
+
+### Lagt til
+- **Ljodbanken** (`ljodbanken/`) — ei avgreining av Lydskurd for den som skal spele inn mange korte klipp etter ei liste. Heile lista står på skjermen med tekst og rettleiing for kvart klipp, og kvar rad har sin eigen opptaksknapp med nedteljing på tre. Mikrofonen blir verande på mellom klippa, og «Gå automatisk vidare» tek deg til det neste som manglar — 141 klipp let seg ikkje gjere med eitt løyve per opptak.
+- **Verktøyet foreslår sjølv kvar lyden byrjar og sluttar** etter kvart opptak, og skjer bort stilla i endane. Blei klippet for langt, dreg du handtaka innover i «Skjer til». Lyden blir aldri kasta — utsnittet er to tal, så grensene kan dragast ut att.
+- **Alt kan lastast ned som éi zip-fil**, med ei mappe per bank, `innhald.json` og rettleiingane som tekstfil. Same zip-fila kan hentast inn att seinare, så ei økt kan delast over fleire dagar. Klipp som blir henta inn og ikkje rørte, blir lagde uendra inn i neste zip — ei mp3 som blir dekoda og enkoda på nytt for kvar dag taper lyd kvar gong. Zip-skrivinga er vår eigen, utan nytt bibliotek.
+- **Innebygd liste for Ljodstigen** med alle 141 klippa — bokstavlydar, bokstavnamn, ord og ros — henta frå `INNSPELING.md`. Du kan òg lage dine eigne lister i verktøyet, og lagre og opne dei som `.json`-filer.
+- Verktøyet er **skjult** (`hidden: true` i `json/apps.json`) på same vis som Etikktesten: det står korkje på framsida eller i toppmenyen, men `ljodbanken/index.html` verkar for den som har lenkja. Notatet på framsida nemner det difor ikkje — berre versjonsnummeret følgjer med.
 
 ## [1.26] — 2026-08-25
 
