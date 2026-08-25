@@ -3,6 +3,15 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.28] — 2026-08-25
+
+### Lagt til
+- **Heile lydbanken til Ljodstigen er spelt inn.** 70 ord og 13 ros- og oppmuntringsklipp kom til, så alle **141** klippa er på plass. Alle fire modusane har no ekte tale, og plasshaldartonane er ute av bruk. Samla 720 kB i fire lydsprites.
+- **Ordbyggjaren og «Første lyd» er spelbare for første gong.** Begge treng eit opplese ord for å fungere i det heile.
+
+### Fiksa
+- **Stille-detektoren i byggjeskriptet gjekk ut frå toppnivået åleine**, og det held ikkje når opptaka kjem frå ulike rom. Ord- og ros-klippa har eit støygolv på −34 til −44 dB mot −50 til −58 for bokstavlydane. Med toppen på −11 dB hamna terskelen på −41 dB — altså **under romtona** — og då blei heile klippet rekna som lyd: «pose» kom ut som 550 ms tale med **800 ms romtone framfor og 600 ms etter**. Detektoren måler no støygolvet i kvart klipp for seg (10. persentil av vindaugsnivåa) og krev at lyden ligg minst 12 dB over det. Ordbanken gjekk frå 71,2 til **52,4 sekund** — nitten sekund romtone borte — medan bokstavlydane er uendra, sidan dei alt var tekne opp i eit stille rom.
+
 ## [1.27] — 2026-08-25
 
 ### Lagt til

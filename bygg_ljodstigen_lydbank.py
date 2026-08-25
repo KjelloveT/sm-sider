@@ -53,6 +53,7 @@ GAP_MS = 60         # stille mellom klipp i spriten
 HEAD_MS = 80        # stille heilt i starten, tek unna kodeforsinking
 FADE_MS = 5         # mot klikk i skøytane
 SILENCE_DB = -30    # terskel under toppen for «her byrjar lyden»
+FLOOR_OVER_DB = 12  # ... men alltid minst så mykje over støygolvet i klippet
 PEAK_CEIL = 0.891   # -1 dBFS
 ALIGN = 0.5         # kor langt mot median-RMS vi flyttar (0 = ikkje, 1 = heilt)
 BITRATE = 64
@@ -105,7 +106,22 @@ def find_sound(a, fr, win_ms=5, hold_ms=25):
     top = max(levels)
     if top <= 0:
         return 0, len(a)
-    thr = top * (10 ** (SILENCE_DB / 20.0))
+    # To tersklar, og vi tek den strengaste.
+    #
+    # Berre «topp minus 30 dB» held ikkje. Ord- og ros-opptaka har eit
+    # støygolv på -34 til -44 dB, medan bokstavlydane låg på -50 til -58.
+    # Med toppen på -11 dB hamna terskelen på -41 dB, altså UNDER romtona,
+    # og då blir heile klippet rekna som lyd: «pose» kom ut som 550 ms tale
+    # med 800 ms romtone framfor og 600 ms etter.
+    #
+    # Difor måler vi støygolvet i kvart klipp for seg — 10. persentil av
+    # vindaugsnivåa — og krev at lyden ligg minst 12 dB over det. Klipp
+    # med stille rom oppfører seg som før; klipp med støyande rom blir
+    # trimma etter sitt eige golv.
+    quiet = sorted(levels)
+    floor = quiet[max(0, int(len(quiet) * 0.10) - 1)]
+    thr = max(top * (10 ** (SILENCE_DB / 20.0)),
+              floor * (10 ** (FLOOR_OVER_DB / 20.0)))
     hold = max(1, int(hold_ms / win_ms))
 
     def sustained(i, step):
