@@ -296,6 +296,13 @@
       </div>
     </div>
 
+    <label class="ls-field ls-field-narrow-wide">
+      <span class="ls-field-label">Mikrofon</span>
+      <select id="recordDevice" class="ls-text-input">
+        <option value="">Standard</option>
+      </select>
+    </label>
+
     <div class="ls-rec-meter">
       <span class="ls-slider-icon" aria-hidden="true" data-icon="mic" data-icon-size="16"></span>
       <div class="ls-meter-track"><div class="ls-meter-fill" id="recordMeterFill"></div></div>
@@ -305,10 +312,11 @@
     <div class="ls-rec-countdown" id="recordCountdown" aria-hidden="true" hidden></div>
 
     <p class="ls-rec-status" id="recordStatus" role="status"></p>
+    <p class="ls-muted ls-rec-hint">Mellomrom startar og stoppar opptaket når mikrofonen er på.</p>
 
     <div class="ls-btn-row">
       <button class="btn" id="recordMicBtn" type="button"><span data-icon="mic"></span>Slå på mikrofonen</button>
-      <button class="btn" id="recordToggleBtn" type="button" hidden><span data-icon="mic"></span>Start opptak</button>
+      <button class="btn" id="recordToggleBtn" type="button" hidden title="Mellomrom gjer det same"><span data-icon="mic"></span>Start opptak</button>
       <button class="btn" id="recordDone" type="button">Ferdig</button>
     </div>
   </div>

@@ -39,7 +39,13 @@
     <div class="lb-toolbar" role="toolbar" aria-label="Verktøy for innspelinga">
       <div class="lb-btn-group">
         <button class="btn lb-mic-btn" id="micBtn" type="button"><span data-icon="micOff"></span>Slå på mikrofonen</button>
-        <button class="btn" id="nextBtn" type="button"><span data-icon="play"></span>Ta neste som manglar</button>
+        <button class="btn" id="nextBtn" type="button" title="Mellomrom gjer det same"><span data-icon="play"></span>Ta neste som manglar</button>
+        <label class="lb-check">
+          <span>Mikrofon</span>
+          <select class="lb-input lb-select" id="micSelect" aria-label="Vel mikrofon">
+            <option value="">Standard</option>
+          </select>
+        </label>
       </div>
 
       <div class="lb-btn-group">
@@ -219,6 +225,7 @@
     <ul class="lb-tips">
       <li>Trykk på mikrofonknappen i rada. Nedteljinga gir deg tre korte sekund før opptaket byrjar — bruk dei til å puste inn.</li>
       <li>Trykk på same knappen for å stoppe. Verktøyet foreslår sjølv kvar lyden byrjar og sluttar, og skjer bort stilla i endane.</li>
+      <li><strong>Mellomrom</strong> startar neste klipp som manglar, og stoppar opptaket som går. <strong>Escape</strong> avbryt utan å lagre. Då slepp du å flytte handa til musa mellom kvart klipp.</li>
       <li>Slå på «Gå automatisk vidare» når du er varm i trøya. Då kjem neste klipp av seg sjølv, og du slepp å flytte handa mellom kvar.</li>
       <li>Blei klippet for langt, opnar du saksa i rada og dreg handtaka innover. Lyden blir ikkje kasta — du kan alltid dra dei ut att.</li>
     </ul>

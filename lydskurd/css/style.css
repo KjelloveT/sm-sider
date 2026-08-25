@@ -437,6 +437,8 @@ input[type="file"]:focus-visible,
 .ls-clip-warn > span:first-child { flex-shrink: 0; display: inline-flex; }
 .ls-clip-warn .ls-icon-btn-small { margin-left: auto; flex-shrink: 0; }
 
+.ls-rec-hint { margin: 6px 0 0; font-size: 0.82rem; }
+
 /* ---- Tips-vindauget ---- */
 .ls-tips-modal { max-height: 82vh; overflow-y: auto; }
 .ls-tips-head {

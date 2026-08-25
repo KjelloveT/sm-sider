@@ -199,8 +199,7 @@ canvas:focus-visible {
 .lb-row-actions { display: flex; gap: 6px; flex-shrink: 0; }
 /* Inverteringa er den einaste fyllinga som held kontrasten i alle 21 temaa:
    --text og --surface er motsetnader i kvart einaste eitt. */
-.lb-rec-btn.lb-rec-live { background: var(--text); color: var(--surface); }
-.lb-rec-btn.lb-rec-live:hover { background: var(--text); color: var(--surface); }
+.lb-rec-live, .lb-rec-live:hover { background: var(--text); color: var(--surface); }
 
 /* Nedteljinga skal vere umogleg å ikkje sjå — det er ho som seier når du
    skal puste inn. */

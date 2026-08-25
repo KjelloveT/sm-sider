@@ -50,6 +50,14 @@ LB.session = (function () {
     return LB.record.openMic().then(() => { onChange(); });
   }
 
+  /** Byter mikrofon. Eit opptak som går blir kasta — det er halvt uansett. */
+  function useDevice(id) {
+    if (activeId) cancel();
+    return LB.record.useDevice(id)
+      .then(() => { onChange(); })
+      .catch((err) => { onChange(); LB.util.toast(err.message); });
+  }
+
   function closeMic() {
     cancel();
     LB.record.closeMic();
@@ -179,7 +187,7 @@ LB.session = (function () {
   return {
     MAX_SECONDS,
     setOnChange, state, isBusy, micOn, level, elapsed,
-    isAuto, setAuto, openMic, closeMic,
+    isAuto, setAuto, openMic, closeMic, useDevice,
     record, finish, cancel
   };
 })();
