@@ -1,7 +1,7 @@
 {
   "_kommentar_fallback": "Ein sti som ikkje treffer ei fil blir skriven om til index.html med status 200 — ikkje 404. Ei lydfil med skrivefeil i stien gjev då ein HTML-body, og decodeAudioData feilar med «Unable to decode audio data» utan å seie kvifor. Difor står lyd- og ressursmappene her.",
-  "_kommentar_trailingSlash": "Ein mappe-URL utan skråstrek — /lydskurd — blir servert med index.html frå mappa, men UTAN at nettlesaren blir sendt vidare til /lydskurd/. Nettlesaren står då framleis på rota, og kvar relativ sti i sida peikar eitt hakk for høgt: css/style.css blir henta frå /css/style.css. Fila finst ikkje der, fallbacken svarar med index.html, og nettlesaren nektar å køyre HTML som skript. «always» gjer at Azure sender nettlesaren vidare til adressa med skråstrek først.",
-  "trailingSlash": "always",
+  "_kommentar_trailingSlash": "Ein mappe-URL utan skråstrek — /lydskurd — blir servert med index.html frå mappa, men UTAN at nettlesaren blir sendt vidare til /lydskurd/. Nettlesaren står då framleis på rota, og kvar relativ sti i sida peikar eitt hakk for høgt: css/style.css blir henta frå /css/style.css. Fila finst ikkje der, fallbacken svarar med index.html, og nettlesaren nektar å køyre HTML som skript. «auto» normaliserer adressa: mapper får skråstrek, filer får det ikkje.",
+  "trailingSlash": "auto",
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/_resources/*", "/ljodstigen/lyd/*"]
