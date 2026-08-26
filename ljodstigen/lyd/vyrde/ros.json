@@ -2,6 +2,7 @@
  "app": "ljodstigen",
  "version": 1,
  "bank": "ros",
+ "voice": "vyrde",
  "rate": 48000,
  "gapMs": 60,
  "clips": {

@@ -3,6 +3,18 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.30] — 2026-08-26
+
+### Lagt til
+- **Stemmepakkar i Ljodstigen.** Lyden ligg no under `lyd/<stemme>/` i staden for rett i `lyd/`, og `lyd/stemmer.json` er registeret. Ein stemmeveljar dukkar opp under Skrift så snart det finst meir enn éi innspeling — med berre éi er han skjult, sidan eit val med eitt alternativ berre er støy. Dagens opptak heiter no «Vyrde» og er standard.
+  - **Ei halvferdig stemme låner frå standarden.** Manglar ein bank i den valde stemma, blir han henta frå standardstemma før vi fell tilbake til plasshaldartone. Det gjer at ei ny innspeling kan sleppast bank for bank — spelar du inn fonema først, får elevane den nye stemma der og den gamle på resten, i staden for pip på tre av fire bankar.
+  - `bygg_ljodstigen_lydbank.py` tek `--stemme <id>` og seier frå dersom stemma ikkje står i registeret, sidan ho då aldri blir vist i appen.
+- **`bygg_ljodstigen_atlas.py`** byggjer teksturatlaset til plattformspelet frå Kenney-pakkane: 149 sprites, 2048×1561, 163 kB. Atlaset blir bygd frå enkeltfilene og ikkje henta ferdig, fordi utvidingspakken berre har ein `tilesheet.png` **utan indeks** — å gjette på alfabetisk rekkjefølgje ville verka heilt til Kenney gjev ut ein 1.1 med ein ny sprite midt i lista.
+  - Kuratert med vilje: våpen, kanonar, sagblad og piggar blir ikkje med. Det er ikkje for å spare kilobyte, men fordi eit atlas som inneheld eit sverd er ei open dør for at nokon seinare legg eit sverd i eit lesespel for seksåringar.
+
+### Endra
+- **`lyd/stemmer.json` blir ikkje cacha `immutable`**, til skilnad frå lydfilene. Registeret endrar seg når ei ny stemme kjem til, og ei elevmaskin med varm cache ville elles ikkje sett henne på eit år. Ruta må stå **føre** wildcarden i `staticwebapp.config.json` — rutene blir evaluerte i rekkjefølgje, og første treff vinn.
+
 ## [1.30] — 2026-08-25
 
 ### Lagt til
