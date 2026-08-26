@@ -24,6 +24,7 @@
 
   const ATLAS = 'jakta/atlas.png';
   const ATLAS_JSON = 'jakta/atlas.json';
+  const FLISESETT = 'jakta/flisesett.png';
 
   const FLIS = 64;
   const RUTER_BREI = 16;
@@ -67,6 +68,9 @@
     preload() {
       const bar = $('jakta-progress');
       this.load.atlas('kenney', ATLAS, ATLAS_JSON);
+      /* Flisesettet er eit eige bilete: eit flisekart kan ikkje lese frå
+         eit pakka atlas, det treng eit uniformt rutenett. */
+      this.load.image('flisesett', FLISESETT);
       this.load.on('progress', function (v) { if (bar) bar.style.width = Math.round(v * 100) + '%'; });
       this.load.on('loaderror', function (f) {
         feil('Fekk ikkje lasta «' + f.key + '». Prøv å laste sida på nytt.');
@@ -104,8 +108,12 @@
       this.spelar = JaktaSpelar.lag(this, this.bane.start.x, this.bane.start.y, {
         farge: 'Green'
       });
-      this.physics.add.collider(this.spelar.kropp, this.bane.faste);
-      this.physics.world.setBounds(0, -200, W, H + 400);
+      /* Éin collider mot heile flislaget, uansett kor brei banen er. */
+      this.physics.add.collider(this.spelar.kropp, this.bane.lag);
+      this.bane.soklar.forEach(function (so) {
+        scene.physics.add.collider(scene.spelar.kropp, so.blokk);
+      });
+      this.physics.world.setBounds(0, -400, this.bane.breidd, this.bane.hogd + 600);
 
       /* Bokstavane på soklane. Dei blir sette av oppdraget, ikkje av
          banefila: geometrien er fast, innhaldet er adaptivt. */
