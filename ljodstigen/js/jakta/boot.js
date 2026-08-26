@@ -33,6 +33,13 @@
   const RUTER_BREI = 16;
   const RUTER_HOG = 9;
 
+  /* Hoppkjensla. Desse tre tala avgjer om spelet er godt, og dei er dei
+     einaste som er verdt å justere etter at nokon har prøvd det. */
+  const BASE_SKALA = 0.9;  // figuren mot ei 64-flis
+  const HOPPKRAFT = 640;
+  const COYOTE_MS = 110;   // du kan hoppe eit augeblink etter kanten
+  const BUFFER_MS = 160;   // trykk rett før landing tel når du landar
+
   let game = null;
 
   function $(id) { return document.getElementById(id); }
@@ -105,8 +112,14 @@
       /* Figuren. Éin ramme — Kenney har ingen gangesyklus — så rørsla
          må lagast prosedyralt. Her berre eit lite sprett i landinga. */
       this.spelar = this.physics.add.sprite(2 * FLIS, H - 3 * FLIS, 'kenney', 'character_roundGreen');
-      this.spelar.setDisplaySize(FLIS * 0.9, FLIS * 0.9);
-      this.spelar.body.setSize(46, 60).setOffset(9, 4);
+      /* setScale, ikkje setDisplaySize: skalaen er noko vi kjem til å
+         pille på for sprett-effekten, og då må vi vite kva som er
+         utgangspunktet. BASE er sanninga; squashen gongar med han. */
+      this.spelar.setScale(BASE_SKALA);
+      /* Kroppen i KJELDEPIKSLAR — Arcade skalerer han sjølv. Han er
+         litt smalare og lågare enn sprita, så figuren ikkje hektar seg
+         fast i kantar han visuelt ser ut til å komme forbi. */
+      this.spelar.body.setSize(44, 56).setOffset(10, 8);
       this.spelar.setCollideWorldBounds(true);
       this.physics.add.collider(this.spelar, grunn);
 
@@ -124,7 +137,25 @@
         });
       }, this);
 
-      this.piler = this.input.keyboard.createCursorKeys();
+      this.styring = JaktaStyring.lag(this);
+      this.strekkNo = 1;
+      this.sistPaaGrunn = -1e9;   // tidsstempel, ikkje teljar — sjå update()
+      this.sistHoppTrykt = -1e9;
+
+      /* Ei diskret markering av kvar sonene er. Ho ligg i lerretet og
+         ikkje i DOM, fordi ho skal skalere saman med spelflata. */
+      const sh = H * JaktaStyring.SONE_HOGD;
+      const g = this.add.graphics().setScrollFactor(0).setDepth(100);
+      g.lineStyle(2, 0x1a1a1a, 0.18);
+      g.strokeRect(0, H - sh, W / 3, sh);
+      g.strokeRect(W / 3, H - sh, W / 3, sh);
+      g.strokeRect(2 * W / 3, H - sh, W / 3, sh);
+      [['←', W / 6], ['→', W / 2], ['HOPP', 5 * W / 6]].forEach(function (m) {
+        this.add.text(m[1], H - sh / 2, m[0], {
+          fontFamily: 'Andika, Verdana, sans-serif',
+          fontSize: '34px', color: '#1a1a1a'
+        }).setOrigin(0.5).setAlpha(0.28).setScrollFactor(0).setDepth(100);
+      }, this);
 
       /* Måletal vi treng på iPad. Lesne ut av testane, ikkje vist. */
       root.JaktaProve = { scene: this, fps: 0 };
@@ -135,16 +166,72 @@
       });
     },
 
-    update: function () {
+    update: function (tid, delta) {
       const s = this.spelar;
       if (!s) return;
-      const fart = 260;
-      if (this.piler.left.isDown) s.setVelocityX(-fart);
-      else if (this.piler.right.isDown) s.setVelocityX(fart);
+      const inn = this.styring.les();
+      const paaBakken = s.body.blocked.down;
+
+      /* ── Vassrett ── */
+      const fart = 300;
+      if (inn.venstre && !inn.hogre) { s.setVelocityX(-fart); s.setFlipX(true); }
+      else if (inn.hogre && !inn.venstre) { s.setVelocityX(fart); s.setFlipX(false); }
       else s.setVelocityX(0);
-      if (this.piler.up.isDown && s.body.blocked.down) s.setVelocityY(-620);
-      /* Ingen død: fell figuren ut, kjem han opp att. */
-      if (s.y > RUTER_HOG * FLIS + 200) { s.setPosition(2 * FLIS, 0); s.setVelocity(0, 0); }
+
+      /* ── Tilgjeving ──
+         Desse to er ikkje pynt for målgruppa. Ein seksåring trykkjer
+         hopp for seint når han når kanten, og for tidleg når han er på
+         veg ned. Utan dei kjennest spelet ustyrleg, og feilen ser ut til
+         å vere hans.
+
+         TIDSSTEMPEL, IKKJE AKKUMULERT DELTA. Å trekkje delta frå ein
+         teljar kvar ramme gjev eit vindauge som krympar og veks med
+         bildefrekvensen: fell han til 30 fps på ein eldre iPad, blir
+         110 ms plutseleg til noko heilt anna. Eit tidsstempel er det
+         same talet uansett kor mange rammer som gjekk. */
+      if (paaBakken) this.sistPaaGrunn = tid;
+      if (inn.hoppTrykt) this.sistHoppTrykt = tid;
+
+      const kanHoppe = (tid - (this.sistPaaGrunn || -1e9)) <= COYOTE_MS;
+      const villeHoppe = (tid - (this.sistHoppTrykt || -1e9)) <= BUFFER_MS;
+
+      if (kanHoppe && villeHoppe) {
+        s.setVelocityY(-HOPPKRAFT);
+        /* Begge må brukast opp, elles hoppar figuren igjen neste ramme. */
+        this.sistPaaGrunn = -1e9;
+        this.sistHoppTrykt = -1e9;
+      }
+
+      /* Slepper eleven hoppknappen tidleg, blir hoppet lågare. Gjev
+         kontroll utan at nokon treng å lære seg noko. */
+      if (!inn.hopp && s.body.velocity.y < -180) s.setVelocityY(-180);
+
+      /* ── Sprett ──
+         Kenney har ingen gangesyklus, så rørsla må lagast av forma:
+         strekk i lufta, squash på bakken.
+
+         Effekten gongar med BASE_SKALA i staden for å setje scaleY
+         direkte. Set han direkte, overskriv han skalaen sprita blei
+         sett opp med, fysikk-kroppen endrar storleik under føtene på
+         figuren, og han blir pressa ned i bakken — hoppet såg ut til å
+         vere på fire piksel. Det tok ei stund å finne. */
+      const strekk = paaBakken ? 1 : 1.07;
+      this.strekkNo = this.strekkNo + (strekk - this.strekkNo) * 0.2;
+      s.setScale(BASE_SKALA / this.strekkNo, BASE_SKALA * this.strekkNo);
+
+      /* ── Ingen død ──
+         Fell figuren ut, kjem han opp att på siste faste grunn. Ingen
+         liv, ingen «prøv igjen», ingenting tapt. */
+      if (paaBakken) { this.trygg = { x: s.x, y: s.y }; }
+      if (s.y > RUTER_HOG * FLIS + 160) {
+        const t = this.trygg || { x: 2 * FLIS, y: RUTER_HOG * FLIS - 3 * FLIS };
+        s.setPosition(t.x, t.y - FLIS);
+        s.setVelocity(0, 0);
+      }
+    },
+
+    shutdown: function () {
+      if (this.styring) this.styring.riv();
     }
   };
 
