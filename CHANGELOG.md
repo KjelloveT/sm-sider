@@ -3,6 +3,12 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.32] — 2026-08-26
+
+### Fiksa
+- **Spelsida til Bokstavjakta blei cacha `immutable` i eit år.** Azure fjernar `.html` frå URL-ar, så `/ljodstigen/jakta.html` blir servert som `/ljodstigen/jakta` — og den stien matchar cache-ruta `/ljodstigen/jakta/*`, som var meint for teksturatlaset. Resultatet var ei side som sat fast i ein gammal versjon der eit script mangla: `JaktaBaner is not defined`. Deployen såg vellykka ut heile tida, og ei vanleg omlasting hjelpte ikkje. Sida har eigne rutar med `max-age=0, must-revalidate` no, plasserte føre wildcarden.
+- **`sjekk_cache_rutar.py`** er lagt til som vakt mot same feil. Han går gjennom alle HTML-sidene i repoet og finn dei som endar opp med immutable cache, med same rekkjefølgje-logikk som Azure. Merk at han modellerer at `/x/*` matchar `/x` hos Azure sjølv om `fnmatch` seier nei — utan det ser vakta ikkje den feilen ho finst for å finne.
+
 ## [1.31] — 2026-08-26
 
 ### Lagt til
