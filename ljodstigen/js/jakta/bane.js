@@ -141,6 +141,31 @@
       }
     });
 
+    /* JORDA HELD FRAM UNDER KONTROLLANE.
+
+       Banen er åtte rader, lerretet ti. Dei to nedste er kontrollsone —
+       men det tyder ikkje at dei skal vere tomme. Stoppar bakken der
+       banen sluttar, ligg det ei stripe bakgrunnsfarge under, og verda
+       ser ut til å sveve over knappane.
+
+       Vi fyller difor kvar bunnsolid kolonne heilt ned til lerretkanten.
+       Reint visuelt: figuren kan ikkje kome dit, så flisene treng ingen
+       kollisjon, og dei blir lagde inn utan fysikk. */
+    if (opts.fyllTilY) {
+      const botnRad = rader.length - 1;
+      for (let rx = 0; rx < breidd; rx++) {
+        const t = botnRad >= 0 ? (rader[botnRad][rx] || '.') : '.';
+        if (t !== '#' && t !== '_') continue;
+        let y = rader.length * FLIS + FLIS / 2 + yOff;
+        while (y - FLIS / 2 < opts.fyllTilY) {
+          scene.add.image(rx * FLIS + FLIS / 2, y, 'kenney', 'tile')
+            .setDisplaySize(FLIS + OVERLAPP, FLIS + OVERLAPP)
+            .setDepth(4);
+          y += FLIS;
+        }
+      }
+    }
+
     return {
       faste: faste, soklar: soklar, myntar: myntar,
       start: start, doer: doer,

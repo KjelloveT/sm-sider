@@ -14,8 +14,10 @@
       for å vise ein svart skjerm.
 
    4. KONTROLLSONA HAR EIGA HØGD I VERDA. Banen er 8 fliser høg, lerretet
-      10. Dei to nedste radene er tomme med vilje: der ligg fingrane, og
-      ein plattform under tommelen er ein plattform eleven ikkje ser.
+      10. Dei to nedste radene har ingen SPELBAR geometri: der ligg
+      fingrane, og ein plattform under tommelen er ein plattform eleven
+      ikkje ser. Men dei er ikkje tomme — jorda held fram ned dit, utan
+      kollisjon, så verda ikkje ser ut til å sveve over knappane.
    ══════════════════════════════════════════════ */
 (function (root) {
   'use strict';
@@ -96,7 +98,9 @@
       this.cameras.main.setBackgroundColor('#f4f1ea');
 
       /* Banen ligg øvst; kontrollsona er tomrommet under. */
-      this.bane = JaktaBane.bygg(this, def.rutenett, { yOffset: 0 });
+      /* fyllTilY: jorda held fram heilt ned til lerretkanten, under
+         kontrollane. Sjå bane.js — utan det svevar verda over knappane. */
+      this.bane = JaktaBane.bygg(this, def.rutenett, { yOffset: 0, fyllTilY: H });
 
       this.spelar = JaktaSpelar.lag(this, this.bane.start.x, this.bane.start.y, {
         farge: 'Green'

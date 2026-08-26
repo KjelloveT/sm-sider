@@ -10,6 +10,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **Hendene var praktisk talt usynlege.** `character_hand*` har berre **32×30 px synleg blekk inne i eit 128×129-sprite** — handa fyller ein fjerdedel av breidda. Ein `displaySize` på 15 px ga difor ei hand på under 4 px. Storleiken kompenserer for lufta rundt no, og handa er 13 px mot ein figur på 44.
 
 ### Endra
+- **Jorda held fram under kontrollane.** Banen er åtte rader og lerretet ti, men dei to nedste var tomme — så verda såg ut til å sveve over knappane. Dei blir no fylte med fliser utan kollisjon: reint visuelt, sidan figuren ikkje kan kome dit uansett.
 - **Flisene overlappar med 5 px.** Kenney-flisene har konturstreken heilt ute i kanten, så kant-i-kant gjev to strekar med kvitt imellom, og rutenettet ser ut som laushengande øyer. `Sample.png` i pakken viser at det skal vere ein samanhengande vegg med enkle strekar. Fysikk-kroppen held seg på 64, så rutenettlogikken er urørt.
 - **Berre øvste rad har graskant.** Grunn med noko oppå seg blir ei blank flis. Det blir avgjort av byggjaren og ikkje i banefila, så den som teiknar ei bane slepp å tenkje på det.
 
