@@ -135,6 +135,11 @@
         });
       });
 
+      /* Kamera og pil. Utan dei er ein bane breiare enn skjermen uråd
+         å finne fram i. */
+      JaktaKamera.fest(this, this.spelar, this.bane);
+      this.pil = JaktaPil.lag(this);
+
       this.styring = JaktaStyring.lag(this);
 
       /* ── Lyd ──
@@ -166,18 +171,27 @@
 
     visOppdrag() {
       if (!this.hudTekst) return;
-      this.hudTekst.textContent = this.oppdrag.type === 'ord'
-        ? 'Finn bokstavane i ordet du høyrer'
+      const o = this.oppdrag;
+      this.hudTekst.textContent =
+        o.type === 'ord' ? 'Finn bokstavane i ordet du høyrer'
+        : o.type === 'rekkje' ? 'Finn bokstavane du høyrer, éin om gongen'
         : 'Finn bokstaven du høyrer';
     }
 
     oppdaterHud() {
       if (!this.hudTekst || !this.oppdrag) return;
-      if (this.oppdrag.type === 'ord' && this.oppdrag.ord) {
-        const t = this.oppdrag.ord.letters.map(function (ch, i) {
-          return i < this.oppdrag.steg ? ch : '_';
-        }, this).join(' ');
-        this.hudTekst.textContent = t;
+      const o = this.oppdrag;
+      if (o.type === 'ord' && o.ord) {
+        /* Ordlinje: bokstavane fyllest inn etter kvart. */
+        this.hudTekst.textContent = o.ord.letters.map(function (ch, i) {
+          return i < o.steg ? ch : '_';
+        }).join(' ');
+      } else if (o.type === 'rekkje') {
+        /* Ei rekkje er ikkje eit ord, så bokstavane skal IKKJE visast —
+           då kunne eleven lese seg til svaret i staden for å høyre det.
+           Vi viser berre kor langt han er komen. */
+        this.hudTekst.textContent = 'Bokstav ' + Math.min(o.steg + 1, o.maal.length) +
+          ' av ' + o.maal.length;
       }
     }
 
@@ -208,6 +222,7 @@
           onComplete: function () { sokkel.glyf.destroy(); }
         });
         sokkel.blokk.setTint(0xBAFCA2);
+        sokkel.viserSvar = true;
         LjodAudio.playSeq(['f_' + svar.ch, LjodRender.praiseId()], 160);
         this.oppdaterHud();
 
@@ -220,8 +235,12 @@
           targets: sokkel.glyf, x: sokkel.x + 8, duration: 60,
           yoyo: true, repeat: 4
         });
+        sokkel.viserSvar = true;
         sokkel.blokk.setTint(0xFFC2C2);
-        this.time.delayedCall(700, function () { sokkel.blokk.clearTint(); });
+        this.time.delayedCall(900, function () {
+          sokkel.viserSvar = false;
+          sokkel.blokk.clearTint();
+        });
         LjodAudio.playSeq([LjodRender.nudgeId()].concat(this.oppdrag.lydForOppgava()), 200);
       }
       LjodState.saveProfile(this.profil);
@@ -255,30 +274,46 @@
       const s = this.spelar;
       if (!s || !this.oppdrag) return;
 
-      s.oppdater(tid, delta, this.styring.les());
-      s.bergOmFalt(RUTER_HOG * FLIS + 120);
+      const inn = this.styring.les();
+      s.oppdater(tid, delta, inn);
+      s.bergOmFalt(this.bane.hogd + 120);
 
       const k = s.kropp;
+      JaktaKamera.oppdater(this);
+      this.pil.pek(JaktaPil.finnMaal(this.bane, this.oppdrag, k.x));
 
-      /* Soklar. Vi brukar avstand og ikkje Arcade sin overlapp, fordi
-         sokkelen ALT er ein fast kropp figuren står på — ein overlapp
-         ville aldri utløysast.
+      /* ── Å VELJE EIN SOKKEL ──
 
-         ÉIN FREISTNAD PER TILNÆRMING. Vi utløyser når eleven KJEM INN i
-         sirkelen, ikkje medan han er der. Utan det blir eit feilsvar
-         registrert på nytt kvar gong sperra går ut, så lenge han står i
-         ro ved sokkelen — og eit barn som blir ståande og lurer ville
-         samla opp ti feil han aldri gjorde. Det er læringsdata, ikkje
-         berre ein teljar. */
+         Eleven må stå ved sokkelen OG trykkje handlingsknappen. To grunnar:
+
+         Å utløyse på posisjon åleine var feil på ein måte som først synte
+         seg i ein brei bane: soklane står i vegen, så eleven MÅTTE innom
+         dei for å komme forbi — og fekk eit feilsvar registrert for kvar
+         sokkel han berre reiste forbi. I ein fire skjermars bane samla han
+         opp feil han aldri hadde gjort, rett inn i den adaptive motoren.
+
+         Og ein knapp skil UTFORSKING frå SVAR. Eleven kan klatre opp,
+         høyre oppgåva om att, tenkje seg om — og så bestemme seg. Det er
+         ein annan ting enn å bli teken på fersken av å stå på feil stad. */
+      this.naerSokkel = null;
       for (let i = 0; i < this.bane.soklar.length; i++) {
         const so = this.bane.soklar[i];
         if (so.teken || !so.glyf) continue;
-        const inne = Phaser.Math.Distance.Between(k.x, k.y, so.x, so.y) < FLIS * 0.85;
-        if (inne && !so.inne) this.proevSokkel(so);
-        /* Litt slark ut att, så ein figur som vippar på grensa ikkje
-           utløyser om og om igjen. */
-        so.inne = inne || (so.inne &&
-          Phaser.Math.Distance.Between(k.x, k.y, so.x, so.y) < FLIS * 1.15);
+        const naer = Math.abs(k.x - so.blokk.x) < FLIS * 0.9 &&
+          Math.abs(k.y - so.blokk.y) < FLIS * 1.4;
+        /* Bokstaven lyser opp når eleven er nær nok til å kunne velje
+           han, så knappen aldri er eit sjansespel.
+
+           Vi rører ikkje sokkelen medan han viser tilbakemelding: den
+           tinten er svaret hans, og nærleiksmarkeringa ville overskrive
+           han kvar einaste ramme. */
+        so.glyf.setAlpha(naer ? 1 : 0.72);
+        if (!so.viserSvar) so.blokk.setTint(naer ? 0xFFF0B3 : 0xffffff);
+        if (naer && !this.naerSokkel) this.naerSokkel = so;
+      }
+      if (inn.handling && this.naerSokkel) {
+        s.sving();
+        this.proevSokkel(this.naerSokkel);
       }
 
       /* Myntar. Rein utforsking — ingen straff for å gå glipp av dei. */
