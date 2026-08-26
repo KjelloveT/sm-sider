@@ -8,7 +8,8 @@
       "/images/*.{png,jpg,gif}",
       "/css/*",
       "/_resources/*",
-      "/ljodstigen/lyd/*"
+      "/ljodstigen/lyd/*",
+      "/ljodstigen/jakta/*"
     ]
   },
   "routes": [
@@ -39,6 +40,13 @@
       }
     },
     {
+      "_kommentar": "Phaser er versjonspinna i eiga mappe. Ny versjon skal i _libs/phaser-4xx/, ikkje som nytt innhald her: filnamnet er det same, og immutable-cachen ville elles late elevmaskiner sitje att med den gamle motoren.",
+      "route": "/_libs/phaser-390/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
       "route": "/_libs/codemirror/*",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
@@ -54,6 +62,13 @@
     {
       "_kommentar": "Lydbanken til Ljodstigen er versjonspinna og endrar seg aldri utan at mappa byttar namn. Utan dette lastar elevane heile banken på nytt kvar time. Ny innspeling skal difor leggjast i ei NY mappe (lyd-v2/), ikkje som nytt innhald i den gamle: filnamna er dei same, og immutable-cachen ville elles late elevmaskiner sitje att med gammal lyd.",
       "route": "/ljodstigen/lyd/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "_kommentar": "Teksturatlaset til Bokstavjakta blir bygd av bygg_ljodstigen_atlas.py og endrar seg berre når nokon køyrer skriptet på nytt.",
+      "route": "/ljodstigen/jakta/*",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
       }

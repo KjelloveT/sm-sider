@@ -156,6 +156,83 @@ er formene eleven skal lære.
 
 Godkjend av brukaren under planlegginga av Ljodstigen.
 
+## Phaser 3.90.0 — `phaser-390/`
+
+Spelmotoren i **Bokstavjakta**, plattformspelet i Ljodstigen.
+
+Vi brukar den trimma bygginga `phaser-arcade-physics.min.js` og ikkje
+`phaser.min.js`: ho har berre Arcade Physics, ikkje Matter.js, og sparer
+100 kB på funksjonalitet vi aldri kjem til å bruke. Eit plattformspel på
+eit flisegitter treng ikkje ein fullverdig fysikkmotor med leddstyrte
+kropper.
+
+| | |
+|---|---|
+| Prosjekt | [Phaser](https://phaser.io/) av Richard Davey / Phaser Studio |
+| Lisens | MIT — sjå `LICENSE.md` |
+| Versjon | 3.90.0 |
+| Henta frå | `https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/` |
+| Endra av oss | Nei |
+
+| Fil | Byte | SHA-256 |
+|---|---|---|
+| `phaser-arcade-physics.min.js` | 1 086 308 | `2e1bc84f885ab5c62b11ebb72492bb334159ac5678b664c7cb2942fc979e44e3` |
+| `LICENSE.md` | 1 120 | `080f3d5539e766bb556df5b8e86c4f5d581ece35c692b80956ca352b84d29134` |
+
+Fila er UMD og festar seg på `window.Phaser`. Ho lastar med ein vanleg
+`<script>`-tagg — ingen byggjesteg, ingen importmap, i motsetnad til
+CodeMirror 6 som vi valde bort nettopp av den grunnen.
+
+**Han treng ikkje `'unsafe-eval'` i CSP-en.** Fila har eitt einaste
+`new Function`, og det er webpack sin globalThis-polyfill:
+
+```js
+"object"==typeof globalThis ? globalThis : (this || new Function("return this")())
+```
+
+Greina blir aldri nådd i ein nettlesar som har `globalThis` — altså alle
+vi bryr oss om — og ho ligg i ein try/catch med `window` som fallback.
+Verifisert i konsollen på preview: ingen CSP-brot.
+
+**Phaser sitt eige lydsystem er slått av** (`audio: { noAudio: true }`).
+`LjodAudio` eig all lyd i Ljodstigen, med lydsprites, stemmepakkar og
+iOS-opplåsinga. To lydmotorar i same app er ein feil som ventar på å skje.
+
+Godkjend av brukaren under planlegginga av Bokstavjakta.
+
+## Kenney Scribble Platformer — `../ljodstigen/jakta/atlas.png`
+
+Grafikken i **Bokstavjakta**: to pakkar frå Kenney, «Scribble Platformer»
+og «Scribble Platformer Expansion 1.0».
+
+| | |
+|---|---|
+| Prosjekt | [Kenney](https://kenney.nl/) |
+| Lisens | **CC0 1.0** — offentleg eige, ingen attribusjonsplikt |
+| Henta | 2026-08-26 |
+
+CC0 krev ingenting av oss. Vi krediterer likevel, fordi Kenney gjev bort
+arbeidet sitt gratis og fortener at det står kven som har laga det.
+
+Atlaset blir **bygd av oss** med `bygg_ljodstigen_atlas.py`, ikkje henta
+ferdig. Grunnen er at utvidingspakken berre har ein `tilesheet.png` utan
+indeks — vi veit ikkje kva rute som er kva. Å gjette på alfabetisk
+rekkjefølgje ville verka heilt til Kenney gjev ut ein 1.1 med ein ny
+sprite midt i lista, og då ville halve verda skifta utsjånad utan at
+nokon skjøna kvifor.
+
+| Fil | Byte | SHA-256 |
+|---|---|---|
+| `atlas.png` | 167159 | `f11eee218da1874fcd49d20056da7573f9983490dfd42b953a6613bf6ce22335` |
+
+**149 av 172 sprites er med.** Våpen, kanonar, sagblad og piggar er
+utelatne. Det er ikkje for å spare kilobyte: Bokstavjakta er eit spel
+utan farar, og eit atlas som inneheld eit sverd er ei open dør for at
+nokon seinare legg eit sverd i eit lesespel for seksåringar.
+
+Råpakkane ligg i `_kjelder/kenney-scribble/`, som er gitignore-a — same
+mønster som lydopptaka. Atlaset kan byggjast på nytt derifrå.
+
 ## CodeMirror 5.65.21 — `codemirror/`
 
 Kodeeditoren i **Ormritaren**: syntaksfarging, linjenummer, innrykk og

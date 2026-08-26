@@ -12,6 +12,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 - **`bygg_ljodstigen_atlas.py`** byggjer teksturatlaset til plattformspelet frå Kenney-pakkane: 149 sprites, 2048×1561, 163 kB. Atlaset blir bygd frå enkeltfilene og ikkje henta ferdig, fordi utvidingspakken berre har ein `tilesheet.png` **utan indeks** — å gjette på alfabetisk rekkjefølgje ville verka heilt til Kenney gjev ut ein 1.1 med ein ny sprite midt i lista.
   - Kuratert med vilje: våpen, kanonar, sagblad og piggar blir ikkje med. Det er ikkje for å spare kilobyte, men fordi eit atlas som inneheld eit sverd er ei open dør for at nokon seinare legg eit sverd i eit lesespel for seksåringar.
 
+### Lagt til
+- **Phaser 3.90.0 sjølv-hosta** i `_libs/phaser-390/` som grunnlag for plattformspelet Bokstavjakta. Vi brukar den trimma `phaser-arcade-physics.min.js` (1,04 MB) og ikkje fullversjonen: ho har berre Arcade Physics, ikkje Matter.js, og eit plattformspel på eit flisegitter treng ingen leddstyrte kroppar. UMD, så han lastar med ein vanleg `<script>`-tagg — ingen byggjesteg, i motsetnad til CodeMirror 6 som vart valt bort nettopp av den grunnen.
+  - **Ingen CSP-endring.** Fila har eitt `new Function`, og det er webpack sin globalThis-polyfill som aldri blir nådd i ein nettlesar med `globalThis`. Verifisert i konsollen.
+  - **Phaser sitt lydsystem er slått av.** `LjodAudio` eig all lyd, med sprites, stemmepakkar og iOS-opplåsinga.
+- **Grafikk frå Kenney** (CC0): 149 kuraterte sprites i eit atlas på 163 kB.
+
 ### Endra
 - **`lyd/stemmer.json` blir ikkje cacha `immutable`**, til skilnad frå lydfilene. Registeret endrar seg når ei ny stemme kjem til, og ei elevmaskin med varm cache ville elles ikkje sett henne på eit år. Ruta må stå **føre** wildcarden i `staticwebapp.config.json` — rutene blir evaluerte i rekkjefølgje, og første treff vinn.
 
