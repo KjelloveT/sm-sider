@@ -2,10 +2,14 @@
 # -*- coding: utf-8 -*-
 """Byggjer lydspritene til Ljodstigen frå råopptaka.
 
-    python bygg_ljodstigen_lydbank.py [bank ...]
+    python bygg_ljodstigen_lydbank.py [--stemme <id>] [bank ...]
 
-Les WAV-filer frå  _kjelder/ljodstigen-lyd/<bank>/<id>.wav
-og skriv           ljodstigen/lyd/<bank>.mp3  +  <bank>.json
+Les WAV-filer frå  _kjelder/ljodstigen-lyd/<stemme>/<bank>/<id>.wav
+og skriv           ljodstigen/lyd/<stemme>/<bank>.mp3  +  <bank>.json
+
+Standardstemma er «vyrde». Ligg råopptaka rett under
+_kjelder/ljodstigen-lyd/<bank>/ utan stemmemappe, blir dei lesne der òg,
+slik det var før stemmepakkane kom.
 
 Éin MP3 per bank i staden for 141 småfiler: fire nettverkskall i staden
 for hundrevis, som betyr noko på skule-wifi.
@@ -42,8 +46,10 @@ import wave
 
 ROT = os.path.dirname(os.path.abspath(__file__))
 KJELDE = os.path.join(ROT, '_kjelder', 'ljodstigen-lyd')
-UT = os.path.join(ROT, 'ljodstigen', 'lyd')
-MANIFEST = os.path.join(UT, 'manifest.json')
+LYD = os.path.join(ROT, 'ljodstigen', 'lyd')
+MANIFEST = os.path.join(LYD, 'manifest.json')
+STEMMER = os.path.join(LYD, 'stemmer.json')
+STANDARD_STEMME = 'vyrde'
 
 BANKS = ('fonem', 'namn', 'ord', 'ros')
 
@@ -169,9 +175,18 @@ def silence(fr, ms):
 
 # ── Bygg éin bank ────────────────────────────────────────────────
 
-def build(bank, manifest, verbose=True):
-    src = os.path.join(KJELDE, bank)
-    if not os.path.isdir(src):
+def kjeldemappe(stemme, bank):
+    """Med stemmemappe om ho finst, elles rett under banken."""
+    med = os.path.join(KJELDE, stemme, bank)
+    if os.path.isdir(med):
+        return med
+    utan = os.path.join(KJELDE, bank)
+    return utan if os.path.isdir(utan) else None
+
+
+def build(bank, manifest, stemme, verbose=True):
+    src = kjeldemappe(stemme, bank)
+    if not src:
         return None, 'mappa finst ikkje'
 
     ids = sorted(manifest.get(bank, {}))
@@ -220,11 +235,12 @@ def build(bank, manifest, verbose=True):
 
     mp3 = encode(out, rate)
 
-    os.makedirs(UT, exist_ok=True)
-    with open(os.path.join(UT, bank + '.mp3'), 'wb') as f:
+    ut = os.path.join(LYD, stemme)
+    os.makedirs(ut, exist_ok=True)
+    with open(os.path.join(ut, bank + '.mp3'), 'wb') as f:
         f.write(mp3)
-    with open(os.path.join(UT, bank + '.json'), 'w', encoding='utf-8', newline='\n') as f:
-        json.dump({'app': 'ljodstigen', 'version': 1, 'bank': bank,
+    with open(os.path.join(ut, bank + '.json'), 'w', encoding='utf-8', newline='\n') as f:
+        json.dump({'app': 'ljodstigen', 'version': 1, 'bank': bank, 'voice': stemme,
                    'rate': rate, 'gapMs': GAP_MS, 'clips': offsets},
                   f, ensure_ascii=False, indent=1)
         f.write('\n')
@@ -256,19 +272,41 @@ def main():
         raise SystemExit('Manifestet manglar. Køyr lag_ljodstigen_lydliste.py først.')
     manifest = json.load(open(MANIFEST, encoding='utf-8'))['banks']
 
-    want = sys.argv[1:] or BANKS
-    print('Byggjer lydbank frå %s' % KJELDE)
+    args = sys.argv[1:]
+    stemme = STANDARD_STEMME
+    if '--stemme' in args:
+        i = args.index('--stemme')
+        if i + 1 >= len(args):
+            raise SystemExit('--stemme treng eit namn, t.d. --stemme kjellove')
+        stemme = args[i + 1]
+        del args[i:i + 2]
+
+    want = args or BANKS
+    print('Byggjer stemma «%s»' % stemme)
     total = 0
     for bank in want:
         if bank not in BANKS:
             print('  ukjend bank: %s' % bank)
             continue
-        n, err = build(bank, manifest)
+        n, err = build(bank, manifest, stemme)
         if err:
             print('  %-6s hoppa over — %s' % (bank, err))
         else:
             total += n
-    print('%d klipp bygde.' % total)
+    print('%d klipp bygde til ljodstigen/lyd/%s/' % (total, stemme))
+    varsle_om_registeret(stemme)
+
+
+def varsle_om_registeret(stemme):
+    """Ei stemme som ikkje står i stemmer.json blir aldri vist i appen."""
+    try:
+        reg = json.load(open(STEMMER, encoding='utf-8'))
+    except Exception:
+        print('  MERK: lyd/stemmer.json finst ikkje, appen finn ingen stemmer.')
+        return
+    if not any(v.get('id') == stemme for v in reg.get('voices', [])):
+        print('  MERK: «%s» står ikkje i lyd/stemmer.json og blir ikkje'
+              ' vald i appen før han er ført opp der.' % stemme)
 
 
 if __name__ == '__main__':

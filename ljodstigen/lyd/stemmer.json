@@ -1,0 +1,19 @@
+{
+  "app": "ljodstigen",
+  "version": 1,
+  "_note": "Registeret over innspelte stemmepakkar. Kvar pakke er ei mappe under lyd/ med dei fire bankane. Legg ein ny stemme inn ved å byggje han med `python bygg_ljodstigen_lydbank.py --stemme <id>` og føre han opp her.",
+  "default": "vyrde",
+  "voices": [
+    {
+      "id": "vyrde",
+      "name": "Vyrde",
+      "note": "Første innspeling. Plasshaldar til betre mikrofon og jamnare stemmebruk.",
+      "banks": [
+        "fonem",
+        "namn",
+        "ord",
+        "ros"
+      ]
+    }
+  ]
+}

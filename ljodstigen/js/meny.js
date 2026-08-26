@@ -204,6 +204,38 @@
     });
   }
 
+  /* ──────────────── Stemmeveljar ──────────────── */
+
+  /* Same stad og same form som fontveljaren. Er det berre éi stemme
+     innspelt, viser vi ingenting — eit val med eitt alternativ er ikkje
+     eit val, berre støy på ei side lærarar skal finne fram på. */
+  function wireVoice() {
+    const host = $('voicepick');
+    if (!host) return;
+    LjodAudio.voices().then(function (reg) {
+      if (!reg || !Array.isArray(reg.voices) || reg.voices.length < 2) {
+        const wrap = host.closest('[data-voice-section]');
+        if (wrap) wrap.hidden = true;
+        return;
+      }
+      const chosen = LjodState.read().voice || reg.default;
+      reg.voices.forEach(function (v) {
+        const b = R().h('button', 'btn ljod-fontbtn' + (chosen === v.id ? ' active' : ''));
+        b.type = 'button';
+        b.textContent = v.name || v.id;
+        if (v.note) b.title = v.note;
+        b.addEventListener('click', function () {
+          const st = LjodState.read();
+          st.voice = v.id;
+          LjodState.write(st);
+          Array.prototype.forEach.call(host.children, function (c) { c.classList.remove('active'); });
+          b.classList.add('active');
+        });
+        host.appendChild(b);
+      });
+    });
+  }
+
   /* ──────────────── Opne alle modusane ──────────────── */
 
   function wireAllModes() {
@@ -228,6 +260,7 @@
 
   function init() {
     wireFont();
+    wireVoice();
     wireAllModes();
     wireTabs();
     const s = LjodState.read();

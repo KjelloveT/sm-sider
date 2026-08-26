@@ -22,7 +22,14 @@
   'use strict';
 
   const BANKS = ['fonem', 'namn', 'ord', 'ros'];
-  const PATH = 'lyd/';
+  const ROOT = 'lyd/';
+
+  /* Stemma som er i bruk, og den vi fell tilbake til. Blir sett av
+     load(); står dei tomme, har ingen kalla load() enno. */
+  let voice = null;
+  let fallbackVoice = null;
+
+  function bankUrl(v, bank, ext) { return ROOT + v + '/' + bank + '.' + ext; }
 
   /* Klangfarge per bank, så plasshaldarane er til å skilje frå kvarandre. */
   const TONE = {
@@ -42,6 +49,7 @@
   const buffers = {};     // bank -> AudioBuffer
   const maps = {};        // bank -> { id: [startSek, lengdSek] }
   const missing = new Set();   // bankar utan ekte lyd
+  const borrowed = new Set();  // bankar lånte frå standardstemma
   let ready = false;
   let playing = [];       // aktive kjelder, så stop() faktisk stoppar
 
@@ -92,13 +100,33 @@
     });
   }
 
-  function loadBank(bank) {
+  function loadFrom(v, bank) {
     return Promise.all([
-      fetchJson(PATH + bank + '.json'),
-      fetchBuffer(PATH + bank + '.mp3')
+      fetchJson(bankUrl(v, bank, 'json')),
+      fetchBuffer(bankUrl(v, bank, 'mp3'))
     ]).then(function (r) {
       maps[bank] = r[0].clips || r[0];
       buffers[bank] = r[1];
+      if (v !== voice) borrowed.add(bank);
+    });
+  }
+
+  /* Prøver den valde stemma først, så standardstemma, og gjev til slutt
+     opp til plasshaldartone.
+
+     Mellomsteget er poenget: ei ny stemme blir spelt inn bank for bank,
+     og då er det gjerne berre fonem som finst medan orda står att. Utan
+     fallback ville eleven mist ekte tale på tre av fire bankar berre
+     fordi nokon valde ei halvferdig stemme. */
+  function loadBank(bank) {
+    return loadFrom(voice, bank).catch(function (err1) {
+      if (fallbackVoice && fallbackVoice !== voice) {
+        return loadFrom(fallbackVoice, bank).then(function () {
+          console.info('[Ljodstigen] «' + bank + '» finst ikkje i stemma «' + voice +
+                       '», lånar frå «' + fallbackVoice + '».');
+        }).catch(function (err2) { throw err2; });
+      }
+      throw err1;
     }).catch(function (err) {
       /* Ikkje ein feil å bråke om: banken finst berre ikkje enno. */
       missing.add(bank);
@@ -106,25 +134,49 @@
     });
   }
 
+  /** Registeret over stemmer. Resolvar med null om fila ikkje finst. */
+  function voices() {
+    return fetchJson(ROOT + 'stemmer.json').catch(function () { return null; });
+  }
+
   /**
    * Last alle bankar. onProgress(ferdig, totalt) undervegs.
    * Resolvar alltid — manglande bankar blir plasshaldarar, ikkje krasj.
    */
-  function load(onProgress) {
+  function load(onProgress, opts) {
+    opts = opts || {};
     if (!context()) {
       BANKS.forEach(function (b) { missing.add(b); });
       ready = true;
-      return Promise.resolve({ ok: false, missing: BANKS.slice() });
+      return Promise.resolve({ ok: false, missing: BANKS.slice(), voice: null });
     }
-    let done = 0;
-    return Promise.all(BANKS.map(function (b) {
-      return loadBank(b).then(function () {
-        done++;
-        if (onProgress) onProgress(done, BANKS.length);
-      });
-    })).then(function () {
+    missing.clear();
+    borrowed.clear();
+
+    return voices().then(function (reg) {
+      fallbackVoice = (reg && reg.default) || 'vyrde';
+      voice = opts.voice || fallbackVoice;
+      /* Ei stemme som ikkje står i registeret finst ikkje. Å prøve henne
+         likevel gjev fire mislykka nettverkskall og ingen betre lyd. */
+      if (reg && Array.isArray(reg.voices) &&
+          !reg.voices.some(function (v) { return v.id === voice; })) {
+        voice = fallbackVoice;
+      }
+      let done = 0;
+      return Promise.all(BANKS.map(function (b) {
+        return loadBank(b).then(function () {
+          done++;
+          if (onProgress) onProgress(done, BANKS.length);
+        });
+      }));
+    }).then(function () {
       ready = true;
-      return { ok: missing.size === 0, missing: BANKS.filter(function (b) { return missing.has(b); }) };
+      return {
+        ok: missing.size === 0,
+        voice: voice,
+        missing: BANKS.filter(function (b) { return missing.has(b); }),
+        borrowed: BANKS.filter(function (b) { return borrowed.has(b); })
+      };
     });
   }
 
@@ -239,6 +291,9 @@
     isReady: function () { return ready; },
     /* Kva bankar som køyrer på plasshaldartone. Menyen viser dette. */
     missingBanks: function () { return BANKS.filter(function (b) { return missing.has(b); }); },
-    hasRealAudio: function () { return ready && missing.size === 0; }
+    borrowedBanks: function () { return BANKS.filter(function (b) { return borrowed.has(b); }); },
+    hasRealAudio: function () { return ready && missing.size === 0; },
+    voices: voices,
+    currentVoice: function () { return voice; }
   };
 })(window);

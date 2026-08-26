@@ -3,10 +3,63 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
-## [1.31] — 2026-08-26
+## [1.34] — 2026-08-26
 
 ### Fiksa
 - **Kludre Klodrian røpte fasiten.** Skjelettfiskane vart spawna i alle lanene *utanom* den med rett svar, så den tomme lana var svaret. Eleven kunne styre dit utan å sjå på reknestykket i det heile — spelet målte då kven som såg mønsteret, ikkje kven som kunne rekne. Lanene blir no trekte tilfeldig og heilt uavhengig av fasiten (2–3 av 4 per oppgåve), så kvar lane, inkludert den rette, har same sjanse for ein skjelettfisk. Står det ein i rett port, er det eit reelt val: eit treff kostar 200 poeng, rett svar gjev 500.
+## [1.33] — 2026-08-26
+
+### Fiksa
+- **Figuren sokk ned i klossane.** Fysikk-kroppen var sett i kjeldepikslar som om sprita var 64 px, men atlaset brukar retina-utgåva på 128. Kroppen dekte y 12–58 medan figuren sitt blekk går ned til y=124 — føtene låg **66 px under kollisjonen**. Målt opp mot det faktiske blekket no; figuren står 1 px ned i flisa i staden for 23.
+- **Hendene var praktisk talt usynlege.** `character_hand*` har berre **32×30 px synleg blekk inne i eit 128×129-sprite** — handa fyller ein fjerdedel av breidda. Ein `displaySize` på 15 px ga difor ei hand på under 4 px. Storleiken kompenserer for lufta rundt no, og handa er 13 px mot ein figur på 44.
+
+### Endra
+- **Verda står på ein fast sokkel.** Dei tre nedste radene er bakke i kvar einaste bane, lagde av byggjaren og ikkje av banefila. Banefilene teiknar berre det som står *på* han, så dei slepp tre identiske `###`-rader kvar. Kontrollane ligg over dei to nedste sokkelradene — der er det berre jord, så ingen skjermplass går til ei tom stripe, og figuren har 62 px klaring over toppen av joysticken. Berre øvste sokkelrad har kollisjon; dei to under er reint visuelle.
+- **Flisene overlappar med 5 px.** Kenney-flisene har konturstreken heilt ute i kanten, så kant-i-kant gjev to strekar med kvitt imellom, og rutenettet ser ut som laushengande øyer. `Sample.png` i pakken viser at det skal vere ein samanhengande vegg med enkle strekar. Fysikk-kroppen held seg på 64, så rutenettlogikken er urørt.
+- **Berre øvste rad har graskant.** Grunn med noko oppå seg blir ei blank flis. Det blir avgjort av byggjaren og ikkje i banefila, så den som teiknar ei bane slepp å tenkje på det.
+
+## [1.32] — 2026-08-26
+
+### Fiksa
+- **Spelsida til Bokstavjakta blei cacha `immutable` i eit år.** Azure fjernar `.html` frå URL-ar, så `/ljodstigen/jakta.html` blir servert som `/ljodstigen/jakta` — og den stien matchar cache-ruta `/ljodstigen/jakta/*`, som var meint for teksturatlaset. Resultatet var ei side som sat fast i ein gammal versjon der eit script mangla: `JaktaBaner is not defined`. Deployen såg vellykka ut heile tida, og ei vanleg omlasting hjelpte ikkje. Sida har eigne rutar med `max-age=0, must-revalidate` no, plasserte føre wildcarden.
+- **`sjekk_cache_rutar.py`** er lagt til som vakt mot same feil. Han går gjennom alle HTML-sidene i repoet og finn dei som endar opp med immutable cache, med same rekkjefølgje-logikk som Azure. Merk at han modellerer at `/x/*` matchar `/x` hos Azure sjølv om `fnmatch` seier nei — utan det ser vakta ikkje den feilen ho finst for å finne.
+
+## [1.31] — 2026-08-26
+
+### Lagt til
+- **Bokstavjakta har vorte eit spel.** Prøvescena er bytt ut med ei ekte banescene: bokstavsoklar som kan plukkast, myntar, ei dør som opnar seg når oppdraget er løyst, og lyd på alt.
+  - **Oppdraget kjem frå `LjodAdaptive`.** Geometrien i banen er fast og lik kvar gong; kva bokstav som står på kvar sokkel blir valt av same motor som dei fire andre modusane. Plattformspelet arvar dermed forvekslingsregelen, dei to klokkene og frustrasjonsvakta utan at noko av det er skrive på nytt. Eit rett plukk går inn som eit vanleg svar med responstid, så hagen veks av å spele Bokstavjakta.
+  - **Baner i ASCII.** Eit banegitter er tekst, lesbart i ein pull request og redigerbart utan verktøy.
+- **Figuren har fått lause hender.** Kenney-pakken har `character_hand*`-sprites, så han er teikna for Rayman-trikset frå starten: hendene svevar ved sida av kroppen og heng etter når han snur. All rørsle — wiggle når han går, strekk i lufta, squash i landinga — er laga av forma, utan ei einaste animasjonsramme.
+
+### Endra
+- **Kontrollane er ein joystick og ein rund knapp**, ikkje tre store soner. Sonene åt opp skjermen og fingrane låg over spelflata. Joysticken flyttar seg dit fingeren landar, sidan ein seksåring ikkje ser ned på hendene medan han speler. Han er analog: eit lite vipp gjev sakte gange.
+- **Banen er løfta opp.** Lerretet er ti fliser høgt og banen åtte; dei to nedste radene er tomme med vilje, så fingrane ikkje ligg over noko eleven treng å sjå.
+- **Hoppet når to fliser** (153 px mot 128). Plattformene i prøvescena låg tre og fire fliser opp, og då såg det ut som om kollisjonen var øydelagd — figuren nådde dei rett og slett aldri.
+
+### Fiksa
+- **Blokkene med bokstavar var berre bilete.** Dei hadde ingen fysikk, så figuren gjekk rett gjennom dei, og ingenting skjedde når han var borti. No er dei faste kroppar han kan stå på, og dei kan plukkast.
+- **Eit feilsvar blei registrert på nytt kvar 700 ms** så lenge eleven stod ved sokkelen. Eit barn som blei ståande og lurte ville samla opp ti feil han aldri gjorde — og det er læringsdata, ikkje berre ein teljar. No tel éin freistnad per tilnærming: utløysinga skjer når eleven kjem *inn* i sirkelen, ikkje medan han er der.
+- **Den globale sperra svelgde rette svar.** Ho stod der for å hindre dobbeltutløysing, men den jobben gjer inngangssporinga betre — og sperra gjorde skade: eit barn som bomma og straks sprang til rett sokkel fekk det rette svaret sitt stille ignorert.
+- **Scenene var vanlege objekt.** Phaser kopierer berre dei kjende livssyklus-metodane frå eit objekt; eigne hjelpemetodar forsvinn stille, og feilen kjem først når noko kallar dei. Scenene er ES6-klassar no.
+
+## [1.30] — 2026-08-26
+
+### Lagt til
+- **Stemmepakkar i Ljodstigen.** Lyden ligg no under `lyd/<stemme>/` i staden for rett i `lyd/`, og `lyd/stemmer.json` er registeret. Ein stemmeveljar dukkar opp under Skrift så snart det finst meir enn éi innspeling — med berre éi er han skjult, sidan eit val med eitt alternativ berre er støy. Dagens opptak heiter no «Vyrde» og er standard.
+  - **Ei halvferdig stemme låner frå standarden.** Manglar ein bank i den valde stemma, blir han henta frå standardstemma før vi fell tilbake til plasshaldartone. Det gjer at ei ny innspeling kan sleppast bank for bank — spelar du inn fonema først, får elevane den nye stemma der og den gamle på resten, i staden for pip på tre av fire bankar.
+  - `bygg_ljodstigen_lydbank.py` tek `--stemme <id>` og seier frå dersom stemma ikkje står i registeret, sidan ho då aldri blir vist i appen.
+- **`bygg_ljodstigen_atlas.py`** byggjer teksturatlaset til plattformspelet frå Kenney-pakkane: 149 sprites, 2048×1561, 163 kB. Atlaset blir bygd frå enkeltfilene og ikkje henta ferdig, fordi utvidingspakken berre har ein `tilesheet.png` **utan indeks** — å gjette på alfabetisk rekkjefølgje ville verka heilt til Kenney gjev ut ein 1.1 med ein ny sprite midt i lista.
+  - Kuratert med vilje: våpen, kanonar, sagblad og piggar blir ikkje med. Det er ikkje for å spare kilobyte, men fordi eit atlas som inneheld eit sverd er ei open dør for at nokon seinare legg eit sverd i eit lesespel for seksåringar.
+
+### Lagt til
+- **Phaser 3.90.0 sjølv-hosta** i `_libs/phaser-390/` som grunnlag for plattformspelet Bokstavjakta. Vi brukar den trimma `phaser-arcade-physics.min.js` (1,04 MB) og ikkje fullversjonen: ho har berre Arcade Physics, ikkje Matter.js, og eit plattformspel på eit flisegitter treng ingen leddstyrte kroppar. UMD, så han lastar med ein vanleg `<script>`-tagg — ingen byggjesteg, i motsetnad til CodeMirror 6 som vart valt bort nettopp av den grunnen.
+  - **Ingen CSP-endring.** Fila har eitt `new Function`, og det er webpack sin globalThis-polyfill som aldri blir nådd i ein nettlesar med `globalThis`. Verifisert i konsollen.
+  - **Phaser sitt lydsystem er slått av.** `LjodAudio` eig all lyd, med sprites, stemmepakkar og iOS-opplåsinga.
+- **Grafikk frå Kenney** (CC0): 149 kuraterte sprites i eit atlas på 163 kB.
+
+### Endra
+- **`lyd/stemmer.json` blir ikkje cacha `immutable`**, til skilnad frå lydfilene. Registeret endrar seg når ei ny stemme kjem til, og ei elevmaskin med varm cache ville elles ikkje sett henne på eit år. Ruta må stå **føre** wildcarden i `staticwebapp.config.json` — rutene blir evaluerte i rekkjefølgje, og første treff vinn.
 
 ## [1.30] — 2026-08-25
 

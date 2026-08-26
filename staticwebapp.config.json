@@ -4,7 +4,13 @@
   "trailingSlash": "auto",
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*", "/_resources/*", "/ljodstigen/lyd/*"]
+    "exclude": [
+      "/images/*.{png,jpg,gif}",
+      "/css/*",
+      "/_resources/*",
+      "/ljodstigen/lyd/*",
+      "/ljodstigen/jakta/*"
+    ]
   },
   "routes": [
     {
@@ -34,14 +40,48 @@
       }
     },
     {
+      "_kommentar": "Phaser er versjonspinna i eiga mappe. Ny versjon skal i _libs/phaser-4xx/, ikkje som nytt innhald her: filnamnet er det same, og immutable-cachen ville elles late elevmaskiner sitje att med den gamle motoren.",
+      "route": "/_libs/phaser-390/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
       "route": "/_libs/codemirror/*",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
       }
     },
     {
+      "_kommentar": "Registeret over stemmer skal IKKJE cachast immutable. Legg vi til ei ny stemme, ville ei elevmaskin med varm cache ikkje sett henne på eit år. Sjølve lydfilene under lyd/<stemme>/ er derimot versjonspinna og treffer wildcarden under. Denne ruta må stå FØRE henne — rutene blir evaluerte i rekkjefølgje, og første treff vinn.",
+      "route": "/ljodstigen/lyd/stemmer.json",
+      "headers": {
+        "Cache-Control": "public, max-age=300, must-revalidate"
+      }
+    },
+    {
       "_kommentar": "Lydbanken til Ljodstigen er versjonspinna og endrar seg aldri utan at mappa byttar namn. Utan dette lastar elevane heile banken på nytt kvar time. Ny innspeling skal difor leggjast i ei NY mappe (lyd-v2/), ikkje som nytt innhald i den gamle: filnamna er dei same, og immutable-cachen ville elles late elevmaskiner sitje att med gammal lyd.",
       "route": "/ljodstigen/lyd/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "_kommentar": "Spelsida sjølv skal ALDRI cachast immutable. Azure fjernar .html, så /ljodstigen/jakta.html blir /ljodstigen/jakta - og den stien matchar wildcarden /ljodstigen/jakta/* under, som er meint for atlaset. Resultatet var at sjølve HTML-en fekk eitt års immutable cache: nettlesaren sat med ein gammal versjon som mangla eit script, og henta han aldri på nytt. Denne ruta må stå FØRST.",
+      "route": "/ljodstigen/jakta",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    },
+    {
+      "route": "/ljodstigen/jakta.html",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    },
+    {
+      "_kommentar": "Teksturatlaset til Bokstavjakta blir bygd av bygg_ljodstigen_atlas.py og endrar seg berre når nokon køyrer skriptet på nytt.",
+      "route": "/ljodstigen/jakta/*",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"
       }

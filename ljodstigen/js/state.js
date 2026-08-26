@@ -51,7 +51,7 @@
 
   function blank() {
     return { app: APP_ID, version: VERSION, profiles: [], lastProfile: null,
-             font: 'lesefont', allModes: false };
+             font: 'lesefont', allModes: false, voice: null };
   }
 
   function read() {
@@ -67,6 +67,10 @@
        kven som brukar maskina, ikkje om kva eleven kan. Progresjonen
        blir ikkje rørt — motoren reknar vidare som før. */
     s.allModes = raw.allModes === true;
+    /* null = bruk standardstemma frå lyd/stemmer.json. Vi lagrar ikkje
+       standarden eksplisitt: gjer vi det, blir valet frose fast den dagen
+       ein betre innspeling tek over som standard. */
+    s.voice = typeof raw.voice === 'string' ? raw.voice : null;
     return s;
   }
 

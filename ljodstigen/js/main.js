@@ -61,7 +61,7 @@
 
     LjodAudio.load(function (done, total) {
       fill.style.width = Math.round(100 * done / total) + '%';
-    }).then(function (res) {
+    }, { voice: LjodState.read().voice }).then(function (res) {
       runSession(host, profile, mode, res);
     });
   }
