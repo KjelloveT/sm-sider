@@ -1,133 +1,156 @@
 /* ══════════════════════════════════════════════
-   STYRING.JS — Kontrollane i Bokstavjakta
+   STYRING.JS — Joystick og hoppknapp
 
-   Spelet blir mest brukt på iPad, så trykk er hovudvegen og tastatur er
-   for PC og testing.
+   Første utgåve delte heile nedre tredjedel i tre store soner. Det var
+   for mykje: sonene åt opp skjermen, og fingrane låg over spelflata.
+   No er det ein liten joystick nede til venstre og ein rund hoppknapp
+   nede til høgre — resten av skjermen er spel.
 
-   TRE SONER, INGEN MINDRE ENN EIN TREDJEDEL AV BREIDDA:
+   VI BRUKAR PHASER SITT INPUT-SYSTEM, ikkje eigne vindaugslyttarar.
+   Lerretet blir skalert med FIT og sentrert med svarte kantar rundt, og
+   Phaser reknar om frå skjerm- til lerretkoordinatar for oss. Gjer vi
+   det sjølve med getBoundingClientRect, må vi ta høgd for både skalering
+   og brevkantar — og det blir feil den dagen nokon endrar skaleringa.
 
-     ┌─────────────────────────────────────────┐
-     │              spelflate                  │
-     ├───────────┬───────────┬─────────────────┤
-     │     ←     │     →     │      HOPP       │
-     └───────────┴───────────┴─────────────────┘
-
-   Ein virtuell d-pad ville vore meir kjent, men han er feil for
-   målgruppa: knappane blir små, og tommelen driv av utan at eit barn
-   merkar det. Her kan fingeren gli fritt inne i sona.
-
-   VI LYTTAR PÅ HEILE VINDAUGET, ikkje på kvar sone for seg. Sklir
-   fingeren frå «venstre» til «høgre» utan å sleppe, skal figuren snu —
-   det gjer han berre om éin lyttar følgjer peikaren heile vegen. Med ein
-   lyttar per sone ville trykket blitt hengande i den første sona.
-
-   FLEIRE FINGRAR SAMSTUNDES. Å gå og hoppe på same tid er ikkje ein
-   spesialmanøver, det er det ein gjer heile tida. Kvar peikar blir spora
-   for seg.
+   JOYSTICKEN ER FLYTTBAR. Basen står teikna nede til venstre, men tek
+   eleven på ein annan stad i venstre halvdel, flyttar han seg dit. Ein
+   seksåring ser ikkje ned på hendene medan han speler, og ein joystick
+   som berre verkar på nøyaktig rett punkt er ein joystick som ikkje
+   verkar.
    ══════════════════════════════════════════════ */
 (function (root) {
   'use strict';
 
-  /* Kor stor del av høgda nedanfrå som er kontrollsone. Resten er
-     spelflate og tek ikkje imot styringstrykk. */
-  const SONE_HOGD = 0.34;
+  const BASE_R = 52;        // radius på joystick-basen
+  const KNOTT_R = 30;
+  const DAUDSONE = 0.22;    // under dette tel utslaget som «ingen retning»
+  const HOPP_R = 46;
 
   function lag(scene, opts) {
     opts = opts || {};
-    const el = opts.element || scene.game.canvas;
+    const W = scene.scale.width;
+    const H = scene.scale.height;
 
-    /* Kva som er trykt akkurat no. Ikkje kva som blei trykt sist. */
-    const state = { venstre: false, hogre: false, hopp: false, hoppNy: false };
-    const peikarar = {};          // pointerId -> 'venstre' | 'hogre' | 'hopp'
+    /* Kvileposisjonar. Godt inne frå kanten, så tommelen ikkje hamnar
+       utanfor skjermen på ein iPad med avrunda hjørne. */
+    const hvileX = opts.joyX || (BASE_R + 34);
+    const hvileY = opts.joyY || (H - BASE_R - 26);
+    const hoppX = opts.hoppX || (W - HOPP_R - 34);
+    const hoppY = opts.hoppY || (H - HOPP_R - 26);
 
-    function sone(x, y, rect) {
-      const relY = (y - rect.top) / rect.height;
-      if (relY < 1 - SONE_HOGD) return null;      // over kontrollsona
-      const relX = (x - rect.left) / rect.width;
-      if (relX < 1 / 3) return 'venstre';
-      if (relX < 2 / 3) return 'hogre';
-      return 'hopp';
+    const state = { akse: 0, hopp: false, hoppNy: false };
+    let joyPeikar = null;     // id-en til fingeren som styrer joysticken
+    let hoppPeikar = null;
+
+    /* ──────────────── Teikning ──────────────── */
+
+    const lag_ = scene.add.container(0, 0).setScrollFactor(0).setDepth(1000);
+
+    const base = scene.add.circle(hvileX, hvileY, BASE_R, 0xffffff, 0.55)
+      .setStrokeStyle(4, 0x1a1a1a, 0.55);
+    const knott = scene.add.circle(hvileX, hvileY, KNOTT_R, 0x1a1a1a, 0.34)
+      .setStrokeStyle(3, 0x1a1a1a, 0.7);
+    const hoppKnapp = scene.add.circle(hoppX, hoppY, HOPP_R, 0xffffff, 0.55)
+      .setStrokeStyle(4, 0x1a1a1a, 0.55);
+    /* Ein pil opp, teikna med strekar — ingen bokstav, sidan knappen skal
+       kunne brukast av ein som ikkje les enno. */
+    const hoppIkon = scene.add.graphics();
+    hoppIkon.lineStyle(6, 0x1a1a1a, 0.6);
+    hoppIkon.beginPath();
+    hoppIkon.moveTo(hoppX, hoppY + 14);
+    hoppIkon.lineTo(hoppX, hoppY - 14);
+    hoppIkon.moveTo(hoppX - 13, hoppY - 2);
+    hoppIkon.lineTo(hoppX, hoppY - 16);
+    hoppIkon.lineTo(hoppX + 13, hoppY - 2);
+    hoppIkon.strokePath();
+
+    lag_.add([base, knott, hoppKnapp, hoppIkon]);
+    [base, knott, hoppKnapp, hoppIkon].forEach(function (o) {
+      o.setScrollFactor(0).setDepth(1000);
+    });
+
+    /* ──────────────── Trykk ──────────────── */
+
+    function erPaaHopp(p) {
+      return Phaser.Math.Distance.Between(p.worldX || p.x, p.worldY || p.y, hoppX, hoppY)
+        <= HOPP_R * 1.6;
     }
 
-    function oppdater() {
-      const v = Object.keys(peikarar).map(function (k) { return peikarar[k]; });
-      state.venstre = v.indexOf('venstre') !== -1;
-      state.hogre = v.indexOf('hogre') !== -1;
-      const hopp = v.indexOf('hopp') !== -1;
-      /* Hoppet skal utløysast av at knappen blir TRYKT, ikkje av at han
-         er nede: elles hoppar figuren igjen med ein gong han landar,
-         berre fordi fingeren aldri blei løfta. */
-      if (hopp && !state.hopp) state.hoppNy = true;
-      state.hopp = hopp;
+    function settKnott(x, y) {
+      const dx = x - base.x, dy = y - base.y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      const k = d > BASE_R ? BASE_R / d : 1;
+      knott.setPosition(base.x + dx * k, base.y + dy * k);
+      const ut = (knott.x - base.x) / BASE_R;
+      state.akse = Math.abs(ut) < DAUDSONE ? 0 : ut;
     }
 
-    function ned(e) {
-      const r = el.getBoundingClientRect();
-      const s = sone(e.clientX, e.clientY, r);
-      if (!s) return;
-      peikarar[e.pointerId] = s;
-      oppdater();
-      /* Hindrar at iPad tolkar trykket som scroll eller dobbelttrykk-zoom. */
-      if (e.cancelable) e.preventDefault();
+    function slippJoy() {
+      joyPeikar = null;
+      base.setPosition(hvileX, hvileY);
+      knott.setPosition(hvileX, hvileY);
+      state.akse = 0;
     }
 
-    function flytt(e) {
-      if (!(e.pointerId in peikarar)) return;
-      const r = el.getBoundingClientRect();
-      const s = sone(e.clientX, e.clientY, r);
-      if (s) peikarar[e.pointerId] = s;
-      else delete peikarar[e.pointerId];   // dregen opp i spelflata: slepp
-      oppdater();
+    scene.input.on('pointerdown', function (p) {
+      if (hoppPeikar === null && erPaaHopp(p)) {
+        hoppPeikar = p.id;
+        if (!state.hopp) state.hoppNy = true;
+        state.hopp = true;
+        hoppKnapp.setFillStyle(0x1a1a1a, 0.28);
+        return;
+      }
+      if (joyPeikar === null && p.x < scene.scale.width * 0.62) {
+        joyPeikar = p.id;
+        /* Flytt basen dit fingeren landa — sjå kommentaren øvst. */
+        base.setPosition(p.x, p.y);
+        settKnott(p.x, p.y);
+      }
+    });
+
+    scene.input.on('pointermove', function (p) {
+      if (p.id === joyPeikar) settKnott(p.x, p.y);
+    });
+
+    function opp(p) {
+      if (p.id === joyPeikar) slippJoy();
+      if (p.id === hoppPeikar) {
+        hoppPeikar = null;
+        state.hopp = false;
+        hoppKnapp.setFillStyle(0xffffff, 0.55);
+      }
     }
+    scene.input.on('pointerup', opp);
+    scene.input.on('pointerupoutside', opp);
 
-    function opp(e) {
-      delete peikarar[e.pointerId];
-      oppdater();
-    }
+    /* ──────────────── Tastatur ──────────────── */
 
-    const maal = root;   // heile vindauget, sjå kommentaren øvst
-    maal.addEventListener('pointerdown', ned, { passive: false });
-    maal.addEventListener('pointermove', flytt, { passive: true });
-    maal.addEventListener('pointerup', opp, { passive: true });
-    maal.addEventListener('pointercancel', opp, { passive: true });
-    /* Dreg fingeren ut av vindauget, skal figuren stoppe. Utan denne
-       blir han ståande og gå til eleven trykkjer ein annan stad. */
-    maal.addEventListener('pointerleave', opp, { passive: true });
-
-    /* Tastatur for PC og for testing. */
     const piler = scene.input.keyboard.createCursorKeys();
-    const romtast = scene.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-    let taastHoppFor = false;
+    const rom = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    let tastHoppFor = false;
 
     function les() {
-      const kbVenstre = piler.left.isDown;
-      const kbHogre = piler.right.isDown;
-      const kbHopp = piler.up.isDown || romtast.isDown;
-      const kbHoppNy = kbHopp && !taastHoppFor;
-      taastHoppFor = kbHopp;
+      const kbHopp = piler.up.isDown || rom.isDown;
+      const kbNy = kbHopp && !tastHoppFor;
+      tastHoppFor = kbHopp;
+
+      let akse = state.akse;
+      if (piler.left.isDown) akse = -1;
+      else if (piler.right.isDown) akse = 1;
 
       const ut = {
-        venstre: state.venstre || kbVenstre,
-        hogre: state.hogre || kbHogre,
+        akse: akse,
         hopp: state.hopp || kbHopp,
-        hoppTrykt: state.hoppNy || kbHoppNy
+        hoppTrykt: state.hoppNy || kbNy
       };
-      state.hoppNy = false;      // eit trykk blir lese éin gong
+      state.hoppNy = false;   // eit trykk blir lese éin gong
       return ut;
     }
 
-    function riv() {
-      maal.removeEventListener('pointerdown', ned);
-      maal.removeEventListener('pointermove', flytt);
-      maal.removeEventListener('pointerup', opp);
-      maal.removeEventListener('pointercancel', opp);
-      maal.removeEventListener('pointerleave', opp);
-    }
+    function vis(paa) { lag_.setVisible(paa !== false); }
 
-    return { les: les, riv: riv, SONE_HOGD: SONE_HOGD, _state: state };
+    return { les: les, vis: vis, _state: state, BASE_R: BASE_R, HOPP_R: HOPP_R };
   }
 
-  root.JaktaStyring = { lag: lag, SONE_HOGD: SONE_HOGD };
+  root.JaktaStyring = { lag: lag, BASE_R: BASE_R, HOPP_R: HOPP_R };
 })(window);

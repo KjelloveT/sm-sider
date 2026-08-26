@@ -3,6 +3,25 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.31] — 2026-08-26
+
+### Lagt til
+- **Bokstavjakta har vorte eit spel.** Prøvescena er bytt ut med ei ekte banescene: bokstavsoklar som kan plukkast, myntar, ei dør som opnar seg når oppdraget er løyst, og lyd på alt.
+  - **Oppdraget kjem frå `LjodAdaptive`.** Geometrien i banen er fast og lik kvar gong; kva bokstav som står på kvar sokkel blir valt av same motor som dei fire andre modusane. Plattformspelet arvar dermed forvekslingsregelen, dei to klokkene og frustrasjonsvakta utan at noko av det er skrive på nytt. Eit rett plukk går inn som eit vanleg svar med responstid, så hagen veks av å spele Bokstavjakta.
+  - **Baner i ASCII.** Eit banegitter er tekst, lesbart i ein pull request og redigerbart utan verktøy.
+- **Figuren har fått lause hender.** Kenney-pakken har `character_hand*`-sprites, så han er teikna for Rayman-trikset frå starten: hendene svevar ved sida av kroppen og heng etter når han snur. All rørsle — wiggle når han går, strekk i lufta, squash i landinga — er laga av forma, utan ei einaste animasjonsramme.
+
+### Endra
+- **Kontrollane er ein joystick og ein rund knapp**, ikkje tre store soner. Sonene åt opp skjermen og fingrane låg over spelflata. Joysticken flyttar seg dit fingeren landar, sidan ein seksåring ikkje ser ned på hendene medan han speler. Han er analog: eit lite vipp gjev sakte gange.
+- **Banen er løfta opp.** Lerretet er ti fliser høgt og banen åtte; dei to nedste radene er tomme med vilje, så fingrane ikkje ligg over noko eleven treng å sjå.
+- **Hoppet når to fliser** (153 px mot 128). Plattformene i prøvescena låg tre og fire fliser opp, og då såg det ut som om kollisjonen var øydelagd — figuren nådde dei rett og slett aldri.
+
+### Fiksa
+- **Blokkene med bokstavar var berre bilete.** Dei hadde ingen fysikk, så figuren gjekk rett gjennom dei, og ingenting skjedde når han var borti. No er dei faste kroppar han kan stå på, og dei kan plukkast.
+- **Eit feilsvar blei registrert på nytt kvar 700 ms** så lenge eleven stod ved sokkelen. Eit barn som blei ståande og lurte ville samla opp ti feil han aldri gjorde — og det er læringsdata, ikkje berre ein teljar. No tel éin freistnad per tilnærming: utløysinga skjer når eleven kjem *inn* i sirkelen, ikkje medan han er der.
+- **Den globale sperra svelgde rette svar.** Ho stod der for å hindre dobbeltutløysing, men den jobben gjer inngangssporinga betre — og sperra gjorde skade: eit barn som bomma og straks sprang til rett sokkel fekk det rette svaret sitt stille ignorert.
+- **Scenene var vanlege objekt.** Phaser kopierer berre dei kjende livssyklus-metodane frå eit objekt; eigne hjelpemetodar forsvinn stille, og feilen kjem først når noko kallar dei. Scenene er ES6-klassar no.
+
 ## [1.30] — 2026-08-26
 
 ### Lagt til
