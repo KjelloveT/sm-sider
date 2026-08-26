@@ -1,0 +1,23 @@
+{
+ "app": "ljodstigen",
+ "version": 1,
+ "flisPx": 64,
+ "tal": 6,
+ "namn": [
+  "tile_grass",
+  "tile",
+  "tile_bridge",
+  "tile_stone",
+  "tile_brick",
+  "tile_sand"
+ ],
+ "teikn": {
+  "#": 0,
+  "_": 1,
+  "=": 2,
+  "S": 3,
+  "B": 4,
+  "A": 5
+ },
+ "_note": "Skore til strekmidtane, så nabofliser deler kontur. Sjå bygg_ljodstigen_atlas.py. -1 er tom rute i Phaser."
+}

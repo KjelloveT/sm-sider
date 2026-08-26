@@ -138,6 +138,111 @@ def pakk(sprites):
     return atlas, rammer
 
 
+# ── Flisesett til flisekartet ────────────────────────────────────
+#
+# Terrenget i Bokstavjakta blir teikna med Phaser sitt flisekart og ikkje
+# med eitt sprite per flis. Ein bane på 30 skjermar er 4 800 fliser, og
+# så mange sprites er uspelbart på ein skule-iPad; eit flisekart teiknar
+# berre det kameraet ser.
+#
+# Eit flisekart legg flisene KANT I KANT. Kenney-flisene har
+# konturstreken 3-6 px inn frå kanten, så kant i kant gjev to strekar med
+# kvitt imellom — rutenettet ser ut som laushengande øyer. Spelekoden
+# løyste det ei stund ved å teikne kvar flis 5 px for stor, men eit
+# flisekart har ingen plass til det trikset.
+#
+# Fiksen høyrer uansett heime her: vi skjer kvar flis frå MIDTEN AV
+# KONTUREN på den eine sida til MIDTEN AV KONTUREN på den andre. Då
+# bidreg to nabofliser med ei halv strek kvar, og saumen blir éin strek
+# utan at spelet treng vite om det.
+
+FLISER = ['tile_grass', 'tile', 'tile_bridge', 'tile_stone', 'tile_brick', 'tile_sand']
+
+# Fliser som IKKJE skal skjerast. tile_bridge er ein planke utan sidestrek
+# og med gjennomsikt i nedre halvdel; skjer vi han, blir planken strekt ut
+# til å fylle heile ruta.
+HEILE = {'tile_bridge'}
+
+# Utdata er 64 px, same som verda si flisstorleik, så flisekartet slepp
+# å skalerast — ei skalert flislag gjer kollisjonen usikker. Sjølve
+# skjeringa skjer på 128-kjelda, så presisjonen i strekmidten er i behald.
+FLIS_PX = 64
+
+
+def strekmidte(im, fast, vassrett, fraa_start):
+    """Midten av den ytste mørke streken langs ei linje."""
+    px = im.load()
+    w, h = im.size
+    treff = []
+    for i in range(w if vassrett else h):
+        x, y = (i, fast) if vassrett else (fast, i)
+        r, g, b, a = px[x, y]
+        if a > 60 and max(r, g, b) < 130:
+            treff.append(i)
+    if not treff:
+        return None
+    grupper = []
+    for v in treff:
+        if grupper and v == grupper[-1][-1] + 1:
+            grupper[-1].append(v)
+        else:
+            grupper.append([v])
+    g = grupper[0] if fraa_start else grupper[-1]
+    return sum(g) / len(g)
+
+
+def skjer(im, namn):
+    """Skjer flisa til strekmidtane, så nabofliser deler kontur."""
+    if namn in HEILE:
+        return im
+    w, h = im.size
+    v = strekmidte(im, h // 2, True, True)
+    ho = strekmidte(im, h // 2, True, False)
+    t = strekmidte(im, w // 2, False, True)
+    b = strekmidte(im, w // 2, False, False)
+    boks = (int(round(v if v is not None else 0)),
+            int(round(t if t is not None else 0)),
+            int(round(ho + 1 if ho is not None else w)),
+            int(round(b + 1 if b is not None else h)))
+    return im.crop(boks).resize((FLIS_PX, FLIS_PX), Image.LANCZOS)
+
+
+def bygg_flisesett():
+    bilete = []
+    for namn in FLISER:
+        sti = None
+        for _, mappe in KJELDER:
+            if mappe and os.path.exists(os.path.join(mappe, namn + '.png')):
+                sti = os.path.join(mappe, namn + '.png')
+                break
+        if not sti:
+            raise SystemExit('Fann ikkje flisa "%s"' % namn)
+        bilete.append(skjer(Image.open(sti).convert('RGBA'), namn))
+
+    ark = Image.new('RGBA', (FLIS_PX * len(bilete), FLIS_PX), (0, 0, 0, 0))
+    for i, im in enumerate(bilete):
+        ark.paste(im, (i * FLIS_PX, 0))
+
+    os.makedirs(UT, exist_ok=True)
+    png = os.path.join(UT, 'flisesett.png')
+    ark.quantize(colors=FARGAR, method=Image.FASTOCTREE,
+                 dither=Image.FLOYDSTEINBERG).save(png, optimize=True)
+
+    # Teikn -> indeks. Same teikn som i baneformatet, sjå bane.js.
+    teikn = {'#': 0, '_': 1, '=': 2, 'S': 3, 'B': 4, 'A': 5}
+    with open(os.path.join(UT, 'flisesett.json'), 'w', encoding='utf-8', newline='\n') as f:
+        json.dump({
+            'app': 'ljodstigen', 'version': 1,
+            'flisPx': FLIS_PX, 'tal': len(bilete),
+            'namn': FLISER,
+            'teikn': teikn,
+            '_note': 'Skore til strekmidtane, så nabofliser deler kontur. '
+                     'Sjå bygg_ljodstigen_atlas.py. -1 er tom rute i Phaser.'
+        }, f, ensure_ascii=False, indent=1)
+        f.write('\n')
+    return len(bilete), os.path.getsize(png) / 1024
+
+
 def main():
     sprites = samle()
     if '--liste' in sys.argv:
@@ -173,7 +278,10 @@ def main():
         f.write('\n')
 
     kb = os.path.getsize(png) / 1024
-    print('  %d rammer, %dx%d px, %.0f kB' % (len(rammer), atlas.width, atlas.height, kb))
+    print('  atlas:      %d rammer, %dx%d px, %.0f kB' % (len(rammer), atlas.width, atlas.height, kb))
+
+    n, fkb = bygg_flisesett()
+    print('  flisesett:  %d fliser, %.0f kB' % (n, fkb))
     print('  skrive til %s' % UT)
 
 
