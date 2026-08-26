@@ -278,10 +278,13 @@ function moveLane(d){const n=G.targetLane+d;if(n>=0&&n<LANE_COUNT)G.targetLane=n
 function spawnGates(){
   const newG=G.curQ.choices.map((val,i)=>({x:W+60,lane:i,val,isCorrect:val===G.curQ.ans,lit:false,resolved:false}));
   G.gates=[...newG,...G.gates.filter(g=>g.resolved)];
+  // Skjelettfisk skal aldri seie noko om kva port som er rett - lanene blir
+  // trekte tilfeldig, uavhengig av fasiten. Elles ville den tomme lana
+  // vore svaret, og ein kunne halde seg unna rekninga.
   const newS=[];
-  for(let i=0;i<LANE_COUNT;i++){
-    if(newG[i].isCorrect)continue;
-    newS.push({x:W+rI(140,300),lane:i,speed:rI(85,135),sprite:rPick(SKEL_SPS),alive:true,resolved:false});
+  const skelLanes=shuffle([...Array(LANE_COUNT).keys()]).slice(0,rI(2,3));
+  for(const lane of skelLanes){
+    newS.push({x:W+rI(140,300),lane,speed:rI(85,135),sprite:rPick(SKEL_SPS),alive:true,resolved:false});
   }
   G.skels=[...newS,...G.skels.filter(sf=>sf.resolved)];
   G.answered=false;
