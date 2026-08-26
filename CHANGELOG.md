@@ -3,6 +3,22 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.34] — 2026-08-26
+
+### Lagt til
+- **Banelagar: læraren kan teikne eigne baner.** Ei eiga side under «For læraren» der ein malar terrenget i eit rutenett og spelar resultatet med ein gong. Ingen Phaser på sida — ein redigerar treng ikkje ein spelmotor for å teikne eit rutenett, og cellene er DOM-knappar med utsnitt av `atlas.png` som bakgrunn, så kvar rute kan få fokus og seie kva ho er.
+  - **Innhaldet er adaptivt som standard.** Læraren teiknar geometrien; `LjodAdaptive` vel bokstavane, så same bane passar kvar elev som speler han. Eit felt lèt han låse utvalet — «vi jobbar med s, o og l denne veka» — utan at svara sluttar å telje i motoren eller i hagen.
+  - **Validering medan ein teiknar.** Same validator som dei innebygde banene. Ein sokkel som ikkje kan nåast blir merkt raud i rutenettet med ein gong, med ei setning om kvifor. Ein lærar skal ikkje oppdage at banen er umogleg først når ein elev sit fast i han.
+  - **Lagring, deling og import.** Banene ligg på eininga gjennom `VyrdepilStorage`. Eksport gjev éi JSON-fil per bane som kan sendast til ein kollega; import validerer før noko blir lagra. Ingen server, ingen konto.
+  - Breidda kan endrast i heile skjermar, opptil 30. Sokkelen er teikna, men låst: det er den enklaste måten å forklare at verda byggjer oppå han — og at det difor ikkje kan vere hol i bakken.
+- **«Banene til læraren»** er ein eigen seksjon på Ljodstigen-sida, alltid open uavhengig av progresjonen. Ein elev som har låst opp lite skal likevel kunne spele det læraren laga til nettopp han. Seksjonen er heilt borte når det ikkje finst slike baner.
+- **Breie baner, kamera og ei pil.** Ein bane kan no vere opptil 30 skjermar brei. Kameraet følgjer figuren, og ei pil peikar mot næraste bokstav som står att — og mot døra når alt er samla. Ein bane på 30 skjermar er ein bane ein seksåring kan gå seg bort i.
+- **Seks baner i to verder,** og oppdragstypen **`rekkje`**: fleire enkeltbokstavar etter kvarandre, kvar av dei valt av motoren for seg.
+- **Blyantknapp.** Figuren skriv bokstaven i staden for å gå inn i sokkelen. Utan ein eigen handlingsknapp registrerte det å gå forbi ein sokkel eit feilsvar rett inn i den adaptive motoren.
+
+### Fiksa
+- **Forvekslingsregelen lak i baner med fleire bokstavar.** `LjodAdaptive` passar på at ein bokstav og distraktorane *hans* ikkje er forvekslingspar, men ein bane hentar bokstavar frå fleire kall — og då kunne `b` kome frå eitt og `d` frå eit anna, begge lovlege kvar for seg og likevel side om side. Målt til 2 av 400 baner før vakta, 0 av 800 etter.
+
 ## [1.33] — 2026-08-26
 
 ### Fiksa

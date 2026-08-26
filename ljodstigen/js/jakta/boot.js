@@ -47,6 +47,17 @@
     console.warn('[Bokstavjakta] ' + melding);
   }
 
+  /* Ein bane-id på forma «eigen:<id>» kjem frå Banelagar og ligg i
+     VyrdepilStorage, ikkje i baner.js. */
+  function finnBane(id) {
+    if (String(id).indexOf('eigen:') === 0) {
+      const b = JaktaEigne.hent(String(id).slice(6));
+      return b ? { id: id, namn: b.namn, type: b.type, rutenett: b.rutenett,
+                   bokstavar: b.bokstavar, eigen: true } : null;
+    }
+    return JaktaBaner.hent(id);
+  }
+
   function profil() {
     const s = LjodState.read();
     let p = s.lastProfile ? LjodState.getProfile(s.lastProfile) : null;
@@ -81,7 +92,8 @@
       JaktaGlyfar.addToPhaser(this, 'glyfar');
       const lastar = $('jakta-lastar');
       if (lastar) lastar.hidden = true;
-      this.scene.start('bane', { baneId: root.JaktaStartBane || 'verd1-01' });
+      const bad = new URLSearchParams(root.location.search).get('bane');
+      this.scene.start('bane', { baneId: bad || root.JaktaStartBane || 'verd1-01' });
     }
   }
 
@@ -96,7 +108,11 @@
 
     create() {
       const scene = this;
-      const def = JaktaBaner.hent(this.baneId);
+      const def = finnBane(this.baneId);
+      if (!def) {
+        feil('Fann ikkje banen. Han kan vere sletta.');
+        return;
+      }
       this.def = def;
 
       this.cameras.main.setBackgroundColor('#f4f1ea');
@@ -122,7 +138,12 @@
         feil('Vel ein figur på Ljodstigen-sida først, så veit spelet kven som speler.');
         return;
       }
-      this.oppdrag = JaktaOppdrag.lag(this.profil, this.bane.soklar, { type: def.type });
+      this.oppdrag = JaktaOppdrag.lag(this.profil, this.bane.soklar, {
+        type: def.type,
+        /* Berre eigne baner kan ha låste bokstavar. Dei innebygde er
+           alltid adaptive. */
+        laasteBokstavar: def.bokstavar || []
+      });
       if (!this.oppdrag) { feil('Fekk ikkje laga eit oppdrag til denne banen.'); return; }
 
       this.bane.soklar.forEach(function (s) {
@@ -264,7 +285,7 @@
       LjodAudio.play('r_okt');
       if (this.hudTekst) this.hudTekst.textContent = 'Godt jobba!';
       this.time.delayedCall(1400, function () {
-        root.location.href = 'index.html';
+        root.location.href = scene.def.eigen ? 'banelagar.html' : 'index.html';
       });
     }
 
