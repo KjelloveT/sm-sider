@@ -1,0 +1,181 @@
+/* ══════════════════════════════════════════════
+   BANELAGAR — teikneflate for eigne baner
+
+   Kontrastregelen frå AGENTS.md §3.2 gjeld her som elles: ingen flate
+   blir fylt med var(--accent)/var(--accent2) med tekst oppå.
+   ══════════════════════════════════════════════ */
+
+/* ──────────────── Palett ──────────────── */
+
+.bl-palett {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.bl-verktoy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 8px 10px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  /* Store nok for ein finger på iPad. */
+  min-height: 46px;
+}
+.bl-verktoy:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--border); }
+.bl-verktoy.active {
+  /* Inverteringa: motsetnader i kvart tema, så kontrasten held per
+     konstruksjon utan måling. */
+  background: var(--text);
+  color: var(--surface);
+}
+.bl-verktoy:focus-visible { outline: 4px solid var(--accent2); outline-offset: 3px; }
+
+.bl-ikon {
+  width: 30px; height: 30px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  text-align: center;
+  line-height: 30px;
+}
+
+/* ──────────────── Teikneflata ──────────────── */
+
+.bl-flate {
+  /* Ein bane kan vere 30 skjermar brei. Flata rullar sidelengs; resten
+     av sida gjer det ikkje. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: #f4f1ea;
+  padding: 0;
+  /* Loddrett drag skal rulle sida, ikkje flata — elles blir det uråd å
+     komme forbi redigeraren på ein iPad. */
+  touch-action: pan-x;
+}
+.bl-flate:focus-visible { outline: 4px solid var(--accent2); outline-offset: 3px; }
+
+.bl-gitter {
+  display: grid;
+  width: max-content;
+}
+
+.bl-celle {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  box-sizing: border-box;
+  /* Eit svakt rutenett, så ein ser kvar rutene går utan at det tek
+     merksemd frå sjølve banen. */
+  box-shadow: inset 0 0 0 1px rgba(26, 26, 26, 0.10);
+  cursor: crosshair;
+  font-size: 22px;
+  line-height: 1;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bl-celle:hover { background-color: rgba(26, 26, 26, 0.07); }
+.bl-celle:focus-visible { outline: 3px solid var(--accent2); outline-offset: -3px; z-index: 1; }
+
+.bl-start { color: #1a1a1a; }
+
+/* Sokkelen: teikna, men ikkje til å røre. Striper er tydelegare enn ei
+   dimming — dimming les folk som «ikkje ferdig lasta». */
+.bl-basis {
+  cursor: not-allowed;
+  position: relative;
+}
+.bl-basis::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg, rgba(26,26,26,0.05) 0 6px, rgba(26,26,26,0) 6px 12px);
+}
+
+.bl-feil {
+  box-shadow: inset 0 0 0 3px #d33;
+  background-color: rgba(221, 51, 51, 0.14);
+}
+
+/* ──────────────── Status ──────────────── */
+
+.bl-status {
+  margin: 12px 0;
+  padding: 10px 14px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  font-weight: 700;
+  background: var(--surface);
+  color: var(--text);
+  min-height: 44px;
+}
+/* Faste lyse pastellar med mørk tekst — trygge i alle 21 tema, fordi dei
+   ikkje endrar seg med temaet. */
+.bl-status.is-ok   { background: var(--ljod-right); color: var(--text-on-light-accent); }
+.bl-status.is-feil { background: var(--ljod-wrong); color: var(--text-on-light-accent); }
+.bl-status ul { margin: 0; padding-left: 20px; font-weight: 400; }
+
+/* ──────────────── Skjema ──────────────── */
+
+.bl-rad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-top: 12px;
+}
+.bl-felt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+.bl-felt input[type="text"], .bl-felt select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 8px 10px;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  min-height: 44px;
+}
+.bl-felt .ljod-hint { font-weight: 400; font-size: 0.8rem; }
+.bl-knappar { gap: 10px; }
+
+/* ──────────────── Banene dine ──────────────── */
+
+.bl-mine {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  gap: 12px;
+}
+.bl-kort {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border: 3px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.bl-kort-meta { font-size: 0.82rem; color: var(--muted); }
+.bl-kort-knappar { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.bl-kort-knappar .btn { font-size: 0.8rem; padding: 6px 12px; min-height: 40px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-verktoy:hover { transform: none; }
+}

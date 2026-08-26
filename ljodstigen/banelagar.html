@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banelagar — Ljodstigen</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="preload" href="../_libs/andika/Andika-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/banelagar.css">
+    <script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content main-wide">
+
+    <div class="box2 hero-box ljod-hero">
+        <div class="hero-text">
+            <h1>Banelagar</h1>
+            <p>Teikn eigne baner til Bokstavjakta.</p>
+        </div>
+    </div>
+
+    <div class="box1 ljod-alpha">
+        <p>Du teiknar <strong>terrenget</strong>. Kva bokstavar som dukkar opp på soklane
+        vel spelet sjølv, tilpassa kvar elev — med mindre du skriv inn kva de skal øve på.
+        Dei tre nedste radene er fast bakke i alle baner og kan ikkje endrast; kontrollane
+        til eleven ligg oppå dei. Det tyder òg at det <strong>ikkje kan vere hol i
+        bakken</strong> — høgdeskilnad lagar du med plattformer.</p>
+    </div>
+
+    <section class="box4">
+        <div class="box-header"><h2>Teikn</h2></div>
+        <div class="box-body">
+            <div id="palett" class="bl-palett" role="toolbar" aria-label="Verktøy"></div>
+
+            <div id="rutenett-vert" class="bl-flate" tabindex="0"
+                 aria-label="Baneflata. Trykk eller dra for å teikne."></div>
+
+            <div id="status" class="bl-status" aria-live="polite"></div>
+
+            <div class="bl-rad">
+                <span class="bl-felt">
+                    Breidd:
+                    <button class="btn" id="breiddMinus" type="button" aria-label="Ei skjermbreidd mindre">−</button>
+                    <strong><span id="breidd">2</span> skjermar</strong>
+                    <button class="btn" id="breiddPluss" type="button" aria-label="Ei skjermbreidd meir">+</button>
+                </span>
+            </div>
+
+            <div class="bl-rad">
+                <label class="bl-felt">Namn
+                    <input type="text" id="namn" maxlength="40" size="18">
+                </label>
+                <label class="bl-felt">Oppgåve
+                    <select id="type">
+                        <option value="lyd">Finn bokstaven du høyrer</option>
+                        <option value="rekkje">Fleire bokstavar etter kvarandre</option>
+                        <option value="ord">Samle eit heilt ord</option>
+                    </select>
+                </label>
+                <label class="bl-felt">Øv på
+                    <input type="text" id="bokstavar" size="12" placeholder="tomt = tilpassa">
+                    <span class="ljod-hint">t.d. «s o l»</span>
+                </label>
+            </div>
+
+            <div class="bl-rad bl-knappar">
+                <button class="btn" id="lagre" type="button">Lagre</button>
+                <button class="btn" id="proev" type="button">Lagre og spel</button>
+                <button class="btn" id="nybane" type="button">Ny bane</button>
+                <button class="btn" id="importer" type="button">Hent frå fil</button>
+                <input type="file" id="importfil" accept="application/json,.json" hidden>
+            </div>
+        </div>
+    </section>
+
+    <section class="box4">
+        <div class="box-header"><h2>Banene dine</h2></div>
+        <div class="box-body">
+            <p class="ljod-hint">Ligg berre i denne nettlesaren. Bruk <strong>Del</strong>
+            for å lagre banen som ei fil du kan sende til ein kollega.</p>
+            <div id="mine" class="bl-mine"></div>
+        </div>
+    </section>
+
+    <p><a href="index.html" class="btn">Tilbake til Ljodstigen</a></p>
+
+</main>
+</div>
+
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="js/letters.js"></script>
+<script src="js/words.js"></script>
+<script src="js/adaptive.js"></script>
+<script src="js/state.js"></script>
+<script src="js/jakta/validator.js"></script>
+<script src="js/jakta/eigne.js"></script>
+<script src="js/banelagar/rutenett.js"></script>
+<script src="js/banelagar/main.js"></script>
+
+</body>
+</html>

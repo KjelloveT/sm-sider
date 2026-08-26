@@ -69,6 +69,15 @@
                         <span class="ljod-mode-flag ljod-flag-open">Prøveutgåve</span>
                     </a>
                 </div>
+
+                <!-- Banene læraren har laga i Banelagar. Eigen seksjon,
+                     alltid open: dei er laga til denne eleven, og skal
+                     ikkje vente på ei opplåsing. Borte når det ikkje
+                     finst nokon. -->
+                <div data-laerarbaner hidden>
+                    <h3 class="heading4">Banene til læraren</h3>
+                    <div id="laerarbaner" class="ljod-modes"></div>
+                </div>
             </div>
         </div>
 
@@ -89,7 +98,13 @@
                 </div>
                 <div data-pane="laerar" hidden>
                     <div id="laerar"></div>
-                    <button class="btn" id="printLaerar" type="button">Skriv ut</button>
+                    <div class="ljod-btn-row" style="justify-content:flex-start">
+                        <button class="btn" id="printLaerar" type="button">Skriv ut</button>
+                        <a class="btn" href="banelagar.html">Lag eigne baner</a>
+                    </div>
+                    <p class="ljod-hint">I <strong>Banelagar</strong> teiknar du eigne baner
+                    til Bokstavjakta. Du lagar terrenget; spelet vel bokstavane tilpassa kvar
+                    elev — eller du kan skrive inn kva de skal øve på denne veka.</p>
                 </div>
             </div>
         </div>
@@ -134,6 +149,9 @@
 <script src="js/modes/bokstavropet.js"></script>
 <script src="js/modes/forstelyd.js"></script>
 <script src="js/modes/ordbyggjar.js"></script>
+<script src="js/jakta/validator.js"></script>
+<script src="js/jakta/eigne.js"></script>
+<script src="js/laerarbaner.js"></script>
 <script src="js/meny.js"></script>
 
 </body>
