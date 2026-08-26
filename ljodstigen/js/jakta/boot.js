@@ -24,6 +24,7 @@
 
   const ATLAS = 'jakta/atlas.png';
   const ATLAS_JSON = 'jakta/atlas.json';
+  const FLISESETT = 'jakta/flisesett.png';
 
   const FLIS = 64;
   const RUTER_BREI = 16;
@@ -44,6 +45,17 @@
     if (boks) boks.hidden = false;
     if (lastar) lastar.hidden = true;
     console.warn('[Bokstavjakta] ' + melding);
+  }
+
+  /* Ein bane-id på forma «eigen:<id>» kjem frå Banelagar og ligg i
+     VyrdepilStorage, ikkje i baner.js. */
+  function finnBane(id) {
+    if (String(id).indexOf('eigen:') === 0) {
+      const b = JaktaEigne.hent(String(id).slice(6));
+      return b ? { id: id, namn: b.namn, type: b.type, rutenett: b.rutenett,
+                   bokstavar: b.bokstavar, eigen: true } : null;
+    }
+    return JaktaBaner.hent(id);
   }
 
   function profil() {
@@ -67,6 +79,9 @@
     preload() {
       const bar = $('jakta-progress');
       this.load.atlas('kenney', ATLAS, ATLAS_JSON);
+      /* Flisesettet er eit eige bilete: eit flisekart kan ikkje lese frå
+         eit pakka atlas, det treng eit uniformt rutenett. */
+      this.load.image('flisesett', FLISESETT);
       this.load.on('progress', function (v) { if (bar) bar.style.width = Math.round(v * 100) + '%'; });
       this.load.on('loaderror', function (f) {
         feil('Fekk ikkje lasta «' + f.key + '». Prøv å laste sida på nytt.');
@@ -77,7 +92,8 @@
       JaktaGlyfar.addToPhaser(this, 'glyfar');
       const lastar = $('jakta-lastar');
       if (lastar) lastar.hidden = true;
-      this.scene.start('bane', { baneId: root.JaktaStartBane || 'verd1-01' });
+      const bad = new URLSearchParams(root.location.search).get('bane');
+      this.scene.start('bane', { baneId: bad || root.JaktaStartBane || 'verd1-01' });
     }
   }
 
@@ -92,7 +108,11 @@
 
     create() {
       const scene = this;
-      const def = JaktaBaner.hent(this.baneId);
+      const def = finnBane(this.baneId);
+      if (!def) {
+        feil('Fann ikkje banen. Han kan vere sletta.');
+        return;
+      }
       this.def = def;
 
       this.cameras.main.setBackgroundColor('#f4f1ea');
@@ -104,8 +124,12 @@
       this.spelar = JaktaSpelar.lag(this, this.bane.start.x, this.bane.start.y, {
         farge: 'Green'
       });
-      this.physics.add.collider(this.spelar.kropp, this.bane.faste);
-      this.physics.world.setBounds(0, -200, W, H + 400);
+      /* Éin collider mot heile flislaget, uansett kor brei banen er. */
+      this.physics.add.collider(this.spelar.kropp, this.bane.lag);
+      this.bane.soklar.forEach(function (so) {
+        scene.physics.add.collider(scene.spelar.kropp, so.blokk);
+      });
+      this.physics.world.setBounds(0, -400, this.bane.breidd, this.bane.hogd + 600);
 
       /* Bokstavane på soklane. Dei blir sette av oppdraget, ikkje av
          banefila: geometrien er fast, innhaldet er adaptivt. */
@@ -114,7 +138,12 @@
         feil('Vel ein figur på Ljodstigen-sida først, så veit spelet kven som speler.');
         return;
       }
-      this.oppdrag = JaktaOppdrag.lag(this.profil, this.bane.soklar, { type: def.type });
+      this.oppdrag = JaktaOppdrag.lag(this.profil, this.bane.soklar, {
+        type: def.type,
+        /* Berre eigne baner kan ha låste bokstavar. Dei innebygde er
+           alltid adaptive. */
+        laasteBokstavar: def.bokstavar || []
+      });
       if (!this.oppdrag) { feil('Fekk ikkje laga eit oppdrag til denne banen.'); return; }
 
       this.bane.soklar.forEach(function (s) {
@@ -126,6 +155,11 @@
           yoyo: true, repeat: -1, ease: 'Sine.easeInOut'
         });
       });
+
+      /* Kamera og pil. Utan dei er ein bane breiare enn skjermen uråd
+         å finne fram i. */
+      JaktaKamera.fest(this, this.spelar, this.bane);
+      this.pil = JaktaPil.lag(this);
 
       this.styring = JaktaStyring.lag(this);
 
@@ -158,18 +192,27 @@
 
     visOppdrag() {
       if (!this.hudTekst) return;
-      this.hudTekst.textContent = this.oppdrag.type === 'ord'
-        ? 'Finn bokstavane i ordet du høyrer'
+      const o = this.oppdrag;
+      this.hudTekst.textContent =
+        o.type === 'ord' ? 'Finn bokstavane i ordet du høyrer'
+        : o.type === 'rekkje' ? 'Finn bokstavane du høyrer, éin om gongen'
         : 'Finn bokstaven du høyrer';
     }
 
     oppdaterHud() {
       if (!this.hudTekst || !this.oppdrag) return;
-      if (this.oppdrag.type === 'ord' && this.oppdrag.ord) {
-        const t = this.oppdrag.ord.letters.map(function (ch, i) {
-          return i < this.oppdrag.steg ? ch : '_';
-        }, this).join(' ');
-        this.hudTekst.textContent = t;
+      const o = this.oppdrag;
+      if (o.type === 'ord' && o.ord) {
+        /* Ordlinje: bokstavane fyllest inn etter kvart. */
+        this.hudTekst.textContent = o.ord.letters.map(function (ch, i) {
+          return i < o.steg ? ch : '_';
+        }).join(' ');
+      } else if (o.type === 'rekkje') {
+        /* Ei rekkje er ikkje eit ord, så bokstavane skal IKKJE visast —
+           då kunne eleven lese seg til svaret i staden for å høyre det.
+           Vi viser berre kor langt han er komen. */
+        this.hudTekst.textContent = 'Bokstav ' + Math.min(o.steg + 1, o.maal.length) +
+          ' av ' + o.maal.length;
       }
     }
 
@@ -200,6 +243,7 @@
           onComplete: function () { sokkel.glyf.destroy(); }
         });
         sokkel.blokk.setTint(0xBAFCA2);
+        sokkel.viserSvar = true;
         LjodAudio.playSeq(['f_' + svar.ch, LjodRender.praiseId()], 160);
         this.oppdaterHud();
 
@@ -212,8 +256,12 @@
           targets: sokkel.glyf, x: sokkel.x + 8, duration: 60,
           yoyo: true, repeat: 4
         });
+        sokkel.viserSvar = true;
         sokkel.blokk.setTint(0xFFC2C2);
-        this.time.delayedCall(700, function () { sokkel.blokk.clearTint(); });
+        this.time.delayedCall(900, function () {
+          sokkel.viserSvar = false;
+          sokkel.blokk.clearTint();
+        });
         LjodAudio.playSeq([LjodRender.nudgeId()].concat(this.oppdrag.lydForOppgava()), 200);
       }
       LjodState.saveProfile(this.profil);
@@ -237,7 +285,7 @@
       LjodAudio.play('r_okt');
       if (this.hudTekst) this.hudTekst.textContent = 'Godt jobba!';
       this.time.delayedCall(1400, function () {
-        root.location.href = 'index.html';
+        root.location.href = scene.def.eigen ? 'banelagar.html' : 'index.html';
       });
     }
 
@@ -247,30 +295,46 @@
       const s = this.spelar;
       if (!s || !this.oppdrag) return;
 
-      s.oppdater(tid, delta, this.styring.les());
-      s.bergOmFalt(RUTER_HOG * FLIS + 120);
+      const inn = this.styring.les();
+      s.oppdater(tid, delta, inn);
+      s.bergOmFalt(this.bane.hogd + 120);
 
       const k = s.kropp;
+      JaktaKamera.oppdater(this);
+      this.pil.pek(JaktaPil.finnMaal(this.bane, this.oppdrag, k.x));
 
-      /* Soklar. Vi brukar avstand og ikkje Arcade sin overlapp, fordi
-         sokkelen ALT er ein fast kropp figuren står på — ein overlapp
-         ville aldri utløysast.
+      /* ── Å VELJE EIN SOKKEL ──
 
-         ÉIN FREISTNAD PER TILNÆRMING. Vi utløyser når eleven KJEM INN i
-         sirkelen, ikkje medan han er der. Utan det blir eit feilsvar
-         registrert på nytt kvar gong sperra går ut, så lenge han står i
-         ro ved sokkelen — og eit barn som blir ståande og lurer ville
-         samla opp ti feil han aldri gjorde. Det er læringsdata, ikkje
-         berre ein teljar. */
+         Eleven må stå ved sokkelen OG trykkje handlingsknappen. To grunnar:
+
+         Å utløyse på posisjon åleine var feil på ein måte som først synte
+         seg i ein brei bane: soklane står i vegen, så eleven MÅTTE innom
+         dei for å komme forbi — og fekk eit feilsvar registrert for kvar
+         sokkel han berre reiste forbi. I ein fire skjermars bane samla han
+         opp feil han aldri hadde gjort, rett inn i den adaptive motoren.
+
+         Og ein knapp skil UTFORSKING frå SVAR. Eleven kan klatre opp,
+         høyre oppgåva om att, tenkje seg om — og så bestemme seg. Det er
+         ein annan ting enn å bli teken på fersken av å stå på feil stad. */
+      this.naerSokkel = null;
       for (let i = 0; i < this.bane.soklar.length; i++) {
         const so = this.bane.soklar[i];
         if (so.teken || !so.glyf) continue;
-        const inne = Phaser.Math.Distance.Between(k.x, k.y, so.x, so.y) < FLIS * 0.85;
-        if (inne && !so.inne) this.proevSokkel(so);
-        /* Litt slark ut att, så ein figur som vippar på grensa ikkje
-           utløyser om og om igjen. */
-        so.inne = inne || (so.inne &&
-          Phaser.Math.Distance.Between(k.x, k.y, so.x, so.y) < FLIS * 1.15);
+        const naer = Math.abs(k.x - so.blokk.x) < FLIS * 0.9 &&
+          Math.abs(k.y - so.blokk.y) < FLIS * 1.4;
+        /* Bokstaven lyser opp når eleven er nær nok til å kunne velje
+           han, så knappen aldri er eit sjansespel.
+
+           Vi rører ikkje sokkelen medan han viser tilbakemelding: den
+           tinten er svaret hans, og nærleiksmarkeringa ville overskrive
+           han kvar einaste ramme. */
+        so.glyf.setAlpha(naer ? 1 : 0.72);
+        if (!so.viserSvar) so.blokk.setTint(naer ? 0xFFF0B3 : 0xffffff);
+        if (naer && !this.naerSokkel) this.naerSokkel = so;
+      }
+      if (inn.handling && this.naerSokkel) {
+        s.sving();
+        this.proevSokkel(this.naerSokkel);
       }
 
       /* Myntar. Rein utforsking — ingen straff for å gå glipp av dei. */

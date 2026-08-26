@@ -35,6 +35,7 @@
      Sjå HAND_LUFT i lag(): sprita har mykje tom plass rundt blekket. */
   const HAND_STORLEIK = 0.30;
   const HAND_TREGHEIT = 0.22;   // 0 = heng heilt etter, 1 = klistra fast
+  const SVING_MS = 260;         // kor lenge blyantsvinget varer
 
   const FARGAR = ['Green', 'Red', 'Yellow', 'Purple'];
 
@@ -77,9 +78,19 @@
       return h;
     });
 
+    /* Blyanten. Han heng i høgre hand og svingar når eleven vel ein
+       sokkel — eit sverd ville gjort same nytten, men ein blyant høyrer
+       heime i eit lesespel: eleven SKRIV bokstaven i staden for å hogge
+       han ned. */
+    const blyant = scene.add.image(x, y, 'kenney', 'item_pencil');
+    blyant.setDisplaySize(storleik * 0.26, storleik * 0.62);
+    blyant.setDepth(22).setOrigin(0.5, 0.9);
+
     const s = {
       kropp: kropp,
       hender: hender,
+      blyant: blyant,
+      svingar: 0,
       farge: farge,
       storleik: storleik,
       retning: 1,
@@ -171,6 +182,21 @@
         h.y += (my - h.y) * HAND_TREGHEIT * d;
         h.setVisible(k.visible);
       });
+
+      /* Blyanten følgjer handa som ligg i den retninga figuren ser. */
+      const handIFront = s.retning > 0 ? hender[1] : hender[0];
+      s.blyant.x = handIFront.x + s.retning * 6;
+      s.blyant.y = handIFront.y - 2;
+      s.blyant.setFlipX(s.retning < 0);
+      if (s.svingar > 0) {
+        s.svingar = Math.max(0, s.svingar - delta);
+        /* Eit raskt sving frå bak og fram, og attende. */
+        const p = 1 - s.svingar / SVING_MS;
+        const vinkel = Math.sin(p * Math.PI) * 110 * s.retning;
+        s.blyant.setAngle(-30 * s.retning + vinkel);
+      } else {
+        s.blyant.setAngle(-30 * s.retning);
+      }
     }
 
     /* ──────────────── Ingen død ──────────────── */
@@ -181,11 +207,16 @@
       s.kropp.setPosition(s.trygg.x, s.trygg.y - 8);
       s.kropp.setVelocity(0, 0);
       s.hender.forEach(function (h) { h.setPosition(s.trygg.x, s.trygg.y); });
+      s.blyant.setPosition(s.trygg.x, s.trygg.y);
       return true;
     };
 
+    /** Sving blyanten. Kallast når eleven vel ein sokkel. */
+    s.sving = function () { s.svingar = SVING_MS; };
+
     s.riv = function () {
       s.hender.forEach(function (h) { h.destroy(); });
+      s.blyant.destroy();
       s.kropp.destroy();
     };
 
