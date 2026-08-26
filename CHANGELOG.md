@@ -3,6 +3,10 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.34] — 2026-08-26
+
+### Fiksa
+- **Kludre Klodrian røpte fasiten.** Skjelettfiskane vart spawna i alle lanene *utanom* den med rett svar, så den tomme lana var svaret. Eleven kunne styre dit utan å sjå på reknestykket i det heile — spelet målte då kven som såg mønsteret, ikkje kven som kunne rekne. Lanene blir no trekte tilfeldig og heilt uavhengig av fasiten (2–3 av 4 per oppgåve), så kvar lane, inkludert den rette, har same sjanse for ein skjelettfisk. Står det ein i rett port, er det eit reelt val: eit treff kostar 200 poeng, rett svar gjev 500.
 ## [1.33] — 2026-08-26
 
 ### Fiksa

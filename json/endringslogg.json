@@ -2,6 +2,18 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.34",
+      "dato": "2026-08-26",
+      "samandrag": "Kludre Klodrian røpte kva port som var rett.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Kludre Klodrian",
+          "tekst": "Skjelettfiskane heldt seg alltid unna lana med rett svar, så den tomme lana var fasiten og eleven kunne velje rett utan å rekne. Dei blir no plasserte tilfeldig, uavhengig av kva svar som er rett."
+        }
+      ]
+    },
+    {
       "versjon": "1.30",
       "dato": "2026-08-25",
       "samandrag": "Denne sida: kort oppsummering av alle punkta i endringsloggen.",
