@@ -25,6 +25,7 @@
   const KNOTT_R = 30;
   const DAUDSONE = 0.22;    // under dette tel utslaget som «ingen retning»
   const HOPP_R = 46;
+  const HANDLING_R = 40;
 
   function lag(scene, opts) {
     opts = opts || {};
@@ -37,10 +38,15 @@
     const hvileY = opts.joyY || (H - BASE_R - 26);
     const hoppX = opts.hoppX || (W - HOPP_R - 34);
     const hoppY = opts.hoppY || (H - HOPP_R - 26);
+    /* Handlingsknappen ligg til venstre for hoppknappen og litt høgare,
+       så tommelen når begge utan å måtte sikte. */
+    const handX = hoppX - HOPP_R - HANDLING_R - 18;
+    const handY = hoppY - 30;
 
-    const state = { akse: 0, hopp: false, hoppNy: false };
+    const state = { akse: 0, hopp: false, hoppNy: false, handlingNy: false };
     let joyPeikar = null;     // id-en til fingeren som styrer joysticken
     let hoppPeikar = null;
+    let handPeikar = null;
 
     /* ──────────────── Teikning ──────────────── */
 
@@ -64,16 +70,24 @@
     hoppIkon.lineTo(hoppX + 13, hoppY - 2);
     hoppIkon.strokePath();
 
-    lag_.add([base, knott, hoppKnapp, hoppIkon]);
-    [base, knott, hoppKnapp, hoppIkon].forEach(function (o) {
+    /* Handlingsknappen. Ein blyant, ikkje eit sverd: eleven skriv
+       bokstaven, han hogg han ikkje ned. Same handling, og han høyrer
+       heime i eit lesespel. */
+    const handKnapp = scene.add.circle(handX, handY, HANDLING_R, 0xffffff, 0.55)
+      .setStrokeStyle(4, 0x1a1a1a, 0.55);
+    const handIkon = scene.add.image(handX, handY, 'kenney', 'item_pencil')
+      .setDisplaySize(HANDLING_R * 0.9, HANDLING_R * 1.8)
+      .setAlpha(0.6).setAngle(-30);
+
+    lag_.add([base, knott, hoppKnapp, hoppIkon, handKnapp, handIkon]);
+    [base, knott, hoppKnapp, hoppIkon, handKnapp, handIkon].forEach(function (o) {
       o.setScrollFactor(0).setDepth(1000);
     });
 
     /* ──────────────── Trykk ──────────────── */
 
-    function erPaaHopp(p) {
-      return Phaser.Math.Distance.Between(p.worldX || p.x, p.worldY || p.y, hoppX, hoppY)
-        <= HOPP_R * 1.6;
+    function erPaa(p, x, y, r) {
+      return Phaser.Math.Distance.Between(p.x, p.y, x, y) <= r * 1.5;
     }
 
     function settKnott(x, y) {
@@ -93,7 +107,13 @@
     }
 
     scene.input.on('pointerdown', function (p) {
-      if (hoppPeikar === null && erPaaHopp(p)) {
+      if (handPeikar === null && erPaa(p, handX, handY, HANDLING_R)) {
+        handPeikar = p.id;
+        state.handlingNy = true;
+        handKnapp.setFillStyle(0x1a1a1a, 0.28);
+        return;
+      }
+      if (hoppPeikar === null && erPaa(p, hoppX, hoppY, HOPP_R)) {
         hoppPeikar = p.id;
         if (!state.hopp) state.hoppNy = true;
         state.hopp = true;
@@ -119,6 +139,10 @@
         state.hopp = false;
         hoppKnapp.setFillStyle(0xffffff, 0.55);
       }
+      if (p.id === handPeikar) {
+        handPeikar = null;
+        handKnapp.setFillStyle(0xffffff, 0.55);
+      }
     }
     scene.input.on('pointerup', opp);
     scene.input.on('pointerupoutside', opp);
@@ -127,7 +151,9 @@
 
     const piler = scene.input.keyboard.createCursorKeys();
     const rom = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    const handTast = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     let tastHoppFor = false;
+    let tastHandFor = false;
 
     function les() {
       const kbHopp = piler.up.isDown || rom.isDown;
@@ -138,12 +164,18 @@
       if (piler.left.isDown) akse = -1;
       else if (piler.right.isDown) akse = 1;
 
+      const kbHand = handTast.isDown;
+      const kbHandNy = kbHand && !tastHandFor;
+      tastHandFor = kbHand;
+
       const ut = {
         akse: akse,
         hopp: state.hopp || kbHopp,
-        hoppTrykt: state.hoppNy || kbNy
+        hoppTrykt: state.hoppNy || kbNy,
+        handling: state.handlingNy || kbHandNy
       };
-      state.hoppNy = false;   // eit trykk blir lese éin gong
+      state.hoppNy = false;      // eit trykk blir lese éin gong
+      state.handlingNy = false;
       return ut;
     }
 
@@ -152,5 +184,5 @@
     return { les: les, vis: vis, _state: state, BASE_R: BASE_R, HOPP_R: HOPP_R };
   }
 
-  root.JaktaStyring = { lag: lag, BASE_R: BASE_R, HOPP_R: HOPP_R };
+  root.JaktaStyring = { lag: lag, BASE_R: BASE_R, HOPP_R: HOPP_R, HANDLING_R: HANDLING_R };
 })(window);
