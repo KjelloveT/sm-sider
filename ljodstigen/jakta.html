@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Bokstavjakta — Ljodstigen</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="preload" href="../_libs/andika/Andika-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/jakta.css">
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic" class="ljod-jakta">
+
+<div id="jakta-wrap">
+    <!-- Phaser sitt lerret blir sett inn her -->
+    <div id="jakta-canvas"></div>
+
+    <!-- HUD og kontrollar er DOM, ikkje teikna i lerretet: dei skal
+         følgje fargetemaet, kunne lesast av skjermlesar og nåast med
+         tastatur, akkurat som resten av appen. -->
+    <div id="jakta-hud" class="jakta-hud">
+        <a href="index.html" class="jakta-btn jakta-back" aria-label="Tilbake til Ljodstigen">Tilbake</a>
+        <div id="jakta-oppdrag" class="jakta-oppdrag" aria-live="polite"></div>
+        <button id="jakta-lyd" class="jakta-btn jakta-lyd" type="button" aria-label="Høyr oppgåva om att">
+            Høyr om att
+        </button>
+    </div>
+
+    <div id="jakta-lastar" class="jakta-lastar">
+        <p class="ljod-prompt">Lastar Bokstavjakta…</p>
+        <div class="ljod-progress"><div class="ljod-progress-fill" id="jakta-progress"></div></div>
+    </div>
+
+    <div id="jakta-feil" class="jakta-feil" hidden>
+        <div class="box1">
+            <h1 class="heading3 no-mt">Bokstavjakta startar ikkje her</h1>
+            <p id="jakta-feil-tekst"></p>
+            <a href="index.html" class="btn">Tilbake til dei andre modusane</a>
+        </div>
+    </div>
+</div>
+
+<script src="../js/vyrdepil-fullscreen.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="js/letters.js"></script>
+<script src="js/words.js"></script>
+<script src="js/adaptive.js"></script>
+<script src="js/state.js"></script>
+<script src="js/merke.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+
+<script src="../_libs/phaser-390/phaser-arcade-physics.min.js"></script>
+<script src="js/jakta/glyfar.js"></script>
+<script src="js/jakta/styring.js"></script>
+<script src="js/jakta/spelar.js"></script>
+<script src="js/jakta/bane.js"></script>
+<script src="js/jakta/baner.js"></script>
+<script src="js/jakta/oppdrag.js"></script>
+<script src="js/jakta/boot.js"></script>
+
+</body>
+</html>
