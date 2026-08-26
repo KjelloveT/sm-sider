@@ -23,16 +23,39 @@
 
   const FLIS = 64;
 
+  /* KVIFOR FLISENE BLIR TEIKNA STØRRE ENN RUTA DEI LIGG I.
+
+     Kenney-flisene har konturstreken heilt ute i kanten av sprita —
+     målt ligg han 3-6 px inn frå kanten på ei 128 px-flis. Legg ein dei
+     kant i kant, får ein to strekar med kvitt imellom, og rutenettet
+     ser ut som ei samling laushengande øyer. Sample.png frå pakken viser
+     korleis det skal sjå ut: ein samanhengande vegg med ENKLE strekar.
+
+     Vi teiknar difor kvar flis 5 px større enn ruta, sentrert. Nabofliser
+     overlappar då akkurat nok til at strekane fell saman. Fysikk-kroppen
+     held seg på 64, så rutenettlogikken er urørt. */
+  const OVERLAPP = 5;
+
   /* Kva sprite kvart teikn blir. Fleire teikn kan peike på same sprite;
      det er kollisjonen og tydinga som skil dei. */
   const SPRITES = {
-    '#': 'tile_grass',
+    '#': 'tile_grass',      // berre øvste rad — sjå flisFor()
     '_': 'tile',
     '=': 'tile_bridge',
     'P': 'tile_block',
     'D': 'tile_door',
     'T': 'background_tree'
   };
+
+  /* Grunn med noko oppå seg skal vere ei blank flis, ikkje ei med
+     gras-kant. Berre den øvste raden i ein haug har den takka toppen —
+     slik det er i Sample.png. Det blir avgjort her og ikkje i banefila,
+     så den som teiknar ei bane slepp å tenkje på det. */
+  function flisFor(teikn, rader, rx, ry) {
+    if (teikn !== '#') return SPRITES[teikn];
+    const over = ry > 0 ? (rader[ry - 1][rx] || '.') : '.';
+    return (over === '#' || over === '_') ? 'tile' : 'tile_grass';
+  }
 
   const FASTE = '#_=P';        // teikn som figuren kan stå på
 
@@ -92,12 +115,17 @@
           continue;
         }
 
-        const namn = SPRITES[t];
+        const namn = flisFor(t, rader, rx, ry);
         if (!namn) continue;
 
         if (FASTE.indexOf(t) !== -1) {
           const b = faste.create(x, y, 'kenney', namn);
-          b.setDisplaySize(FLIS, FLIS).refreshBody();
+          /* Teikna større enn ruta, men kollisjonen held seg på 64:
+             setSize etter refreshBody, elles arvar kroppen den store
+             visinga og figuren stoppar i lufta. */
+          b.setDisplaySize(FLIS + OVERLAPP, FLIS + OVERLAPP).refreshBody();
+          b.body.setSize(FLIS, FLIS);
+          b.body.position.set(x - FLIS / 2, y - FLIS / 2);
           b.setDepth(5);
           if (t === 'P') {
             /* Sokkelen er fast grunn OG ein plass for ein bokstav.
@@ -106,7 +134,7 @@
           }
         } else if (t === 'D') {
           doer = scene.add.image(x, y, 'kenney', namn)
-            .setDisplaySize(FLIS, FLIS).setDepth(6);
+            .setDisplaySize(FLIS + OVERLAPP, FLIS + OVERLAPP).setDepth(6);
           doer.stengd = true;
           doer.setAlpha(0.45);
         }
@@ -120,5 +148,5 @@
     };
   }
 
-  root.JaktaBane = { bygg: bygg, parse: parse, FLIS: FLIS, SPRITES: SPRITES };
+  root.JaktaBane = { bygg: bygg, parse: parse, FLIS: FLIS, OVERLAPP: OVERLAPP, SPRITES: SPRITES, flisFor: flisFor };
 })(window);

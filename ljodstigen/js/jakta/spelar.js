@@ -31,6 +31,9 @@
   /* Kor langt ut frå kroppen hendene svevar, i delar av kroppsbreidda. */
   const HAND_UT = 0.62;
   const HAND_NED = 0.10;
+  /* Kor stor handa skal vere PÅ SKJERMEN, i delar av kroppsstorleiken.
+     Sjå HAND_LUFT i lag(): sprita har mykje tom plass rundt blekket. */
+  const HAND_STORLEIK = 0.30;
   const HAND_TREGHEIT = 0.22;   // 0 = heng heilt etter, 1 = klistra fast
 
   const FARGAR = ['Green', 'Red', 'Yellow', 'Purple'];
@@ -49,15 +52,27 @@
 
     const kropp = scene.physics.add.sprite(x, y, 'kenney', 'character_round' + farge);
     kropp.setDisplaySize(storleik, storleik);
-    /* Kroppen i kjeldepikslar. Arcade skalerer sjølv. Smalare enn sprita,
-       så figuren ikkje hektar seg fast i kantar han visuelt passerer. */
-    kropp.body.setSize(40, 46).setOffset(12, 12);
+    /* Kroppen i KJELDEPIKSLAR, og kjelda er 128 px — retina-utgåva, ikkje
+       64. Første utgåve sette 40x46 med offset 12,12 som om sprita var
+       64 px stor. Det ga ein kropp som dekte y 12..58, medan figuren sitt
+       blekk går ned til y=124: føtene låg 66 px UNDER kollisjonen, og
+       figuren såg ut til å synke ned i klossane.
+
+       Målt blekk i character_round*: x 23..104, y 0..124. */
+    kropp.body.setSize(76, 118).setOffset(26, 6);
     kropp.setCollideWorldBounds(true);
     kropp.setDepth(20);
 
-    const hender = [0, 1].map(function (i) {
+    /* HENDENE MÅ KOMPENSERE FOR LUFTA RUNDT DEI.
+       character_hand* har berre 32x30 px synleg blekk inne i eit
+       128x129-sprite — handa fyller ein fjerdedel av breidda. Set ein
+       displaySize direkte, blir den synlege handa ein fjerdedel av det
+       ein bad om: 15 px blei til under 4 px, og hendene forsvann. */
+    const HAND_LUFT = 128 / 32;
+    const handSynleg = storleik * HAND_STORLEIK;
+    const hender = [0, 1].map(function () {
       const h = scene.add.image(x, y, 'kenney', 'character_hand' + farge);
-      h.setDisplaySize(storleik * 0.34, storleik * 0.34);
+      h.setDisplaySize(handSynleg * HAND_LUFT, handSynleg * HAND_LUFT);
       h.setDepth(21);
       return h;
     });

@@ -3,6 +3,16 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.33] — 2026-08-26
+
+### Fiksa
+- **Figuren sokk ned i klossane.** Fysikk-kroppen var sett i kjeldepikslar som om sprita var 64 px, men atlaset brukar retina-utgåva på 128. Kroppen dekte y 12–58 medan figuren sitt blekk går ned til y=124 — føtene låg **66 px under kollisjonen**. Målt opp mot det faktiske blekket no; figuren står 1 px ned i flisa i staden for 23.
+- **Hendene var praktisk talt usynlege.** `character_hand*` har berre **32×30 px synleg blekk inne i eit 128×129-sprite** — handa fyller ein fjerdedel av breidda. Ein `displaySize` på 15 px ga difor ei hand på under 4 px. Storleiken kompenserer for lufta rundt no, og handa er 13 px mot ein figur på 44.
+
+### Endra
+- **Flisene overlappar med 5 px.** Kenney-flisene har konturstreken heilt ute i kanten, så kant-i-kant gjev to strekar med kvitt imellom, og rutenettet ser ut som laushengande øyer. `Sample.png` i pakken viser at det skal vere ein samanhengande vegg med enkle strekar. Fysikk-kroppen held seg på 64, så rutenettlogikken er urørt.
+- **Berre øvste rad har graskant.** Grunn med noko oppå seg blir ei blank flis. Det blir avgjort av byggjaren og ikkje i banefila, så den som teiknar ei bane slepp å tenkje på det.
+
 ## [1.32] — 2026-08-26
 
 ### Fiksa
