@@ -1,11 +1,18 @@
 /* ══════════════════════════════════════════════
    BANER.JS — Banedata
 
-   Sjå bane.js for teikna. Gitteret er 16 breitt og 8 høgt; dei to
-   nedste radene på skjermen er kontrollsone og har ingen geometri, så
-   fingrane til eleven aldri ligg over noko han treng å sjå.
+   Sjå bane.js for teikna.
 
-   HOPPET NÅR TO FLISER (128 px) med margin. Ingen plattform ligg meir
+   BANEFILA TEIKNAR IKKJE BAKKEN. Dei tre nedste radene er ein fast
+   sokkel som blir lagd av byggjaren, lik i kvar bane. Her skriv ein
+   berre det som står PÅ han — plattformer, soklar, myntar, døra. Det
+   sparer tre identiske ###-rader i kvar fil, og gjer at kontrollane
+   trygt kan liggje oppå sokkelen: der er det berre jord.
+
+   Gitteret er 16 breitt og 7 høgt. Nedste rad (rad 6) er bakkenivå:
+   der står figuren, soklane og døra. Radene over er luft.
+
+   HOPPET NÅR 153 PX, altså to fliser og litt. Ingen plattform ligg meir
    enn to fliser over den under. Første utgåve hadde plattformer tre og
    fire fliser opp, og då såg det ut som om kollisjonen var øydelagd —
    figuren nådde dei rett og slett aldri.
@@ -20,32 +27,30 @@
       namn: 'Lysninga',
       type: 'lyd',
       rutenett: [
-        '// verd1-01 — heilt flat, alt innan rekkjevidd',
+        '// verd1-01 — heilt flat. To soklar, ei plattform å hoppe på.',
+        '................',
+        '................',
         '................',
         '................',
         '..........c.....',
-        '....c.....==....',
-        '.@...P......P..D',
-        '################',
-        '################',
-        '################'
+        '.........===....',
+        '.@...P......P..D'
       ].join('\n')
     },
     {
       id: 'verd1-02',
       verd: 1,
-      namn: 'Steget',
+      namn: 'Trappa',
       type: 'lyd',
       rutenett: [
-        '// verd1-02 — eitt steg opp, eitt ned',
+        '// verd1-02 — to steg opp, kvart eitt innan rekkjevidd',
         '................',
-        '.........c......',
-        '......P..===..P.',
-        '..c...==......==',
-        '.@.............D',
-        '#####...########',
-        '#####...########',
-        '#####...########'
+        '................',
+        '................',
+        '........c.......',
+        '.......===......',
+        '...c.===........',
+        '.@.P.........P.D'
       ].join('\n')
     },
     {
@@ -56,13 +61,12 @@
       rutenett: [
         '// verd2-01 — tre soklar, eit heilt ord',
         '................',
-        '....c......c....',
-        '...P...P...P....',
-        '...==..==..==..D',
-        '.@..............',
-        '################',
-        '################',
-        '################'
+        '................',
+        '................',
+        '................',
+        '.....c.....c....',
+        '....===...===...',
+        '.@..P...P...P..D'
       ].join('\n')
     }
   ];

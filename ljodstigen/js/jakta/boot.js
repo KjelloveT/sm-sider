@@ -13,11 +13,11 @@
    3. AUTO, IKKJE WEBGL. Fell WebGL bort, går Phaser til Canvas i staden
       for å vise ein svart skjerm.
 
-   4. KONTROLLSONA HAR EIGA HØGD I VERDA. Banen er 8 fliser høg, lerretet
-      10. Dei to nedste radene har ingen SPELBAR geometri: der ligg
-      fingrane, og ein plattform under tommelen er ein plattform eleven
-      ikkje ser. Men dei er ikkje tomme — jorda held fram ned dit, utan
-      kollisjon, så verda ikkje ser ut til å sveve over knappane.
+   4. VERDA STÅR PÅ EIN FAST SOKKEL. Dei tre nedste radene er bakke i
+      kvar einaste bane, lagde av byggjaren og ikkje av banefila. Verda
+      blir bygd oppå. Kontrollane ligg over dei to nedste radene av
+      sokkelen — det er berre jord der, ingenting eleven treng å sjå, og
+      dermed slepp vi å ofre skjermplass på ei tom stripe.
    ══════════════════════════════════════════════ */
 (function (root) {
   'use strict';
@@ -27,9 +27,9 @@
 
   const FLIS = 64;
   const RUTER_BREI = 16;
-  const BANE_RADER = 8;        // sjølve banen
-  const KONTROLL_RADER = 2;    // tomrom under, der fingrane ligg
-  const RUTER_HOG = BANE_RADER + KONTROLL_RADER;
+  const BANE_RADER = 7;        // det banefila teiknar
+  const BASIS_RADER = 3;       // fast sokkel under, lik i kvar bane
+  const RUTER_HOG = BANE_RADER + BASIS_RADER;
 
   const W = RUTER_BREI * FLIS;
   const H = RUTER_HOG * FLIS;
@@ -97,10 +97,9 @@
 
       this.cameras.main.setBackgroundColor('#f4f1ea');
 
-      /* Banen ligg øvst; kontrollsona er tomrommet under. */
-      /* fyllTilY: jorda held fram heilt ned til lerretkanten, under
-         kontrollane. Sjå bane.js — utan det svevar verda over knappane. */
-      this.bane = JaktaBane.bygg(this, def.rutenett, { yOffset: 0, fyllTilY: H });
+      /* Banefila teiknar berre det som står PÅ sokkelen; dei tre nedste
+         radene legg byggjaren til. Sjå bane.js. */
+      this.bane = JaktaBane.bygg(this, def.rutenett, { basisRader: BASIS_RADER });
 
       this.spelar = JaktaSpelar.lag(this, this.bane.start.x, this.bane.start.y, {
         farge: 'Green'
@@ -249,7 +248,7 @@
       if (!s || !this.oppdrag) return;
 
       s.oppdater(tid, delta, this.styring.les());
-      s.bergOmFalt(BANE_RADER * FLIS + 120);
+      s.bergOmFalt(RUTER_HOG * FLIS + 120);
 
       const k = s.kropp;
 
@@ -343,7 +342,7 @@
 
   root.JaktaBoot = {
     start: start, FLIS: FLIS, W: W, H: H,
-    BANE_RADER: BANE_RADER, KONTROLL_RADER: KONTROLL_RADER
+    BANE_RADER: BANE_RADER, BASIS_RADER: BASIS_RADER
   };
 
   if (document.readyState === 'loading') {

@@ -89,6 +89,42 @@
     let start = { x: FLIS * 1.5, y: FLIS * 2 };
     let doer = null;
 
+    /* ── SOKKELEN ──
+       Tre rader fast bakke heilt nedst, like i kvar bane. Han blir lagd
+       her og ikkje i banefila, av to grunnar:
+
+       Den som teiknar ei bane skal sleppe å skrive tre identiske rader
+       med ### kvar gong. Han teiknar berre det som står PÅ bakken.
+
+       Og kontrollane ligg oppå sokkelen. Joysticken dekkjer dei to
+       nedste radene, men det gjer ikkje noko: der er det berre jord,
+       ingenting eleven treng å sjå. Verda byrjar over fingrane hans.
+
+       Berre øvste rad har kollisjon. Dei to under er reint visuelle —
+       figuren kan ikkje kome dit uansett, og to lag statiske kroppar til
+       hadde vore reine kostnader. */
+    const basisRader = opts.basisRader || 0;
+    const basisTopp = rader.length;
+    for (let i = 0; i < basisRader; i++) {
+      const ry = basisTopp + i;
+      const y = ry * FLIS + FLIS / 2 + yOff;
+      for (let rx = 0; rx < breidd; rx++) {
+        const x = rx * FLIS + FLIS / 2;
+        if (i === 0) {
+          const b = faste.create(x, y, 'kenney', 'tile_grass');
+          b.setDisplaySize(FLIS + OVERLAPP, FLIS + OVERLAPP).refreshBody();
+          b.body.setSize(FLIS, FLIS);
+          b.body.position.set(x - FLIS / 2, y - FLIS / 2);
+          b.setDepth(5);
+        } else {
+          scene.add.image(x, y, 'kenney', 'tile')
+            .setDisplaySize(FLIS + OVERLAPP, FLIS + OVERLAPP).setDepth(4);
+        }
+      }
+    }
+    /* Startpunktet står på sokkelen om banefila ikkje seier noko anna. */
+    start = { x: FLIS * 1.5, y: basisTopp * FLIS + yOff - FLIS * 0.6 };
+
     rader.forEach(function (rad, ry) {
       for (let rx = 0; rx < rad.length; rx++) {
         const t = rad[rx];
@@ -140,31 +176,6 @@
         }
       }
     });
-
-    /* JORDA HELD FRAM UNDER KONTROLLANE.
-
-       Banen er åtte rader, lerretet ti. Dei to nedste er kontrollsone —
-       men det tyder ikkje at dei skal vere tomme. Stoppar bakken der
-       banen sluttar, ligg det ei stripe bakgrunnsfarge under, og verda
-       ser ut til å sveve over knappane.
-
-       Vi fyller difor kvar bunnsolid kolonne heilt ned til lerretkanten.
-       Reint visuelt: figuren kan ikkje kome dit, så flisene treng ingen
-       kollisjon, og dei blir lagde inn utan fysikk. */
-    if (opts.fyllTilY) {
-      const botnRad = rader.length - 1;
-      for (let rx = 0; rx < breidd; rx++) {
-        const t = botnRad >= 0 ? (rader[botnRad][rx] || '.') : '.';
-        if (t !== '#' && t !== '_') continue;
-        let y = rader.length * FLIS + FLIS / 2 + yOff;
-        while (y - FLIS / 2 < opts.fyllTilY) {
-          scene.add.image(rx * FLIS + FLIS / 2, y, 'kenney', 'tile')
-            .setDisplaySize(FLIS + OVERLAPP, FLIS + OVERLAPP)
-            .setDepth(4);
-          y += FLIS;
-        }
-      }
-    }
 
     return {
       faste: faste, soklar: soklar, myntar: myntar,
