@@ -89,7 +89,8 @@ class NeoHeader extends HTMLElement {
     /* Lucide-ikon til dei to sidene som ikkje er ein app med eigen logo. */
     const EXTRA_ICONS = {
       home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
-      shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>'
+      shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
+      cc: '<circle cx="12" cy="12" r="10"/><path d="M9.6 9.9a2.6 2.6 0 1 0 0 4.2"/><path d="M15.4 9.9a2.6 2.6 0 1 0 0 4.2"/>'
     };
 
     /* «/mappe/index.html», «/mappe/» og «/mappe» skal reknast som same side. */
@@ -166,6 +167,7 @@ class NeoHeader extends HTMLElement {
         const more = grid();
         more.appendChild(item('Heim', 'index.html', null, 'home'));
         more.appendChild(item('Personvern', 'personvern.html', null, 'shield'));
+        more.appendChild(item('Lisens', 'lisens.html', null, 'cc'));
         frag.appendChild(more);
 
         menu.textContent = '';
