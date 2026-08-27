@@ -3,6 +3,16 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.36] — 2026-08-27
+
+### Lagt til
+- **Lisens på sida.** Vyrdepil er delt under **CC BY-NC-SA 4.0**: bruk, kopier og endre fritt, sei kvar det kjem frå, ikkje ten pengar på det, og del di eiga utgåve på same vilkår. Framsida har ein kort bolk under personvern med dei tre reglane skrivne så ein elev kan lese dei, og `lisens.html` går grundig gjennom kvart vilkår med døme på kva som er greitt og ikkje i ein skulekvardag.
+  - Ein lærar som vil dele eit opplegg vidare, treng eit svar på om han har lov — ikkje ei lenkje til ein juridisk tekst på engelsk. Difor står forklaringa på nynorsk, og lisensteksten hjå Creative Commons er lenkja som fasit, ikkje som forklaring.
+  - Sida seier òg kva lisensen *ikkje* dekkjer: tredjepartsbiblioteka i `_libs/` har sine eigne lisensar, og Wikimedia-bileta i Heimsank og Vidfaren høyrer andre til.
+  - CC-merka er teikna som inline SVG. CSP-en tillèt ikkje bilete frå creativecommons.org, og eit merke som ikkje lastar er verre enn ingen merke.
+- **`LICENSE` i rota** med den fullstendige lisensteksten frå Creative Commons, ordrett. Ein som klonar repoet skal finne vilkåra der han er van med å leite etter dei, ikkje i ei HTML-fil. Toppen av fila listar opp unntaka: `_libs/` har sine eigne lisensar, Wikimedia-bileta høyrer andre til, og namnet og maskoten kan ikkje brukast slik at ei endra utgåve ser offisiell ut.
+- **Lisens i menyen og i botnteksten** på framsida, personvernsida og lisenssida.
+
 ## [1.35] — 2026-08-26
 
 ### Lagt til

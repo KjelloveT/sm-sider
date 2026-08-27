@@ -666,6 +666,15 @@ main.main-wide {
 .privacy-body h4 { font-size: 1rem; font-weight: 900; color: var(--text); }
 .privacy-body ul { margin-left: 22px; margin-bottom: 16px; }
 .privacy-body li { margin-bottom: 6px; }
+/* Lenkjer i brødteksten arva nettlesaren si standardblå (#0000EE), som er
+   uleseleg mot dei mørke temaa. Understreking + tekstfargen frå temaet
+   held seg lesbar i alle femten. */
+.privacy-body a:not(.btn) {
+  color: inherit; font-weight: 700;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px;
+}
+.privacy-body a:not(.btn):hover { color: var(--accent); }
+.privacy-body blockquote { margin-left: 0; margin-right: 0; }
 
 .privacy-highlight {
   background: var(--accent4);
@@ -677,12 +686,14 @@ main.main-wide {
   font-weight: 600;
 }
 
-/* KI-merking (transparensymbol i tråd med EU sitt framlegg) */
-.ai-marks {
+/* KI-merking (transparensymbol i tråd med EU sitt framlegg).
+   Same rutenett av merke blir brukt til lisensvilkåra på lisens.html —
+   difor står `.info-mark*` som eit nøytralt alias ved sida av `.ai-mark*`. */
+.ai-marks, .info-marks {
   display: flex; flex-wrap: wrap; gap: 12px;
   margin: 18px 0;
 }
-.ai-mark {
+.ai-mark, .info-mark {
   flex: 1 1 190px;
   display: flex; align-items: center; gap: 12px;
   padding: 12px 14px;
@@ -690,13 +701,13 @@ main.main-wide {
   border: 3px solid var(--border);
   box-shadow: 4px 4px 0 var(--shadow);
 }
-.ai-mark-icon {
+.ai-mark-icon, .info-mark-icon {
   flex-shrink: 0; color: var(--text);
   display: flex; align-items: center; justify-content: center;
 }
-.ai-mark-text { font-size: 0.9rem; line-height: 1.35; }
-.ai-mark-text strong { display: block; font-weight: 900; }
-.ai-mark-text span { color: var(--muted); font-size: 0.82rem; }
+.ai-mark-text, .info-mark-text { font-size: 0.9rem; line-height: 1.35; }
+.ai-mark-text strong, .info-mark-text strong { display: block; font-weight: 900; }
+.ai-mark-text span, .info-mark-text span { color: var(--muted); font-size: 0.82rem; }
 
 .accordion-note {
   margin-top: 12px;
