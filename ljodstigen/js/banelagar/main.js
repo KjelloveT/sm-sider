@@ -110,6 +110,18 @@
         rad.appendChild(lagKnapp(b.f || b.s, b.n, b.s, b.s));
       });
 
+      /* TRELLEKKJE: berre éi gruppe open om gongen. Med tolv opne
+         grupper er stolpen fem skjermar lang, og då er han tilbake til
+         problemet han skulle løyse. */
+      boks.addEventListener('toggle', function () {
+        if (!boks.open) return;
+        const andre = vert.querySelectorAll('.bl-gruppe[open]');
+        Array.prototype.forEach.call(andre, function (a) {
+          if (a !== boks) a.open = false;
+        });
+        vert.parentNode.scrollTop = boks.offsetTop - vert.offsetTop;
+      });
+
       boks.appendChild(rad);
       vert.appendChild(boks);
     });

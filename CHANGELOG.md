@@ -11,6 +11,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
   - **Pyntelaget ligg utanfor rutenettet.** Rutenettet er framleis teikn — det lesbare formatet validatoren reknar på — mens pynten er `[x, y, sprite]` ved sida av. Det er difor katalogen kan vekse til 145 utan at nokon må finne på nye ledige teikn, og difor eit nytt bibliotek ikkje rører ei einaste eksisterande bane.
   - Sideforholdet blir halde og klossen forankra i botnen av ruta, både i redigeraren og i spelet, så eit tre veks oppover ut av ruta i staden for å bli klemt ned i ein kvadrat.
   - Viskelêret tek pynten først: ligg det ei lykt oppå ei plattform, er det lykta ein siktar på.
+  - **Klossane står ved sida av banen, ikkje over han.** Med 166 av dei over flata var vegen frå ein kloss til ruta han skulle i ei heil skjermrulling kvar veg. Stolpen står stille med si eiga rulling medan flata rullar sidelengs, klossane ligg som fliser tre i breidda, og berre éi gruppe er open om gongen. På iPad i ståande format legg stolpen seg under flata i staden.
   - Ukjende spritenamn blir sila bort når ei bane blir lasta, så ei fil frå ein annan versjon ikkje kan be spelet teikne noko som ikkje finst.
 
 ### Endra

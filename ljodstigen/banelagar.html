@@ -42,15 +42,23 @@
     <section class="box4">
         <div class="box-header"><h2>Teikn</h2></div>
         <div class="box-body">
-            <label class="bl-felt bl-sok">Finn kloss
-                <input type="search" id="sok" placeholder="lykt, stige, tal…" size="18">
-            </label>
-            <div id="palett" role="toolbar" aria-label="Klossar"></div>
+            <!-- Klossane står ved sida av flata, ikkje over henne: med
+                 166 av dei var vegen frå ein kloss til ruta han skulle i
+                 ei heil skjermrulling kvar veg. -->
+            <div class="bl-arbeidsflate">
+                <div class="bl-teikn">
+                    <div id="rutenett-vert" class="bl-flate" tabindex="0"
+                         aria-label="Baneflata. Trykk eller dra for å teikne."></div>
+                    <div id="status" class="bl-status" aria-live="polite"></div>
+                </div>
 
-            <div id="rutenett-vert" class="bl-flate" tabindex="0"
-                 aria-label="Baneflata. Trykk eller dra for å teikne."></div>
-
-            <div id="status" class="bl-status" aria-live="polite"></div>
+                <div class="bl-sidestolpe">
+                    <label class="bl-felt bl-sok">Finn kloss
+                        <input type="search" id="sok" placeholder="lykt, stige, tal…">
+                    </label>
+                    <div id="palett" role="toolbar" aria-label="Klossar"></div>
+                </div>
+            </div>
 
             <div class="bl-rad">
                 <span class="bl-felt">

@@ -5,24 +5,75 @@
    blir fylt med var(--accent)/var(--accent2) med tekst oppå.
    ══════════════════════════════════════════════ */
 
+/* ──────────────── Arbeidsflata ──────────────── */
+
+/* KLOSSANE STÅR VED SIDA AV BANEN, IKKJE OVER HAN. Med 166 klossar over
+   flata var vegen frå ein kloss til ruta han skulle i ei heil
+   skjermrulling kvar veg — ein vel ein kloss, rullar ned, teiknar, og
+   rullar opp att for den neste.
+
+   Stolpen står stille medan flata rullar: `sticky` med eiga rulling, så
+   ein kan ha ei lang bane til venstre og eit langt bibliotek til høgre
+   utan at dei dreg i kvarandre. */
+.bl-arbeidsflate {
+  display: grid;
+  /* minmax(0, 1fr) og ikkje 1fr: utan han nektar rutenettkolonnen å bli
+     smalare enn innhaldet sitt, og ei bane på 30 skjermar ville sprengje
+     sida i staden for å rulle inne i si eiga flate. */
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 14px;
+  align-items: start;
+}
+
+.bl-sidestolpe {
+  position: sticky;
+  top: 12px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  /* Rulling i stolpen skal ikkje halde fram i sida når ein når botnen. */
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+/* På iPad i ståande format og på telefon er det ikkje plass til to
+   kolonnar. Då legg stolpen seg under, og får ei fast høgd i staden for
+   sticky, så han ikkje et heile skjermen. */
+@media (max-width: 900px) {
+  /* minmax(0, ...) her òg: eit reint 1fr let kolonnen vekse til
+     innhaldet, og då blei paletten 1286 px brei på ein skjerm på 375. */
+  .bl-arbeidsflate { grid-template-columns: minmax(0, 1fr); }
+  .bl-sidestolpe {
+    position: static;
+    max-height: 46vh;
+  }
+}
+
 /* ──────────────── Palett ──────────────── */
 
-/* Hundre og femti klossar i ei rad er inga meny. Dei ligg i grupper som
-   kan foldast ut, med eit søkjefelt over. */
+/* 166 klossar i ei rad er inga meny. Dei ligg i grupper som kan foldast
+   ut, med eit søkjefelt over. */
 
-.bl-sok { margin-bottom: 10px; }
+.bl-sok { margin-bottom: 10px; display: flex; }
+.bl-sok input { flex: 1; min-width: 0; }
 
 .bl-gruppe {
   border: 3px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
   margin-bottom: 8px;
-  padding: 0 12px;
+  padding: 0 8px;
 }
 .bl-gruppe > summary {
   cursor: pointer;
   font-weight: 700;
-  padding: 10px 0;
+  font-size: 0.85rem;
+  padding: 10px 2px;
+  /* Overskrifta følgjer med når ein rullar i ei lang gruppe, så ein veit
+     kva ein ser på. */
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: 2;
   /* Store nok å treffe med ein finger. */
   min-height: 44px;
   display: flex;
@@ -31,28 +82,35 @@
 .bl-gruppe > summary:focus-visible { outline: 4px solid var(--accent2); outline-offset: 2px; }
 .bl-gruppe > .ljod-hint { margin: 0 0 8px; }
 
+/* Fliser og ikkje ei liste: i ein stolpe på 320 px får ein tre klossar
+   per rad i staden for éin, og eit heilt bibliotek på ein tredjedel av
+   rullinga. */
 .bl-palett {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 6px;
+  margin-bottom: 12px;
 }
 
 .bl-verktoy {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 8px 14px 8px 10px;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 6px 4px;
   border: 3px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
   color: var(--text);
   font-family: inherit;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.68rem;
+  line-height: 1.15;
+  text-align: center;
   cursor: pointer;
-  /* Store nok for ein finger på iPad. */
-  min-height: 46px;
+  /* Store nok for ein finger på iPad, jamvel som flis. */
+  min-height: 62px;
 }
 .bl-verktoy:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--border); }
 .bl-verktoy.active {
@@ -74,12 +132,12 @@
 }
 
 /* Namnet er sjølve grensesnittet mot læraren — det skal ikkje kappast
-   av. Men eit langt namn får heller ikkje sprengje rada. */
+   av. I ei flis får det brekke over to linjer i staden. */
 .bl-verktoy-namn {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 15ch;
+  display: block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 /* ──────────────── Teikneflata ──────────────── */
@@ -191,7 +249,7 @@
   gap: 8px;
   font-weight: 700;
 }
-.bl-felt input[type="text"], .bl-felt select {
+.bl-felt input[type="text"], .bl-felt input[type="search"], .bl-felt select {
   font-family: inherit;
   font-size: 1rem;
   padding: 8px 10px;
