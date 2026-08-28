@@ -39,6 +39,7 @@
 
   const ROT = 'hage/';
   const RUTE = 1.0;          // breidda på ei plantebed i verdseiningar
+  const BED = 1.55;          // jordflisa, som faktor på naturleg storleik
   const KOLONNAR = 6;
 
   let bib = null;            // { modellar, artar, palett, bokstavar }
@@ -285,7 +286,7 @@
      ut som ein feil, og eleven har ingen måte å flytte han på. */
   function pyntOya(ut, rx, rz) {
     if (!bib.pynt || !bib.pynt.length) return;
-    const bedRadius = 0.42;
+    const bedRadius = 0.58;
     const senter = [];
     for (let i = 0; i < LjodLetters.ALPHABET.length; i++) senter.push(plass(i));
 
@@ -342,6 +343,11 @@
     const rz = (radTal - 1) / 2 * RUTE * 0.92 + RUTE * 1.15;
     oy(ut, rx, rz);
     pyntOya(ut, rx, rz);
+    /* Kameraet måler avstanden sin mot desse. Ein hage for eit anna
+       alfabet får ei anna øy, og då skal ikkje nokon hugse å justere ei
+       hardkoda avstand. */
+    ut.rx = rx;
+    ut.rz = rz;
 
     LjodLetters.ALPHABET.forEach(function (ch, i) {
       const p = plass(i);
@@ -358,9 +364,12 @@
 
       /* Jorda ligg under kvar plante, ikkje berre under dei som ikkje
          har vakse enno: eit bed skal sjå ut som eit bed heile vegen. */
-      leggModell(bib.modellar['crops_dirtSingle'], ut, p.x, 0, p.z, 1, vinkel, !aktiv);
+      /* Bedet er større enn den naturlege flisa. Ved naturleg storleik
+         er han 40 cm i ei rute på 100, og då ser planta ut til å stå på
+         ingenting. */
+      leggModell(bib.modellar['crops_dirtSingle'], ut, p.x, 0, p.z, BED, vinkel, !aktiv);
 
-      let toppen = bib.modellar['crops_dirtSingle'].hogd;
+      let toppen = bib.modellar['crops_dirtSingle'].hogd * BED;
       if (steg > 0 && aktiv) {
         const mod = bib.modellar[art.steg[steg]];
         /* Fleire eksemplar i same bed. Éin blomsterstilk midt i eit bed
@@ -431,10 +440,38 @@
     return s;
   }
 
-  function lagProgram(gl) {
+  /* ── DJUPNESKYGGEN ──
+
+     Bokstavlappane er DOM oppå lerretet, og DOM veit ikkje kva som står
+     framfor kva. Ein lapp som ligg oppå eit tre som står framfor han er
+     stygt, og verre: han lyg om kvar planta står.
+
+     Difor blir scena teikna ein gong til, i lite format, med ein shader
+     som skriv djupna si i staden for ein farge. Så les vi det biletet
+     éin gong og slår opp i det for kvar lapp. Er det noko nærare
+     kameraet i den ruta, blir lappen gøymd.
+
+     WebGL 1 kan ikkje lese djupnebufferen direkte, og difor pakkar vi
+     djupna inn i dei fire fargebyta. Firetalsvektoren er den vanlege
+     pakkinga: kvart ledd tek med seg åtte nye bit. */
+  const DJUP_FS = [
+    'precision highp float;',
+    'void main() {',
+    '  vec4 e = vec4(1.0, 255.0, 65025.0, 16581375.0) * gl_FragCoord.z;',
+    '  e = fract(e);',
+    '  e -= e.yzww * vec4(1.0 / 255.0, 1.0 / 255.0, 1.0 / 255.0, 0.0);',
+    '  gl_FragColor = e;',
+    '}'
+  ].join('\n');
+
+  function pakkUt(d, i) {
+    return d[i] / 255 + d[i + 1] / 65025 + d[i + 2] / 16581375 + d[i + 3] / 4228250625;
+  }
+
+  function lagProgram(gl, fs) {
     const p = gl.createProgram();
     gl.attachShader(p, lagShader(gl, gl.VERTEX_SHADER, VS));
-    gl.attachShader(p, lagShader(gl, gl.FRAGMENT_SHADER, FS));
+    gl.attachShader(p, lagShader(gl, gl.FRAGMENT_SHADER, fs || FS));
     gl.linkProgram(p);
     if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
       throw new Error('program: ' + gl.getProgramInfoLog(p));
@@ -460,15 +497,47 @@
     if (!gl) throw new Error('ingen webgl-kontekst');
 
     const prog = lagProgram(gl);
+    const djupProg = lagProgram(gl, DJUP_FS);
     const buf = {
       pos: gl.createBuffer(), nor: gl.createBuffer(), far: gl.createBuffer()
     };
-    const stad = {
-      pos: gl.getAttribLocation(prog, 'aPos'),
-      nor: gl.getAttribLocation(prog, 'aNor'),
-      far: gl.getAttribLocation(prog, 'aFar'),
-      mvp: gl.getUniformLocation(prog, 'uMvp')
+    function stader(pr) {
+      return {
+        pos: gl.getAttribLocation(pr, 'aPos'),
+        nor: gl.getAttribLocation(pr, 'aNor'),
+        far: gl.getAttribLocation(pr, 'aFar'),
+        mvp: gl.getUniformLocation(pr, 'uMvp')
+      };
+    }
+    const stad = stader(prog);
+    const djupStad = stader(djupProg);
+
+    /* Djupnebiletet treng ikkje vere stort. Ein lapp er ei rute på tjue
+       piksel; ein tredjedels oppløysing tek han med god margin, og eit
+       lite bilete gjer readPixels billeg. */
+    const djup = {
+      tex: gl.createTexture(), fbo: gl.createFramebuffer(),
+      dybde: gl.createRenderbuffer(), b: 0, h: 0, px: null, klar: false
     };
+
+    function settDjupStorleik(b, h) {
+      if (djup.b === b && djup.h === h) return;
+      djup.b = b; djup.h = h;
+      djup.px = new Uint8Array(b * h * 4);
+      gl.bindTexture(gl.TEXTURE_2D, djup.tex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, b, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.bindRenderbuffer(gl.RENDERBUFFER, djup.dybde);
+      gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, b, h);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, djup.fbo);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, djup.tex, 0);
+      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, djup.dybde);
+      djup.klar = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    }
 
     gl.enable(gl.DEPTH_TEST);
     /* INGA BAKSIDEKUTTING. Fleire av Kenney-plantene — grasstrå, blad,
@@ -478,8 +547,21 @@
     gl.disable(gl.CULL_FACE);
 
     let hage = byggHage(profil);
+    /* Kameraet: vassrett vinkel, loddrett vinkel, og eit zoom-tal som
+       er ein faktor på avstanden. Dei tre er heile kameratilstanden. */
+    /* Zoom 1 er «heile øya med luft rundt». Standarden er nærare enn
+       det: hagen skal fylle biletet, ikkje ligge som ein flekk i det.
+       Bedene ligg godt innanfor kanten av øya, så bokstavane kjem ikkje
+       utanfor sjølv om øykanten gjer det. */
     let dreiing = -0.42;
+    let helling = 0.46;
+    let zoom = 0.78;
     let mvp = null;
+
+    const HELLING_MIN = 0.06;   // nesten i augehøgd med bakken
+    const HELLING_MAKS = 1.42;  // nesten rett ovanfrå
+    const ZOOM_MIN = 0.42;
+    const ZOOM_MAKS = 1.6;
 
     function lastOpp() {
       gl.bindBuffer(gl.ARRAY_BUFFER, buf.pos);
@@ -494,7 +576,10 @@
     function teikn() {
       const dpr = Math.min(root.devicePixelRatio || 1, 2);
       const b = vert.clientWidth || 640;
-      const h = Math.max(260, Math.round(b * 0.52));
+      /* Høgare enn før. Hagen fekk 52 % av breidda, og då blei plantene
+         små ved sida av bokstavlappane, som har ein fast storleik i
+         piksel. Det er plass på skjermen; hagen skal bruke han. */
+      const h = Math.max(340, Math.round(b * 0.68));
       canvas.style.height = h + 'px';
       canvas.width = Math.round(b * dpr);
       canvas.height = Math.round(h * dpr);
@@ -502,25 +587,84 @@
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-      /* Kameraet står så langt ute at heile hagen får plass, og litt
-         lenger ute på ein smal skjerm. Ei fast avstand som fungerer på
-         ein PC klipper dei ytste bedene på ein telefon. */
-      const smal = Math.min(1, (b / h) / 1.9);
-      const avstand = 8.6 + (1 - smal) * 5.2;
-      const hogde = 4.6 + (1 - smal) * 2.0;
-      const oye = [Math.sin(dreiing) * avstand, hogde, Math.cos(dreiing) * avstand];
-      const P = perspektiv(0.62, b / h, 0.5, 40);
-      const V = sePaa(oye, [0, 0.5, 0], [0, 1, 0]);
-      mvp = multiplo(P, V);
+      /* AVSTANDEN BLIR MÅLT, IKKJE GJETTA.
+
+         Vi projiserer randa av øya og toppen av dei høgaste plantene med
+         ein prøveavstand, ser kor langt utanfor ramma dei hamnar, og
+         skalerer avstanden med akkurat det. Skalaen i eit perspektiv er
+         omvendt proporsjonal med avstanden, så éi runde treffer.
+
+         Det er dette som gjer at hellinga kan gå frå augehøgd til rett
+         ovanfrå utan at nokon justerer eit tal: sett ovanfrå er øya
+         djup, sett frå sida er ho flat, og formelen for det er ikkje
+         verdt å skrive når ein kan måle. Ei hardkoda avstand klipte dei
+         ytste bedene tre gonger før dette stod her. */
+      const FOV = 0.62;
+
+      function kameraFor(d) {
+        return [
+          Math.sin(dreiing) * Math.cos(helling) * d,
+          Math.sin(helling) * d,
+          Math.cos(dreiing) * Math.cos(helling) * d
+        ];
+      }
+      /* Opp-vektoren må ikkje vere parallell med blikkretninga. Står
+         kameraet rett over hagen, er han det — og då blir biletet borte.
+         Difor stoppar hellinga før 90 grader. */
+      function matrise(d) {
+        return multiplo(perspektiv(FOV, b / h, 0.4, 200),
+          sePaa(kameraFor(d), [0, 0.4, 0], [0, 1, 0]));
+      }
+
+      const proeve = 12;
+      const M = matrise(proeve);
+      let verst = 0.001;
+      for (let i = 0; i < 24; i++) {
+        const v = i / 24 * Math.PI * 2;
+        const k = omkrins(v, hage.rx, hage.rz);
+        [0, 1.35].forEach(function (y) {
+          const cx = M[0] * k.x + M[4] * y + M[8] * k.z + M[12];
+          const cy = M[1] * k.x + M[5] * y + M[9] * k.z + M[13];
+          const cw = M[3] * k.x + M[7] * y + M[11] * k.z + M[15];
+          if (cw <= 0.01) { verst = Math.max(verst, 3); return; }
+          verst = Math.max(verst, Math.abs(cx / cw), Math.abs(cy / cw));
+        });
+      }
+      /* 0,92 og ikkje 1,0: litt luft, så kanten ikkje ligg klemt mot
+         ramma og bokstavlappane får plass utanfor plantene sine. */
+      const grunn = proeve * (verst / 0.92) * zoom;
+      mvp = matrise(grunn);
+
+      function bind(st) {
+        [['pos', 3], ['nor', 3], ['far', 3]].forEach(function (d) {
+          if (st[d[0]] < 0) return;
+          gl.bindBuffer(gl.ARRAY_BUFFER, buf[d[0]]);
+          gl.enableVertexAttribArray(st[d[0]]);
+          gl.vertexAttribPointer(st[d[0]], d[1], gl.FLOAT, false, 0, 0);
+        });
+      }
 
       gl.useProgram(prog);
       gl.uniformMatrix4fv(stad.mvp, false, mvp);
-      [['pos', 3], ['nor', 3], ['far', 3]].forEach(function (d) {
-        gl.bindBuffer(gl.ARRAY_BUFFER, buf[d[0]]);
-        gl.enableVertexAttribArray(stad[d[0]]);
-        gl.vertexAttribPointer(stad[d[0]], d[1], gl.FLOAT, false, 0, 0);
-      });
+      bind(stad);
       gl.drawArrays(gl.TRIANGLES, 0, hage.tal);
+
+      /* Same scena ein gong til, i lite format, med djupna som farge. */
+      settDjupStorleik(Math.max(48, Math.round(canvas.width / 3)),
+        Math.max(48, Math.round(canvas.height / 3)));
+      if (djup.klar) {
+        gl.bindFramebuffer(gl.FRAMEBUFFER, djup.fbo);
+        gl.viewport(0, 0, djup.b, djup.h);
+        gl.clearColor(1, 1, 1, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.useProgram(djupProg);
+        gl.uniformMatrix4fv(djupStad.mvp, false, mvp);
+        bind(djupStad);
+        gl.drawArrays(gl.TRIANGLES, 0, hage.tal);
+        gl.readPixels(0, 0, djup.b, djup.h, gl.RGBA, gl.UNSIGNED_BYTE, djup.px);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
 
       plasserLapper(b, h);
     }
@@ -538,17 +682,43 @@
 
            Han blir skoven eit lite steg mot kameraet, så han ikkje
            forsvinn inn i stilken. Retninga følgjer dreiinga. */
-        const mot = 0.34;
+        const mot = 0.48;
         const x = bed.x + Math.sin(dreiing) * mot;
-        const y = 0.10;
+        const y = 0.13;
         const z = bed.z + Math.cos(dreiing) * mot;
         const cx = mvp[0] * x + mvp[4] * y + mvp[8] * z + mvp[12];
         const cy = mvp[1] * x + mvp[5] * y + mvp[9] * z + mvp[13];
+        const cz = mvp[2] * x + mvp[6] * y + mvp[10] * z + mvp[14];
         const cw = mvp[3] * x + mvp[7] * y + mvp[11] * z + mvp[15];
         if (cw <= 0) { el.style.visibility = 'hidden'; return; }
-        el.style.visibility = '';
-        el.style.left = ((cx / cw * 0.5 + 0.5) * b) + 'px';
-        el.style.top = ((-cy / cw * 0.5 + 0.5) * h) + 'px';
+
+        const nx = cx / cw, ny = cy / cw;
+        /* Utanfor biletet: bort med han. Elles ville han lege og klemt
+           seg mot kanten av ramma og peikt på ei plante ingen ser. */
+        if (nx < -1.02 || nx > 1.02 || ny < -1.02 || ny > 1.02) {
+          el.style.visibility = 'hidden';
+          return;
+        }
+
+        /* Slå opp i djupnebiletet. Er noko nærare kameraet i den ruta,
+           står lappen bak geometrien og skal ikkje synast.
+
+           Slingringsmonnet er ikkje pynt: lappen sit rett over jorda han
+           høyrer til, så utan han ville kvar einaste lapp gøymt seg bak
+           sitt eige bed. */
+        let skjult = false;
+        if (djup.klar && djup.px) {
+          const px = Math.round((nx * 0.5 + 0.5) * (djup.b - 1));
+          const py = Math.round((ny * 0.5 + 0.5) * (djup.h - 1));
+          if (px >= 0 && px < djup.b && py >= 0 && py < djup.h) {
+            const scene = pakkUt(djup.px, (py * djup.b + px) * 4);
+            const min = (cz / cw) * 0.5 + 0.5;
+            skjult = scene < min - 0.0022;
+          }
+        }
+        el.style.visibility = skjult ? 'hidden' : '';
+        el.style.left = ((nx * 0.5 + 0.5) * b) + 'px';
+        el.style.top = ((-ny * 0.5 + 0.5) * h) + 'px';
       });
     }
 
@@ -571,27 +741,100 @@
     }
     byggLapper();
 
-    /* ── Dreiing ──
-       Berre vassrett, og berre så mykje at ein kan sjå bak dei fremste
-       plantene. Fri bane i alle retningar er lett å miste seg i og
-       vanskeleg å komme tilbake frå. */
-    let drar = false, sisteX = 0;
-    canvas.style.touchAction = 'pan-y';
+    /* ── Å SJÅ PÅ HAGEN ──
+
+       Heile vegen rundt vassrett, og frå nesten i augehøgd til nesten
+       rett ovanfrå. Loddrett MÅ stoppe før 90 grader: står kameraet rett
+       over hagen, blir opp-vektoren parallell med blikkretninga og
+       biletet forsvinn.
+
+       Ein finger dreier, to fingrar knip zoom. Hjulet zoomar. Piltastane
+       dreier og pluss og minus zoomar, så hagen kan sjåast utan mus —
+       lerretet har tabindex nettopp for det. */
+
+    function stell() {
+      helling = Math.max(HELLING_MIN, Math.min(HELLING_MAKS, helling));
+      zoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAKS, zoom));
+      /* Dreiinga går heile vegen rundt og har ingen grense — men han
+         blir halden i [0, 2π) så talet ikkje veks i det uendelege. */
+      dreiing = (dreiing % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+      teikn();
+    }
+
+    const fingrar = {};        // pointerId -> {x, y}
+    let knipAvstand = 0;
+    /* Draginga eig både aksane, så nettlesaren skal ikkje rulle sida
+       samtidig. */
+    canvas.style.touchAction = 'none';
+
+    function fingerliste() {
+      return Object.keys(fingrar).map(function (k) { return fingrar[k]; });
+    }
 
     canvas.addEventListener('pointerdown', function (e) {
-      drar = true; sisteX = e.clientX;
-      canvas.setPointerCapture && canvas.setPointerCapture(e.pointerId);
+      fingrar[e.pointerId] = { x: e.clientX, y: e.clientY };
+      const f = fingerliste();
+      if (f.length === 2) knipAvstand = Math.hypot(f[0].x - f[1].x, f[0].y - f[1].y);
+      /* Fangst kan feile — ein peikar som alt er borte, ein nettlesar som
+         ikkje vil. Det skal ikkje stoppe draginga. */
+      try {
+        if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
+      } catch (feil) { /* draginga går fint utan */ }
     });
+
     canvas.addEventListener('pointermove', function (e) {
-      if (!drar) return;
-      dreiing += (e.clientX - sisteX) * 0.008;
-      dreiing = Math.max(-1.15, Math.min(0.31, dreiing));
-      sisteX = e.clientX;
-      teikn();
+      const gamal = fingrar[e.pointerId];
+      if (!gamal) return;
+      const dx = e.clientX - gamal.x;
+      const dy = e.clientY - gamal.y;
+      gamal.x = e.clientX; gamal.y = e.clientY;
+
+      const f = fingerliste();
+      if (f.length >= 2) {
+        const ny = Math.hypot(f[0].x - f[1].x, f[0].y - f[1].y);
+        if (knipAvstand > 0 && ny > 0) zoom *= knipAvstand / ny;
+        knipAvstand = ny;
+      } else {
+        dreiing += dx * 0.008;
+        helling += dy * 0.006;
+      }
+      stell();
     });
+
     ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (n) {
-      canvas.addEventListener(n, function () { drar = false; });
+      canvas.addEventListener(n, function (e) {
+        delete fingrar[e.pointerId];
+        if (fingerliste().length < 2) knipAvstand = 0;
+      });
     });
+
+    canvas.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      zoom *= (e.deltaY > 0 ? 1.12 : 1 / 1.12);
+      stell();
+    }, { passive: false });
+
+    canvas.tabIndex = 0;
+    canvas.setAttribute('role', 'application');
+    canvas.setAttribute('aria-label',
+      'Hagen sett i 3D. Dra for å snu, knip eller bruk pluss og minus for å zoome.');
+    canvas.addEventListener('keydown', function (e) {
+      const steg = 0.14;
+      if (e.key === 'ArrowLeft') dreiing -= steg;
+      else if (e.key === 'ArrowRight') dreiing += steg;
+      else if (e.key === 'ArrowUp') helling += steg * 0.7;
+      else if (e.key === 'ArrowDown') helling -= steg * 0.7;
+      else if (e.key === '+' || e.key === '=') zoom /= 1.14;
+      else if (e.key === '-') zoom *= 1.14;
+      else return;
+      e.preventDefault();
+      stell();
+    });
+
+    function settUtsyn(d, hl, z) {
+      dreiing = d; helling = hl; zoom = z;
+      stell();
+    }
 
     let tidsavbrot = null;
     function paaStorleik() {
@@ -605,6 +848,11 @@
     return {
       element: vert,
       teikn: teikn,
+      /* Knappane over hagen styrer kameraet gjennom desse. */
+      zoomInn: function () { zoom /= 1.18; stell(); },
+      zoomUt: function () { zoom *= 1.18; stell(); },
+      midtstill: function () { settUtsyn(-0.42, 0.46, 0.78); },
+      utsyn: function () { return { dreiing: dreiing, helling: helling, zoom: zoom }; },
       oppdater: function (nyProfil) {
         hage = byggHage(nyProfil);
         lastOpp();

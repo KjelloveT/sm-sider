@@ -553,14 +553,17 @@ body[data-font="lesefont"] .ljod-bed-letter {
   position: absolute;
   transform: translate(-50%, -50%);
   font-family: inherit;
-  font-size: 0.95rem;
+  /* Mindre enn før. Lappane har fast storleik i piksel medan hagen
+     skalerer med lerretet, så dei vaks i forhold til plantene på ein
+     liten skjerm og tok over biletet. */
+  font-size: 0.8rem;
   font-weight: 700;
   line-height: 1;
   color: #1a1a1a;
   background: rgba(255, 255, 255, 0.86);
   border: 2px solid #1a1a1a;
   border-radius: 6px;
-  padding: 2px 6px 3px;
+  padding: 1px 5px 2px;
   white-space: nowrap;
 }
 .ljod-hage3d-lapp.is-locked {
@@ -596,3 +599,36 @@ body[data-font="lesefont"] .ljod-bed-letter {
   padding: 8px 12px;
 }
 .ljod-hage3d-prov .ljod-hint { margin: 0; max-width: 34ch; font-size: 0.78rem; }
+
+/* Kamerastyringa ligg oppå lerretet, øvst til høgre. */
+.ljod-hage3d-styring {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.ljod-hage3d-knapp {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.88);
+  border: 2px solid #1a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+  /* Faste fargar som lappane: hagen er ein stad med sin eigen himmel,
+     og knappane står oppå den himmelen, ikkje på temaflata. */
+}
+.ljod-hage3d-knapp:hover { background: #fff; }
+.ljod-hage3d-knapp:active { transform: translateY(1px); }
+.ljod-hage3d-knapp:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }

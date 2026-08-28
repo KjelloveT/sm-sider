@@ -41,9 +41,11 @@
       if (hage3d) hage3d.riv();
       hage3d = LjodHage3D.lag(vert, p);
 
+      vert.appendChild(kameraknappar(hage3d));
+
       const under = R().h('div', 'ljod-hage3d-under');
       under.appendChild(R().h('p', 'ljod-hint ljod-hage3d-hint',
-        'Dra i hagen for å sjå han frå ei anna side.'));
+        'Dra for å snu hagen, knip for å zoome.'));
       under.appendChild(proveknapp(host, p));
       host.insertBefore(under, vert.nextSibling);
     }).catch(function (e) {
@@ -51,6 +53,27 @@
          eleven vere i fred. */
       console.warn('[Ljodstigen] 3D-hagen lasta ikkje:', e.message);
     });
+  }
+
+  /* Knappane ligg oppå lerretet, ikkje under det: dei høyrer til hagen,
+     og ein zoomknapp som står langt frå det han zoomar er ein knapp ein
+     må leite etter. Dei gjer det same som knip og hjul, for dei som
+     ikkje har nokon av delane. */
+  function kameraknappar(h3d) {
+    const rad = R().h('div', 'ljod-hage3d-styring');
+    [
+      ['+', 'Zoom inn', function () { h3d.zoomInn(); }],
+      ['−', 'Zoom ut', function () { h3d.zoomUt(); }],
+      ['⌂', 'Midtstill hagen', function () { h3d.midtstill(); }]
+    ].forEach(function (k) {
+      const b = R().h('button', 'ljod-hage3d-knapp', k[0]);
+      b.type = 'button';
+      b.title = k[1];
+      b.setAttribute('aria-label', k[1]);
+      b.addEventListener('click', k[2]);
+      rad.appendChild(b);
+    });
+    return rad;
   }
 
   /* ── PRØVEKNAPP ──
