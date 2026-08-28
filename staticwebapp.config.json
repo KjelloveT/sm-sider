@@ -9,7 +9,8 @@
       "/css/*",
       "/_resources/*",
       "/ljodstigen/lyd/*",
-      "/ljodstigen/jakta/*"
+      "/ljodstigen/jakta/*",
+      "/ljodstigen/hage/*"
     ]
   },
   "routes": [
@@ -77,6 +78,13 @@
       "route": "/ljodstigen/jakta.html",
       "headers": {
         "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    },
+    {
+      "_kommentar": "Plantebiblioteket til bokstavhagen blir bygd av bygg_ljodstigen_hage.py, og planter.bin blir skriven på nytt under same namn kvar gong artane endrar seg. Med immutable ville ei elevmaskin sitje med eit gammalt bibliotek der modellane ligg andre stader enn indeksen seier, og hagen ville teikne feil planter utan ein feil som forklarer kvifor. Ei revalidering kostar eit 304-svar.",
+      "route": "/ljodstigen/hage/*",
+      "headers": {
+        "Cache-Control": "public, max-age=300, must-revalidate"
       }
     },
     {

@@ -518,3 +518,59 @@ body[data-font="lesefont"] .ljod-bed-letter {
   .ljod-table tr.is-weak td { background: none; font-weight: 700; }
   body { background: #fff; color: #000; }
 }
+
+/* ══════════════════════════════════════════════
+   BOKSTAVHAGEN I 3D
+   ══════════════════════════════════════════════ */
+
+.ljod-hage3d {
+  position: relative;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  /* Ein himmel bak hagen. Fast farge og ikkje ein temavariabel: hagen
+     er ein stad, og han skal sjå lik ut i alle dei 21 temaa. */
+  background: linear-gradient(#DCEFF6 0%, #EFF6E4 62%);
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.ljod-hage3d-lerret {
+  display: block;
+  width: 100%;
+  cursor: grab;
+}
+.ljod-hage3d-lerret:active { cursor: grabbing; }
+
+.ljod-hage3d-lapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Bokstaven står over planta si. Mørk tekst på ei lys brikke, uavhengig
+   av tema, av same grunn som himmelen over. */
+.ljod-hage3d-lapp {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.86);
+  border: 2px solid #1a1a1a;
+  border-radius: 6px;
+  padding: 2px 6px 3px;
+  white-space: nowrap;
+}
+.ljod-hage3d-lapp.is-locked {
+  color: #6b6b6b;
+  border-color: #9a9a9a;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.ljod-hage3d-hint { margin-top: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ljod-hage3d-lerret { cursor: default; }
+}

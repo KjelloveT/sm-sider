@@ -3,6 +3,19 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.38] — 2026-08-28
+
+### Endra
+- **Bokstavhagen er i 3D.** Kvar bokstav er ei plante som veks gjennom seks steg, og vekststeget er framleis boksen i den adaptive motoren: det eleven ser er nøyaktig det motoren veit, og hagen visnar aldri. Femten artar frå Kenney sin Nature Kit — blomar, buskar, gras, sopp, kaktus, korn og sju slag tre — fordelte fast på dei 29 bokstavane, så eleven kjenner att si eiga s-plante frå gong til gong.
+  - **Blomane har ein ekte knopp-til-blom.** `flower_*A/B/C` er lukka knopp, open blome og full blom, så dei tre siste stega er ein blomstring og ikkje ei oppskalering. Frå steg 4 står det fleire stilkar i bedet: éin blome midt i eit bed ser ut som ein blome nokon gløymde.
+  - **Ingen spelmotor.** Hagen teiknar 6 500 trekantar utan texturar, animasjon eller fysikk — hundre linjer WebGL. three.js ville lagt 600 kB på ei skule-iPad og dratt inn ES-modular og eit importmap i eit prosjekt utan byggjesteg.
+  - **Ingen animasjonsløkke.** Hagen blir teikna på nytt når noko endrar seg — sida opnar, vindauget skiftar storleik, eleven dreier på han — og elles ikkje. Ei iPad som ligg open med hagen framme brukar null batteri på han. Ei omteikning tek 1,7 ms.
+  - **Bokstavane er DOM.** Namnelappane er element over lerretet, ikkje pikslar i det, så dei arvar lesefonten eleven har valt og kan lesast av ein skjermlesar.
+  - **Den flate hagen står att som reserve.** Han blir teikna først, og 3D-hagen tek over når han har lasta. Ei maskin utan WebGL, eller ei henting som ikkje kjem fram, endar med den gamle hagen og ikkje med ei tom rute.
+- **`bygg_ljodstigen_hage.py`** hentar dei femti modellane vi brukar ut av Nature Kit og skriv geometrien til `planter.bin` (227 kB) med flate normalar og ein felles palett. Difor finst det ingen glTF-lastar i nettlesaren: hagen treng trekantar med ein farge, ikkje scenegrafar og PBR.
+- Modellane arvar målestokken frå Kenney i staden for å bli normaliserte kvar for seg. Første utgåva normaliserte alt til høgd 1, og då blei jordflisa — 0,10 høg og 1,0 brei — ti gonger for brei.
+- `/ljodstigen/hage/*` blir revalidert kvar femte minutt og ikkje cacha `immutable`, av same grunn som atlaset: `planter.bin` blir skriven på nytt under same namn kvar gong artane endrar seg.
+
 ## [1.36] — 2026-08-27
 
 ### Lagt til

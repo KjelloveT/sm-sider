@@ -18,7 +18,38 @@
 
   /* ──────────────── Hagen ──────────────── */
 
+  /* HAGEN ER I 3D, MED DEN FLATE SOM RESERVE.
+
+     Ei skule-iPad utan WebGL, eit avslått GPU-lag, ei henting som ikkje
+     kom fram — alle tre skal ende med ein hage eleven kan sjå, ikkje med
+     ei tom rute. Den flate hagen står difor uendra under, og han er det
+     som blir teikna medan 3D-hagen lastar.
+
+     Talet under hagen står utanfor lerretet i begge tilfelle. Det er
+     framgangen i tekst, og han skal ikkje krevje ein GPU. */
+  let hage3d = null;
+
   function renderGarden(host, p) {
+    render2D(host, p);
+    if (!LjodHage3D.stott()) return;
+
+    LjodHage3D.last().then(function () {
+      if (!host.isConnected) return;
+      const flat = host.querySelector('.ljod-garden');
+      const vert = R().h('div', 'ljod-hage3d');
+      if (flat) host.replaceChild(vert, flat); else host.insertBefore(vert, host.firstChild);
+      if (hage3d) hage3d.riv();
+      hage3d = LjodHage3D.lag(vert, p);
+      host.insertBefore(R().h('p', 'ljod-hint ljod-hage3d-hint',
+        'Dra i hagen for å sjå han frå ei anna side.'), vert.nextSibling);
+    }).catch(function (e) {
+      /* Den flate hagen står allereie. Vi seier frå i konsollen og lèt
+         eleven vere i fred. */
+      console.warn('[Ljodstigen] 3D-hagen lasta ikkje:', e.message);
+    });
+  }
+
+  function render2D(host, p) {
     const a = p.adaptive;
     R().clear(host);
 
@@ -47,7 +78,10 @@
     const st = LjodAdaptive.stats(a);
     const sum = R().h('p', 'ljod-garden-sum');
     sum.textContent = 'Du har ' + st.planted + ' av ' + st.total + ' bokstavar i hagen.' +
-      (st.mastered ? ' ' + st.mastered + ' har vorte tre.' : '');
+      /* «vorte tre» stemde då alle plantene var same plante. No er
+         nokre av dei blomar og buskar, og då er «fullvaksen» det ordet
+         som gjeld for alle. */
+      (st.mastered ? ' ' + st.mastered + ' er fullvaksne.' : '');
     host.appendChild(sum);
   }
 
@@ -152,6 +186,9 @@
 
   root.LjodHage = {
     renderGarden: renderGarden,
+    /* Den aktive 3D-hagen, om han finst. Meny og innstillingar treng han
+       for å teikne på nytt når noko utanfor hagen endrar seg. */
+    hage3d: function () { return hage3d; },
     renderStars: renderStars,
     renderBadges: renderBadges,
     celebrate: celebrate
