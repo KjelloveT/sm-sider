@@ -12,6 +12,12 @@
 
    SOKKELEN ER TEIKNA, MEN LÅST. Han kan ikkje redigerast, og det skal
    synast: det er den enklaste måten å forklare at verda byggjer oppå han.
+
+   TO LAG. Rutenettet er teikn — det validatoren reknar på. Pyntelaget er
+   spritenamn i eit oppslag på «x,y», og det ser validatoren aldri: ein
+   kloss utan funksjon skal ikkje kunne stengje ein veg. Verktøyet veit
+   kva lag det høyrer til på lengda: eitt teikn er rutenett, eit lengre
+   namn er pynt.
    ══════════════════════════════════════════════ */
 (function (root) {
   'use strict';
@@ -40,6 +46,7 @@
     opts = opts || {};
     const r = {
       rader: [],
+      pynt: {},                      // 'x,y' -> spritenamn
       cellePx: opts.cellePx || 40,
       atlas: opts.atlas,             // { frames, meta } frå atlas.json
       verktoy: '=',
@@ -66,9 +73,28 @@
       el.style.backgroundRepeat = 'no-repeat';
     }
 
+    /* Pynt held sideforholdet og står i botnen av ruta — eit tre skal
+       vekse oppover ut av ruta, ikkje bli klemt ned i ein kvadrat. Same
+       regel som pyntLag() i bane.js, så redigeraren viser det spelet
+       faktisk teiknar. */
+    function pyntBakgrunn(el, spriteNamn) {
+      const f = r.atlas && r.atlas.frames[spriteNamn] && r.atlas.frames[spriteNamn].frame;
+      if (!f) { el.style.backgroundImage = ''; return; }
+      const C = r.cellePx;
+      const k = C / f.w;
+      el.style.backgroundImage = 'url("jakta/atlas.png")';
+      el.style.backgroundSize = (r.atlas.meta.size.w * k) + 'px ' +
+        (r.atlas.meta.size.h * k) + 'px';
+      el.style.backgroundPosition = (-f.x * k) + 'px ' + (-f.y * k) + 'px';
+      el.style.backgroundRepeat = 'no-repeat';
+      el.style.height = (f.h * k) + 'px';
+    }
+
     /* ──────────────── Bygging ──────────────── */
 
-    r.settRutenett = function (tekst) {
+    r.settRutenett = function (tekst, pynt) {
+      r.pynt = {};
+      (pynt || []).forEach(function (p) { r.pynt[p[0] + ',' + p[1]] = p[2]; });
       r.rader = String(tekst).replace(/\r/g, '').split('\n')
         .filter(function (l) { return l.trim().length > 0 && l.trim().slice(0, 2) !== '//'; });
       /* Alltid RADER høge og like lange — ein redigerar skal ikkje kunne
@@ -84,12 +110,26 @@
     r.tekst = function () { return r.rader.join('\n'); };
     r.breidd = function () { return r.rader[0] ? r.rader[0].length : 0; };
 
+    /** Pyntelaget som [[x, y, sprite], ...], sortert så diffar blir små. */
+    r.pyntListe = function () {
+      return Object.keys(r.pynt).map(function (k) {
+        const d = k.split(',');
+        return [+d[0], +d[1], r.pynt[k]];
+      }).sort(function (a, b) { return (a[1] - b[1]) || (a[0] - b[0]); });
+    };
+
     r.settBreidd = function (skjermar) {
       const ny = Math.max(1, Math.min(30, skjermar)) * SKJERM;
       const gamal = r.breidd();
       r.rader = r.rader.map(function (l, y) {
         if (ny > gamal) return l + '.'.repeat(ny - gamal);
         return l.slice(0, ny);
+      });
+      /* Pynt utanfor den nye breidda blir borte for godt. Å halde på
+         usynlege klossar ville la ein bane vekse tilbake til noko
+         læraren trudde han hadde fjerna. */
+      Object.keys(r.pynt).forEach(function (k) {
+        if (+k.split(',')[0] >= ny) delete r.pynt[k];
       });
       /* Døra og startpunktet må halde seg innanfor. Blir banen smalare,
          flyttar dei til kvar sin ende i staden for å forsvinne — ein
@@ -157,21 +197,56 @@
     }
 
     function teiknCelle(el, t) {
+      const x = +el.dataset.x, y = +el.dataset.y;
+      const pyntNamn = r.pynt[x + ',' + y];
       el.dataset.teikn = t;
       el.className = 'bl-celle' + (t === '@' ? ' bl-start' : '');
       el.textContent = '';
       bakgrunn(el, SPRITE[t]);
       if (t === '@') el.textContent = '★';
+
+      /* Pynten ligg i eit eige element oppå ruta, ikkje som bakgrunn på
+         henne: ei rute kan ha både ei plattform og ein lykt på seg, og
+         eit element kan berre ha éin bakgrunn. */
+      if (pyntNamn) {
+        const lag = document.createElement('span');
+        lag.className = 'bl-pynt';
+        pyntBakgrunn(lag, pyntNamn);
+        el.appendChild(lag);
+      }
+
       el.setAttribute('aria-label',
-        'Rad ' + (+el.dataset.y + 1) + ', kolonne ' + (+el.dataset.x + 1) + ': ' + (NAMN[t] || t));
+        'Rad ' + (y + 1) + ', kolonne ' + (x + 1) + ': ' + (NAMN[t] || t) +
+        (pyntNamn ? ', med ' + JaktaBlokker.namnFor(pyntNamn) : ''));
     }
 
     /* ──────────────── Maling ──────────────── */
 
     function mal(x, y) {
       const t = r.verktoy;
-      const gamal = r.rader[y][x];
-      if (gamal === t) return;
+
+      /* Eitt teikn er rutenett, eit lengre namn er ein pyntekloss. Det
+         er lengda som skil dei, og difor kan pyntekatalogen vekse utan
+         at nokon må finne på nye ledige teikn. */
+      if (t.length > 1) {
+        if (r.pynt[x + ',' + y] === t) return;
+        r.pynt[x + ',' + y] = t;
+        teiknCelle(r.celler[y][x], r.rader[y][x]);
+        r.onEndra();
+        return;
+      }
+
+      /* Viskelêret tek pynten først. Ligg det ein lykt oppå ei plattform,
+         er det lykta ein siktar på — plattforma ligg der framleis og kan
+         viskast ut med eit trykk til. */
+      if (t === '.' && r.pynt[x + ',' + y]) {
+        delete r.pynt[x + ',' + y];
+        teiknCelle(r.celler[y][x], r.rader[y][x]);
+        r.onEndra();
+        return;
+      }
+
+      if (r.rader[y][x] === t) return;
 
       /* Det kan berre vere eitt startpunkt og éi dør. Set ein eit nytt,
          forsvinn det gamle — det er meir forståeleg enn ei feilmelding

@@ -53,7 +53,7 @@
     if (String(id).indexOf('eigen:') === 0) {
       const b = JaktaEigne.hent(String(id).slice(6));
       return b ? { id: id, namn: b.namn, type: b.type, rutenett: b.rutenett,
-                   bokstavar: b.bokstavar, eigen: true } : null;
+                   bokstavar: b.bokstavar, pynt: b.pynt, eigen: true } : null;
     }
     return JaktaBaner.hent(id);
   }
@@ -119,7 +119,10 @@
 
       /* Banefila teiknar berre det som står PÅ sokkelen; dei tre nedste
          radene legg byggjaren til. Sjå bane.js. */
-      this.bane = JaktaBane.bygg(this, def.rutenett, { basisRader: BASIS_RADER });
+      this.bane = JaktaBane.bygg(this, def.rutenett, {
+        basisRader: BASIS_RADER,
+        pynt: def.pynt || []
+      });
 
       this.spelar = JaktaSpelar.lag(this, this.bane.start.x, this.bane.start.y, {
         farge: 'Green'

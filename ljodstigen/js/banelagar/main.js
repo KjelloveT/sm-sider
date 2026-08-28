@@ -13,14 +13,11 @@
 (function (root) {
   'use strict';
 
-  const VERKTOY = [
-    { t: '=', namn: 'Plattform', sprite: 'tile_bridge' },
-    { t: 'P', namn: 'Bokstavsokkel', sprite: 'tile_block' },
-    { t: 'c', namn: 'Mynt', sprite: 'tile_coin' },
-    { t: 'T', namn: 'Tre', sprite: 'background_tree' },
-    { t: '@', namn: 'Start', sprite: null },
-    { t: 'D', namn: 'Dør', sprite: 'tile_door' },
-    { t: '.', namn: 'Viskelêr', sprite: null }
+  /* Verktøy som ikkje er ein kloss i biblioteket: startpunktet og
+     viskelêret. Dei har ikkje eit sprite, så dei står her. */
+  const REIDSKAP = [
+    { t: '@', namn: 'Start', teikn: '★' },
+    { t: '.', namn: 'Viskelêr', teikn: '✕' }
   ];
 
   let atlas = null;
@@ -31,32 +28,113 @@
 
   /* ──────────────── Palett ──────────────── */
 
+  /* HUNDRE OG FEMTI KLOSSAR I EI RAD ER INGEN MENY. Dei ligg i grupper,
+     éi open om gongen, med eit søkjefelt over. Det er skilnaden mellom
+     eit bibliotek ein kan bla i og ei veggflate.
+
+     Namnet står på kvar knapp. Det er ikkje pynt: det er slik læraren
+     kan seie «stigen bør kunne klatrast» og vi veit begge kva kloss det
+     gjeld. Sprite-nøkkelen ligg i title-attributtet for same grunn. */
+  function ikonFor(el, spriteNamn, px) {
+    const f = atlas && atlas.frames[spriteNamn] && atlas.frames[spriteNamn].frame;
+    if (!f) return false;
+    /* Sideforhold: eit tre er dobbelt så høgt som breitt, og skal ikkje
+       stå og skjelve i ei kvadratisk rute. Skalér etter den lengste sida. */
+    const k = px / Math.max(f.w, f.h);
+    el.style.backgroundImage = 'url("jakta/atlas.png")';
+    el.style.backgroundSize = (atlas.meta.size.w * k) + 'px ' + (atlas.meta.size.h * k) + 'px';
+    el.style.backgroundPosition = (-f.x * k) + 'px ' + (-f.y * k) + 'px';
+    return true;
+  }
+
+  function velgVerktoy(t, knapp) {
+    gitter.verktoy = t;
+    const gamle = document.querySelectorAll('.bl-verktoy.active');
+    Array.prototype.forEach.call(gamle, function (c) { c.classList.remove('active'); });
+    knapp.classList.add('active');
+  }
+
+  function lagKnapp(t, namn, spriteNamn, tittel) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'bl-verktoy';
+    b.dataset.teikn = t;
+    b.dataset.sok = (namn + ' ' + (spriteNamn || '')).toLowerCase();
+    if (tittel) b.title = tittel;
+    const ikon = document.createElement('span');
+    ikon.className = 'bl-ikon';
+    if (!spriteNamn || !ikonFor(ikon, spriteNamn, 30)) ikon.textContent = t === '@' ? '★' : '✕';
+    b.appendChild(ikon);
+    const merkelapp = document.createElement('span');
+    merkelapp.className = 'bl-verktoy-namn';
+    merkelapp.textContent = namn;
+    b.appendChild(merkelapp);
+    b.addEventListener('click', function () { velgVerktoy(t, b); });
+    return b;
+  }
+
   function byggPalett() {
     const vert = $('palett');
-    VERKTOY.forEach(function (v, i) {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'bl-verktoy' + (i === 0 ? ' active' : '');
-      b.dataset.teikn = v.t;
-      const ikon = document.createElement('span');
-      ikon.className = 'bl-ikon';
-      if (v.sprite && atlas && atlas.frames[v.sprite]) {
-        const f = atlas.frames[v.sprite].frame, C = 30;
-        const sx = C / f.w, sy = C / f.h;
-        ikon.style.backgroundImage = 'url("jakta/atlas.png")';
-        ikon.style.backgroundSize = (atlas.meta.size.w * sx) + 'px ' + (atlas.meta.size.h * sy) + 'px';
-        ikon.style.backgroundPosition = (-f.x * sx) + 'px ' + (-f.y * sy) + 'px';
-      } else {
-        ikon.textContent = v.t === '@' ? '★' : '✕';
+    vert.innerHTML = '';
+
+    JaktaBlokker.GRUPPER.forEach(function (g, gi) {
+      const boks = document.createElement('details');
+      boks.className = 'bl-gruppe';
+      boks.open = gi === 0;
+
+      const tittel = document.createElement('summary');
+      tittel.textContent = g.namn + ' (' + g.blokker.length + ')';
+      boks.appendChild(tittel);
+
+      if (g.hint) {
+        const h = document.createElement('p');
+        h.className = 'ljod-hint';
+        h.textContent = g.hint;
+        boks.appendChild(h);
       }
-      b.appendChild(ikon);
-      b.appendChild(document.createTextNode(v.namn));
-      b.addEventListener('click', function () {
-        gitter.verktoy = v.t;
-        Array.prototype.forEach.call(vert.children, function (c) { c.classList.remove('active'); });
-        b.classList.add('active');
+
+      const rad = document.createElement('div');
+      rad.className = 'bl-palett';
+
+      /* Startpunktet og viskelêret høyrer saman med dei fem som gjer
+         noko — det er den gruppa ein arbeider i mest. */
+      if (g.id === 'funksjon') {
+        REIDSKAP.forEach(function (v) {
+          rad.appendChild(lagKnapp(v.t, v.namn, null, null));
+        });
+      }
+
+      g.blokker.forEach(function (b) {
+        /* Klossar med funksjon er teikn i rutenettet; resten er pynt, og
+           då er sjølve spritenamnet verktøyet. Sjå mal() i rutenett.js. */
+        rad.appendChild(lagKnapp(b.f || b.s, b.n, b.s, b.s));
       });
-      vert.appendChild(b);
+
+      boks.appendChild(rad);
+      vert.appendChild(boks);
+    });
+
+    /* Første knappen — Start — er vald frå byrjinga, så noko alltid er det. */
+    const forste = vert.querySelector('.bl-verktoy[data-teikn="="]');
+    if (forste) velgVerktoy('=', forste);
+  }
+
+  /* Søket opnar gruppene som har treff og lukkar dei som ikkje har det.
+     Med hundre og femti klossar er det raskare å skrive «lykt» enn å
+     hugse om ho ligg under Natur eller Bygningar. */
+  function filtrer(ord) {
+    const q = String(ord || '').trim().toLowerCase();
+    const grupper = document.querySelectorAll('.bl-gruppe');
+    Array.prototype.forEach.call(grupper, function (g) {
+      let treff = 0;
+      const knappar = g.querySelectorAll('.bl-verktoy');
+      Array.prototype.forEach.call(knappar, function (k) {
+        const vis = !q || k.dataset.sok.indexOf(q) !== -1;
+        k.hidden = !vis;
+        if (vis) treff++;
+      });
+      g.hidden = q && !treff;
+      if (q) g.open = true;
     });
   }
 
@@ -155,6 +233,7 @@
       bokstavar: $('bokstavar').value.toLowerCase().split(/[^a-zæøå]+/)
         .filter(function (c) { return c.length === 1 && LjodLetters.get(c); }),
       rutenett: gitter.tekst(),
+      pynt: gitter.pyntListe(),
       laga: bane.laga
     };
   }
@@ -164,7 +243,7 @@
     $('namn').value = bane.namn;
     $('type').value = bane.type;
     $('bokstavar').value = bane.bokstavar.join(' ');
-    gitter.settRutenett(bane.rutenett);
+    gitter.settRutenett(bane.rutenett, bane.pynt);
     $('breidd').textContent = (gitter.breidd() / 16);
     valider();
     $('rutenett-vert').scrollLeft = 0;
@@ -239,12 +318,13 @@
         e.target.value = '';
       });
       $('importer').addEventListener('click', function () { $('importfil').click(); });
+      $('sok').addEventListener('input', function (e) { filtrer(e.target.value); });
     }).catch(function () {
       $('status').textContent = 'Fekk ikkje lasta grafikken. Last sida på nytt.';
     });
   }
 
-  root.Banelagar = { start: start, VERKTOY: VERKTOY };
+  root.Banelagar = { start: start, filtrer: filtrer };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', start);

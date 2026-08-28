@@ -57,10 +57,45 @@
       });
   }
 
+  /* ── PYNTELAGET ──
+
+     Alt læraren har teikna av klossar UTAN funksjon. Dei ligg ikkje i
+     rutenettet, og det er heile poenget: validatoren reknar ut kva
+     figuren kan nå, og ein kloss som berre er teikna skal ikkje kunne
+     stengje ein veg. Dei kolliderer ikkje, og eleven går rett gjennom.
+
+     Får ein av dei ein funksjon seinare, flyttar han til rutenettet og
+     får sitt eige teikn — og då er det validatoren sin jobb igjen.
+
+     Sprita har ulike storleikar (128×128, 128×256, 256×128). Vi held
+     sideforholdet og forankrar i BOTNEN av ruta, så eit tre veks oppover
+     ut av ruta i staden for å bli klemt ned i ein kvadrat. */
+  function pyntLag(scene, pynt) {
+    const ut = [];
+    (pynt || []).forEach(function (p) {
+      const rx = p[0], ry = p[1], namn = p[2];
+      const ramme = scene.textures.getFrame('kenney', namn);
+      if (!ramme) return;
+      const skala = FLIS / ramme.width;
+      const bilete = scene.add.image(
+        rx * FLIS + FLIS / 2,
+        (ry + 1) * FLIS,
+        'kenney', namn
+      );
+      bilete.setOrigin(0.5, 1);
+      bilete.setDisplaySize(FLIS, ramme.height * skala);
+      /* Under flisekartet (5) og under figuren: pynt skal aldri dekkje
+         ein sokkel eleven leitar etter. */
+      bilete.setDepth(2);
+      ut.push(bilete);
+    });
+    return ut;
+  }
+
   /**
    * Byggjer banen inn i ei scene.
-   * @param opts { basisRader }
-   * @returns { lag, soklar, myntar, start, doer, breidd, hogd, rader }
+   * @param opts { basisRader, pynt }
+   * @returns { lag, soklar, myntar, start, doer, pynt, breidd, hogd, rader }
    */
   function bygg(scene, tekst, opts) {
     opts = opts || {};
@@ -157,6 +192,7 @@
 
     return {
       lag: lag, kart: kart,
+      pynt: pyntLag(scene, opts.pynt),
       soklar: soklar, myntar: myntar,
       start: start, doer: doer, rader: rader,
       breidd: breidd * FLIS, hogd: hogd * FLIS,
@@ -165,7 +201,7 @@
   }
 
   root.JaktaBane = {
-    bygg: bygg, parse: parse, FLIS: FLIS,
+    bygg: bygg, parse: parse, pyntLag: pyntLag, FLIS: FLIS,
     TERRENG: TERRENG, TOM: TOM, terrengIndeks: terrengIndeks
   };
 })(window);

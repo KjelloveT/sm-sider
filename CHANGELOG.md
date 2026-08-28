@@ -3,6 +3,16 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.37] — 2026-08-27
+
+### Lagt til
+- **Heile Kenney-biblioteket er i Banelagar.** Alle 145 byggjeklossane frå grunnpakka og utvidinga, med namn på nynorsk, i ti grupper med eit søkjefelt over: «lykt» er raskare å skrive enn å hugse om ho ligg under Natur eller Bygningar. Namnet står på kvar knapp og spritenøkkelen i `title` — det er slik ein lærar kan peike på ein kloss og seie kva han skal gjere.
+  - **Berre fem av dei gjer noko.** Plattform, bokstavsokkel, mynt, dør og tre. Resten er reine bilete: dei kolliderer ikkje, figuren går rett gjennom dei, og validatoren ser dei aldri. Ein kloss som ikkje har ein funksjon skal ikkje kunne stengje ein veg.
+  - **Pyntelaget ligg utanfor rutenettet.** Rutenettet er framleis teikn — det lesbare formatet validatoren reknar på — mens pynten er `[x, y, sprite]` ved sida av. Det er difor katalogen kan vekse til 145 utan at nokon må finne på nye ledige teikn, og difor eit nytt bibliotek ikkje rører ei einaste eksisterande bane.
+  - Sideforholdet blir halde og klossen forankra i botnen av ruta, både i redigeraren og i spelet, så eit tre veks oppover ut av ruta i staden for å bli klemt ned i ein kvadrat.
+  - Viskelêret tek pynten først: ligg det ei lykt oppå ei plattform, er det lykta ein siktar på.
+  - Ukjende spritenamn blir sila bort når ei bane blir lasta, så ei fil frå ein annan versjon ikkje kan be spelet teikne noko som ikkje finst.
+
 ## [1.36] — 2026-08-27
 
 ### Lagt til
