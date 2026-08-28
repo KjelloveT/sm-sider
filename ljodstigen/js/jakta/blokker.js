@@ -15,10 +15,16 @@
    NAMNA ER GRENSESNITTET. Læraren ser namnet, eg ser sprite-nøkkelen,
    og begge står i menyen, så vi snakkar om same kloss.
 
-   Våpen og farar er ikkje med — korkje her eller i atlaset. Sjå
-   VRAK-lista i bygg_ljodstigen_atlas.py. Bokstavjakta er eit spel utan
-   piggar, sagblad og sverd, og det skal ein ikkje kunne teikne seg bort
-   frå heller.
+   VÅPEN OG FARAR ER MED, OG DEI GJER INGENTING. Dei låg utanfor både
+   biblioteket og atlaset til 1.38, med den grunngjevinga at eit atlas
+   som inneheld eit sverd er ei open dør for at nokon seinare legg eit
+   sverd i eit lesespel for seksåringar. Læraren som eig spelet bad om
+   dei likevel.
+
+   Døra står framleis lukka der ho betyr noko: ein pigg har ingen
+   kollisjon, gjer ingen skade, og spelet har framleis ingen måte å tape
+   på. Skal ein av dei ein dag gjere noko, må nokon skrive den koden med
+   vilje — og då er det den avgjerda som gjeld, ikkje denne.
    ══════════════════════════════════════════════ */
 (function (root) {
   'use strict';
@@ -197,6 +203,39 @@
         { s: 'ui_numPercent', n: 'Prosent' },
         { s: 'ui_numX', n: 'Gongeteikn' },
         { s: 'ui_numXlarge', n: 'Kryss' }
+      ]
+    },
+    {
+      id: 'utstyr', namn: 'Utstyr og våpen',
+      hint: 'Reine bilete. Ingen av dei kan plukkast opp eller brukast.',
+      blokker: [
+        { s: 'item_sword', n: 'Sverd' },
+        { s: 'item_spear', n: 'Spyd' },
+        { s: 'item_bow', n: 'Boge' },
+        { s: 'item_arrow', n: 'Pil til bogen' },
+        { s: 'item_gun', n: 'Pistol' },
+        { s: 'item_blaster', n: 'Strålepistol' },
+        { s: 'item_shield', n: 'Skjold' },
+        { s: 'item_shieldRound', n: 'Rundt skjold' },
+        { s: 'item_helmet', n: 'Hjelm' },
+        { s: 'item_helmetModern', n: 'Hjelm, moderne' }
+      ]
+    },
+    {
+      id: 'farar', namn: 'Farar og smell',
+      hint: 'Òg berre bilete. Ein pigg har ingen kollisjon og gjer ingen skade — spelet har ingen måte å tape på.',
+      blokker: [
+        { s: 'tile_spikes', n: 'Piggar' },
+        { s: 'tile_spike', n: 'Piggblokk' },
+        { s: 'sawblade', n: 'Sagblad' },
+        { s: 'cannon_large', n: 'Kanon, stor' },
+        { s: 'cannon_small', n: 'Kanon, liten' },
+        { s: 'cannon_base', n: 'Kanonfot' },
+        { s: 'bullet', n: 'Kule' },
+        { s: 'effect_shot', n: 'Skotstripe' },
+        { s: 'effect_shotLarge', n: 'Skotstripe, stor' },
+        { s: 'effect_blast', n: 'Smell' },
+        { s: 'effect_blastLarge', n: 'Smell, stort' }
       ]
     },
     {

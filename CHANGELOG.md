@@ -6,12 +6,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 ## [1.37] — 2026-08-27
 
 ### Lagt til
-- **Heile Kenney-biblioteket er i Banelagar.** Alle 145 byggjeklossane frå grunnpakka og utvidinga, med namn på nynorsk, i ti grupper med eit søkjefelt over: «lykt» er raskare å skrive enn å hugse om ho ligg under Natur eller Bygningar. Namnet står på kvar knapp og spritenøkkelen i `title` — det er slik ein lærar kan peike på ein kloss og seie kva han skal gjere.
+- **Heile Kenney-biblioteket er i Banelagar.** Alle 166 byggjeklossane frå grunnpakka og utvidinga, med namn på nynorsk, i ti grupper med eit søkjefelt over: «lykt» er raskare å skrive enn å hugse om ho ligg under Natur eller Bygningar. Namnet står på kvar knapp og spritenøkkelen i `title` — det er slik ein lærar kan peike på ein kloss og seie kva han skal gjere.
   - **Berre fem av dei gjer noko.** Plattform, bokstavsokkel, mynt, dør og tre. Resten er reine bilete: dei kolliderer ikkje, figuren går rett gjennom dei, og validatoren ser dei aldri. Ein kloss som ikkje har ein funksjon skal ikkje kunne stengje ein veg.
   - **Pyntelaget ligg utanfor rutenettet.** Rutenettet er framleis teikn — det lesbare formatet validatoren reknar på — mens pynten er `[x, y, sprite]` ved sida av. Det er difor katalogen kan vekse til 145 utan at nokon må finne på nye ledige teikn, og difor eit nytt bibliotek ikkje rører ei einaste eksisterande bane.
   - Sideforholdet blir halde og klossen forankra i botnen av ruta, både i redigeraren og i spelet, så eit tre veks oppover ut av ruta i staden for å bli klemt ned i ein kvadrat.
   - Viskelêret tek pynten først: ligg det ei lykt oppå ei plattform, er det lykta ein siktar på.
   - Ukjende spritenamn blir sila bort når ei bane blir lasta, så ei fil frå ein annan versjon ikkje kan be spelet teikne noko som ikkje finst.
+
+### Endra
+- **Vraklista i atlaset er tømd.** Våpen, piggar, sagblad og kanonar — 21 sprites — låg utanfor både atlaset og biblioteket, med den grunngjevinga at eit atlas som inneheld eit sverd er ei open dør for at nokon seinare legg eit sverd i eit lesespel for seksåringar. Læraren som eig spelet bad om dei. Dei er reine bilete: ingen kollisjon, ingen skade, og spelet har framleis ingen måte å tape på. Skal ein pigg ein dag gjere noko, må nokon skrive den koden med vilje.
+- **Teksturatlaset blir ikkje lenger cacha `immutable`.** `atlas.png` og `atlas.json` blir skrivne på nytt under same namn kvar gong nokon legg til sprites, og alle rammekoordinatane flyttar seg. Med eitt års immutable cache ville ei elevmaskin sitje med eit gammalt atlas medan koden spør etter rammer som berre finst i det nye — Phaser teiknar ingenting, utan ein feil som forklarer kvifor. Same felle som tok spelsida i 1.32, oppdaga før ho rakk å slå til. Fem minutt og revalidering no; ei revalidering kostar eit 304-svar.
 
 ## [1.36] — 2026-08-27
 
