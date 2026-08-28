@@ -569,8 +569,30 @@ body[data-font="lesefont"] .ljod-bed-letter {
   background: rgba(255, 255, 255, 0.6);
 }
 
-.ljod-hage3d-hint { margin-top: 8px; }
-
 @media (prefers-reduced-motion: reduce) {
   .ljod-hage3d-lerret { cursor: default; }
 }
+
+.ljod-hage3d-under {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+}
+.ljod-hage3d-hint { margin: 0; }
+
+/* Prøveknappen står her medan hagen er ny. Han skal sjå ut som det han
+   er — eit verktøy under arbeid — og ikkje som noko eleven skal trykkje
+   på, difor den stipla ramma. */
+.ljod-hage3d-prov {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+.ljod-hage3d-prov .ljod-hint { margin: 0; max-width: 34ch; font-size: 0.78rem; }

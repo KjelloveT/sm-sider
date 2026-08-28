@@ -191,13 +191,140 @@
     }
   }
 
-  function bakke(ut, w, d, farge) {
-    const hj = [[-w, 0, -d], [w, 0, -d], [w, 0, d], [-w, 0, -d], [w, 0, d], [-w, 0, d]];
-    hj.forEach(function (p) {
-      ut.pos.push(p[0], -0.001, p[2]);
-      ut.nor.push(0, 1, 0);
+  /* ── ØYA ──
+
+     Ein firkant er ei flate; ei øy er ein stad. Forma blir rekna ut her
+     og ikkje henta frå ein modell: ho må passe til talet bokstavar, og
+     ein hage for eit anna alfabet skal ikkje krevje ein ny 3D-fil.
+
+     Omrisset er ein ring med radius som svingar mjukt — tre sinusar med
+     ulik periode. Det er nok til at kanten les som noko som har vorte
+     til, og lite nok til at ho ikkje ser tilfeldig ut.
+
+     Under toppflata går tre ringar nedover og innover: ei grasrand, ei
+     jordside, og ei spiss underside. Øya flyt, så ho treng ein botn. */
+  const SIDER = 44;
+
+  function omkrins(vinkel, rx, rz) {
+    const bulk = 1
+      + 0.085 * Math.sin(vinkel * 3 + 0.7)
+      + 0.055 * Math.sin(vinkel * 5 - 1.9)
+      + 0.030 * Math.sin(vinkel * 8 + 2.6);
+    return { x: Math.cos(vinkel) * rx * bulk, z: Math.sin(vinkel) * rz * bulk, bulk: bulk };
+  }
+
+  function trekant(ut, a, b, c, farge) {
+    const ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2];
+    const vx = c[0] - a[0], vy = c[1] - a[1], vz = c[2] - a[2];
+    let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+    const nl = Math.hypot(nx, ny, nz) || 1e-9;
+    nx /= nl; ny /= nl; nz /= nl;
+    [a, b, c].forEach(function (p) {
+      ut.pos.push(p[0], p[1], p[2]);
+      ut.nor.push(nx, ny, nz);
       ut.far.push(farge[0], farge[1], farge[2]);
     });
+  }
+
+  /* Kenney sin eigen palett, henta ut av biblioteket, så øya og plantene
+     er same verd. Fell tilbake på faste verdiar om eit materiale skulle
+     forsvinne ut av settet. */
+  function palettFarge(namn, reserve) {
+    const i = bib && bib.palettNamn ? bib.palettNamn.indexOf(namn) : -1;
+    const c = i >= 0 ? bib.palett[i] : reserve;
+    return [c[0] / 255, c[1] / 255, c[2] / 255];
+  }
+
+  function oy(ut, rx, rz) {
+    const gras = palettFarge('grass', [44, 216, 184]);
+    const jord = palettFarge('dirt', [226, 131, 87]);
+    const djup = palettFarge('dirtDark', [181, 104, 69]);
+
+    /* Ringane: y, innskrenking, og farge på flata ned til neste. */
+    const ringar = [
+      { y: 0, k: 1.00, farge: jord },
+      { y: -0.34, k: 0.97, farge: jord },
+      { y: -1.05, k: 0.72, farge: djup },
+      { y: -1.95, k: 0.30, farge: djup }
+    ];
+
+    for (let i = 0; i < SIDER; i++) {
+      const v0 = i / SIDER * Math.PI * 2;
+      const v1 = (i + 1) / SIDER * Math.PI * 2;
+      const a0 = omkrins(v0, rx, rz);
+      const a1 = omkrins(v1, rx, rz);
+
+      /* Toppflata, som ei vifte frå midten. */
+      trekant(ut, [0, 0, 0], [a1.x, 0, a1.z], [a0.x, 0, a0.z], gras);
+
+      for (let r = 0; r < ringar.length - 1; r++) {
+        const o = ringar[r], n = ringar[r + 1];
+        const p00 = [a0.x * o.k, o.y, a0.z * o.k];
+        const p10 = [a1.x * o.k, o.y, a1.z * o.k];
+        const p01 = [a0.x * n.k, n.y, a0.z * n.k];
+        const p11 = [a1.x * n.k, n.y, a1.z * n.k];
+        trekant(ut, p00, p01, p11, o.farge);
+        trekant(ut, p00, p11, p10, o.farge);
+      }
+      /* Spissen i botnen. */
+      const s = ringar[ringar.length - 1];
+      trekant(ut,
+        [a0.x * s.k, s.y, a0.z * s.k],
+        [0, s.y - 0.55, 0],
+        [a1.x * s.k, s.y, a1.z * s.k], djup);
+    }
+  }
+
+  /* ── PYNT ──
+
+     Steinar, stubbar og gras mellom bedene og langs kanten. Dei står i
+     eit fast mønster rekna ut frå eit frø, så hagen ser lik ut kvar gong
+     utan at vi lagrar ei liste over kvar stein.
+
+     Ingen av dei kjem nær eit bed. Ein stein oppå ei plante ville sett
+     ut som ein feil, og eleven har ingen måte å flytte han på. */
+  function pyntOya(ut, rx, rz) {
+    if (!bib.pynt || !bib.pynt.length) return;
+    const bedRadius = 0.42;
+    const senter = [];
+    for (let i = 0; i < LjodLetters.ALPHABET.length; i++) senter.push(plass(i));
+
+    let fro = 20260828;
+    function neste() {
+      fro = (fro * 1103515245 + 12345) & 0x7fffffff;
+      return fro / 0x7fffffff;
+    }
+
+    let sett = 0;
+    for (let forsok = 0; forsok < 900 && sett < 34; forsok++) {
+      const v = neste() * Math.PI * 2;
+      /* Kvadratrota gjev jamn tettleik utover i staden for ein klump i
+         midten — det er fordelinga av punkt i ein sirkel. */
+      const r = Math.sqrt(neste());
+      const kant = omkrins(v, rx, rz);
+      const x = kant.x * r * 0.94;
+      const z = kant.z * r * 0.94;
+
+      let naerBed = false;
+      for (let k = 0; k < senter.length; k++) {
+        if (Math.hypot(x - senter[k].x, z - senter[k].z) < bedRadius) { naerBed = true; break; }
+      }
+      if (naerBed) continue;
+
+      const namn = bib.pynt[Math.floor(neste() * bib.pynt.length) % bib.pynt.length];
+      const mod = bib.modellar[namn];
+      if (!mod) continue;
+      /* Skalér mot ei MÅLHØGD og ikkje med ein rå faktor. Pynten er
+         alt frå ei grastust på 14 cm til ein stubbe på 21, og ein felles
+         faktor gjer den eine usynleg og den andre til eit møbel. Alt
+         havnar mellom 10 og 22 cm, godt under den minste planta. */
+      const maal = 0.10 + neste() * 0.12;
+      /* Breidda tel med. Ein tømmerstokk er 17 cm høg og 71 brei; skalert
+         berre etter høgda blir han ein planke tvers over hagen. */
+      const sk = maal / Math.max(mod.hogd, mod.vidd * 0.5, 0.01);
+      leggModell(mod, ut, x, 0, z, sk, neste() * Math.PI * 2, false);
+      sett++;
+    }
   }
 
   /**
@@ -208,13 +335,13 @@
     const a = profil.adaptive;
     const ut = { pos: [], nor: [], far: [], beds: [] };
 
-    /* Bakken er så stor som bedene treng og ein halv rute til. Ei stor
-       tom flate rundt hagen ser ut som ein hage nokon har gjeve opp. */
+    /* Øya er så stor som bedene treng og ein rute til. Ei stor tom flate
+       rundt hagen ser ut som ein hage nokon har gjeve opp. */
     const radTal = Math.ceil(LjodLetters.ALPHABET.length / KOLONNAR);
-    bakke(ut,
-      (KOLONNAR - 1) / 2 * RUTE + RUTE * 1.05,
-      (radTal - 1) / 2 * RUTE * 0.92 + RUTE * 0.85,
-      [0.62, 0.78, 0.52]);
+    const rx = (KOLONNAR - 1) / 2 * RUTE + RUTE * 1.35;
+    const rz = (radTal - 1) / 2 * RUTE * 0.92 + RUTE * 1.15;
+    oy(ut, rx, rz);
+    pyntOya(ut, rx, rz);
 
     LjodLetters.ALPHABET.forEach(function (ch, i) {
       const p = plass(i);
@@ -404,7 +531,17 @@
       hage.beds.forEach(function (bed, i) {
         const el = lapper.children[i];
         if (!el) return;
-        const x = bed.x, y = bed.hogd + 0.16, z = bed.z;
+        /* Lappen står ved ROTA, ikkje over toppen. Over toppen låg han i
+           vegen for planta han skulle namngje — og han flytta seg
+           oppover kvar gong planta voks, så auget måtte leite etter han
+           på nytt. Ved rota står han i ro.
+
+           Han blir skoven eit lite steg mot kameraet, så han ikkje
+           forsvinn inn i stilken. Retninga følgjer dreiinga. */
+        const mot = 0.34;
+        const x = bed.x + Math.sin(dreiing) * mot;
+        const y = 0.10;
+        const z = bed.z + Math.cos(dreiing) * mot;
         const cx = mvp[0] * x + mvp[4] * y + mvp[8] * z + mvp[12];
         const cy = mvp[1] * x + mvp[5] * y + mvp[9] * z + mvp[13];
         const cw = mvp[3] * x + mvp[7] * y + mvp[11] * z + mvp[15];

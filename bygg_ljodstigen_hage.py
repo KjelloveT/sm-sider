@@ -129,6 +129,26 @@ ARTAR = [
      'stegnamn': ['frø', 'spire', 'liten busk', 'lite tre', 'tre', 'stort tre']},
 ]
 
+# ── Pynt ─────────────────────────────────────────────────────────
+#
+# Steinar, stubbar og gras som blir strødde utover øya mellom bedene.
+# Dei har ingen funksjon og høyrer ingen bokstav til; dei er der fordi
+# ei flate med tjueni planter i eit rutenett og ingenting elles ser ut
+# som ein utstillingsmontér og ikkje som ein hage.
+#
+# Plasseringa blir rekna ut i nettlesaren frå eit fast frø, så hagen ser
+# lik ut kvar gong utan at vi lagrar ei liste over kvar stein.
+# «stone_tallA» og resten av dei høge steinane er med vilje utelatne:
+# dei er ein meter høge og ville stått som bautaer over ein hage der den
+# største planta er åtti centimeter.
+PYNT = [
+    'rock_smallA', 'rock_smallB', 'rock_smallC', 'rock_smallFlatA',
+    'stone_smallA', 'stone_smallB',
+    'log', 'stump_round',
+    'grass', 'grass_leafs', 'plant_bushSmall', 'mushroom_tan',
+    'flower_redA', 'flower_yellowA',
+]
+
 ALFABET = list('abcdefghijklmnopqrstuvwxyzæøå')
 
 # «klynge» er kor mange eksemplar som står i bedet på kvart steg. Ein
@@ -226,6 +246,9 @@ def bygg():
         for m in a['steg']:
             if m not in namn:
                 namn.append(m)
+    for m in PYNT:
+        if m not in namn:
+            namn.append(m)
 
     palett_namn, palett = [], []
     modellar = {}
@@ -306,6 +329,7 @@ def bygg():
         'palettNamn': palett_namn,
         'modellar': modellar,
         'artar': ARTAR,
+        'pynt': PYNT,
         'bokstavar': {ch: art_for(i) for i, ch in enumerate(ALFABET)},
     }
     with open(os.path.join(UT, 'planter.json'), 'w', encoding='utf-8', newline='\n') as f:

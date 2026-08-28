@@ -40,13 +40,49 @@
       if (flat) host.replaceChild(vert, flat); else host.insertBefore(vert, host.firstChild);
       if (hage3d) hage3d.riv();
       hage3d = LjodHage3D.lag(vert, p);
-      host.insertBefore(R().h('p', 'ljod-hint ljod-hage3d-hint',
-        'Dra i hagen for å sjå han frå ei anna side.'), vert.nextSibling);
+
+      const under = R().h('div', 'ljod-hage3d-under');
+      under.appendChild(R().h('p', 'ljod-hint ljod-hage3d-hint',
+        'Dra i hagen for å sjå han frå ei anna side.'));
+      under.appendChild(proveknapp(host, p));
+      host.insertBefore(under, vert.nextSibling);
     }).catch(function (e) {
       /* Den flate hagen står allereie. Vi seier frå i konsollen og lèt
          eleven vere i fred. */
       console.warn('[Ljodstigen] 3D-hagen lasta ikkje:', e.message);
     });
+  }
+
+  /* ── PRØVEKNAPP ──
+
+     Han set eit tilfeldig vekststeg på kvar bokstav, så ein kan sjå
+     korleis hagen tek seg ut utan å løyse tjueni oppgåver først. Han
+     står her medan hagen er ny og skal ut av vegen når han er ferdig
+     prøvd — difor er han merkt som det han er, og ikkje gøymd bak ein
+     tastekombinasjon vi kjem til å gløyme.
+
+     Han skriv til den ekte profilen. Det er meininga: skal ein sjå
+     korleis hagen ser ut etter ei omlasting, må det som blir vist vere
+     lagra. Ein elev som har ekte framgang skal ikkje trykkje på han. */
+  function proveknapp(host, p) {
+    const rad = R().h('div', 'ljod-hage3d-prov');
+    const knapp = R().h('button', 'btn', 'Tilfeldig vekst');
+    knapp.type = 'button';
+    knapp.addEventListener('click', function () {
+      const a = p.adaptive;
+      /* Steget må òg opp, elles står dei fleste bokstavane som «ikkje
+         opna enno» og hagen ser like tom ut som før. */
+      a.step = LjodLetters.STEPS.length;
+      LjodLetters.ALPHABET.forEach(function (ch) {
+        LjodAdaptive.item(a, ch).maxBox = Math.floor(Math.random() * 6);
+      });
+      LjodState.saveProfile(p);
+      renderGarden(host, p);
+    });
+    rad.appendChild(knapp);
+    rad.appendChild(R().h('span', 'ljod-hint',
+      'Prøveknapp: gjev kvar bokstav eit tilfeldig vekststeg, og skriv over framgangen til denne figuren.'));
+    return rad;
   }
 
   function render2D(host, p) {
