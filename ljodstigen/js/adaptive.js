@@ -20,7 +20,7 @@
    4. FRUSTRASJONSVAKT. To feil på rad tvingar fram ei oppgåve eleven
       garantert klarer. Tre på rad senkar vanskegraden stille.
 
-   maxBox fell aldri. Det er den hagen viser - sjå hage.js.
+   maxBox fell aldri. Det er det skogen viser - sjå skog.js.
    ══════════════════════════════════════════════ */
 (function (root) {
   'use strict';
@@ -121,7 +121,7 @@
       if (chosen) it.errors[chosen] = (it.errors[chosen] || 0) + 1;
     }
 
-    /* maxBox er hagen sitt minne. Han går berre opp. Ein plante som
+    /* maxBox er skogen sitt minne. Han går berre opp. Eit tre som
        visnar fordi eleven bomma er ein straffemekanisme retta mot
        nøyaktig dei elevane appen er til for. */
     if (it.box > it.maxBox) it.maxBox = it.box;

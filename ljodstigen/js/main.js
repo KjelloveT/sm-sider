@@ -155,7 +155,7 @@
 
     box.appendChild(R().h('h2', 'heading2 no-mt', 'Godt jobba!'));
 
-    /* Nye merke og stjerner blir feira. Resten står i hagen. */
+    /* Nye merke og stjerner blir feira. Resten står i skogen. */
     if (wonBadges.length) {
       const list = R().h('div', 'ljod-won');
       wonBadges.forEach(function (b) {
@@ -169,12 +169,12 @@
     }
 
     const stars = R().h('div');
-    LjodHage.renderStars(stars, profile);
+    LjodSkog.renderStars(stars, profile);
     box.appendChild(stars);
 
-    /* Hagen er det siste eleven ser. */
+    /* Skogen er det siste eleven ser. */
     const garden = R().h('div');
-    LjodHage.renderGarden(garden, profile);
+    LjodSkog.renderSkog(garden, profile);
     box.appendChild(garden);
 
     const row = R().h('div', 'ljod-btn-row');
@@ -191,7 +191,7 @@
 
     R().setMood('cool');
     LjodAudio.play('r_okt');
-    requestAnimationFrame(function () { LjodHage.celebrate(canvas); });
+    requestAnimationFrame(function () { LjodSkog.celebrate(canvas); });
   }
 
   root.LjodMain = { start: start, TASKS_PER_SESSION: TASKS_PER_SESSION, MODES: MODES };

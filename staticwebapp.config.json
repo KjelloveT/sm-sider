@@ -10,7 +10,7 @@
       "/_resources/*",
       "/ljodstigen/lyd/*",
       "/ljodstigen/jakta/*",
-      "/ljodstigen/hage/*"
+      "/ljodstigen/skog/*"
     ]
   },
   "routes": [
@@ -81,8 +81,8 @@
       }
     },
     {
-      "_kommentar": "Plantebiblioteket til bokstavhagen blir bygd av bygg_ljodstigen_hage.py, og planter.bin blir skriven på nytt under same namn kvar gong artane endrar seg. Med immutable ville ei elevmaskin sitje med eit gammalt bibliotek der modellane ligg andre stader enn indeksen seier, og hagen ville teikne feil planter utan ein feil som forklarer kvifor. Ei revalidering kostar eit 304-svar.",
-      "route": "/ljodstigen/hage/*",
+      "_kommentar": "Plantebiblioteket til bokstavskogen blir bygd av bygg_ljodstigen_skog.py, og planter.bin blir skriven på nytt under same namn kvar gong artane endrar seg. Med immutable ville ei elevmaskin sitje med eit gammalt bibliotek der modellane ligg andre stader enn indeksen seier, og skogen ville teikne feil planter utan ein feil som forklarer kvifor. Ei revalidering kostar eit 304-svar.",
+      "route": "/ljodstigen/skog/*",
       "headers": {
         "Cache-Control": "public, max-age=300, must-revalidate"
       }
