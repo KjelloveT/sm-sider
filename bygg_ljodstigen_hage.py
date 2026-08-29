@@ -149,6 +149,15 @@ PYNT = [
     'flower_redA', 'flower_yellowA',
 ]
 
+# Store steinar til bakkanten av øya. Dei står for langt bak til å kome
+# i vegen for nokon plante, og dei gjev hagen ein horisont: utan dei
+# sluttar han berre.
+STORE = [
+    'stone_largeA', 'stone_largeB', 'stone_largeC',
+    'stone_tallA', 'stone_tallB',
+    'rock_largeA', 'rock_largeB', 'rock_tallA',
+]
+
 ALFABET = list('abcdefghijklmnopqrstuvwxyzæøå')
 
 # «klynge» er kor mange eksemplar som står i bedet på kvart steg. Ein
@@ -250,7 +259,7 @@ def bygg():
         for m in a['steg']:
             if m not in namn:
                 namn.append(m)
-    for m in PYNT:
+    for m in PYNT + STORE:
         if m not in namn:
             namn.append(m)
 
@@ -334,6 +343,7 @@ def bygg():
         'modellar': modellar,
         'artar': ARTAR,
         'pynt': PYNT,
+        'store': STORE,
         'bokstavar': {ch: art_for(i) for i, ch in enumerate(ALFABET)},
     }
     with open(os.path.join(UT, 'planter.json'), 'w', encoding='utf-8', newline='\n') as f:

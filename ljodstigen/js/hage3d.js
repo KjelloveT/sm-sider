@@ -39,7 +39,9 @@
 
   const ROT = 'hage/';
   const RUTE = 1.0;          // breidda på ei plantebed i verdseiningar
-  const BED = 1.55;          // jordflisa, som faktor på naturleg storleik
+  const BED = 1.30;          // jordflisa, som faktor på naturleg storleik
+  const BED_FLAT = 0.30;     // og kor flat ho blir trykt i høgda
+  const SKILT_MOT = 0.42;    // kor langt framfor planta skiltet står
   const KOLONNAR = 6;
 
   let bib = null;            // { modellar, artar, palett, bokstavar }
@@ -132,7 +134,7 @@
     const skift = (rad % 2) ? RUTE * 0.5 : 0;
     return {
       x: (kol - (KOLONNAR - 1) / 2) * RUTE + skift,
-      z: (rad - (radTal - 1) / 2) * RUTE * 0.92
+      z: (rad - (radTal - 1) / 2) * RUTE * 0.92 + RUTE * 0.55
     };
   }
 
@@ -161,8 +163,9 @@
 
   /* ──────────────── Bygging av geometrien ──────────────── */
 
-  function leggModell(mod, ut, mx, my, mz, skala, vinkel, dimma) {
+  function leggModell(mod, ut, mx, my, mz, skala, vinkel, dimma, yskala) {
     const s = 1 / bib.skala;
+    const sy = (yskala === undefined ? 1 : yskala) * skala;
     const cos = Math.cos(vinkel), sin = Math.sin(vinkel);
     const start = mod.start, tal = mod.tal;
     for (let i = 0; i < tal; i++) {
@@ -177,7 +180,7 @@
 
       ut.pos.push(
         (px * cos - pz * sin) * skala + mx,
-        py * skala + my,
+        py * sy + my,
         (px * sin + pz * cos) * skala + mz
       );
       ut.nor.push(nx * cos - nz * sin, ny, nx * sin + nz * cos);
@@ -328,6 +331,37 @@
     }
   }
 
+  /* Store steinar langs bakkanten. Dei står bak den siste raden, der dei
+     ikkje kan kome i vegen for nokon plante, og gjev hagen ein horisont:
+     utan dei sluttar han berre. */
+  function storsteinar(ut, rx, rz) {
+    if (!bib.store || !bib.store.length) return;
+    const bak = -rz * 0.60;
+    const tal = 7;
+    for (let i = 0; i < tal; i++) {
+      const t = (i + 0.5) / tal;
+      const namn = bib.store[i % bib.store.length];
+      const mod = bib.modellar[namn];
+      if (!mod) continue;
+      /* Litt slark i djupna, elles står dei på ei snorrett line. */
+      const bolge = Math.sin(i * 2.1) * 0.34;
+      const x = (t - 0.5) * 2 * rx * 0.58;
+      const z = bak + bolge;
+      /* Godt innanfor kanten. Ein stein som heng ut over rimen ser ut
+         som ein feil i øya og ikkje som ein stein — og «rock_large*» er
+         grastopa, så halvparten av han blir ei grasflate i lause lufta. */
+      const kant = omkrins(Math.atan2(z, x), rx, rz);
+      const naa = Math.hypot(x, z), maks = Math.hypot(kant.x, kant.z) * 0.74;
+      if (naa > maks) continue;
+      /* Breidda tel med, som for den vesle pynten. stone_largeA er 26 cm
+         høg og 120 brei; skalert etter høgda åleine blei han ein
+         kampestein på to og ein halv meter tvers over halve hagen. */
+      const maal = 0.44 + ((i * 7) % 5) * 0.11;
+      leggModell(mod, ut, x, -0.03, z,
+        maal / Math.max(mod.hogd, mod.vidd * 0.42, 0.01), i * 1.7, false);
+    }
+  }
+
   /**
    * @param profil frå LjodState
    * @returns { pos, nor, far, tal, beds: [{ch, x, z, hogd, steg, aktiv}] }
@@ -340,8 +374,12 @@
        rundt hagen ser ut som ein hage nokon har gjeve opp. */
     const radTal = Math.ceil(LjodLetters.ALPHABET.length / KOLONNAR);
     const rx = (KOLONNAR - 1) / 2 * RUTE + RUTE * 1.35;
-    const rz = (radTal - 1) / 2 * RUTE * 0.92 + RUTE * 1.15;
+    /* Meir rom bak enn framfor. Bedene ligg framme på øya, og det som
+       er att bak dei er der dei store steinane står — ein horisont å
+       sjå plantene mot i staden for ein kant som berre sluttar. */
+    const rz = (radTal - 1) / 2 * RUTE * 0.92 + RUTE * 1.95;
     oy(ut, rx, rz);
+    storsteinar(ut, rx, rz);
     pyntOya(ut, rx, rz);
     /* Kameraet måler avstanden sin mot desse. Ein hage for eit anna
        alfabet får ei anna øy, og då skal ikkje nokon hugse å justere ei
@@ -364,12 +402,18 @@
 
       /* Jorda ligg under kvar plante, ikkje berre under dei som ikkje
          har vakse enno: eit bed skal sjå ut som eit bed heile vegen. */
-      /* Bedet er større enn den naturlege flisa. Ved naturleg storleik
-         er han 40 cm i ei rute på 100, og då ser planta ut til å stå på
-         ingenting. */
-      leggModell(bib.modellar['crops_dirtSingle'], ut, p.x, 0, p.z, BED, vinkel, !aktiv);
+      /* Bedet er breitt og nesten flatt. Ei tue som stod opp av bakken
+         såg ut som ein maurtue under kvar plante; ei flat flekk med jord
+         seier «her er det planta noko» utan å ta plass i biletet.
 
-      let toppen = bib.modellar['crops_dirtSingle'].hogd * BED;
+         Ein bokstav som ikkje er opna enno har ikkje jord i det heile —
+         berre gras og eit skilt. Det er ei tom seng, ikkje ei grav. */
+      let toppen = 0;
+      if (aktiv) {
+        leggModell(bib.modellar['crops_dirtSingle'], ut,
+          p.x, 0, p.z, BED, vinkel, false, BED_FLAT);
+        toppen = bib.modellar['crops_dirtSingle'].hogd * BED * BED_FLAT;
+      }
       if (steg > 0 && aktiv) {
         const mod = bib.modellar[art.steg[steg]];
         /* Fleire eksemplar i same bed. Éin blomsterstilk midt i eit bed
@@ -440,37 +484,113 @@
     return s;
   }
 
-  /* ── DJUPNESKYGGEN ──
+  /* ── BOKSTAVANE ER SKILT, IKKJE ETIKETTAR ──
 
-     Bokstavlappane er DOM oppå lerretet, og DOM veit ikkje kva som står
-     framfor kva. Ein lapp som ligg oppå eit tre som står framfor han er
-     stygt, og verre: han lyg om kvar planta står.
+     Første utgåva la bokstavane som DOM-element oppå lerretet. Dei var
+     skarpe og kunne lesast av ein skjermlesar, men dei var ikkje I hagen:
+     når ein snudde på han, hoppa dei inn og ut alt etter kva djupnepróva
+     sa, og eit namn som blinkar er verre enn eit namn som er litt uskarpt.
 
-     Difor blir scena teikna ein gong til, i lite format, med ein shader
-     som skriv djupna si i staden for ein farge. Så les vi det biletet
-     éin gong og slår opp i det for kvar lapp. Er det noko nærare
-     kameraet i den ruta, blir lappen gøymd.
+     No er kvart namn eit lite skilt som står i bakken framfor planta si,
+     bygd av to firkantar: ein stolpe og eit bord. Bordet ber bokstaven
+     som ein tekstur, og heile skiltet snur seg mot kameraet om den
+     loddrette aksen — så det er alltid lesbart, og alltid eit føremål i
+     rommet som eit tre kan stå framfor.
 
-     WebGL 1 kan ikkje lese djupnebufferen direkte, og difor pakkar vi
-     djupna inn i dei fire fargebyta. Firetalsvektoren er den vanlege
-     pakkinga: kvart ledd tek med seg åtte nye bit. */
-  const DJUP_FS = [
-    'precision highp float;',
+     Bokstavane blir teikna i eit lerret ved oppstart, ikkje bygde inn i
+     ei bildefil. Då arvar dei lesefonten eleven har valt.
+
+     Skjermlesarar får si eiga liste ved sida av lerretet. Ein tekstur er
+     usynleg for dei, og det skal ikkje bety at hagen blir det. */
+  /* ÅTTE KOLONNAR OG IKKJE SEKS, OG DET ER IKKJE SMAK.
+
+     29 bokstavar i 8 x 4 ruter på 128 piksel gjev eit atlas på nøyaktig
+     1024 x 512 — begge toarpotensar. WebGL 1 nektar å lage mipmap-nivå
+     for ein tekstur som ikkje er det, og ein tekstur med
+     LINEAR_MIPMAP_LINEAR og ingen mipmap er UFULLSTENDIG: han svarar
+     (0, 0, 0, 1) på kvart oppslag.
+
+     Med seks kolonnar blei atlaset 768 x 640, og alle skilta i hagen
+     stod som heilt svarte tavler — alfa var 1 overalt, så blekket dekte
+     bordet. Feilen såg ut som eit fargeproblem og var ein tekstur som
+     aldri blei lest. */
+  const ATLAS_RUTE = 128;
+  const ATLAS_KOL = 8;
+
+  function lagBokstavAtlas(font) {
+    const alf = LjodLetters.ALPHABET;
+    const rader = Math.ceil(alf.length / ATLAS_KOL);
+    const c = document.createElement('canvas');
+    c.width = ATLAS_KOL * ATLAS_RUTE;
+    c.height = rader * ATLAS_RUTE;
+    if ((c.width & (c.width - 1)) || (c.height & (c.height - 1))) {
+      /* Ei line i konsollen er betre enn tjueni svarte tavler. */
+      console.warn('[Ljodstigen] Bokstavatlaset er ' + c.width + 'x' + c.height +
+        ' og ikkje ein toarpotens. Skilta blir svarte.');
+    }
+    const g = c.getContext('2d');
+    g.clearRect(0, 0, c.width, c.height);
+    g.fillStyle = '#000';
+    g.textAlign = 'center';
+    g.textBaseline = 'middle';
+    /* Feit og stort: bokstaven skal tole å bli teikna på eit bord som er
+       tretti centimeter breitt i ein hage sett frå ni meter. */
+    g.font = '700 ' + Math.round(ATLAS_RUTE * 0.86) + 'px ' + font;
+    alf.forEach(function (ch, i) {
+      const x = (i % ATLAS_KOL + 0.5) * ATLAS_RUTE;
+      const y = (Math.floor(i / ATLAS_KOL) + 0.54) * ATLAS_RUTE;
+      g.fillText(ch, x, y);
+    });
+    return c;
+  }
+
+  /* UV-rammene til ein bokstav, med litt luft rundt så naboruta ikkje
+     lek inn når teksturen blir interpolert. */
+  function bokstavUv(i) {
+    const rader = Math.ceil(LjodLetters.ALPHABET.length / ATLAS_KOL);
+    const luft = 0.02;
+    return {
+      u0: (i % ATLAS_KOL + luft) / ATLAS_KOL,
+      u1: (i % ATLAS_KOL + 1 - luft) / ATLAS_KOL,
+      v0: (Math.floor(i / ATLAS_KOL) + luft) / rader,
+      v1: (Math.floor(i / ATLAS_KOL) + 1 - luft) / rader
+    };
+  }
+
+  /* Ein tom rute i atlaset, til stolpen: han skal vere reint trevirke. */
+  const TOM_UV = { u0: 0.999, u1: 1.0, v0: 0.999, v1: 1.0 };
+
+  const SKILT_VS = [
+    'attribute vec3 aPos;',
+    'attribute vec2 aUv;',
+    'attribute vec3 aFar;',
+    'uniform mat4 uMvp;',
+    'varying vec2 vUv;',
+    'varying vec3 vFar;',
     'void main() {',
-    '  vec4 e = vec4(1.0, 255.0, 65025.0, 16581375.0) * gl_FragCoord.z;',
-    '  e = fract(e);',
-    '  e -= e.yzww * vec4(1.0 / 255.0, 1.0 / 255.0, 1.0 / 255.0, 0.0);',
-    '  gl_FragColor = e;',
+    '  vUv = aUv;',
+    '  vFar = aFar;',
+    '  gl_Position = uMvp * vec4(aPos, 1.0);',
     '}'
   ].join('\n');
 
-  function pakkUt(d, i) {
-    return d[i] / 255 + d[i + 1] / 65025 + d[i + 2] / 16581375 + d[i + 3] / 4228250625;
-  }
+  /* Blekket er ein mørk versjon av bordet sjølv. Då treng skiltet berre
+     éin farge per hjørne, og eit grått skilt for ein bokstav som ikkje er
+     opna enno får grått blekk utan noka ekstra greie. */
+  const SKILT_FS = [
+    'precision mediump float;',
+    'uniform sampler2D uTex;',
+    'varying vec2 vUv;',
+    'varying vec3 vFar;',
+    'void main() {',
+    '  float blekk = texture2D(uTex, vUv).a;',
+    '  gl_FragColor = vec4(mix(vFar, vFar * 0.16, blekk), 1.0);',
+    '}'
+  ].join('\n');
 
-  function lagProgram(gl, fs) {
+  function lagProgram(gl, vs, fs) {
     const p = gl.createProgram();
-    gl.attachShader(p, lagShader(gl, gl.VERTEX_SHADER, VS));
+    gl.attachShader(p, lagShader(gl, gl.VERTEX_SHADER, vs || VS));
     gl.attachShader(p, lagShader(gl, gl.FRAGMENT_SHADER, fs || FS));
     gl.linkProgram(p);
     if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
@@ -486,8 +606,8 @@
     canvas.className = 'ljod-hage3d-lerret';
     /* Lerretet er pynt; innhaldet ligg i lappane under, som har tekst. */
     canvas.setAttribute('aria-hidden', 'true');
-    const lapper = document.createElement('div');
-    lapper.className = 'ljod-hage3d-lapper';
+    const lapper = document.createElement('ul');
+    lapper.className = 'ljod-hage3d-lesarliste';
 
     vert.appendChild(canvas);
     vert.appendChild(lapper);
@@ -497,47 +617,44 @@
     if (!gl) throw new Error('ingen webgl-kontekst');
 
     const prog = lagProgram(gl);
-    const djupProg = lagProgram(gl, DJUP_FS);
+    const skiltProg = lagProgram(gl, SKILT_VS, SKILT_FS);
     const buf = {
       pos: gl.createBuffer(), nor: gl.createBuffer(), far: gl.createBuffer()
     };
-    function stader(pr) {
-      return {
-        pos: gl.getAttribLocation(pr, 'aPos'),
-        nor: gl.getAttribLocation(pr, 'aNor'),
-        far: gl.getAttribLocation(pr, 'aFar'),
-        mvp: gl.getUniformLocation(pr, 'uMvp')
-      };
-    }
-    const stad = stader(prog);
-    const djupStad = stader(djupProg);
-
-    /* Djupnebiletet treng ikkje vere stort. Ein lapp er ei rute på tjue
-       piksel; ein tredjedels oppløysing tek han med god margin, og eit
-       lite bilete gjer readPixels billeg. */
-    const djup = {
-      tex: gl.createTexture(), fbo: gl.createFramebuffer(),
-      dybde: gl.createRenderbuffer(), b: 0, h: 0, px: null, klar: false
+    const skiltBuf = {
+      pos: gl.createBuffer(), uv: gl.createBuffer(), far: gl.createBuffer()
+    };
+    const stad = {
+      pos: gl.getAttribLocation(prog, 'aPos'),
+      nor: gl.getAttribLocation(prog, 'aNor'),
+      far: gl.getAttribLocation(prog, 'aFar'),
+      mvp: gl.getUniformLocation(prog, 'uMvp')
+    };
+    const skiltStad = {
+      pos: gl.getAttribLocation(skiltProg, 'aPos'),
+      uv: gl.getAttribLocation(skiltProg, 'aUv'),
+      far: gl.getAttribLocation(skiltProg, 'aFar'),
+      mvp: gl.getUniformLocation(skiltProg, 'uMvp'),
+      tex: gl.getUniformLocation(skiltProg, 'uTex')
     };
 
-    function settDjupStorleik(b, h) {
-      if (djup.b === b && djup.h === h) return;
-      djup.b = b; djup.h = h;
-      djup.px = new Uint8Array(b * h * 4);
-      gl.bindTexture(gl.TEXTURE_2D, djup.tex);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, b, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    /* Bokstavane blir teikna i eit lerret og lasta opp som ein tekstur.
+       Fonten er den eleven har valt, henta ut av sida sjølv. */
+    const skiltTex = gl.createTexture();
+    function lastAtlas() {
+      const font = root.getComputedStyle(document.body).fontFamily ||
+        'Verdana, sans-serif';
+      const c = lagBokstavAtlas(font);
+      gl.bindTexture(gl.TEXTURE_2D, skiltTex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.bindRenderbuffer(gl.RENDERBUFFER, djup.dybde);
-      gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, b, h);
-      gl.bindFramebuffer(gl.FRAMEBUFFER, djup.fbo);
-      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, djup.tex, 0);
-      gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, djup.dybde);
-      djup.klar = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
-      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.generateMipmap(gl.TEXTURE_2D);
     }
+    lastAtlas();
 
     gl.enable(gl.DEPTH_TEST);
     /* INGA BAKSIDEKUTTING. Fleire av Kenney-plantene — grasstrå, blad,
@@ -555,13 +672,68 @@
        utanfor sjølv om øykanten gjer det. */
     let dreiing = -0.42;
     let helling = 0.46;
-    let zoom = 0.78;
+    let zoom = 0.70;
     let mvp = null;
 
     const HELLING_MIN = 0.06;   // nesten i augehøgd med bakken
     const HELLING_MAKS = 1.42;  // nesten rett ovanfrå
     const ZOOM_MIN = 0.42;
     const ZOOM_MAKS = 1.6;
+
+    /* SKILTA SNUR SEG MOT KAMERAET om den loddrette aksen. Difor blir
+       geometrien deira bygd på nytt for kvar teikning — 29 skilt er 348
+       hjørne, og det er billegare å rekne dei om att enn å finne på ein
+       måte å sleppe det. */
+    /* Eit skilt er lite. Første utgåva hadde eit bord på 37 cm i ein
+       hage der ein blome er 40 høg, og då stod hagen full av
+       reklametavler med ei plante bak kvar. */
+    const STOLPE_B = 0.024, STOLPE_H = 0.10;
+    const BORD_B = 0.135, BORD_TOPP = 0.325;
+
+    function byggSkilt() {
+      const pos = [], uv = [], far = [];
+      const hx = Math.sin(dreiing), hz = Math.cos(dreiing);   // mot kameraet
+      const rx = Math.cos(dreiing), rz = -Math.sin(dreiing);  // sidelengs
+      const tre = palettFarge('woodInner', [245, 215, 187]);
+      const stamme = palettFarge('woodBark', [226, 131, 87]);
+
+      hage.beds.forEach(function (bed, i) {
+        /* Skiltet står framfor planta, ikkje oppi henne. */
+        const bx = bed.x + hx * SKILT_MOT;
+        const bz = bed.z + hz * SKILT_MOT;
+        const bokstav = bokstavUv(i);
+        /* Ein bokstav som ikkje er opna enno får eit gråna skilt. Han
+           står der framleis — eleven skal sjå at hagen har plass. */
+        const d = bed.aktiv ? 1 : 0.62;
+        const g = bed.aktiv ? 0 : 0.30;
+        function tone(c) {
+          return [c[0] * d + g, c[1] * d + g, c[2] * d + g];
+        }
+        const bordFarge = tone(tre);
+        const stolpeFarge = tone(stamme);
+
+        function firkant(b, y0, y1, farge, u) {
+          const hj = [[-b, y0], [b, y0], [b, y1], [-b, y0], [b, y1], [-b, y1]];
+          const uvs = [[u.u0, u.v0], [u.u1, u.v0], [u.u1, u.v1],
+                       [u.u0, u.v0], [u.u1, u.v1], [u.u0, u.v1]];
+          hj.forEach(function (h, k) {
+            pos.push(bx + rx * h[0], h[1], bz + rz * h[0]);
+            uv.push(uvs[k][0], uvs[k][1]);
+            far.push(farge[0], farge[1], farge[2]);
+          });
+        }
+        firkant(STOLPE_B, 0, STOLPE_H + 0.02, stolpeFarge, TOM_UV);
+        firkant(BORD_B, STOLPE_H, BORD_TOPP, bordFarge, bokstav);
+      });
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, skiltBuf.pos);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pos), gl.DYNAMIC_DRAW);
+      gl.bindBuffer(gl.ARRAY_BUFFER, skiltBuf.uv);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.DYNAMIC_DRAW);
+      gl.bindBuffer(gl.ARRAY_BUFFER, skiltBuf.far);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(far), gl.DYNAMIC_DRAW);
+      return pos.length / 3;
+    }
 
     function lastOpp() {
       gl.bindBuffer(gl.ARRAY_BUFFER, buf.pos);
@@ -579,7 +751,9 @@
       /* Høgare enn før. Hagen fekk 52 % av breidda, og då blei plantene
          små ved sida av bokstavlappane, som har ein fast storleik i
          piksel. Det er plass på skjermen; hagen skal bruke han. */
-      const h = Math.max(340, Math.round(b * 0.68));
+      /* Ei øvre grense òg: på ein brei skjerm blir 68 % av breidda ein
+         hage på 760 piksel som skuvar alt anna ned frå sida. */
+      const h = Math.max(340, Math.min(520, Math.round(b * 0.68)));
       canvas.style.height = h + 'px';
       canvas.width = Math.round(b * dpr);
       canvas.height = Math.round(h * dpr);
@@ -635,111 +809,49 @@
       const grunn = proeve * (verst / 0.92) * zoom;
       mvp = matrise(grunn);
 
-      function bind(st) {
-        [['pos', 3], ['nor', 3], ['far', 3]].forEach(function (d) {
-          if (st[d[0]] < 0) return;
-          gl.bindBuffer(gl.ARRAY_BUFFER, buf[d[0]]);
-          gl.enableVertexAttribArray(st[d[0]]);
-          gl.vertexAttribPointer(st[d[0]], d[1], gl.FLOAT, false, 0, 0);
-        });
-      }
-
       gl.useProgram(prog);
       gl.uniformMatrix4fv(stad.mvp, false, mvp);
-      bind(stad);
+      [['pos', 3], ['nor', 3], ['far', 3]].forEach(function (d) {
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf[d[0]]);
+        gl.enableVertexAttribArray(stad[d[0]]);
+        gl.vertexAttribPointer(stad[d[0]], d[1], gl.FLOAT, false, 0, 0);
+      });
       gl.drawArrays(gl.TRIANGLES, 0, hage.tal);
 
-      /* Same scena ein gong til, i lite format, med djupna som farge. */
-      settDjupStorleik(Math.max(48, Math.round(canvas.width / 3)),
-        Math.max(48, Math.round(canvas.height / 3)));
-      if (djup.klar) {
-        gl.bindFramebuffer(gl.FRAMEBUFFER, djup.fbo);
-        gl.viewport(0, 0, djup.b, djup.h);
-        gl.clearColor(1, 1, 1, 1);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        gl.useProgram(djupProg);
-        gl.uniformMatrix4fv(djupStad.mvp, false, mvp);
-        bind(djupStad);
-        gl.drawArrays(gl.TRIANGLES, 0, hage.tal);
-        gl.readPixels(0, 0, djup.b, djup.h, gl.RGBA, gl.UNSIGNED_BYTE, djup.px);
-        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-        gl.viewport(0, 0, canvas.width, canvas.height);
-      }
-
-      plasserLapper(b, h);
-    }
-
-    /* Lappane blir projiserte med same matrise som geometrien, så dei
-       følgjer plantene når hagen blir dreidd. */
-    function plasserLapper(b, h) {
-      hage.beds.forEach(function (bed, i) {
-        const el = lapper.children[i];
-        if (!el) return;
-        /* Lappen står ved ROTA, ikkje over toppen. Over toppen låg han i
-           vegen for planta han skulle namngje — og han flytta seg
-           oppover kvar gong planta voks, så auget måtte leite etter han
-           på nytt. Ved rota står han i ro.
-
-           Han blir skoven eit lite steg mot kameraet, så han ikkje
-           forsvinn inn i stilken. Retninga følgjer dreiinga. */
-        const mot = 0.48;
-        const x = bed.x + Math.sin(dreiing) * mot;
-        const y = 0.13;
-        const z = bed.z + Math.cos(dreiing) * mot;
-        const cx = mvp[0] * x + mvp[4] * y + mvp[8] * z + mvp[12];
-        const cy = mvp[1] * x + mvp[5] * y + mvp[9] * z + mvp[13];
-        const cz = mvp[2] * x + mvp[6] * y + mvp[10] * z + mvp[14];
-        const cw = mvp[3] * x + mvp[7] * y + mvp[11] * z + mvp[15];
-        if (cw <= 0) { el.style.visibility = 'hidden'; return; }
-
-        const nx = cx / cw, ny = cy / cw;
-        /* Utanfor biletet: bort med han. Elles ville han lege og klemt
-           seg mot kanten av ramma og peikt på ei plante ingen ser. */
-        if (nx < -1.02 || nx > 1.02 || ny < -1.02 || ny > 1.02) {
-          el.style.visibility = 'hidden';
-          return;
-        }
-
-        /* Slå opp i djupnebiletet. Er noko nærare kameraet i den ruta,
-           står lappen bak geometrien og skal ikkje synast.
-
-           Slingringsmonnet er ikkje pynt: lappen sit rett over jorda han
-           høyrer til, så utan han ville kvar einaste lapp gøymt seg bak
-           sitt eige bed. */
-        let skjult = false;
-        if (djup.klar && djup.px) {
-          const px = Math.round((nx * 0.5 + 0.5) * (djup.b - 1));
-          const py = Math.round((ny * 0.5 + 0.5) * (djup.h - 1));
-          if (px >= 0 && px < djup.b && py >= 0 && py < djup.h) {
-            const scene = pakkUt(djup.px, (py * djup.b + px) * 4);
-            const min = (cz / cw) * 0.5 + 0.5;
-            skjult = scene < min - 0.0022;
-          }
-        }
-        el.style.visibility = skjult ? 'hidden' : '';
-        el.style.left = ((nx * 0.5 + 0.5) * b) + 'px';
-        el.style.top = ((-ny * 0.5 + 0.5) * h) + 'px';
+      /* Skilta er vanleg geometri i same djupnebuffer som resten, så eit
+         tre som står framfor eit skilt dekkjer det — utan at nokon må
+         rekne ut kva som er framfor kva. */
+      const skiltTal = byggSkilt();
+      gl.useProgram(skiltProg);
+      gl.uniformMatrix4fv(skiltStad.mvp, false, mvp);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, skiltTex);
+      gl.uniform1i(skiltStad.tex, 0);
+      [['pos', 3], ['uv', 2], ['far', 3]].forEach(function (d) {
+        gl.bindBuffer(gl.ARRAY_BUFFER, skiltBuf[d[0]]);
+        gl.enableVertexAttribArray(skiltStad[d[0]]);
+        gl.vertexAttribPointer(skiltStad[d[0]], d[1], gl.FLOAT, false, 0, 0);
+      });
+      gl.drawArrays(gl.TRIANGLES, 0, skiltTal);
+      [skiltStad.pos, skiltStad.uv, skiltStad.far].forEach(function (a) {
+        if (a >= 0) gl.disableVertexAttribArray(a);
       });
     }
 
-    function byggLapper() {
+    /* Skjermlesarane får si eiga liste. Ein bokstav malt i ein tekstur
+       finst ikkje for dei, og det skal ikkje bety at hagen ikkje finst. */
+    function byggLesarliste() {
       lapper.innerHTML = '';
       hage.beds.forEach(function (bed) {
-        const el = document.createElement('span');
-        el.className = 'ljod-hage3d-lapp' + (bed.aktiv ? '' : ' is-locked');
-        el.textContent = bed.ch;
+        const el = document.createElement('li');
         const stegnamn = bed.art.stegnamn[bed.steg];
-        el.setAttribute('role', 'img');
-        el.setAttribute('aria-label', bed.aktiv
-          ? ('Bokstaven ' + bed.ch.toUpperCase() + ': ' + bed.art.namn.toLowerCase() +
-             ', ' + stegnamn)
-          : ('Bokstaven ' + bed.ch.toUpperCase() + ': ikkje opna enno'));
-        el.title = bed.ch.toUpperCase() + ' — ' +
-          (bed.aktiv ? bed.art.namn + ', ' + stegnamn : 'ikkje opna enno');
+        el.textContent = bed.aktiv
+          ? (bed.ch.toUpperCase() + ': ' + bed.art.namn.toLowerCase() + ', ' + stegnamn)
+          : (bed.ch.toUpperCase() + ': ikkje opna enno');
         lapper.appendChild(el);
       });
     }
-    byggLapper();
+    byggLesarliste();
 
     /* ── Å SJÅ PÅ HAGEN ──
 
@@ -851,14 +963,16 @@
       /* Knappane over hagen styrer kameraet gjennom desse. */
       zoomInn: function () { zoom /= 1.18; stell(); },
       zoomUt: function () { zoom *= 1.18; stell(); },
-      midtstill: function () { settUtsyn(-0.42, 0.46, 0.78); },
+      midtstill: function () { settUtsyn(-0.42, 0.46, 0.70); },
       utsyn: function () { return { dreiing: dreiing, helling: helling, zoom: zoom }; },
       oppdater: function (nyProfil) {
         hage = byggHage(nyProfil);
         lastOpp();
-        byggLapper();
+        byggLesarliste();
         teikn();
       },
+      /* Skiftar eleven lesefont, må bokstavane teiknast om att. */
+      nyFont: function () { lastAtlas(); teikn(); },
       riv: function () {
         root.removeEventListener('resize', paaStorleik);
         clearTimeout(tidsavbrot);

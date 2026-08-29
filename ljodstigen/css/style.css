@@ -541,39 +541,20 @@ body[data-font="lesefont"] .ljod-bed-letter {
 }
 .ljod-hage3d-lerret:active { cursor: grabbing; }
 
-.ljod-hage3d-lapper {
+/* Bokstavane er 3D-skilt i hagen no. Denne lista er den same
+   informasjonen for skjermlesarar: ein tekstur finst ikkje for dei, og
+   det skal ikkje bety at hagen ikkje finst. */
+.ljod-hage3d-lesarliste {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-/* Bokstaven står over planta si. Mørk tekst på ei lys brikke, uavhengig
-   av tema, av same grunn som himmelen over. */
-.ljod-hage3d-lapp {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  font-family: inherit;
-  /* Mindre enn før. Lappane har fast storleik i piksel medan hagen
-     skalerer med lerretet, så dei vaks i forhold til plantene på ein
-     liten skjerm og tok over biletet. */
-  font-size: 0.8rem;
-  font-weight: 700;
-  line-height: 1;
-  color: #1a1a1a;
-  background: rgba(255, 255, 255, 0.86);
-  border: 2px solid #1a1a1a;
-  border-radius: 6px;
-  padding: 1px 5px 2px;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-.ljod-hage3d-lapp.is-locked {
-  color: #6b6b6b;
-  border-color: #9a9a9a;
-  background: rgba(255, 255, 255, 0.6);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ljod-hage3d-lerret { cursor: default; }
+  border: 0;
+  list-style: none;
 }
 
 .ljod-hage3d-under {
