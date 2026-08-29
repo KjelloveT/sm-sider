@@ -125,17 +125,59 @@
 
   /* ──────────────── Plassering ──────────────── */
 
-  /* Radene er forskyvne annakvar gong. Eit reint rutenett les som eit
-     rekneark; ei forskyving gjer det same talet planter til eit bed. */
+  /* ── TREA STÅR TILFELDIG ──
+
+     Eit rutenett med forskyvne rader var eit kompromiss, og det såg ut
+     som eit kompromiss: dei fem første bokstavane stod på snorrett rekkje
+     framme, og resten låg spreidde. Halvt rutenett og halvt tilfeldig les
+     som ein feil.
+
+     No er alle tilfeldige. Plasseringa blir rekna ut frå eit fast frø, så
+     skogen ser lik ut kvar gong og på kvar maskin — eleven skal finne
+     att si eiga rute — men han ser ikkje planlagd ut.
+
+     Avvisingsmetoden: trekk eit punkt, forkast det om det er for nær eit
+     tre som alt står. Det er den enkle måten å få jamn spreiing utan
+     klumpar, og med tjueni punkt er han rask nok til at ingen merkar
+     han. Kravet blir mjukna opp om det ikkje går: betre eit par tre som
+     står tett enn ein bokstav som ikkje fekk plass. */
+  let plassar = null;
+
+  function byggPlassar(rx, rz) {
+    const n = LjodLetters.ALPHABET.length;
+    let fro = 4711;
+    function neste() {
+      fro = (fro * 1103515245 + 12345) & 0x7fffffff;
+      return fro / 0x7fffffff;
+    }
+    const ut = [];
+    let krav = RUTE * 0.98;
+    for (let forsok = 0; ut.length < n && forsok < 40000; forsok++) {
+      /* Kvadratrota gjev jamn tettleik utover i staden for ein klump i
+         midten — det er fordelinga av punkt i ein sirkel. */
+      const v = neste() * Math.PI * 2;
+      const r = Math.sqrt(neste());
+      const kant = omkrins(v, rx, rz);
+      const x = kant.x * r * 0.80;
+      /* Bakre femtedel er reservert til dei store steinane. */
+      const z = kant.z * r * 0.80;
+      if (z < -rz * 0.40) continue;
+
+      let for_naer = false;
+      for (let k = 0; k < ut.length; k++) {
+        if (Math.hypot(x - ut[k].x, z - ut[k].z) < krav) { for_naer = true; break; }
+      }
+      if (for_naer) {
+        if (forsok % 2000 === 1999) krav *= 0.92;
+        continue;
+      }
+      ut.push({ x: x, z: z });
+    }
+    return ut;
+  }
+
   function plass(i) {
-    const rad = Math.floor(i / KOLONNAR);
-    const kol = i % KOLONNAR;
-    const radTal = Math.ceil(29 / KOLONNAR);
-    const skift = (rad % 2) ? RUTE * 0.5 : 0;
-    return {
-      x: (kol - (KOLONNAR - 1) / 2) * RUTE + skift,
-      z: (rad - (radTal - 1) / 2) * RUTE * 0.92 + RUTE * 0.55
-    };
+    return plassar[i] || { x: 0, z: 0 };
   }
 
   /* Same bokstav skal stå likt kvar gong, på kvar maskin. Ein
@@ -279,61 +321,11 @@
     }
   }
 
-  /* ── PYNT ──
-
-     Steinar, stubbar og gras mellom bedene og langs kanten. Dei står i
-     eit fast mønster rekna ut frå eit frø, så skogen ser lik ut kvar gong
-     utan at vi lagrar ei liste over kvar stein.
-
-     Ingen av dei kjem nær eit bed. Ein stein oppå ei plante ville sett
-     ut som ein feil, og eleven har ingen måte å flytte han på. */
-  function pyntOya(ut, rx, rz) {
-    if (!bib.pynt || !bib.pynt.length) return;
-    const bedRadius = 0.58;
-    const senter = [];
-    for (let i = 0; i < LjodLetters.ALPHABET.length; i++) senter.push(plass(i));
-
-    let fro = 20260828;
-    function neste() {
-      fro = (fro * 1103515245 + 12345) & 0x7fffffff;
-      return fro / 0x7fffffff;
-    }
-
-    let sett = 0;
-    for (let forsok = 0; forsok < 900 && sett < 34; forsok++) {
-      const v = neste() * Math.PI * 2;
-      /* Kvadratrota gjev jamn tettleik utover i staden for ein klump i
-         midten — det er fordelinga av punkt i ein sirkel. */
-      const r = Math.sqrt(neste());
-      const kant = omkrins(v, rx, rz);
-      const x = kant.x * r * 0.94;
-      const z = kant.z * r * 0.94;
-
-      let naerBed = false;
-      for (let k = 0; k < senter.length; k++) {
-        if (Math.hypot(x - senter[k].x, z - senter[k].z) < bedRadius) { naerBed = true; break; }
-      }
-      if (naerBed) continue;
-
-      const namn = bib.pynt[Math.floor(neste() * bib.pynt.length) % bib.pynt.length];
-      const mod = bib.modellar[namn];
-      if (!mod) continue;
-      /* Skalér mot ei MÅLHØGD og ikkje med ein rå faktor. Pynten er
-         alt frå ei grastust på 14 cm til ein stubbe på 21, og ein felles
-         faktor gjer den eine usynleg og den andre til eit møbel. Alt
-         havnar mellom 10 og 22 cm, godt under den minste planta. */
-      const maal = 0.10 + neste() * 0.12;
-      /* Breidda tel med. Ein tømmerstokk er 17 cm høg og 71 brei; skalert
-         berre etter høgda blir han ein planke tvers over skogen. */
-      const sk = maal / Math.max(mod.hogd, mod.vidd * 0.5, 0.01);
-      leggModell(mod, ut, x, 0, z, sk, neste() * Math.PI * 2, false);
-      sett++;
-    }
-  }
-
-  /* Store steinar langs bakkanten. Dei står bak den siste raden, der dei
-     ikkje kan kome i vegen for nokon plante, og gjev skogen ein horisont:
-     utan dei sluttar han berre. */
+  /* Store steinar langs bakkanten. Dei står bak det siste treet, der dei
+     ikkje kan kome i vegen for nokon bokstav, og gjev skogen ein
+     horisont: utan dei sluttar han berre. Dette er det einaste pyntet
+     som er att — småstein, stubbar og grastuster mellom trea vart berre
+     rot når trea vart tre gonger så store. */
   function storsteinar(ut, rx, rz) {
     if (!bib.store || !bib.store.length) return;
     const bak = -rz * 0.60;
@@ -353,10 +345,10 @@
       const kant = omkrins(Math.atan2(z, x), rx, rz);
       const naa = Math.hypot(x, z), maks = Math.hypot(kant.x, kant.z) * 0.74;
       if (naa > maks) continue;
-      /* Breidda tel med, som for den vesle pynten. stone_largeA er 26 cm
-         høg og 120 brei; skalert etter høgda åleine blei han ein
-         kampestein på to og ein halv meter tvers over halve skogen. */
-      const maal = 0.44 + ((i * 7) % 5) * 0.11;
+      /* Breidda tel med. stone_largeA er 26 cm høg og 120 brei; skalert
+         etter høgda åleine blei han ein kampestein på to og ein halv
+         meter tvers over halve skogen. */
+      const maal = 0.60 + ((i * 7) % 5) * 0.16;
       leggModell(mod, ut, x, -0.03, z,
         maal / Math.max(mod.hogd, mod.vidd * 0.42, 0.01), i * 1.7, false);
     }
@@ -370,17 +362,19 @@
     const a = profil.adaptive;
     const ut = { pos: [], nor: [], far: [], beds: [] };
 
-    /* Øya er så stor som bedene treng og ein rute til. Ei stor tom flate
-       rundt skogen ser ut som ein skog nokon har gjeve opp. */
+    /* Kor stor øya må vere for å ta 29 tre. KOLONNAR og radTal er ikkje
+       ei plassering lenger — trea står tilfeldig — men dei er framleis
+       den enklaste måten å seie «så mange tre med så stor avstand».
+
+       Meir rom bak enn framfor: bakre femtedel er reservert til dei
+       store steinane, som gjev skogen ein horisont i staden for ein kant
+       som berre sluttar. */
     const radTal = Math.ceil(LjodLetters.ALPHABET.length / KOLONNAR);
     const rx = (KOLONNAR - 1) / 2 * RUTE + RUTE * 1.35;
-    /* Meir rom bak enn framfor. Bedene ligg framme på øya, og det som
-       er att bak dei er der dei store steinane står — ein horisont å
-       sjå plantene mot i staden for ein kant som berre sluttar. */
     const rz = (radTal - 1) / 2 * RUTE * 0.92 + RUTE * 1.95;
     oy(ut, rx, rz);
     storsteinar(ut, rx, rz);
-    pyntOya(ut, rx, rz);
+    plassar = byggPlassar(rx, rz);
     /* Kameraet måler avstanden sin mot desse. Ein skog for eit anna
        alfabet får ei anna øy, og då skal ikkje nokon hugse å justere ei
        hardkoda avstand. */
@@ -537,19 +531,36 @@
 
   /* UV-rammene til ein bokstav, med litt luft rundt så naboruta ikkje
      lek inn når teksturen blir interpolert. */
+  /* RADA MÅ SNUAST. Teksturen blir lasta opp med UNPACK_FLIP_Y_WEBGL,
+     så biletet står rett veg — men då ligg rad 0 i lerretet øvst i
+     teksturen, altså ved v = 1 og ikkje v = 0.
+
+     Utan snuinga henta bokstav nr. 0 frå den nedste rada i staden for
+     den øvste: a til e viste y, z, æ, ø og å, og f, g og h viste dei tre
+     tomme rutene på slutten. Tre blanke skilt og tre bokstavar som var
+     borte — og resten stod med feil bokstav utan at det var like lett å
+     sjå. */
   function bokstavUv(i) {
     const rader = Math.ceil(LjodLetters.ALPHABET.length / ATLAS_KOL);
+    const kol = i % ATLAS_KOL;
+    const rad = rader - 1 - Math.floor(i / ATLAS_KOL);
     const luft = 0.02;
     return {
-      u0: (i % ATLAS_KOL + luft) / ATLAS_KOL,
-      u1: (i % ATLAS_KOL + 1 - luft) / ATLAS_KOL,
-      v0: (Math.floor(i / ATLAS_KOL) + luft) / rader,
-      v1: (Math.floor(i / ATLAS_KOL) + 1 - luft) / rader
+      u0: (kol + luft) / ATLAS_KOL,
+      u1: (kol + 1 - luft) / ATLAS_KOL,
+      v0: (rad + luft) / rader,
+      v1: (rad + 1 - luft) / rader
     };
   }
 
-  /* Ein tom rute i atlaset, til stolpen: han skal vere reint trevirke. */
-  const TOM_UV = { u0: 0.999, u1: 1.0, v0: 0.999, v1: 1.0 };
+  /* Ei tom rute i atlaset, til stolpen og sidene: dei skal vere reint
+     trevirke. Alfabetet fyller ikkje siste rada, så den siste ruta i
+     rutenettet er tom — og han blir slått opp med same funksjonen, så
+     han ikkje kan hamne feil om rutenettet endrar seg. */
+  function tomUv() {
+    const n = LjodLetters.ALPHABET.length;
+    return bokstavUv(ATLAS_KOL * Math.ceil(n / ATLAS_KOL) - 1);
+  }
 
   const SKILT_VS = [
     'attribute vec3 aPos;',
@@ -663,7 +674,7 @@
        utanfor sjølv om øykanten gjer det. */
     let dreiing = -0.42;
     let helling = 0.46;
-    let zoom = 0.62;
+    let zoom = 0.74;
     let mvp = null;
 
     const HELLING_MIN = 0.06;   // nesten i augehøgd med bakken
@@ -733,14 +744,14 @@
           }
           /* Framsida ber bokstaven; resten er reint trevirke. */
           flate([[-b, y0, t], [b, y0, t], [b, y1, t], [-b, y1, t]], framme, u);
-          flate([[b, y0, -t], [-b, y0, -t], [-b, y1, -t], [b, y1, -t]], side, TOM_UV);
-          flate([[b, y0, t], [b, y0, -t], [b, y1, -t], [b, y1, t]], side, TOM_UV);
-          flate([[-b, y0, -t], [-b, y0, t], [-b, y1, t], [-b, y1, -t]], side, TOM_UV);
-          flate([[-b, y1, t], [b, y1, t], [b, y1, -t], [-b, y1, -t]], topp, TOM_UV);
-          flate([[-b, y0, -t], [b, y0, -t], [b, y0, t], [-b, y0, t]], botn, TOM_UV);
+          flate([[b, y0, -t], [-b, y0, -t], [-b, y1, -t], [b, y1, -t]], side, tomUv());
+          flate([[b, y0, t], [b, y0, -t], [b, y1, -t], [b, y1, t]], side, tomUv());
+          flate([[-b, y0, -t], [-b, y0, t], [-b, y1, t], [-b, y1, -t]], side, tomUv());
+          flate([[-b, y1, t], [b, y1, t], [b, y1, -t], [-b, y1, -t]], topp, tomUv());
+          flate([[-b, y0, -t], [b, y0, -t], [b, y0, t], [-b, y0, t]], botn, tomUv());
         }
 
-        boks(STOLPE_B, 0, STOLPE_H + 0.015, stamme, TOM_UV);
+        boks(STOLPE_B, 0, STOLPE_H + 0.015, stamme, tomUv());
         boks(BORD_B, STOLPE_H, BORD_TOPP, tre, bokstav);
       });
 
@@ -981,7 +992,7 @@
       /* Knappane over skogen styrer kameraet gjennom desse. */
       zoomInn: function () { zoom /= 1.18; stell(); },
       zoomUt: function () { zoom *= 1.18; stell(); },
-      midtstill: function () { settUtsyn(-0.42, 0.46, 0.62); },
+      midtstill: function () { settUtsyn(-0.42, 0.46, 0.74); },
       utsyn: function () { return { dreiing: dreiing, helling: helling, zoom: zoom }; },
       oppdater: function (nyProfil) {
         skog = byggSkog(nyProfil);
