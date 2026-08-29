@@ -104,26 +104,6 @@ ARTAR = [
         'tree_palm', 'tree_palmBend', 'tree_palmTall', 1.85),
 ]
 
-# ── Pynt ─────────────────────────────────────────────────────────
-#
-# Steinar, stubbar og gras som blir strødde utover øya mellom bedene.
-# Dei har ingen funksjon og høyrer ingen bokstav til; dei er der fordi
-# ei flate med tjueni planter i eit rutenett og ingenting elles ser ut
-# som ein utstillingsmontér og ikkje som ein skog.
-#
-# Plasseringa blir rekna ut i nettlesaren frå eit fast frø, så skogen ser
-# lik ut kvar gong utan at vi lagrar ei liste over kvar stein.
-# «stone_tallA» og resten av dei høge steinane er med vilje utelatne:
-# dei er ein meter høge og ville stått som bautaer over ein skog der den
-# største planta er åtti centimeter.
-PYNT = [
-    'rock_smallA', 'rock_smallB', 'rock_smallC', 'rock_smallFlatA',
-    'stone_smallA', 'stone_smallB',
-    'log', 'stump_round',
-    'grass', 'grass_leafs', 'plant_bushSmall', 'mushroom_tan',
-    'flower_redA', 'flower_yellowA',
-]
-
 # Store steinar til bakkanten av øya. Dei står for langt bak til å kome
 # i vegen for nokon plante, og dei gjev skogen ein horisont: utan dei
 # sluttar han berre.
@@ -229,7 +209,7 @@ def bygg():
         for m in a['steg']:
             if m not in namn:
                 namn.append(m)
-    for m in PYNT + STORE:
+    for m in STORE:
         if m not in namn:
             namn.append(m)
 
@@ -312,7 +292,6 @@ def bygg():
         'palettNamn': palett_namn,
         'modellar': modellar,
         'artar': ARTAR,
-        'pynt': PYNT,
         'store': STORE,
         'bokstavar': {ch: art_for(i) for i, ch in enumerate(ALFABET)},
     }
