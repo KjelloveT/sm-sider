@@ -364,7 +364,7 @@ body[data-font="lesefont"] .ljod-bed-letter {
 
 .ljod-loading { display: flex; flex-direction: column; gap: 14px; padding: 40px 0; }
 
-/* ──────────────── Hagen ──────────────── */
+/* ──────────────── Skogen ──────────────── */
 
 .ljod-garden {
   display: grid;
@@ -520,31 +520,31 @@ body[data-font="lesefont"] .ljod-bed-letter {
 }
 
 /* ══════════════════════════════════════════════
-   BOKSTAVHAGEN I 3D
+   BOKSTAVSKOGEN I 3D
    ══════════════════════════════════════════════ */
 
-.ljod-hage3d {
+.ljod-skog3d {
   position: relative;
   border: 3px solid var(--border);
   border-radius: 12px;
-  /* Ein himmel bak hagen. Fast farge og ikkje ein temavariabel: hagen
+  /* Ein himmel bak skogen. Fast farge og ikkje ein temavariabel: skogen
      er ein stad, og han skal sjå lik ut i alle dei 21 temaa. */
   background: linear-gradient(#DCEFF6 0%, #EFF6E4 62%);
   overflow: hidden;
   touch-action: pan-y;
 }
 
-.ljod-hage3d-lerret {
+.ljod-skog3d-lerret {
   display: block;
   width: 100%;
   cursor: grab;
 }
-.ljod-hage3d-lerret:active { cursor: grabbing; }
+.ljod-skog3d-lerret:active { cursor: grabbing; }
 
-/* Bokstavane er 3D-skilt i hagen no. Denne lista er den same
+/* Bokstavane er 3D-skilt i skogen no. Denne lista er den same
    informasjonen for skjermlesarar: ein tekstur finst ikkje for dei, og
-   det skal ikkje bety at hagen ikkje finst. */
-.ljod-hage3d-lesarliste {
+   det skal ikkje bety at skogen ikkje finst. */
+.ljod-skog3d-lesarliste {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -557,7 +557,7 @@ body[data-font="lesefont"] .ljod-bed-letter {
   list-style: none;
 }
 
-.ljod-hage3d-under {
+.ljod-skog3d-under {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -565,12 +565,12 @@ body[data-font="lesefont"] .ljod-bed-letter {
   gap: 10px;
   margin-top: 8px;
 }
-.ljod-hage3d-hint { margin: 0; }
+.ljod-skog3d-hint { margin: 0; }
 
-/* Prøveknappen står her medan hagen er ny. Han skal sjå ut som det han
+/* Prøveknappen står her medan skogen er ny. Han skal sjå ut som det han
    er — eit verktøy under arbeid — og ikkje som noko eleven skal trykkje
    på, difor den stipla ramma. */
-.ljod-hage3d-prov {
+.ljod-skog3d-prov {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -579,10 +579,10 @@ body[data-font="lesefont"] .ljod-bed-letter {
   border-radius: 10px;
   padding: 8px 12px;
 }
-.ljod-hage3d-prov .ljod-hint { margin: 0; max-width: 34ch; font-size: 0.78rem; }
+.ljod-skog3d-prov .ljod-hint { margin: 0; max-width: 34ch; font-size: 0.78rem; }
 
 /* Kamerastyringa ligg oppå lerretet, øvst til høgre. */
-.ljod-hage3d-styring {
+.ljod-skog3d-styring {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -592,7 +592,7 @@ body[data-font="lesefont"] .ljod-bed-letter {
   z-index: 2;
 }
 
-.ljod-hage3d-knapp {
+.ljod-skog3d-knapp {
   width: 40px;
   height: 40px;
   display: flex;
@@ -607,9 +607,9 @@ body[data-font="lesefont"] .ljod-bed-letter {
   border: 2px solid #1a1a1a;
   border-radius: 8px;
   cursor: pointer;
-  /* Faste fargar som lappane: hagen er ein stad med sin eigen himmel,
+  /* Faste fargar som lappane: skogen er ein stad med sin eigen himmel,
      og knappane står oppå den himmelen, ikkje på temaflata. */
 }
-.ljod-hage3d-knapp:hover { background: #fff; }
-.ljod-hage3d-knapp:active { transform: translateY(1px); }
-.ljod-hage3d-knapp:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
+.ljod-skog3d-knapp:hover { background: #fff; }
+.ljod-skog3d-knapp:active { transform: translateY(1px); }
+.ljod-skog3d-knapp:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }

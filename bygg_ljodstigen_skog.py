@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Byggjer plantebiblioteket til bokstavhagen frå Kenney sin Nature Kit.
+"""Byggjer trebiblioteket til bokstavskogen frå Kenney sin Nature Kit.
 
-    python bygg_ljodstigen_hage.py [--liste]
+    python bygg_ljodstigen_skog.py [--liste]
 
 Les    _kjelder/kenney-nature/Models/GLTF format/*.glb
-skriv  ljodstigen/hage/planter.bin  +  planter.json
+skriv  ljodstigen/skog/planter.bin  +  planter.json
 
 KVIFOR IKKJE BERRE LEVERE GLB-FILENE?
 
-Fordi vi då måtte skrive ein glTF-lastar i nettlesaren. Hagen treng
+Fordi vi då måtte skrive ein glTF-lastar i nettlesaren. Skogen treng
 nøyaktig éin ting av glTF: trekantar med ein farge. Alt det andre i
 spesifikasjonen — scenegraf, skinn, animasjonar, PBR, texturar,
 samplarar — er kode vi ville drege med oss for å ikkje bruke han.
 
-Her blir geometrien pakka til det hagen faktisk teiknar: eit
+Her blir geometrien pakka til det skogen faktisk teiknar: eit
 posisjonsfelt, ein normal og ein palettindeks per hjørne. Femti modellar
 blir éi fil som nettlesaren kan sende rett til GPU-en utan å tolke noko.
 
@@ -28,7 +28,7 @@ PALETTEN ER FELLES. Kenney brukar dei same materialnamna på tvers av
 heile settet — «grass», «woodBark», «colorRed». Dei blir samla i éin
 palett, og kvart hjørne ber ein indeks inn i han i staden for tre
 fargebyte. Det er ikkje for å spare plass; det er for at ein seinare
-kan bytte heile fargestemninga i hagen ved å endre seks tal.
+kan bytte heile fargestemninga i skogen ved å endre seks tal.
 
 Nature Kit er CC0. Sjå _libs/CREDITS.md.
 """
@@ -39,94 +39,69 @@ import sys
 
 ROT = os.path.dirname(os.path.abspath(__file__))
 KJELDE = os.path.join(ROT, '_kjelder', 'kenney-nature')
-UT = os.path.join(ROT, 'ljodstigen', 'hage')
+UT = os.path.join(ROT, 'ljodstigen', 'skog')
 
 # ── Artane ───────────────────────────────────────────────────────
 #
 # Kvar art er seks modellar, éin per boks i den adaptive motoren.
-# Steg 0 er ei tom seng; steg 5 er planta fullvaksen.
+# Steg 0 er ei tom rute; steg 5 er treet fullvakse.
 #
-# DETTE ER STIGEN ELEVEN SER. Han skal lesast som vekst og ikkje som
-# ei utskifting: frøet blir ei spire, spira får blad, bladet får ein
-# knopp. Difor deler artane innleiinga — alle byrjar i same jord med
-# same spire — og skil lag først når planta blir seg sjølv.
-#
-# Blomane er den einaste staden Kenney gjev oss ein ekte knopp-til-blom:
-# flower_*A er ein lukka knopp, B er open, C er heilt utsprungen.
+# DETTE ER STIGEN ELEVEN SER. Han skal lesast som vekst og ikkje som ei
+# utskifting: frøet blir ei spire, spira blir ei lita plante, planta blir
+# eit tre. Difor deler artane dei tre første stega — alle byrjar likt —
+# og skil lag først når treet blir seg sjølv.
 
-SPIRE = ['crops_dirtSingle', 'grass_leafs']
+# Alle artane er TRE. Ein tidlegare versjon blanda blomar, buskar, gras
+# og sopp, og han var finare å sjå på — men eit tre som veks er den
+# tydelegaste vekstkurva vi har: han blir høgare, og han blir det på ein
+# måte eit barn kjenner att frå utsida av vindauget.
+#
+# Prisen er at fleire bokstavar får liknande tre. Kenney har elleve
+# lauvtreformer og fem furuformer, kvar i tre fargesett — grønt, mørkt og
+# haust — så av femten artar er ingen to heilt like, men nokre er
+# søskenbarn. Det er ein pris det er verdt: eleven skal kjenne att SI
+# plante, og plasseringa i skogen gjer meir av den jobben enn forma.
+
+SPIRE = ['crops_dirtSingle', 'grass_leafs', 'plant_bushSmall']
+STEGNAMN = ['frø', 'spire', 'lita plante', 'lite tre', 'tre', 'stort tre']
+
+
+def tre(id_, namn, liten, mellom, stor, maks):
+    return {'id': id_, 'namn': namn, 'steg': SPIRE + [liten, mellom, stor],
+            'maks': maks, 'stegnamn': STEGNAMN}
+
 
 ARTAR = [
-    {'id': 'blome-raud', 'namn': 'Raud blome',
-     'steg': SPIRE + ['crops_leafsStageA', 'flower_redA', 'flower_redB', 'flower_redC'],
-     'klynge': [1, 1, 1, 1, 2, 3],
-     'maks': 1.782,
-     'stegnamn': ['frø', 'spire', 'blad', 'knopp', 'blome', 'full blom']},
-    {'id': 'furu', 'namn': 'Furu',
-     'steg': SPIRE + ['plant_bushSmall', 'tree_pineSmallA', 'tree_pineRoundA', 'tree_pineDefaultA'],
-     'maks': 0.686,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'lite tre', 'tre', 'stort tre']},
-    {'id': 'busk', 'namn': 'Busk',
-     'steg': SPIRE + ['plant_bushSmall', 'plant_bush', 'plant_bushDetailed', 'plant_bushLarge'],
-     'klynge': [1, 1, 1, 1, 2, 2],
-     'maks': 1.914,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'busk', 'tett busk', 'stor busk']},
-    {'id': 'blome-lilla', 'namn': 'Lilla blome',
-     'steg': SPIRE + ['crops_leafsStageA', 'flower_purpleA', 'flower_purpleB', 'flower_purpleC'],
-     'klynge': [1, 1, 1, 1, 2, 3],
-     'maks': 1.98,
-     'stegnamn': ['frø', 'spire', 'blad', 'knopp', 'blome', 'full blom']},
-    {'id': 'lauvtre', 'namn': 'Lauvtre',
-     'steg': SPIRE + ['plant_bushSmall', 'tree_small', 'tree_default', 'tree_tall'],
-     'maks': 0.66,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'lite tre', 'tre', 'stort tre']},
-    {'id': 'gras', 'namn': 'Gras',
-     'steg': SPIRE + ['grass_leafsLarge', 'grass', 'grass_large', 'grass_large'],
-     'klynge': [1, 1, 2, 2, 3, 3],
-     'maks': 1.716,
-     'stegnamn': ['frø', 'spire', 'blad', 'gras', 'tett gras', 'stort gras']},
-    {'id': 'blome-gul', 'namn': 'Gul blome',
-     'steg': SPIRE + ['crops_leafsStageA', 'flower_yellowA', 'flower_yellowB', 'flower_yellowC'],
-     'klynge': [1, 1, 1, 1, 2, 3],
-     'maks': 2.244,
-     'stegnamn': ['frø', 'spire', 'blad', 'knopp', 'blome', 'full blom']},
-    {'id': 'eik', 'namn': 'Eik',
-     'steg': SPIRE + ['plant_bushSmall', 'tree_blocks', 'tree_oak', 'tree_detailed'],
-     'maks': 0.686,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'lite tre', 'tre', 'stort tre']},
-    {'id': 'sopp', 'namn': 'Sopp',
-     'steg': SPIRE + ['mushroom_tan', 'mushroom_tanTall', 'mushroom_red', 'mushroom_redGroup'],
-     'klynge': [1, 1, 1, 2, 2, 3],
-     'maks': 1.716,
-     'stegnamn': ['frø', 'spire', 'liten sopp', 'sopp', 'raud sopp', 'soppring']},
-    {'id': 'busk-spiss', 'namn': 'Spiss busk',
-     'steg': SPIRE + ['plant_bushSmall', 'plant_bushTriangle', 'plant_flatShort', 'plant_flatTall'],
-     'klynge': [1, 1, 1, 1, 2, 2],
-     'maks': 1.848,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'busk', 'brei busk', 'stor busk']},
-    {'id': 'korn', 'namn': 'Korn',
-     'steg': ['crops_dirtSingle', 'crops_cornStageA', 'crops_cornStageB', 'crops_cornStageC',
-              'crops_cornStageD', 'crops_cornStageD'],
-     'klynge': [1, 1, 2, 2, 3, 3],
-     'maks': 0.766,
-     'stegnamn': ['frø', 'spire', 'strå', 'høgt strå', 'kolbe', 'moden kolbe']},
-    {'id': 'palme', 'namn': 'Palme',
-     'steg': SPIRE + ['plant_bushSmall', 'tree_palmShort', 'tree_palmDetailedShort', 'tree_palmDetailedTall'],
-     'maks': 0.607,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'lita palme', 'palme', 'høg palme']},
-    {'id': 'kaktus', 'namn': 'Kaktus',
-     'steg': SPIRE + ['plant_bushSmall', 'cactus_short', 'cactus_tall', 'cactus_tall'],
-     'klynge': [1, 1, 1, 1, 1, 2],
-     'maks': 1.03,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'liten kaktus', 'kaktus', 'stor kaktus']},
-    {'id': 'kjegletre', 'namn': 'Kjegletre',
-     'steg': SPIRE + ['plant_bushSmall', 'tree_cone', 'tree_plateau', 'tree_thin'],
-     'maks': 0.66,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'lite tre', 'tre', 'stort tre']},
-    {'id': 'rundtre', 'namn': 'Rundtre',
-     'steg': SPIRE + ['plant_bushSmall', 'tree_simple', 'tree_fat', 'tree_detailed'],
-     'maks': 0.686,
-     'stegnamn': ['frø', 'spire', 'liten busk', 'lite tre', 'tre', 'stort tre']},
+    tre('furu', 'Furu',
+        'tree_pineSmallA', 'tree_pineDefaultA', 'tree_pineTallA', 1.95),
+    tre('lauvtre', 'Lauvtre',
+        'tree_small', 'tree_default', 'tree_tall', 1.95),
+    tre('eik', 'Eik',
+        'tree_blocks', 'tree_oak', 'tree_detailed', 2.10),
+    tre('haustlauv', 'Haustlauv',
+        'tree_small_fall', 'tree_default_fall', 'tree_tall_fall', 1.95),
+    tre('rundfuru', 'Rundfuru',
+        'tree_pineSmallB', 'tree_pineRoundA', 'tree_pineRoundB', 1.95),
+    tre('morklauv', 'Mørkt lauvtre',
+        'tree_small_dark', 'tree_default_dark', 'tree_tall_dark', 1.95),
+    tre('kjegletre', 'Kjegletre',
+        'tree_cone', 'tree_plateau', 'tree_thin', 2.00),
+    tre('hausteik', 'Hausteik',
+        'tree_blocks_fall', 'tree_oak_fall', 'tree_detailed_fall', 2.10),
+    tre('palme', 'Palme',
+        'tree_palmShort', 'tree_palmDetailedShort', 'tree_palmDetailedTall', 1.85),
+    tre('rundtre', 'Rundtre',
+        'tree_simple', 'tree_fat', 'tree_detailed', 2.10),
+    tre('morkeik', 'Mørk eik',
+        'tree_blocks_dark', 'tree_oak_dark', 'tree_detailed_dark', 2.10),
+    tre('hogfuru', 'Høgfuru',
+        'tree_pineSmallC', 'tree_pineTallB', 'tree_pineTallB_detailed', 1.90),
+    tre('morkkjegle', 'Mørkt kjegletre',
+        'tree_cone_dark', 'tree_plateau_dark', 'tree_thin_dark', 2.00),
+    tre('haustrundtre', 'Haustrundtre',
+        'tree_simple_fall', 'tree_fat_fall', 'tree_detailed_fall', 2.10),
+    tre('bogepalme', 'Bogepalme',
+        'tree_palm', 'tree_palmBend', 'tree_palmTall', 1.85),
 ]
 
 # ── Pynt ─────────────────────────────────────────────────────────
@@ -134,12 +109,12 @@ ARTAR = [
 # Steinar, stubbar og gras som blir strødde utover øya mellom bedene.
 # Dei har ingen funksjon og høyrer ingen bokstav til; dei er der fordi
 # ei flate med tjueni planter i eit rutenett og ingenting elles ser ut
-# som ein utstillingsmontér og ikkje som ein hage.
+# som ein utstillingsmontér og ikkje som ein skog.
 #
-# Plasseringa blir rekna ut i nettlesaren frå eit fast frø, så hagen ser
+# Plasseringa blir rekna ut i nettlesaren frå eit fast frø, så skogen ser
 # lik ut kvar gong utan at vi lagrar ei liste over kvar stein.
 # «stone_tallA» og resten av dei høge steinane er med vilje utelatne:
-# dei er ein meter høge og ville stått som bautaer over ein hage der den
+# dei er ein meter høge og ville stått som bautaer over ein skog der den
 # største planta er åtti centimeter.
 PYNT = [
     'rock_smallA', 'rock_smallB', 'rock_smallC', 'rock_smallFlatA',
@@ -150,7 +125,7 @@ PYNT = [
 ]
 
 # Store steinar til bakkanten av øya. Dei står for langt bak til å kome
-# i vegen for nokon plante, og dei gjev hagen ein horisont: utan dei
+# i vegen for nokon plante, og dei gjev skogen ein horisont: utan dei
 # sluttar han berre.
 STORE = [
     'stone_largeA', 'stone_largeB', 'stone_largeC',
@@ -160,17 +135,12 @@ STORE = [
 
 ALFABET = list('abcdefghijklmnopqrstuvwxyzæøå')
 
-# «klynge» er kor mange eksemplar som står i bedet på kvart steg. Ein
-# blome er éin stilk, og éin stilk midt i eit bed ser ut som ein blome
-# nokon gløymde. Tre stilkar er ein plante. Trea står åleine — eit tre
-# er stort nok til å vere eit bed i seg sjølv.
-
-# «maks» er kor stor planta står når ho er fullvaksen, som ein faktor på
-# den naturlege storleiken i settet. 1,0 er slik Kenney laga henne.
+# «maks» er kor stort treet står når det er fullvakse, som ein faktor på
+# den naturlege storleiken i settet. 1,0 er slik Kenney laga det.
 #
-# Alle er skrudde opp ein tredjedel frå første utgåva. Bokstavlappane har
-# ein fast storleik i piksel, og plantene tapte mot dei: hagen såg ut som
-# eit kart med etikettar og ikkje som ein hage.
+# Rundt 2,0 no: eit fullvakse tre blir over tre einingar høgt i ei rute
+# på ein og ein halv. Trea skal rage, og kronene skal møtast — det er
+# skilnaden på ei samling planter og ein skog.
 # Blomane blir forstørra litt fordi dei elles blir borte ved sida av eit
 # tre; trea blir krympa litt fordi eit tre på 1,7 einingar i ei rute på
 # 1,0 skuggar for naboen.
@@ -286,7 +256,7 @@ def bygg():
         #
         # Første utgåva normaliserte kvar modell til høgd 1. Det gjorde
         # jordflisa — som er 0,10 høg og 1,0 brei — ti gonger for brei, og
-        # hagen blei ein haug med kjempestore leirklumpar med bitte små
+        # skogen blei ein haug med kjempestore leirklumpar med bitte små
         # planter oppå.
         xs = [p[0] for t in tris for p in t[:3]]
         ys = [p[1] for t in tris for p in t[:3]]
@@ -334,7 +304,7 @@ def bygg():
         f.write(data)
 
     indeks = {
-        'app': 'ljodstigen', 'version': 1, 'type': 'plantebibliotek',
+        'app': 'ljodstigen', 'version': 1, 'type': 'trebibliotek',
         'kjelde': 'Kenney Nature Kit 2.1 (CC0)',
         'steg': struct.calcsize('<hhhbbbBxx'),   # byte per hjørne
         'skala': 8192,                   # int16-einingar per verdseining
@@ -349,7 +319,7 @@ def bygg():
     with open(os.path.join(UT, 'planter.json'), 'w', encoding='utf-8', newline='\n') as f:
         json.dump(indeks, f, ensure_ascii=False, separators=(',', ':'))
 
-    print('Bokstavhagen:')
+    print('Bokstavskogen:')
     print('  %d modellar, %d artar, %d bokstavar' % (len(namn), len(ARTAR), len(ALFABET)))
     print('  %d hjørne (%d trekantar), %d fargar i paletten'
           % (hjornetal, hjornetal // 3, len(palett)))

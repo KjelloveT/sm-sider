@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════
    MENY.JS — Startskjermen
 
-   Profilval, modusval, hagen, merka og læraroversikta.
+   Profilval, modusval, skogen, merka og læraroversikta.
 
    Heile denne skjermen skal kunne brukast med lyden av. Eit klasserom
    har ikkje alltid hovudtelefonar til alle, og ein elev som ikkje finn
@@ -153,9 +153,9 @@
     if (title) title.textContent = av.name;
 
     renderModes();
-    LjodHage.renderStars($('stars'), current);
-    LjodHage.renderGarden($('garden'), current);
-    LjodHage.renderBadges($('badges'), current);
+    LjodSkog.renderStars($('stars'), current);
+    LjodSkog.renderSkog($('garden'), current);
+    LjodSkog.renderBadges($('badges'), current);
     LjodLaerar.render($('laerar'), current);
   }
 
