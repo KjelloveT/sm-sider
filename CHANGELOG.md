@@ -3,6 +3,25 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.38] — 2026-08-28
+
+### Endra
+- **Bokstavhagen er i 3D.** Kvar bokstav er ei plante som veks gjennom seks steg, og vekststeget er framleis boksen i den adaptive motoren: det eleven ser er nøyaktig det motoren veit, og hagen visnar aldri. Femten artar frå Kenney sin Nature Kit — blomar, buskar, gras, sopp, kaktus, korn og sju slag tre — fordelte fast på dei 29 bokstavane, så eleven kjenner att si eiga s-plante frå gong til gong.
+  - **Blomane har ein ekte knopp-til-blom.** `flower_*A/B/C` er lukka knopp, open blome og full blom, så dei tre siste stega er ein blomstring og ikkje ei oppskalering. Frå steg 4 står det fleire stilkar i bedet: éin blome midt i eit bed ser ut som ein blome nokon gløymde.
+  - **Ingen spelmotor.** Hagen teiknar 6 500 trekantar utan texturar, animasjon eller fysikk — hundre linjer WebGL. three.js ville lagt 600 kB på ei skule-iPad og dratt inn ES-modular og eit importmap i eit prosjekt utan byggjesteg.
+  - **Ingen animasjonsløkke.** Hagen blir teikna på nytt når noko endrar seg — sida opnar, vindauget skiftar storleik, eleven dreier på han — og elles ikkje. Ei iPad som ligg open med hagen framme brukar null batteri på han. Ei omteikning tek 1,7 ms.
+  - **Hagen står på ei øy.** Forma blir rekna ut og ikkje henta frå ein modell — ho må passe til talet bokstavar, og eit anna alfabet skal ikkje krevje ei ny 3D-fil. Omrisset er ein ring med radius som svingar mjukt, og under toppflata går tre ringar nedover og innover til ein spiss. Steinar, stubbar, gras og småblomar er strødde mellom bedene frå eit fast frø, så hagen ser lik ut kvar gong utan at vi lagrar kvar stein.
+  - **Bokstavane er DOM.** Namnelappane er element over lerretet, ikkje pikslar i det, så dei arvar lesefonten eleven har valt og kan lesast av ein skjermlesar.
+  - **Bokstaven står ved rota.** Over toppen låg han i vegen for planta han skulle namngje, og han flytta seg oppover kvar gong planta voks, så auget måtte leite etter han på nytt. Ved rota står han i ro. Han blir skoven eit lite steg mot kameraet, så han ikkje forsvinn inn i stilken.
+  - **Fri utsikt.** Hagen kan snuast heile vegen rundt og vippast frå augehøgd til nesten rett ovanfrå, og zoomast med knip, hjul, knappar eller pluss og minus. Avstanden til kameraet blir **målt** og ikkje gjetta: randa av øya blir projisert med ein prøveavstand, og avstanden skalert med kor langt utanfor ramma ho hamna. Ei hardkoda avstand klipte dei ytste bedene tre gonger før det stod slik.
+  - **Bokstavane gøymer seg bak plantene.** Scena blir teikna ein gong til i lite format med djupna som farge, og kvar lapp slår opp i det biletet. Ein lapp som ligg oppå eit tre som står framfor han er ikkje berre stygg — han lyg om kvar planta står. WebGL 1 kan ikkje lese djupnebufferen, så djupna blir pakka inn i dei fire fargebyta.
+  - **Plantene er ein tredjedel større, og bedene halvannan gong.** Bokstavlappane har fast storleik i piksel; plantene tapte mot dei, og hagen såg ut som eit kart med etikettar. Lerretet er òg høgare — 68 % av breidda mot 52 før.
+  - **Ein prøveknapp gjev kvar bokstav eit tilfeldig vekststeg,** så ein kan sjå korleis hagen tek seg ut utan å løyse tjueni oppgåver først. Han er merkt som det han er og skal ut når hagen er ferdig prøvd.
+  - **Den flate hagen står att som reserve.** Han blir teikna først, og 3D-hagen tek over når han har lasta. Ei maskin utan WebGL, eller ei henting som ikkje kjem fram, endar med den gamle hagen og ikkje med ei tom rute.
+- **`bygg_ljodstigen_hage.py`** hentar dei femti modellane vi brukar ut av Nature Kit og skriv geometrien til `planter.bin` (227 kB) med flate normalar og ein felles palett. Difor finst det ingen glTF-lastar i nettlesaren: hagen treng trekantar med ein farge, ikkje scenegrafar og PBR.
+- Modellane arvar målestokken frå Kenney i staden for å bli normaliserte kvar for seg. Første utgåva normaliserte alt til høgd 1, og då blei jordflisa — 0,10 høg og 1,0 brei — ti gonger for brei.
+- `/ljodstigen/hage/*` blir revalidert kvar femte minutt og ikkje cacha `immutable`, av same grunn som atlaset: `planter.bin` blir skriven på nytt under same namn kvar gong artane endrar seg.
+
 ## [1.36] — 2026-08-27
 
 ### Lagt til

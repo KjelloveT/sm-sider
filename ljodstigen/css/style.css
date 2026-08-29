@@ -518,3 +518,117 @@ body[data-font="lesefont"] .ljod-bed-letter {
   .ljod-table tr.is-weak td { background: none; font-weight: 700; }
   body { background: #fff; color: #000; }
 }
+
+/* ══════════════════════════════════════════════
+   BOKSTAVHAGEN I 3D
+   ══════════════════════════════════════════════ */
+
+.ljod-hage3d {
+  position: relative;
+  border: 3px solid var(--border);
+  border-radius: 12px;
+  /* Ein himmel bak hagen. Fast farge og ikkje ein temavariabel: hagen
+     er ein stad, og han skal sjå lik ut i alle dei 21 temaa. */
+  background: linear-gradient(#DCEFF6 0%, #EFF6E4 62%);
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.ljod-hage3d-lerret {
+  display: block;
+  width: 100%;
+  cursor: grab;
+}
+.ljod-hage3d-lerret:active { cursor: grabbing; }
+
+.ljod-hage3d-lapper {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Bokstaven står over planta si. Mørk tekst på ei lys brikke, uavhengig
+   av tema, av same grunn som himmelen over. */
+.ljod-hage3d-lapp {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: inherit;
+  /* Mindre enn før. Lappane har fast storleik i piksel medan hagen
+     skalerer med lerretet, så dei vaks i forhold til plantene på ein
+     liten skjerm og tok over biletet. */
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.86);
+  border: 2px solid #1a1a1a;
+  border-radius: 6px;
+  padding: 1px 5px 2px;
+  white-space: nowrap;
+}
+.ljod-hage3d-lapp.is-locked {
+  color: #6b6b6b;
+  border-color: #9a9a9a;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ljod-hage3d-lerret { cursor: default; }
+}
+
+.ljod-hage3d-under {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 8px;
+}
+.ljod-hage3d-hint { margin: 0; }
+
+/* Prøveknappen står her medan hagen er ny. Han skal sjå ut som det han
+   er — eit verktøy under arbeid — og ikkje som noko eleven skal trykkje
+   på, difor den stipla ramma. */
+.ljod-hage3d-prov {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+.ljod-hage3d-prov .ljod-hint { margin: 0; max-width: 34ch; font-size: 0.78rem; }
+
+/* Kamerastyringa ligg oppå lerretet, øvst til høgre. */
+.ljod-hage3d-styring {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.ljod-hage3d-knapp {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.88);
+  border: 2px solid #1a1a1a;
+  border-radius: 8px;
+  cursor: pointer;
+  /* Faste fargar som lappane: hagen er ein stad med sin eigen himmel,
+     og knappane står oppå den himmelen, ikkje på temaflata. */
+}
+.ljod-hage3d-knapp:hover { background: #fff; }
+.ljod-hage3d-knapp:active { transform: translateY(1px); }
+.ljod-hage3d-knapp:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
