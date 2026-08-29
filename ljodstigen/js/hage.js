@@ -45,7 +45,7 @@
 
       const under = R().h('div', 'ljod-hage3d-under');
       under.appendChild(R().h('p', 'ljod-hint ljod-hage3d-hint',
-        'Dra for å snu hagen, knip for å zoome.'));
+        'Dra for å snu hagen, knip for å zoome. Bokstaven står på eit skilt framfor planta si.'));
       under.appendChild(proveknapp(host, p));
       host.insertBefore(under, vert.nextSibling);
     }).catch(function (e) {
