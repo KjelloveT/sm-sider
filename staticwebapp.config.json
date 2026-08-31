@@ -98,7 +98,7 @@
       "_kommentar": "Teksturatlaset til Bokstavjakta blir bygd av bygg_ljodstigen_atlas.py og endrar seg berre når nokon køyrer skriptet på nytt.",
       "route": "/ljodstigen/jakta/*",
       "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
+        "Cache-Control": "public, max-age=300, must-revalidate"
       }
     }
   ],

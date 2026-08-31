@@ -33,17 +33,32 @@
         Dei tre nedste radene er fast bakke i alle baner og kan ikkje endrast; kontrollane
         til eleven ligg oppå dei. Det tyder òg at det <strong>ikkje kan vere hol i
         bakken</strong> — høgdeskilnad lagar du med plattformer.</p>
+        <p>Berre dei fem klossane under <strong>«Med funksjon»</strong> gjer noko i spelet.
+        Resten er <strong>berre teikna</strong>: dei står der dei står, figuren går rett
+        gjennom dei, og dei påverkar ikkje om banen er spelbar. Dei ligg her så du kan
+        peike på ein kloss ved namn og seie kva du vil at han skal gjere.</p>
     </div>
 
     <section class="box4">
         <div class="box-header"><h2>Teikn</h2></div>
         <div class="box-body">
-            <div id="palett" class="bl-palett" role="toolbar" aria-label="Verktøy"></div>
+            <!-- Klossane står ved sida av flata, ikkje over henne: med
+                 166 av dei var vegen frå ein kloss til ruta han skulle i
+                 ei heil skjermrulling kvar veg. -->
+            <div class="bl-arbeidsflate">
+                <div class="bl-teikn">
+                    <div id="rutenett-vert" class="bl-flate" tabindex="0"
+                         aria-label="Baneflata. Trykk eller dra for å teikne."></div>
+                    <div id="status" class="bl-status" aria-live="polite"></div>
+                </div>
 
-            <div id="rutenett-vert" class="bl-flate" tabindex="0"
-                 aria-label="Baneflata. Trykk eller dra for å teikne."></div>
-
-            <div id="status" class="bl-status" aria-live="polite"></div>
+                <div class="bl-sidestolpe">
+                    <label class="bl-felt bl-sok">Finn kloss
+                        <input type="search" id="sok" placeholder="lykt, stige, tal…">
+                    </label>
+                    <div id="palett" role="toolbar" aria-label="Klossar"></div>
+                </div>
+            </div>
 
             <div class="bl-rad">
                 <span class="bl-felt">
@@ -100,6 +115,7 @@
 <script src="js/words.js"></script>
 <script src="js/adaptive.js"></script>
 <script src="js/state.js"></script>
+<script src="js/jakta/blokker.js"></script>
 <script src="js/jakta/validator.js"></script>
 <script src="js/jakta/eigne.js"></script>
 <script src="js/banelagar/rutenett.js"></script>
