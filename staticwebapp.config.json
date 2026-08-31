@@ -81,6 +81,13 @@
       }
     },
     {
+      "_kommentar": "Leirplassen til Bokstavropet blir bygd av bygg_ljodstigen_ropet.py, og leir.bin blir skriven på nytt under same namn kvar gong modellane eller figuren endrar seg. Same grunngjeving som for skogen under.",
+      "route": "/ljodstigen/ropet/*",
+      "headers": {
+        "Cache-Control": "public, max-age=300, must-revalidate"
+      }
+    },
+    {
       "_kommentar": "Plantebiblioteket til bokstavskogen blir bygd av bygg_ljodstigen_skog.py, og planter.bin blir skriven på nytt under same namn kvar gong artane endrar seg. Med immutable ville ei elevmaskin sitje med eit gammalt bibliotek der modellane ligg andre stader enn indeksen seier, og skogen ville teikne feil planter utan ein feil som forklarer kvifor. Ei revalidering kostar eit 304-svar.",
       "route": "/ljodstigen/skog/*",
       "headers": {

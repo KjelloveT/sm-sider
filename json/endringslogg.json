@@ -2,6 +2,33 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.39",
+      "dato": "2026-08-28",
+      "samandrag": "Bokstavropet finst som eit lite 3D-spel på ein leirplass, der lydane bur i telt.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavropet på leirplassen: eleven ser bokstaven, går bort til eit telt for å høyre lyden, og vel det han meiner er rett. Prøveutgåve."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Figuren er animert med eit skjelett på sju ledd, rekna ut i spelet sjølv utan animasjonsbibliotek."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Styring med piltastar og mellomrom, eller styrespak og knapp på nettbrett."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Notatet seier berre kva som er publisert på framsida. Reglar for notatet og endringssida står i AGENTS.md."
+        }
+      ]
+    },
+    {
       "versjon": "1.38",
       "dato": "2026-08-28",
       "samandrag": "Bokstavskogen: framgangen i Ljodstigen er 29 tre i 3D som veks med kvar bokstav.",

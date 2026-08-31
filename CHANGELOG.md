@@ -3,6 +3,19 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.39] — 2026-08-28
+
+### Lagt til
+- **Bokstavropet på leirplassen** — same oppgåva som skjermutgåva, men lydane bur i telt. Eleven ser bokstaven, går bort til eit telt for å høyre lyden, og vel det han meiner er rett. Prøveutgåve inne i Ljodstigen.
+  - **Det er ikkje berre pynt.** I skjermutgåva ligg alle alternativa framme samtidig og kan klikkast gjennom på eit sekund. Her må eleven gå, og det tek tid — tid der han må halde lyden i hovudet medan han går til neste telt. Det er arbeidsminne, og det er nettopp det som skil å kjenne att ein lyd frå å hente han fram.
+  - **Figuren er animert, og animasjonen blir rekna ut sjølv.** Kenney-figuren har eit skjelett på sju ledd. Sju leddmatriser per bilete er ei løkke på sju, og då trengst det ikkje eit animasjonsbibliotek: shaderen slår opp fire ledd per hjørne og blandar. Fire klipp er med — å stå, å gå, ja og nei.
+  - **Styring:** piltastar eller WASD og mellomrom på maskin, styrespak nede til venstre og ein knapp til høgre på nettbrett. Begge er der heile tida.
+  - **Fargen ligg i geometrien.** Figuren er teksturert i kjelda, men teksturen er eit rutenett av flate fargefelt. Fargen blir plukka éin gong per hjørne under bygginga, så nettlesaren slepp å laste eit bilete på 512 × 512 og shaderen slepp eit oppslag per piksel.
+- **`bygg_ljodstigen_ropet.py`** hentar telt, bål, kubbar og figuren ut av dei to Kenney-pakkane og skriv dei til `ropet/leir.bin` (154 kB): tolv byte per stille hjørne, tjue for eit som heng i eit skjelett.
+
+### Endra
+- **Notatet på framsida seier berre kva som er publisert der.** Punktet om Banelagar er ute — verktøyet ligg inne i Ljodstigen og ikkje på framsida, så den besøkjande kunne ikkje gå og sjå på det. Regelen står i `AGENTS.md` §6.2 no, saman med ein ny regel om at ein versjon i `CHANGELOG.md` skal leggjast i `json/endringslogg.json` i same pull request.
+
 ## [1.38] — 2026-08-28
 
 ### Endra
