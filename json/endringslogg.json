@@ -2,6 +2,43 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.38",
+      "dato": "2026-08-28",
+      "samandrag": "Bokstavskogen: framgangen i Ljodstigen er 29 tre i 3D som veks med kvar bokstav.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavhagen er ein bokstavskog i 3D. Kvar bokstav er eit tre som veks gjennom seks steg, og steget er framleis boksen i den adaptive motoren — skogen visnar aldri."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Femten treslag frå Kenney sin Nature Kit, fast fordelte på dei 29 bokstavane, så eleven kjenner att sitt eige tre frå gong til gong."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Skogen kan snuast heile vegen rundt, vippast frå augehøgd til rett ovanfrå og zoomast med knip, hjul eller knappar."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstaven står på eit lite skilt framfor treet sitt, som eit føremål i skogen og ikkje som ein etikett oppå biletet."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Skogen er teikna med hundre linjer WebGL utan spelmotor, og han blir berre teikna på nytt når noko endrar seg — ei iPad som ligg open brukar ikkje batteri på han."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Tre skilt var blanke og tre bokstavar mangla: teksturen blir snudd loddrett ved opplasting, så radene i bokstavatlaset kom i motsett rekkjefølgje."
+        }
+      ]
+    },
+    {
       "versjon": "1.34",
       "dato": "2026-08-26",
       "samandrag": "Kludre Klodrian røpte kva port som var rett.",
