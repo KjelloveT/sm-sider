@@ -232,18 +232,33 @@
          mellom kvar oppgåve ville rive han ut av staden han er i. */
     }
 
-    /* Kor mange bokstavar som sit, og kor mange som står att. Same tal
-       som skogen viser — det er den same motoren, og eleven skal ikkje
-       møte to ulike svar på kor langt han er komen. */
+    /* ── MÅLAREN MÅ RØRE SEG ──
+
+       Første utgåva viste «ferdige bokstavar»: dei som har nådd boks 5
+       av 5. Det er rett rekna og heilt ubrukeleg. Øktklokka held ein
+       bokstav att mellom kvar promotering — 3, 6, 12 og 25 oppgåver — så
+       éin bokstav treng minst 46 andre oppgåver før han er ferdig. Ein
+       elev med fjorten rette på rad såg framleis 0 / 29, og ein målar
+       som står stille når du gjer alt rett er verre enn ingen målar.
+
+       No er stripa summen av kor langt kvar bokstav har kome, delt på
+       kor langt alle kan komme. Han rører seg på den FØRSTE promoteringa
+       av kvar bokstav, og han går berre opp — vi les maxBox, ikkje box,
+       same regel som skogen. Talet ved sida tel bokstavar eleven har
+       byrja på, som er det han sjølv ville sagt at han «kan». */
     function visFramgang() {
-      const st = LjodAdaptive.stats(profil.adaptive);
-      const att = st.total - st.mastered;
-      $('ropet-tal').textContent = st.mastered + ' / ' + st.total;
-      $('ropet-stripe-fyll').style.width =
-        (st.total ? (st.mastered / st.total * 100) : 0) + '%';
+      const a = profil.adaptive;
+      const st = LjodAdaptive.stats(a);
+      const maks = st.total * LjodAdaptive.MAX_BOX;
+      let sum = 0;
+      LjodLetters.ALPHABET.forEach(function (ch) {
+        sum += LjodAdaptive.item(a, ch).maxBox;
+      });
+      $('ropet-tal').textContent = st.planted + ' / ' + st.total;
+      $('ropet-stripe-fyll').style.width = (maks ? (sum / maks * 100) : 0) + '%';
       $('ropet-framgang').setAttribute('aria-label',
-        st.mastered + ' av ' + st.total + ' bokstavar er ferdige. ' +
-        att + ' står att.');
+        'Du har byrja på ' + st.planted + ' av ' + st.total + ' bokstavar. ' +
+        st.grown + ' sit godt, og ' + st.mastered + ' er heilt ferdige.');
       const r = $('ropet-rekkje');
       r.hidden = rekkje < 2;
       r.textContent = rekkje + ' på rad';

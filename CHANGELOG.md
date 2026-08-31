@@ -14,11 +14,16 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
   - **Han flyg heim når han har rett.** Ein boge opp og ned med armar og bein i full fart, og så står han på startpunktet att. Å teleportere figuren ville spart eit sekund og teke bort det einaste augeblikket i spelet der han har klart noko.
   - **Telta står i ein ring rundt bålet og vender inn mot elden.** Ringen veks med talet telt, så to naboar alltid har same avstand. Talet telt kjem frå den adaptive motoren og veks frå to til seks etter kvart som eleven meistrar fleire bokstavar.
   - **Figuren kolliderer med telt, tre, kubbar og steinar.** Ein figur som glir tvers gjennom eit tre gjer leiren til ein kulisse; ein som må gå rundt gjer han til ein stad. Gras og blomar stoppar ingen — å bli stoppa av ei grastust er verre enn å gå gjennom henne.
-  - **Ein framgangsmålar** nede i midten viser kor mange bokstavar som sit av 29 — same tal som skogen viser, for det er den same motoren. Ved sida står kor mange eleven har klart på rad, frå to og oppover: ein «1 på rad» er ikkje ei rekkje, det er eit svar.
+  - **Ein framgangsmålar** nede i midten. Stripa er summen av kor langt kvar bokstav har kome, delt på kor langt alle kan komme, og talet ved sida tel bokstavar eleven har byrja på. Ved sida står kor mange han har klart på rad, frå to og oppover: ein «1 på rad» er ikkje ei rekkje, det er eit svar.
   - **Eleven vel sjølv kva utgåve han vil spele.** Bokstavropet-kortet på Ljodstigen-sida har ei lenkje til leirplassen ved sida av den vanlege. Valet ligg der og ikkje som ein eigen modus, fordi det er same oppgåva, same motoren og same framgangen.
 - **`bygg_ljodstigen_ropet.py`** hentar telt, bål, kubbar og figuren ut av dei to Kenney-pakkane og skriv dei til `ropet/leir.bin` (154 kB): tolv byte per stille hjørne, tjue for eit som heng i eit skjelett.
 
+### Fiksa
+- **Framgangsmålaren i leirplassen stod på 0 / 29 uansett kor mange rette eleven fekk.** Han viste «ferdige bokstavar», altså dei som har nådd boks 5 av 5 — rett rekna og heilt ubrukeleg: øktklokka held ein bokstav att mellom kvar promotering, så éin bokstav treng minst 46 andre oppgåver før han er ferdig. Ein elev med fjorten rette på rad såg framleis null, og ein målar som står stille når du gjer alt rett er verre enn ingen målar. No rører stripa seg på den første promoteringa av kvar bokstav.
+- **Telta vende feil veg.** Vinkelen blei rekna som `atan2(dx, dz)` med ei halv omdreiing på — det er ei spegling og ikkje ei dreiing, så han traff for telt rett nord for bålet og bomma meir og meir dess lenger ut til sida dei stod. Retninga er målt no: teiknar ein same teltet ved 0, 90, 180 og 270 grader, er det 180 som vender opninga mot kameraet.
+
 ### Endra
+- **Midten av leirplassen er berre bålet.** Kubbar og steinar er flytta ut utanfor teltringen, og gras og blomar veks berre utanfor. Vegen til teltet er ikkje der oppgåva ligg.
 - **Notatet på framsida seier berre kva som er publisert der.** Punktet om Banelagar er ute — verktøyet ligg inne i Ljodstigen og ikkje på framsida, så den besøkjande kunne ikkje gå og sjå på det. Regelen står i `AGENTS.md` §6.2 no, saman med ein ny regel om at ein versjon i `CHANGELOG.md` skal leggjast i `json/endringslogg.json` i same pull request.
 
 ## [1.38] — 2026-08-28

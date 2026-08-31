@@ -45,6 +45,21 @@
           "t": "nytt",
           "kva": "Ljodstigen",
           "tekst": "Eleven vel sjølv om Bokstavropet skal spelast på skjermen eller på leirplassen."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Framgangsmålaren på leirplassen stod på 0 av 29 uansett kor mange rette eleven fekk. Han viste berre heilt ferdige bokstavar, og det tek minst 46 oppgåver å bli ferdig med éin."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Telta vende feil veg. Vinkelen var rekna som ei spegling og ikkje ei dreiing."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Midten av leirplassen er berre bålet. Kubbar, steinar og blomar er flytta ut utanfor teltringen."
         }
       ]
     },

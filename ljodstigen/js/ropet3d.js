@@ -382,12 +382,22 @@
       const v = -Math.PI / 2 + (tal === 1 ? 0 : (i / (tal - 1) - 0.5) * spenn);
       const x = BAAL.x + Math.cos(v) * r;
       const z = BAAL.z + Math.sin(v) * r;
-      /* Snu mot bålet. leggStatisk roterer med (cos, sin) på same måten
-         som atan2 gjev vinkelen, så retninga hit-til-bålet er vinkelen
-         rett fram — pluss ein halv omdreiing, fordi opninga på Kenney
-         sine telt vender bakover i modellen. */
-      const motBaal = Math.atan2(BAAL.x - x, BAAL.z - z);
-      ut.push({ x: x, z: z, vinkel: motBaal + Math.PI });
+      /* SNU OPNINGA MOT BÅLET.
+
+         Målt og ikkje gjetta: teiknar ein det same teltet ved 0, 90, 180
+         og 270 grader og ser rett på dei, er det 180 som vender opninga
+         mot kameraet. Kameraet står på +z, så opninga ligg på -z i
+         modellen når vinkelen er null.
+
+         leggStatisk roterer slik at eit punkt (0, -1) hamnar på
+         (sin v, -cos v). Skal det peike i retning (dx, dz), må
+         sin v = dx og cos v = -dz — altså atan2(dx, -dz).
+
+         Dei to første utgåvene la på ein halv og ein kvart omdreiing på
+         atan2(dx, dz). Det er ei SPEGLING og ikkje ei dreiing: han
+         traff for telt rett nord for bålet og bomma meir og meir dess
+         lenger ut til sida dei stod. */
+      ut.push({ x: x, z: z, vinkel: Math.atan2(BAAL.x - x, -(BAAL.z - z)) });
     }
     return ut;
   }
@@ -409,13 +419,26 @@
     ut.hindringar = ut.hindringar || [];
     function stopp(x, z, r) { ut.hindringar.push({ x: x, z: z, r: r }); }
 
+    /* MIDTEN ER BERRE BÅLET. Alt anna som stod inne mellom telta var
+       noko eleven måtte gå rundt for å komme fram, og vegen til teltet
+       er ikkje der oppgåva ligg. Kubbane er flytta ut utanfor teltringen
+       — dei ser framleis ut som ein leirplass, men dei står ikkje i
+       vegen for nokon. */
     leggStatisk('campfire_stones', ut, BAAL.x, 0, BAAL.z, 0, 1.0);
     leggStatisk('campfire_logs', ut, BAAL.x, 0.02, BAAL.z, 0.6, 1.0);
     stopp(BAAL.x, BAAL.z, 0.52);
-    leggStatisk('log', ut, -1.25, 0, 2.15, 0.4, 1.0);
-    stopp(-1.25, 2.15, 0.42);
-    leggStatisk('log_stack', ut, 1.35, 0, 2.05, -0.3, 1.0);
-    stopp(1.35, 2.05, 0.48);
+
+    const utanfor = [
+      { namn: 'log', v: 2.35, r: 4.5, vri: 0.4 },
+      { namn: 'log_stack', v: 0.75, r: 4.6, vri: -0.3 },
+      { namn: 'log', v: -2.1, r: 4.4, vri: 1.1 }
+    ];
+    utanfor.forEach(function (k) {
+      const x = BAAL.x + Math.cos(k.v) * k.r;
+      const z = BAAL.z + Math.sin(k.v) * k.r;
+      leggStatisk(k.namn, ut, x, 0, z, k.vri, 1.0);
+      stopp(x, z, 0.42);
+    });
 
     const kant = ['tree_pineDefaultA', 'tree_default', 'tree_small'];
     for (let i = 0; i < 12; i++) {
@@ -429,20 +452,20 @@
          bakken, ikkje ein halv meter før. */
       stopp(k.x * r, k.z * r, 0.30 * sk + 0.18);
     }
+    /* Gras og blomar berre UTANFOR teltringen. Inne på plassen skal det
+       vere fri veg til kvart telt; ein blome ein må gå rundt er ein
+       blome for mykje. Steinar er heilt ute — dei var det einaste her som
+       stoppa nokon. */
     const smaatt = ['plant_bush', 'grass', 'grass_large', 'flower_redA',
-                    'flower_yellowA', 'mushroom_red', 'stone_smallA', 'rock_smallA'];
-    for (let i = 0; i < 20; i++) {
+                    'flower_yellowA', 'mushroom_red'];
+    for (let i = 0; i < 22; i++) {
       const v = neste() * Math.PI * 2;
       const k = omkrins(v);
-      const r = Math.sqrt(neste()) * 0.78;
+      const r = 0.62 + neste() * 0.22;
       const x = k.x * r, z = k.z * r;
-      if (Math.hypot(x - BAAL.x, z - BAAL.z) < 0.95) continue;   // ikkje oppi bålet
-      const namn = smaatt[Math.floor(neste() * smaatt.length) % smaatt.length];
-      const sk = 0.6 + neste() * 0.5;
-      leggStatisk(namn, ut, x, 0, z, neste() * Math.PI * 2, sk);
-      if (namn.indexOf('stone') === 0 || namn.indexOf('rock') === 0) {
-        stopp(x, z, 0.24 * sk + 0.14);
-      }
+      if (Math.hypot(x - BAAL.x, z - BAAL.z) < 4.0) continue;   // ikkje inne på plassen
+      leggStatisk(smaatt[Math.floor(neste() * smaatt.length) % smaatt.length],
+                  ut, x, 0, z, neste() * Math.PI * 2, 0.6 + neste() * 0.5);
     }
   }
 
