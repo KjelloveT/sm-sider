@@ -1,0 +1,216 @@
+/* ══════════════════════════════════════════════
+   BOKSTAVROPET PÅ LEIRPLASSEN
+
+   Heile skjermen er spelet. Kontrollane ligg oppå, ikkje under: eit
+   nettbrett i liggjande format har ikkje plass til ei rad med knappar
+   under lerretet utan at leiren blir ei stripe.
+   ══════════════════════════════════════════════ */
+
+.ropet-wrap {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  /* Ein himmel bak leiren. Fast farge og ikkje ein temavariabel: leiren
+     er ein stad, og han skal sjå lik ut i alle dei 21 temaa. */
+  background: linear-gradient(#DCEFF6 0%, #EFF6E4 64%);
+}
+
+.ropet-scene {
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+}
+
+.ropet-lerret {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ──────────────── HUD ──────────────── */
+
+.ropet-hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Bokstaven midt på skjermen, over leiren. Mørk tekst på ei lys brikke,
+   uavhengig av tema, av same grunn som himmelen. */
+.ropet-bokstav {
+  margin: 14px 0 0;
+  padding: 4px 26px 10px;
+  font-size: clamp(3.2rem, 11vw, 5.4rem);
+  font-weight: 700;
+  line-height: 1;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.9);
+  border: 4px solid #1a1a1a;
+  border-radius: 16px;
+  box-shadow: 5px 5px 0 rgba(26, 26, 26, 0.25);
+}
+
+.ropet-melding {
+  margin: 10px 0 0;
+  padding: 6px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 10px;
+  max-width: min(92vw, 40ch);
+  text-align: center;
+}
+
+.ropet-attende {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  pointer-events: auto;
+}
+
+.ropet-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.9);
+  border: 3px solid #1a1a1a;
+  border-radius: 10px;
+  text-decoration: none;
+}
+.ropet-btn:hover { background: #fff; }
+.ropet-btn:focus-visible { outline: 4px solid var(--accent2); outline-offset: 3px; }
+
+/* ──────────────── Styring ──────────────── */
+
+/* Spaken og knappen ligg i kvar sin nedre hjørne, der tomlane er når
+   nokon held eit nettbrett i liggjande format. */
+.ropet-spak {
+  position: absolute;
+  left: max(18px, env(safe-area-inset-left));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  border: 4px solid rgba(26, 26, 26, 0.55);
+  touch-action: none;
+  display: grid;
+  place-items: center;
+}
+
+.ropet-knott {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 4px solid #1a1a1a;
+  pointer-events: none;
+}
+
+.ropet-knapp {
+  position: absolute;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.92);
+  border: 5px solid #1a1a1a;
+  cursor: pointer;
+}
+.ropet-knapp:active { transform: translateY(2px); }
+.ropet-knapp:focus-visible { outline: 4px solid var(--accent2); outline-offset: 3px; }
+
+/* Slått av til eleven står ved eit telt. Dempa og ikkje gøymd: knappen
+   skal stå på same staden heile tida, så handa lærer kvar han er. */
+.ropet-knapp:disabled {
+  opacity: 0.42;
+  cursor: default;
+}
+
+/* ──────────────── Lasting og feil ──────────────── */
+
+.ropet-lastar,
+.ropet-feil {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: var(--bg, #EEF2F7);
+  z-index: 5;
+}
+.ropet-feil .box1 { max-width: 46ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ropet-knapp:active { transform: none; }
+}
+
+/* ──────────────── Framgang ──────────────── */
+
+/* Nede i midten, over spelet: eit tal og ei stripe. Eleven skal kunne
+   sjå kor langt han er komen utan å avbryte det han held på med. */
+.ropet-framgang {
+  position: absolute;
+  left: 50%;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 3px solid #1a1a1a;
+  border-radius: 999px;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.ropet-stripe {
+  display: block;
+  width: clamp(70px, 22vw, 150px);
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.16);
+  overflow: hidden;
+}
+
+.ropet-stripe-fyll {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: #2CD8B8;
+  transition: width 260ms ease-out;
+}
+
+.ropet-tal { font-variant-numeric: tabular-nums; }
+
+/* Rekkja dukkar berre opp frå to på rad. Ein «1 på rad» er ikkje ei
+   rekkje, det er eit svar. */
+.ropet-rekkje {
+  padding: 2px 9px 3px;
+  border-radius: 999px;
+  background: #FEB147;
+  color: #1a1a1a;
+  font-size: 0.78rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ropet-stripe-fyll { transition: none; }
+}

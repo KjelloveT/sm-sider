@@ -268,14 +268,14 @@ Python-hjelpar, så forslaga kjem frå vår eigen `ormritaren/js/autocomplete.js
 
 Godkjend av brukaren under planlegginga av Ormritaren.
 
-## Kenney Nature Kit 2.1 — `ljodstigen/hage/planter.bin`
+## Kenney Nature Kit 2.1 — `ljodstigen/skog/planter.bin`
 
-3D-modellar av tre, buskar, blomar, sopp og gras, brukte av **bokstavhagen**
+3D-modellar av tre, buskar, blomar, sopp og gras, brukte av **bokstavskogen**
 i Ljodstigen. Kvar bokstav er ei plante som veks gjennom seks steg.
 
-GLB-filene ligg ikkje i repoet. `bygg_ljodstigen_hage.py` les dei frå
+GLB-filene ligg ikkje i repoet. `bygg_ljodstigen_skog.py` les dei frå
 `_kjelder/kenney-nature/` og skriv ut geometrien dei femti modellane vi
-faktisk brukar, i eit format hagen kan sende rett til GPU-en. Det er difor
+faktisk brukar, i eit format skogen kan sende rett til GPU-en. Det er difor
 det ikkje ligg nokon glTF-lastar i nettlesaren.
 
 | | |
@@ -284,3 +284,20 @@ det ikkje ligg nokon glTF-lastar i nettlesaren.
 | Lisens | CC0 1.0 — fri bruk, kreditering frivillig |
 | Versjon | 2.1 (2020-04-29) |
 | Format | glTF 2.0 binær (`.glb`) |
+
+## Kenney Mini Characters 1.0 — `ljodstigen/ropet/leir.bin`
+
+Figuren eleven styrer i **Bokstavropet på leirplassen**. Han er rigga med
+eit skjelett på sju ledd og kjem med 32 animasjonsklipp; vi brukar fire —
+`idle`, `walk`, `emote-yes` og `emote-no`.
+
+GLB-filene ligg ikkje i repoet. `bygg_ljodstigen_ropet.py` les dei frå
+`_kjelder/kenney-mini/` og skriv ut geometrien, skjelettet og dei fire
+klippa vi brukar. Fargen blir plukka frå `colormap.png` under bygginga og
+skriven inn per hjørne, så nettlesaren slepp å laste teksturen.
+
+| | |
+|---|---|
+| Prosjekt | [Mini Characters](https://kenney.nl/assets/mini-characters-1) av Kenney |
+| Lisens | CC0 1.0 — fri bruk, kreditering frivillig |
+| Format | glTF 2.0 binær (`.glb`), med skinn og animasjonar |

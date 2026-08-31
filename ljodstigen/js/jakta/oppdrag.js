@@ -13,7 +13,7 @@
    ikkje blir skriven på nytt her.
 
    Eit rett plukk går inn i motoren som eit vanleg svar, med responstid.
-   Hagen veks av å spele Bokstavjakta akkurat som av Lydfangst.
+   Skogen veks av å spele Bokstavjakta akkurat som av Lydfangst.
    ══════════════════════════════════════════════ */
 (function (root) {
   'use strict';

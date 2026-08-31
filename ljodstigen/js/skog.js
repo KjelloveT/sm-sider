@@ -1,13 +1,13 @@
 /* ══════════════════════════════════════════════
-   HAGE.JS — Bokstavhagen, dagsstjerner og merke
+   SKOG.JS — Bokstavskogen, dagsstjerner og merke
 
-   Hagen er heile framgangsvisinga i Ljodstigen. Det finst ingen
-   poengsum: vekststeget til kvar plante ER boksen i den adaptive
+   Skogen er heile framgangsvisinga i Ljodstigen. Det finst ingen
+   poengsum: vekststeget til kvart tre ER boksen i den adaptive
    motoren, så det eleven ser er nøyaktig det motoren veit. Ingen
    parallell økonomi å balansere, ingenting å jukse i, og ingenting å
    samanlikne med ein annan elev.
 
-   HAGEN VISNAR ALDRI. Vi les maxBox, ikkje box. Ein plante som gjekk
+   SKOGEN VISNAR ALDRI. Vi les maxBox, ikkje box. Eit tre som gjekk
    tilbake fordi eleven bomma ville vore ein straffemekanisme retta mot
    nøyaktig dei elevane appen er til for — sjå adaptive.js.
    ══════════════════════════════════════════════ */
@@ -16,57 +16,57 @@
 
   const R = function () { return LjodRender; };
 
-  /* ──────────────── Hagen ──────────────── */
+  /* ──────────────── Skogen ──────────────── */
 
   /* HAGEN ER I 3D, MED DEN FLATE SOM RESERVE.
 
      Ei skule-iPad utan WebGL, eit avslått GPU-lag, ei henting som ikkje
-     kom fram — alle tre skal ende med ein hage eleven kan sjå, ikkje med
-     ei tom rute. Den flate hagen står difor uendra under, og han er det
-     som blir teikna medan 3D-hagen lastar.
+     kom fram — alle tre skal ende med ein skog eleven kan sjå, ikkje med
+     ei tom rute. Den flate skogen står difor uendra under, og han er det
+     som blir teikna medan 3D-skogen lastar.
 
-     Talet under hagen står utanfor lerretet i begge tilfelle. Det er
+     Talet under skogen står utanfor lerretet i begge tilfelle. Det er
      framgangen i tekst, og han skal ikkje krevje ein GPU. */
-  let hage3d = null;
+  let skog3d = null;
 
-  function renderGarden(host, p) {
+  function renderSkog(host, p) {
     render2D(host, p);
-    if (!LjodHage3D.stott()) return;
+    if (!LjodSkog3D.stott()) return;
 
-    LjodHage3D.last().then(function () {
+    LjodSkog3D.last().then(function () {
       if (!host.isConnected) return;
       const flat = host.querySelector('.ljod-garden');
-      const vert = R().h('div', 'ljod-hage3d');
+      const vert = R().h('div', 'ljod-skog3d');
       if (flat) host.replaceChild(vert, flat); else host.insertBefore(vert, host.firstChild);
-      if (hage3d) hage3d.riv();
-      hage3d = LjodHage3D.lag(vert, p);
+      if (skog3d) skog3d.riv();
+      skog3d = LjodSkog3D.lag(vert, p);
 
-      vert.appendChild(kameraknappar(hage3d));
+      vert.appendChild(kameraknappar(skog3d));
 
-      const under = R().h('div', 'ljod-hage3d-under');
-      under.appendChild(R().h('p', 'ljod-hint ljod-hage3d-hint',
-        'Dra for å snu hagen, knip for å zoome.'));
+      const under = R().h('div', 'ljod-skog3d-under');
+      under.appendChild(R().h('p', 'ljod-hint ljod-skog3d-hint',
+        'Dra for å snu skogen, knip for å zoome. Bokstaven står på eit skilt framfor planta si.'));
       under.appendChild(proveknapp(host, p));
       host.insertBefore(under, vert.nextSibling);
     }).catch(function (e) {
-      /* Den flate hagen står allereie. Vi seier frå i konsollen og lèt
+      /* Den flate skogen står allereie. Vi seier frå i konsollen og lèt
          eleven vere i fred. */
-      console.warn('[Ljodstigen] 3D-hagen lasta ikkje:', e.message);
+      console.warn('[Ljodstigen] 3D-skogen lasta ikkje:', e.message);
     });
   }
 
-  /* Knappane ligg oppå lerretet, ikkje under det: dei høyrer til hagen,
+  /* Knappane ligg oppå lerretet, ikkje under det: dei høyrer til skogen,
      og ein zoomknapp som står langt frå det han zoomar er ein knapp ein
      må leite etter. Dei gjer det same som knip og hjul, for dei som
      ikkje har nokon av delane. */
   function kameraknappar(h3d) {
-    const rad = R().h('div', 'ljod-hage3d-styring');
+    const rad = R().h('div', 'ljod-skog3d-styring');
     [
       ['+', 'Zoom inn', function () { h3d.zoomInn(); }],
       ['−', 'Zoom ut', function () { h3d.zoomUt(); }],
-      ['⌂', 'Midtstill hagen', function () { h3d.midtstill(); }]
+      ['⌂', 'Midtstill skogen', function () { h3d.midtstill(); }]
     ].forEach(function (k) {
-      const b = R().h('button', 'ljod-hage3d-knapp', k[0]);
+      const b = R().h('button', 'ljod-skog3d-knapp', k[0]);
       b.type = 'button';
       b.title = k[1];
       b.setAttribute('aria-label', k[1]);
@@ -79,28 +79,28 @@
   /* ── PRØVEKNAPP ──
 
      Han set eit tilfeldig vekststeg på kvar bokstav, så ein kan sjå
-     korleis hagen tek seg ut utan å løyse tjueni oppgåver først. Han
-     står her medan hagen er ny og skal ut av vegen når han er ferdig
+     korleis skogen tek seg ut utan å løyse tjueni oppgåver først. Han
+     står her medan skogen er ny og skal ut av vegen når han er ferdig
      prøvd — difor er han merkt som det han er, og ikkje gøymd bak ein
      tastekombinasjon vi kjem til å gløyme.
 
      Han skriv til den ekte profilen. Det er meininga: skal ein sjå
-     korleis hagen ser ut etter ei omlasting, må det som blir vist vere
+     korleis skogen ser ut etter ei omlasting, må det som blir vist vere
      lagra. Ein elev som har ekte framgang skal ikkje trykkje på han. */
   function proveknapp(host, p) {
-    const rad = R().h('div', 'ljod-hage3d-prov');
+    const rad = R().h('div', 'ljod-skog3d-prov');
     const knapp = R().h('button', 'btn', 'Tilfeldig vekst');
     knapp.type = 'button';
     knapp.addEventListener('click', function () {
       const a = p.adaptive;
       /* Steget må òg opp, elles står dei fleste bokstavane som «ikkje
-         opna enno» og hagen ser like tom ut som før. */
+         opna enno» og skogen ser like tom ut som før. */
       a.step = LjodLetters.STEPS.length;
       LjodLetters.ALPHABET.forEach(function (ch) {
         LjodAdaptive.item(a, ch).maxBox = Math.floor(Math.random() * 6);
       });
       LjodState.saveProfile(p);
-      renderGarden(host, p);
+      renderSkog(host, p);
     });
     rad.appendChild(knapp);
     rad.appendChild(R().h('span', 'ljod-hint',
@@ -136,10 +136,9 @@
        kan difor ikkje falle på ein dårleg dag. */
     const st = LjodAdaptive.stats(a);
     const sum = R().h('p', 'ljod-garden-sum');
-    sum.textContent = 'Du har ' + st.planted + ' av ' + st.total + ' bokstavar i hagen.' +
-      /* «vorte tre» stemde då alle plantene var same plante. No er
-         nokre av dei blomar og buskar, og då er «fullvaksen» det ordet
-         som gjeld for alle. */
+    sum.textContent = 'Du har ' + st.planted + ' av ' + st.total + ' bokstavar i skogen.' +
+      /* «fullvaksne» og ikkje «vorte tre»: no ER alle saman tre, og
+         då seier «har vorte tre» ingenting om kva som skjedde. */
       (st.mastered ? ' ' + st.mastered + ' er fullvaksne.' : '');
     host.appendChild(sum);
   }
@@ -243,11 +242,11 @@
     raf = requestAnimationFrame(frame);
   }
 
-  root.LjodHage = {
-    renderGarden: renderGarden,
-    /* Den aktive 3D-hagen, om han finst. Meny og innstillingar treng han
-       for å teikne på nytt når noko utanfor hagen endrar seg. */
-    hage3d: function () { return hage3d; },
+  root.LjodSkog = {
+    renderSkog: renderSkog,
+    /* Den aktive 3D-skogen, om han finst. Meny og innstillingar treng han
+       for å teikne på nytt når noko utanfor skogen endrar seg. */
+    skog3d: function () { return skog3d; },
     renderStars: renderStars,
     renderBadges: renderBadges,
     celebrate: celebrate

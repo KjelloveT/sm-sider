@@ -57,7 +57,7 @@
     return s;
   }
 
-  /* ──────────────── Hagen ──────────────── */
+  /* ──────────────── Skogen ──────────────── */
 
   /* Seks steg som svarar til maxBox 0–5. Kvart steg legg noko synleg
      til det førre, så framgangen er lesbar for ein som ikkje kan lese. */

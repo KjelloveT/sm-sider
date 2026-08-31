@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Bokstavropet på leirplassen — Ljodstigen</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="preload" href="../_libs/andika/Andika-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ropet.css">
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<div id="ropet-wrap" class="ropet-wrap">
+
+    <div id="ropet-scene" class="ropet-scene">
+        <canvas class="ropet-lerret" aria-hidden="true"></canvas>
+
+        <!-- Bokstaven står midt på skjermen. Han er oppgåva, ikkje pynt,
+             og difor er han DOM og ikkje ein tekstur: han skal arve
+             lesefonten eleven har valt og kunne lesast av ein skjermlesar. -->
+        <div class="ropet-hud">
+            <a href="index.html" class="ropet-btn ropet-attende">Tilbake</a>
+            <p id="ropet-bokstav" class="ropet-bokstav" aria-live="polite">?</p>
+            <p id="ropet-melding" class="ropet-melding" aria-live="polite"></p>
+
+            <!-- Kor langt eleven er komen. Same tal som skogen viser: det
+                 er den same motoren, og han skal ikkje møte to ulike svar
+                 på kor mange bokstavar han kan. -->
+            <div id="ropet-framgang" class="ropet-framgang" role="img">
+                <span class="ropet-stripe"><span id="ropet-stripe-fyll" class="ropet-stripe-fyll"></span></span>
+                <span id="ropet-tal" class="ropet-tal">0 / 29</span>
+                <span id="ropet-rekkje" class="ropet-rekkje" hidden></span>
+            </div>
+        </div>
+
+        <div id="ropet-spak" class="ropet-spak" role="application"
+             aria-label="Styrespak. Dra for å gå.">
+            <span class="ropet-knott"></span>
+        </div>
+
+        <button id="ropet-knapp" class="ropet-knapp" type="button" disabled
+                aria-label="Vel dette teltet">Vel</button>
+    </div>
+
+    <div id="ropet-lastar" class="ropet-lastar">
+        <p class="ljod-prompt">Lastar leirplassen…</p>
+    </div>
+
+    <div id="ropet-feil" class="ropet-feil" hidden>
+        <div class="box1">
+            <h1 class="heading3 no-mt">Leirplassen startar ikkje her</h1>
+            <p id="ropet-feil-tekst"></p>
+            <a href="index.html" class="btn">Tilbake til dei andre modusane</a>
+        </div>
+    </div>
+
+</div>
+
+<script src="../js/vyrdepil-fullscreen.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="js/letters.js"></script>
+<script src="js/words.js"></script>
+<script src="js/adaptive.js"></script>
+<script src="js/shapes.js"></script>
+<script src="js/state.js"></script>
+<script src="js/merke.js"></script>
+<script src="js/render.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/ropet3d.js"></script>
+<script src="js/ropet.js"></script>
+<script src="js/ropet-boot.js"></script>
+
+</body>
+</html>

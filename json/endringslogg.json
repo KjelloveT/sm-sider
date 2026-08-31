@@ -2,6 +2,105 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.39",
+      "dato": "2026-08-28",
+      "samandrag": "Bokstavropet finst som eit lite 3D-spel på ein leirplass, der lydane bur i telt.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavropet på leirplassen: eleven ser bokstaven, går bort til eit telt for å høyre lyden, og vel det han meiner er rett. Prøveutgåve."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Figuren er animert med eit skjelett på sju ledd, rekna ut i spelet sjølv utan animasjonsbibliotek."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Styring med piltastar og mellomrom, eller styrespak og knapp på nettbrett."
+        },
+        {
+          "t": "endra",
+          "kva": "Framsida",
+          "tekst": "Notatet seier berre kva som er publisert på framsida. Reglar for notatet og endringssida står i AGENTS.md."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Figuren flyg heim i ein boge når han har rett, og telta står i ein ring rundt bålet og vender inn mot elden."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Framgangsmålar som viser kor mange bokstavar som sit, og kor mange eleven har klart på rad."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Figuren kolliderer med telt, tre, kubbar og steinar i staden for å gli gjennom dei."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Eleven vel sjølv om Bokstavropet skal spelast på skjermen eller på leirplassen."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Framgangsmålaren på leirplassen stod på 0 av 29 uansett kor mange rette eleven fekk. Han viste berre heilt ferdige bokstavar, og det tek minst 46 oppgåver å bli ferdig med éin."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Telta vende feil veg. Vinkelen var rekna som ei spegling og ikkje ei dreiing."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Midten av leirplassen er berre bålet. Kubbar, steinar og blomar er flytta ut utanfor teltringen."
+        }
+      ]
+    },
+    {
+      "versjon": "1.38",
+      "dato": "2026-08-28",
+      "samandrag": "Bokstavskogen: framgangen i Ljodstigen er 29 tre i 3D som veks med kvar bokstav.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavhagen er ein bokstavskog i 3D. Kvar bokstav er eit tre som veks gjennom seks steg, og steget er framleis boksen i den adaptive motoren — skogen visnar aldri."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Femten treslag frå Kenney sin Nature Kit, fast fordelte på dei 29 bokstavane, så eleven kjenner att sitt eige tre frå gong til gong."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Skogen kan snuast heile vegen rundt, vippast frå augehøgd til rett ovanfrå og zoomast med knip, hjul eller knappar."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstaven står på eit lite skilt framfor treet sitt, som eit føremål i skogen og ikkje som ein etikett oppå biletet."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Skogen er teikna med hundre linjer WebGL utan spelmotor, og han blir berre teikna på nytt når noko endrar seg — ei iPad som ligg open brukar ikkje batteri på han."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Tre skilt var blanke og tre bokstavar mangla: teksturen blir snudd loddrett ved opplasting, så radene i bokstavatlaset kom i motsett rekkjefølgje."
+        }
+      ]
+    },
+    {
       "versjon": "1.34",
       "dato": "2026-08-26",
       "samandrag": "Kludre Klodrian røpte kva port som var rett.",

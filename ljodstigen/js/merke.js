@@ -67,7 +67,7 @@
       }
     },
     {
-      id: 'heilehagen', title: 'Heile hagen', hint: 'Få alle 29 bokstavane til å bli tre',
+      id: 'heilehagen', title: 'Heile skogen', hint: 'Få alle 29 bokstavane til å bli tre',
       test: function (p, a) {
         return LjodLetters.ALPHABET.every(function (ch) {
           return a.items[ch] && a.items[ch].maxBox >= LjodAdaptive.MAX_BOX;
