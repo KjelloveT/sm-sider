@@ -47,6 +47,14 @@
       bokstavar: Array.isArray(b.bokstavar)
         ? b.bokstavar.filter(function (c) { return LjodLetters.get(c); }) : [],
       rutenett: String(b.rutenett || tom(1)),
+      /* Pyntelaget: klossar utan funksjon, som [x, y, sprite]. Dei ligg
+         utanfor rutenettet med vilje — sjå pyntLag() i bane.js. Ukjende
+         spritenamn blir sila bort her, så ei fil frå ein annan versjon
+         ikkje kan be spelet teikne noko som ikkje finst. */
+      pynt: (Array.isArray(b.pynt) ? b.pynt : []).filter(function (p) {
+        return Array.isArray(p) && p.length === 3 &&
+          isFinite(p[0]) && isFinite(p[1]) && JaktaBlokker.hent(p[2]);
+      }).map(function (p) { return [p[0] | 0, p[1] | 0, String(p[2])]; }),
       laga: b.laga || new Date().toISOString().slice(0, 10)
     };
   }
@@ -83,7 +91,10 @@
     const b = normaliser(bane);
     return JSON.stringify({
       app: APP, version: VERSJON, type: 'bane',
-      bane: { namn: b.namn, type: b.type, bokstavar: b.bokstavar, rutenett: b.rutenett, laga: b.laga }
+      bane: {
+        namn: b.namn, type: b.type, bokstavar: b.bokstavar,
+        rutenett: b.rutenett, pynt: b.pynt, laga: b.laga
+      }
     }, null, 1) + '\n';
   }
 

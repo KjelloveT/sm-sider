@@ -19,11 +19,16 @@ utsjånad utan at nokon skjøna kvifor.
 Ved å byggje frå enkeltfilene får vi namngjevne rammer frå begge pakkane
 i éi fil, og vi bestemmer sjølve kva som blir med.
 
-KURATERT MED VILJE. Bokstavjakta er eit spel utan farar: ingen piggar,
-ingen sagblad, ingen kanonar, ingen våpen. Dei sprita blir ikkje med, og
-det er ikkje for å spare kilobyte — eit atlas som inneheld eit sverd er
-ei open dør for at nokon seinare legg eit sverd i eit lesespel for
-seksåringar.
+HEILE PAKKANE ER MED. Atlaset hadde ei vrakliste — piggar, sagblad,
+kanonar og våpen låg utanfor, med den grunngjevinga at eit atlas som
+inneheld eit sverd er ei open dør for at nokon seinare legg eit sverd i
+eit lesespel for seksåringar. Læraren som eig spelet bad om dei likevel,
+og då er det hans avgjerd.
+
+Dei er framleis berre BILETE. Ingen av dei har kollisjon, ingen av dei
+skader nokon, og spelet har framleis ingen måte å tape på. Skal ein pigg
+ein dag gjere noko, må nokon skrive den koden med vilje — og då er det
+den avgjerda som gjeld, ikkje denne.
 
 Begge pakkane er CC0. Sjå _libs/CREDITS.md.
 """
@@ -68,21 +73,15 @@ ATLAS_BREIDD = 2048  # trygt på all maskinvare vi bryr oss om
 FARGAR = 192         # kvantisering, jf. AGENTS.md §5.7
 
 # Sprites vi ikkje vil ha i det heile. Regex mot filnamn utan .png.
-VRAK = [
-    r'^item_(arrow|blaster|bow|gun|helmet|helmetModern|shield|shieldRound|spear|sword)$',
-    r'^effect_(blast|blastLarge|shot|shotLarge)$',
-    r'^(bullet|sawblade|cannon_base|cannon_large|cannon_small)$',
-    r'^tile_spikes?$',
-]
-
-# Sprites vi vil ha, sjølv om dei liknar noko i VRAK.
-# tile_arrow* er vegvisarar som peikar eleven rett veg, ikkje pilskot.
-BEHALD = [r'^tile_arrow(Up|Down|Left|Right)$']
+#
+# Lista er tom. Ho stod full av våpen og farar fram til 1.38; sjå
+# toppen av fila for kvifor ho blei tømd. Ho står att som ein krok:
+# skal noko ut av atlaset seinare, er det her det skjer, og då er det
+# éin stad å sjå etter kvifor ein sprite manglar.
+VRAK = []
 
 
 def vraka(namn):
-    if any(re.match(p, namn) for p in BEHALD):
-        return False
     return any(re.match(p, namn) for p in VRAK)
 
 
