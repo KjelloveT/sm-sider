@@ -11,6 +11,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
   - **Figuren er animert, og animasjonen blir rekna ut sjølv.** Kenney-figuren har eit skjelett på sju ledd. Sju leddmatriser per bilete er ei løkke på sju, og då trengst det ikkje eit animasjonsbibliotek: shaderen slår opp fire ledd per hjørne og blandar. Fire klipp er med — å stå, å gå, ja og nei.
   - **Styring:** piltastar eller WASD og mellomrom på maskin, styrespak nede til venstre og ein knapp til høgre på nettbrett. Begge er der heile tida.
   - **Fargen ligg i geometrien.** Figuren er teksturert i kjelda, men teksturen er eit rutenett av flate fargefelt. Fargen blir plukka éin gong per hjørne under bygginga, så nettlesaren slepp å laste eit bilete på 512 × 512 og shaderen slepp eit oppslag per piksel.
+  - **Han flyg heim når han har rett.** Ein boge opp og ned med armar og bein i full fart, og så står han på startpunktet att. Å teleportere figuren ville spart eit sekund og teke bort det einaste augeblikket i spelet der han har klart noko.
+  - **Telta står i ein ring rundt bålet og vender inn mot elden.** Ringen veks med talet telt, så to naboar alltid har same avstand. Talet telt kjem frå den adaptive motoren og veks frå to til seks etter kvart som eleven meistrar fleire bokstavar.
+  - **Figuren kolliderer med telt, tre, kubbar og steinar.** Ein figur som glir tvers gjennom eit tre gjer leiren til ein kulisse; ein som må gå rundt gjer han til ein stad. Gras og blomar stoppar ingen — å bli stoppa av ei grastust er verre enn å gå gjennom henne.
+  - **Ein framgangsmålar** nede i midten viser kor mange bokstavar som sit av 29 — same tal som skogen viser, for det er den same motoren. Ved sida står kor mange eleven har klart på rad, frå to og oppover: ein «1 på rad» er ikkje ei rekkje, det er eit svar.
+  - **Eleven vel sjølv kva utgåve han vil spele.** Bokstavropet-kortet på Ljodstigen-sida har ei lenkje til leirplassen ved sida av den vanlege. Valet ligg der og ikkje som ein eigen modus, fordi det er same oppgåva, same motoren og same framgangen.
 - **`bygg_ljodstigen_ropet.py`** hentar telt, bål, kubbar og figuren ut av dei to Kenney-pakkane og skriv dei til `ropet/leir.bin` (154 kB): tolv byte per stille hjørne, tjue for eit som heng i eit skjelett.
 
 ### Endra

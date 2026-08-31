@@ -27,6 +27,9 @@
   const FART = 3.4;            // einingar i sekundet
   const NAER = 1.5;            // kor nær eit telt ein må vere
   const FIGUR_SKALA = 1.15;
+  const FIGUR_R = 0.28;        // kor brei figuren er, til kollisjon
+  const START = { x: 0, z: 3.4 };
+  const FLYGETID = 1.0;        // sekund frå telt til startpunkt
 
   function $(id) { return document.getElementById(id); }
 
@@ -138,12 +141,17 @@
     /* ── Verda ── */
     let verd = null, verdBuf = null;
     function byggVerd(telt) {
-      const ut = { pos: [], nor: [], far: [] };
+      const ut = { pos: [], nor: [], far: [], hindringar: [] };
       V.oy(ut);
       V.pynt(ut);
       telt.forEach(function (t) {
         V.leggStatisk(t.modell, ut, t.x, 0, t.z, t.vinkel, 1.25);
+        /* Teltet stoppar deg, men mindre enn han ser ut: ein figur som
+           blir stoppa ein halv meter framfor teltet ser ut til å ha gått
+           inn i ein usynleg vegg. */
+        ut.hindringar.push({ x: t.x, z: t.z, r: 0.46 });
       });
+      hindringar = ut.hindringar;
       verd = ut;
       verdBuf = {
         pos: buffer(ut.pos, 3), nor: buffer(ut.nor, 3), far: buffer(ut.far, 3),
@@ -159,7 +167,32 @@
     const leddM = new Float32Array(7 * 16);
 
     /* ── Tilstand ── */
-    const spelar = { x: 0, z: 3.4, vinkel: Math.PI, gaar: false };
+    const spelar = { x: START.x, z: START.z, vinkel: Math.PI, y: 0 };
+    let hindringar = [];
+    let flyg = null;             // { fraa, tid } medan han er i lufta
+    let rekkje = 0;
+
+    /* Skyv figuren ut av alt han står oppi. To rundar, for å komme ut av
+       eitt hinder kan skyve han inn i eit anna — det skjer mellom to tre
+       som står tett. Fleire rundar er ikkje verdt det: står han fast
+       mellom tre ting, står han òg fast i verkelegheita. */
+    function losne(p) {
+      for (let runde = 0; runde < 2; runde++) {
+        let rorte = false;
+        for (let i = 0; i < hindringar.length; i++) {
+          const h = hindringar[i];
+          const dx = p.x - h.x, dz = p.z - h.z;
+          const d = Math.hypot(dx, dz);
+          const minst = h.r + FIGUR_R;
+          if (d < minst && d > 1e-4) {
+            p.x = h.x + dx / d * minst;
+            p.z = h.z + dz / d * minst;
+            rorte = true;
+          }
+        }
+        if (!rorte) break;
+      }
+    }
     let telt = [];
     let oppgaave = null;
     let naerTelt = -1;
@@ -194,8 +227,26 @@
       laast = false;
       $('ropet-bokstav').textContent = q.ch;
       $('ropet-melding').textContent = 'Gå til eit telt for å høyre lyden.';
+      visFramgang();
       /* Figuren står igjen der han var. Å teleportere han til start
          mellom kvar oppgåve ville rive han ut av staden han er i. */
+    }
+
+    /* Kor mange bokstavar som sit, og kor mange som står att. Same tal
+       som skogen viser — det er den same motoren, og eleven skal ikkje
+       møte to ulike svar på kor langt han er komen. */
+    function visFramgang() {
+      const st = LjodAdaptive.stats(profil.adaptive);
+      const att = st.total - st.mastered;
+      $('ropet-tal').textContent = st.mastered + ' / ' + st.total;
+      $('ropet-stripe-fyll').style.width =
+        (st.total ? (st.mastered / st.total * 100) : 0) + '%';
+      $('ropet-framgang').setAttribute('aria-label',
+        st.mastered + ' av ' + st.total + ' bokstavar er ferdige. ' +
+        att + ' står att.');
+      const r = $('ropet-rekkje');
+      r.hidden = rekkje < 2;
+      r.textContent = rekkje + ' på rad';
     }
 
     function hoyr(i) {
@@ -223,8 +274,21 @@
       LjodState.saveProfile(profil);
       if (kroken && kroken.etterSvar) kroken.etterSvar(rett);
 
+      if (rett) { rekkje++; } else { rekkje = 0; }
+      visFramgang();
+
       LjodRender.feedback(rett, rett ? [] : ['f_' + oppgaave.ch]).then(function () {
-        settKlipp('idle');
+        if (rett) {
+          /* HEIM I EIN BOGE. Å teleportere figuren tilbake ville spart
+             eit sekund og teke bort det einaste augeblikket i spelet der
+             han har klart noko. Ein flygetur er ei markering eleven kan
+             sjå, og han set han samtidig på startpunktet, så neste
+             oppgåve byrjar likt for alle telt. */
+          flyg = { fraaX: spelar.x, fraaZ: spelar.z, tid: 0 };
+          settKlipp('sprint', FLYGETID);
+        } else {
+          settKlipp('idle');
+        }
         nyOppgaave();
       });
     }
@@ -232,6 +296,31 @@
     /* ── Løkka ── */
 
     function steg(dt) {
+      /* Flygeturen eig figuren medan han varer. Ein boge opp og ned med
+         ein sinus: han er null i begge endar, så figuren tek av og landar
+         på bakken og ikkje i lufta. */
+      if (flyg) {
+        flyg.tid += dt;
+        const u = Math.min(1, flyg.tid / FLYGETID);
+        spelar.x = flyg.fraaX + (START.x - flyg.fraaX) * u;
+        spelar.z = flyg.fraaZ + (START.z - flyg.fraaZ) * u;
+        spelar.y = Math.sin(u * Math.PI) * 1.7;
+        /* Han snurrar rundt éin gong på vegen. */
+        spelar.vinkel += dt * 7.0;
+        if (u >= 1) {
+          flyg = null;
+          spelar.y = 0;
+          spelar.vinkel = Math.PI;
+          /* Låsen må opnast FØRST. Ho blir sett når flygeturen startar,
+             og tid blir berre trekt frå i den andre greina av steg() —
+             som flygeturen hoppar over. Utan dette blei figuren ståande
+             og springe på staden etter landing. */
+          klippLaas = 0;
+          settKlipp('idle');
+        }
+        return;
+      }
+
       if (!laast) {
         const inn = styring.les();
         const flytt = Math.hypot(inn.x, inn.z) > 0.02;
@@ -243,6 +332,7 @@
           const r = Math.hypot(spelar.x, spelar.z);
           const kant = V.OY_R * 0.82;
           if (r > kant) { spelar.x = spelar.x / r * kant; spelar.z = spelar.z / r * kant; }
+          losne(spelar);
           spelar.vinkel = Math.atan2(inn.x, inn.z);
         }
         settKlipp(flytt ? 'walk' : 'idle');
@@ -308,7 +398,7 @@
       gl.useProgram(figurProg);
       gl.uniformMatrix4fv(fst.mvp, false, mvp);
       gl.uniformMatrix4fv(fst.modell, false,
-        V.plassering(spelar.x, 0, spelar.z, spelar.vinkel, FIGUR_SKALA));
+        V.plassering(spelar.x, spelar.y, spelar.z, spelar.vinkel, FIGUR_SKALA));
       gl.uniformMatrix4fv(fst.leddM, false, leddM);
       [['pos', fst.pos, 3], ['nor', fst.nor, 3], ['far', fst.far, 3],
        ['ledd', fst.ledd, 4], ['vekt', fst.vekt, 4]].forEach(function (d) {
@@ -347,6 +437,8 @@
         };
       },
       flyttTil: function (x, z) { spelar.x = x; spelar.z = z; },
+      hindringar: function () { return hindringar; },
+      rekkje: function () { return rekkje; },
       velg: velg,
       riv: function () {
         if (leverandor) root.cancelAnimationFrame(leverandor);

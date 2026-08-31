@@ -613,3 +613,26 @@ body[data-font="lesefont"] .ljod-bed-letter {
 .ljod-skog3d-knapp:hover { background: #fff; }
 .ljod-skog3d-knapp:active { transform: translateY(1px); }
 .ljod-skog3d-knapp:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
+
+/* Ein modus som finst i to utgåver: kortet, og ei lenkje til den andre
+   under. Lenkja er tydeleg mindre enn kortet — utgåvene er ikkje
+   likeverdige val, den vanlege er hovudvegen. */
+.ljod-mode-par {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ljod-mode-par .ljod-mode { margin: 0; }
+
+.ljod-mode-variant {
+  align-self: flex-start;
+  padding: 5px 12px 6px;
+  border: 2px dashed var(--border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+.ljod-mode-variant:hover { background: var(--surface); }
+.ljod-mode-variant:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
