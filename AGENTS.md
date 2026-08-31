@@ -207,10 +207,13 @@ Ein `CHANGELOG.md` på rot skal vedlikehaldast med eit fast format per versjon:
 
 Oppdater CHANGELOG når du legg til nye spel/verktøy, gjer brytande endringar eller fiksar feil som påverkar brukaropplevinga.
 
-**Notatet på framsida skal følgje CHANGELOG.** Gul-lappen i `index.html` (`aside.hero-postit`) har eit versjonsnummer, og det skal vere det same som øvste versjonen i `CHANGELOG.md`. Legg du til ein ny versjon i endringsloggen, skal du i same pull request:
+**Endringssida skal følgje CHANGELOG.** `json/endringslogg.json` er kortversjonen som `endringar.html` viser, og notatet på framsida lenkjer dit. Legg du ein ny versjon i `CHANGELOG.md`, skal du i **same pull request** leggje same versjonen i `json/endringslogg.json` med éi kort linje per punkt (`t` = `nytt`, `endra` eller `fiksa`). Ein endringslogg som veks medan sida står stille, er ein endringslogg ingen brukar les.
 
-- setje versjonsnummeret i notatet til den nye versjonen, og
-- vurdere om innhaldet i notatet framleis stemmer — notatet skal seie kva som er nytt og verdt å sjå på no, ikkje vere ei oppsamling. Er eit punkt blitt gammalt, tek du det bort i staden for å leggje til enda eit.
+**Notatet på framsida skal følgje CHANGELOG.** Gul-lappen i `index.html` (`aside.hero-postit`) har eit versjonsnummer, og det skal vere det same som øvste versjonen i `CHANGELOG.md`. Legg du til ein ny versjon i endringsloggen, skal du i same pull request setje versjonsnummeret i notatet til den nye versjonen.
+
+**Berre nye spel og verktøy som ER PUBLISERTE PÅ FRAMSIDA skal stå i notatet.** Notatet er utstillingsvindauget, ikkje arbeidsloggen. Ei aktivitet som ligg i repoet men ikkje i `json/apps.json`, eller som står som prøveutgåve inne i eit anna verktøy, høyrer ikkje heime der — den besøkjande kan ikkje gå og sjå på henne, og då er punktet berre støy. Detaljar om noko som er under arbeid høyrer heime i `CHANGELOG.md` og på endringssida.
+
+Er det ingenting nytt å vise fram, står notatet med versjonsnummeret og lenkja åleine. Det er eit betre notat enn eitt som fortel om noko ingen får prøve.
 
 Notatet er det einaste stadet ein besøkjande ser at sida lever. Står det same versjonsnummeret der i mange veker medan endringsloggen veks, tyder det ikkje lenger noko.
 
