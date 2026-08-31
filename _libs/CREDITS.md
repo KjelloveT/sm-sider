@@ -267,3 +267,20 @@ Python-hjelpar, så forslaga kjem frå vår eigen `ormritaren/js/autocomplete.js
 — ei kuratert liste med forklaringar på nynorsk.
 
 Godkjend av brukaren under planlegginga av Ormritaren.
+
+## Kenney Nature Kit 2.1 — `ljodstigen/hage/planter.bin`
+
+3D-modellar av tre, buskar, blomar, sopp og gras, brukte av **bokstavhagen**
+i Ljodstigen. Kvar bokstav er ei plante som veks gjennom seks steg.
+
+GLB-filene ligg ikkje i repoet. `bygg_ljodstigen_hage.py` les dei frå
+`_kjelder/kenney-nature/` og skriv ut geometrien dei femti modellane vi
+faktisk brukar, i eit format hagen kan sende rett til GPU-en. Det er difor
+det ikkje ligg nokon glTF-lastar i nettlesaren.
+
+| | |
+|---|---|
+| Prosjekt | [Nature Kit](https://kenney.nl/assets/nature-kit) av Kenney |
+| Lisens | CC0 1.0 — fri bruk, kreditering frivillig |
+| Versjon | 2.1 (2020-04-29) |
+| Format | glTF 2.0 binær (`.glb`) |

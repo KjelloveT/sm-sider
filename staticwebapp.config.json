@@ -9,7 +9,8 @@
       "/css/*",
       "/_resources/*",
       "/ljodstigen/lyd/*",
-      "/ljodstigen/jakta/*"
+      "/ljodstigen/jakta/*",
+      "/ljodstigen/hage/*"
     ]
   },
   "routes": [
@@ -81,6 +82,14 @@
     },
     {
       "_kommentar": "Teksturatlaset til Bokstavjakta blir bygd av bygg_ljodstigen_atlas.py, og det gjer det OFTE: kvar gong vi legg til sprites blir atlas.png og atlas.json skrivne på nytt under same namn, og alle rammekoordinatane flyttar seg. Med immutable ville ei elevmaskin med varm cache sitje med eit gammalt atlas i eit år, medan koden spør etter rammer som berre finst i det nye - og Phaser teiknar ingenting, utan ein feil som forklarer kvifor. Ei revalidering kostar eit 304-svar; det gamle valet kosta ei øydelagd side. Same avveging som for lyd/stemmer.json over.",
+      "_kommentar": "Plantebiblioteket til bokstavhagen blir bygd av bygg_ljodstigen_hage.py, og planter.bin blir skriven på nytt under same namn kvar gong artane endrar seg. Med immutable ville ei elevmaskin sitje med eit gammalt bibliotek der modellane ligg andre stader enn indeksen seier, og hagen ville teikne feil planter utan ein feil som forklarer kvifor. Ei revalidering kostar eit 304-svar.",
+      "route": "/ljodstigen/hage/*",
+      "headers": {
+        "Cache-Control": "public, max-age=300, must-revalidate"
+      }
+    },
+    {
+      "_kommentar": "Teksturatlaset til Bokstavjakta blir bygd av bygg_ljodstigen_atlas.py og endrar seg berre når nokon køyrer skriptet på nytt.",
       "route": "/ljodstigen/jakta/*",
       "headers": {
         "Cache-Control": "public, max-age=300, must-revalidate"
