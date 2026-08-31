@@ -158,3 +158,59 @@
 @media (prefers-reduced-motion: reduce) {
   .ropet-knapp:active { transform: none; }
 }
+
+/* ──────────────── Framgang ──────────────── */
+
+/* Nede i midten, over spelet: eit tal og ei stripe. Eleven skal kunne
+   sjå kor langt han er komen utan å avbryte det han held på med. */
+.ropet-framgang {
+  position: absolute;
+  left: 50%;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 3px solid #1a1a1a;
+  border-radius: 999px;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.ropet-stripe {
+  display: block;
+  width: clamp(70px, 22vw, 150px);
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(26, 26, 26, 0.16);
+  overflow: hidden;
+}
+
+.ropet-stripe-fyll {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: #2CD8B8;
+  transition: width 260ms ease-out;
+}
+
+.ropet-tal { font-variant-numeric: tabular-nums; }
+
+/* Rekkja dukkar berre opp frå to på rad. Ein «1 på rad» er ikkje ei
+   rekkje, det er eit svar. */
+.ropet-rekkje {
+  padding: 2px 9px 3px;
+  border-radius: 999px;
+  background: #FEB147;
+  color: #1a1a1a;
+  font-size: 0.78rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ropet-stripe-fyll { transition: none; }
+}

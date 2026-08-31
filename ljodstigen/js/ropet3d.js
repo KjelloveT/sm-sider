@@ -354,39 +354,80 @@
     }
   }
 
-  /* Telta står i ein boge framfor startpunktet, med god avstand: to telt
-     som står tett er to telt eleven kan komme borti på ein gong, og då
-     er valet hans ikkje eit val. */
+  /* ── TELTA STÅR I EIN RING RUNDT BÅLET ──
+
+     Ikkje i ein boge framfor eleven: ein ring gjer at ingen telt er
+     «det første», og at avstanden frå bålet til kvart av dei er den
+     same. Med to telt blir ringen ein boge av seg sjølv.
+
+     Ringen veks med talet telt, så to som står ved sida av kvarandre
+     alltid har same avstand. To telt som står tett er to telt eleven kan
+     komme borti på ein gong, og då er valet hans ikkje eit val.
+
+     Og dei vender inn mot bålet. Ein leirplass der telta snur ryggen
+     til elden er ikkje ein leirplass. */
+  const BAAL = { x: 0, z: 1.5 };
+  const TELT_AVSTAND = 1.85;     // minste avstand mellom to teltmidtar
+
   function teltplassar(tal) {
     const ut = [];
-    const spenn = Math.min(2.0, 0.72 * tal);
+    /* Radius slik at nabotelt får minst TELT_AVSTAND mellom seg, men
+       aldri så stor at telta hamnar utanfor øya. */
+    const spenn = Math.min(Math.PI * 1.45, 0.62 * tal + 0.5);
+    const bogeSteg = tal > 1 ? spenn / (tal - 1) : 0;
+    const r = Math.max(2.9, Math.min(OY_R * 0.62,
+      bogeSteg > 0 ? TELT_AVSTAND / (2 * Math.sin(bogeSteg / 2)) : 2.9));
+
     for (let i = 0; i < tal; i++) {
       const v = -Math.PI / 2 + (tal === 1 ? 0 : (i / (tal - 1) - 0.5) * spenn);
-      ut.push({ x: Math.cos(v) * 3.1, z: Math.sin(v) * 3.1 + 1.0, vinkel: -v - Math.PI / 2 });
+      const x = BAAL.x + Math.cos(v) * r;
+      const z = BAAL.z + Math.sin(v) * r;
+      /* Snu mot bålet. leggStatisk roterer med (cos, sin) på same måten
+         som atan2 gjev vinkelen, så retninga hit-til-bålet er vinkelen
+         rett fram — pluss ein halv omdreiing, fordi opninga på Kenney
+         sine telt vender bakover i modellen. */
+      const motBaal = Math.atan2(BAAL.x - x, BAAL.z - z);
+      ut.push({ x: x, z: z, vinkel: motBaal + Math.PI });
     }
     return ut;
   }
 
   /* Alt som ikkje er telt: bål, kubbar, tre langs kanten, litt gras.
-     Faste plassar frå eit frø, så leiren ser lik ut kvar gong. */
+     Faste plassar frå eit frø, så leiren ser lik ut kvar gong.
+
+     Dei store tinga blir samtidig lagde i ei liste over HINDRINGAR med
+     ein radius kvar. Ein figur som glir tvers gjennom eit tre gjer
+     leiren til ein kulisse; ein som må gå rundt gjer han til ein stad.
+     Graset og blomane står ikkje i lista — å bli stoppa av ei grastust
+     er verre enn å gå gjennom henne. */
   function pynt(ut) {
     let fro = 90210;
     function neste() {
       fro = (fro * 1103515245 + 12345) & 0x7fffffff;
       return fro / 0x7fffffff;
     }
-    leggStatisk('campfire_stones', ut, 0, 0, 1.5, 0, 1.0);
-    leggStatisk('campfire_logs', ut, 0, 0.02, 1.5, 0.6, 1.0);
+    ut.hindringar = ut.hindringar || [];
+    function stopp(x, z, r) { ut.hindringar.push({ x: x, z: z, r: r }); }
+
+    leggStatisk('campfire_stones', ut, BAAL.x, 0, BAAL.z, 0, 1.0);
+    leggStatisk('campfire_logs', ut, BAAL.x, 0.02, BAAL.z, 0.6, 1.0);
+    stopp(BAAL.x, BAAL.z, 0.52);
     leggStatisk('log', ut, -1.25, 0, 2.15, 0.4, 1.0);
+    stopp(-1.25, 2.15, 0.42);
     leggStatisk('log_stack', ut, 1.35, 0, 2.05, -0.3, 1.0);
+    stopp(1.35, 2.05, 0.48);
 
     const kant = ['tree_pineDefaultA', 'tree_default', 'tree_small'];
     for (let i = 0; i < 12; i++) {
       const v = (i / 12) * Math.PI * 2 + 0.2;
       const k = omkrins(v);
       const r = 0.86 + neste() * 0.08;
+      const sk = 0.5 + neste() * 0.25;
       leggStatisk(kant[i % kant.length], ut, k.x * r, 0, k.z * r,
-                  neste() * Math.PI * 2, 0.5 + neste() * 0.25);
+                  neste() * Math.PI * 2, sk);
+      /* Stammen, ikkje krona: eit tre skal stoppe deg der han står i
+         bakken, ikkje ein halv meter før. */
+      stopp(k.x * r, k.z * r, 0.30 * sk + 0.18);
     }
     const smaatt = ['plant_bush', 'grass', 'grass_large', 'flower_redA',
                     'flower_yellowA', 'mushroom_red', 'stone_smallA', 'rock_smallA'];
@@ -395,9 +436,13 @@
       const k = omkrins(v);
       const r = Math.sqrt(neste()) * 0.78;
       const x = k.x * r, z = k.z * r;
-      if (Math.hypot(x, z - 1.5) < 0.95) continue;   // ikkje oppi bålet
-      leggStatisk(smaatt[Math.floor(neste() * smaatt.length) % smaatt.length],
-                  ut, x, 0, z, neste() * Math.PI * 2, 0.6 + neste() * 0.5);
+      if (Math.hypot(x - BAAL.x, z - BAAL.z) < 0.95) continue;   // ikkje oppi bålet
+      const namn = smaatt[Math.floor(neste() * smaatt.length) % smaatt.length];
+      const sk = 0.6 + neste() * 0.5;
+      leggStatisk(namn, ut, x, 0, z, neste() * Math.PI * 2, sk);
+      if (namn.indexOf('stone') === 0 || namn.indexOf('rock') === 0) {
+        stopp(x, z, 0.24 * sk + 0.14);
+      }
     }
   }
 
@@ -407,6 +452,7 @@
     plassering: plassering, leddmatriser: leddmatriser,
     leggStatisk: leggStatisk, figurBuffer: figurBuffer,
     oy: oy, pynt: pynt, teltplassar: teltplassar, omkrins: omkrins,
+    BAAL: BAAL, TELT_AVSTAND: TELT_AVSTAND,
     lagProgram: lagProgram, VS: VS, FS: FS, FIGUR_VS: FIGUR_VS,
     OY_R: OY_R,
     bib: function () { return bib; }

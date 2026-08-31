@@ -56,7 +56,9 @@ LEIR = ['campfire_stones', 'campfire_logs', 'log', 'log_stack',
 
 # Klippa vi treng. Kvilepositur ligg i nodane sine eigne TRS frå før og
 # treng ikkje noko klipp.
-KLIPP = ['idle', 'walk', 'emote-yes', 'emote-no']
+# «sprint» blir brukt til flygeturen: armar og bein i full fart ser ut
+# som spreling når figuren ikkje har bakke under seg.
+KLIPP = ['idle', 'walk', 'sprint', 'jump', 'emote-yes', 'emote-no']
 
 SKALA = 8192          # int16-einingar per verdseining
 

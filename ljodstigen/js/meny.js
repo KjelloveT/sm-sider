@@ -11,6 +11,16 @@
   'use strict';
 
   const R = function () { return LjodRender; };
+
+  /* Modusar som finst i meir enn éi utgåve. Utgåva er eit VAL og ikkje
+     ein ny modus: same oppgåve, same motor, same framgang. */
+  const VARIANTAR = {
+    bokstavropet: {
+      href: 'ropet.html',
+      label: 'Prøv på leirplassen →',
+      aria: 'Bokstavropet på leirplassen, ei 3D-utgåve der lydane bur i telt'
+    }
+  };
   let current = null;   // vald profil
 
   function $(id) { return document.getElementById(id); }
@@ -133,6 +143,26 @@
       if (!unlocked) {
         card.appendChild(R().h('span', 'ljod-mode-flag', 'Opnar seg snart'));
         card.setAttribute('aria-disabled', 'true');
+      }
+
+      /* BOKSTAVROPET FINST I TO UTGÅVER, og eleven vel sjølv.
+
+         Den vanlege er raskare og har alle alternativa framme samtidig.
+         Leirplassen tek lengre tid, og det er heile poenget: han må
+         halde lyden i hovudet medan han går til neste telt.
+
+         Valet ligg her og ikkje som ein eigen modus, fordi det ER same
+         oppgåva og same framgangen. To modusar ville gjeve eleven
+         inntrykk av to ulike ting å lære. */
+      if (unlocked && VARIANTAR[m.id]) {
+        const boks = R().h('div', 'ljod-mode-par');
+        boks.appendChild(card);
+        const alt = R().h('a', 'ljod-mode-variant', VARIANTAR[m.id].label);
+        alt.href = VARIANTAR[m.id].href;
+        alt.setAttribute('aria-label', VARIANTAR[m.id].aria);
+        boks.appendChild(alt);
+        host.appendChild(boks);
+        return;
       }
       host.appendChild(card);
     });
