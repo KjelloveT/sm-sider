@@ -6,6 +6,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 ## [1.40] — 2026-09-01
 
 ### Lagt til
+- **Eleven vel kor lang økta skal vere** — ti, tjue eller tretti rette — i eit spørsmål som kjem før første oppgåva, med tjue ferdig valt. Den som berre vil spele treng eitt trykk. Valet blir lagra på profilen, så neste gong står same talet klart, og «Byt tal» på målsida opnar spørsmålet på nytt.
 - **Ei økt på leirplassen varer til tjue rette,** og så er eleven i mål. Motoren sitt eige mål — alle 29 bokstavane i boks 5 — er rett, men ligg hundrevis av oppgåver unna; ein seksåring treng eit mål han kan sjå enden på i dag. Kvart rette svar tel, same bokstav eller ikkje, så eleven kan telje sjølv utan å kjenne til boksar og øktklokker.
   - Måleren viser **rette av tjue** i staden for bokstavar av 29. Det lange løpet står framleis i skjermlesaren sin tekst og på målsida, så ein lærar får begge delar.
   - **Figuren flyg heim på den siste òg.** Turen er markeringa, og ho skal ikkje falle bort på den eine gongen ho tel mest.

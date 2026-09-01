@@ -267,3 +267,16 @@
   justify-content: center;
   margin-top: 20px;
 }
+
+/* Tala eleven vel mellom. Store nok for ein finger, og det valde er
+   inverterte i staden for berre ramma — ein seksåring skal sjå kva som
+   står klart utan å samanlikne kantar. */
+.ropet-val {
+  min-width: 78px;
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.ropet-val.is-vald {
+  background: #1a1a1a;
+  color: #fff;
+}

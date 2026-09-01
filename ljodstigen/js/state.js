@@ -84,6 +84,15 @@
 
   /* ──────────────── Profilar ──────────────── */
 
+  /* Lovlege lengder på ei økt. Tre val er nok: eit kort, eit vanleg og
+     eit langt. Fleire ville gjort eit val for ein seksåring til ei
+     avgjerd. */
+  const ROPET_MAAL = [10, 20, 30];
+
+  function RopetMaal(v) {
+    return ROPET_MAAL.indexOf(+v) !== -1 ? +v : 20;
+  }
+
   function hydrateProfile(p) {
     p = p || {};
     return {
@@ -97,7 +106,15 @@
       lastModes: Array.isArray(p.lastModes) ? p.lastModes : [],
       /* Teljarar for merka. Held her, ikkje i den adaptive tilstanden:
          motoren skal handle om læring, ikkje om premiar. */
-      counters: (p.counters && typeof p.counters === 'object') ? p.counters : {}
+      counters: (p.counters && typeof p.counters === 'object') ? p.counters : {},
+      /* Kor mange rette ei økt på leirplassen varer. Eleven vel sjølv, og
+         valet står til han byter det.
+
+         MÅ STÅ I DENNE LISTA. hydrateProfile byggjer eit heilt nytt
+         objekt med faste nøklar, så eit felt som ikkje er nemnt her blir
+         stroke neste gong profilen blir lesen — og innstillinga ville
+         overlevd akkurat til sida blei lasta på nytt. */
+      ropetMaal: RopetMaal(p.ropetMaal)
     };
   }
 
@@ -178,7 +195,8 @@
 
   root.LjodState = {
     APP_ID: APP_ID, VERSION: VERSION,
-    AVATARS: AVATARS, FONTS: FONTS, STARS: STARS,
+    AVATARS: AVATARS,
+    ROPET_MAAL: ROPET_MAAL, FONTS: FONTS, STARS: STARS,
     today: today, daysBetween: daysBetween,
     read: read, write: write,
     createProfile: createProfile, deleteProfile: deleteProfile,

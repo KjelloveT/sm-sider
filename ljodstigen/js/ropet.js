@@ -35,11 +35,12 @@
      det ligg hundrevis av oppgåver unna. Ein seksåring treng eit mål han
      kan sjå enden på i dag.
 
-     Tjue rette er det målet. Kvart rette svar tel, same bokstav eller
-     ikkje: eleven skal kunne telje sjølv utan å kjenne til boksar og
-     øktklokker. Det som skjer inne i motoren held fram som før — økta er
-     ei ramme rundt treninga, ikkje ei ny måling av henne. */
-  const MAAL = 20;
+     Tjue rette er standarden, men eleven vel sjølv — ti, tjue eller
+     tretti — og valet står på profilen til han byter det. Kvart rette
+     svar tel, same bokstav eller ikkje: eleven skal kunne telje sjølv
+     utan å kjenne til boksar og øktklokker. Det som skjer inne i motoren
+     held fram som før — økta er ei ramme rundt treninga, ikkje ei ny
+     måling av henne. */
   const START = { x: 0, z: 3.4 };
   const FLYGETID = 1.0;        // sekund frå telt til startpunkt
 
@@ -186,6 +187,8 @@
     let rette = 0;              // i denne økta
     let besteRekkje = 0;
     let iMaal = false;
+    let maal = profil.ropetMaal || 20;
+    let venter = true;          // startsida står oppe
 
     /* Skyv figuren ut av alt han står oppi. To rundar, for å komme ut av
        eitt hinder kan skyve han inn i eit anna — det skjer mellom to tre
@@ -263,13 +266,13 @@
        byrja på, som er det han sjølv ville sagt at han «kan». */
     function visFramgang() {
       const st = LjodAdaptive.stats(profil.adaptive);
-      $('ropet-tal').textContent = rette + ' / ' + MAAL;
-      $('ropet-stripe-fyll').style.width = (rette / MAAL * 100) + '%';
+      $('ropet-tal').textContent = rette + ' / ' + maal;
+      $('ropet-stripe-fyll').style.width = (rette / maal * 100) + '%';
       /* Skjermlesaren får både økta og det lange løpet. Måleren viser
          berre økta — han skal kunne lesast med eit blikk — men ein lærar
          som spør maskina skal få vite kor eleven står i det heile. */
       $('ropet-framgang').setAttribute('aria-label',
-        rette + ' av ' + MAAL + ' rette i denne økta. ' +
+        rette + ' av ' + maal + ' rette i denne økta. ' +
         'I alt har du byrja på ' + st.planted + ' av ' + st.total +
         ' bokstavar, og ' + st.grown + ' sit godt.');
       const r = $('ropet-rekkje');
@@ -312,7 +315,7 @@
       visFramgang();
 
       LjodRender.feedback(rett, rett ? [] : ['f_' + oppgaave.ch]).then(function () {
-        if (rett && rette >= MAAL) {
+        if (rett && rette >= maal) {
           /* Han flyg heim òg når han er i mål — turen er markeringa, og
              ho skal ikkje falle bort på den eine gongen ho tel mest. */
           flyg = { fraaX: spelar.x, fraaZ: spelar.z, tid: 0 };
@@ -340,7 +343,7 @@
     function visMaal() {
       iMaal = true;
       const st = LjodAdaptive.stats(profil.adaptive);
-      $('ropet-maal-tal').textContent = MAAL;
+      $('ropet-maal-tal').textContent = maal;
       $('ropet-maal-rekkje').textContent = besteRekkje > 1
         ? ('Beste rekkje: ' + besteRekkje + ' på rad.') : '';
       $('ropet-maal-sum').textContent =
@@ -355,20 +358,59 @@
       rekkje = 0;
       besteRekkje = 0;
       iMaal = false;
+      venter = false;
       $('ropet-maal').hidden = true;
+      $('ropet-start').hidden = true;
       spelar.x = START.x; spelar.z = START.z; spelar.vinkel = Math.PI;
       settKlipp('idle');
       nyOppgaave();
     }
     $('ropet-maal-om').addEventListener('click', nyOkt);
 
+    /* ── Kor lang skal økta vere? ──
+
+       Spørsmålet kjem før første oppgåva og har eit svar ferdig valt, så
+       den som berre vil spele kan trykkje éin gong. Valet blir lagra på
+       profilen: neste gong står det same talet klart, og eleven treng
+       ikkje ta stilling til det same på nytt kvar dag. */
+    function byggStart() {
+      const rad = $('ropet-start-val');
+      rad.innerHTML = '';
+      LjodState.ROPET_MAAL.forEach(function (n) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'btn ropet-val' + (n === maal ? ' is-vald' : '');
+        b.textContent = n;
+        b.setAttribute('aria-label', n + ' rette');
+        if (n === maal) b.setAttribute('aria-current', 'true');
+        b.addEventListener('click', function () {
+          maal = n;
+          profil.ropetMaal = n;
+          LjodState.saveProfile(profil);
+          nyOkt();
+        });
+        rad.appendChild(b);
+      });
+    }
+
+    function visStart() {
+      venter = true;
+      iMaal = false;
+      $('ropet-maal').hidden = true;
+      byggStart();
+      $('ropet-start').hidden = false;
+      const vald = $('ropet-start-val').querySelector('.is-vald');
+      if (vald) vald.focus();
+    }
+    $('ropet-maal-byt').addEventListener('click', visStart);
+
     /* ── Løkka ── */
 
     function steg(dt) {
-      /* Er eleven i mål, står leiren stille bak panelet. Ein figur som
-         framleis kan gå rundt medan «du er i mål» står på skjermen gjer
-         markeringa til ein ting som er i vegen. */
-      if (iMaal) return;
+      /* Er eleven i mål eller ikkje har starta enno, står leiren stille
+         bak panelet. Ein figur som framleis kan gå rundt medan eit panel
+         står på skjermen gjer panelet til ein ting som er i vegen. */
+      if (iMaal || venter) return;
 
       /* Flygeturen eig figuren medan han varer. Ein boge opp og ned med
          ein sinus: han er null i begge endar, så figuren tek av og landar
@@ -495,7 +537,11 @@
       teikn();
     }
 
+    /* Leiren blir teikna med ein gong, men står stille bak startsida:
+       eleven skal sjå kvar han skal, ikkje ei tom rute med eit spørsmål
+       oppå. */
     nyOppgaave();
+    visStart();
     sist = performance.now();
     leverandor = root.requestAnimationFrame(ramme);
 
@@ -515,7 +561,9 @@
       rekkje: function () { return rekkje; },
       rette: function () { return rette; },
       iMaal: function () { return iMaal; },
-      MAAL: MAAL,
+      venter: function () { return venter; },
+      maal: function () { return maal; },
+      start: nyOkt,
       velg: velg,
       riv: function () {
         if (leverandor) root.cancelAnimationFrame(leverandor);
