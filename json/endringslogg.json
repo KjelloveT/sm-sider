@@ -170,6 +170,85 @@
       ]
     },
     {
+      "versjon": "1.36",
+      "dato": "2026-08-27",
+      "samandrag": "Vyrdepil har fått ein lisens, forklart så ein lærar kan lese han.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Heile nettstaden",
+          "tekst": "Vyrdepil er delt under CC BY-NC-SA 4.0: bruk, kopier og endre fritt, sei kvar det kjem frå, ikkje ten pengar på det, og del di eiga utgåve på same vilkår."
+        },
+        {
+          "t": "nytt",
+          "kva": "Heile nettstaden",
+          "tekst": "Lisenssida går gjennom kvart vilkår på nynorsk med døme frå ein skulekvardag. Ein lærar som vil dele eit opplegg vidare treng eit svar på om han har lov, ikkje ei lenkje til ein juridisk tekst på engelsk."
+        },
+        {
+          "t": "nytt",
+          "kva": "Heile nettstaden",
+          "tekst": "Sida seier òg kva lisensen ikkje dekkjer: biblioteka i _libs/ har sine eigne lisensar, og Wikimedia-bileta i Heimsank og Vidfaren høyrer andre til."
+        },
+        {
+          "t": "nytt",
+          "kva": "Heile nettstaden",
+          "tekst": "LICENSE i rota med den fullstendige teksten, ordrett. Den som klonar repoet skal finne vilkåra der han er van med å leite."
+        }
+      ]
+    },
+    {
+      "versjon": "1.35",
+      "dato": "2026-08-26",
+      "samandrag": "Læraren kan teikne sine eigne baner til Bokstavjakta, og banene kan vere breie.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Banelagar: ei side under «For læraren» der ein malar terrenget i eit rutenett og spelar resultatet med ein gong. Cellene er vanlege knappar, så kvar rute kan få fokus og seie kva ho er."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Innhaldet i eigne baner er adaptivt som standard: læraren teiknar geometrien, motoren vel bokstavane. Eit felt lèt han låse utvalet — «vi jobbar med s, o og l denne veka» — utan at svara sluttar å telje."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Banene blir validerte medan ein teiknar. Ein sokkel som ikkje kan nåast blir merkt raud med ein gong: ein lærar skal ikkje oppdage at banen er umogleg først når ein elev sit fast i han."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Eigne baner ligg på eininga, kan eksporterast som ei fil til ein kollega og importerast tilbake. Ingen server, ingen konto."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "«Banene til læraren» er ein eigen seksjon, alltid open uavhengig av progresjonen. Ein elev som har låst opp lite skal likevel kunne spele det læraren laga til nettopp han."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Baner kan vere opptil 30 skjermar breie. Kameraet følgjer figuren, og ei pil peikar mot næraste bokstav som står att — og mot døra når alt er samla."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Seks baner i to verder, og ein ny oppdragstype: fleire enkeltbokstavar etter kvarandre, kvar av dei valt av motoren for seg."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Blyantknapp: figuren skriv bokstaven i staden for å gå inn i sokkelen. Utan ein eigen handlingsknapp registrerte det å gå forbi ein sokkel eit feilsvar."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Forvekslingsregelen lak i baner med fleire bokstavar: b kunne kome frå eitt kall og d frå eit anna, kvar for seg lovlege og likevel side om side. Målt til 2 av 400 baner før vakta, 0 av 800 etter."
+        }
+      ]
+    },
+    {
       "versjon": "1.34",
       "dato": "2026-08-26",
       "samandrag": "Kludre Klodrian røpte kva port som var rett.",
@@ -178,6 +257,97 @@
           "t": "fiksa",
           "kva": "Kludre Klodrian",
           "tekst": "Skjelettfiskane heldt seg alltid unna lana med rett svar, så den tomme lana var fasiten og eleven kunne velje rett utan å rekne. Dei blir no plasserte tilfeldig, uavhengig av kva svar som er rett."
+        }
+      ]
+    },
+    {
+      "versjon": "1.33",
+      "dato": "2026-08-26",
+      "samandrag": "Figuren i Bokstavjakta står på bakken i staden for nedi han, og verda står på ein fast sokkel.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Figuren sokk ned i klossane. Fysikk-kroppen var rekna som om sprita var 64 piksel breie medan atlaset brukar utgåva på 128, så føtene låg 66 piksel under kollisjonen. Han står 1 piksel ned i flisa no i staden for 23."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Hendene var praktisk talt usynlege: handsprita er stort sett luft, så ein storleik på 15 piksel gav ei hand på under fire. Storleiken tek omsyn til lufta no."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Verda står på ein fast sokkel som byggjaren lagar. Banefilene teiknar berre det som står oppå, og kontrollane ligg over dei to nedste radene der det likevel berre er jord."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Flisene overlappar litt, så konturstrekane fell saman. Kant i kant gav to strekar med kvitt imellom, og rutenettet såg ut som laushengande øyer."
+        }
+      ]
+    },
+    {
+      "versjon": "1.32",
+      "dato": "2026-08-26",
+      "samandrag": "Spelsida til Bokstavjakta sat fast i ei gammal utgåve, og no finst det ei vakt mot same feil.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Spelsida til Bokstavjakta blei mellomlagra i eit år om gongen fordi ho matcha ei cache-rute som var meint for teksturatlaset. Resultatet var ei side som sat fast i ei gammal utgåve der eit script mangla — og deployen såg vellykka ut heile tida."
+        },
+        {
+          "t": "nytt",
+          "kva": "Drift",
+          "tekst": "Ei vakt går gjennom alle sidene i repoet og finn dei som endar opp med å bli mellomlagra for lenge, med same rekkjefølgje-logikk som tenaren brukar."
+        }
+      ]
+    },
+    {
+      "versjon": "1.31",
+      "dato": "2026-08-26",
+      "samandrag": "Bokstavjakta har vorte eit spel: soklar å plukke, myntar, ei dør, og oppdrag frå den adaptive motoren.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavjakta har vorte eit spel. Prøvescena er bytt ut med ei ekte bane: bokstavsoklar som kan plukkast, myntar, ei dør som opnar seg når oppdraget er løyst, og lyd på alt."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Oppdraget kjem frå den same adaptive motoren som dei andre modusane, så plattformspelet arvar forvekslingsregelen og klokkene utan at noko er skrive på nytt. Eit rett plukk går inn som eit vanleg svar, så skogen veks av å spele Bokstavjakta."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Figuren har fått lause hender som svevar ved sida av kroppen og heng etter når han snur. All rørsla er laga av forma, utan ei einaste animasjonsramme."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Kontrollane er ein styrespak og ein rund knapp, ikkje tre store soner som åt opp skjermen. Spaken flyttar seg dit fingeren landar, sidan ein seksåring ikkje ser ned på hendene medan han speler."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Hoppet når to fliser. Plattformene i prøvescena låg tre og fire fliser opp, og då såg det ut som om kollisjonen var øydelagd — figuren nådde dei rett og slett aldri."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Blokkene med bokstavar var berre bilete utan fysikk, så figuren gjekk rett gjennom dei."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Eit feilsvar blei registrert på nytt kvar 700 ms så lenge eleven stod ved sokkelen. Eit barn som blei ståande og lurte ville samla opp ti feil han aldri gjorde — og det er læringsdata, ikkje berre ein teljar."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Ei sperre mot dobbeltutløysing svelgde rette svar: eit barn som bomma og straks sprang til rett sokkel fekk det rette svaret sitt stille ignorert."
         }
       ]
     },
