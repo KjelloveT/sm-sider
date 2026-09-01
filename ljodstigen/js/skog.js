@@ -38,6 +38,14 @@
       const flat = host.querySelector('.ljod-garden');
       const vert = R().h('div', 'ljod-skog3d');
       if (flat) host.replaceChild(vert, flat); else host.insertBefore(vert, host.firstChild);
+      /* Styrespaken må stå i DOM-en FØR skogen blir laga: han leitar
+         han opp der og koplar seg på om han finst. */
+      const spak = R().h('div', 'ljod-skog3d-spak');
+      spak.setAttribute('role', 'application');
+      spak.setAttribute('aria-label', 'Styrespak. Dra for å gå i skogen.');
+      spak.appendChild(R().h('span', 'ljod-skog3d-knott'));
+      vert.appendChild(spak);
+
       if (skog3d) skog3d.riv();
       skog3d = LjodSkog3D.lag(vert, p);
 
@@ -45,7 +53,7 @@
 
       const under = R().h('div', 'ljod-skog3d-under');
       under.appendChild(R().h('p', 'ljod-hint ljod-skog3d-hint',
-        'Dra for å snu skogen, knip for å zoome. Bokstaven står på eit skilt framfor planta si.'));
+        'Gå rundt med piltastane eller styrespaken. Kameraet følgjer etter deg.'));
       under.appendChild(proveknapp(host, p));
       host.insertBefore(under, vert.nextSibling);
     }).catch(function (e) {

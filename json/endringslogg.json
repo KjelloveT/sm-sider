@@ -2,6 +2,33 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.41",
+      "dato": "2026-09-01",
+      "samandrag": "Eleven kan gå rundt i bokstavskogen med figuren, og kameraet følgjer mjukt etter.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Bokstavskogen kan gåast i. Same figuren som på leirplassen, styrt med piltastane eller ein styrespak, med kameraet bak seg."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Kameraet følgjer figuren mjukt og langs den kortaste vegen, så det ikkje hoppar når han snur."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Meir rom mellom trea, og trea stoppar figuren i staden for å la han gå tvers gjennom."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Datamappa til leirplassen mangla i navigationFallback, så ein feilskriven sti ville svart med framsida i staden for 404."
+        }
+      ]
+    },
+    {
       "versjon": "1.40",
       "dato": "2026-09-01",
       "samandrag": "Ei økt på leirplassen varer til tjue rette, og så er eleven i mål.",

@@ -3,6 +3,22 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.41] — 2026-09-01
+
+### Lagt til
+- **Eleven kan gå rundt i bokstavskogen.** Same figuren som på leirplassen, styrt med piltastane eller ein styrespak, med kameraet bak seg. Skogen var noko ein såg på ovanfrå; no er han ein stad ein går i — og eit skilt ein har gått bort til og lese er ikkje det same som eit skilt ein har sett på avstand.
+  - **Kameraet hoppar ikkje.** Det ligg bak figuren, men kjem dit mjukt: snur eleven på flekken, sveipar kameraet etter over drygt eit sekund i staden for å bytte side i eitt bilete. Vinkelen blir dregen langs den kortaste vegen, så ein figur som går frå 179 til −179 grader — to grader — ikkje får kameraet til å sveipe 358 den andre vegen.
+  - **Meir rom mellom trea.** Ruta gjekk frå 1,5 til 2,6 einingar. Eit tre er over ei rute breitt i krona, og det som skil ein skog frå ein hekk er at det finst ein veg imellom.
+  - **Trea stoppar figuren.** Ein skog ein går tvers gjennom er ei tapetsering. Radiusen er stammen og ikkje krona.
+  - Loddrett drag hevar og senkar kameraet; vassrett gjer ingenting, for der bestemmer figuren.
+
+### Endra
+- **`figur3d.js`** er ny og delt: figuren, skjelettet, dei fire klippa, den delte shaderen og matrisemattematikken. Leirplassen og skogen hadde elles hatt kvar sin kopi av det same, og to kopiar av noko som må vere likt er ein kopi for mykje.
+- **Figuren ligg i `ljodstigen/figur/`** og ikkje inne i leirplassen sine filer. Skogen skal ikkje laste fire telt og eit bål for å få tak i ein figur å gå rundt med — 42 kB i staden for 154.
+
+### Fiksa
+- **`/ljodstigen/ropet/*` mangla i `navigationFallback`.** Ein feilskriven sti under leirplassen ville svart med `index.html` og status 200 i staden for 404 — same fella som `decodeAudioData` i lydmappa. Både `ropet` og den nye `figur`-mappa står der no.
+
 ## [1.40] — 2026-09-01
 
 ### Lagt til

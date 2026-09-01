@@ -37,8 +37,15 @@
 (function (root) {
   'use strict';
 
+  /* Figuren, skjelettet og matrisene er delte med leirplassen. */
+  const F = root.Figur3D;
+
   const ROT = 'skog/';
-  const RUTE = 1.5;          // breidda på ei rute i verdseiningar
+  /* MEIR ROM MELLOM TREA ENN FØR. Skogen var noko ein såg på ovanfrå, og
+     då heldt det at trea ikkje overlappa. No skal eleven gå mellom dei,
+     og då må det vere ein veg — eit tre er over ei rute breitt i krona,
+     så to og ein halv rute er det som skil ein skog frå ein hekk. */
+  const RUTE = 2.6;          // breidda på ei rute i verdseiningar
   const BED = 1.85;          // jordflisa, som faktor på naturleg storleik
   const BED_FLAT = 0.30;     // og kor flat ho blir trykt i høgda
   const SKILT_MOT = 0.58;    // kor langt framfor treet skiltet står
@@ -70,57 +77,14 @@
       fetch(ROT + 'planter.bin').then(function (r) {
         if (!r.ok) throw new Error('planter.bin: ' + r.status);
         return r.arrayBuffer();
-      })
+      }),
+      F.last()
     ]).then(function (svar) {
       bib = svar[0];
       geo = new DataView(svar[1]);
       return bib;
     });
     return lastar;
-  }
-
-  /* ──────────────── Matriser ──────────────── */
-
-  function multiplo(a, b) {
-    const ut = new Float32Array(16);
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        let s = 0;
-        for (let k = 0; k < 4; k++) s += a[k * 4 + j] * b[i * 4 + k];
-        ut[i * 4 + j] = s;
-      }
-    }
-    return ut;
-  }
-
-  function perspektiv(fov, sideforhold, naer, fjern) {
-    const f = 1 / Math.tan(fov / 2);
-    const ut = new Float32Array(16);
-    ut[0] = f / sideforhold; ut[5] = f;
-    ut[10] = (fjern + naer) / (naer - fjern); ut[11] = -1;
-    ut[14] = 2 * fjern * naer / (naer - fjern);
-    return ut;
-  }
-
-  function sePaa(oye, maal, opp) {
-    function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
-    function kryss(a, b) {
-      return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-    }
-    function norm(v) {
-      const l = Math.hypot(v[0], v[1], v[2]) || 1e-9;
-      return [v[0] / l, v[1] / l, v[2] / l];
-    }
-    function prikk(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
-    const z = norm(sub(oye, maal));
-    const x = norm(kryss(opp, z));
-    const y = kryss(z, x);
-    return new Float32Array([
-      x[0], y[0], z[0], 0,
-      x[1], y[1], z[1], 0,
-      x[2], y[2], z[2], 0,
-      -prikk(x, oye), -prikk(y, oye), -prikk(z, oye), 1
-    ]);
   }
 
   /* ──────────────── Plassering ──────────────── */
@@ -429,46 +393,6 @@
 
   /* ──────────────── WebGL ──────────────── */
 
-  const VS = [
-    'attribute vec3 aPos;',
-    'attribute vec3 aNor;',
-    'attribute vec3 aFar;',
-    'uniform mat4 uMvp;',
-    'varying vec3 vNor;',
-    'varying vec3 vFar;',
-    'void main() {',
-    '  vNor = aNor;',
-    '  vFar = aFar;',
-    '  gl_Position = uMvp * vec4(aPos, 1.0);',
-    '}'
-  ].join('\n');
-
-  /* To lys og eit botnlys. Eit einaste retningslys gjer undersida av
-     kvar plante heilt svart, og då ser ein skog med små planter ut som
-     ein skog full av hòl. */
-  const FS = [
-    'precision mediump float;',
-    'varying vec3 vNor;',
-    'varying vec3 vFar;',
-    'void main() {',
-    '  vec3 n = normalize(vNor);',
-    '  float hovud = max(dot(n, normalize(vec3(-0.42, 0.86, 0.30))), 0.0);',
-    '  float fyll  = max(dot(n, normalize(vec3(0.55, 0.25, -0.60))), 0.0);',
-    '  float lys = 0.52 + 0.42 * hovud + 0.14 * fyll;',
-    '  gl_FragColor = vec4(vFar * lys, 1.0);',
-    '}'
-  ].join('\n');
-
-  function lagShader(gl, type, kjelde) {
-    const s = gl.createShader(type);
-    gl.shaderSource(s, kjelde);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      throw new Error('shader: ' + gl.getShaderInfoLog(s));
-    }
-    return s;
-  }
-
   /* ── BOKSTAVANE ER SKILT, IKKJE ETIKETTAR ──
 
      Første utgåva la bokstavane som DOM-element oppå lerretet. Dei var
@@ -590,16 +514,6 @@
     '}'
   ].join('\n');
 
-  function lagProgram(gl, vs, fs) {
-    const p = gl.createProgram();
-    gl.attachShader(p, lagShader(gl, gl.VERTEX_SHADER, vs || VS));
-    gl.attachShader(p, lagShader(gl, gl.FRAGMENT_SHADER, fs || FS));
-    gl.linkProgram(p);
-    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
-      throw new Error('program: ' + gl.getProgramInfoLog(p));
-    }
-    return p;
-  }
 
   /* ──────────────── Visninga ──────────────── */
 
@@ -618,20 +532,34 @@
       || canvas.getContext('experimental-webgl', { antialias: true, alpha: true });
     if (!gl) throw new Error('ingen webgl-kontekst');
 
-    const prog = lagProgram(gl);
-    const skiltProg = lagProgram(gl, SKILT_VS, SKILT_FS);
+    const prog = F.lagProgram(gl, F.STATISK_VS, F.FS);
+    const skiltProg = F.lagProgram(gl, SKILT_VS, SKILT_FS);
     const buf = {
       pos: gl.createBuffer(), nor: gl.createBuffer(), far: gl.createBuffer()
     };
     const skiltBuf = {
       pos: gl.createBuffer(), uv: gl.createBuffer(), far: gl.createBuffer()
     };
+    const figBuf = { tal: 0 };
     const stad = {
       pos: gl.getAttribLocation(prog, 'aPos'),
       nor: gl.getAttribLocation(prog, 'aNor'),
       far: gl.getAttribLocation(prog, 'aFar'),
       mvp: gl.getUniformLocation(prog, 'uMvp')
     };
+    const figProg = F.lagProgram(gl, F.VS, F.FS);
+    const figStad = {
+      pos: gl.getAttribLocation(figProg, 'aPos'),
+      nor: gl.getAttribLocation(figProg, 'aNor'),
+      far: gl.getAttribLocation(figProg, 'aFar'),
+      ledd: gl.getAttribLocation(figProg, 'aLedd'),
+      vekt: gl.getAttribLocation(figProg, 'aVekt'),
+      mvp: gl.getUniformLocation(figProg, 'uMvp'),
+      modell: gl.getUniformLocation(figProg, 'uModell'),
+      leddM: gl.getUniformLocation(figProg, 'uLedd')
+    };
+    const leddM = new Float32Array(F.LEDD * 16);
+
     const skiltStad = {
       pos: gl.getAttribLocation(skiltProg, 'aPos'),
       uv: gl.getAttribLocation(skiltProg, 'aUv'),
@@ -666,21 +594,86 @@
     gl.disable(gl.CULL_FACE);
 
     let skog = byggSkog(profil);
-    /* Kameraet: vassrett vinkel, loddrett vinkel, og eit zoom-tal som
-       er ein faktor på avstanden. Dei tre er heile kameratilstanden. */
-    /* Zoom 1 er «heile øya med luft rundt». Standarden er nærare enn
-       det: skogen skal fylle biletet, ikkje ligge som ein flekk i det.
-       Bedene ligg godt innanfor kanten av øya, så bokstavane kjem ikkje
-       utanfor sjølv om øykanten gjer det. */
-    let dreiing = -0.42;
-    let helling = 0.46;
-    let zoom = 0.74;
+
+    /* ── EIN FIGUR Å GÅ MED ──
+
+       Skogen var noko ein såg på. No kan eleven gå inn i han, og det er
+       ein annan ting: eit skilt ein har gått bort til og lese er ikkje
+       det same som eit skilt ein har sett på avstand.
+
+       Kameraet ligg bak figuren og følgjer han. Det er heile grunnen til
+       at han kan gå rundt eit tre og sjå det frå andre sida. */
+    const fig = F.buffer();
+    const figHogd = F.hogd();
+    [['pos', fig.pos], ['nor', fig.nor], ['far', fig.far],
+     ['ledd', fig.ledd], ['vekt', fig.vekt]].forEach(function (d) {
+      const b = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, b);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(d[1]), gl.STATIC_DRAW);
+      figBuf[d[0]] = b;
+    });
+    figBuf.tal = fig.tal;
+    const FIGUR_SKALA = 1.15;
+    const FIGUR_R = 0.30;
+    const FART = 3.6;
+
+    const figur = { x: 0, z: skog.rz * 0.45, vinkel: Math.PI };
+    let klipp = 'idle', klippTid = 0;
+
+    /* ── KAMERAET SKAL IKKJE HOPPE ──
+
+       Det ligg bak figuren, men det kjem dit MJUKT. Snur eleven på
+       flekken, sveipar kameraet etter over eit halvt sekund i staden for
+       å bytte side i eitt bilete — og det er skilnaden på ein hage ein
+       kan gå i og ein som gjer ein svimmel.
+
+       Vinkelen blir dregen langs den KORTASTE vegen. Utan det ville ein
+       figur som går frå 179 til -179 grader — to grader — fått kameraet
+       til å sveipe 358 den andre vegen.
+
+       Kameraet følgjer òg posisjonen med litt etterslep, så han ikkje
+       sit limt fast i figuren når eleven rykkjer til. */
+    let kamVinkel = Math.PI;
+    let kamX = figur.x, kamZ = figur.z;
+    let helling = 0.34;
+    let zoom = 1.0;
     let mvp = null;
 
-    const HELLING_MIN = 0.06;   // nesten i augehøgd med bakken
-    const HELLING_MAKS = 1.42;  // nesten rett ovanfrå
-    const ZOOM_MIN = 0.42;
-    const ZOOM_MAKS = 1.6;
+    const KAM_FART = 4.5;       // kor fort vinkelen tek att figuren
+    const KAM_FOLGE = 6.0;      // og posisjonen
+    const KAM_AVSTAND = 5.6;
+    const HELLING_MIN = 0.10;
+    const HELLING_MAKS = 1.05;
+    const ZOOM_MIN = 0.55;
+    const ZOOM_MAKS = 1.9;
+
+    /* Trea stoppar figuren. Ein skog ein går tvers gjennom er ei
+       tapetsering; ein ein må gå rundt i er ein stad. Radiusen er
+       stammen og ikkje krona — eit tre skal stoppe deg der det står i
+       bakken, ikkje ein meter før. */
+    function hindringar() {
+      return skog.beds.filter(function (b) { return b.steg >= 3 && b.aktiv; })
+        .map(function (b) { return { x: b.x, z: b.z, r: 0.34 }; });
+    }
+    let stopparar = hindringar();
+
+    function losne(pkt) {
+      for (let runde = 0; runde < 2; runde++) {
+        let rorte = false;
+        for (let i = 0; i < stopparar.length; i++) {
+          const h = stopparar[i];
+          const dx = pkt.x - h.x, dz = pkt.z - h.z;
+          const d = Math.hypot(dx, dz);
+          const minst = h.r + FIGUR_R;
+          if (d < minst && d > 1e-4) {
+            pkt.x = h.x + dx / d * minst;
+            pkt.z = h.z + dz / d * minst;
+            rorte = true;
+          }
+        }
+        if (!rorte) break;
+      }
+    }
 
     /* SKILTA SNUR SEG MOT KAMERAET om den loddrette aksen. Difor blir
        geometrien deira bygd på nytt for kvar teikning — 29 skilt er 348
@@ -696,8 +689,11 @@
 
     function byggSkilt() {
       const pos = [], uv = [], far = [];
-      const hx = Math.sin(dreiing), hz = Math.cos(dreiing);   // mot kameraet
-      const rx = Math.cos(dreiing), rz = -Math.sin(dreiing);  // sidelengs
+      /* Skilta vender mot KAMERAET, ikkje mot figuren. Det er kameraet
+         som ser dei, og eit skilt som snur seg etter figuren ville stått
+         på skrå kvar gong han går forbi. */
+      const hx = Math.sin(kamVinkel), hz = Math.cos(kamVinkel);   // mot kameraet
+      const rx = Math.cos(kamVinkel), rz = -Math.sin(kamVinkel);  // sidelengs
       const tre = palettFarge('woodInner', [245, 215, 187]);
       const stamme = palettFarge('woodBark', [226, 131, 87]);
 
@@ -790,53 +786,20 @@
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-      /* AVSTANDEN BLIR MÅLT, IKKJE GJETTA.
-
-         Vi projiserer randa av øya og toppen av dei høgaste plantene med
-         ein prøveavstand, ser kor langt utanfor ramma dei hamnar, og
-         skalerer avstanden med akkurat det. Skalaen i eit perspektiv er
-         omvendt proporsjonal med avstanden, så éi runde treffer.
-
-         Det er dette som gjer at hellinga kan gå frå augehøgd til rett
-         ovanfrå utan at nokon justerer eit tal: sett ovanfrå er øya
-         djup, sett frå sida er ho flat, og formelen for det er ikkje
-         verdt å skrive når ein kan måle. Ei hardkoda avstand klipte dei
-         ytste bedene tre gonger før dette stod her. */
+      /* Kameraet står bak figuren i den mjuka vinkelen, og ser på eit
+         punkt litt over hovudet hans. Avstanden er fast og ikkje målt:
+         her skal vi ikkje sjå heile øya, vi skal sjå det figuren står
+         framfor. */
       const FOV = 0.62;
-
-      function kameraFor(d) {
-        return [
-          Math.sin(dreiing) * Math.cos(helling) * d,
-          Math.sin(helling) * d,
-          Math.cos(dreiing) * Math.cos(helling) * d
-        ];
-      }
-      /* Opp-vektoren må ikkje vere parallell med blikkretninga. Står
-         kameraet rett over skogen, er han det — og då blir biletet borte.
-         Difor stoppar hellinga før 90 grader. */
-      function matrise(d) {
-        return multiplo(perspektiv(FOV, b / h, 0.4, 200),
-          sePaa(kameraFor(d), [0, 0.4, 0], [0, 1, 0]));
-      }
-
-      const proeve = 12;
-      const M = matrise(proeve);
-      let verst = 0.001;
-      for (let i = 0; i < 24; i++) {
-        const v = i / 24 * Math.PI * 2;
-        const k = omkrins(v, skog.rx, skog.rz);
-        [0, 1.35].forEach(function (y) {
-          const cx = M[0] * k.x + M[4] * y + M[8] * k.z + M[12];
-          const cy = M[1] * k.x + M[5] * y + M[9] * k.z + M[13];
-          const cw = M[3] * k.x + M[7] * y + M[11] * k.z + M[15];
-          if (cw <= 0.01) { verst = Math.max(verst, 3); return; }
-          verst = Math.max(verst, Math.abs(cx / cw), Math.abs(cy / cw));
-        });
-      }
-      /* 0,92 og ikkje 1,0: litt luft, så kanten ikkje ligg klemt mot
-         ramma og bokstavlappane får plass utanfor plantene sine. */
-      const grunn = proeve * (verst / 0.92) * zoom;
-      mvp = matrise(grunn);
+      const avst = KAM_AVSTAND * zoom;
+      const maal = [kamX, figHogd * FIGUR_SKALA * 0.75, kamZ];
+      const oye = [
+        maal[0] + Math.sin(kamVinkel) * Math.cos(helling) * avst,
+        maal[1] + Math.sin(helling) * avst,
+        maal[2] + Math.cos(kamVinkel) * Math.cos(helling) * avst
+      ];
+      mvp = F.gonge(F.perspektiv(FOV, b / h, 0.3, 200),
+                    F.sePaa(oye, maal, [0, 1, 0]));
 
       gl.useProgram(prog);
       gl.uniformMatrix4fv(stad.mvp, false, mvp);
@@ -865,6 +828,24 @@
       [skiltStad.pos, skiltStad.uv, skiltStad.far].forEach(function (a) {
         if (a >= 0) gl.disableVertexAttribArray(a);
       });
+
+      /* Figuren til slutt, i same djupnebuffer som resten: går han bak
+         eit tre, blir han dekt av det. */
+      F.leddmatriser(klipp, klippTid, leddM);
+      gl.useProgram(figProg);
+      gl.uniformMatrix4fv(figStad.mvp, false, mvp);
+      gl.uniformMatrix4fv(figStad.modell, false,
+        F.plassering(figur.x, 0, figur.z, figur.vinkel, FIGUR_SKALA));
+      gl.uniformMatrix4fv(figStad.leddM, false, leddM);
+      [['pos', figStad.pos, 3], ['nor', figStad.nor, 3], ['far', figStad.far, 3],
+       ['ledd', figStad.ledd, 4], ['vekt', figStad.vekt, 4]].forEach(function (d) {
+        gl.bindBuffer(gl.ARRAY_BUFFER, figBuf[d[0]]);
+        gl.enableVertexAttribArray(d[1]);
+        gl.vertexAttribPointer(d[1], d[2], gl.FLOAT, false, 0, 0);
+      });
+      gl.drawArrays(gl.TRIANGLES, 0, figBuf.tal);
+      [figStad.pos, figStad.nor, figStad.far, figStad.ledd, figStad.vekt]
+        .forEach(function (a) { if (a >= 0) gl.disableVertexAttribArray(a); });
     }
 
     /* Skjermlesarane får si eiga liste. Ein bokstav malt i ein tekstur
@@ -882,100 +863,179 @@
     }
     byggLesarliste();
 
-    /* ── Å SJÅ PÅ HAGEN ──
+    /* ── Å GÅ I SKOGEN ──
 
-       Heile vegen rundt vassrett, og frå nesten i augehøgd til nesten
-       rett ovanfrå. Loddrett MÅ stoppe før 90 grader: står kameraet rett
-       over skogen, blir opp-vektoren parallell med blikkretninga og
-       biletet forsvinn.
+       Piltastane og WASD går. På nettbrett er det ein styrespak nede til
+       venstre. Kameraet snur seg sjølv — eleven styrer figuren, ikkje
+       biletet, og det er éin ting mindre å halde styr på for ein
+       seksåring som skal finne bokstaven sin.
 
-       Ein finger dreier, to fingrar knip zoom. Hjulet zoomar. Piltastane
-       dreier og pluss og minus zoomar, så skogen kan sjåast utan mus —
-       lerretet har tabindex nettopp for det. */
+       Pluss og minus, hjulet og knip zoomar. Dra loddrett hevar og
+       senkar kameraet; dra vassrett gjer ingenting, for der bestemmer
+       figuren. */
 
-    function stell() {
-      helling = Math.max(HELLING_MIN, Math.min(HELLING_MAKS, helling));
-      zoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAKS, zoom));
-      /* Dreiinga går heile vegen rundt og har ingen grense — men han
-         blir halden i [0, 2π) så talet ikkje veks i det uendelege. */
-      dreiing = (dreiing % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
-      teikn();
+    const tastar = {};
+    const spak = { x: 0, z: 0 };
+
+    function taste(e, ned) {
+      const k = e.key.toLowerCase();
+      if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright',
+           'w', 'a', 's', 'd'].indexOf(k) === -1) return;
+      tastar[k] = ned;
+      e.preventDefault();
+    }
+    canvas.tabIndex = 0;
+    canvas.setAttribute('role', 'application');
+    canvas.setAttribute('aria-label',
+      'Skogen i 3D. Bruk piltastane for å gå mellom trea, og pluss og minus for å zoome.');
+    canvas.addEventListener('keydown', function (e) {
+      if (e.key === '+' || e.key === '=') { zoom /= 1.14; klem(); e.preventDefault(); return; }
+      if (e.key === '-') { zoom *= 1.14; klem(); e.preventDefault(); return; }
+      taste(e, true);
+    });
+    canvas.addEventListener('keyup', function (e) { taste(e, false); });
+
+    /* Styrespaken er den same som på leirplassen: eit felt du legg
+       fingeren i, og ein knott som følgjer han. */
+    const spakEl = vert.querySelector('.ljod-skog3d-spak');
+    if (spakEl) {
+      const knott = spakEl.querySelector('.ljod-skog3d-knott');
+      const R = 42;
+      let peikar = null;
+      function sett(e) {
+        const r = spakEl.getBoundingClientRect();
+        let dx = e.clientX - (r.left + r.width / 2);
+        let dy = e.clientY - (r.top + r.height / 2);
+        const l = Math.hypot(dx, dy);
+        if (l > R) { dx = dx / l * R; dy = dy / l * R; }
+        knott.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+        spak.x = dx / R; spak.z = dy / R;
+      }
+      spakEl.addEventListener('pointerdown', function (e) {
+        peikar = e.pointerId;
+        try { spakEl.setPointerCapture(e.pointerId); } catch (f) { /* går utan */ }
+        sett(e); e.preventDefault();
+      });
+      spakEl.addEventListener('pointermove', function (e) {
+        if (peikar === e.pointerId) sett(e);
+      });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (n) {
+        spakEl.addEventListener(n, function (e) {
+          if (peikar !== e.pointerId) return;
+          peikar = null; knott.style.transform = ''; spak.x = 0; spak.z = 0;
+        });
+      });
     }
 
-    const fingrar = {};        // pointerId -> {x, y}
-    let knipAvstand = 0;
-    /* Draginga eig både aksane, så nettlesaren skal ikkje rulle sida
-       samtidig. */
-    canvas.style.touchAction = 'none';
+    function klem() {
+      helling = Math.max(HELLING_MIN, Math.min(HELLING_MAKS, helling));
+      zoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAKS, zoom));
+    }
 
+    /* Loddrett drag hevar kameraet; knip zoomar. */
+    const fingrar = {};
+    let knipAvstand = 0;
+    canvas.style.touchAction = 'none';
     function fingerliste() {
       return Object.keys(fingrar).map(function (k) { return fingrar[k]; });
     }
-
     canvas.addEventListener('pointerdown', function (e) {
       fingrar[e.pointerId] = { x: e.clientX, y: e.clientY };
       const f = fingerliste();
       if (f.length === 2) knipAvstand = Math.hypot(f[0].x - f[1].x, f[0].y - f[1].y);
-      /* Fangst kan feile — ein peikar som alt er borte, ein nettlesar som
-         ikkje vil. Det skal ikkje stoppe draginga. */
       try {
         if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
-      } catch (feil) { /* draginga går fint utan */ }
+      } catch (feil) { /* går fint utan */ }
     });
-
     canvas.addEventListener('pointermove', function (e) {
       const gamal = fingrar[e.pointerId];
       if (!gamal) return;
-      const dx = e.clientX - gamal.x;
       const dy = e.clientY - gamal.y;
       gamal.x = e.clientX; gamal.y = e.clientY;
-
       const f = fingerliste();
       if (f.length >= 2) {
         const ny = Math.hypot(f[0].x - f[1].x, f[0].y - f[1].y);
         if (knipAvstand > 0 && ny > 0) zoom *= knipAvstand / ny;
         knipAvstand = ny;
       } else {
-        dreiing += dx * 0.008;
-        helling += dy * 0.006;
+        helling += dy * 0.005;
       }
-      stell();
+      klem();
     });
-
     ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (n) {
       canvas.addEventListener(n, function (e) {
         delete fingrar[e.pointerId];
         if (fingerliste().length < 2) knipAvstand = 0;
       });
     });
-
     canvas.addEventListener('wheel', function (e) {
       e.preventDefault();
       zoom *= (e.deltaY > 0 ? 1.12 : 1 / 1.12);
-      stell();
+      klem();
     }, { passive: false });
 
-    canvas.tabIndex = 0;
-    canvas.setAttribute('role', 'application');
-    canvas.setAttribute('aria-label',
-      'Skogen sett i 3D. Dra for å snu, knip eller bruk pluss og minus for å zoome.');
-    canvas.addEventListener('keydown', function (e) {
-      const steg = 0.14;
-      if (e.key === 'ArrowLeft') dreiing -= steg;
-      else if (e.key === 'ArrowRight') dreiing += steg;
-      else if (e.key === 'ArrowUp') helling += steg * 0.7;
-      else if (e.key === 'ArrowDown') helling -= steg * 0.7;
-      else if (e.key === '+' || e.key === '=') zoom /= 1.14;
-      else if (e.key === '-') zoom *= 1.14;
-      else return;
-      e.preventDefault();
-      stell();
-    });
+    /* ── Steget ── */
 
-    function settUtsyn(d, hl, z) {
-      dreiing = d; helling = hl; zoom = z;
-      stell();
+    function steg(dt) {
+      let x = spak.x, z = spak.z;
+      if (tastar.arrowleft || tastar.a) x -= 1;
+      if (tastar.arrowright || tastar.d) x += 1;
+      if (tastar.arrowup || tastar.w) z -= 1;
+      if (tastar.arrowdown || tastar.s) z += 1;
+      const l = Math.hypot(x, z);
+      const gaar = l > 0.05;
+
+      if (gaar) {
+        if (l > 1) { x /= l; z /= l; }
+        figur.x += x * FART * dt;
+        figur.z += z * FART * dt;
+        /* Hald deg på øya. */
+        const kant = omkrins(Math.atan2(figur.z, figur.x), skog.rx, skog.rz);
+        const naa = Math.hypot(figur.x, figur.z);
+        const maks = Math.hypot(kant.x, kant.z) * 0.88;
+        if (naa > maks) { figur.x = figur.x / naa * maks; figur.z = figur.z / naa * maks; }
+        losne(figur);
+        figur.vinkel = Math.atan2(x, z);
+      }
+
+      if (klipp !== (gaar ? 'walk' : 'idle')) {
+        klipp = gaar ? 'walk' : 'idle';
+        klippTid = 0;
+      }
+      klippTid += dt;
+
+      /* Kameraet tek att figuren langs den kortaste vegen. */
+      kamVinkel = F.mjukVinkel(kamVinkel, figur.vinkel, KAM_FART, dt);
+      kamX = F.mjuk(kamX, figur.x, KAM_FOLGE, dt);
+      kamZ = F.mjuk(kamZ, figur.z, KAM_FOLGE, dt);
     }
+
+    /* ── Løkka ──
+
+       Her går det ei, til skilnad frå den gamle skogen: ein figur som går
+       må teiknast om att. Ho stoppar når fana blir gøymd, og når skogen
+       blir riven. */
+    let bilete = null, sist = 0;
+    function ramme(no) {
+      bilete = root.requestAnimationFrame(ramme);
+      const dt = Math.min(0.05, (no - sist) / 1000 || 0);
+      sist = no;
+      steg(dt);
+      teikn();
+    }
+    function start() {
+      if (bilete) return;
+      sist = performance.now();
+      bilete = root.requestAnimationFrame(ramme);
+    }
+    function stopp() {
+      if (bilete) root.cancelAnimationFrame(bilete);
+      bilete = null;
+    }
+    function paaSynleg() {
+      if (document.hidden) stopp(); else start();
+    }
+    document.addEventListener('visibilitychange', paaSynleg);
 
     let tidsavbrot = null;
     function paaStorleik() {
@@ -985,17 +1045,27 @@
     root.addEventListener('resize', paaStorleik);
 
     teikn();
+    start();
 
     return {
       element: vert,
       teikn: teikn,
+      steg: steg,
       /* Knappane over skogen styrer kameraet gjennom desse. */
-      zoomInn: function () { zoom /= 1.18; stell(); },
-      zoomUt: function () { zoom *= 1.18; stell(); },
-      midtstill: function () { settUtsyn(-0.42, 0.46, 0.74); },
-      utsyn: function () { return { dreiing: dreiing, helling: helling, zoom: zoom }; },
+      zoomInn: function () { zoom /= 1.18; klem(); },
+      zoomUt: function () { zoom *= 1.18; klem(); },
+      midtstill: function () {
+        figur.x = 0; figur.z = skog.rz * 0.45; figur.vinkel = Math.PI;
+        kamVinkel = Math.PI; kamX = figur.x; kamZ = figur.z;
+        helling = 0.34; zoom = 1.0;
+      },
+      utsyn: function () {
+        return { kamVinkel: kamVinkel, helling: helling, zoom: zoom,
+                 figur: { x: figur.x, z: figur.z, vinkel: figur.vinkel }, klipp: klipp };
+      },
       oppdater: function (nyProfil) {
         skog = byggSkog(nyProfil);
+        stopparar = hindringar();
         lastOpp();
         byggLesarliste();
         teikn();
@@ -1003,6 +1073,8 @@
       /* Skiftar eleven lesefont, må bokstavane teiknast om att. */
       nyFont: function () { lastAtlas(); teikn(); },
       riv: function () {
+        stopp();
+        document.removeEventListener('visibilitychange', paaSynleg);
         root.removeEventListener('resize', paaStorleik);
         clearTimeout(tidsavbrot);
         const utvid = gl.getExtension('WEBGL_lose_context');
