@@ -12,6 +12,9 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
   - **Trea stoppar figuren.** Ein skog ein går tvers gjennom er ei tapetsering. Radiusen er stammen og ikkje krona.
   - Loddrett drag hevar og senkar kameraet; vassrett gjer ingenting, for der bestemmer figuren.
 
+### Fiksa
+- **Figuren gjekk mot kameraet når ein trykte fram,** og framover når ein trykte venstre eller høgre. Éin feil med to symptom som såg ulike ut: kameraet følgde figuren sin eigen retning i staden for den motsette, så det stod framfor nasen på han. «Fram» — bort frå kameraet — var då bakover for figuren, og eit trykk til sida fekk kameraet til å svinge etter til den nye retninga var «fram» igjen. Kameraet står ei halv omdreiing frå figuren no.
+
 ### Endra
 - **`figur3d.js`** er ny og delt: figuren, skjelettet, dei fire klippa, den delte shaderen og matrisemattematikken. Leirplassen og skogen hadde elles hatt kvar sin kopi av det same, og to kopiar av noko som må vere likt er ein kopi for mykje.
 - **Figuren ligg i `ljodstigen/figur/`** og ikkje inne i leirplassen sine filer. Skogen skal ikkje laste fire telt og eit bål for å få tak i ein figur å gå rundt med — 42 kB i staden for 154.

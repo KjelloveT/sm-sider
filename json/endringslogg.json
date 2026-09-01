@@ -25,6 +25,11 @@
           "t": "fiksa",
           "kva": "Ljodstigen",
           "tekst": "Datamappa til leirplassen mangla i navigationFallback, så ein feilskriven sti ville svart med framsida i staden for 404."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Ljodstigen",
+          "tekst": "Figuren i skogen gjekk mot kameraet når ein trykte fram. Kameraet følgde hans eigen retning i staden for den motsette, så det stod framfor nasen på han."
         }
       ]
     },

@@ -633,7 +633,19 @@
 
        Kameraet følgjer òg posisjonen med litt etterslep, så han ikkje
        sit limt fast i figuren når eleven rykkjer til. */
-    let kamVinkel = Math.PI;
+    /* ── KAMERAET STÅR BAK, OG DÅ ER VINKELEN MOTSETT ──
+
+       figur.vinkel er kva veg figuren VENDER: retninga (sin v, cos v).
+       kamVinkel er kva veg kameraet ligg FRÅ figuren. Står det bak han,
+       er dei to ei halv omdreiing frå kvarandre.
+
+       Første utgåva sette dei like. Då stod kameraet framfor nasen på
+       figuren: han såg rett inn i det, og «fram» — bort frå kameraet —
+       var bakover for han. Å trykkje fram sende han mot kameraet, og
+       venstre og høgre fekk han til å gå framover fordi kameraet svinga
+       etter til den nye retninga var «fram» igjen. Éin feil, to symptom
+       som såg ulike ut. */
+    let kamVinkel = Math.PI + Math.PI;
     let kamX = figur.x, kamZ = figur.z;
     let helling = 0.34;
     let zoom = 1.0;
@@ -976,17 +988,41 @@
 
     /* ── Steget ── */
 
+    /* ── «FRAM» ER FRÅ KAMERAET, IKKJE FRÅ VERDA ──
+
+       Første utgåva flytta figuren i verdskoordinatar: opp var alltid
+       -z. Det er rett når kameraet står stille, som på leirplassen — men
+       her følgjer kameraet figuren, og då tyder «opp» noko nytt kvar
+       gong han snur.
+
+       Utslaget var to feil som såg ulike ut og var den same: å trykkje
+       fram sende figuren MOT kameraet (kameraet står på -z bak han ved
+       oppstart, og -z var det «fram» tydde), og venstre eller høgre fekk
+       han til å gå framover — fordi kameraet svinga etter til den nye
+       retninga var «fram» igjen.
+
+       No blir utslaget lagt på kameraet sine aksar. Fram er bort frå
+       kameraet, høgre er høgre på skjermen, og begge held fram med å
+       tyde det same medan kameraet svingar. */
     function steg(dt) {
-      let x = spak.x, z = spak.z;
-      if (tastar.arrowleft || tastar.a) x -= 1;
-      if (tastar.arrowright || tastar.d) x += 1;
-      if (tastar.arrowup || tastar.w) z -= 1;
-      if (tastar.arrowdown || tastar.s) z += 1;
-      const l = Math.hypot(x, z);
+      let hoeg = spak.x, fram = -spak.z;
+      if (tastar.arrowleft || tastar.a) hoeg -= 1;
+      if (tastar.arrowright || tastar.d) hoeg += 1;
+      if (tastar.arrowup || tastar.w) fram += 1;
+      if (tastar.arrowdown || tastar.s) fram -= 1;
+
+      const l = Math.hypot(hoeg, fram);
       const gaar = l > 0.05;
 
       if (gaar) {
-        if (l > 1) { x /= l; z /= l; }
+        if (l > 1) { hoeg /= l; fram /= l; }
+        /* Kameraet ligg på (sin, cos) frå figuren, så bort frå det er
+           minus det same. Høgre står vinkelrett på det. */
+        const framX = -Math.sin(kamVinkel), framZ = -Math.cos(kamVinkel);
+        const hoegX = Math.cos(kamVinkel), hoegZ = -Math.sin(kamVinkel);
+        const x = fram * framX + hoeg * hoegX;
+        const z = fram * framZ + hoeg * hoegZ;
+
         figur.x += x * FART * dt;
         figur.z += z * FART * dt;
         /* Hald deg på øya. */
@@ -1005,7 +1041,7 @@
       klippTid += dt;
 
       /* Kameraet tek att figuren langs den kortaste vegen. */
-      kamVinkel = F.mjukVinkel(kamVinkel, figur.vinkel, KAM_FART, dt);
+      kamVinkel = F.mjukVinkel(kamVinkel, figur.vinkel + Math.PI, KAM_FART, dt);
       kamX = F.mjuk(kamX, figur.x, KAM_FOLGE, dt);
       kamZ = F.mjuk(kamZ, figur.z, KAM_FOLGE, dt);
     }
@@ -1056,7 +1092,7 @@
       zoomUt: function () { zoom *= 1.18; klem(); },
       midtstill: function () {
         figur.x = 0; figur.z = skog.rz * 0.45; figur.vinkel = Math.PI;
-        kamVinkel = Math.PI; kamX = figur.x; kamZ = figur.z;
+        kamVinkel = figur.vinkel + Math.PI; kamX = figur.x; kamZ = figur.z;
         helling = 0.34; zoom = 1.0;
       },
       utsyn: function () {
