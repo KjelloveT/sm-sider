@@ -645,14 +645,40 @@
        venstre og høgre fekk han til å gå framover fordi kameraet svinga
        etter til den nye retninga var «fram» igjen. Éin feil, to symptom
        som såg ulike ut. */
-    let kamVinkel = Math.PI + Math.PI;
+    /* Kameravinkelen har ein fart som høyrer til han, fordi han blir
+       dregen av ei fjør og ikkje av ei utglatting. Sjå fjaerVinkel(). */
+    const kamFjaer = { verdi: Math.PI + Math.PI, fart: 0 };
+    let kamVinkel = kamFjaer.verdi;
     let kamX = figur.x, kamZ = figur.z;
     let helling = 0.34;
     let zoom = 1.0;
     let mvp = null;
 
-    const KAM_FART = 4.5;       // kor fort vinkelen tek att figuren
-    const KAM_FOLGE = 6.0;      // og posisjonen
+    /* KAMERAET SKAL LIGGE ETTER. Stivleiken er lågare enn ho treng vere
+       for å henge med — det er meininga: eleven skal rekke å sjå at
+       figuren snur før biletet gjer det. For høg, og kameraet slår rundt
+       i same augeblikket som fingeren; for låg, og han blir sjøsjuk.
+       2,2 gjev drygt to sekund på ei heil vending. */
+    const KAM_STIV = 2.2;       // fjørstivleik på kameravinkelen
+    const KAM_FOLGE = 3.2;      // kor fort kameraet tek att posisjonen
+    /* Figuren snur raskare enn kameraet, men ikkje momentant. Ei
+       momentan vending er det som gjer at kameraet får noko brått å
+       reagere på i det heile. */
+    const SNU_FART = 9.0;
+
+    /* ── STYREAKSANE STÅR STILLE MEDAN EIN HELD INNE ──
+
+       «Fram» er bort frå kameraet. Men kameraet følgjer figuren, og
+       figuren går dit «fram» peikar — så om aksane blir rekna på nytt
+       kvart bilete, jagar dei to kvarandre: eit trykk på bak snur figuren
+       mot kameraet, kameraet svingar bak han, «bak» peikar ein ny veg, og
+       han går rundt og rundt utan å stoppe. Målt: kameraet auka jamt
+       forbi to omdreiingar utan å nå fram nokon gong.
+
+       Difor blir aksane LÅSTE i det augeblikket eleven byrjar å gå, og
+       står til han slepp. Ei retning ein held inne er ei rett line, og
+       kameraet svingar seg på plass bak éin gong. */
+    let styreBasis = null;
     const KAM_AVSTAND = 5.6;
     const HELLING_MIN = 0.10;
     const HELLING_MAKS = 1.05;
@@ -1014,12 +1040,15 @@
       const l = Math.hypot(hoeg, fram);
       const gaar = l > 0.05;
 
+      if (!gaar) styreBasis = null;
+
       if (gaar) {
         if (l > 1) { hoeg /= l; fram /= l; }
         /* Kameraet ligg på (sin, cos) frå figuren, så bort frå det er
            minus det same. Høgre står vinkelrett på det. */
-        const framX = -Math.sin(kamVinkel), framZ = -Math.cos(kamVinkel);
-        const hoegX = Math.cos(kamVinkel), hoegZ = -Math.sin(kamVinkel);
+        if (styreBasis === null) styreBasis = kamVinkel;
+        const framX = -Math.sin(styreBasis), framZ = -Math.cos(styreBasis);
+        const hoegX = Math.cos(styreBasis), hoegZ = -Math.sin(styreBasis);
         const x = fram * framX + hoeg * hoegX;
         const z = fram * framZ + hoeg * hoegZ;
 
@@ -1031,7 +1060,8 @@
         const maks = Math.hypot(kant.x, kant.z) * 0.88;
         if (naa > maks) { figur.x = figur.x / naa * maks; figur.z = figur.z / naa * maks; }
         losne(figur);
-        figur.vinkel = Math.atan2(x, z);
+        /* Figuren dreier MOT retninga i staden for å byte til henne. */
+        figur.vinkel = F.mjukVinkel(figur.vinkel, Math.atan2(x, z), SNU_FART, dt);
       }
 
       if (klipp !== (gaar ? 'walk' : 'idle')) {
@@ -1040,8 +1070,10 @@
       }
       klippTid += dt;
 
-      /* Kameraet tek att figuren langs den kortaste vegen. */
-      kamVinkel = F.mjukVinkel(kamVinkel, figur.vinkel + Math.PI, KAM_FART, dt);
+      /* Kameraet tek att figuren langs den kortaste vegen, dregen av ei
+         fjør: ho må byggje opp fart før ho kan bruke han, så både starten
+         og stoppen er mjuke. */
+      kamVinkel = F.fjaerVinkel(kamFjaer, figur.vinkel + Math.PI, KAM_STIV, dt);
       kamX = F.mjuk(kamX, figur.x, KAM_FOLGE, dt);
       kamZ = F.mjuk(kamZ, figur.z, KAM_FOLGE, dt);
     }
@@ -1092,7 +1124,9 @@
       zoomUt: function () { zoom *= 1.18; klem(); },
       midtstill: function () {
         figur.x = 0; figur.z = skog.rz * 0.45; figur.vinkel = Math.PI;
-        kamVinkel = figur.vinkel + Math.PI; kamX = figur.x; kamZ = figur.z;
+        styreBasis = null;
+        kamFjaer.verdi = figur.vinkel + Math.PI; kamFjaer.fart = 0;
+        kamVinkel = kamFjaer.verdi; kamX = figur.x; kamZ = figur.z;
         helling = 0.34; zoom = 1.0;
       },
       utsyn: function () {

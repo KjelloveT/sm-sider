@@ -12,6 +12,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
   - **Trea stoppar figuren.** Ein skog ein går tvers gjennom er ei tapetsering. Radiusen er stammen og ikkje krona.
   - Loddrett drag hevar og senkar kameraet; vassrett gjer ingenting, for der bestemmer figuren.
 
+### Fiksa (kameraet)
+- **Kameraet snudde seg for brått, og det stoppa aldri.** To feil i same rørsla, og den andre gøymde seg bak den første.
+  - Vinkelen blei dregen med eksponentiell glatting, som er raskast i det FØRSTE biletet: sjølve rykket låg der eleven merka det best. No er det ei kritisk dempa fjør med eiga fart, så både starten og stoppen er mjuke. Målt gjekk første biletet av ei heilomvending frå eit hardt kast til 0,016 rad/s, med toppfarten flytta til 0,77 sekund uti svingen.
+  - **Styreaksane blei rekna på nytt kvart bilete, og det er ei sløyfe.** «Fram» er bort frå kameraet, kameraet følgjer figuren, og figuren går dit «fram» peikar. Eit trykk på bak snudde han mot kameraet, kameraet svinga bak han, «bak» peika ein ny veg — og han gjekk rundt og rundt utan å stoppe. Målt auka kameravinkelen jamt forbi to omdreiingar utan å nå fram nokon gong. Aksane blir låste i det augeblikket eleven byrjar å gå, og står til han slepp: ei retning ein held inne er ei rett line (målt avvik 0,000 i alle fire retningane), og kameraet svingar seg på plass bak éin gong.
+
 ### Fiksa
 - **Figuren gjekk mot kameraet når ein trykte fram,** og framover når ein trykte venstre eller høgre. Éin feil med to symptom som såg ulike ut: kameraet følgde figuren sin eigen retning i staden for den motsette, så det stod framfor nasen på han. «Fram» — bort frå kameraet — var då bakover for figuren, og eit trykk til sida fekk kameraet til å svinge etter til den nye retninga var «fram» igjen. Kameraet står ei halv omdreiing frå figuren no.
 

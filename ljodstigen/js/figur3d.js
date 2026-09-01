@@ -158,6 +158,28 @@
     return naa + (maal - naa) * (1 - Math.exp(-fart * dt));
   }
 
+  /* ── EI FJØR I STADEN FOR EI UTGLATTING ──
+
+     mjukVinkel() tek av med full fart i det målet flyttar seg: farten er
+     størst i første biletet og avtek derifrå. Det ser rykkete ut nettopp
+     når rørsla er størst — kameraet slår ut, og bremsar.
+
+     Ei kritisk dempa fjør har farten som sin eigen storleik. Ho må byggje
+     han opp før ho kan bruke han, så starten blir mjuk òg, og ho kjem
+     fram utan å svinge forbi og tilbake. «Kritisk dempa» er nettopp det:
+     dempinga er sett til 2·√stivleik, som er grensa der ho sluttar å
+     svinge.
+
+     Tilstanden er eit fartstal som kallaren må ta vare på mellom bileta —
+     difor tek funksjonen eit objekt og ikkje eit tal. */
+  function fjaerVinkel(s, maal, stivleik, dt) {
+    const d = vinkelDiff(s.verdi, maal);
+    const demping = 2 * Math.sqrt(stivleik);
+    s.fart += (stivleik * d - demping * s.fart) * dt;
+    s.verdi += s.fart * dt;
+    return s.verdi;
+  }
+
   /* ──────────────── Geometrien ──────────────── */
 
   /** Hjørna til figuren, klare til fem buffer. */
@@ -306,6 +328,7 @@
     ident: ident, gonge: gonge, perspektiv: perspektiv, sePaa: sePaa,
     plassering: plassering, fraTRS: fraTRS, slerp: slerp,
     vinkelDiff: vinkelDiff, mjukVinkel: mjukVinkel, mjuk: mjuk,
+    fjaerVinkel: fjaerVinkel,
     lagProgram: lagProgram, lagShader: lagShader,
     VS: VS, STATISK_VS: STATISK_VS, FS: FS,
     LEDD: 7,
