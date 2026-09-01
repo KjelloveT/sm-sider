@@ -2,6 +2,28 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.40",
+      "dato": "2026-09-01",
+      "samandrag": "Ei økt på leirplassen varer til tjue rette, og så er eleven i mål.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Ei økt på leirplassen varer til tjue rette. Kvart rette svar tel, så eleven kan telje sjølv."
+        },
+        {
+          "t": "nytt",
+          "kva": "Ljodstigen",
+          "tekst": "Målsida viser beste rekkje i økta og kor mange bokstavar eleven har byrja på i alt, med ein knapp for ein runde til."
+        },
+        {
+          "t": "endra",
+          "kva": "Ljodstigen",
+          "tekst": "Måleren viser rette av tjue i staden for bokstavar av 29. Det lange løpet står framleis i skjermlesaren sin tekst."
+        }
+      ]
+    },
+    {
       "versjon": "1.39",
       "dato": "2026-08-28",
       "samandrag": "Bokstavropet finst som eit lite 3D-spel på ein leirplass, der lydane bur i telt.",

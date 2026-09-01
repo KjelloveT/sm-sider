@@ -214,3 +214,56 @@
 @media (prefers-reduced-motion: reduce) {
   .ropet-stripe-fyll { transition: none; }
 }
+
+/* ──────────────── I mål ──────────────── */
+
+.ropet-maal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(26, 26, 26, 0.34);
+  z-index: 6;
+}
+
+.ropet-maal-kort {
+  max-width: 34ch;
+  padding: 26px 30px 24px;
+  text-align: center;
+  background: #fff;
+  border: 4px solid #1a1a1a;
+  border-radius: 18px;
+  box-shadow: 7px 7px 0 rgba(26, 26, 26, 0.28);
+  color: #1a1a1a;
+}
+
+.ropet-maal-tittel {
+  margin: 0;
+  font-size: 1.7rem;
+  line-height: 1.1;
+}
+
+.ropet-maal-stort {
+  margin: 10px 0 0;
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ropet-maal-linje {
+  margin: 10px 0 0;
+  font-size: 0.92rem;
+}
+/* Tomme linjer skal ikkje ta plass: har eleven inga rekkje å vise fram,
+   skal det ikkje stå eit hòl der ho skulle vore. */
+.ropet-maal-linje:empty { display: none; }
+
+.ropet-maal-knappar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}

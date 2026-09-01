@@ -3,6 +3,15 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.40] — 2026-09-01
+
+### Lagt til
+- **Ei økt på leirplassen varer til tjue rette,** og så er eleven i mål. Motoren sitt eige mål — alle 29 bokstavane i boks 5 — er rett, men ligg hundrevis av oppgåver unna; ein seksåring treng eit mål han kan sjå enden på i dag. Kvart rette svar tel, same bokstav eller ikkje, så eleven kan telje sjølv utan å kjenne til boksar og øktklokker.
+  - Måleren viser **rette av tjue** i staden for bokstavar av 29. Det lange løpet står framleis i skjermlesaren sin tekst og på målsida, så ein lærar får begge delar.
+  - **Figuren flyg heim på den siste òg.** Turen er markeringa, og ho skal ikkje falle bort på den eine gongen ho tel mest.
+  - Målsida viser beste rekkje i økta og kor mange bokstavar eleven har byrja på i alt, og har ein knapp for ein runde til.
+  - Spelet står stille bak målsida. Ein figur som framleis kan gå rundt medan «du er i mål» står på skjermen gjer markeringa til ein ting som er i vegen.
+
 ## [1.39] — 2026-08-28
 
 ### Lagt til
