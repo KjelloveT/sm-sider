@@ -10,7 +10,9 @@
       "/_resources/*",
       "/ljodstigen/lyd/*",
       "/ljodstigen/jakta/*",
-      "/ljodstigen/skog/*"
+      "/ljodstigen/skog/*",
+      "/ljodstigen/ropet/*",
+      "/ljodstigen/figur/*"
     ]
   },
   "routes": [
@@ -78,6 +80,13 @@
       "route": "/ljodstigen/jakta.html",
       "headers": {
         "Cache-Control": "public, max-age=0, must-revalidate"
+      }
+    },
+    {
+      "_kommentar": "Figuren er delt av leirplassen og skogen, og blir skriven på nytt under same namn kvar gong bygg_ljodstigen_ropet.py køyrer. Same grunngjeving som for dei andre datamappene under.",
+      "route": "/ljodstigen/figur/*",
+      "headers": {
+        "Cache-Control": "public, max-age=300, must-revalidate"
       }
     },
     {

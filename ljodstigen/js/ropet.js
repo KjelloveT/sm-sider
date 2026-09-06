@@ -28,6 +28,19 @@
   const NAER = 1.5;            // kor nær eit telt ein må vere
   const FIGUR_SKALA = 1.15;
   const FIGUR_R = 0.28;        // kor brei figuren er, til kollisjon
+
+  /* ── EI ØKT ER TJUE RETTE ──
+
+     Motoren sitt eige mål — alle 29 bokstavane i boks 5 — er rett, men
+     det ligg hundrevis av oppgåver unna. Ein seksåring treng eit mål han
+     kan sjå enden på i dag.
+
+     Tjue rette er standarden, men eleven vel sjølv — ti, tjue eller
+     tretti — og valet står på profilen til han byter det. Kvart rette
+     svar tel, same bokstav eller ikkje: eleven skal kunne telje sjølv
+     utan å kjenne til boksar og øktklokker. Det som skjer inne i motoren
+     held fram som før — økta er ei ramme rundt treninga, ikkje ei ny
+     måling av henne. */
   const START = { x: 0, z: 3.4 };
   const FLYGETID = 1.0;        // sekund frå telt til startpunkt
 
@@ -171,6 +184,11 @@
     let hindringar = [];
     let flyg = null;             // { fraa, tid } medan han er i lufta
     let rekkje = 0;
+    let rette = 0;              // i denne økta
+    let besteRekkje = 0;
+    let iMaal = false;
+    let maal = profil.ropetMaal || 20;
+    let venter = true;          // startsida står oppe
 
     /* Skyv figuren ut av alt han står oppi. To rundar, for å komme ut av
        eitt hinder kan skyve han inn i eit anna — det skjer mellom to tre
@@ -247,18 +265,16 @@
        same regel som skogen. Talet ved sida tel bokstavar eleven har
        byrja på, som er det han sjølv ville sagt at han «kan». */
     function visFramgang() {
-      const a = profil.adaptive;
-      const st = LjodAdaptive.stats(a);
-      const maks = st.total * LjodAdaptive.MAX_BOX;
-      let sum = 0;
-      LjodLetters.ALPHABET.forEach(function (ch) {
-        sum += LjodAdaptive.item(a, ch).maxBox;
-      });
-      $('ropet-tal').textContent = st.planted + ' / ' + st.total;
-      $('ropet-stripe-fyll').style.width = (maks ? (sum / maks * 100) : 0) + '%';
+      const st = LjodAdaptive.stats(profil.adaptive);
+      $('ropet-tal').textContent = rette + ' / ' + maal;
+      $('ropet-stripe-fyll').style.width = (rette / maal * 100) + '%';
+      /* Skjermlesaren får både økta og det lange løpet. Måleren viser
+         berre økta — han skal kunne lesast med eit blikk — men ein lærar
+         som spør maskina skal få vite kor eleven står i det heile. */
       $('ropet-framgang').setAttribute('aria-label',
-        'Du har byrja på ' + st.planted + ' av ' + st.total + ' bokstavar. ' +
-        st.grown + ' sit godt, og ' + st.mastered + ' er heilt ferdige.');
+        rette + ' av ' + maal + ' rette i denne økta. ' +
+        'I alt har du byrja på ' + st.planted + ' av ' + st.total +
+        ' bokstavar, og ' + st.grown + ' sit godt.');
       const r = $('ropet-rekkje');
       r.hidden = rekkje < 2;
       r.textContent = rekkje + ' på rad';
@@ -289,10 +305,24 @@
       LjodState.saveProfile(profil);
       if (kroken && kroken.etterSvar) kroken.etterSvar(rett);
 
-      if (rett) { rekkje++; } else { rekkje = 0; }
+      if (rett) {
+        rekkje++;
+        rette++;
+        if (rekkje > besteRekkje) besteRekkje = rekkje;
+      } else {
+        rekkje = 0;
+      }
       visFramgang();
 
       LjodRender.feedback(rett, rett ? [] : ['f_' + oppgaave.ch]).then(function () {
+        if (rett && rette >= maal) {
+          /* Han flyg heim òg når han er i mål — turen er markeringa, og
+             ho skal ikkje falle bort på den eine gongen ho tel mest. */
+          flyg = { fraaX: spelar.x, fraaZ: spelar.z, tid: 0 };
+          settKlipp('sprint', FLYGETID);
+          setTimeout(visMaal, FLYGETID * 1000);
+          return;
+        }
         if (rett) {
           /* HEIM I EIN BOGE. Å teleportere figuren tilbake ville spart
              eit sekund og teke bort det einaste augeblikket i spelet der
@@ -308,9 +338,80 @@
       });
     }
 
+    /* ── I mål ── */
+
+    function visMaal() {
+      iMaal = true;
+      const st = LjodAdaptive.stats(profil.adaptive);
+      $('ropet-maal-tal').textContent = maal;
+      $('ropet-maal-rekkje').textContent = besteRekkje > 1
+        ? ('Beste rekkje: ' + besteRekkje + ' på rad.') : '';
+      $('ropet-maal-sum').textContent =
+        'I alt har du byrja på ' + st.planted + ' av ' + st.total + ' bokstavar.';
+      $('ropet-maal').hidden = false;
+      $('ropet-maal-om').focus();
+      settKlipp('emote-yes', 1.4);
+    }
+
+    function nyOkt() {
+      rette = 0;
+      rekkje = 0;
+      besteRekkje = 0;
+      iMaal = false;
+      venter = false;
+      $('ropet-maal').hidden = true;
+      $('ropet-start').hidden = true;
+      spelar.x = START.x; spelar.z = START.z; spelar.vinkel = Math.PI;
+      settKlipp('idle');
+      nyOppgaave();
+    }
+    $('ropet-maal-om').addEventListener('click', nyOkt);
+
+    /* ── Kor lang skal økta vere? ──
+
+       Spørsmålet kjem før første oppgåva og har eit svar ferdig valt, så
+       den som berre vil spele kan trykkje éin gong. Valet blir lagra på
+       profilen: neste gong står det same talet klart, og eleven treng
+       ikkje ta stilling til det same på nytt kvar dag. */
+    function byggStart() {
+      const rad = $('ropet-start-val');
+      rad.innerHTML = '';
+      LjodState.ROPET_MAAL.forEach(function (n) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'btn ropet-val' + (n === maal ? ' is-vald' : '');
+        b.textContent = n;
+        b.setAttribute('aria-label', n + ' rette');
+        if (n === maal) b.setAttribute('aria-current', 'true');
+        b.addEventListener('click', function () {
+          maal = n;
+          profil.ropetMaal = n;
+          LjodState.saveProfile(profil);
+          nyOkt();
+        });
+        rad.appendChild(b);
+      });
+    }
+
+    function visStart() {
+      venter = true;
+      iMaal = false;
+      $('ropet-maal').hidden = true;
+      byggStart();
+      $('ropet-start').hidden = false;
+      const vald = $('ropet-start-val').querySelector('.is-vald');
+      if (vald) vald.focus();
+    }
+    $('ropet-maal-byt').addEventListener('click', visStart);
+
     /* ── Løkka ── */
 
     function steg(dt) {
+      /* Er eleven i mål eller ikkje har starta enno, står leiren stille
+         bak panelet. Ein figur som framleis kan gå rundt medan eit panel
+         står på skjermen gjer panelet til ein ting som er i vegen. */
+      if (iMaal || venter) return;
+
       /* Flygeturen eig figuren medan han varer. Ein boge opp og ned med
          ein sinus: han er null i begge endar, så figuren tek av og landar
          på bakken og ikkje i lufta. */
@@ -436,7 +537,11 @@
       teikn();
     }
 
+    /* Leiren blir teikna med ein gong, men står stille bak startsida:
+       eleven skal sjå kvar han skal, ikkje ei tom rute med eit spørsmål
+       oppå. */
     nyOppgaave();
+    visStart();
     sist = performance.now();
     leverandor = root.requestAnimationFrame(ramme);
 
@@ -454,6 +559,11 @@
       flyttTil: function (x, z) { spelar.x = x; spelar.z = z; },
       hindringar: function () { return hindringar; },
       rekkje: function () { return rekkje; },
+      rette: function () { return rette; },
+      iMaal: function () { return iMaal; },
+      venter: function () { return venter; },
+      maal: function () { return maal; },
+      start: nyOkt,
       velg: velg,
       riv: function () {
         if (leverandor) root.cancelAnimationFrame(leverandor);

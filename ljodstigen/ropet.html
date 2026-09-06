@@ -46,6 +46,35 @@
                 aria-label="Vel dette teltet">Vel</button>
     </div>
 
+    <!-- Kor lang skal økta vere? Kjem før første oppgåva, med eit svar
+         ferdig valt, så den som berre vil spele kan trykkje éin gong. -->
+    <div id="ropet-start" class="ropet-maal" hidden role="dialog"
+         aria-labelledby="ropet-start-tittel">
+        <div class="ropet-maal-kort">
+            <h2 id="ropet-start-tittel" class="ropet-maal-tittel">Kor mange vil du øve på?</h2>
+            <p class="ropet-maal-linje">Du er i mål når du har så mange rette.</p>
+            <div id="ropet-start-val" class="ropet-maal-knappar"></div>
+        </div>
+    </div>
+
+    <!-- I mål. Panelet ligg over leiren og stoppar spelet: ein figur som
+         framleis kan gå rundt medan «du er i mål» står på skjermen gjer
+         markeringa til ein ting som er i vegen. -->
+    <div id="ropet-maal" class="ropet-maal" hidden role="dialog"
+         aria-labelledby="ropet-maal-tittel">
+        <div class="ropet-maal-kort">
+            <h2 id="ropet-maal-tittel" class="ropet-maal-tittel">Du er i mål!</h2>
+            <p class="ropet-maal-stort"><span id="ropet-maal-tal">20</span> rette</p>
+            <p id="ropet-maal-rekkje" class="ropet-maal-linje"></p>
+            <p id="ropet-maal-sum" class="ropet-maal-linje"></p>
+            <div class="ropet-maal-knappar">
+                <button id="ropet-maal-om" class="btn" type="button">Ein runde til</button>
+                <button id="ropet-maal-byt" class="btn" type="button">Byt tal</button>
+                <a href="index.html" class="btn">Tilbake til Ljodstigen</a>
+            </div>
+        </div>
+    </div>
+
     <div id="ropet-lastar" class="ropet-lastar">
         <p class="ljod-prompt">Lastar leirplassen…</p>
     </div>
@@ -70,6 +99,7 @@
 <script src="js/merke.js"></script>
 <script src="js/render.js"></script>
 <script src="js/audio.js"></script>
+<script src="js/figur3d.js"></script>
 <script src="js/ropet3d.js"></script>
 <script src="js/ropet.js"></script>
 <script src="js/ropet-boot.js"></script>

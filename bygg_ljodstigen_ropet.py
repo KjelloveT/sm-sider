@@ -8,16 +8,16 @@ Les    _kjelder/kenney-nature/Models/GLTF format/*.glb     (telt, bål, tre)
 og     _kjelder/kenney-mini/Models/GLB format/*.glb        (figuren)
 skriv  ljodstigen/ropet/leir.bin  +  leir.json
 
-TO SLAGS GEOMETRI I SAME FILA.
+TO FILER, FORDI DEI HAR TO ULIKE BRUKARAR.
 
 Telta og kubbane står stille og treng berre posisjon, normal og farge —
 tolv byte per hjørne, same format som skogen brukar. Figuren har eit
 skjelett, og kvart hjørne må dessutan vite kva ledd det heng i og kor
 mykje: fire leddindeksar og fire vekter til, tjue byte i alt.
 
-Dei ligg etter kvarandre i same fila med kvar sin startadresse. Éi
-henting i staden for to, og ingen av dei to formata må bøye seg for det
-andre.
+Telta går til ropet/leir.bin, og berre leirplassen treng dei. Figuren går
+til figur/figur.bin — for han blir brukt to stader. Skogen skal ikkje
+laste fire telt og eit bål for å få tak i ein figur å gå rundt med.
 
 FARGEN BLIR PLUKKA FRÅ FARGEKARTET HER.
 
@@ -44,6 +44,7 @@ import sys
 
 ROT = os.path.dirname(os.path.abspath(__file__))
 UT = os.path.join(ROT, 'ljodstigen', 'ropet')
+UT_FIGUR = os.path.join(ROT, 'ljodstigen', 'figur')
 
 FIGUR = 'character-male-a'
 
@@ -276,6 +277,11 @@ def figur(mappe, tekstur, biter, hjornetal):
 
 # ── Bygging ──────────────────────────────────────────────────────
 
+def skriv_json(sti, data):
+    with open(sti, 'w', encoding='utf-8', newline=chr(10)) as f:
+        json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
+
+
 def bygg():
     natur = finn_mappe(
         os.path.join(ROT, '_kjelder', 'kenney-nature', 'Models', 'GLTF format'))
@@ -292,39 +298,50 @@ def bygg():
     for namn in TELT + LEIR:
         modellar[namn], hjornetal = statisk(natur, namn, biter, hjornetal)
 
-    statiskBytes = len(b''.join(biter))
-    fig, hjornetal = figur(mini, tekstur, biter, hjornetal)
-
     data = b''.join(biter)
     os.makedirs(UT, exist_ok=True)
     with open(os.path.join(UT, 'leir.bin'), 'wb') as f:
         f.write(data)
 
     indeks = {
-        'app': 'ljodstigen', 'version': 1, 'type': 'leirplass',
-        'kjelde': 'Kenney Nature Kit 2.1 og Mini Characters 1.0 (CC0)',
+        'app': 'ljodstigen', 'version': 2, 'type': 'leirplass',
+        'kjelde': 'Kenney Nature Kit 2.1 (CC0)',
         'skala': SKALA,
         'stegStatisk': struct.calcsize(STATISK_FMT),
-        'stegFigur': struct.calcsize(FIGUR_FMT),
-        'figurStart': statiskBytes,
         'modellar': modellar,
         'telt': TELT,
-        'figur': fig,
     }
-    with open(os.path.join(UT, 'leir.json'), 'w', encoding='utf-8', newline='\n') as f:
-        json.dump(indeks, f, ensure_ascii=False, separators=(',', ':'))
+    skriv_json(os.path.join(UT, 'leir.json'), indeks)
 
-    print('Bokstavropet:')
+    # ── Figuren for seg ──
+    #
+    # Han blir brukt to stader — leirplassen og skogen — og skogen skal
+    # ikkje laste fire telt og eit bål for å få tak i han.
+    fbiter = []
+    fig, ftal = figur(mini, tekstur, fbiter, 0)
+    fdata = b''.join(fbiter)
+    os.makedirs(UT_FIGUR, exist_ok=True)
+    with open(os.path.join(UT_FIGUR, 'figur.bin'), 'wb') as f:
+        f.write(fdata)
+    skriv_json(os.path.join(UT_FIGUR, 'figur.json'), {
+        'app': 'ljodstigen', 'version': 1, 'type': 'figur',
+        'kjelde': 'Kenney Mini Characters 1.0 (CC0)',
+        'skala': SKALA,
+        'steg': struct.calcsize(FIGUR_FMT),
+        'tal': fig['tal'],
+        'ledd': fig['ledd'],
+        'klipp': fig['klipp'],
+    })
+
+    print('Bokstavropet og figuren:')
     print('  %d statiske modellar, figur med %d ledd og %d klipp'
           % (len(modellar), len(fig['ledd']), len(fig['klipp'])))
-    print('  statisk: %d hjørne (%d trekantar)'
-          % (statiskBytes // struct.calcsize(STATISK_FMT),
-             statiskBytes // struct.calcsize(STATISK_FMT) // 3))
-    print('  figur:   %d hjørne (%d trekantar)' % (fig['tal'], fig['tal'] // 3))
-    print('  leir.bin   %6.1f kB' % (len(data) / 1024))
-    print('  leir.json  %6.1f kB'
-          % (os.path.getsize(os.path.join(UT, 'leir.json')) / 1024))
+    print('  leir.bin   %6.1f kB  (%d trekantar)'
+          % (len(data) / 1024, len(data) // struct.calcsize(STATISK_FMT) // 3))
+    print('  figur.bin  %6.1f kB  (%d trekantar)'
+          % (len(fdata) / 1024, fig['tal'] // 3))
     print('  skrive til %s' % UT)
+    print('        og %s' % UT_FIGUR)
 
 
 def liste():
