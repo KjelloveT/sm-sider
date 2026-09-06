@@ -9,6 +9,17 @@ on:
     branches:
       - main
 
+# Alle actions er pinna til full commit-SHA, ikkje til ein tagg som `v1`.
+# Ein tagg kan flyttast av den som eig actionen. Desse stega køyrer i same
+# jobb som deploy-tokenet, så eit kompromittert oppstraums-repo kunne flytte
+# taggen og lese tokenet ut av miljøet. Ein SHA kan ikkje flyttast.
+# Kommentaren bak kvar SHA seier kva versjon han svarar til; skal du
+# oppgradere, hent ny SHA med:
+#     git ls-remote https://github.com/<eigar>/<repo> refs/tags/<tagg>
+# (er taggen annotert, er det linja som endar på `^{}` du skal ha).
+# Same grunngjeving for `npm install`: pakkane er versjonspinna, elles ville
+# ei ny utgåve av dei kunne køyre kode her utan at nokon endra denne fila.
+
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -18,7 +29,7 @@ jobs:
        id-token: write
        contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
         with:
           submodules: true
           lfs: false
@@ -28,9 +39,9 @@ jobs:
       # frå miljøet likevel. Utan han feilar deployen med «No matching Static
       # Web App was found or the api key was invalid».
       - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client
+        run: npm install @actions/core@1.6.0 @actions/http-client@4.0.1
       - name: Get Id Token
-        uses: actions/github-script@v6
+        uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         id: idtoken
         with:
            script: |
@@ -39,7 +50,7 @@ jobs:
            result-encoding: string
       - name: Build And Deploy
         id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
+        uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9 # v1 (Azure gjev ut berre denne taggen)
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_WATER_0487AC303 }}
           action: "upload"
@@ -64,9 +75,9 @@ jobs:
        contents: read
     steps:
       - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client
+        run: npm install @actions/core@1.6.0 @actions/http-client@4.0.1
       - name: Get Id Token
-        uses: actions/github-script@v6
+        uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         id: idtoken
         with:
            script: |
@@ -75,7 +86,7 @@ jobs:
            result-encoding: string
       - name: Close Pull Request
         id: closepullrequest
-        uses: Azure/static-web-apps-deploy@v1
+        uses: Azure/static-web-apps-deploy@1a947af9992250f3bc2e68ad0754c0b0c11566c9 # v1 (Azure gjev ut berre denne taggen)
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_WATER_0487AC303 }}
           action: "close"
