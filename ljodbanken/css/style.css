@@ -273,25 +273,6 @@ canvas:focus-visible {
 .modal4 { max-height: 86vh; overflow-y: auto; }
 .modal-close { position: absolute; top: 12px; right: 12px; }
 
-/* ---- Kort melding nedst ---- */
-.lb-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translate(-50%, 140%);
-  max-width: min(92vw, 460px);
-  padding: 12px 18px;
-  background: var(--surface);
-  color: var(--text);
-  border: 3px solid var(--border);
-  box-shadow: 5px 5px 0 var(--shadow);
-  font-weight: 700;
-  text-align: center;
-  z-index: 900;
-  transition: transform 0.18s ease-out;
-}
-.lb-toast.open { transform: translate(-50%, 0); }
-
 /* ---- Mindre skjermar ---- */
 @media (max-width: 900px) {
   .lb-row { grid-template-columns: minmax(0, 1fr) auto; }
@@ -309,6 +290,5 @@ canvas:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lb-toast { transition: none; }
   .lb-progress-fill, .lb-meter-fill { transition: none; }
 }

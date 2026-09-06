@@ -12,6 +12,7 @@ Dette er den sentrale retningslinjen for koding, design og arkitektur for alle p
 - **VyrdepilStorage:** Direkte bruk av `localStorage` er forbode inne i dei individuelle spela.
   - All lagring **må** gå gjennom det felles API-et definert i `js/vyrdepil-storage.js` (t.d. `VyrdepilStorage.saveHighScore()`, `VyrdepilStorage.saveToHistory()`, `VyrdepilStorage.getHighScore()`).
 - **Personvern-oversikta på framsida:** Dersom du legg til lagring for eit nytt spel eller verktøy, eller endrar eksisterande, MÅ du samtidig oppdatere informasjonen i trekkspel-menyen (accordion) under "Personvern og datasikkerheit" → "Kva data lagrast?" på `index.html`. Spelet må listast der med informasjon om "Kva" og "Kvifor" det blir lagra. Det er òg ei visning på framsida som let brukaren sjå all informasjon som er lagra i localStorage.
+- **Delingslenkjer skal bruke fragmentet (`#`), aldri spørjestrengen (`?`).** Legg eit verktøy data i lenkja — ei ordliste, eit oppsett, ein quiz — skal dei stå etter `#`. Ei spørjestreng blir **send til tenaren** og hamnar i tilgangsloggane hans, i `Referer`-headeren til kvar eksterne ressurs sida lastar, og i nettlesarhistorikka til alle som får lenkja. Fragmentet forlèt aldri nettlesaren. Ordaklok delte ordlister på `?d=` i lang tid medan framsida lova at «ingenting blir sendt til ein server» — skilnaden er eitt teikn, og han avgjer om lovnaden held. Skal gamle `?`-lenkjer framleis verke, les begge og rydd spørjestrengen med `history.replaceState` etterpå; sjå `ordaklok/js/share.js`.
 - I overgangen frå gammalt til nytt lagringssystem er det greitt om gamle toppscore blir sletta eller forsvinn. Vi treng ikkje leggje opp til at gammalt innhald i localStorage skal behaldast.
 
 ## 3. Design og neobrutalisme
@@ -104,6 +105,48 @@ Når du lagar eller modifiserer kode i dette prosjektet:
 ### 5.1 JS-arkitektur
 Spel og verktøy med meir enn **~400 linjer JavaScript** skal splittast i fleire filer etter ansvarsområde (t.d. `state`, `render`, `input`, `storage`, `game`). Bruk **IIFE-mønster** med eksponerte modular — sjå `heimsank/js/` og `klassekart/js/` som referansar. Ein monolittisk ES6-klasse er greitt for kompakte verktøy under denne grensa.
 
+### 5.1.1 Fellesmodulane i `js/` — sjå her før du skriv ein hjelpar
+
+Ligg det ein hjelpar i `js/`, skal verktøyet bruke han. Skriv ikkje din eigen.
+
+| Fil | Gjev deg |
+|---|---|
+| `js/vyrdepil-storage.js` | All lagring (§2). |
+| `js/vyrdepil-icons.js` | `ICON(namn, storleik)` — Lucide-ikon som SVG. |
+| `js/vyrdepil-util.js` | `Vy.escapeHtml`, `Vy.el`, `Vy.shuffle`, `Vy.rng`, `Vy.newSeed`, `Vy.slug`, `Vy.uuid`, `Vy.downloadBlob`, `Vy.downloadJson`, `Vy.openModal` / `closeModal` / `bindOverlayClose` (med Escape, §5.4), `Vy.toast`. |
+| `js/vyrdepil-elevlister.js` | Elevnamn frå Flokkdeilar og Klassekart: `kjelder()`, `reinsk()`, `tel()`, og den ferdige veljardialogen `lagVeljar()`. |
+| `js/neo-header.js` | Den globale toppmenyen. |
+| `js/vyrdepil-fullscreen.js` | Fullskjerm i spel. |
+
+**Kvifor dette er ein regel og ikkje eit tips.** Same funksjonen skriven på nytt
+i kvart verktøy er ikkje berre meir kode — det er fleire sjansar til å skrive
+han litt feil, og ein feil som blir retta éin stad medan dei andre lever
+vidare. Repoet hadde på det meste ni `toast()`, åtte `downloadBlob()`, ti
+`shuffle()` og fire `escapeHtml()`. Éin av dei fire escape-funksjonane rensa
+ikkje hermeteikn i det heile og var difor verdlaus inne i eit HTML-attributt,
+og alle ni toast-ane fylte flata med `--accent` og fall under AA-kravet i dei
+sju mørke temaa (§3.2). Ingen av delane hadde overlevd i ei felles fil, fordi
+ei felles fil blir lesen av fleire.
+
+Har verktøyet alt eit eige `util`-objekt, skal det **peike vidare** til
+fellesmodulen i staden for å halde ein kopi — sjå `leitekryss/js/util.js` og
+`ordkryss/js/util.js` for mønsteret. Kallstadene treng ikkje å endrast.
+
+Rekkjefølgja på script-taggane: fellesmodulane fyrst, så verktøyet sine eigne.
+
+```html
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="../js/vyrdepil-util.js"></script>
+<script src="../js/vyrdepil-elevlister.js"></script>
+<script src="js/util.js"></script>
+```
+
+**Treng du noko som ikkje finst der?** Er det noko berre dette verktøyet vil
+bruke, høyrer det heime lokalt. Er det noko det andre verktøyet nummer to kjem
+til å trenge — legg det i `js/vyrdepil-util.js` med ein gong. Grensa går på om
+funksjonen handlar om *domenet* til verktøyet eller om *plattforma*.
+
 ### 5.2 JSON-eksport
 Alle eksporterte data-objekt (lagra spel, quizzar, oppsett, kortsamlingar) skal innehalde to felt på toppnivå:
 
@@ -180,6 +223,64 @@ Ein logo blir vist lite. Kortet på framsida er 160px høgt, hero-boksen på ei 
 - **Éin storleik per logo.** Vi lagar ikkje eigne miniatyrar til menyen. Eit sett på 64px ville spart kring 390 kB på første opning av menyen, men kosta 26 ekstra filer som må haldast i takt for hand i eit prosjekt utan byggesteg. Gevinsten er ikkje verdt vedlikehaldet.
 
 - Sprite-ark (t.d. `_resources/vyrde.png`) følgjer same tanken: skaler ned til det største visingsbehovet og kvantiser.
+
+#### Bakgrunnar og anna spelgrafikk
+
+Reglane over handlar om logoar, som er små. Det er ikkje der megabytene kjem
+frå. Ein bakgrunn dekkjer heile skjermen, og eksporten frå teikneprogrammet
+kjem gjerne som 32-bits RGBA på 2800 piksel — 8 MB for eitt bilete som ligg
+bak ein meny. Tre slike bakgrunnar låg i dette repoet på til saman **23 MB**,
+altså meir enn heile Pyodide-installasjonen som §5.6 skriv eit eige avsnitt om.
+Ein klasse på 25 elevar bak éi skule-linje merkar det med ein gong.
+
+Difor, for alt som ikkje er ein logo eller eit ikon:
+
+- **Vel format etter innhaldet, ikkje etter vane.** Har biletet ikkje
+  gjennomsikt — og ein bakgrunn har det som regel ikkje — skal det vere
+  **JPEG**, ikkje PNG. Eit måla eller fotografisk motiv har hundretusenvis av
+  fargar, og då er PNG feil verktøy: han er tapsfri og lagrar kvar einaste ein.
+  Sjekk før du vel:
+
+  ```python
+  im = Image.open(src)
+  a = im.getchannel("A") if "A" in im.getbands() else None
+  print("treng alfa:", bool(a) and a.getextrema()[0] < 255)
+  ```
+
+  Er svaret `False`, er alfakanalen berre ein tredjedel meir fil for ingenting.
+  PNG med redusert palett er framleis rett for flate fargefelt, ikon og
+  sprite-ark; JPEG er rett for foto og måla flater.
+
+- **Maks 1920 piksel på lengste side** for eit fullskjermsbilete. Ein
+  klasseromsprojektor er sjeldan over 1920 brei, og eit bilete som blir skalert
+  ned med `cover` treng ikkje meir. Kvalitet 82 og `progressive=True`:
+
+  ```python
+  im = Image.open(src).convert("RGB")
+  r = 1920 / max(im.size)
+  if r < 1:
+      im = im.resize((round(im.width * r), round(im.height * r)), Image.LANCZOS)
+  im.save(dst, "JPEG", quality=82, optimize=True, progressive=True)
+  ```
+
+  Dei tre bakgrunnane over gjekk frå 23 MB til under 1 MB på dette — 96 %, utan
+  at nokon ser skilnaden gjennom eit menyoverlegg.
+
+- **Taket er 500 kB per bilete.** Går ei fil over, skal ho anten komprimerast
+  hardare eller grunngjevast i pull requesten. Dette er ei grense du skal måle
+  mot, ikkje eit mål å sikte etter: dei fleste bakgrunnar landar på 200–400 kB.
+
+- **Originalen går i `_kjelder/bakgrunnar/`**, på same måten som logoane. Mappa
+  er `.gitignore`-a, så han blir korkje publisert eller dregen med i historikka.
+
+- **Sjekk filnamnet.** `reknedaesj/resources/background.png.png` låg her med
+  dobbel filending i månadsvis. Ingen ser eit filnamn ingen les.
+
+**Hugs at eit bilete i eit git-repo er for alltid.** Same argumentet som for
+binærfilene i §5.6 gjeld her: vi har ikkje Git LFS, så ein 8 MB PNG blir
+liggjande i historikka sjølv etter at han er sletta — og ein gong til for kvar
+gong nokon eksporterer han på nytt. Komprimer **før** første commit, ikkje
+etterpå.
 
 ### 5.8 Compliance-pass
 Ved endringar i denne fila (`AGENTS.md`) skal det gjerast eit kontroll-pass gjennom alle eksisterande spel og verktøy for å sikre at dei framleis følgjer reglane. Spel som ikkje gjer det skal merkast for oppgradering (t.d. i `CHANGELOG.md` eller som GitHub-issue).

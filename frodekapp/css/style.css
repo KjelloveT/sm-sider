@@ -295,21 +295,6 @@ select.form-input { cursor: pointer; }
 .stat-num { font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 900; }
 .stat-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; gap: 4px; align-items: center; }
 
-/* ── Toast ── */
-.fk-toast {
-    position: fixed; bottom: 24px; left: 50%;
-    transform: translateX(-50%);
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--accent); color: var(--text-on-accent);
-    border: 3px solid var(--border); box-shadow: 4px 4px 0 var(--shadow);
-    padding: 12px 24px; font-weight: 800; font-size: 0.95rem;
-    z-index: 9999; transition: opacity 0.3s;
-}
-.fk-toast.success { background: var(--accent5); color: var(--text-on-light-accent); }
-.fk-toast.error   { background: var(--accent2); color: var(--text-on-accent); }
-.fk-toast.leaving { opacity: 0; }
-.fk-toast-icon { display: inline-flex; }
-
 /* ── Editor ── */
 .icon-btn { padding: 8px; }
 .question-item { position: relative; }

@@ -148,13 +148,9 @@ const App = (() => {
 
     /* ---- toast ---- */
 
-    let toastTimer = null;
+    /* Kort melding — sjå Vy.toast() i js/vyrdepil-util.js. */
     function toast(msg) {
-        const el = $('toast');
-        el.textContent = msg;
-        el.classList.add('open');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => el.classList.remove('open'), 3500);
+        return Vy.toast(msg, { ms: 3500 });
     }
 
     /* ---- innstillingar ---- */

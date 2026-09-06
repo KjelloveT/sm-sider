@@ -139,66 +139,16 @@
     });
   }
 
-  /* ---- Namnekjelder (eingongskopi, ikkje ei kopling) ---- */
+  /* ---- Namnekjelder ----
+     Henting og reinsking ligg i js/vyrdepil-elevlister.js, saman med den same
+     logikken som Ordkryss og Leitekryss brukar. Tidvis har sin eigen dialog
+     (namnevalet er ein del av det større eksportskjemaet), så herifrå brukar
+     vi berre datalaget. */
 
-  function cleanNames(list) {
-    const seen = {};
-    const out = [];
-    list.forEach(function (raw) {
-      const name = String(raw || '').trim();
-      if (!name || seen[name]) return;
-      seen[name] = true;
-      out.push(name);
-    });
-    return out;
-  }
+  const cleanNames = VyrdepilElevlister.reinsk;
+  const allSources = VyrdepilElevlister.kjelder;
+  const elevar = VyrdepilElevlister.tel;
 
-  function nameOf(s) { return (s && s.name) || s; }
-
-  function flokkdeilarLists() {
-    return VyrdepilStorage.getList('flokkdeilar', 'lister').map(function (item) {
-      return {
-        label: item.name || 'Utan namn',
-        source: 'Flokkdeilar',
-        names: cleanNames((item.students || []).map(nameOf))
-      };
-    });
-  }
-
-  function klassekartLists() {
-    const out = [];
-    VyrdepilStorage.getList('klassekart', 'oppsett').forEach(function (item) {
-      const students = (item.data && item.data.students) || [];
-      out.push({
-        label: item.name || 'Utan namn',
-        source: 'Klassekart',
-        names: cleanNames(students.map(nameOf))
-      });
-    });
-    const gameState = VyrdepilStorage.getGameState('klassekart');
-    const tabs = (gameState && gameState.tabs) || [];
-    tabs.forEach(function (tab) {
-      const students = (tab.data && tab.data.students) || [];
-      out.push({
-        label: (tab.name || 'Fane') + ' (open fane)',
-        source: 'Klassekart',
-        names: cleanNames(students.map(nameOf))
-      });
-    });
-    return out;
-  }
-
-  function allSources() {
-    let lists = [];
-    try {
-      lists = lists.concat(flokkdeilarLists(), klassekartLists());
-    } catch (e) {
-      lists = [];
-    }
-    return lists.filter(function (l) { return l.names.length; });
-  }
-
-  function elevar(n) { return n + (n === 1 ? ' elev' : ' elevar'); }
 
   /* ---- Dialogen ---- */
 

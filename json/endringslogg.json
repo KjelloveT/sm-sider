@@ -2,6 +2,38 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.45",
+      "dato": "2026-09-07",
+      "samandrag": "Delingslenkjene i Ordaklok sluttar å gå innom tenaren, og tre bakgrunnsbilete blei 23 MB lettare.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Ordaklok",
+          "tekst": "Delingslenkjer la ordlista i spørjestrengen, som blir send til tenaren. Ho ligg no i fragmentet, som aldri forlèt nettlesaren. Gamle lenkjer verkar framleis."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Personvern",
+          "tekst": "Ljodstigen er lagd inn i oversikta over kva kvart verktøy lagrar."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Heile sida",
+          "tekst": "Tastaturfokus er no definert i designsystemet, så alle knappar, lenkjer og felt viser kvar du er når du bruker Tab."
+        },
+        {
+          "t": "endra",
+          "kva": "Kludre Klodrian, Reknedæsj, Rettslause Raud",
+          "tekst": "Bakgrunnsbileta gjekk frå 23 MB til under 1 MB til saman. Spela opnar seg raskare på treg skulelinje."
+        },
+        {
+          "t": "endra",
+          "kva": "Under panseret",
+          "tekst": "Felles kode for korte meldingar og for elevlister, i staden for ein kopi i kvart verktøy. Meldingane er samstundes blitt lesbare i alle 21 fargetema."
+        }
+      ]
+    },
+    {
       "versjon": "1.44",
       "dato": "2026-09-07",
       "samandrag": "Vitjingsruta er enklare å ta i bruk, og sjekkar sjølv at koden let seg skanne.",

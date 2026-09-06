@@ -389,8 +389,9 @@
   });
 
   async function checkShareImport() {
-    const params = new URLSearchParams(location.search);
+    const params = OrdaklokShare.readParams();
     if (!params.has('d') && !params.has('dz')) return;
+    OrdaklokShare.scrubLegacyQuery();
     try {
       const obj = await OrdaklokShare.decodeFromParams(params);
       if (!obj) return;

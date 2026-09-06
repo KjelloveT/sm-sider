@@ -5,27 +5,12 @@
 
 const ProgressionUI = (function () {
 
-  // ---- Toast ----
+  /* Kort melding — sjå Vy.toast() i js/vyrdepil-util.js. Låg tidlegare her i
+     eiga utgåve; flytta til fellesmodulen så rettingar treffer alle verktøya,
+     og fordi den gamle stilen fylte flata med --accent og fall under
+     AA-kravet i dei sju mørke temaa (AGENTS.md §3.2). */
   function toast(msg, icon, kind) {
-    const c = document.getElementById('toastContainer');
-    if (!c) return;
-    const t = document.createElement('div');
-    t.className = 'toast' + (kind ? ' toast-' + kind : '');
-    if (icon) {
-      const i = document.createElement('span');
-      i.className = 'toast-ico';
-      i.innerHTML = ICON(icon, 18);
-      t.appendChild(i);
-    }
-    const m = document.createElement('span');
-    m.className = 'toast-msg';
-    m.textContent = msg;
-    t.appendChild(m);
-    c.appendChild(t);
-    setTimeout(() => {
-      t.classList.add('toast-out');
-      setTimeout(() => t.remove(), 400);
-    }, 3400);
+    return Vy.toast(msg, { icon: icon, kind: kind });
   }
 
   function announceBadges(earned) {

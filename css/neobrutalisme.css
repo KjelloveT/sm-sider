@@ -869,3 +869,111 @@ main.main-wide {
   border-color: var(--accent2);
   transform: rotate(-3deg);
 }
+
+/* ══════════════════════════════════════════════
+   KORT MELDING (TOAST)
+   Køyrd av Vy.toast() i js/vyrdepil-util.js.
+   ══════════════════════════════════════════════ */
+
+/* Verten ligg over modalane (z-index 2000), for ei melding om at noko blei
+   lagra må kunne synast medan ein dialog står open. */
+.vy-toast-host {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  z-index: 2100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+  max-width: min(28rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+/* Fargane er snudde med vilje: `--text` som botn og `--surface` som tekst.
+   Dei to er motsetnader i kvart einaste tema, så paringa gjev 8,59:1
+   («dracula») til 18,88:1 («grayscale») i alle 21 — per konstruksjon, utan
+   måling. Sjå åtvaringa i AGENTS.md §3.2: dei gamle toast-ane i verktøya
+   fylte flata med `--accent` og la `--text-on-accent` oppå, og fall då til
+   2,41–4,47:1 i dei sju mørke temaa. */
+.vy-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border: 3px solid var(--border);
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.vy-toast.open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vy-toast-ico {
+  display: flex;
+  flex-shrink: 0;
+}
+
+/* Variantane ber skilnaden på RAMMA, ikkje på flata. Ei aksentfylt flate med
+   tekst oppå er nettopp det §3.2 seier vi ikkje skal gjere; ei kantstripe på
+   ei flate som alt har full kontrast kostar ingenting og fungerer i alle
+   tema. */
+.vy-toast-good  { border-color: var(--accent3); }
+.vy-toast-warn  { border-color: var(--accent2); }
+.vy-toast-badge { border-color: var(--accent4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vy-toast { transition: none; }
+}
+
+/* ══════════════════════════════════════════════
+   TASTATURFOKUS
+   AGENTS.md §5.4 krev at :focus-visible er definert for alle interaktive
+   element. Før dette låg regelen berre på .section-accordion > summary, og
+   alt anna var overlate til standardringen i nettlesaren.
+   ══════════════════════════════════════════════ */
+
+/* Ringen er teikna med `outline` og ikkje med `box-shadow`, av to grunnar:
+   outline følgjer forma på elementet òg når det er rotert (.box3 og
+   .card-flag-broken er det), og han tek ikkje plass i layouten, så ingenting
+   hoppar når fokus flyttar seg.
+
+   `--border` er brukt som farge fordi han per konstruksjon står i kontrast
+   til både `--surface` og `--bg` i kvart einaste tema. Ein fast farge ville
+   forsvunne i sju av dei.
+
+   `outline-offset` er positiv, så ringen legg seg UTANFOR ramma til elementet
+   i staden for å blande seg med henne. På ein knapp med 3px svart kant er ein
+   ring rett innanfor kanten praktisk talt usynleg. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--border);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Element som ligg rett på ei mørk eller aksentfarga flate treng den motsette
+   fargen for at ringen skal syne. `--surface` og `--border` er motsetnader i
+   alle tema, så dette er trygt utan måling. */
+.box4 .box-header :where(a, button, input, select):focus-visible,
+.box5 .box-tab:focus-visible,
+.banner-full :where(a, button):focus-visible,
+.vy-toast :where(a, button):focus-visible {
+  outline-color: var(--surface);
+}
+
+/* `:where()` over har spesifisitet 0, så eit verktøy kan overstyre ringen med
+   ein heilt vanleg selektor når det er grunn til det. Fjernar du han, skal du
+   setje noko anna synleg i staden — ein knapp utan synleg fokus er ikkje
+   tilgjengeleg med tastatur. */

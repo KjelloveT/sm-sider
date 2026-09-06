@@ -946,32 +946,6 @@ kbd {
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-/* ──────────────── Kort melding ──────────────── */
-
-.rv-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 1.5rem;
-  transform: translateX(-50%) translateY(1rem);
-  z-index: 950;
-  max-width: min(26rem, 90vw);
-  padding: 0.55rem 1rem;
-  border: 3px solid var(--border);
-  border-radius: 8px;
-  background: var(--accent);
-  color: var(--text-on-accent);
-  box-shadow: 4px 4px 0 var(--shadow);
-  font-size: 0.9rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.rv-toast.open {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
 /* ──────────────── Mindre skjermar ──────────────── */
 
 @media (max-width: 980px) {
@@ -1015,5 +989,4 @@ kbd {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rv-toast { transition: none; }
 }
