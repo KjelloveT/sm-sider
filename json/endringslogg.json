@@ -2,6 +2,51 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.42",
+      "dato": "2026-09-06",
+      "samandrag": "Vitjingsruta er ny: QR-kodar du formar sjølv, med logo, og ein sjekk som les koden tilbake.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Vitjingsruta",
+          "merke": [
+            "verktoy"
+          ],
+          "tekst": "Nytt verktøy som lagar QR-kodar til lenkjer, trådlause nett, kontaktkort, kalenderhendingar og meir — alt rekna ut i nettlesaren."
+        },
+        {
+          "t": "nytt",
+          "kva": "Vitjingsruta",
+          "tekst": "Du formar koden sjølv: seks modulformer, eigne auge, fargar og fargeovergangar, ramme med tekst og ti ferdige stilar."
+        },
+        {
+          "t": "nytt",
+          "kva": "Vitjingsruta",
+          "tekst": "Logo i midten — eit ikon frå Vyrdepil, ein av sidelogoane, eller ei fil du lastar opp sjølv."
+        },
+        {
+          "t": "nytt",
+          "kva": "Vitjingsruta",
+          "tekst": "Lesbarheitssjekk som les den ferdige koden tilbake og seier om han faktisk let seg skanne."
+        },
+        {
+          "t": "nytt",
+          "kva": "Vitjingsruta",
+          "tekst": "Kodeark: lim inn ei liste og få alle kodane på eitt ark med etikett under kvar, eller som zip."
+        },
+        {
+          "t": "endra",
+          "kva": "Vyrdepil",
+          "tekst": "QR- og zip-biblioteka er flytte til _libs/ og førte opp i CREDITS.md. Ordaklok og Bildebehandling peikar dit no."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Vitjingsruta",
+          "tekst": "Runde modular gjorde koden ulesbar i store storleikar. Timing-mønsteret blir no teikna som heile kvadrat, og koden les på alle storleikar."
+        }
+      ]
+    },
+    {
       "versjon": "1.41",
       "dato": "2026-09-01",
       "samandrag": "Eleven kan gå rundt i bokstavskogen med figuren, og kameraet følgjer mjukt etter.",
