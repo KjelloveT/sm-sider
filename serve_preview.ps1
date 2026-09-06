@@ -1,4 +1,6 @@
-$root = 'C:\Users\88kjebjo\_projects\.claude\worktrees\sleepy-hodgkin-a2a7b9'
+# Rota er mappa dette skriptet ligg i, slik at repoet kan liggje kvar som helst
+# — og slik at eit skript inne i ein worktree serverer den worktreen.
+$root = $PSScriptRoot
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add('http://localhost:8083/')
 $listener.Start()
