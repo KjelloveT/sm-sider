@@ -212,16 +212,40 @@
     });
   }
 
+  /* ──────────────── Vegen inn i oppsettet ────────────────
+
+     Kontrollane peikar på ein STI — 'fill.color', 'module.radius' — og
+     ikkje på sjølve objektet. Det er ikkje pedanteri: `state.design`
+     blir BYTT UT kvar gong nokon klikkar ein ferdigstil, hentar eit
+     lagra oppsett eller importerer ei JSON-fil. Ein kontroll som hadde
+     halde på objektet ville frå det augeblikket skrive inn i eit oppsett
+     som ikkje lenger var i bruk, og både førehandsvisinga og eksporten
+     ville stå heilt stille utan at noko feila.
+
+     Med ein sti blir oppsettet slege opp på nytt for kvart tastetrykk,
+     og feilen kan ikkje oppstå igjen. */
+
+  function read(path) {
+    return path.split('.').reduce((o, k) => (o == null ? o : o[k]), state.design);
+  }
+
+  function write(path, value) {
+    const keys = path.split('.');
+    const last = keys.pop();
+    const parent = keys.reduce((o, k) => (o == null ? o : o[k]), state.design);
+    if (parent) parent[last] = value;
+  }
+
   /* Fargeknappane er alle like: ein rute som viser fargen, og ein
      veljar som skriv tilbake i oppsettet. */
-  function bindSwatch(button, valueEl, get, set) {
+  function bindSwatch(button, valueEl, path) {
     function paint() {
-      button.style.background = get();
-      if (valueEl) valueEl.textContent = get();
+      button.style.background = read(path);
+      if (valueEl) valueEl.textContent = read(path);
     }
     button.addEventListener('click', () => {
-      VR.color.open(button, get(), (hex) => {
-        set(hex);
+      VR.color.open(button, read(path), (hex) => {
+        write(path, hex);
         paint();
         update();
       });
@@ -232,8 +256,6 @@
   const painters = [];
 
   function buildControls() {
-    const d = state.design;
-
     /* Brikkene blir bygde av syncControls(); her fyller vi berre dei
        kontrollane som ikkje skal byggjast på nytt for kvar endring. */
     VR.render.FRAME_STYLES.forEach((f) => {
@@ -249,66 +271,61 @@
     });
     els.batchType.value = 'url';
 
-    range(els.radius, els.radiusOut, () => d.module.radius, (v) => { d.module.radius = v; },
-      (v) => Math.round(v * 100) + ' %');
-    range(els.gap, els.gapOut, () => d.module.gap, (v) => { d.module.gap = v; },
-      (v) => Math.round(v * 100) + ' %');
-    range(els.angle, els.angleOut, () => d.fill.angle, (v) => { d.fill.angle = v; },
-      (v) => Math.round(v) + '°');
-    range(els.quiet, els.quietOut, () => d.quiet, (v) => { d.quiet = v; },
-      (v) => Math.round(v) + ' modular');
-    range(els.logoSize, els.logoSizeOut, () => d.logo.size, (v) => { d.logo.size = v; },
-      (v) => Math.round(v * 100) + ' %');
-    range(els.platePad, els.platePadOut, () => d.logo.platePad, (v) => { d.logo.platePad = v; },
-      (v) => Math.round(v * 100) + ' %');
-    range(els.logoWeight, els.logoWeightOut, () => d.logo.weight, (v) => { d.logo.weight = v; },
+    range(els.radius, els.radiusOut, 'module.radius', (v) => Math.round(v * 100) + ' %');
+    range(els.gap, els.gapOut, 'module.gap', (v) => Math.round(v * 100) + ' %');
+    range(els.angle, els.angleOut, 'fill.angle', (v) => Math.round(v) + '°');
+    range(els.quiet, els.quietOut, 'quiet', (v) => Math.round(v) + ' modular');
+    range(els.logoSize, els.logoSizeOut, 'logo.size', (v) => Math.round(v * 100) + ' %');
+    range(els.platePad, els.platePadOut, 'logo.platePad', (v) => Math.round(v * 100) + ' %');
+    range(els.logoWeight, els.logoWeightOut, 'logo.weight',
       (v) => v.toFixed(2).replace(/0+$/, '').replace(/\.$/, ''));
 
-    select(els.alignStyle, () => d.alignment.style, (v) => { d.alignment.style = v; });
-    select(els.fillType, () => d.fill.type, (v) => { d.fill.type = v; });
-    select(els.fillTarget, () => d.fill.target, (v) => { d.fill.target = v; });
-    select(els.frameStyle, () => d.frame.style, (v) => { d.frame.style = v; });
-    select(els.framePos, () => d.frame.textPos, (v) => { d.frame.textPos = v; });
-    select(els.ecc, () => d.ecc, (v) => { d.ecc = v; });
-    select(els.logoPlate, () => d.logo.plate, (v) => { d.logo.plate = v; });
+    select(els.alignStyle, 'alignment.style');
+    select(els.fillType, 'fill.type');
+    select(els.fillTarget, 'fill.target');
+    select(els.frameStyle, 'frame.style');
+    select(els.framePos, 'frame.textPos');
+    select(els.ecc, 'ecc');
+    select(els.logoPlate, 'logo.plate');
 
-    check(els.eyeSame, () => d.eye.sameColor, (v) => { d.eye.sameColor = v; });
-    check(els.bgTransparent, () => d.bg.transparent, (v) => { d.bg.transparent = v; });
-    check(els.excavate, () => d.logo.excavate, (v) => { d.logo.excavate = v; });
+    check(els.eyeSame, 'eye.sameColor');
+    check(els.bgTransparent, 'bg.transparent');
+    check(els.excavate, 'logo.excavate');
 
     els.frameText.addEventListener('input', () => {
-      d.frame.text = els.frameText.value;
+      write('frame.text', els.frameText.value);
       update();
     });
 
-    painters.push(bindSwatch(els.inkSwatch, els.inkValue, () => d.fill.color, (v) => { d.fill.color = v; }));
-    painters.push(bindSwatch(els.ink2Swatch, els.ink2Value, () => d.fill.color2, (v) => { d.fill.color2 = v; }));
-    painters.push(bindSwatch(els.eyeSwatch, els.eyeValue, () => d.eye.color, (v) => { d.eye.color = v; }));
-    painters.push(bindSwatch(els.bgSwatch, els.bgValue, () => d.bg.color, (v) => { d.bg.color = v; }));
-    painters.push(bindSwatch(els.frameSwatch, els.frameValue, () => d.frame.color, (v) => { d.frame.color = v; }));
-    painters.push(bindSwatch(els.plateSwatch, els.plateValue, () => d.logo.plateColor, (v) => { d.logo.plateColor = v; }));
-    painters.push(bindSwatch(els.logoColorSwatch, els.logoColorValue, () => d.logo.color, (v) => { d.logo.color = v; }));
+    painters.push(bindSwatch(els.inkSwatch, els.inkValue, 'fill.color'));
+    painters.push(bindSwatch(els.ink2Swatch, els.ink2Value, 'fill.color2'));
+    painters.push(bindSwatch(els.eyeSwatch, els.eyeValue, 'eye.color'));
+    painters.push(bindSwatch(els.bgSwatch, els.bgValue, 'bg.color'));
+    painters.push(bindSwatch(els.frameSwatch, els.frameValue, 'frame.color'));
+    painters.push(bindSwatch(els.plateSwatch, els.plateValue, 'logo.plateColor'));
+    painters.push(bindSwatch(els.logoColorSwatch, els.logoColorValue, 'logo.color'));
   }
 
-  function range(input, out, get, set, fmt) {
+  function range(input, out, path, fmt) {
     input.addEventListener('input', () => {
-      set(parseFloat(input.value));
-      if (out) out.textContent = fmt(parseFloat(input.value));
+      const v = parseFloat(input.value);
+      write(path, v);
+      if (out) out.textContent = fmt(v);
       update();
     });
   }
 
-  function select(input, get, set) {
+  function select(input, path) {
     input.addEventListener('change', () => {
-      set(input.value);
+      write(path, input.value);
       syncControls();
       update();
     });
   }
 
-  function check(input, get, set) {
+  function check(input, path) {
     input.addEventListener('change', () => {
-      set(input.checked);
+      write(path, input.checked);
       syncControls();
       update();
     });
@@ -320,14 +337,17 @@
   function syncControls() {
     const d = state.design;
 
+    /* Brikkene skriv gjennom write() av same grunn som resten: dei blir
+       bygde på nytt her, men skal ikkje vere avhengige av at nokon hugsar
+       å kalle syncControls() etter kvart byte av oppsett. */
     chips(els.moduleShapes, VR.shapes.MODULE_SHAPES, d.module.shape, (id) => {
-      d.module.shape = id; syncControls(); update();
+      write('module.shape', id); syncControls(); update();
     });
     chips(els.eyeFrames, VR.shapes.EYE_FRAMES, d.eye.frame, (id) => {
-      d.eye.frame = id; syncControls(); update();
+      write('eye.frame', id); syncControls(); update();
     });
     chips(els.eyePupils, VR.shapes.EYE_PUPILS, d.eye.pupil, (id) => {
-      d.eye.pupil = id; syncControls(); update();
+      write('eye.pupil', id); syncControls(); update();
     });
 
     els.radius.value = d.module.radius;
