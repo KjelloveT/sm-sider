@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vitjingsruta — QR-kodar med eige design for Vyrdepil</title>
-<meta name="description" content="Lag QR-kodar til lenkjer, trådlause nett, kontaktkort og meir. Form modulane, vel fargar og legg på ein logo. Alt skjer i nettlesaren.">
+<meta name="description" content="Lag QR-kodar til lenkjer, trådlause nett, kontaktkort og meir. Form prikkane, vel fargar og legg på ein logo. Alt skjer i nettlesaren.">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
 <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
@@ -23,7 +23,7 @@
     <img src="../_resources/vitjingsruta.png" alt="Vitjingsruta" class="hero-logo">
     <div class="hero-text">
       <h1>Vitjingsruta</h1>
-      <p>Lag ein QR-kode til ei lenkje, eit trådlaust nett, eit kontaktkort eller ei kalenderhending — og form han slik du vil. Alt skjer i nettlesaren din; innhaldet blir aldri sendt nokon stad.</p>
+      <p>Lag ein QR-kode til ei lenkje, eit trådlaust nett, eit kontaktkort eller ei kalenderhending — og form han slik du vil. Verktøyet sjekkar sjølv at koden let seg skanne. Alt skjer i nettlesaren din; innhaldet blir aldri sendt nokon stad.</p>
     </div>
   </div>
 
@@ -31,7 +31,10 @@
   <section class="box1" aria-labelledby="contentHeading">
     <h2 class="heading3 no-mt" id="contentHeading">1. Kva skal koden innehalde?</h2>
 
-    <div class="vr-type-grid" id="typeGrid" role="tablist" aria-label="Innhaldstype"></div>
+    <div class="vr-setting">
+      <label class="vr-setting-label" for="typeSelect">Innhaldstype</label>
+      <select class="vr-select" id="typeSelect"></select>
+    </div>
     <p class="vr-hint" id="typeHint"></p>
 
     <div class="vr-fields" id="fields"></div>
@@ -64,15 +67,8 @@
         </div>
 
         <div class="vr-status" id="status" role="status" aria-live="polite">
-          <div class="vr-status-head">
-            <span class="vr-status-dot" id="statusDot"></span>
-            <strong id="statusTitle">Ingen kode enno</strong>
-          </div>
-          <ul class="vr-status-list" id="statusList"></ul>
-          <div class="vr-btn-row">
-            <button class="btn vr-small" type="button" id="verifyBtn" data-icon="scanLine">Prøv å lese koden</button>
-          </div>
-          <p class="vr-muted vr-tiny" id="verifyNote">Sjekken teiknar den ferdige koden og les han tilbake. Han hentar eit lesar-bibliotek på 257 kB første gongen.</p>
+          <span class="vr-status-dot" id="statusDot"></span>
+          <strong id="statusTitle">Ingen kode enno</strong>
         </div>
 
         <div class="vr-btn-row">
@@ -106,11 +102,17 @@
         <div class="box4">
           <div class="box-header">Ferdige stilar</div>
           <div class="box-body">
-            <div class="vr-presets" id="presets" role="group" aria-label="Ferdige stilar"></div>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="presetSelect">Vel ein stil</label>
+              <div class="vr-select-row">
+                <select class="vr-select" id="presetSelect"></select>
+                <button class="btn vr-icon-only" type="button" id="deleteTemplateBtn"
+                        aria-label="Slett den valde stilen min" hidden></button>
+              </div>
+            </div>
             <div class="vr-btn-row">
               <button class="btn vr-small" type="button" id="saveTemplateBtn" data-icon="stamp">Lagre stilen min</button>
             </div>
-            <div class="vr-presets" id="myTemplates" role="group" aria-label="Eigne stilar"></div>
           </div>
         </div>
 
@@ -125,7 +127,7 @@
           <!-- Form -->
           <div class="box-body vr-panel" data-panel="form">
             <div class="vr-setting">
-              <span class="vr-setting-label" id="modShapeLabel">Modulform</span>
+              <span class="vr-setting-label" id="modShapeLabel">Prikk</span>
               <div class="vr-chips" id="moduleShapes" role="radiogroup" aria-labelledby="modShapeLabel"></div>
             </div>
             <div class="vr-setting">
@@ -133,24 +135,16 @@
               <input type="range" class="vr-range" id="radius" min="0" max="1" step="0.05">
             </div>
             <div class="vr-setting">
-              <label class="vr-setting-label" for="gap">Luft mellom modulane <span class="vr-value" id="gapOut"></span></label>
+              <label class="vr-setting-label" for="gap">Luft mellom prikkane <span class="vr-value" id="gapOut"></span></label>
               <input type="range" class="vr-range" id="gap" min="0" max="0.12" step="0.01">
             </div>
             <div class="vr-setting">
-              <span class="vr-setting-label" id="eyeFrameLabel">Auge — ramme</span>
+              <span class="vr-setting-label" id="eyeFrameLabel">Hjørnemerke — ramme</span>
               <div class="vr-chips" id="eyeFrames" role="radiogroup" aria-labelledby="eyeFrameLabel"></div>
             </div>
             <div class="vr-setting">
-              <span class="vr-setting-label" id="eyePupilLabel">Auge — kjerne</span>
+              <span class="vr-setting-label" id="eyePupilLabel">Hjørnemerke — kjerne</span>
               <div class="vr-chips" id="eyePupils" role="radiogroup" aria-labelledby="eyePupilLabel"></div>
-            </div>
-            <div class="vr-setting">
-              <label class="vr-setting-label" for="alignStyle">Justeringsmønster</label>
-              <select class="vr-select" id="alignStyle">
-                <option value="module">Same form som modulane</option>
-                <option value="rounded">Eiga ramme</option>
-                <option value="circle">Sirklar</option>
-              </select>
             </div>
           </div>
 
@@ -165,8 +159,8 @@
               </select>
             </div>
             <div class="vr-setting vr-color-row-setting">
-              <span class="vr-setting-label">Modulfarge</span>
-              <button class="vr-swatch" type="button" id="inkSwatch" aria-label="Vel modulfarge"></button>
+              <span class="vr-setting-label">Prikkfarge</span>
+              <button class="vr-swatch" type="button" id="inkSwatch" aria-label="Vel prikkfarge"></button>
               <span class="vr-mono" id="inkValue"></span>
             </div>
             <div class="vr-setting vr-color-row-setting" id="ink2Row" hidden>
@@ -182,16 +176,16 @@
               <label class="vr-setting-label" for="fillTarget">Overgangen gjeld</label>
               <select class="vr-select" id="fillTarget">
                 <option value="all">Heile koden</option>
-                <option value="module">Berre modulane</option>
-                <option value="eye">Berre augene</option>
+                <option value="module">Berre prikkane</option>
+                <option value="eye">Berre hjørnemerka</option>
               </select>
             </div>
             <label class="vr-check">
-              <input type="checkbox" id="eyeSame"> Augene har same farge som modulane
+              <input type="checkbox" id="eyeSame"> Hjørnemerka har same farge som prikkane
             </label>
             <div class="vr-setting vr-color-row-setting" id="eyeColorRow" hidden>
-              <span class="vr-setting-label">Augefarge</span>
-              <button class="vr-swatch" type="button" id="eyeSwatch" aria-label="Vel augefarge"></button>
+              <span class="vr-setting-label">Farge på hjørnemerka</span>
+              <button class="vr-swatch" type="button" id="eyeSwatch" aria-label="Vel farge på hjørnemerka"></button>
               <span class="vr-mono" id="eyeValue"></span>
             </div>
             <div class="vr-setting vr-color-row-setting">
@@ -267,7 +261,7 @@
                 <input type="range" class="vr-range" id="platePad" min="0" max="0.6" step="0.02">
               </div>
               <label class="vr-check">
-                <input type="checkbox" id="excavate"> Fjern modulane under logoen
+                <input type="checkbox" id="excavate"> Fjern prikkane under logoen
               </label>
             </div>
           </div>
@@ -309,7 +303,7 @@
                 <option value="H">H — 30 %</option>
               </select>
             </div>
-            <p class="vr-muted vr-tiny">Høgare feilretting toler meir skit, slitasje og logo — men tettar koden. Automatisk vel det høgaste innhaldet får plass til, og aldri under Q når det ligg ein logo oppå.</p>
+            <p class="vr-muted vr-tiny">Høgare feilretting gjer at QR-koden toler meir skit, slitasje og at man har med ein logo — men det gjer at QR-koden vert tettare.</p>
           </div>
         </div>
       </div>

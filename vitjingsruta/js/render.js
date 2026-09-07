@@ -23,7 +23,11 @@ VR.render = (function () {
     thin:   { ring: 0.6,  band: 3.4, radius: 0,   fillBand: false, tail: 0 },
     thick:  { ring: 1.5,  band: 4.0, radius: 0,   fillBand: true,  tail: 0 },
     label:  { ring: 0,    band: 4.0, radius: 1.2, fillBand: true,  tail: 0 },
-    speech: { ring: 1.1,  band: 4.2, radius: 2.4, fillBand: true,  tail: 1.6 }
+    /* Snakkebobla treng å SJÅ ut som ei snakkeboble. Det krev tre ting
+       samstundes: runde nok hjørne til at boksen les som ei boble, og ein
+       hale som er stor nok til å bli sett og spiss nok til å peike. Ein
+       hale på halvannan modul mot ein kode på førti forsvinn rett og slett. */
+    speech: { ring: 1.2,  band: 4.2, radius: 4.5, fillBand: true,  tail: 5, tailBase: 7 }
   };
 
   const FRAME_STYLES = [
@@ -59,7 +63,7 @@ VR.render = (function () {
     const f = FRAMES[d.frame.style] || FRAMES.none;
     const hasText = f.band > 0 && String(d.frame.text || '').trim() !== '';
     const band = hasText ? f.band : 0;
-    const tail = (hasText && f.tail) ? f.tail : 0;
+    const tail = f.tail || 0;
 
     const quiet = VR.util.clamp(d.quiet, 0, 8);
     const side = qr.size + quiet * 2;
@@ -123,6 +127,24 @@ VR.render = (function () {
       });
     }
 
+    /* ── Halen på snakkebobla ──
+       Ho høyrer til ramma og ikkje til teksten: ei snakkeboble utan tekst
+       er framleis ei snakkeboble. Ho overlappar kanten med ein modul så
+       det ikkje blir ei skjøt, og spissen står inn mot venstre — ein hale
+       rett ned les som ein trekant, ein skeiv hale les som ei boble. */
+    if (tail) {
+      const bodyBottom = h - tail;
+      const baseW = f.tailBase || tail;
+      const bx = f.ring + (w - f.ring * 2) * 0.2;
+      const nn = VR.util.n;
+      scene.items.push({
+        type: 'path', fill: d.frame.color,
+        d: 'M' + nn(bx) + ',' + nn(bodyBottom - 1) +
+           'L' + nn(bx + baseW) + ',' + nn(bodyBottom - 1) +
+           'L' + nn(bx + baseW * 0.18) + ',' + nn(bodyBottom + tail) + 'Z'
+      });
+    }
+
     /* ── Tekstbandet ── */
     if (hasText) {
       const bandY = topBand ? f.ring : (h - tail - f.ring - band);
@@ -135,17 +157,6 @@ VR.render = (function () {
         scene.items.push({
           type: 'path', fill: d.frame.color,
           d: VR.shapes.roundRect(bandX, bandY, bandW, band, corners)
-        });
-      }
-
-      if (tail) {
-        /* Halen på snakkebobla. Ho peikar ned frå bandet. */
-        const tx = bandX + bandW * 0.22;
-        scene.items.push({
-          type: 'path', fill: d.frame.color,
-          d: 'M' + VR.util.n(tx) + ',' + VR.util.n(bandY + band - 0.2) +
-             'L' + VR.util.n(tx + tail * 1.5) + ',' + VR.util.n(bandY + band - 0.2) +
-             'L' + VR.util.n(tx + tail * 0.35) + ',' + VR.util.n(bandY + band + tail) + 'Z'
         });
       }
 

@@ -41,9 +41,9 @@ VR.check = (function () {
         if (c < worst) { worst = c; worstInk = ink; }
       });
       if (worst < 2.5) {
-        notes.push({ level: 'bad', text: 'Altfor lite skilnad mellom modulfarge og bakgrunn (' + worst.toFixed(1) + ':1). Koden blir ikkje lesen.' });
+        notes.push({ level: 'bad', short: 'For lite skilnad mellom prikkfarge og bakgrunn.', text: 'Altfor lite skilnad mellom prikkfarge og bakgrunn (' + worst.toFixed(1) + ':1). Koden blir ikkje lesen.' });
       } else if (worst < L.contrastMin) {
-        notes.push({ level: 'warn', text: 'Låg kontrast mellom ' + worstInk + ' og bakgrunnen (' + worst.toFixed(1) + ':1). Han kan svikte på papir og i dårleg lys.' });
+        notes.push({ level: 'warn', short: 'Låg kontrast mot bakgrunnen — kan svikte på papir.', text: 'Låg kontrast mellom ' + worstInk + ' og bakgrunnen (' + worst.toFixed(1) + ':1). Han kan svikte på papir og i dårleg lys.' });
       }
 
       /* Invertert kode: lyse modular på mørk botn. Kontrasten kan vere
@@ -52,23 +52,24 @@ VR.check = (function () {
       const inkLum = VR.util.luminance(d.fill.color);
       const bgLum = VR.util.luminance(d.bg.color);
       if (inkLum > bgLum) {
-        notes.push({ level: 'warn', text: 'Koden er invertert — lyse modular på mørk botn. Nyare telefonar klarer det; eldre skannarar gjer det ofte ikkje.' });
+        notes.push({ level: 'warn', short: 'Lyse prikkar på mørk botn — eldre skannarar slit.', text: 'Koden er invertert — lyse prikkar på mørk botn. Nyare telefonar klarer det; eldre skannarar gjer det ofte ikkje.' });
       }
     } else {
-      notes.push({ level: 'warn', text: 'Gjennomsiktig bakgrunn. Koden må leggjast på ei lys, roleg flate — eit mønster bak gjer han ulesbar.' });
+      notes.push({ level: 'warn', short: 'Gjennomsiktig botn — legg koden på ei lys, roleg flate.', text: 'Gjennomsiktig bakgrunn. Koden må leggjast på ei lys, roleg flate — eit mønster bak gjer han ulesbar.' });
     }
 
     /* Stillesona. */
     if (d.quiet < L.quietMin) {
       notes.push({
         level: d.quiet < 2 ? 'bad' : 'warn',
+        short: 'For lite luft rundt koden (stillesona er ' + d.quiet + ' av 4).',
         text: 'Stillesona er ' + d.quiet + ' modular. Standarden krev 4 — utan luft rundt finn ikkje skannaren kanten på koden.'
       });
     }
 
     /* Mellomrom mellom modulane. */
     if (d.module.gap > 0.09) {
-      notes.push({ level: 'warn', text: 'Mykje luft mellom modulane. Over ti prosent byrjar skannarar å lese dei som skilde prikkar.' });
+      notes.push({ level: 'warn', short: 'Mykje luft mellom prikkane.', text: 'Mykje luft mellom prikkane. Over ti prosent byrjar skannarar å lese dei som skilde prikkar.' });
     }
 
     /* Augene er den mest utsette delen av heile designet. Skannaren finn
@@ -78,7 +79,8 @@ VR.check = (function () {
     if (d.eye.frame !== 'square' || d.eye.pupil !== 'square') {
       notes.push({
         level: 'info',
-        text: 'Augene har eiga form. Det er den delen av designet skannaren er mest kresen på — køyr lesbarheitssjekken før du skriv ut mange ark.'
+        short: 'Hjørnemerka har eiga form.',
+        text: 'Hjørnemerka har eiga form. Det er den delen av designet skannaren er mest kresen på.'
       });
     }
 
@@ -86,12 +88,12 @@ VR.check = (function () {
     if (logo) {
       const pct = Math.round(d.logo.size * 100);
       if (d.logo.size > L.logoDanger) {
-        notes.push({ level: 'bad', text: 'Logoen dekkjer ' + pct + ' % av koden. I målingane våre slutta koden å la seg lese mellom 25 og 30 % — sjølv med utsparing og feilretting H.' });
+        notes.push({ level: 'bad', short: 'Logoen dekkjer ' + pct + ' % — det er for mykje.', text: 'Logoen dekkjer ' + pct + ' % av koden. I målingane våre slutta koden å la seg lese mellom 25 og 30 % — sjølv med utsparing og feilretting H.' });
       } else if (d.logo.size > L.logoWarn) {
-        notes.push({ level: 'warn', text: 'Logoen dekkjer ' + pct + ' %. Det er over det vi har målt som trygt (25 %). Køyr lesbarheitssjekken før du skriv ut.' });
+        notes.push({ level: 'warn', short: 'Logoen dekkjer ' + pct + ' % — over det vi har målt som trygt.', text: 'Logoen dekkjer ' + pct + ' %. Det er over det vi har målt som trygt (25 %).' });
       }
       if (qr.ecc === 'L' || qr.ecc === 'M') {
-        notes.push({ level: 'warn', text: 'Logo på feilrettingsnivå ' + qr.ecc + '. Vel Q eller H — logoen et modular, og feilrettinga er det einaste som veg opp.' });
+        notes.push({ level: 'warn', short: 'Logo på feilrettingsnivå ' + qr.ecc + ' — vel Q eller H.', text: 'Logo på feilrettingsnivå ' + qr.ecc + '. Vel Q eller H — logoen et prikkar, og feilrettinga er det einaste som veg opp.' });
       }
       /* Eit auge som er delvis dekt gjer koden ubrukeleg: skannaren finn
          ikkje koden i det heile utan alle tre. */
@@ -99,7 +101,7 @@ VR.check = (function () {
       const near = box.x < 8 || box.y < 8 ||
         box.x + box.size > qr.size - 8 || box.y + box.size > qr.size - 8;
       if (near) {
-        notes.push({ level: 'bad', text: 'Logoen kjem borti eit av augene i hjørna. Utan alle tre finn ikkje skannaren koden.' });
+        notes.push({ level: 'bad', short: 'Logoen dekkjer eit hjørnemerke.', text: 'Logoen kjem borti eit av hjørnemerka. Utan alle tre finn ikkje skannaren koden.' });
       }
     }
 
@@ -109,7 +111,12 @@ VR.check = (function () {
       if (x.level === 'bad') level = 'bad';
       else if (x.level === 'warn' && level !== 'bad') level = 'warn';
     });
-    return { level: level, notes: notes };
+    /* Den eine merknaden som er verdt plass i statusfeltet. */
+    const worstNote =
+      notes.filter(x => x.level === 'bad')[0] ||
+      notes.filter(x => x.level === 'warn')[0] || null;
+
+    return { level: level, notes: notes, worst: worstNote };
   }
 
   /* ──────────────── Dekoding ──────────────── */

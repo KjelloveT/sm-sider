@@ -37,20 +37,18 @@
 
   /* ──────────────── Innhaldsskjemaet ──────────────── */
 
-  function buildTypeGrid() {
-    U.clear(els.typeGrid);
+  /* Ni typar som ni knappar var ein vegg å møte. Ei nedtrekksliste viser
+     éin ting om gongen, og lenkje — det dei aller fleste er ute etter —
+     står øvst og er valt frå start. */
+  function buildTypeSelect() {
+    U.clear(els.typeSelect);
     VR.content.TYPES.forEach((type) => {
-      const btn = U.el('button', 'vr-type');
-      btn.type = 'button';
-      btn.setAttribute('role', 'tab');
-      btn.dataset.type = type.id;
-      const icon = U.el('span', 'vr-type-icon');
-      icon.innerHTML = ICON(type.icon, 22);
-      btn.appendChild(icon);
-      btn.appendChild(U.el('span', 'vr-type-label', type.label));
-      btn.addEventListener('click', () => selectType(type.id));
-      els.typeGrid.appendChild(btn);
+      const o = U.el('option', null, type.label);
+      o.value = type.id;
+      els.typeSelect.appendChild(o);
     });
+    els.typeSelect.value = state.content.type;
+    els.typeSelect.addEventListener('change', () => selectType(els.typeSelect.value));
   }
 
   function selectType(id) {
@@ -64,11 +62,7 @@
   function buildFields() {
     const type = VR.content.byId(state.content.type);
 
-    els.typeGrid.querySelectorAll('.vr-type').forEach((b) => {
-      const on = b.dataset.type === type.id;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
+    els.typeSelect.value = type.id;
     els.typeHint.textContent = type.hint || '';
 
     U.clear(els.fields);
@@ -145,70 +139,86 @@
     });
   }
 
+  /* Ferdige stilar og eigne stilar i éi liste. Dei ti brikkene tok halve
+     panelet og drog merksemda vekk frå det brukaren faktisk skulle gjere.
+
+     Ein stil er berre eit sett verdiar, ikkje ein tilstand verktøyet er i:
+     endrar du noko etterpå, er du ikkje lenger «i» stilen. Difor står lista
+     på «Eigen» så snart du rører ein kontroll. */
   function buildPresets() {
-    U.clear(els.presets);
+    U.clear(els.presetSelect);
+
+    const eigen = U.el('option', null, 'Eigen');
+    eigen.value = '';
+    els.presetSelect.appendChild(eigen);
+
+    const ferdige = U.el('optgroup');
+    ferdige.label = 'Ferdige stilar';
     VR.design.PRESETS.forEach((preset) => {
-      const btn = U.el('button', 'vr-preset');
-      btn.type = 'button';
-      btn.title = preset.label;
-      const p = preset.patch;
-      const ink = (p.fill && p.fill.color) || '#1a1a1a';
-      const bg = (p.bg && p.bg.color) || '#ffffff';
-      const dot = U.el('span', 'vr-preset-dot');
-      dot.style.background = bg;
-      dot.style.borderColor = ink;
-      const inner = U.el('span', 'vr-preset-ink');
-      inner.style.background = (p.fill && p.fill.type === 'linear')
-        ? 'linear-gradient(45deg,' + p.fill.color + ',' + p.fill.color2 + ')'
-        : ink;
-      dot.appendChild(inner);
-      btn.appendChild(dot);
-      btn.appendChild(U.el('span', 'vr-preset-name', preset.label));
-      btn.addEventListener('click', () => {
-        state.design = VR.design.applyPreset(state.design, preset);
-        syncControls();
-        update();
-      });
-      els.presets.appendChild(btn);
+      const o = U.el('option', null, preset.label);
+      o.value = 'p:' + preset.id;
+      ferdige.appendChild(o);
     });
+    els.presetSelect.appendChild(ferdige);
+
+    const mine = VR.storage.templates();
+    if (mine.length) {
+      const eigne = U.el('optgroup');
+      eigne.label = 'Mine stilar';
+      mine.forEach((tpl) => {
+        const o = U.el('option', null, tpl.name);
+        o.value = 't:' + tpl.id;
+        eigne.appendChild(o);
+      });
+      els.presetSelect.appendChild(eigne);
+    }
+
+    els.presetSelect.value = currentPreset;
+    els.deleteTemplateBtn.hidden = currentPreset.indexOf('t:') !== 0;
   }
 
-  function buildMyTemplates() {
-    U.clear(els.myTemplates);
-    const mine = VR.storage.templates();
-    mine.forEach((tpl) => {
-      const btn = U.el('button', 'vr-preset');
-      btn.type = 'button';
-      const dot = U.el('span', 'vr-preset-dot');
-      dot.style.background = tpl.design.bg.color;
-      dot.style.borderColor = tpl.design.fill.color;
-      const inner = U.el('span', 'vr-preset-ink');
-      inner.style.background = tpl.design.fill.color;
-      dot.appendChild(inner);
-      btn.appendChild(dot);
-      btn.appendChild(U.el('span', 'vr-preset-name', tpl.name));
-      btn.addEventListener('click', () => {
+  /* Kva lista står på no. Han blir tømt av markDirty() når brukaren
+     endrar noko for hand. */
+  let currentPreset = '';
+
+  function applyPresetChoice(value) {
+    currentPreset = value;
+    if (value.indexOf('p:') === 0) {
+      const preset = VR.design.presetById(value.slice(2));
+      if (preset) state.design = VR.design.applyPreset(state.design, preset);
+    } else if (value.indexOf('t:') === 0) {
+      const tpl = VR.storage.templates().filter(x => x.id === value.slice(2))[0];
+      if (tpl) {
+        /* Ein eigen stil er utsjånad utan innhald — logoen brukaren har
+           valt no skal han få behalde. */
         const logo = state.design.logo;
         state.design = VR.design.normalise(tpl.design);
         state.design.logo = logo;
-        syncControls();
-        update();
-      });
+      }
+    }
+    els.deleteTemplateBtn.hidden = value.indexOf('t:') !== 0;
+    syncControls();
+    update();
+  }
 
-      const del = U.el('button', 'vr-preset-del');
-      del.type = 'button';
-      del.innerHTML = ICON('x', 14);
-      del.setAttribute('aria-label', 'Slett stilen ' + tpl.name);
-      del.addEventListener('click', (e) => {
-        e.stopPropagation();
-        VR.storage.removeTemplate(tpl.id);
-        buildMyTemplates();
-      });
+  function markDirty() {
+    if (!currentPreset) return;
+    currentPreset = '';
+    els.presetSelect.value = '';
+    els.deleteTemplateBtn.hidden = true;
+  }
 
-      const cell = U.el('span', 'vr-preset-cell');
-      cell.appendChild(btn);
-      cell.appendChild(del);
-      els.myTemplates.appendChild(cell);
+  function bindPresets() {
+    els.presetSelect.addEventListener('change', () => {
+      applyPresetChoice(els.presetSelect.value);
+    });
+    els.deleteTemplateBtn.innerHTML = ICON('trash2', 16);
+    els.deleteTemplateBtn.addEventListener('click', () => {
+      if (currentPreset.indexOf('t:') !== 0) return;
+      VR.storage.removeTemplate(currentPreset.slice(2));
+      currentPreset = '';
+      buildPresets();
+      toast('Stilen er sletta.');
     });
   }
 
@@ -216,14 +226,11 @@
 
      Kontrollane peikar på ein STI — 'fill.color', 'module.radius' — og
      ikkje på sjølve objektet. Det er ikkje pedanteri: `state.design`
-     blir BYTT UT kvar gong nokon klikkar ein ferdigstil, hentar eit
-     lagra oppsett eller importerer ei JSON-fil. Ein kontroll som hadde
-     halde på objektet ville frå det augeblikket skrive inn i eit oppsett
-     som ikkje lenger var i bruk, og både førehandsvisinga og eksporten
-     ville stå heilt stille utan at noko feila.
-
-     Med ein sti blir oppsettet slege opp på nytt for kvart tastetrykk,
-     og feilen kan ikkje oppstå igjen. */
+     blir BYTT UT kvar gong nokon vel ein stil, hentar eit lagra oppsett
+     eller importerer ei JSON-fil. Ein kontroll som hadde halde på
+     objektet ville frå det augeblikket skrive inn i eit oppsett som
+     ikkje lenger var i bruk, og både førehandsvisinga og eksporten ville
+     stå heilt stille utan at noko feila. */
 
   function read(path) {
     return path.split('.').reduce((o, k) => (o == null ? o : o[k]), state.design);
@@ -245,6 +252,7 @@
     }
     button.addEventListener('click', () => {
       VR.color.open(button, read(path), (hex) => {
+        markDirty();
         write(path, hex);
         paint();
         update();
@@ -280,7 +288,6 @@
     range(els.logoWeight, els.logoWeightOut, 'logo.weight',
       (v) => v.toFixed(2).replace(/0+$/, '').replace(/\.$/, ''));
 
-    select(els.alignStyle, 'alignment.style');
     select(els.fillType, 'fill.type');
     select(els.fillTarget, 'fill.target');
     select(els.frameStyle, 'frame.style');
@@ -293,6 +300,7 @@
     check(els.excavate, 'logo.excavate');
 
     els.frameText.addEventListener('input', () => {
+      markDirty();
       write('frame.text', els.frameText.value);
       update();
     });
@@ -309,6 +317,7 @@
   function range(input, out, path, fmt) {
     input.addEventListener('input', () => {
       const v = parseFloat(input.value);
+      markDirty();
       write(path, v);
       if (out) out.textContent = fmt(v);
       update();
@@ -317,6 +326,7 @@
 
   function select(input, path) {
     input.addEventListener('change', () => {
+      markDirty();
       write(path, input.value);
       syncControls();
       update();
@@ -325,6 +335,7 @@
 
   function check(input, path) {
     input.addEventListener('change', () => {
+      markDirty();
       write(path, input.checked);
       syncControls();
       update();
@@ -341,13 +352,13 @@
        bygde på nytt her, men skal ikkje vere avhengige av at nokon hugsar
        å kalle syncControls() etter kvart byte av oppsett. */
     chips(els.moduleShapes, VR.shapes.MODULE_SHAPES, d.module.shape, (id) => {
-      write('module.shape', id); syncControls(); update();
+      markDirty(); write('module.shape', id); syncControls(); update();
     });
     chips(els.eyeFrames, VR.shapes.EYE_FRAMES, d.eye.frame, (id) => {
-      write('eye.frame', id); syncControls(); update();
+      markDirty(); write('eye.frame', id); syncControls(); update();
     });
     chips(els.eyePupils, VR.shapes.EYE_PUPILS, d.eye.pupil, (id) => {
-      write('eye.pupil', id); syncControls(); update();
+      markDirty(); write('eye.pupil', id); syncControls(); update();
     });
 
     els.radius.value = d.module.radius;
@@ -365,7 +376,6 @@
     els.logoWeight.value = d.logo.weight;
     els.logoWeightOut.textContent = String(d.logo.weight);
 
-    els.alignStyle.value = d.alignment.style;
     els.fillType.value = d.fill.type;
     els.fillTarget.value = d.fill.target;
     els.frameStyle.value = d.frame.style;
@@ -539,7 +549,8 @@
       els.preview.hidden = true;
       els.capacity.textContent = 'Tomt';
       els.meterBar.style.width = '0%';
-      setStatus('none', 'Ingen kode enno', []);
+      checkToken++;
+      setStatus('none', 'Ingen kode enno');
       enableExports(false);
       return;
     }
@@ -564,7 +575,8 @@
         'Innhaldet er for langt for ein QR-kode på feilretting ' + ecc +
         '. Kort ned teksten, eller vel eit lågare feilrettingsnivå.';
       els.preview.hidden = true;
-      setStatus('bad', 'Får ikkje plass', [{ level: 'bad', text: 'Innhaldet er for langt.' }]);
+      checkToken++;
+      setStatus('bad', 'Innhaldet er for langt for ein QR-kode.');
       enableExports(false);
       return;
     }
@@ -578,11 +590,8 @@
     els.preview.setAttribute('aria-label',
       'QR-kode for ' + type.label.toLowerCase() + ': ' + shortText(state.text));
 
-    const report = VR.check.rules(qr, state.design, logo);
-    setStatus(report.level,
-      report.level === 'ok' ? 'Ser bra ut' :
-      report.level === 'warn' ? 'Bør sjekkast' : 'Truleg ulesbar',
-      report.notes);
+    setStatus('checking', 'Sjekkar koden …');
+    scheduleCheck();
     enableExports(true);
   }
 
@@ -591,15 +600,53 @@
     return one.length > 70 ? one.slice(0, 70) + '…' : one;
   }
 
-  function setStatus(level, title, notes) {
+  /* Statusfeltet er ei lampe og ei linje. Lista med merknader er borte:
+     ho fortalde sant, men ho fortalde det til nokon som berre ville lage
+     ein QR-kode til tavla. Er noko gale, får du grunnen — éi setning. */
+  function setStatus(level, title) {
     els.status.dataset.level = level;
     els.statusTitle.textContent = title;
-    U.clear(els.statusList);
-    notes.forEach((note) => {
-      const li = U.el('li', 'vr-note vr-note-' + note.level, note.text);
-      els.statusList.appendChild(li);
-    });
-    els.verifyBtn.disabled = level === 'none';
+  }
+
+  /* ──────────────── Automatisk lesbarheitssjekk ────────────────
+
+     Koden blir lesen tilbake etter kvar endring, ikkje når nokon trykkjer
+     på ein knapp. Ein knapp du må hugse å trykkje på er ein knapp som ikkje
+     blir trykt på, og då er sjekken like god som om han ikkje fanst.
+
+     Teljaren finst fordi kvar sjekk tek nokre hundre millisekund: skriv du
+     vidare medan han går, skal svaret hans kastast og ikkje overskrive
+     statusen for det du har no. */
+  let checkToken = 0;
+
+  const scheduleCheck = U.debounce(() => { runCheck(); }, 400);
+
+  async function runCheck() {
+    if (!state.scene) return;
+    const token = ++checkToken;
+    const expected = state.text;
+    const report = VR.check.rules(state.qr, state.design, activeLogo());
+
+    let result;
+    try {
+      result = await VR.check.decode(state.scene, expected);
+    } catch (err) {
+      /* Fekk vi ikkje lasta lesaren, seier vi det framfor å vise ei grøn
+         lampe vi ikkje har dekning for. */
+      if (token !== checkToken) return;
+      setStatus(report.level === 'ok' ? 'warn' : report.level,
+        report.worst ? report.worst.short : 'Fekk ikkje sjekka koden automatisk.');
+      return;
+    }
+    if (token !== checkToken) return;
+
+    if (!result.ok) {
+      setStatus('bad', report.worst ? report.worst.short : 'Koden let seg ikkje lese.');
+    } else if (report.worst) {
+      setStatus('warn', report.worst.short);
+    } else {
+      setStatus('ok', 'Koden er lesbar.');
+    }
   }
 
   function enableExports(on) {
@@ -681,8 +728,10 @@
       state.design.logo.source = 'none';
     }
 
+    currentPreset = '';
     buildFields();
     syncControls();
+    buildPresets();
     buildIconGrid(els.iconSearch.value);
     update();
   }
@@ -738,7 +787,7 @@
     if (pendingSave === 'template') {
       const design = VR.design.clone(state.design);
       VR.storage.saveTemplate(name, design);
-      buildMyTemplates();
+      buildPresets();
       toast('Stilen er lagra.');
     } else {
       state.name = name;
@@ -803,36 +852,6 @@
   }
 
   /* ──────────────── Lesbarheitssjekk ──────────────── */
-
-  function bindVerify() {
-    els.verifyBtn.addEventListener('click', async () => {
-      if (!state.scene) return;
-      els.verifyBtn.disabled = true;
-      els.verifyNote.textContent = 'Les koden …';
-      try {
-        const result = await VR.check.decode(state.scene, state.text);
-        const failed = result.sizes.filter(s => !s.ok).map(s => s.px + ' px');
-        if (result.ok) {
-          els.verifyNote.textContent =
-            'Lesen i alle tre storleikane (' + result.sizes.map(s => s.px + ' px').join(', ') +
-            '). Koden verkar.';
-        } else if (result.text === state.text) {
-          els.verifyNote.textContent =
-            'Lesen i somme storleikar, men ikkje i ' + failed.join(' og ') + '. ' +
-            'Koden er på grensa — han kan svikte alt etter kor stort han blir vist.';
-        } else if (result.text) {
-          els.verifyNote.textContent =
-            'Koden vart lesen, men teksten stemte ikkje. Det bør ikkje kunne skje — sei frå om det.';
-        } else {
-          els.verifyNote.textContent =
-            'Klarte ikkje lese koden. Prøv lågare logostorleik, meir kontrast eller mindre luft mellom modulane.';
-        }
-      } catch (err) {
-        els.verifyNote.textContent = err.message;
-      }
-      els.verifyBtn.disabled = false;
-    });
-  }
 
   /* ──────────────── Mange kodar ──────────────── */
 
@@ -903,15 +922,14 @@
 
   function collect() {
     [
-      'typeGrid', 'typeHint', 'fields', 'contentWarn', 'capacity', 'meterBar',
+      'typeSelect', 'typeHint', 'fields', 'contentWarn', 'capacity', 'meterBar',
       'recentBox', 'recentList', 'clearRecentBtn',
-      'preview', 'previewEmpty', 'status', 'statusTitle', 'statusList',
-      'verifyBtn', 'verifyNote',
+      'preview', 'previewEmpty', 'status', 'statusTitle', 'statusDot',
       'pngBtn', 'svgBtn', 'copyBtn', 'printBtn', 'pngSize',
       'saveBtn', 'exportJsonBtn', 'importJsonBtn', 'jsonInput',
-      'presets', 'myTemplates', 'saveTemplateBtn',
+      'presetSelect', 'deleteTemplateBtn', 'saveTemplateBtn',
       'moduleShapes', 'radius', 'radiusOut', 'gap', 'gapOut',
-      'eyeFrames', 'eyePupils', 'alignStyle',
+      'eyeFrames', 'eyePupils',
       'fillType', 'inkSwatch', 'inkValue', 'ink2Row', 'ink2Swatch', 'ink2Value',
       'angleRow', 'angle', 'angleOut', 'targetRow', 'fillTarget',
       'eyeSame', 'eyeColorRow', 'eyeSwatch', 'eyeValue',
@@ -936,18 +954,17 @@
     VR.color.attach();
     iconNames = VR.logo.iconNames();
 
-    buildTypeGrid();
+    buildTypeSelect();
     buildFields();
     buildControls();
     buildPresets();
-    buildMyTemplates();
+    bindPresets();
     buildSaved();
     buildRecent();
     buildIconGrid('');
     bindUpload();
     bindExports();
     bindSaving();
-    bindVerify();
     bindBatch();
     bindPanels();
 
