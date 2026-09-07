@@ -3,6 +3,13 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.43] — 2026-09-07
+
+### Fiksa
+- **Kontrollane i Vitjingsruta slutta å verke så snart du hadde klikka ein ferdigstil.** Fargeveljaren, skyvarane, nedtrekka og avkryssingane gjorde ingenting — verken i førehandsvisinga eller i eksporten — og det kom ingen feilmelding. Feilen var at kontrollane vart bundne til sjølve oppsett-objektet éin gong ved oppstart, medan `state.design` blir **bytt ut** kvar gong nokon hentar ein ferdigstil, opnar eit lagra oppsett eller importerer ei JSON-fil. Frå det augeblikket skreiv kvar kontroll inn i eit oppsett som ikkje lenger var i bruk.
+
+  Kontrollane peikar no på ein **sti** inn i oppsettet (`fill.color`, `module.radius`) i staden for på objektet, og oppsettet blir slege opp på nytt for kvart tastetrykk. Det fjernar heile klassen av feil framfor dei 21 einskilde bindingane: ei ny kontroll kan ikkje bli bunden feil.
+
 ## [1.42] — 2026-09-06
 
 ### Lagt til

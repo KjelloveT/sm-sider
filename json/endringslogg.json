@@ -2,6 +2,18 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.43",
+      "dato": "2026-09-07",
+      "samandrag": "Fargar og andre innstillingar i Vitjingsruta verkar igjen etter at du har valt ein ferdigstil.",
+      "punkt": [
+        {
+          "t": "fiksa",
+          "kva": "Vitjingsruta",
+          "tekst": "Fargeveljaren og dei andre innstillingane gjorde ingenting så snart du hadde klikka ein ferdigstil eller opna eit lagra oppsett. Dei verkar no uansett rekkjefølgje."
+        }
+      ]
+    },
+    {
       "versjon": "1.42",
       "dato": "2026-09-06",
       "samandrag": "Vitjingsruta er ny: QR-kodar du formar sjølv, med logo, og ein sjekk som les koden tilbake.",
