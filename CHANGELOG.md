@@ -3,6 +3,27 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.42] — 2026-09-06
+
+### Lagt til
+- **Vitjingsruta** — eit verktøy som lagar QR-kodar. Alternativet var nettbaserte tenester som sender innhaldet til ein tenar, og som ofte lagar «dynamiske» kodar via ein vidaresendar eigaren kontrollerer. Ein QR-kode er rein matematikk og treng ingen tenar.
+  - **Ni innhaldstypar:** lenkje, fritekst, trådlaust nett, kontaktkort (vCard eller MeCard), e-post, SMS, telefon, posisjon og kalenderhending. Kvar type veit si eiga form, og rømmer teikn slik formatet krev — eit semikolon i eit WiFi-passord ville elles lese resten av strengen som eit nytt felt.
+  - **Designmotor:** seks modulformer (mellom dei ei samanbunden som renn saman til éin kropp), eigne former på augene, flat farge eller fargeovergang, eiga augefarge, ramme med tekst, og ti ferdige stilar.
+  - **Logo i midten:** eit av dei 190 Lucide-ikona, ein Vyrdepil-logo, eller ei fil du lastar opp. Modulane under blir sparte ut i staden for å bli teikna over.
+  - **Lesbarheitssjekk:** verktøyet les den ferdige, designa koden tilbake i tre storleikar og seier om han faktisk let seg skanne. Reglar kan seie «dette bør gå bra»; berre dekodinga kan seie «dette gjekk bra».
+  - **Kodeark:** lim inn ei liste, få alle kodane på eitt A4-ark med etikett under kvar — eller som zip.
+  - PNG i valfri storleik, ekte vektor-SVG, utskrift, utklippstavle og oppsett som JSON.
+
+### Endra
+- **Éi kjelde for geometrien.** Både PNG-en og SVG-en blir bygde av dei same SVG-path-strengane: canvas les dei gjennom `Path2D`, SVG-en skriv dei rett inn. Måling av eksporten viser 0,000 % avvik mellom dei to for alle stilar utan rammetekst; med tekst skil dei 0,7–3,3 %, som er skilnaden mellom `fillText` og `<text>`.
+- **`qrcode-generator`, `JSZip` og `jsQR` ligg no i `_libs/`** med oppføring i `CREDITS.md`. Dei to første låg inne i Ordaklok og Bildebehandling, i strid med §5.6. Stiane i dei to verktøya er oppdaterte, og dei tre mappene har fått `immutable`-cache som dei andre versjonspinna biblioteka.
+- **Sju nye ikon** i det felles settet `js/vyrdepil-icons.js`: `wifi`, `phone`, `mail`, `messageSquare`, `contact`, `qrCode` og `scanLine`.
+
+### Fiksa (funne ved måling, før noko var publisert)
+- **Runde modular gjorde koden ulesbar i store storleikar.** Timing-mønsteret er ei linje av enkeltmodular som vekslar mørk og lys, og skannaren måler modulbreidda på han. Er kvar av dei ein sirkel, måler han for smalt. Med prikkform feila lesinga frå 800 px og oppover; med funksjonsmodulane teikna som heile kvadrat les han på alle storleikar frå 220 til 1600 px. Same valet kommersielle QR-designarar gjer.
+- **«Liten prikk» som augekjerne er teken ut.** Han feila i alle kombinasjonar vi målte. Skannaren finn koden ved å måle forholdet 1:1:3:1:1 tvers over auget, og ein kjerne som er mindre enn dei tre modulane sine gjer det talet feil.
+- **Logogrensene er målte, ikkje gjetta.** Med utsparing og feilretting H las lesaren koden på 15, 20 og 25 %, og ikkje på 30 og 35 %. Åtvaringa står no mellom desse, og seier kva målinga viste.
+
 ## [1.41] — 2026-09-01
 
 ### Lagt til

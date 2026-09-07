@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitjingsruta — QR-kodar med eige design for Vyrdepil</title>
+<meta name="description" content="Lag QR-kodar til lenkjer, trådlause nett, kontaktkort og meir. Form modulane, vel fargar og legg på ein logo. Alt skjer i nettlesaren.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+<link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+<link rel="stylesheet" href="../css/neobrutalisme.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="space" data-theme="classic">
+
+<neo-header></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+  <div class="box2 hero-box">
+    <img src="../_resources/vitjingsruta.png" alt="Vitjingsruta" class="hero-logo">
+    <div class="hero-text">
+      <h1>Vitjingsruta</h1>
+      <p>Lag ein QR-kode til ei lenkje, eit trådlaust nett, eit kontaktkort eller ei kalenderhending — og form han slik du vil. Alt skjer i nettlesaren din; innhaldet blir aldri sendt nokon stad.</p>
+    </div>
+  </div>
+
+  <!-- ══════════ 1. Innhald ══════════ -->
+  <section class="box1" aria-labelledby="contentHeading">
+    <h2 class="heading3 no-mt" id="contentHeading">1. Kva skal koden innehalde?</h2>
+
+    <div class="vr-type-grid" id="typeGrid" role="tablist" aria-label="Innhaldstype"></div>
+    <p class="vr-hint" id="typeHint"></p>
+
+    <div class="vr-fields" id="fields"></div>
+
+    <p class="vr-warn" id="contentWarn" hidden></p>
+
+    <div class="vr-meter-row">
+      <div class="vr-meter" aria-hidden="true"><span id="meterBar"></span></div>
+      <p class="vr-muted" id="capacity">Tomt</p>
+    </div>
+
+    <details class="vr-details" id="recentBox" hidden>
+      <summary>Nyleg innhald</summary>
+      <div class="vr-recent" id="recentList"></div>
+      <button class="btn vr-small" type="button" id="clearRecentBtn">Tøm lista</button>
+    </details>
+  </section>
+
+  <!-- ══════════ 2. Design og resultat ══════════ -->
+  <section aria-labelledby="designHeading">
+    <h2 class="heading3 heading3-accent2" id="designHeading">2. Form og last ned</h2>
+
+    <div class="vr-layout">
+
+      <!-- Førehandsvising -->
+      <div class="vr-preview-col">
+        <div class="vr-preview" id="previewWrap">
+          <canvas id="preview" width="600" height="600" role="img" aria-label="Førehandsvising av QR-koden"></canvas>
+          <p class="vr-empty" id="previewEmpty">Skriv inn noko innhald, så teiknar vi koden her.</p>
+        </div>
+
+        <div class="vr-status" id="status" role="status" aria-live="polite">
+          <div class="vr-status-head">
+            <span class="vr-status-dot" id="statusDot"></span>
+            <strong id="statusTitle">Ingen kode enno</strong>
+          </div>
+          <ul class="vr-status-list" id="statusList"></ul>
+          <div class="vr-btn-row">
+            <button class="btn vr-small" type="button" id="verifyBtn" data-icon="scanLine">Prøv å lese koden</button>
+          </div>
+          <p class="vr-muted vr-tiny" id="verifyNote">Sjekken teiknar den ferdige koden og les han tilbake. Han hentar eit lesar-bibliotek på 257 kB første gongen.</p>
+        </div>
+
+        <div class="vr-btn-row">
+          <button class="btn" type="button" id="pngBtn" data-icon="download">Last ned PNG</button>
+          <button class="btn" type="button" id="svgBtn" data-icon="fileDown">Last ned SVG</button>
+          <button class="btn" type="button" id="copyBtn" data-icon="copy">Kopier</button>
+          <button class="btn" type="button" id="printBtn" data-icon="printer">Skriv ut</button>
+        </div>
+
+        <div class="vr-setting-row">
+          <label class="vr-setting-label" for="pngSize">Storleik på PNG</label>
+          <select class="vr-select" id="pngSize">
+            <option value="512">512 px</option>
+            <option value="1024" selected>1024 px</option>
+            <option value="2048">2048 px</option>
+            <option value="4096">4096 px</option>
+          </select>
+        </div>
+
+        <div class="vr-btn-row">
+          <button class="btn vr-small" type="button" id="saveBtn" data-icon="save">Lagre oppsett</button>
+          <button class="btn vr-small" type="button" id="exportJsonBtn" data-icon="fileJson">Eksporter JSON</button>
+          <button class="btn vr-small" type="button" id="importJsonBtn" data-icon="fileUp">Importer JSON</button>
+          <input type="file" id="jsonInput" accept="application/json,.json" hidden>
+        </div>
+      </div>
+
+      <!-- Kontrollar -->
+      <div class="vr-controls-col">
+
+        <div class="box4">
+          <div class="box-header">Ferdige stilar</div>
+          <div class="box-body">
+            <div class="vr-presets" id="presets" role="group" aria-label="Ferdige stilar"></div>
+            <div class="vr-btn-row">
+              <button class="btn vr-small" type="button" id="saveTemplateBtn" data-icon="stamp">Lagre stilen min</button>
+            </div>
+            <div class="vr-presets" id="myTemplates" role="group" aria-label="Eigne stilar"></div>
+          </div>
+        </div>
+
+        <div class="box5">
+          <div class="box-tabs" role="tablist" aria-label="Designpanel">
+            <button class="box-tab active" type="button" role="tab" data-panel="form" aria-selected="true">Form</button>
+            <button class="box-tab" type="button" role="tab" data-panel="farge" aria-selected="false">Farge</button>
+            <button class="box-tab" type="button" role="tab" data-panel="logo" aria-selected="false">Logo</button>
+            <button class="box-tab" type="button" role="tab" data-panel="ramme" aria-selected="false">Ramme</button>
+          </div>
+
+          <!-- Form -->
+          <div class="box-body vr-panel" data-panel="form">
+            <div class="vr-setting">
+              <span class="vr-setting-label" id="modShapeLabel">Modulform</span>
+              <div class="vr-chips" id="moduleShapes" role="radiogroup" aria-labelledby="modShapeLabel"></div>
+            </div>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="radius">Avrunding <span class="vr-value" id="radiusOut"></span></label>
+              <input type="range" class="vr-range" id="radius" min="0" max="1" step="0.05">
+            </div>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="gap">Luft mellom modulane <span class="vr-value" id="gapOut"></span></label>
+              <input type="range" class="vr-range" id="gap" min="0" max="0.12" step="0.01">
+            </div>
+            <div class="vr-setting">
+              <span class="vr-setting-label" id="eyeFrameLabel">Auge — ramme</span>
+              <div class="vr-chips" id="eyeFrames" role="radiogroup" aria-labelledby="eyeFrameLabel"></div>
+            </div>
+            <div class="vr-setting">
+              <span class="vr-setting-label" id="eyePupilLabel">Auge — kjerne</span>
+              <div class="vr-chips" id="eyePupils" role="radiogroup" aria-labelledby="eyePupilLabel"></div>
+            </div>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="alignStyle">Justeringsmønster</label>
+              <select class="vr-select" id="alignStyle">
+                <option value="module">Same form som modulane</option>
+                <option value="rounded">Eiga ramme</option>
+                <option value="circle">Sirklar</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Farge -->
+          <div class="box-body vr-panel" data-panel="farge" hidden>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="fillType">Fyll</label>
+              <select class="vr-select" id="fillType">
+                <option value="solid">Flat farge</option>
+                <option value="linear">Overgang, rett</option>
+                <option value="radial">Overgang, frå midten</option>
+              </select>
+            </div>
+            <div class="vr-setting vr-color-row-setting">
+              <span class="vr-setting-label">Modulfarge</span>
+              <button class="vr-swatch" type="button" id="inkSwatch" aria-label="Vel modulfarge"></button>
+              <span class="vr-mono" id="inkValue"></span>
+            </div>
+            <div class="vr-setting vr-color-row-setting" id="ink2Row" hidden>
+              <span class="vr-setting-label">Farge nummer to</span>
+              <button class="vr-swatch" type="button" id="ink2Swatch" aria-label="Vel andre fargen i overgangen"></button>
+              <span class="vr-mono" id="ink2Value"></span>
+            </div>
+            <div class="vr-setting" id="angleRow" hidden>
+              <label class="vr-setting-label" for="angle">Retning <span class="vr-value" id="angleOut"></span></label>
+              <input type="range" class="vr-range" id="angle" min="0" max="360" step="15">
+            </div>
+            <div class="vr-setting" id="targetRow" hidden>
+              <label class="vr-setting-label" for="fillTarget">Overgangen gjeld</label>
+              <select class="vr-select" id="fillTarget">
+                <option value="all">Heile koden</option>
+                <option value="module">Berre modulane</option>
+                <option value="eye">Berre augene</option>
+              </select>
+            </div>
+            <label class="vr-check">
+              <input type="checkbox" id="eyeSame"> Augene har same farge som modulane
+            </label>
+            <div class="vr-setting vr-color-row-setting" id="eyeColorRow" hidden>
+              <span class="vr-setting-label">Augefarge</span>
+              <button class="vr-swatch" type="button" id="eyeSwatch" aria-label="Vel augefarge"></button>
+              <span class="vr-mono" id="eyeValue"></span>
+            </div>
+            <div class="vr-setting vr-color-row-setting">
+              <span class="vr-setting-label">Bakgrunn</span>
+              <button class="vr-swatch" type="button" id="bgSwatch" aria-label="Vel bakgrunnsfarge"></button>
+              <span class="vr-mono" id="bgValue"></span>
+            </div>
+            <label class="vr-check">
+              <input type="checkbox" id="bgTransparent"> Gjennomsiktig bakgrunn
+            </label>
+          </div>
+
+          <!-- Logo -->
+          <div class="box-body vr-panel" data-panel="logo" hidden>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="logoSource">Kjelde</label>
+              <select class="vr-select" id="logoSource">
+                <option value="none">Ingen logo</option>
+                <option value="icon">Ikon frå Vyrdepil</option>
+                <option value="app">Logo frå ei Vyrdepil-side</option>
+                <option value="upload">Eiga fil</option>
+              </select>
+            </div>
+
+            <div id="iconPickerBox" hidden>
+              <input type="search" class="vr-text-input" id="iconSearch" placeholder="Søk etter ikon …" aria-label="Søk etter ikon">
+              <div class="vr-icon-grid" id="iconGrid" role="radiogroup" aria-label="Ikon"></div>
+              <div class="vr-setting vr-color-row-setting">
+                <span class="vr-setting-label">Ikonfarge</span>
+                <button class="vr-swatch" type="button" id="logoColorSwatch" aria-label="Vel ikonfarge"></button>
+                <span class="vr-mono" id="logoColorValue"></span>
+              </div>
+              <div class="vr-setting">
+                <label class="vr-setting-label" for="logoWeight">Strekbreidd <span class="vr-value" id="logoWeightOut"></span></label>
+                <input type="range" class="vr-range" id="logoWeight" min="1" max="3.5" step="0.25">
+              </div>
+            </div>
+
+            <div id="appPickerBox" hidden>
+              <div class="vr-app-grid" id="appGrid" role="radiogroup" aria-label="Vyrdepil-logoar"></div>
+            </div>
+
+            <div id="uploadBox" hidden>
+              <div class="vr-upload" id="uploadZone" role="button" tabindex="0"
+                   aria-label="Vel eller slepp ei biletfil">
+                <span data-icon="imagePlus" data-icon-size="28"></span>
+                <span class="vr-upload-text">Klikk eller slepp ei fil her<br><span class="vr-muted vr-tiny">PNG, JPG, WebP eller SVG — maks 4 MB</span></span>
+              </div>
+              <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/svg+xml,.svg" hidden>
+              <p class="vr-muted vr-tiny" id="uploadNote" hidden></p>
+            </div>
+
+            <div id="logoOptions" hidden>
+              <div class="vr-setting">
+                <label class="vr-setting-label" for="logoSize">Storleik <span class="vr-value" id="logoSizeOut"></span></label>
+                <input type="range" class="vr-range" id="logoSize" min="0.05" max="0.35" step="0.01">
+              </div>
+              <div class="vr-setting">
+                <label class="vr-setting-label" for="logoPlate">Plate bak logoen</label>
+                <select class="vr-select" id="logoPlate">
+                  <option value="roundrect">Avrunda firkant</option>
+                  <option value="circle">Sirkel</option>
+                  <option value="none">Inga plate</option>
+                </select>
+              </div>
+              <div class="vr-setting vr-color-row-setting" id="plateColorRow">
+                <span class="vr-setting-label">Platefarge</span>
+                <button class="vr-swatch" type="button" id="plateSwatch" aria-label="Vel farge på plata"></button>
+                <span class="vr-mono" id="plateValue"></span>
+              </div>
+              <div class="vr-setting">
+                <label class="vr-setting-label" for="platePad">Luft rundt logoen <span class="vr-value" id="platePadOut"></span></label>
+                <input type="range" class="vr-range" id="platePad" min="0" max="0.6" step="0.02">
+              </div>
+              <label class="vr-check">
+                <input type="checkbox" id="excavate"> Fjern modulane under logoen
+              </label>
+            </div>
+          </div>
+
+          <!-- Ramme -->
+          <div class="box-body vr-panel" data-panel="ramme" hidden>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="frameStyle">Rammestil</label>
+              <select class="vr-select" id="frameStyle"></select>
+            </div>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="frameText">Tekst</label>
+              <input type="text" class="vr-text-input" id="frameText" maxlength="40" placeholder="SKANN MEG">
+            </div>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="framePos">Teksten står</label>
+              <select class="vr-select" id="framePos">
+                <option value="bottom">Under koden</option>
+                <option value="top">Over koden</option>
+              </select>
+            </div>
+            <div class="vr-setting vr-color-row-setting">
+              <span class="vr-setting-label">Rammefarge</span>
+              <button class="vr-swatch" type="button" id="frameSwatch" aria-label="Vel rammefarge"></button>
+              <span class="vr-mono" id="frameValue"></span>
+            </div>
+            <hr class="vr-rule">
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="quiet">Stillesone <span class="vr-value" id="quietOut"></span></label>
+              <input type="range" class="vr-range" id="quiet" min="0" max="8" step="1">
+            </div>
+            <div class="vr-setting">
+              <label class="vr-setting-label" for="ecc">Feilretting</label>
+              <select class="vr-select" id="ecc">
+                <option value="auto">Automatisk</option>
+                <option value="L">L — 7 %</option>
+                <option value="M">M — 15 %</option>
+                <option value="Q">Q — 25 %</option>
+                <option value="H">H — 30 %</option>
+              </select>
+            </div>
+            <p class="vr-muted vr-tiny">Høgare feilretting toler meir skit, slitasje og logo — men tettar koden. Automatisk vel det høgaste innhaldet får plass til, og aldri under Q når det ligg ein logo oppå.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 3. Mange kodar ══════════ -->
+  <details class="accordion-box accordion-box-accent4 vr-section" id="batchBox">
+    <summary>Mange kodar på ein gong</summary>
+    <div class="accordion-content">
+      <p>Éi linje per kode. Vil du ha ein etikett under koden, skriv <code>Etikett | innhald</code>. Alle kodane får den stilen du har sett over. Maks 60 linjer.</p>
+      <textarea class="vr-textarea" id="batchText" rows="7" aria-label="Ei linje per kode"
+        placeholder="Stasjon 1 | vyrdepil.no/ordkryss&#10;Stasjon 2 | vyrdepil.no/leitekryss&#10;Stasjon 3 | vyrdepil.no/duldord"></textarea>
+      <div class="vr-setting-row">
+        <label class="vr-setting-label" for="batchType">Innhaldstype</label>
+        <select class="vr-select" id="batchType"></select>
+        <label class="vr-setting-label" for="batchCols">Kolonnar på arket</label>
+        <select class="vr-select" id="batchCols">
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+      <div class="vr-btn-row">
+        <button class="btn" type="button" id="batchSheetBtn" data-icon="printer">Lag kodeark</button>
+        <button class="btn" type="button" id="batchZipBtn" data-icon="hardDriveDownload">Last ned som ZIP (PNG)</button>
+        <button class="btn" type="button" id="batchZipSvgBtn" data-icon="hardDriveDownload">ZIP (SVG)</button>
+      </div>
+      <p class="vr-warn" id="batchWarn" hidden></p>
+    </div>
+  </details>
+
+  <!-- ══════════ 4. Lagra oppsett ══════════ -->
+  <details class="accordion-box accordion-box-accent5 vr-section" id="savedBox">
+    <summary>Lagra oppsett</summary>
+    <div class="accordion-content">
+      <div class="vr-saved" id="savedList"></div>
+      <p class="vr-muted vr-tiny">Oppsetta ligg i nettlesaren din, ikkje på nokon tenar. Tømmer du nettlesardata, forsvinn dei.</p>
+    </div>
+  </details>
+
+  <p class="vr-muted vr-footnote">
+    Vitjingsruta reknar ut koden på maskina di. Verken lenkja, passordet eller kontaktkortet du skriv inn blir sendt nokon stad —
+    det finst ingen tenar å sende det til. <a href="../personvern.html">Meir om personvern</a>.
+  </p>
+
+</main>
+</div>
+
+<!-- Utskrift -->
+<div class="vr-print" id="printArea" aria-hidden="true">
+  <img id="printImg" alt="">
+  <p id="printCaption"></p>
+  <div class="vr-sheet" id="sheet"></div>
+</div>
+
+<!-- Namn på lagringa -->
+<div class="modal-overlay" id="nameOverlay">
+  <div class="modal1" role="dialog" aria-modal="true" aria-labelledby="nameTitle">
+    <button class="btn modal-close" type="button" id="nameClose" aria-label="Lukk">✕</button>
+    <h2 class="heading4 no-mt" id="nameTitle">Gje oppsettet eit namn</h2>
+    <input type="text" class="vr-text-input" id="nameInput" maxlength="60" placeholder="Til dømes «Stasjon 3»">
+    <div class="vr-btn-row">
+      <button class="btn" type="button" id="nameOk">Lagre</button>
+      <button class="btn" type="button" id="nameCancel">Avbryt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Fargeveljar -->
+<div class="vr-color-pop" id="colorPop" hidden role="dialog" aria-label="Vel farge">
+  <div class="vr-color-area" id="colorArea" tabindex="0" role="slider"
+       aria-label="Metting og lysstyrke" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="vr-color-cursor" id="colorCursor"></div>
+  </div>
+  <div class="vr-color-hue" id="colorHue" tabindex="0" role="slider"
+       aria-label="Fargetone" aria-valuemin="0" aria-valuemax="360" aria-valuenow="0">
+    <div class="vr-color-hue-cursor" id="colorHueCursor"></div>
+  </div>
+  <div class="vr-color-row">
+    <span class="vr-color-preview" id="colorPreview"></span>
+    <input type="text" class="vr-text-input vr-color-hex" id="colorHex" maxlength="7" spellcheck="false" aria-label="Fargekode">
+  </div>
+  <div class="vr-color-swatches" id="colorSwatches" role="group" aria-label="Fargar frå temaet"></div>
+</div>
+
+<div class="vr-toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="../_libs/qrcode-arase/qrcode.js"></script>
+<script src="../_libs/jszip/jszip.min.js"></script>
+
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+
+<script src="js/util.js"></script>
+<script src="js/qr.js"></script>
+<script src="js/content.js"></script>
+<script src="js/shapes.js"></script>
+<script src="js/design.js"></script>
+<script src="js/render.js"></script>
+<script src="js/render-canvas.js"></script>
+<script src="js/render-svg.js"></script>
+<script src="js/logo.js"></script>
+<script src="js/check.js"></script>
+<script src="js/color.js"></script>
+<script src="js/export.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/batch.js"></script>
+<script src="js/ui.js"></script>
+
+<script src="../js/neobrutalisme.js"></script>
+</body>
+</html>

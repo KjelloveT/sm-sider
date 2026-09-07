@@ -301,3 +301,98 @@ skriven inn per hjørne, så nettlesaren slepp å laste teksturen.
 | Prosjekt | [Mini Characters](https://kenney.nl/assets/mini-characters-1) av Kenney |
 | Lisens | CC0 1.0 — fri bruk, kreditering frivillig |
 | Format | glTF 2.0 binær (`.glb`), med skinn og animasjonar |
+
+## qrcode-generator 1.4.4 — `qrcode-arase/`
+
+QR-kodaren i **Vitjingsruta**, og den same fila som lagar delingskoden i
+**Ordaklok**. Han gjer ein tekststreng om til ei matrise av modular —
+Reed–Solomon-feilretting, versjonsval og maskering.
+
+| | |
+|---|---|
+| Prosjekt | [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) av Kazuhiko Arase |
+| Lisens | MIT |
+| Versjon | 1.4.4 |
+| Henta frå | `https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js` — låg opphavleg i `ordaklok/js/lib/`, flytta hit 2026-09-06 |
+| Endra av oss | Nei |
+
+| Fil | Byte | SHA-256 |
+|---|---|---|
+| `qrcode.js` | 56 694 | `18ae399f81182bc9de916e9c77b195df20cc58d6f2d55a62b085a299f1bf1780` |
+
+Fila festar seg på `window.qrcode` og lastar med ein vanleg `<script>`-tagg.
+
+Biblioteket har eigne teiknarutinar (`createDataURL`, `createSvgTag`), men
+Vitjingsruta brukar dei ikkje. Vi les matrisa gjennom `getModuleCount()` og
+`isDark(r, c)` og teiknar sjølve — det er heile grunnen til at koden kan få
+runde modular, eigne auge og fargeovergangar. Ordaklok brukar framleis si
+eiga enkle lerretsteikning.
+
+«QR Code» er eit registrert varemerke for DENSO WAVE INCORPORATED.
+Patenta på sjølve formatet er utgått, og DENSO WAVE seier sjølv at retten
+ikkje blir handheva — sjå [FAQ-en deira](https://www.denso-wave.com/en/technology/vol1.html).
+
+Godkjend av brukaren under planlegginga av Vitjingsruta.
+
+## jsQR 1.4.0 — `jsqr/`
+
+QR-**lesaren** i Vitjingsruta. Han står ikkje for noka brukarfunksjon; han
+er kvalitetskontrollen.
+
+Grunnen til at han er her: eit designverktøy som let deg runde modulane,
+leggje på ein logo og velje eigne fargar, kan lage kodar som ser flotte ut
+og ikkje let seg skanne. Reglar — kontrast, logostorleik, stille sone —
+fangar det meste, men dei er tommelfingerreglar. jsQR les den ferdige,
+designa koden tilbake frå lerretet og samanliknar med teksten som gjekk
+inn. Skiljet er mellom «reglane er oppfylte» og «koden er faktisk lesen».
+
+| | |
+|---|---|
+| Prosjekt | [jsQR](https://github.com/cozmo/jsQR) av Cosmo Wolfe |
+| Lisens | Apache-2.0 — sjå `LICENSE` |
+| Versjon | 1.4.0 |
+| Henta frå | `https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js`, 2026-09-06 |
+| Endra av oss | Nei |
+
+| Fil | Byte | SHA-256 |
+|---|---|---|
+| `jsQR.js` | 256 885 | `bc40c8a15196236b2314db0856f72ca0b49980cd5413b8c852a7349f5fee0859` |
+| `LICENSE` | 11 358 | `c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08` |
+
+Pakken har inga minifisert utgåve — `dist/jsQR.js` er det einaste bygget
+som blir distribuert. 257 kB rått blir **57 kB** over nettet, sidan Azure
+komprimerer, og fila blir lasta **etterspurt**: Vitjingsruta hentar han
+først når brukaren ber om lesbarheitssjekken, ikkje ved sidelasting.
+
+**Han brukar ikkje kamera.** jsQR tek `ImageData` og returnerer teksten;
+kameratilgang er noko den som kallar eventuelt skaffar. `Permissions-Policy`
+i `staticwebapp.config.json` set `camera=()` for heile Vyrdepil, og det
+står uendra. Vitjingsruta matar han med pikslar frå sitt eige lerret.
+
+Ingen `eval` eller `new Function` — dei seks treffa på «eval» i fila er
+metoden `evaluateAt` i Reed–Solomon-koden. Ingen CSP-endring trengst.
+
+Godkjend av brukaren under planlegginga av Vitjingsruta.
+
+## JSZip 3.10.1 — `jszip/`
+
+ZIP-pakking i nettlesaren. Brukt av **Bildebehandling** til å laste ned
+mange behandla bilete på ein gong, og av **Vitjingsruta** til å laste ned
+eit heilt sett QR-kodar.
+
+| | |
+|---|---|
+| Prosjekt | [JSZip](https://stuk.github.io/jszip/) av Stuart Knightley m.fl. |
+| Lisens | MIT eller GPL-3.0 etter mottakarens val — vi brukar han under MIT |
+| Versjon | 3.10.1 |
+| Henta frå | npm — låg opphavleg i `bildebehandling/js/vendor/`, flytta hit 2026-09-06 |
+| Endra av oss | Nei |
+
+| Fil | Byte | SHA-256 |
+|---|---|---|
+| `jszip.min.js` | 97 630 | `acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e` |
+
+Han skriv og les zip-filer heilt lokalt; ingenting blir lasta opp.
+
+Godkjend av brukaren — opphavleg under arbeidet med Bildebehandling, og på
+nytt under planlegginga av Vitjingsruta då han vart flytta hit.

@@ -1,0 +1,468 @@
+/* Vitjingsruta — utvidar neobrutalisme.css.
+
+   Sjølve QR-koden er unnateken frå designsystemet: han skal bere dei
+   fargane brukaren har valt, i alle tema. Alt rundt han følgjer temaet. */
+
+/* ──────────────── Skjemaelement ──────────────── */
+
+.vr-text-input,
+.vr-select,
+.vr-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.vr-textarea {
+  min-height: 84px;
+  resize: vertical;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.vr-range { width: 100%; accent-color: var(--accent2); }
+
+.vr-text-input:focus-visible,
+.vr-select:focus-visible,
+.vr-textarea:focus-visible,
+.vr-range:focus-visible,
+.vr-swatch:focus-visible,
+.vr-chip:focus-visible,
+.vr-type:focus-visible,
+.vr-preset:focus-visible,
+.vr-icon-btn:focus-visible,
+.vr-app-btn:focus-visible,
+.vr-upload:focus-visible,
+.vr-color-area:focus-visible,
+.vr-color-hue:focus-visible,
+.vr-preset-del:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.vr-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  font-weight: 700;
+  cursor: pointer;
+}
+.vr-check input { width: 20px; height: 20px; accent-color: var(--accent2); }
+
+.vr-btn-row { display: flex; flex-wrap: wrap; gap: clamp(8px, 1.5vw, 12px); margin-top: 14px; }
+.btn.vr-small { font-size: 0.85rem; padding: 6px 12px; }
+.btn.vr-icon-only { padding: 6px 10px; display: inline-flex; align-items: center; }
+.btn[disabled] { opacity: 0.45; cursor: not-allowed; }
+.btn[disabled]:hover { transform: none; background: var(--surface); color: var(--text); }
+
+.vr-muted { color: var(--muted); font-size: 0.9rem; }
+.vr-tiny { font-size: 0.8rem; line-height: 1.45; }
+.vr-mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.85rem; }
+.vr-warn { color: var(--accent2); font-weight: 700; margin-top: 10px; }
+.vr-hint { color: var(--muted); font-size: 0.9rem; margin: 10px 0 4px; max-width: 70ch; }
+.vr-rule { border: none; border-top: 2px dashed var(--border); margin: 18px 0; }
+.vr-footnote { max-width: 78ch; margin-top: 28px; }
+.vr-section { margin-top: 24px; }
+
+/* ──────────────── Innhaldstypar ──────────────── */
+
+.vr-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.vr-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.82rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--shadow);
+}
+.vr-type:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--shadow); }
+/* Aktiv type blir invertert i staden for aksentfarga: --text mot --surface
+   er motsetnader i kvart einaste tema, så kontrasten held utan måling. */
+.vr-type.active { background: var(--text); color: var(--surface); }
+.vr-type-icon { display: flex; }
+
+.vr-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.vr-field-wide { grid-column: 1 / -1; }
+
+.vr-setting-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  /* Eksplisitt farge framfor arv: same mønster som resten av kodebasen,
+     og han held sjølv om elementet blir flytta inn i ein annan boks. */
+  color: var(--text);
+}
+
+.vr-value { float: right; font-weight: 700; text-transform: none; letter-spacing: 0; color: var(--muted); }
+
+/* ──────────────── Kapasitetsmålaren ──────────────── */
+
+.vr-meter-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+.vr-meter {
+  flex: 1 1 160px;
+  height: 12px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+.vr-meter span { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.15s; }
+.vr-meter span.vr-meter-full { background: var(--accent2); }
+.vr-meter-row p { margin: 0; }
+
+/* ──────────────── Oppsettet på sida ──────────────── */
+
+.vr-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(300px, 1fr);
+  gap: clamp(16px, 3vw, 28px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .vr-layout { grid-template-columns: 1fr; }
+}
+
+.vr-preview-col { position: sticky; top: 12px; }
+@media (max-width: 900px) {
+  .vr-preview-col { position: static; }
+}
+
+.vr-preview {
+  border: 3px solid var(--border);
+  box-shadow: 8px 8px 0 var(--shadow);
+  background:
+    linear-gradient(45deg, #d8d8d8 25%, transparent 25%),
+    linear-gradient(-45deg, #d8d8d8 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #d8d8d8 75%),
+    linear-gradient(-45deg, transparent 75%, #d8d8d8 75%),
+    #ffffff;
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+}
+
+.vr-preview canvas { display: block; width: 100%; height: auto; max-width: 420px; }
+.vr-empty { color: #444; font-weight: 700; text-align: center; max-width: 34ch; margin: 0; }
+
+/* ──────────────── Statusfeltet ──────────────── */
+
+.vr-status {
+  margin-top: 16px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  padding: 12px 14px;
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.vr-status-head { display: flex; align-items: center; gap: 10px; }
+
+.vr-status-dot {
+  width: 16px; height: 16px;
+  flex: 0 0 auto;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  background: var(--muted);
+}
+.vr-status[data-level="ok"] .vr-status-dot { background: #2d9c3f; }
+.vr-status[data-level="warn"] .vr-status-dot { background: #e8a11a; }
+.vr-status[data-level="bad"] .vr-status-dot { background: #d90429; }
+
+.vr-status-list { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 8px; }
+.vr-note {
+  color: var(--text);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  padding-left: 12px;
+  border-left: 4px solid var(--muted);
+}
+.vr-note-info { border-left-color: var(--accent); }
+.vr-note-warn { border-left-color: #e8a11a; }
+.vr-note-bad { border-left-color: #d90429; }
+
+/* ──────────────── Panel og brikker ──────────────── */
+
+.vr-panel { display: block; }
+.vr-setting { margin-bottom: 16px; }
+.vr-setting:last-child { margin-bottom: 0; }
+
+.vr-setting-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 14px; }
+.vr-setting-row .vr-setting-label { margin: 0; }
+.vr-setting-row .vr-select { width: auto; min-width: 100px; }
+
+.vr-color-row-setting { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.vr-color-row-setting .vr-setting-label { margin: 0; flex: 1 1 120px; }
+
+.vr-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.vr-chip {
+  padding: 6px 12px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.vr-chip:hover { transform: translate(1px, 1px); }
+.vr-chip.active { background: var(--text); color: var(--surface); }
+
+/* ──────────────── Ferdige stilar ──────────────── */
+
+.vr-presets { display: flex; flex-wrap: wrap; gap: 8px; }
+.vr-preset-cell { position: relative; display: inline-flex; }
+
+.vr-preset {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.vr-preset:hover { transform: translate(1px, 1px); }
+
+.vr-preset-dot {
+  width: 22px; height: 22px;
+  flex: 0 0 auto;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vr-preset-ink { width: 10px; height: 10px; display: block; }
+
+.vr-preset-del {
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  margin-left: -3px;
+}
+.vr-preset-del:hover { background: var(--accent2); color: #fff; }
+
+/* ──────────────── Logo ──────────────── */
+
+.vr-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 4px;
+  max-height: 210px;
+  overflow-y: auto;
+  margin: 10px 0 14px;
+  padding: 6px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+}
+
+.vr-icon-btn {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.vr-icon-btn:hover { border-color: var(--border); }
+.vr-icon-btn.active { background: var(--text); color: var(--surface); border-color: var(--border); }
+
+.vr-app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+}
+
+.vr-app-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+}
+.vr-app-btn img { width: 44px; height: 44px; object-fit: contain; }
+.vr-app-btn:hover { border-color: var(--border); }
+.vr-app-btn.active { background: var(--text); color: var(--surface); border-color: var(--border); }
+
+.vr-upload {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 3px dashed var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+}
+.vr-upload.dragover { background: var(--accent3); color: var(--text-on-light-accent); }
+.vr-upload-text { line-height: 1.4; }
+
+/* ──────────────── Fargeruter ──────────────── */
+
+.vr-swatch {
+  width: 2.2rem;
+  height: 1.8rem;
+  flex: 0 0 auto;
+  border: 3px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+}
+
+.vr-swatch-tiny { width: 1.4rem; height: 1.4rem; border-width: 2px; }
+
+/* ──────────────── Fargeveljar ──────────────── */
+
+.vr-color-pop {
+  position: fixed;
+  z-index: 1200;
+  width: 15rem;
+  padding: 0.7rem;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+
+.vr-color-area {
+  position: relative;
+  height: 8rem;
+  border: 2px solid var(--border);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.vr-color-hue {
+  position: relative;
+  height: 1.1rem;
+  margin-top: 0.5rem;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  touch-action: none;
+  background: linear-gradient(to right,
+    #ff0000 0%, #ffff00 17%, #00ff00 33%,
+    #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+}
+
+.vr-color-cursor,
+.vr-color-hue-cursor {
+  position: absolute;
+  width: 12px; height: 12px;
+  margin: -6px 0 0 -6px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #000000;
+  pointer-events: none;
+}
+.vr-color-hue-cursor { top: 50%; }
+
+.vr-color-row { display: flex; align-items: center; gap: 0.4rem; margin: 0.55rem 0; }
+.vr-color-preview { width: 1.8rem; height: 1.6rem; flex: 0 0 auto; border: 2px solid var(--border); }
+.vr-color-hex { text-transform: lowercase; }
+
+.vr-color-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 2px dashed var(--border);
+}
+
+/* ──────────────── Lagra, nyleg, meldingar ──────────────── */
+
+.vr-details { margin-top: 16px; }
+.vr-details > summary { font-weight: 800; cursor: pointer; }
+.vr-recent { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+
+.vr-saved { display: flex; flex-direction: column; gap: 8px; }
+.vr-saved-row { display: flex; gap: 6px; align-items: center; }
+.vr-saved-row .btn:first-child { flex: 1 1 auto; text-align: left; }
+
+.vr-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 1300;
+  max-width: min(92vw, 420px);
+  padding: 10px 16px;
+  border: 3px solid var(--border);
+  background: var(--text);
+  color: var(--surface);
+  font-weight: 700;
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+
+/* ──────────────── Utskrift ──────────────── */
+
+.vr-print { display: none; }
+
+.vr-sheet { display: grid; grid-template-columns: repeat(var(--vr-sheet-cols, 3), 1fr); gap: 10mm 6mm; }
+.vr-sheet-cell { margin: 0; text-align: center; break-inside: avoid; page-break-inside: avoid; }
+.vr-sheet-cell img { width: 100%; height: auto; }
+.vr-sheet-caption { font-weight: 800; font-size: 11pt; margin-top: 2mm; word-break: break-word; }
+
+@media print {
+  neo-header, .page-wrapper { display: none !important; }
+
+  .vr-print { display: block; }
+  .vr-print img { max-width: 150mm; max-height: 200mm; display: block; margin: 0 auto; }
+  .vr-print #printCaption { text-align: center; font-weight: 800; font-size: 14pt; margin-top: 4mm; }
+  .vr-print img:not([src]) { display: none; }
+
+  @page { margin: 12mm; }
+  body { background: #ffffff; }
+}
