@@ -911,14 +911,28 @@ main.main-wide {
   font-size: 0.92rem;
   font-weight: 700;
   text-align: left;
-  opacity: 0;
-  transform: translateY(0.75rem);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  /* Kvilestoda er SYNLEG, og innfarten er berre ein animasjon oppå.
+     Det var motsett fyrst — `opacity: 0` som grunnstode og `.open` som slo
+     han på — og det er ei felle: i eit dokument nettlesaren strupar (ei fane
+     i bakgrunnen) kjem verken overgangar eller animasjonar i mål, og
+     meldinga stod usynleg heilt til ho blei rydda bort. Med denne vegen
+     rundt er det verste som kan skje at ho dukkar opp utan å gli inn. */
+  opacity: 1;
+  animation: vy-toast-inn 0.2s ease;
 }
 
-.vy-toast.open {
-  opacity: 1;
-  transform: translateY(0);
+/* Utgangen kan hoppe av same grunn. Det gjer ingenting — ei melding som
+   forsvinn brått er framleis ei melding som forsvinn. */
+.vy-toast.vy-toast-ut {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes vy-toast-inn {
+  from { opacity: 0; transform: translateY(0.75rem); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .vy-toast-ico {
@@ -935,7 +949,8 @@ main.main-wide {
 .vy-toast-badge { border-color: var(--accent4); }
 
 @media (prefers-reduced-motion: reduce) {
-  .vy-toast { transition: none; }
+  .vy-toast { animation: none; }
+  .vy-toast.vy-toast-ut { transition: none; }
 }
 
 /* ══════════════════════════════════════════════

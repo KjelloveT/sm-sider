@@ -274,19 +274,16 @@ window.Vy = (function () {
         node.appendChild(el('span', 'vy-toast-msg', message));
         host.appendChild(node);
 
-        /* Framtving ei omrekning før klassen blir sett, elles hoppar han rett
-           til sluttilstanden og overgangen blir aldri spelt.
-
-           Dette var eit `requestAnimationFrame` fyrst, men rAF står stille i
-           ei fane som ikkje er synleg. Ein toast som blei utløyst medan fana
-           låg i bakgrunnen fekk då aldri `.open`, og stod usynleg til han
-           blei rydda bort. Ei tvinga omrekning bryr seg ikkje om det. */
-        void node.offsetWidth;
-        node.classList.add('open');
+        /* Ingen klasse å setje for å gjere han synleg — meldinga ER synleg med
+           ein gong ho står i dokumentet, og innfarten er ein animasjon oppå.
+           Sjå grunngjevinga ved `.vy-toast` i neobrutalisme.css: i ei fane
+           nettlesaren strupar kjem korkje overgangar eller animasjonar i mål,
+           og ei melding som treng animasjonen for å bli synleg blir aldri
+           synleg i det heile. */
 
         const levetid = typeof opts.ms === 'number' ? opts.ms : 3200;
         setTimeout(function () {
-            node.classList.remove('open');
+            node.classList.add('vy-toast-ut');
             setTimeout(function () { node.remove(); }, 400);
         }, levetid);
 
