@@ -33,14 +33,11 @@
 .vr-range:focus-visible,
 .vr-swatch:focus-visible,
 .vr-chip:focus-visible,
-.vr-type:focus-visible,
-.vr-preset:focus-visible,
 .vr-icon-btn:focus-visible,
 .vr-app-btn:focus-visible,
 .vr-upload:focus-visible,
 .vr-color-area:focus-visible,
-.vr-color-hue:focus-visible,
-.vr-preset-del:focus-visible {
+.vr-color-hue:focus-visible {
   outline: 3px solid var(--accent2);
   outline-offset: 2px;
 }
@@ -70,35 +67,7 @@
 .vr-footnote { max-width: 78ch; margin-top: 28px; }
 .vr-section { margin-top: 24px; }
 
-/* ──────────────── Innhaldstypar ──────────────── */
-
-.vr-type-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.vr-type {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 6px;
-  border: 3px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.82rem;
-  cursor: pointer;
-  box-shadow: 3px 3px 0 var(--shadow);
-}
-.vr-type:hover { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--shadow); }
-/* Aktiv type blir invertert i staden for aksentfarga: --text mot --surface
-   er motsetnader i kvart einaste tema, så kontrasten held utan måling. */
-.vr-type.active { background: var(--text); color: var(--surface); }
-.vr-type-icon { display: flex; }
+/* ──────────────── Innhaldsfelt ──────────────── */
 
 .vr-fields {
   display: grid;
@@ -175,40 +144,48 @@
 .vr-preview canvas { display: block; width: 100%; height: auto; max-width: 420px; }
 .vr-empty { color: #444; font-weight: 700; text-align: center; max-width: 34ch; margin: 0; }
 
-/* ──────────────── Statusfeltet ──────────────── */
+/* ──────────────── Statusfeltet ────────────────
+   Éi lampe og éi linje. Fargane er faste og ikkje temavariablar: raudt,
+   gult og grønt skal tyde det same i alle 21 tema. */
 
 .vr-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 16px;
   border: 3px solid var(--border);
   background: var(--surface);
+  color: var(--text);
   padding: 12px 14px;
   box-shadow: 4px 4px 0 var(--shadow);
+  min-height: 52px;
 }
 
-.vr-status-head { display: flex; align-items: center; gap: 10px; }
+.vr-status strong { font-size: 0.95rem; line-height: 1.35; }
 
 .vr-status-dot {
-  width: 16px; height: 16px;
+  width: 18px; height: 18px;
   flex: 0 0 auto;
   border: 2px solid var(--border);
   border-radius: 50%;
   background: var(--muted);
 }
-.vr-status[data-level="ok"] .vr-status-dot { background: #2d9c3f; }
+.vr-status[data-level="ok"]   .vr-status-dot { background: #2d9c3f; }
 .vr-status[data-level="warn"] .vr-status-dot { background: #e8a11a; }
-.vr-status[data-level="bad"] .vr-status-dot { background: #d90429; }
+.vr-status[data-level="bad"]  .vr-status-dot { background: #d90429; }
 
-.vr-status-list { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 8px; }
-.vr-note {
-  color: var(--text);
-  font-size: 0.86rem;
-  line-height: 1.45;
-  padding-left: 12px;
-  border-left: 4px solid var(--muted);
+/* Medan sjekken går pulserer lampa, så det er tydeleg at svaret ikkje
+   er klart enno — ikkje at alt er i orden. */
+.vr-status[data-level="checking"] .vr-status-dot {
+  background: var(--muted);
+  animation: vrPulse 1s ease-in-out infinite;
 }
-.vr-note-info { border-left-color: var(--accent); }
-.vr-note-warn { border-left-color: #e8a11a; }
-.vr-note-bad { border-left-color: #d90429; }
+
+@keyframes vrPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .vr-status[data-level="checking"] .vr-status-dot { animation: none; }
+}
 
 /* ──────────────── Panel og brikker ──────────────── */
 
@@ -222,6 +199,9 @@
 
 .vr-color-row-setting { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .vr-color-row-setting .vr-setting-label { margin: 0; flex: 1 1 120px; }
+
+.vr-select-row { display: flex; gap: 8px; align-items: center; }
+.vr-select-row .vr-select { flex: 1 1 auto; min-width: 0; }
 
 .vr-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 
@@ -237,48 +217,6 @@
 }
 .vr-chip:hover { transform: translate(1px, 1px); }
 .vr-chip.active { background: var(--text); color: var(--surface); }
-
-/* ──────────────── Ferdige stilar ──────────────── */
-
-.vr-presets { display: flex; flex-wrap: wrap; gap: 8px; }
-.vr-preset-cell { position: relative; display: inline-flex; }
-
-.vr-preset {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border: 3px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-.vr-preset:hover { transform: translate(1px, 1px); }
-
-.vr-preset-dot {
-  width: 22px; height: 22px;
-  flex: 0 0 auto;
-  border: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.vr-preset-ink { width: 10px; height: 10px; display: block; }
-
-.vr-preset-del {
-  border: 2px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  cursor: pointer;
-  padding: 0 4px;
-  display: inline-flex;
-  align-items: center;
-  margin-left: -3px;
-}
-.vr-preset-del:hover { background: var(--accent2); color: #fff; }
 
 /* ──────────────── Logo ──────────────── */
 

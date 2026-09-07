@@ -2,6 +2,33 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.44",
+      "dato": "2026-09-07",
+      "samandrag": "Vitjingsruta er enklare å ta i bruk, og sjekkar sjølv at koden let seg skanne.",
+      "punkt": [
+        {
+          "t": "endra",
+          "kva": "Vitjingsruta",
+          "tekst": "Innhaldstype og ferdige stilar er nedtrekkslister i staden for rader med knappar. Lenkje er valt frå start."
+        },
+        {
+          "t": "endra",
+          "kva": "Vitjingsruta",
+          "tekst": "Nye ord: «modul» heiter no prikk, og «auge» heiter hjørnemerke. Justeringsmønsteret er teke bort."
+        },
+        {
+          "t": "endra",
+          "kva": "Vitjingsruta",
+          "tekst": "Lesbarheitssjekken går automatisk etter kvar endring. Statusen er ei lampe — raud, gul eller grøn — og éi linje."
+        },
+        {
+          "t": "fiksa",
+          "kva": "Vitjingsruta",
+          "tekst": "Snakkeboble-ramma såg ikkje ut som ei snakkeboble. Ho har no rundare hjørne og ein tydeleg hale som peikar ned."
+        }
+      ]
+    },
+    {
       "versjon": "1.43",
       "dato": "2026-09-07",
       "samandrag": "Fargar og andre innstillingar i Vitjingsruta verkar igjen etter at du har valt ein ferdigstil.",

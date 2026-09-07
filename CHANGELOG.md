@@ -3,6 +3,21 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.44] — 2026-09-07
+
+### Endra
+- **Vitjingsruta er forenkla.** Verktøyet var overveldande for den som berre skulle lage ein QR-kode til tavla. Alt som var der er der framleis — det er kor mykje som ropar på ein gong som er endra.
+  - **Innhaldstypen er ei nedtrekksliste.** Ni knappar med ikon var ein vegg å møte som det første på sida. Lenkje står øvst og er valt frå start, sidan det er det dei aller fleste er ute etter.
+  - **Ferdige stilar er ei nedtrekksliste**, med dine eigne stilar i same lista under «Mine stilar». Ti fargebrikker tok halve panelet og drog merksemda vekk frå det brukaren skulle gjere. Lista fell tilbake til «Eigen» så snart du endrar noko for hand — ein stil er eit sett verdiar, ikkje ein tilstand du er i.
+  - **Nye ord:** «modul» heiter no **prikk**, og «auge» heiter **hjørnemerke**. Dei gamle orda er henta frå QR-standarden og er presise; dei er berre ikkje til hjelp for nokon som skal henge eit ark på veggen.
+  - **Justeringsmønsteret er teke bort.** Tre val som endra ein detalj dei færraste ser, og som ingen ba om.
+  - **Hjelpeteksten under feilretting** er skriven om til noko som seier kva valet gjer for deg, ikkje kva verktøyet gjer internt.
+
+- **Lesbarheitssjekken går av seg sjølv.** Knappen «Prøv å lese koden» er borte; koden blir lesen tilbake etter kvar endring i staden. Ein knapp du må hugse å trykkje på er ein knapp som ikkje blir trykt på, og då er sjekken like god som om han ikkje fanst. Statusfeltet er kutta ned til éi lampe — raud, gul eller grøn — og éi linje som seier kva som eventuelt er gale. Lista med merknader fortalde sant, men ho fortalde det til nokon som berre ville lage ein QR-kode.
+
+### Fiksa
+- **Snakkebobla såg ikkje ut som ei snakkeboble.** Halen var halvannan modul mot ein kode på førti og forsvann rett og slett, og hjørna var for lite runda til at boksen las som ei boble. Halen er no fem modular høg med ei brei rot og ein spiss som peikar ned mot venstre, hjørneradiusen er nær firedobla, og halen høyrer til ramma i staden for til tekstbandet — ei snakkeboble utan tekst er framleis ei snakkeboble.
+
 ## [1.43] — 2026-09-07
 
 ### Fiksa
