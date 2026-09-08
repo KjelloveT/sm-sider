@@ -2,6 +2,29 @@
   "_note": "Kort oppsummering av CHANGELOG.md, til sida endringar.html (js/endringar.js). Éi linje per punkt i loggen. t = type (nytt, endra, fiksa). merke: verktoy = nytt verktøy sleppt til sida, eksperiment = ikkje publisert på framsida.",
   "versjonar": [
     {
+      "versjon": "1.46",
+      "dato": "2026-09-08",
+      "samandrag": "Eit nytt verktøy for å lage behandlingsprotokoll etter GDPR artikkel 30, med rettleiing til kvart felt.",
+      "punkt": [
+        {
+          "t": "nytt",
+          "kva": "Protokollsmia",
+          "merke": "eksperiment",
+          "tekst": "Lag ein behandlingsprotokoll etter artikkel 30 med forklaringar til kvart felt, ein vegvisar for kven som må føre protokoll, og ein kvalitetssjekk. Ikkje lagt ut på framsida enno."
+        },
+        {
+          "t": "nytt",
+          "kva": "Protokollsmia",
+          "tekst": "Eksport til rekneark i Datatilsynet sitt format, til PDF, og til ei sjølvstendig HTML-fil."
+        },
+        {
+          "t": "endra",
+          "kva": "Under panseret",
+          "tekst": "Rekneark blir skrivne utan nytt bibliotek — ei .xlsx-fil er ein ZIP med sju XML-filer, og zip-pakkaren låg der frå før."
+        }
+      ]
+    },
+    {
       "versjon": "1.45",
       "dato": "2026-09-07",
       "samandrag": "Delingslenkjene i Ordaklok sluttar å gå innom tenaren, og tre bakgrunnsbilete blei 23 MB lettare.",

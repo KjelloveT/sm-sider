@@ -3,6 +3,26 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.46] — 2026-09-08
+
+### Lagt til
+- **Protokollsmia** — eit verktøy for å lage behandlingsprotokoll etter artikkel 30 nr. 1 i personvernforordninga, på `/gdpr/`. Datatilsynet sin Excel-mal fortel deg kva felt som skal fyllast ut, men ikkje kva eit godt svar ser ut som, og det er der folk går i stå. Hovudføremålet her er opplæring; ein ferdig, leverbar protokoll er resultatet.
+  - **Rettleiing på kvart av dei nitten felta:** kva feltet er, kva bokstav i artikkel 30 nr. 1 det oppfyller, kvifor kravet finst, gode døme, vanlege feil og kjelde. Teksten ligg i `gdpr/data/rettleiing.json` og ikkje i koden, så han kan rettast utan at nokon rører ein JS-modul.
+  - **Vegvisar for unntaket i artikkel 30 nr. 5.** Ordlyden ser ut som eit generelt fritak under 250 tilsette, og mange sluttar å lese der — men resten av setninga snur han, og dei tre vilkåra er alternative. Vegvisaren endar nesten alltid med ja, og viser kva som utløyste svaret, så brukaren lærer regelen i staden for berre å få ein konklusjon.
+  - **Kvalitetssjekk med fjorten reglar.** Reglane kjem frå det irske datatilsynet sin gjennomgang av tretti verksemder i 2022: «passande sikkerheit» som skildring av sikringstiltak, «personopplysningar» som opplysningskategori, tilvisingar til dokument som ikkje ligg ved, udefinerte forkortingar, og Privacy Shield fem år etter at han vart kjend ugyldig. Reglane er data i `gdpr/data/reglar.json`; predikata er åtte funksjonar i koden. Sjekken blokkerer aldri, og brukaren kan avvise eit funn med ein grunn som blir liggjande i protokollen.
+  - **Eksport til .xlsx, PDF, sjølvstendig HTML og .json.** Reknearket følgjer Datatilsynet sin kolonnerekkjefølgje så fila kan takast rett vidare i Excel.
+  - **Verktøyet er skjult** (`hidden: true` i `json/apps.json`) og står ikkje i menyar eller på framsida. Det har difor si eiga personvernside på `gdpr/personvern.html` — sjå avviket under.
+- **`no-theme` på `<neo-header>`.** Attributtet tek bort temaknappen for sider som pinnar eit tema. Standard åtferd er uendra, så ingen andre sider blir rørte.
+
+### Endra
+- **`.xlsx` blir skriven utan nytt bibliotek.** Ei .xlsx-fil er ein ZIP med sju XML-filer, og JSZip låg alt godkjend og sjølv-hosta i `_libs/`. `gdpr/js/xlsx.js` skriv OOXML sjølv på kring 230 linjer. SheetJS ville vore 900 kB mot 98 kB, ei ny avhengnad etter §5.6 — og ville ikkje løyst det einaste vi eigentleg trong frå eit bibliotek: brytande tekst i celler er ikkje med i community-utgåva, så `styles.xml` måtte vi skrive uansett.
+- **`/gdpr/data/*` er lagt i `navigationFallback.exclude`.** Utan det ville ein feilskriven sti svart med HTML og status 200 i staden for 404 — og `serve.ps1` gjev ekte 404 lokalt, så feilen ville synt seg berre i produksjon.
+
+### Avvik frå AGENTS.md
+To medvitne avvik i Protokollsmia, begge etter avklaring:
+- **§3.3** (lyst og mørkt tema per verktøy). Verktøyet har berre ei lys utgåve. Det held ikkje å la vere å skrive mørk CSS: `applyStoredTheme()` les eit lagra temaval og set det globalt, så ein som har valt eit mørkt tema ein annan stad på Vyrdepil ville kome hit med mørke fargevariablar under eit stilark som berre er tenkt for lyst. Sida pinnar difor temaet ved oppstart. Grunngjevinga er at Protokollsmia lagar eit dokument som skal skrivast ut og leverast, og har eit anna publikum enn resten av sida.
+- **§2** (nytt lagring skal førast opp i personvernoversikta på hovudsida). Utsett, sidan verktøyet ikkje skal omtalast på vyrdepil.no enno. **Rada i `personvern.html` skal leggjast inn den dagen verktøyet blir publisert.** I mellomtida har verktøyet ei fullstendig personvernside på `gdpr/personvern.html`, så ingen brukar står utan informasjon.
+
 ## [1.45] — 2026-09-07
 
 ### Fiksa

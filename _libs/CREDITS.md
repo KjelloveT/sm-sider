@@ -377,8 +377,14 @@ Godkjend av brukaren under planlegginga av Vitjingsruta.
 ## JSZip 3.10.1 — `jszip/`
 
 ZIP-pakking i nettlesaren. Brukt av **Bildebehandling** til å laste ned
-mange behandla bilete på ein gong, og av **Vitjingsruta** til å laste ned
-eit heilt sett QR-kodar.
+mange behandla bilete på ein gong, av **Vitjingsruta** til å laste ned
+eit heilt sett QR-kodar, og av **Protokollsmia** til å skrive .xlsx-filer.
+
+Merk den tredje bruken: ei .xlsx-fil *er* ein ZIP med sju XML-filer, så
+Protokollsmia skriv OOXML sjølv (`gdpr/js/xlsx.js`) og brukar JSZip berre til
+pakkinga. Det var det som gjorde at vi slapp å ta inn eit reknearkbibliotek —
+sjå kommentaren øvst i den fila for kvifor SheetJS ikkje ville løyst problemet
+uansett.
 
 | | |
 |---|---|
