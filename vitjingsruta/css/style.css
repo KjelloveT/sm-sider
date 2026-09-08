@@ -369,21 +369,6 @@
 .vr-saved-row { display: flex; gap: 6px; align-items: center; }
 .vr-saved-row .btn:first-child { flex: 1 1 auto; text-align: left; }
 
-.vr-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 20px;
-  transform: translateX(-50%);
-  z-index: 1300;
-  max-width: min(92vw, 420px);
-  padding: 10px 16px;
-  border: 3px solid var(--border);
-  background: var(--text);
-  color: var(--surface);
-  font-weight: 700;
-  box-shadow: 5px 5px 0 var(--shadow);
-}
-
 /* ──────────────── Utskrift ──────────────── */
 
 .vr-print { display: none; }

@@ -615,25 +615,6 @@ kbd {
 .ls-relink-text { flex: 1 1 180px; min-width: 0; line-height: 1.4; }
 .ls-relink-text .ls-muted { font-size: 0.82rem; }
 
-/* ---- Kort melding nedst ---- */
-.ls-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translate(-50%, 140%);
-  max-width: min(92vw, 460px);
-  padding: 12px 18px;
-  background: var(--surface);
-  color: var(--text);
-  border: 3px solid var(--border);
-  box-shadow: 5px 5px 0 var(--shadow);
-  font-weight: 700;
-  text-align: center;
-  z-index: 900;
-  transition: transform 0.18s ease-out;
-}
-.ls-toast.open { transform: translate(-50%, 0); }
-
 /* ---- Mindre skjermar ---- */
 @media (max-width: 640px) {
   /* På mobil er det ikkje rom til panorering ved sida av alt anna. Volum,
@@ -660,5 +641,4 @@ kbd {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ls-toast { transition: none; }
 }

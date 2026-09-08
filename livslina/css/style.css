@@ -276,19 +276,6 @@
 .ll-badge-ico { flex: 0 0 auto; color: var(--accent2); margin-top: 2px; }
 .ll-badge .ll-note { margin-top: 0.1rem; }
 
-/* ══════════ Toast ══════════ */
-.toast-container {
-  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
-  display: flex; flex-direction: column; gap: 8px; z-index: 9999;
-  align-items: center; pointer-events: none;
-}
-.toast {
-  background: var(--surface); border: 3px solid var(--border); border-radius: 12px;
-  box-shadow: 4px 4px 0 var(--shadow); padding: 10px 16px; font-weight: 700;
-  opacity: 0; transform: translateY(8px); transition: opacity 0.3s, transform 0.3s;
-}
-.toast.show { opacity: 1; transform: none; }
-
 /* ══════════ Diverse ══════════ */
 .ll-note { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
 .ll-center { text-align: center; }

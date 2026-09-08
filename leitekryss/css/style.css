@@ -215,28 +215,10 @@ input[type="file"]:focus-visible {
 .lk-lib-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .lk-lib-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
-/* ---- Melding ---- */
-.lk-toast {
-  position: fixed; left: 50%; bottom: 24px;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--accent); color: var(--text-on-accent);
-  border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow);
-  padding: 10px 18px; font-weight: 800;
-  max-width: min(90vw, 460px);
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  z-index: 3000;
-}
-.lk-toast.open { opacity: 1; transform: translateX(-50%) translateY(0); }
-
 /* ---- Utskrift ---- */
 #printArea { display: none; }
 
 @media print {
-  neo-header,
-  .page-wrapper,
-  .modal-overlay,
-  .lk-toast { display: none !important; }
 
   body { background: #ffffff; color: #1a1a1a; }
 

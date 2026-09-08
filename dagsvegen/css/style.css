@@ -458,7 +458,11 @@
     display: flex; align-items: flex-end; justify-content: flex-end;
     color: var(--muted); padding: 0 2px 2px 0;
 }
+/* Peikarfokus skal ikkje teikne ring rundt sjølve tekstfeltet — lappen ER
+   feltet, og ein ring inni han ser ut som ein feil. Tastaturfokus får han
+   likevel, elles er lappen ikkje mogleg å finne med Tab (AGENTS.md §5.4). */
 .dv-note-text:focus { outline: none; }
+.dv-note-text:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
 .dv-note-plain {
     background: var(--surface); color: var(--text);
     border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow);
@@ -535,15 +539,6 @@
     margin-bottom: 24px; line-height: 1.4;
 }
 
-/* ---- toast ---- */
-#toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px);
-    z-index: 2100; background: var(--accent); color: var(--text-on-accent);
-    border: 3px solid var(--border); box-shadow: 5px 5px 0 var(--shadow);
-    padding: 10px 20px; font-weight: 800; opacity: 0; pointer-events: none;
-    transition: opacity 0.25s, transform 0.25s;
-}
-#toast.open { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---- fokus ---- */
 button:focus-visible, a:focus-visible, input:focus-visible,

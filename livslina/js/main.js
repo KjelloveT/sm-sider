@@ -37,16 +37,9 @@ LL.main = (function () {
     });
   }
 
-  // ── Toast ──
+  // ── Toast ── sjå Vy.toast() i js/vyrdepil-util.js
   function toast(msg) {
-    const cont = document.getElementById('toastContainer');
-    if (!cont) return;
-    const t = document.createElement('div');
-    t.className = 'toast';
-    t.textContent = msg;
-    cont.appendChild(t);
-    setTimeout(() => t.classList.add('show'), 10);
-    setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 3000);
+    return Vy.toast(msg, { ms: 3000 });
   }
 
   async function boot() {

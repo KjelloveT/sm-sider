@@ -27,12 +27,9 @@
 
   /* ──────────────── Meldingar ──────────────── */
 
-  let toastTimer = 0;
+  /* Sjå Vy.toast() i js/vyrdepil-util.js (AGENTS.md §5.1.1). */
   function toast(message) {
-    els.toast.textContent = message;
-    els.toast.hidden = false;
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { els.toast.hidden = true; }, 3600);
+    return Vy.toast(message, { ms: 3600 });
   }
 
   /* ──────────────── Innhaldsskjemaet ──────────────── */

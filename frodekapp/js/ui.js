@@ -230,27 +230,11 @@ const UI = {
      * @param {string} [type='info'] - 'info' | 'success' | 'error'
      */
     toast(text, type = 'info') {
-        const existing = document.getElementById('fk-toast');
-        if (existing) existing.remove();
-
-        const toast = document.createElement('div');
-        toast.id = 'fk-toast';
-        toast.className = `fk-toast ${type}`;
-        toast.setAttribute('role', 'status');
-        toast.setAttribute('aria-live', 'polite');
-
-        const icon = document.createElement('span');
-        icon.className = 'fk-toast-icon';
-        icon.innerHTML = ICON(type === 'success' ? 'check' : type === 'error' ? 'alert' : 'list', 18);
-        const label = document.createElement('span');
-        label.textContent = text;
-        toast.append(icon, label);
-
-        document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.classList.add('leaving');
-            setTimeout(() => toast.remove(), 300);
-        }, 2500);
+        /* Sjølve visinga ligg i Vy.toast() (js/vyrdepil-util.js). Her mapper vi
+           berre Frødekapp sine tre typar over på dei felles variantane. */
+        const KIND = { success: 'good', error: 'warn', info: null };
+        const IKON = { success: 'check', error: 'alert', info: 'list' };
+        return Vy.toast(text, { icon: IKON[type] || 'list', kind: KIND[type], ms: 2500 });
     },
 
     /**

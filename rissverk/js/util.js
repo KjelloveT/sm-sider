@@ -192,16 +192,9 @@ RV.util = (function () {
 
   /* ──────────────── Filer ──────────────── */
 
-  function downloadBlob(blob, filename) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
+  /* Nedlasting, elementbygging, modalhandtering og korte meldingar ligg i
+     js/vyrdepil-util.js. Vi peikar vidare dit i staden for å halde ein kopi. */
+  const downloadBlob = Vy.downloadBlob;
 
   function slug(text, fallback) {
     const s = String(text || '').trim().toLowerCase()
@@ -216,51 +209,20 @@ RV.util = (function () {
 
   /* ──────────────── Modalar ──────────────── */
 
-  const openStack = [];
-
-  function openModal(overlay) {
-    overlay.classList.add('open');
-    openStack.push(overlay);
-    const focusable = overlay.querySelector('input, textarea, select, button');
-    if (focusable) focusable.focus();
-  }
-
-  function closeModal(overlay) {
-    overlay.classList.remove('open');
-    const i = openStack.indexOf(overlay);
-    if (i !== -1) openStack.splice(i, 1);
-  }
-
-  function anyModalOpen() {
-    return openStack.length > 0;
-  }
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape' || !openStack.length) return;
-    closeModal(openStack[openStack.length - 1]);
-  });
-
-  function bindOverlayClose(overlay) {
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) closeModal(overlay);
-    });
-  }
+  const openModal = Vy.openModal;
+  const closeModal = Vy.closeModal;
+  const bindOverlayClose = Vy.bindOverlayClose;
+  const anyModalOpen = Vy.anyModalOpen;
 
   /* ──────────────── Kort melding ──────────────── */
 
-  let toastTimer = null;
+  /* Kort melding nedst på skjermen — sjå Vy.toast() i js/vyrdepil-util.js.
+     Handteringa låg tidlegare her, i ni ulike utgåver rundt i repoet. Ho er
+     flytta til fellesmodulen så rettingar treffer alle verktøya, og fordi den
+     gamle stilen fylte flata med --accent og fall under AA-kravet i dei sju
+     mørke temaa (AGENTS.md §3.2). */
   function toast(message) {
-    let node = document.getElementById('rvToast');
-    if (!node) {
-      node = el('div', 'rv-toast');
-      node.id = 'rvToast';
-      node.setAttribute('role', 'status');
-      document.body.appendChild(node);
-    }
-    node.textContent = message;
-    node.classList.add('open');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => node.classList.remove('open'), 3200);
+    return Vy.toast(message);
   }
 
   /* ──────────────── Tidsstyring ──────────────── */

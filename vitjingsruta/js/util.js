@@ -176,16 +176,8 @@ VR.util = (function () {
     return new TextEncoder().encode(String(text || '')).length;
   }
 
-  function downloadBlob(blob, filename) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  }
+  /* Sjå Vy.downloadBlob() i js/vyrdepil-util.js (AGENTS.md §5.1.1). */
+  const downloadBlob = Vy.downloadBlob;
 
   return {
     el, clear, capturePointer, releasePointer, debounce,

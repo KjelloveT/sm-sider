@@ -3,6 +3,19 @@
 Alle merkbare endringar i prosjektet blir dokumenterte her.
 Format: [Keep a Changelog](https://keepachangelog.com/), datoar i ISO 8601.
 
+## [1.45] — 2026-09-07
+
+### Fiksa
+- **Ordaklok la heile ordlista i spørjestrengen på delingslenkja.** `?d=…` blir send til tenaren og hamnar i tilgangsloggane hans, i `Referer`-headeren til alt sida lastar utanfrå, og i nettlesarhistorikka til alle som får lenkja. Framsida lova det motsette — «heile lista ligg i sjølve lenkja, så ingenting blir sendt til ein server». Lista ligg no i **fragmentet** (`#d=…`), som aldri forlèt nettlesaren. Skilnaden er eitt teikn, og han avgjer om lovnaden held. Lenkjer som alt er delte ut held fram med å verke: `?`-forma blir framleis lesen, og spørjestrengen blir rydda ut av adressa med ein gong lista er lesen.
+- **Ljodstigen stod ikkje i personvernoversikta** trass i at appen lagrar framgang per bokstav. Ho er lagd inn, med det poenget at appen med vilje ikkje har noka namnerute — eleven vel ein figur frå ei fast liste, så det kan ikkje hamne eit elevnamn der.
+- **Tastaturfokus var ikkje definert i designsystemet.** `:focus-visible` fanst berre på trekkspel-overskrifta. Tjuefire stilark hadde skrive sine eigne reglar, men tretten verktøy hadde ingen dekning og låg på standardringen i nettlesaren. Designsystemet har no ein botn for alle interaktive element. Tekstfeltet på lappane i Dagsvegen fekk att ringen sin — det var den einaste staden i repoet der `outline: none` stod utan noko synleg i staden.
+
+### Endra
+- **Tre bakgrunnsbilete gjekk frå 23 MB til under 1 MB.** Kludre Klodrian, Reknedæsj og Rettslause Raud hadde kvar sin fullskjermsbakgrunn eksportert som 32-bits PNG på opptil 2816 piksel — 8,8 MB for eitt bilete som ligg bak ein meny. Ingen av dei brukte gjennomsikt. Dei er no JPEG på 1920 piksel: 396, 306 og 267 kB, ein reduksjon på 96 % utan synleg skilnad. `background.png.png` mista samstundes den doble filendinga si.
+- **Fellesmodul for småhjelparar: `js/vyrdepil-util.js`.** Repoet hadde ni ulike `toast()`, åtte `downloadBlob()`, ti `shuffle()` og fire `escapeHtml()`. Éin av dei fire escape-funksjonane rensa ikkje hermeteikn i det heile og var difor verdlaus inne i eit HTML-attributt, og alle ni toast-ane fylte flata med `--accent` og fall til 2,41–4,47:1 i dei sju mørke temaa. Den felles toasten snur fargane i staden — `--text` som botn og `--surface` som tekst — og måler 8,59:1 («dracula») til 18,88:1 («grayscale») i alle 21 tema.
+- **Fellesmodul for elevlister: `js/vyrdepil-elevlister.js`.** Same koden låg i tre utgåver — i Ordkryss, i Leitekryss og inne i eksportmodulen til Tidvis — skild berre på klasseprefiks og eit par setningar. Elevnamn er den einaste datatypen i Vyrdepil som faktisk er personopplysningar om born, og no blir dei lesne, kopierte og tømde éin stad.
+- **`AGENTS.md`:** §2 har fått regelen om at delingslenkjer skal bruke fragmentet; §5.1.1 er ny og listar fellesmodulane med kva dei gjev deg; §5.7 dekkjer no bakgrunnar og spelgrafikk, ikkje berre logoar — med format- og storleiksval, eit tak på 500 kB og påminninga om at eit bilete i eit git-repo er der for alltid.
+
 ## [1.44] — 2026-09-07
 
 ### Endra
