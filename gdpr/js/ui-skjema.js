@@ -84,6 +84,10 @@
 
       vert.appendChild(seksjon);
     });
+
+    /* Rettleiinga blir hekta på etter at skjemaet er bygd. Trygt å kalle òg
+       når data/-filene ikkje er lasta — då gjer han ingenting. */
+    if (root.GD.uiRettleiing) GD.uiRettleiing.hekt(vert);
   }
 
   function feltrad(felt, aktivitet) {

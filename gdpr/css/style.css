@@ -236,3 +236,60 @@
 
   @page { size: A4; margin: 14mm; }
 }
+
+/* ──────────────── Rettleiing ──────────────── */
+
+.gd-rettleiing { margin-top: 4px; }
+
+.gd-rettleiing > summary {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.gd-rettleiing .accordion-body p { margin: 0 0 10px; }
+
+.gd-rettleiing-kort { font-weight: 700; }
+
+.gd-rettleiing-tittel {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 14px 0 6px;
+}
+
+.gd-dome, .gd-feil { margin: 0 0 10px; padding-left: 1.2em; }
+.gd-dome li, .gd-feil li { margin-bottom: 6px; }
+
+/* Døme og feil skil seg på kantstripa, ikkje på ei fylt flate. Ei aksentfarga
+   flate med tekst oppå er det AGENTS.md §3.2 åtvarar mot; ei stripe ved sida av
+   teksten kostar ingenting og fungerer i alle tema. */
+.gd-dome { border-left: 3px solid var(--accent3); padding-left: 1.4em; }
+.gd-feil { border-left: 3px solid var(--accent2); padding-left: 1.4em; }
+
+.gd-kjelde { font-size: 0.86rem; color: var(--muted); margin: 12px 0 0; }
+
+/* ──────────────── Vegvisar ──────────────── */
+
+.gd-vegvisar-sporsmaal {
+  padding: 16px 0;
+  border-top: 2px solid var(--border);
+}
+.gd-vegvisar-sporsmaal:first-child { border-top: none; }
+
+.gd-vegvisar-tekst { font-weight: 800; margin: 0 0 4px; }
+
+.gd-vegvisar-sporsmaal .gd-knapperad { margin: 10px 0 0; }
+
+.gd-vegvisar-svar {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+.gd-vegvisar-svar ul { margin: 10px 0 0; padding-left: 1.2em; }
+.gd-vegvisar-svar li { margin-bottom: 8px; }
+
+.gd-kjelder { padding-left: 1.2em; }
+.gd-kjelder li { margin-bottom: 10px; line-height: 1.5; }

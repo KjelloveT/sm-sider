@@ -1,0 +1,269 @@
+{
+  "app": "gdpr-rettleiing",
+  "version": 1,
+  "_note": "Rettleiingsteksten i Protokollsmia. Éi oppføring per felt, kopla på med feltet sin id i gdpr/js/felt.js. Prosa høyrer heime her og ikkje i koden: teksten skal kunne rettast utan at nokon rører ein JS-modul, og 19 felt x fem slag tekst ville sprengt 400-linjersgrensa i AGENTS.md §5.1.",
+  "_felt": "kort = éi setning som seier kva feltet er. kvifor = kvifor kravet finst. dome = korte, konkrete døme. feil = det tilsynsstyresmakter faktisk har hatt innvendingar mot. kjelde = kvar det står.",
+
+  "felt": {
+
+    "internansvar": {
+      "kort": "Kven i verksemda som eig denne behandlinga og kan svare på spørsmål om henne.",
+      "kvifor": "Artikkel 30 krev det ikkje, men ein protokoll utan eit namn på kvar rad blir eit dokument ingen oppdaterer. Det irske datatilsynet peikar på at protokollen må vere eit levande dokument, og då må nokon vere ansvarleg for kvar linje.",
+      "dome": ["HR-sjef", "Rektor", "Avdelingsleiar for teknisk drift"],
+      "feil": ["Å skrive «leiinga» eller «alle» — då er det ingen som eig det."],
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023, «Maintain a living document»", "url": "https://www.dataprotection.ie/" }
+    },
+
+    "funksjonsomraade": {
+      "kort": "Kva del av verksemda behandlinga høyrer til.",
+      "kvifor": "Å bryte protokollen ned etter funksjonsområde er det einaste rådet både Datatilsynet og det irske datatilsynet gjev om sjølve arbeidsmåten. Går du område for område, oppdagar du behandlingar du elles ville gløymt — og du ser kva område som manglar heilt.",
+      "dome": ["Personal og løn", "Undervisning og elevoppfølging", "Marknad og kommunikasjon", "IT-drift"],
+      "feil": ["Å hoppe over område som «ikkje behandlar personopplysningar» utan å sjekke. Det irske datatilsynet såg at dei beste protokollane hadde med alle område, òg dei tomme, nettopp for å vise at dei var vurderte."],
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023, «Break down the RoPA with reference to the different functions»", "url": "https://www.dataprotection.ie/" }
+    },
+
+    "kvaGjeld": {
+      "kort": "Eit kort namn på behandlinga, slik de sjølve snakkar om henne.",
+      "kvifor": "Dette er raden si overskrift. Han skal vere til å kjenne att for nokon som arbeider i verksemda, og forståeleg for nokon utanfrå.",
+      "dome": ["Rekruttering", "Personalmappe", "Kameraovervaking av inngangsparti", "Nyheitsbrev til kundar"],
+      "feil": ["Interne systemnamn åleine. «Visma» seier kva verktøy de brukar, ikkje kva de gjer."],
+      "kjelde": null
+    },
+
+    "formaal": {
+      "kort": "Kvifor de behandlar desse opplysningane. Éi behandling har eitt formål.",
+      "kvifor": "Dette er kjernen i heile protokollen, og eit av dei sju punkta artikkel 30 nr. 1 faktisk krev. Formålet avgjer alt det andre: kva opplysningar de har lov til å samle inn, kor lenge de kan behalde dei, og kva de kan bruke dei til. Har de to formål med dei same opplysningane, er det to behandlingar og to rader.",
+      "dome": [
+        "Å vurdere søkjarar og tilsetje den best kvalifiserte",
+        "Å utbetale løn og oppfylle plikter etter skattelova og folketrygdlova",
+        "Å kontakte føresette ved sjukdom eller ulykke i skuletida"
+      ],
+      "feil": [
+        "«Administrasjon» eller «drift» — det er ikkje eit formål, det er ein kategori.",
+        "Å slå saman fleire formål i éi rad. Rekruttering og personalmappe har ulike slettefristar og ulikt behandlingsgrunnlag, og då blir raden feil for begge."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav b", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    "registrerte": {
+      "kort": "Kven opplysningane handlar om — som grupper, ikkje som namn.",
+      "kvifor": "Artikkel 30 nr. 1 bokstav c krev ei skildring av kategoriane av registrerte. Kategoriane avgjer kven som kan be om innsyn, og kven som blir råka dersom noko går gale.",
+      "dome": ["Tilsette", "Søkjarar som ikkje fekk stillinga", "Elevar", "Føresette", "Kundar", "Besøkjande"],
+      "feil": [
+        "«Personar» eller «brukarar» — det seier ingenting.",
+        "Å skrive namn på einskildpersonar. Protokollen skal ha kategoriar, ikkje eit register."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav c", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    "opplysningar": {
+      "kort": "Kva slag opplysningar de faktisk behandlar. Ver konkret.",
+      "kvifor": "Andre halvdel av artikkel 30 nr. 1 bokstav c. Dette er feltet det irske datatilsynet fann var dårlegast utfylt i tilsynet sitt: verksemder skreiv «personopplysningar» eller «svar på spørsmål», som ikkje seier noko om kva som faktisk blir samla inn.",
+      "dome": [
+        "Namn, fødselsnummer, adresse, telefon, e-post",
+        "Kontonummer, skattekort, lønstrinn, fråværsdagar",
+        "Søknad, CV, referansar, notat frå intervju",
+        "Helseopplysningar i sjukemelding (særleg kategori, jf. artikkel 9)"
+      ],
+      "feil": [
+        "«Personopplysningar» som heile svaret.",
+        "«Kontaktopplysningar» utan å seie kva slag — er fødselsnummer med, er det ei heilt anna sak enn e-post.",
+        "Å gløyme å merkje av at noko er ein særleg kategori etter artikkel 9. Fagforeiningsmedlemskap og helseopplysningar dukkar opp i personalmapper oftare enn folk trur."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav c; Irish DPC, RoPA-rettleiing 2023, «Don't cut corners with detail and granularity»", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    "kjelde": {
+      "kort": "Kvar opplysningane kjem frå.",
+      "kvifor": "Ikkje kravd av artikkel 30, men Datatilsynet har kolonnen i malen sin — og han er nyttig: kjem opplysningane frå ein annan enn den registrerte sjølv, har de ei eiga informasjonsplikt etter artikkel 14.",
+      "dome": ["Den registrerte sjølv", "Folkeregisteret", "Førre arbeidsgjevar (referansar)", "NAV"],
+      "feil": ["Å hoppe over feltet når opplysningane kjem frå ein tredjepart. Det er nettopp då informasjonsplikta blir strengare."],
+      "kjelde": { "tekst": "Datatilsynet, mal for protokoll (behandlingsansvarleg); jf. artikkel 14", "url": "https://www.datatilsynet.no/rettigheter-og-plikter/virksomhetenes-plikter/protokoll-over-behandlingsaktiviteter/" }
+    },
+
+    "mottakarar": {
+      "kort": "Kven som får sjå opplysningane utanfor dykk sjølve — som kategoriar.",
+      "kvifor": "Artikkel 30 nr. 1 bokstav d. Ein mottakar er alle som får opplysningane utlevert, òg offentlege organ de er pålagde å rapportere til, og òg databehandlarane dykkar.",
+      "dome": ["Skatteetaten", "NAV", "Revisor", "Bedriftshelsetenesta", "Leverandøren av lønssystemet (databehandlar)"],
+      "feil": [
+        "Å berre skrive «ingen» utan å ha tenkt gjennom rapporteringsplikter og leverandørar.",
+        "Å gløyme at ein skyleverandør som lagrar opplysningane er ein mottakar."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav d", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    "grunnlag6": {
+      "kort": "Kva som gjev dykk lov til å behandle opplysningane i det heile.",
+      "kvifor": "Artikkel 30 krev ikkje behandlingsgrunnlaget, og det er verdt å vite — men Datatilsynet har det med i malen sin, og det er som regel det første eit tilsyn spør om. Ei behandling utan grunnlag er ulovleg uansett kor godt protokollen er ført.",
+      "dome": [
+        "Løn: artikkel 6 nr. 1 bokstav c — rettsleg plikt etter skattelova og bokføringslova",
+        "Rekruttering: artikkel 6 nr. 1 bokstav b — tiltak før ein avtale blir inngått",
+        "Nyheitsbrev: artikkel 6 nr. 1 bokstav a — samtykke"
+      ],
+      "feil": [
+        "Å velje samtykke som standard. Samtykke må vere friviljug, og mellom arbeidsgjevar og tilsett er det sjeldan reelt friviljug.",
+        "Å velje rettkomen interesse utan å ha gjort — og skrive ned — interesseavveginga."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 6", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-2#gdpr/a6" }
+    },
+
+    "grunnlagVising": {
+      "kort": "Peik på den konkrete lova, oppgåva eller interessa grunnlaget kviler på.",
+      "kvifor": "Bokstav c, e og f i artikkel 6 nr. 1 seier ikkje i seg sjølve kva som gjev dykk lov — dei viser vidare. Bokstav c og e krev eit grunnlag i nasjonal rett eller EØS-rett, og bokstav f krev ei interesseavveging de har gjort på førehand.",
+      "dome": [
+        "Bokføringslova § 13 — plikt til å oppbevare bilag i fem år",
+        "Opplæringslova kapittel 9 A — plikt til å følgje opp elevar sitt skulemiljø",
+        "Rettkomen interesse: å hindre tjuveri i lokala. Avveging gjort 12.03.2026, arkivert i sak 2026/114"
+      ],
+      "feil": ["«Lovpålagt» utan å seie kva lov. Det er ikkje ei tilvising, det er ein påstand."],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 6 nr. 3", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-2#gdpr/a6" }
+    },
+
+    "grunnlag910": {
+      "kort": "Behandlar de særlege kategoriar eller opplysningar om straffedomar, må de ha eit grunnlag til.",
+      "kvifor": "Artikkel 9 forbyr behandling av helseopplysningar, fagforeiningsmedlemskap, religion, etnisitet, biometri og seksuelle forhold — med mindre eit av unntaka i nr. 2 gjeld. Artikkel 10 gjeld straffedomar og lovbrot. Dette kjem i tillegg til artikkel 6, ikkje i staden for.",
+      "dome": [
+        "Sjukefråvær: artikkel 9 nr. 2 bokstav b — plikter i arbeidsretten",
+        "Politiattest for tilsette i skule: artikkel 10, jf. opplæringslova"
+      ],
+      "feil": [
+        "Å ikkje merke av. Helseopplysningar dukkar opp i personalmapper via sjukemeldingar, og fagforeiningsmedlemskap via trekk på løn.",
+        "Å tru at artikkel 9 er dekt av artikkel 6. Det trengst begge."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 9 og 10", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-2#gdpr/a9" }
+    },
+
+    "system": {
+      "kort": "I kva system eller arkiv opplysningane faktisk ligg.",
+      "kvifor": "Ikkje kravd av artikkel 30, men det er dette feltet som gjer protokollen brukbar i praksis. Får de eit innsynskrav, eit sletteskrav eller eit avvik, er det første spørsmålet «kvar ligg opplysningane?». Utan dette feltet må nokon finne det ut på nytt kvar gong.",
+      "dome": ["Visma Enterprise HRM", "Sak/arkiv (Public 360)", "Fysisk personalmappe i låst arkivskap, rom 214"],
+      "feil": [
+        "Å gløyme papir. Eit arkivskap er eit system.",
+        "Udefinerte forkortingar. «P360» seier ingenting til nokon utanfrå — skriv det ut, eller før forkortinga opp på forsida."
+      ],
+      "kjelde": { "tekst": "Datatilsynet, mal for protokoll (behandlingsansvarleg)", "url": "https://www.datatilsynet.no/rettigheter-og-plikter/virksomhetenes-plikter/protokoll-over-behandlingsaktiviteter/" }
+    },
+
+    "slettefrist": {
+      "kort": "Når opplysningane skal slettast, og kva som utløyser slettinga.",
+      "kvifor": "Artikkel 30 nr. 1 bokstav f. Kravet er «dersom det er mogleg» — men det er som regel mogleg, og eit tomt felt blir lese som at de ikkje har tenkt på det. Ulike kategoriar kan ha ulike fristar, og då skal begge stå.",
+      "dome": [
+        "Søknadar frå dei som ikkje fekk stillinga: seks månader etter at tilsetjinga er avslutta",
+        "Lønsbilag: fem år etter utgangen av rekneskapsåret, jf. bokføringslova § 13",
+        "Kameraopptak: sju dagar, med mindre opptaket blir teke vare på i ei konkret sak"
+      ],
+      "feil": [
+        "«I tråd med lagringsrutinen» — ei tilvising til eit dokument som ikkje ligg ved. Tilsynet kan ikkje klikke på han.",
+        "«Ved behov» eller «så lenge det er nødvendig». Det er ikkje ein frist, det er ei omskriving av spørsmålet.",
+        "Å skrive ein frist utan å seie kva som startar han. «Tre år» — frå kva?"
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav f; Irish DPC, RoPA-rettleiing 2023", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    "sikringstiltak": {
+      "kort": "Kva som faktisk vernar opplysningane — teknisk og organisatorisk.",
+      "kvifor": "Artikkel 30 nr. 1 bokstav g, som viser til artikkel 32. Det irske datatilsynet peikar ut dette som det feltet flest verksemder skriv for tynt: dei fann svar som «measures are in place that ensure appropriate security», og slår fast at det ikkje held. Ei generell skildring skal seie kva tiltaka er.",
+      "dome": [
+        "Tofaktor på administratorkontoar, tilgang styrt etter rolle, kryptert lagring, logg som blir gjennomgått kvartalsvis",
+        "Låst arkivskap, tilgang berre for personalansvarleg og lønsmedarbeidar, tilgangslista gjennomgått ved årsskiftet",
+        "Databehandlaravtale med leverandøren, årleg gjennomgang av tilgangar, opplæring i personvern for nytilsette"
+      ],
+      "feil": [
+        "«Passande sikkerheit» eller «tilstrekkelege tiltak». Dette er den vanlegaste innvendinga tilsynet har, og han er lett å unngå.",
+        "Berre tekniske tiltak. Artikkel 32 krev organisatoriske òg — opplæring, rutinar, tilgangsstyring.",
+        "Å vise til eit tryggingsdokument utan å seie noko her."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav g, jf. artikkel 32; Irish DPC, RoPA-rettleiing 2023", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    "hoegRisiko": {
+      "kort": "Kan behandlinga gje høg risiko for dei registrerte sine rettar og fridomar?",
+      "kvifor": "Ikkje kravd av artikkel 30, men svarar de ja, utløyser artikkel 35 ei plikt til å gjere ei vurdering av personvernkonsekvensar (DPIA). Protokollen er den naturlege staden å oppdage kva behandlingar som treng ei slik vurdering.",
+      "dome": [
+        "Ja — kameraovervaking av eit område der folk oppheld seg systematisk",
+        "Ja — behandling av helseopplysningar i stort omfang",
+        "Nei — vanleg lønsutbetaling til eigne tilsette"
+      ],
+      "feil": [
+        "Å svare nei på alt utan å ha sett på Datatilsynet si liste over behandlingar som alltid krev DPIA.",
+        "Å levere ein DPIA i staden for ein protokoll. Det irske datatilsynet fekk det i tilsynet sitt og slo fast at ein DPIA ikkje erstattar artikkel 30."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 35", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-4#gdpr/a35" }
+    },
+
+    "databehandlarar": {
+      "kort": "Kven som behandlar opplysningane på vegner av dykk.",
+      "kvifor": "Ein databehandlar er ein som behandlar opplysningar for dykk utan å bestemme formålet sjølv — typisk ein systemleverandør. Kvar av dei krev ein databehandlaravtale etter artikkel 28. Feltet er ikkje kravd av artikkel 30, men det er her de oppdagar kva avtalar som manglar.",
+      "dome": ["Visma Software AS (lønssystem)", "Microsoft Ireland (Microsoft 365)", "Lokal IT-leverandør med drift av servrar"],
+      "feil": [
+        "Å gløyme dei små. Eit rekrutteringsverktøy, eit nyheitsbrevsystem og ein skytenest for filer er alle databehandlarar.",
+        "Å føre opp ein leverandør utan å sjekke at avtalen finst."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 28", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a28" }
+    },
+
+    "fellesansvar": {
+      "kort": "Er de behandlingsansvarlege saman med nokon andre?",
+      "kvifor": "Artikkel 30 nr. 1 bokstav a nemner felles behandlingsansvarleg. Felles ansvar oppstår når to verksemder saman bestemmer formålet og midlane — ikkje når den eine berre utfører noko for den andre. Då krev artikkel 26 at de har ein avtale om kven som gjer kva.",
+      "dome": ["Kommunen og fylkeskommunen i eit felles inntakssystem", "To verksemder som driv ei felles rekrutteringsside"],
+      "feil": ["Å blande saman felles behandlingsansvar og databehandlar. Ein leverandør som følgjer instruksane dykkar er ein databehandlar, ikkje ein felles ansvarleg."],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 26 og artikkel 30 nr. 1 bokstav a", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a26" }
+    },
+
+    "tredjeland": {
+      "kort": "Blir opplysningane overførte ut av EØS?",
+      "kvifor": "Artikkel 30 nr. 1 bokstav e. Ei overføring skjer ikkje berre når de sender ei fil — det held at nokon utanfor EØS har tilgang, til dømes ein support-medarbeidar i eit anna land.",
+      "dome": ["Nei — all lagring er innanfor EØS", "USA — support hos leverandøren har tilgang ved feilsøking", "India — underleverandør av drift"],
+      "feil": [
+        "Å svare nei fordi datasenteret ligg i EU, utan å sjekke kven som har tilgang derifrå.",
+        "Å ikkje spørje leverandøren. Svaret står som regel i databehandlaravtalen."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav e og kapittel V", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    "garantiar": {
+      "kort": "Kva som gjer overføringa lovleg.",
+      "kvifor": "Overfører de ut av EØS, krev kapittel V eit grunnlag. Det kan vere ei kommisjonsavgjerd om tilstrekkeleg vernenivå, standard personvernvilkår (SCC), eller bindande verksemdsreglar. Artikkel 30 krev at protokollen dokumenterer garantiane.",
+      "dome": [
+        "EU Standard Contractual Clauses (2021/914), modul 2, med supplerande tiltak vurderte 2026",
+        "EU–US Data Privacy Framework — leverandøren er sertifisert"
+      ],
+      "feil": [
+        "Privacy Shield. Ordninga vart kjend ugyldig av EU-domstolen i 2020 (Schrems II), og det irske datatilsynet nemner det spesifikt som eit døme på utdatert informasjon i protokollar.",
+        "Å skrive «SCC» utan å seie kva versjon eller modul."
+      ],
+      "kjelde": { "tekst": "Personvernforordninga kapittel V; Irish DPC, RoPA-rettleiing 2023", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-5#gdpr/a44" }
+    }
+  },
+
+  "forside": {
+    "verksemd": {
+      "kort": "Det juridiske namnet på den behandlingsansvarlege.",
+      "kvifor": "Artikkel 30 nr. 1 bokstav a. Den behandlingsansvarlege er den som bestemmer formålet med og midlane for behandlinga — som regel verksemda som juridisk person, ikkje ei avdeling.",
+      "dome": ["Døme kommune", "Døme AS"],
+      "feil": ["Å føre opp ei avdeling eller ein person. Ansvaret ligg hjå den juridiske eininga."],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav a, jf. artikkel 4 nr. 7", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+    "ombodNamn": {
+      "kort": "Personvernombodet, dersom de har eitt.",
+      "kvifor": "Artikkel 30 nr. 1 bokstav a krev kontaktopplysningane til ombodet når det finst eitt. Artikkel 37 gjer ombod obligatorisk for offentlege organ og for verksemder som driv systematisk overvaking i stort omfang eller behandlar særlege kategoriar i stort omfang.",
+      "dome": ["Kari Nordmann, personvernombod"],
+      "feil": ["Å la feltet stå tomt fordi ein trur ombod er friviljug. For offentlege organ er det ikkje det."],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 37 og 38", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-4#gdpr/a37" }
+    },
+    "repNamn": {
+      "kort": "Representanten i EØS, dersom verksemda er etablert utanfor EØS.",
+      "kvifor": "Artikkel 27 krev at ei verksemd utanfor EØS som tilbyr varer eller tenester til folk i EØS, peikar ut ein representant her. Er de etablerte i Noreg, skal feltet stå tomt.",
+      "dome": [],
+      "feil": ["Å fylle det ut når det ikkje er aktuelt. Eit utfylt felt som ikkje gjeld er villeiande."],
+      "kjelde": { "tekst": "Personvernforordninga artikkel 27", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-1#gdpr/a27" }
+    },
+    "omgrep": {
+      "kort": "Forkortingar og interne namn de brukar i protokollen, med forklaring.",
+      "kvifor": "Ikkje kravd av artikkel 30, og likevel eit av dei mest konkrete råda som finst. Det irske datatilsynet fann at verksemder brukte forkortingar som var sjølvsagde internt og uforståelege for tilsynet. Protokollen skal vere sjølvforklarande for ein utanforståande lesar.",
+      "dome": ["P360 = Public 360, sak- og arkivsystemet", "GSI = Grunnskolens informasjonssystem", "BHT = bedriftshelsetenesta"],
+      "feil": ["Å tru at forkortingane er allment kjende. Det er dei nesten aldri."],
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023, «Don't maintain a RoPA that is not self-explanatory»", "url": "https://www.dataprotection.ie/" }
+    }
+  }
+}

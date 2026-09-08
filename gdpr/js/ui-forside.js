@@ -54,6 +54,8 @@
     });
 
     vert.appendChild(endringsbolk());
+
+    if (root.GD.uiRettleiing) GD.uiRettleiing.hekt(vert);
   }
 
   function feltFor(gruppeId, felt) {
@@ -67,6 +69,7 @@
       const merke = u.el('span', 'gd-krav gd-krav-maa', 'Art. 30 nr. 1 ' + f.art30);
       rad.rot.querySelector('.gd-etikett').appendChild(merke);
     }
+    rad.under.dataset.felt = f.id;
     return rad.rot;
   }
 

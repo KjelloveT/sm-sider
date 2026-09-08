@@ -203,6 +203,19 @@
     bind();
     bindFaner();
     teiknBibliotek();
+    GD.vegvisar.init('vegvisar');
+
+    /* Rettleiinga kjem etter at skjemaet står. Verktøyet skal vere brukbart
+       sjølv om hentinga feilar — skjemaet er produktet, rettleiinga er laget
+       oppå. Difor ei melding og ikkje ein stopp. */
+    GD.innhald.last().then(function (res) {
+      GD.uiForside.teikn();
+      GD.uiSkjema.teikn();
+      if (res.feil.length) {
+        U().toast('Rettleiingsteksten kunne ikkje lastast. Du kan framleis fylle ut protokollen.',
+          { kind: 'warn', ms: 7000 });
+      }
+    });
 
     GD.state.onChange(function (emne) {
       if (emne === 'load') teiknBibliotek();

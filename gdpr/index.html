@@ -40,13 +40,51 @@
 
     <div class="box5">
         <div class="box-tabs" role="tablist">
-            <button class="box-tab active" data-fane="forside" role="tab" aria-selected="true" type="button">Forside</button>
+            <button class="box-tab active" data-fane="start" role="tab" aria-selected="true" type="button">Må vi føre protokoll?</button>
+            <button class="box-tab" data-fane="forside" role="tab" aria-selected="false" type="button">Forside</button>
             <button class="box-tab" data-fane="aktivitetar" role="tab" aria-selected="false" type="button">Behandlingsaktivitetar</button>
             <button class="box-tab" data-fane="bibliotek" role="tab" aria-selected="false" type="button">Lagra og opne</button>
         </div>
         <div class="box-body">
 
-            <div data-flate="forside">
+            <div data-flate="start">
+                <p>Artikkel 30 nr. 5 ser ut som eit generelt fritak for verksemder med
+                færre enn 250 tilsette. Resten av setninga snur han: unntaket gjeld
+                <strong>ikkje</strong> dersom behandlinga kan medføre ein risiko for dei
+                registrerte, <strong>ikkje</strong> skjer leilegheitsvis, eller omfattar
+                særlege kategoriar etter artikkel 9 eller straffedomar etter artikkel 10.</p>
+                <p class="gd-hjelp">Dei tre vilkåra er <strong>alternative</strong> — eitt av
+                dei er nok. Artikkel 29-gruppa slo det fast i 2018, og EDPB har stadfesta det.
+                Datatilsynet skriv rett ut at «i praksis og nesten uten unntak, skal derfor
+                alle virksomheter føre protokoller».</p>
+
+                <div id="vegvisar"></div>
+
+                <details class="accordion-box">
+                    <summary>Eit forslag som ikkje er vedteke</summary>
+                    <div class="accordion-body">
+                        <p>EU-kommisjonen la 19. november 2025 fram eit forslag om å heve
+                        terskelen frå 250 til 750 tilsette, og samstundes endre prøven frå
+                        «ein risiko» til «høg risiko». Forslaget er <strong>ikkje vedteke</strong>
+                        og er framleis til forhandling mellom Parlamentet og Rådet. Det som
+                        står over er gjeldande rett.</p>
+                    </div>
+                </details>
+
+                <h3 class="heading4">Kjeldene bak dette verktøyet</h3>
+                <ul class="gd-kjelder">
+                    <li><a href="https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" target="_blank" rel="noopener noreferrer">Personvernforordninga artikkel 30</a> — Lovdata, offisiell norsk omsetjing. Òg artikkel 6, 9, 10, 26, 27, 28, 32, 35 og kapittel V.</li>
+                    <li><a href="https://www.datatilsynet.no/rettigheter-og-plikter/virksomhetenes-plikter/protokoll-over-behandlingsaktiviteter/" target="_blank" rel="noopener noreferrer">Datatilsynet — Protokoll over behandlingsaktiviteter</a>, med Excel-malen deira. Feltrekkjefølgja og .xlsx-eksporten følgjer malen.</li>
+                    <li><a href="https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/position-paper-derogations-obligation-maintain-records_en" target="_blank" rel="noopener noreferrer">Artikkel 29-gruppa — posisjonsdokument om unntaket i artikkel 30 nr. 5</a>, 19. april 2018, stadfesta av EDPB. Kjelda for at dei tre vilkåra er alternative.</li>
+                    <li><a href="https://www.dataprotection.ie/" target="_blank" rel="noopener noreferrer">Irish Data Protection Commission — Guidance Note: Records of Processing Activities under Article 30 GDPR</a>, april 2023. Bygd på eit tilsyn av tretti verksemder i 2022, og kjelda for dei vanlege feila.</li>
+                    <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/documentation/" target="_blank" rel="noopener noreferrer">ICO — Documentation</a>. Datatilsynet oppgjev sjølv denne som opphavet til malen sin.</li>
+                    <li>Fortalepunkt 82 i personvernforordninga, om kvifor protokollen finst.</li>
+                </ul>
+                <p class="gd-muted">Verktøyet er ikkje utvikla av eller i samarbeid med
+                Datatilsynet, EDPB eller nokon av dei andre kjeldene.</p>
+            </div>
+
+            <div data-flate="forside" hidden>
                 <p class="gd-hjelp">Artikkel 30 nr. 1 bokstav a gjeld heile protokollen:
                 kven som er behandlingsansvarleg, og korleis ein får tak i dykk. Difor står
                 det her og ikkje på kvar einskild aktivitet.</p>
@@ -144,7 +182,10 @@
 <script src="js/storage.js"></script>
 <script src="js/ui-forside.js"></script>
 <script src="js/ui-liste.js"></script>
+<script src="js/innhald.js"></script>
+<script src="js/ui-rettleiing.js"></script>
 <script src="js/ui-skjema.js"></script>
+<script src="js/vegvisar.js"></script>
 <script src="js/main.js"></script>
 
 </body>
