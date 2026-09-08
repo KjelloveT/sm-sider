@@ -54,15 +54,22 @@ class NeoHeader extends HTMLElement {
     const basePath = src.startsWith('../') ? '../' : '';
     this.basePath = basePath;
 
+    /* `no-theme` fjernar temaknappen. Sider som pinnar eit tema — Protokollsmia
+       skriv ut eit dokument og har berre ei lys utgåve — skal ikkje vise ein
+       knapp som ikkje gjer noko. Ein knapp utan verknad er verre enn ingen
+       knapp: brukaren trykkjer, ingenting skjer, og han lurer på om sida er
+       øydelagd. Standard er uendra, så ingen andre sider blir rørte. */
+    const utanTema = this.hasAttribute('no-theme');
+
     this.shadowRoot.innerHTML = `
       <header class="site-header">
         <div class="header-inner">
           <a href="${basePath}index.html" class="site-logo"><span class="site-logo-img" id="siteLogoVyrde"><img src="${basePath}_resources/vyrde.png" alt="Vyrdepil"></span> Vyrdepil</a>
           
           <div class="header-actions">
-            <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Skift mellom lys og mørkt tema">
+            ${utanTema ? '' : `<button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Skift mellom lys og mørkt tema">
               <span id="themeIcon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/><circle cx="12" cy="12" r="4"/></svg></span>
-            </button>
+            </button>`}
 
             <button class="menu-btn" id="menuBtn" aria-label="Meny" aria-expanded="false" aria-controls="siteMenu">
               <span></span><span></span><span></span>

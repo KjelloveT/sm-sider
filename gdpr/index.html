@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protokollsmia — behandlingsprotokoll etter GDPR artikkel 30</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../js/neo-header.js" defer></script>
+</head>
+<!-- Berre lyst tema. Alle tre attributta peikar på det same, og main.js pinnar
+     det i tillegg ved oppstart — eit lagra mørkt tema frå ei anna Vyrdepil-side
+     ville elles gjeve mørke fargevariablar under eit stilark som berre er
+     tenkt for lyst. -->
+<body data-light-theme="classic" data-dark-theme="classic" data-theme="classic">
+
+<neo-header no-theme></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+    <div class="box2 hero-box">
+        <div class="hero-text">
+            <h1>Protokollsmia</h1>
+            <p>Lag ein behandlingsprotokoll etter artikkel 30 — med forklaringar til kvart felt.</p>
+        </div>
+    </div>
+
+    <div class="box1">
+        <p><strong>Dette er eit opplæringsverktøy.</strong> Det hjelper deg å lage
+        ein protokoll og forklarer kvifor kvart felt står der, men det gjev
+        <strong>ikkje juridisk rådgjeving</strong> og kan ikkje vurdere om det du skriv
+        er rett for di verksemd.</p>
+        <p class="gd-muted">Alt du skriv blir liggjande i denne nettlesaren og blir aldri
+        sendt nokon stad. <a href="personvern.html">Les kva som blir lagra →</a></p>
+    </div>
+
+    <div class="box5">
+        <div class="box-tabs" role="tablist">
+            <button class="box-tab active" data-fane="start" role="tab" aria-selected="true" type="button">Må vi føre protokoll?</button>
+            <button class="box-tab" data-fane="forside" role="tab" aria-selected="false" type="button">Forside</button>
+            <button class="box-tab" data-fane="aktivitetar" role="tab" aria-selected="false" type="button">Behandlingsaktivitetar</button>
+            <button class="box-tab" data-fane="sjekk" role="tab" aria-selected="false" type="button">Sjekk protokollen</button>
+            <button class="box-tab" data-fane="bibliotek" role="tab" aria-selected="false" type="button">Lagra og lever</button>
+        </div>
+        <div class="box-body">
+
+            <div data-flate="start">
+                <p>Artikkel 30 nr. 5 ser ut som eit generelt fritak for verksemder med
+                færre enn 250 tilsette. Resten av setninga snur han: unntaket gjeld
+                <strong>ikkje</strong> dersom behandlinga kan medføre ein risiko for dei
+                registrerte, <strong>ikkje</strong> skjer leilegheitsvis, eller omfattar
+                særlege kategoriar etter artikkel 9 eller straffedomar etter artikkel 10.</p>
+                <p class="gd-hjelp">Dei tre vilkåra er <strong>alternative</strong> — eitt av
+                dei er nok. Artikkel 29-gruppa slo det fast i 2018, og EDPB har stadfesta det.
+                Datatilsynet skriv rett ut at «i praksis og nesten uten unntak, skal derfor
+                alle virksomheter føre protokoller».</p>
+
+                <div id="vegvisar"></div>
+
+                <details class="accordion-box">
+                    <summary>Eit forslag som ikkje er vedteke</summary>
+                    <div class="accordion-body">
+                        <p>EU-kommisjonen la 19. november 2025 fram eit forslag om å heve
+                        terskelen frå 250 til 750 tilsette, og samstundes endre prøven frå
+                        «ein risiko» til «høg risiko». Forslaget er <strong>ikkje vedteke</strong>
+                        og er framleis til forhandling mellom Parlamentet og Rådet. Det som
+                        står over er gjeldande rett.</p>
+                    </div>
+                </details>
+
+                <h3 class="heading4">Kjeldene bak dette verktøyet</h3>
+                <ul class="gd-kjelder">
+                    <li><a href="https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" target="_blank" rel="noopener noreferrer">Personvernforordninga artikkel 30</a> — Lovdata, offisiell norsk omsetjing. Òg artikkel 6, 9, 10, 26, 27, 28, 32, 35 og kapittel V.</li>
+                    <li><a href="https://www.datatilsynet.no/rettigheter-og-plikter/virksomhetenes-plikter/protokoll-over-behandlingsaktiviteter/" target="_blank" rel="noopener noreferrer">Datatilsynet — Protokoll over behandlingsaktiviteter</a>, med Excel-malen deira. Feltrekkjefølgja og .xlsx-eksporten følgjer malen.</li>
+                    <li><a href="https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/position-paper-derogations-obligation-maintain-records_en" target="_blank" rel="noopener noreferrer">Artikkel 29-gruppa — posisjonsdokument om unntaket i artikkel 30 nr. 5</a>, 19. april 2018, stadfesta av EDPB. Kjelda for at dei tre vilkåra er alternative.</li>
+                    <li><a href="https://www.dataprotection.ie/" target="_blank" rel="noopener noreferrer">Irish Data Protection Commission — Guidance Note: Records of Processing Activities under Article 30 GDPR</a>, april 2023. Bygd på eit tilsyn av tretti verksemder i 2022, og kjelda for dei vanlege feila.</li>
+                    <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/documentation/" target="_blank" rel="noopener noreferrer">ICO — Documentation</a>. Datatilsynet oppgjev sjølv denne som opphavet til malen sin.</li>
+                    <li>Fortalepunkt 82 i personvernforordninga, om kvifor protokollen finst.</li>
+                </ul>
+                <p class="gd-muted">Verktøyet er ikkje utvikla av eller i samarbeid med
+                Datatilsynet, EDPB eller nokon av dei andre kjeldene.</p>
+            </div>
+
+            <div data-flate="forside" hidden>
+                <p class="gd-hjelp">Artikkel 30 nr. 1 bokstav a gjeld heile protokollen:
+                kven som er behandlingsansvarleg, og korleis ein får tak i dykk. Difor står
+                det her og ikkje på kvar einskild aktivitet.</p>
+                <div id="forside"></div>
+            </div>
+
+            <div data-flate="aktivitetar" hidden>
+                <p class="gd-hjelp">Éi behandling har eitt formål. Bryt protokollen ned etter
+                funksjonsområde — personal og løn, kundeforhold, marknadsføring — så er det
+                lettare å sjå at ingenting manglar.</p>
+
+                <div class="gd-knapperad">
+                    <button class="btn" id="nyAktivitet" type="button">
+                        <span data-icon="plus"></span>Ny behandlingsaktivitet
+                    </button>
+                </div>
+
+                <div id="aktivitetsliste"></div>
+
+                <h2 class="heading3">Rediger aktiviteten</h2>
+                <div id="skjema"></div>
+            </div>
+
+            <div data-flate="sjekk" hidden>
+                <div class="gd-knapperad">
+                    <button class="btn" id="koeyrSjekk" type="button">
+                        <span data-icon="check"></span>Sjekk protokollen
+                    </button>
+                </div>
+                <div id="sjekkrapport"></div>
+            </div>
+
+            <div data-flate="bibliotek" hidden>
+                <div class="gd-knapperad">
+                    <button class="btn" id="lagre" type="button">
+                        <span data-icon="save"></span>Lagre i nettlesaren
+                    </button>
+                    <button class="btn" id="eksporterJson" type="button">
+                        <span data-icon="download"></span>Last ned som fil
+                    </button>
+                    <button class="btn" id="importerBtn" type="button">
+                        <span data-icon="upload"></span>Opne ei fil
+                    </button>
+                    <button class="btn" id="nyProtokoll" type="button">Ny, tom protokoll</button>
+                </div>
+
+                <h3 class="heading4">Lever protokollen</h3>
+                <p class="gd-hjelp">Alle tre gjev det same innhaldet. Reknearket følgjer
+                Datatilsynet sin kolonnerekkjefølgje, HTML-fila står heilt åleine, og
+                utskrifta gjev PDF gjennom «Skriv ut til PDF».</p>
+                <div class="gd-knapperad">
+                    <button class="btn" id="skrivUt" type="button">
+                        <span data-icon="printer"></span>Skriv ut / PDF
+                    </button>
+                    <button class="btn" id="eksporterXlsx" type="button">
+                        <span data-icon="download"></span>Last ned .xlsx
+                    </button>
+                    <button class="btn" id="eksporterHtml" type="button">
+                        <span data-icon="download"></span>Last ned som HTML-fil
+                    </button>
+                </div>
+                <input type="file" id="importerFil" accept="application/json,.json" hidden>
+
+                <p class="gd-hjelp">Fila er den trygge vegen: ho ligg på di eiga maskin og
+                kan takast med til ei anna. Lagringa i nettlesaren er til for at arbeidet
+                skal overleve ei omlasting, ikkje til å vere arkivet dykkar.</p>
+
+                <h3 class="heading4">Lagra i denne nettlesaren</h3>
+                <div id="bibliotek"></div>
+
+                <div class="gd-knapperad">
+                    <button class="btn gd-fare" id="slettAlt" type="button">
+                        <span data-icon="trash"></span>Slett alt Protokollsmia har lagra
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+</div>
+
+<!-- Overlegg: slett ein aktivitet -->
+<div class="modal-overlay" id="slettOverlegg" role="dialog" aria-modal="true" aria-labelledby="slettTittel">
+    <div class="modal1">
+        <button class="btn gd-ikonknapp modal-close" data-lukk aria-label="Lukk"><span data-icon="x"></span></button>
+        <h2 id="slettTittel">Slette aktiviteten?</h2>
+        <p id="slettTekst"></p>
+        <div class="gd-knapperad">
+            <button class="btn gd-fare" id="slettJa" type="button">Ja, slett</button>
+            <button class="btn" data-lukk type="button">Avbryt</button>
+        </div>
+    </div>
+</div>
+
+<!-- Overlegg: slett alt -->
+<div class="modal-overlay" id="slettAltOverlegg" role="dialog" aria-modal="true" aria-labelledby="slettAltTittel">
+    <div class="modal1">
+        <button class="btn gd-ikonknapp modal-close" data-lukk aria-label="Lukk"><span data-icon="x"></span></button>
+        <h2 id="slettAltTittel">Slette alt?</h2>
+        <p>Dette fjernar alle protokollane Protokollsmia har lagra i denne nettlesaren,
+        òg den du arbeider med no. Har du ikkje lasta dei ned som fil, er dei borte.</p>
+        <div class="gd-knapperad">
+            <button class="btn gd-fare" id="slettAltJa" type="button">Ja, slett alt</button>
+            <button class="btn" data-lukk type="button">Avbryt</button>
+        </div>
+    </div>
+</div>
+
+<!-- Overlegg: avvis eit funn -->
+<div class="modal-overlay" id="avvisOverlegg" role="dialog" aria-modal="true" aria-labelledby="avvisTittel">
+    <div class="modal1">
+        <button class="btn gd-ikonknapp modal-close" data-lukk aria-label="Lukk"><span data-icon="x"></span></button>
+        <h2 id="avvisTittel">Ikkje aktuelt her</h2>
+        <p>Sjekken kan ta feil. Skriv kvifor dette funnet ikkje gjeld, så blir
+        grunngjevinga liggjande i protokollen — det er i seg sjølv god dokumentasjon
+        etter ansvarlegheitsprinsippet i artikkel 5 nr. 2.</p>
+        <div class="gd-felt">
+            <label class="gd-etikett" for="avvisGrunn">Grunn</label>
+            <textarea class="gd-textarea" id="avvisGrunn" rows="3"
+                placeholder="T.d.: Tiltaka er skildra i ISO 27001-sertifikat nr. 12345, som ligg ved protokollen."></textarea>
+        </div>
+        <div class="gd-knapperad">
+            <button class="btn" id="avvisJa" type="button">Lagre og skjul funnet</button>
+            <button class="btn" data-lukk type="button">Avbryt</button>
+        </div>
+    </div>
+</div>
+
+<div id="printArea" aria-hidden="true"></div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="../js/vyrdepil-util.js"></script>
+<script src="js/util.js"></script>
+<script src="js/felt.js"></script>
+<script src="js/state.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui-forside.js"></script>
+<script src="js/ui-liste.js"></script>
+<script src="js/innhald.js"></script>
+<script src="js/ui-rettleiing.js"></script>
+<script src="js/ui-skjema.js"></script>
+<script src="js/vegvisar.js"></script>
+<script src="js/sjekk.js"></script>
+<script src="js/ui-sjekk.js"></script>
+<script src="js/print.js"></script>
+<script src="js/xlsx.js"></script>
+<script src="js/export-xlsx.js"></script>
+<script src="js/export-html.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

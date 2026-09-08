@@ -12,7 +12,8 @@
       "/ljodstigen/jakta/*",
       "/ljodstigen/skog/*",
       "/ljodstigen/ropet/*",
-      "/ljodstigen/figur/*"
+      "/ljodstigen/figur/*",
+      "/gdpr/data/*"
     ]
   },
   "routes": [

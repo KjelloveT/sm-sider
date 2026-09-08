@@ -1,0 +1,419 @@
+/* ══════════════════════════════════════════════
+   PROTOKOLLSMIA — stil
+
+   Utvidar css/neobrutalisme.css. Designsystemet har ingen skjemastil, så
+   inndatafelta er definerte her med `gd-`-prefiks — same mønster som
+   leitekryss (`lk-`) og ordskodde (`os-`).
+
+   BERRE LYST TEMA. Verktøyet lagar eit dokument som skal skrivast ut og
+   leverast, og har eit anna publikum enn resten av Vyrdepil. Det finst difor
+   ingen `@media (prefers-color-scheme: dark)` her, og sida pinnar eit lyst
+   tema ved oppstart (sjå main.js). Fargane kjem framleis frå temavariablane,
+   så dei held seg til designsystemet.
+   ══════════════════════════════════════════════ */
+
+/* ──────────────── Skjemafelt ──────────────── */
+
+.gd-felt {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.gd-etikett {
+  font-weight: 800;
+  display: block;
+  line-height: 1.3;
+}
+
+/* Merket som seier om feltet er lovpålagt. Datatilsynet skil obligatoriske og
+   valfrie kolonnar med farge i reknearket; her ber merket teksten i staden, så
+   skiljet overlever både utskrift, svart-kvitt og skjermlesar. */
+.gd-krav {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+  border: 2px solid var(--border);
+  border-radius: 100px;
+  margin-left: 8px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.gd-krav-maa { background: var(--text); color: var(--surface); }
+.gd-krav-kan { background: var(--surface); color: var(--text); }
+
+.gd-input,
+.gd-textarea,
+.gd-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.gd-textarea {
+  min-height: 92px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.gd-input:focus-visible,
+.gd-textarea:focus-visible,
+.gd-select:focus-visible {
+  outline: 3px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.gd-felt-under:empty { display: none; }
+.gd-felt-under {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gd-hjelp {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.gd-muted { color: var(--muted); font-size: 0.93rem; }
+
+/* ──────────────── Knapperader ──────────────── */
+
+.gd-knapperad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 18px 0;
+}
+
+.gd-btn-liten {
+  padding: 6px 12px;
+  font-size: 0.88rem;
+}
+
+.gd-ikonknapp {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gd-fare:hover { background: #ff6b6b; color: #1a1a1a; }
+
+/* ──────────────── Aktivitetslista ──────────────── */
+
+.gd-liste {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.gd-rad {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px 14px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+  text-align: left;
+  width: 100%;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.gd-rad:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--shadow); }
+
+/* Den opne aktiviteten er snudd: `--text` som botn og `--surface` som tekst.
+   Dei to er motsetnader i kvart einaste tema, så paringa er lesbar utan
+   måling — det er same grepet `.box4 .box-header` brukar. Å fylle med
+   `--accent` og leggje tekst oppå er nettopp det AGENTS.md §3.2 åtvarar mot. */
+.gd-rad.is-aktiv {
+  background: var(--text);
+  color: var(--surface);
+}
+.gd-rad.is-aktiv .gd-rad-under { color: var(--surface); opacity: 0.8; }
+
+.gd-rad-tittel { font-weight: 800; line-height: 1.3; }
+.gd-rad-under { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+
+.gd-rad-styring { display: flex; gap: 6px; }
+
+/* Statusmerket på kvar rad: kor mange av dei lovpålagde felta som er fylte. */
+.gd-status {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border: 2px solid var(--border);
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.gd-status-heil { background: var(--accent3); color: var(--text-on-light-accent); }
+.gd-status-delvis { background: var(--accent4); color: var(--text-on-light-accent); }
+.gd-status-tom { background: var(--surface); color: var(--text); }
+
+.gd-tom-liste {
+  padding: 28px 20px;
+  border: 3px dashed var(--border);
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ──────────────── Forsida ──────────────── */
+
+.gd-gruppe { margin-bottom: 28px; }
+.gd-gruppe:last-child { margin-bottom: 0; }
+
+.gd-rutenett {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0 20px;
+}
+
+.gd-endringar { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.gd-endringar th,
+.gd-endringar td {
+  text-align: left;
+  padding: 8px 10px 8px 0;
+  border-bottom: 2px solid var(--border);
+  vertical-align: top;
+}
+.gd-endringar th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ──────────────── Utskrift ────────────────
+   Arket blir bygd i #printArea, utanfor .page-wrapper. Faste fargar, ikkje
+   temavariablar: protokollen skal sjå lik ut uansett kva tema nokon har valt,
+   og han skal vere leseleg i svart-kvitt. Same mønster som leitekryss. */
+
+#printArea { display: none; }
+
+@media print {
+  neo-header, .page-wrapper { display: none !important; }
+  #printArea { display: block; }
+
+  body { background: #ffffff; color: #1a1a1a; }
+
+  .gd-ark { color: #1a1a1a; }
+  .gd-ark + .gd-ark { break-before: page; page-break-before: always; }
+
+  .gd-ark h1 { font-size: 18pt; margin: 0 0 4pt; }
+  .gd-ark h2 { font-size: 13pt; margin: 14pt 0 4pt; }
+  .gd-ark p, .gd-ark td, .gd-ark th { font-size: 9pt; line-height: 1.4; }
+
+  .gd-ark table { width: 100%; border-collapse: collapse; }
+  .gd-ark th, .gd-ark td {
+    border: 0.5pt solid #1a1a1a;
+    padding: 3pt 4pt;
+    text-align: left;
+    vertical-align: top;
+  }
+  .gd-ark th {
+    background: #e8e8e8;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-size: 8pt;
+  }
+
+  /* Ein behandlingsaktivitet skal ikkje delast over to sider når han får plass
+     på éi. Ein protokoll som er klipt midt i ei rad er vanskeleg å lese for
+     den som skal kontrollere han. */
+  .gd-ark-aktivitet { break-inside: avoid; page-break-inside: avoid; }
+
+  @page { size: A4; margin: 14mm; }
+}
+
+/* ──────────────── Rettleiing ──────────────── */
+
+.gd-rettleiing { margin-top: 4px; }
+
+.gd-rettleiing > summary {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.gd-rettleiing .accordion-body p { margin: 0 0 10px; }
+
+.gd-rettleiing-kort { font-weight: 700; }
+
+.gd-rettleiing-tittel {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 14px 0 6px;
+}
+
+.gd-dome, .gd-feil { margin: 0 0 10px; padding-left: 1.2em; }
+.gd-dome li, .gd-feil li { margin-bottom: 6px; }
+
+/* Døme og feil skil seg på kantstripa, ikkje på ei fylt flate. Ei aksentfarga
+   flate med tekst oppå er det AGENTS.md §3.2 åtvarar mot; ei stripe ved sida av
+   teksten kostar ingenting og fungerer i alle tema. */
+.gd-dome { border-left: 3px solid var(--accent3); padding-left: 1.4em; }
+.gd-feil { border-left: 3px solid var(--accent2); padding-left: 1.4em; }
+
+.gd-kjelde { font-size: 0.86rem; color: var(--muted); margin: 12px 0 0; }
+
+/* ──────────────── Vegvisar ──────────────── */
+
+.gd-vegvisar-sporsmaal {
+  padding: 16px 0;
+  border-top: 2px solid var(--border);
+}
+.gd-vegvisar-sporsmaal:first-child { border-top: none; }
+
+.gd-vegvisar-tekst { font-weight: 800; margin: 0 0 4px; }
+
+.gd-vegvisar-sporsmaal .gd-knapperad { margin: 10px 0 0; }
+
+.gd-vegvisar-svar {
+  margin-top: 20px;
+  padding: 18px 20px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 5px 5px 0 var(--shadow);
+}
+.gd-vegvisar-svar ul { margin: 10px 0 0; padding-left: 1.2em; }
+.gd-vegvisar-svar li { margin-bottom: 8px; }
+
+.gd-kjelder { padding-left: 1.2em; }
+.gd-kjelder li { margin-bottom: 10px; line-height: 1.5; }
+
+/* ──────────────── Kvalitetssjekken ──────────────── */
+
+.gd-sjekk-atterhald {
+  padding: 14px 18px;
+  border-left: 4px solid var(--border);
+  background: var(--bg);
+  margin-bottom: 20px;
+}
+.gd-sjekk-atterhald p { margin: 0; font-size: 0.94rem; }
+
+.gd-sjekk-sum {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.gd-sjekk-tal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 92px;
+  padding: 12px 16px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.gd-sjekk-num { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+.gd-sjekk-lab { font-size: 0.8rem; margin-top: 4px; }
+
+.gd-sjekk-reint {
+  padding: 16px 20px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  font-weight: 600;
+}
+
+/* Nivået ligg i kantstripa, ikkje i ei fylt flate. Same grunngjeving som for
+   døme og feil i rettleiinga: ei aksentfarga flate med tekst oppå er det
+   AGENTS.md §3.2 åtvarar mot. */
+.gd-funn {
+  border: 3px solid var(--border);
+  border-left-width: 8px;
+  background: var(--surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.gd-nivaa-mangel    { border-left-color: var(--accent2); }
+.gd-nivaa-aatvaring { border-left-color: var(--accent4); }
+.gd-nivaa-merknad   { border-left-color: var(--accent5); }
+
+.gd-sjekk-tal.gd-nivaa-mangel,
+.gd-sjekk-tal.gd-nivaa-aatvaring,
+.gd-sjekk-tal.gd-nivaa-merknad { border-left-width: 8px; }
+
+.gd-funn.er-avvist { opacity: 0.72; box-shadow: none; }
+
+.gd-funn-topp { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+
+.gd-funn-nivaa {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 2px solid var(--border);
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.gd-funn-tittel { margin: 0; font-size: 1.05rem; line-height: 1.3; }
+.gd-funn-tal { margin: 10px 0 6px; font-size: 0.9rem; color: var(--muted); }
+
+.gd-funn-liste { list-style: none; padding: 0; margin: 0 0 14px; }
+.gd-funn-liste li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 2px solid var(--rule, var(--border));
+}
+.gd-funn-liste li:first-child { border-top: none; }
+
+.gd-funn-lenkje {
+  all: unset;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.gd-funn-lenkje:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
+
+.gd-funn-treff { font-size: 0.88rem; color: var(--muted); }
+.gd-funn-grunn { flex-basis: 100%; margin: 4px 0 0; font-size: 0.88rem; color: var(--muted); }
+
+.gd-funn-merkelapp {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 12px 0 4px;
+}
+
+.gd-funn-gjer { font-weight: 600; }
+
+/* Utskrifta av protokollen skal ikkje ha sjekkfunna i seg — dei er eit
+   arbeidsverktøy, ikkje ein del av dokumentet tilsynet skal få. */
+@media print {
+  .gd-funn, .gd-sjekk-sum, .gd-sjekk-atterhald { display: none !important; }
+}
+
+/* Utskriftsarket sine eigne små ting. */
+@media print {
+  .gd-ark-under { margin: 0 0 14pt; font-size: 10pt; }
+  .gd-ark-krav { font-weight: 400; font-size: 7.5pt; }
+  .gd-ark-tom { font-style: italic; }
+  .gd-ark-fot { margin-top: 14pt; font-size: 8pt; }
+  .gd-ark th { width: 32%; }
+}
