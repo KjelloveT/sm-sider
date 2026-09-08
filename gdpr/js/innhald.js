@@ -63,12 +63,13 @@
       });
   }
 
-  /* Kvalitetssjekken (data/reglar.json) er ikkje bygd enno. Fila blir henta
-     her når han kjem — å hente henne no ville berre gjeve ein 404 i konsollen
-     og ei åtvaring til brukaren om noko han ikkje saknar. */
   function last() {
-    return hent('rettleiing', 'gdpr-rettleiing').then(function (data) {
-      lager.rettleiing = data;
+    return Promise.all([
+      hent('rettleiing', 'gdpr-rettleiing'),
+      hent('reglar', 'gdpr-reglar')
+    ]).then(function (svar) {
+      lager.rettleiing = svar[0];
+      lager.reglar = svar[1];
       return { feil: feil.slice() };
     });
   }

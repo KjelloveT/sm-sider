@@ -1,0 +1,202 @@
+{
+  "app": "gdpr-reglar",
+  "version": 1,
+  "_note": "Reglane i kvalitetssjekken. Kvar regel namngjev eit predikat i gdpr/js/sjekk.js og gjev det parametrar. Reglane er data nettopp fordi lista over vage frasar veks kvar gong nokon les ein ny tilsynsrapport — det skal vere ein ny linje her, ikkje ei kodeendring.",
+  "_nivaa": "mangel = eit felt artikkel 30 nr. 1 krev står tomt. aatvaring = utfylt, men på ein måte eit tilsyn alt har hatt innvendingar mot. merknad = verdt å vite, senkjer ikkje karakteren.",
+  "_kjelde": "Dei fleste reglane kjem frå Irish Data Protection Commission, «Guidance Note: Records of Processing Activities (RoPA) under Article 30 GDPR», april 2023, som byggjer på eit tilsyn av tretti verksemder i 2022.",
+
+  "reglar": [
+
+    {
+      "id": "manglar-obligatorisk",
+      "felt": "*art30*",
+      "predikat": "tom",
+      "nivaa": "mangel",
+      "tittel": "Eit felt artikkel 30 krev står tomt",
+      "kvifor": "Artikkel 30 nr. 1 listar opp kva protokollen skal innehalde. Står feltet tomt, er protokollen ikkje komplett — og det er det første ein kontrollør ser etter.",
+      "gjer": "Fyll ut feltet. Er svaret at det ikkje er aktuelt for denne behandlinga, skriv det — «Ingen mottakarar utanfor verksemda» er eit svar, eit tomt felt er det ikkje.",
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    {
+      "id": "sikring-vag",
+      "felt": "sikringstiltak",
+      "predikat": "frase",
+      "param": {
+        "heile": true,
+        "frasar": [
+          "passande sikkerheit", "passande sikring", "tilstrekkeleg sikkerheit",
+          "tilstrekkeleg sikring", "tilfredsstillande sikkerheit", "god sikkerheit",
+          "nødvendige tiltak", "naudsynte tiltak", "vanlege tiltak",
+          "sikkerheitstiltak er på plass", "tiltak er på plass",
+          "appropriate security", "appropriate measures",
+          "iht. rutinar", "i tråd med rutinar", "etter gjeldande rutinar"
+        ]
+      },
+      "nivaa": "aatvaring",
+      "tittel": "Sikringstiltaka er for vagt skildra",
+      "kvifor": "Det irske datatilsynet fann nettopp denne formuleringa i tilsynet sitt i 2022, og slo fast at ho ikkje held. Artikkel 30 nr. 1 bokstav g ber om ei generell skildring — men ei skildring skal seie kva tiltaka er.",
+      "gjer": "Namngje tiltaka. Til dømes: «Tofaktor på administratorkontoar, tilgang styrt etter rolle, kryptert lagring, logg som blir gjennomgått kvartalsvis, og opplæring i personvern for nytilsette.» Hugs at artikkel 32 krev organisatoriske tiltak i tillegg til dei tekniske.",
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023; personvernforordninga artikkel 32", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-2#gdpr/a32" }
+    },
+
+    {
+      "id": "sikring-kort",
+      "felt": "sikringstiltak",
+      "predikat": "for-kort",
+      "param": { "minOrd": 4 },
+      "nivaa": "aatvaring",
+      "tittel": "Sikringstiltaka er skildra på under fem ord",
+      "kvifor": "Artikkel 30 nr. 1 bokstav g viser til artikkel 32, som handlar om både tekniske og organisatoriske tiltak. Fire ord rekk sjeldan til begge delar.",
+      "gjer": "Skriv kva som faktisk vernar opplysningane — kven som har tilgang, korleis tilgangen blir styrt, kva som er kryptert, og kva rutinar som gjeld.",
+      "kjelde": { "tekst": "Personvernforordninga artikkel 32", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-2#gdpr/a32" }
+    },
+
+    {
+      "id": "opplysningar-vag",
+      "felt": "opplysningar",
+      "predikat": "frase",
+      "param": {
+        "heile": true,
+        "frasar": [
+          "personopplysningar", "personopplysninger", "personlege opplysningar",
+          "opplysningar om den registrerte", "kontaktopplysningar",
+          "diverse", "ymse", "alle relevante opplysningar",
+          "personal information", "personal data", "svar på spørsmål"
+        ]
+      },
+      "nivaa": "aatvaring",
+      "tittel": "Opplysningskategorien seier ikkje kva som faktisk blir samla inn",
+      "kvifor": "Det irske datatilsynet peikar på svar som «personal information» og «responses to questions» og seier dei «unequivocally are not sufficient». Skilnaden mellom «kontaktopplysningar» og «namn, adresse, telefon, fødselsnummer» er skilnaden på ein protokoll som kan brukast og ein som ikkje kan det.",
+      "gjer": "List opp kva de faktisk har. Til dømes: «Namn, fødselsnummer, adresse, telefon, kontonummer, skattekort, fråværsdagar.» Merk særskilt om noko er ein særleg kategori etter artikkel 9.",
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023, «Don't cut corners with detail and granularity»", "url": "https://www.dataprotection.ie/" }
+    },
+
+    {
+      "id": "registrerte-vag",
+      "felt": "registrerte",
+      "predikat": "frase",
+      "param": {
+        "heile": true,
+        "frasar": ["personar", "brukarar", "brukere", "alle", "diverse", "ymse", "individuals", "data subjects"]
+      },
+      "nivaa": "aatvaring",
+      "tittel": "Kategorien av registrerte er for vid",
+      "kvifor": "Artikkel 30 nr. 1 bokstav c ber om ei skildring av kategoriane. «Personar» er ikkje ein kategori — det er alle.",
+      "gjer": "Skriv kva grupper det gjeld: tilsette, søkjarar, elevar, føresette, kundar, besøkjande. Ulike grupper har ofte ulike slettefristar, og då bør dei uansett vere kvar si rad.",
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav c", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    {
+      "id": "slettefrist-utan-tid",
+      "felt": "slettefrist",
+      "predikat": "utan-tid",
+      "nivaa": "aatvaring",
+      "tittel": "Slettefristen seier ikkje noko om tid",
+      "kvifor": "Artikkel 30 nr. 1 bokstav f ber om planlagde tidsfristar. «Ved behov» og «så lenge det er nødvendig» er omskrivingar av spørsmålet, ikkje svar på det.",
+      "gjer": "Skriv eit tidsrom og kva som startar det: «Fem år etter utgangen av rekneskapsåret», «seks månader etter at tilsetjinga er avslutta», «sju dagar». Ein frist utan startpunkt er halvvegs.",
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav f", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-1#gdpr/a30" }
+    },
+
+    {
+      "id": "vis-til-dokument",
+      "felt": ["slettefrist", "sikringstiltak", "mottakarar", "garantiar"],
+      "predikat": "vis-til-dokument",
+      "nivaa": "aatvaring",
+      "tittel": "Svaret viser til eit dokument som ikkje ligg ved",
+      "kvifor": "Det irske datatilsynet fann protokollar som viste til lagringsrutinar og interne dokument som ikkje var tilgjengelege for tilsynet, og slår fast at protokollen skal vere «a complete, self-contained document». Ein kontrollør kan ikkje klikke på ei lenkje til ein intern filserver.",
+      "gjer": "Skriv innhaldet i protokollen i staden for å vise til det. Vil du behalde tilvisinga, skriv begge: «Fem år, jf. lagringsrutinen punkt 4.2.»",
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023, «Don't maintain a RoPA that is not self-explanatory»; fortalepunkt 82", "url": "https://www.dataprotection.ie/" }
+    },
+
+    {
+      "id": "utdatert-overfoering",
+      "felt": ["garantiar", "tredjeland", "mottakarar"],
+      "predikat": "frase",
+      "param": {
+        "heile": false,
+        "frasar": ["privacy shield", "safe harbor", "safe harbour"]
+      },
+      "nivaa": "aatvaring",
+      "tittel": "Overføringsgrunnlaget er ikkje gyldig lenger",
+      "kvifor": "Safe Harbor fall i 2015 (Schrems I) og Privacy Shield i 2020 (Schrems II). Det irske datatilsynet nemner nettopp Privacy Shield som døme på utdatert informasjon som framleis stod i protokollar i 2022.",
+      "gjer": "Bruk gjeldande grunnlag: EUs standard personvernvilkår (SCC, 2021/914) med modul og dato, EU–US Data Privacy Framework der leverandøren er sertifisert, eller ei anna ordning i kapittel V.",
+      "kjelde": { "tekst": "Personvernforordninga kapittel V; Irish DPC, RoPA-rettleiing 2023", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-5#gdpr/a44" }
+    },
+
+    {
+      "id": "tredjeland-utan-garanti",
+      "felt": "garantiar",
+      "predikat": "krev-anna-felt",
+      "param": { "naar": "tredjeland", "naarIkkje": ["nei", "ingen", "ikkje aktuelt", "-"] },
+      "nivaa": "mangel",
+      "tittel": "Overføring til tredjeland utan at garantiane er skildra",
+      "kvifor": "Artikkel 30 nr. 1 bokstav e krev at protokollen dokumenterer garantiane når opplysningar blir overførte ut av EØS. Ei overføring utan grunnlag i kapittel V er ulovleg.",
+      "gjer": "Skriv kva som gjer overføringa lovleg, og ver konkret: kva ordning, kva versjon, og når vurderinga vart gjord.",
+      "kjelde": { "tekst": "Personvernforordninga artikkel 30 nr. 1 bokstav e og kapittel V", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-5#gdpr/a44" }
+    },
+
+    {
+      "id": "udefinert-forkorting",
+      "felt": ["system", "mottakarar", "sikringstiltak", "databehandlarar", "kvaGjeld", "formaal"],
+      "predikat": "udefinert-forkorting",
+      "param": {
+        "kvitliste": ["EU", "EØS", "GDPR", "IT", "HR", "PC", "SMS", "PDF", "USA", "NAV", "SCC", "DPIA", "API", "VPN", "MFA", "SSO", "AES", "TLS", "ISO", "CV", "AS", "IKS", "KS"]
+      },
+      "nivaa": "merknad",
+      "tittel": "Forkorting som ikkje er forklart",
+      "kvifor": "Det irske datatilsynet fann forkortingar som var sjølvsagde internt og uforståelege for tilsynet. Protokollen skal kunne lesast av nokon utanfrå utan å gjette.",
+      "gjer": "Skriv forkortinga ut første gongen, eller før henne opp under «Forkortingar og omgrep» på forsida. Gjer du det siste, sluttar denne merknaden å kome.",
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023, «Using acronyms that are undefined»", "url": "https://www.dataprotection.ie/" }
+    },
+
+    {
+      "id": "duplikat-sikring",
+      "felt": "sikringstiltak",
+      "predikat": "duplikat",
+      "param": { "minTal": 4 },
+      "nivaa": "merknad",
+      "tittel": "Same sikringstiltak ordrett i mange aktivitetar",
+      "kvifor": "Det er heilt greitt at fleire behandlingar har same tiltak — men når same setninga står ordrett i mange rader, er det oftare eit teikn på klipp og lim enn på ei reell vurdering. Ulike system har som regel ulik sikring.",
+      "gjer": "Sjå over om tiltaka faktisk er dei same. Ligg opplysningane i ulike system, er tilgangsstyringa sjeldan identisk.",
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023, «Use the RoPA as a tool to demonstrate compliance»", "url": "https://www.dataprotection.ie/" }
+    },
+
+    {
+      "id": "duplikat-slettefrist",
+      "felt": "slettefrist",
+      "predikat": "duplikat",
+      "param": { "minTal": 4 },
+      "nivaa": "merknad",
+      "tittel": "Same slettefrist ordrett i mange aktivitetar",
+      "kvifor": "Det irske datatilsynet peikar på at slettefristar som regel skil seg mellom kategoriar av opplysningar. Ein protokoll der alt har same frist er sjeldan rett.",
+      "gjer": "Sjå over kvar frist for seg. Lønsbilag, søknadar frå dei som ikkje fekk stillinga, og personalmapper har ulike fristar i lov og praksis.",
+      "kjelde": { "tekst": "Irish DPC, RoPA-rettleiing 2023", "url": "https://www.dataprotection.ie/" }
+    },
+
+    {
+      "id": "hoeg-risiko-utan-vurdering",
+      "felt": "hoegRisiko",
+      "predikat": "frase",
+      "param": { "heile": true, "frasar": ["ja"] },
+      "nivaa": "merknad",
+      "tittel": "Høg risiko — då krev artikkel 35 ei vurdering av personvernkonsekvensar",
+      "kvifor": "Svarar de ja her, utløyser artikkel 35 ei plikt til å gjere ein DPIA før behandlinga startar. Protokollen er den naturlege staden å oppdage kva behandlingar som treng ei slik vurdering.",
+      "gjer": "Sjekk om det er gjort ein DPIA for denne behandlinga. Er han gjort, skriv gjerne kvar han ligg. Merk at ein DPIA ikkje erstattar protokollen — det irske datatilsynet fekk DPIA-ar i staden for protokoll i tilsynet sitt, og godtok det ikkje.",
+      "kjelde": { "tekst": "Personvernforordninga artikkel 35", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-4-4#gdpr/a35" }
+    },
+
+    {
+      "id": "samtykke-tilsette",
+      "felt": "grunnlag6",
+      "predikat": "frase",
+      "param": { "heile": false, "frasar": ["bokstav a"] },
+      "nivaa": "merknad",
+      "tittel": "Samtykke som behandlingsgrunnlag — er det reelt friviljug?",
+      "kvifor": "Samtykke må vere friviljug, spesifikt, informert og utvitydig, og kunne trekkjast tilbake like lett som det blei gjeve. Mellom arbeidsgjevar og tilsett er det sjeldan reelt friviljug, fordi partane ikkje er likestilte.",
+      "gjer": "Gjeld behandlinga tilsette, sjå om eit anna grunnlag passar betre — avtale (bokstav b), rettsleg plikt (bokstav c) eller rettkomen interesse (bokstav f). Er samtykke likevel rett, må de kunne dokumentere det og la folk trekkje det tilbake.",
+      "kjelde": { "tekst": "Personvernforordninga artikkel 4 nr. 11 og artikkel 7; fortalepunkt 43", "url": "https://lovdata.no/dokument/NL/lov/2018-06-15-38/KAPITTEL_gdpr-2#gdpr/a7" }
+    }
+
+  ]
+}

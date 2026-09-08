@@ -145,6 +145,33 @@
       });
     }
 
+    const sjekkBtn = document.getElementById('koeyrSjekk');
+    if (sjekkBtn) {
+      sjekkBtn.addEventListener('click', function () { GD.uiSjekk.teikn(); });
+    }
+
+    const utBtn = document.getElementById('skrivUt');
+    if (utBtn) utBtn.addEventListener('click', function () { GD.print.skrivUt(); });
+
+    const htmlBtn = document.getElementById('eksporterHtml');
+    if (htmlBtn) htmlBtn.addEventListener('click', function () { GD.exportHtml.lastNed(); });
+
+    /* .xlsx lastar JSZip på etterspurnad, så knappen kan bruke eit augeblikk
+       første gongen. Vi seier frå i staden for å la han sjå daud ut. */
+    const xlsxBtn = document.getElementById('eksporterXlsx');
+    if (xlsxBtn) {
+      xlsxBtn.addEventListener('click', function () {
+        if (!GD.state.aktivitetar().length) {
+          u.toast('Legg til minst éin behandlingsaktivitet først.', { kind: 'warn' });
+          return;
+        }
+        xlsxBtn.disabled = true;
+        GD.exportXlsx.lastNed()
+          .catch(function (e) { u.toast(e.message, { kind: 'warn', ms: 6000 }); })
+          .then(function () { xlsxBtn.disabled = false; });
+      });
+    }
+
     const slettAlt = document.getElementById('slettAlt');
     if (slettAlt) {
       slettAlt.addEventListener('click', function () {

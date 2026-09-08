@@ -293,3 +293,127 @@
 
 .gd-kjelder { padding-left: 1.2em; }
 .gd-kjelder li { margin-bottom: 10px; line-height: 1.5; }
+
+/* ──────────────── Kvalitetssjekken ──────────────── */
+
+.gd-sjekk-atterhald {
+  padding: 14px 18px;
+  border-left: 4px solid var(--border);
+  background: var(--bg);
+  margin-bottom: 20px;
+}
+.gd-sjekk-atterhald p { margin: 0; font-size: 0.94rem; }
+
+.gd-sjekk-sum {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.gd-sjekk-tal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 92px;
+  padding: 12px 16px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+.gd-sjekk-num { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+.gd-sjekk-lab { font-size: 0.8rem; margin-top: 4px; }
+
+.gd-sjekk-reint {
+  padding: 16px 20px;
+  border: 3px solid var(--border);
+  background: var(--surface);
+  font-weight: 600;
+}
+
+/* Nivået ligg i kantstripa, ikkje i ei fylt flate. Same grunngjeving som for
+   døme og feil i rettleiinga: ei aksentfarga flate med tekst oppå er det
+   AGENTS.md §3.2 åtvarar mot. */
+.gd-funn {
+  border: 3px solid var(--border);
+  border-left-width: 8px;
+  background: var(--surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.gd-nivaa-mangel    { border-left-color: var(--accent2); }
+.gd-nivaa-aatvaring { border-left-color: var(--accent4); }
+.gd-nivaa-merknad   { border-left-color: var(--accent5); }
+
+.gd-sjekk-tal.gd-nivaa-mangel,
+.gd-sjekk-tal.gd-nivaa-aatvaring,
+.gd-sjekk-tal.gd-nivaa-merknad { border-left-width: 8px; }
+
+.gd-funn.er-avvist { opacity: 0.72; box-shadow: none; }
+
+.gd-funn-topp { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+
+.gd-funn-nivaa {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 2px solid var(--border);
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.gd-funn-tittel { margin: 0; font-size: 1.05rem; line-height: 1.3; }
+.gd-funn-tal { margin: 10px 0 6px; font-size: 0.9rem; color: var(--muted); }
+
+.gd-funn-liste { list-style: none; padding: 0; margin: 0 0 14px; }
+.gd-funn-liste li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 0;
+  border-top: 2px solid var(--rule, var(--border));
+}
+.gd-funn-liste li:first-child { border-top: none; }
+
+.gd-funn-lenkje {
+  all: unset;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.gd-funn-lenkje:focus-visible { outline: 3px solid var(--border); outline-offset: 2px; }
+
+.gd-funn-treff { font-size: 0.88rem; color: var(--muted); }
+.gd-funn-grunn { flex-basis: 100%; margin: 4px 0 0; font-size: 0.88rem; color: var(--muted); }
+
+.gd-funn-merkelapp {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 12px 0 4px;
+}
+
+.gd-funn-gjer { font-weight: 600; }
+
+/* Utskrifta av protokollen skal ikkje ha sjekkfunna i seg — dei er eit
+   arbeidsverktøy, ikkje ein del av dokumentet tilsynet skal få. */
+@media print {
+  .gd-funn, .gd-sjekk-sum, .gd-sjekk-atterhald { display: none !important; }
+}
+
+/* Utskriftsarket sine eigne små ting. */
+@media print {
+  .gd-ark-under { margin: 0 0 14pt; font-size: 10pt; }
+  .gd-ark-krav { font-weight: 400; font-size: 7.5pt; }
+  .gd-ark-tom { font-style: italic; }
+  .gd-ark-fot { margin-top: 14pt; font-size: 8pt; }
+  .gd-ark th { width: 32%; }
+}

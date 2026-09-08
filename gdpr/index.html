@@ -43,7 +43,8 @@
             <button class="box-tab active" data-fane="start" role="tab" aria-selected="true" type="button">Må vi føre protokoll?</button>
             <button class="box-tab" data-fane="forside" role="tab" aria-selected="false" type="button">Forside</button>
             <button class="box-tab" data-fane="aktivitetar" role="tab" aria-selected="false" type="button">Behandlingsaktivitetar</button>
-            <button class="box-tab" data-fane="bibliotek" role="tab" aria-selected="false" type="button">Lagra og opne</button>
+            <button class="box-tab" data-fane="sjekk" role="tab" aria-selected="false" type="button">Sjekk protokollen</button>
+            <button class="box-tab" data-fane="bibliotek" role="tab" aria-selected="false" type="button">Lagra og lever</button>
         </div>
         <div class="box-body">
 
@@ -108,6 +109,15 @@
                 <div id="skjema"></div>
             </div>
 
+            <div data-flate="sjekk" hidden>
+                <div class="gd-knapperad">
+                    <button class="btn" id="koeyrSjekk" type="button">
+                        <span data-icon="check"></span>Sjekk protokollen
+                    </button>
+                </div>
+                <div id="sjekkrapport"></div>
+            </div>
+
             <div data-flate="bibliotek" hidden>
                 <div class="gd-knapperad">
                     <button class="btn" id="lagre" type="button">
@@ -120,6 +130,22 @@
                         <span data-icon="upload"></span>Opne ei fil
                     </button>
                     <button class="btn" id="nyProtokoll" type="button">Ny, tom protokoll</button>
+                </div>
+
+                <h3 class="heading4">Lever protokollen</h3>
+                <p class="gd-hjelp">Alle tre gjev det same innhaldet. Reknearket følgjer
+                Datatilsynet sin kolonnerekkjefølgje, HTML-fila står heilt åleine, og
+                utskrifta gjev PDF gjennom «Skriv ut til PDF».</p>
+                <div class="gd-knapperad">
+                    <button class="btn" id="skrivUt" type="button">
+                        <span data-icon="printer"></span>Skriv ut / PDF
+                    </button>
+                    <button class="btn" id="eksporterXlsx" type="button">
+                        <span data-icon="download"></span>Last ned .xlsx
+                    </button>
+                    <button class="btn" id="eksporterHtml" type="button">
+                        <span data-icon="download"></span>Last ned som HTML-fil
+                    </button>
                 </div>
                 <input type="file" id="importerFil" accept="application/json,.json" hidden>
 
@@ -170,6 +196,26 @@
     </div>
 </div>
 
+<!-- Overlegg: avvis eit funn -->
+<div class="modal-overlay" id="avvisOverlegg" role="dialog" aria-modal="true" aria-labelledby="avvisTittel">
+    <div class="modal1">
+        <button class="btn gd-ikonknapp modal-close" data-lukk aria-label="Lukk"><span data-icon="x"></span></button>
+        <h2 id="avvisTittel">Ikkje aktuelt her</h2>
+        <p>Sjekken kan ta feil. Skriv kvifor dette funnet ikkje gjeld, så blir
+        grunngjevinga liggjande i protokollen — det er i seg sjølv god dokumentasjon
+        etter ansvarlegheitsprinsippet i artikkel 5 nr. 2.</p>
+        <div class="gd-felt">
+            <label class="gd-etikett" for="avvisGrunn">Grunn</label>
+            <textarea class="gd-textarea" id="avvisGrunn" rows="3"
+                placeholder="T.d.: Tiltaka er skildra i ISO 27001-sertifikat nr. 12345, som ligg ved protokollen."></textarea>
+        </div>
+        <div class="gd-knapperad">
+            <button class="btn" id="avvisJa" type="button">Lagre og skjul funnet</button>
+            <button class="btn" data-lukk type="button">Avbryt</button>
+        </div>
+    </div>
+</div>
+
 <div id="printArea" aria-hidden="true"></div>
 
 <script src="../js/neobrutalisme.js"></script>
@@ -186,6 +232,12 @@
 <script src="js/ui-rettleiing.js"></script>
 <script src="js/ui-skjema.js"></script>
 <script src="js/vegvisar.js"></script>
+<script src="js/sjekk.js"></script>
+<script src="js/ui-sjekk.js"></script>
+<script src="js/print.js"></script>
+<script src="js/xlsx.js"></script>
+<script src="js/export-xlsx.js"></script>
+<script src="js/export-html.js"></script>
 <script src="js/main.js"></script>
 
 </body>
