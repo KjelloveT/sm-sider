@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protokollsmia — behandlingsprotokoll etter GDPR artikkel 30</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../js/neo-header.js" defer></script>
+</head>
+<!-- Berre lyst tema. Alle tre attributta peikar på det same, og main.js pinnar
+     det i tillegg ved oppstart — eit lagra mørkt tema frå ei anna Vyrdepil-side
+     ville elles gjeve mørke fargevariablar under eit stilark som berre er
+     tenkt for lyst. -->
+<body data-light-theme="classic" data-dark-theme="classic" data-theme="classic">
+
+<neo-header no-theme></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+    <div class="box2 hero-box">
+        <div class="hero-text">
+            <h1>Protokollsmia</h1>
+            <p>Lag ein behandlingsprotokoll etter artikkel 30 — med forklaringar til kvart felt.</p>
+        </div>
+    </div>
+
+    <div class="box1">
+        <p><strong>Dette er eit opplæringsverktøy.</strong> Det hjelper deg å lage
+        ein protokoll og forklarer kvifor kvart felt står der, men det gjev
+        <strong>ikkje juridisk rådgjeving</strong> og kan ikkje vurdere om det du skriv
+        er rett for di verksemd.</p>
+        <p class="gd-muted">Alt du skriv blir liggjande i denne nettlesaren og blir aldri
+        sendt nokon stad. <a href="personvern.html">Les kva som blir lagra →</a></p>
+    </div>
+
+    <div class="box5">
+        <div class="box-tabs" role="tablist">
+            <button class="box-tab active" data-fane="forside" role="tab" aria-selected="true" type="button">Forside</button>
+            <button class="box-tab" data-fane="aktivitetar" role="tab" aria-selected="false" type="button">Behandlingsaktivitetar</button>
+            <button class="box-tab" data-fane="bibliotek" role="tab" aria-selected="false" type="button">Lagra og opne</button>
+        </div>
+        <div class="box-body">
+
+            <div data-flate="forside">
+                <p class="gd-hjelp">Artikkel 30 nr. 1 bokstav a gjeld heile protokollen:
+                kven som er behandlingsansvarleg, og korleis ein får tak i dykk. Difor står
+                det her og ikkje på kvar einskild aktivitet.</p>
+                <div id="forside"></div>
+            </div>
+
+            <div data-flate="aktivitetar" hidden>
+                <p class="gd-hjelp">Éi behandling har eitt formål. Bryt protokollen ned etter
+                funksjonsområde — personal og løn, kundeforhold, marknadsføring — så er det
+                lettare å sjå at ingenting manglar.</p>
+
+                <div class="gd-knapperad">
+                    <button class="btn" id="nyAktivitet" type="button">
+                        <span data-icon="plus"></span>Ny behandlingsaktivitet
+                    </button>
+                </div>
+
+                <div id="aktivitetsliste"></div>
+
+                <h2 class="heading3">Rediger aktiviteten</h2>
+                <div id="skjema"></div>
+            </div>
+
+            <div data-flate="bibliotek" hidden>
+                <div class="gd-knapperad">
+                    <button class="btn" id="lagre" type="button">
+                        <span data-icon="save"></span>Lagre i nettlesaren
+                    </button>
+                    <button class="btn" id="eksporterJson" type="button">
+                        <span data-icon="download"></span>Last ned som fil
+                    </button>
+                    <button class="btn" id="importerBtn" type="button">
+                        <span data-icon="upload"></span>Opne ei fil
+                    </button>
+                    <button class="btn" id="nyProtokoll" type="button">Ny, tom protokoll</button>
+                </div>
+                <input type="file" id="importerFil" accept="application/json,.json" hidden>
+
+                <p class="gd-hjelp">Fila er den trygge vegen: ho ligg på di eiga maskin og
+                kan takast med til ei anna. Lagringa i nettlesaren er til for at arbeidet
+                skal overleve ei omlasting, ikkje til å vere arkivet dykkar.</p>
+
+                <h3 class="heading4">Lagra i denne nettlesaren</h3>
+                <div id="bibliotek"></div>
+
+                <div class="gd-knapperad">
+                    <button class="btn gd-fare" id="slettAlt" type="button">
+                        <span data-icon="trash"></span>Slett alt Protokollsmia har lagra
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+</div>
+
+<!-- Overlegg: slett ein aktivitet -->
+<div class="modal-overlay" id="slettOverlegg" role="dialog" aria-modal="true" aria-labelledby="slettTittel">
+    <div class="modal1">
+        <button class="btn gd-ikonknapp modal-close" data-lukk aria-label="Lukk"><span data-icon="x"></span></button>
+        <h2 id="slettTittel">Slette aktiviteten?</h2>
+        <p id="slettTekst"></p>
+        <div class="gd-knapperad">
+            <button class="btn gd-fare" id="slettJa" type="button">Ja, slett</button>
+            <button class="btn" data-lukk type="button">Avbryt</button>
+        </div>
+    </div>
+</div>
+
+<!-- Overlegg: slett alt -->
+<div class="modal-overlay" id="slettAltOverlegg" role="dialog" aria-modal="true" aria-labelledby="slettAltTittel">
+    <div class="modal1">
+        <button class="btn gd-ikonknapp modal-close" data-lukk aria-label="Lukk"><span data-icon="x"></span></button>
+        <h2 id="slettAltTittel">Slette alt?</h2>
+        <p>Dette fjernar alle protokollane Protokollsmia har lagra i denne nettlesaren,
+        òg den du arbeider med no. Har du ikkje lasta dei ned som fil, er dei borte.</p>
+        <div class="gd-knapperad">
+            <button class="btn gd-fare" id="slettAltJa" type="button">Ja, slett alt</button>
+            <button class="btn" data-lukk type="button">Avbryt</button>
+        </div>
+    </div>
+</div>
+
+<div id="printArea" aria-hidden="true"></div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-storage.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script src="../js/vyrdepil-util.js"></script>
+<script src="js/util.js"></script>
+<script src="js/felt.js"></script>
+<script src="js/state.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui-forside.js"></script>
+<script src="js/ui-liste.js"></script>
+<script src="js/ui-skjema.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

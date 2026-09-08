@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personvern i Protokollsmia</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/_resources/vyrde-ikon.png" sizes="384x384">
+    <link rel="apple-touch-icon" href="/_resources/vyrde-ikon-180.png">
+    <link rel="stylesheet" href="../css/neobrutalisme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../js/neo-header.js" defer></script>
+</head>
+<body data-light-theme="classic" data-dark-theme="classic" data-theme="classic">
+
+<neo-header no-theme></neo-header>
+
+<div class="page-wrapper">
+<main class="main-content">
+
+    <h1 class="heading1">Personvern i Protokollsmia</h1>
+    <p class="gd-hjelp">Eit verktøy som hjelper deg å skrive ei oversikt over
+    personopplysningar, bør sjølv kunne gjere greie for sine eigne. Her er heile
+    historia.</p>
+
+    <section class="box4">
+        <div class="box-header"><h2>Kort sagt</h2></div>
+        <div class="box-body">
+            <p>Alt du skriv i Protokollsmia blir liggjande i <strong>din eigen
+            nettlesar</strong>. Ingenting blir sendt til oss eller til nokon annan.
+            Verktøyet gjer ingen nettverkskall etter at sida er lasta ferdig.</p>
+            <p>Det tyder òg at <strong>vi ikkje kan hjelpe deg å få det tilbake</strong>
+            dersom du tømmer nettlesaren. Last ned protokollen som fil når du har gjort
+            noko du vil ta vare på.</p>
+        </div>
+    </section>
+
+    <h2 class="heading2">Kva blir lagra</h2>
+    <div class="box2">
+        <div class="privacy-body">
+            <p>Når du trykkjer <strong>Lagre i nettlesaren</strong>, blir heile protokollen
+            lagra. Det er:</p>
+            <table class="data-table">
+                <tr><th>Kva</th><th>Kvifor</th></tr>
+                <tr>
+                    <td>Namnet på verksemda, organisasjonsnummer, postadresse, telefon og
+                    e-post</td>
+                    <td>Artikkel 30 nr. 1 bokstav a krev at protokollen seier kven den
+                    behandlingsansvarlege er</td>
+                </tr>
+                <tr>
+                    <td><strong>Namn og kontaktopplysningar til personvernombodet</strong>
+                    og til ein eventuell representant</td>
+                    <td>Same krav. Merk at dette er <strong>personopplysningar om ein namngjeven
+                    person</strong> — sjå avsnittet om delte maskiner under</td>
+                </tr>
+                <tr>
+                    <td>Alt du skriv om kvar behandlingsaktivitet: formål, kategoriar av
+                    registrerte og opplysningar, mottakarar, system, slettefristar og
+                    sikringstiltak</td>
+                    <td>Det er sjølve protokollen</td>
+                </tr>
+                <tr>
+                    <td>Godkjenning og endringshistorikk — namn, rolle og dato</td>
+                    <td>For at det skal gå an å sjå kva utgåve som gjeld og kven som står
+                    bak henne</td>
+                </tr>
+                <tr>
+                    <td>Merknader frå kvalitetssjekken du har vurdert og avvist, med grunnen
+                    du gav</td>
+                    <td>For at grunngjevinga ikkje skal forsvinne, og for at sjekken ikkje
+                    skal spørje om det same om att</td>
+                </tr>
+            </table>
+
+            <p style="margin-top:16px;">Lagringa skjer i <code>localStorage</code> under
+            nøkkelen <code>VyrdepilStorage</code>, som er den same lagringa resten av
+            Vyrdepil brukar. Ingen informasjonskapslar (cookies) er i bruk, og det finst
+            ingen analyse eller sporing på sida.</p>
+        </div>
+    </div>
+
+    <h2 class="heading2">Kor lenge</h2>
+    <div class="box2">
+        <div class="privacy-body">
+            <p>Til du slettar det. Det finst inga automatisk sletting, og ingen utløpsdato.</p>
+            <p>Du kan slette på tre måtar:</p>
+            <ul>
+                <li><strong>Éin protokoll:</strong> søppelbøtta ved sida av han under
+                «Lagra og opne».</li>
+                <li><strong>Alt Protokollsmia har lagra:</strong> knappen nedst på same
+                fana.</li>
+                <li><strong>Alt Vyrdepil har lagra:</strong> gjennom nettlesaren sine eigne
+                innstillingar for å tømme nettstadsdata.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="heading2">På ei delt maskin</h2>
+    <div class="box2">
+        <div class="privacy-body">
+            <p>Dette er det viktigaste punktet på sida.</p>
+            <p><code>localStorage</code> høyrer til nettlesaren, ikkje til deg. Brukar de
+            same maskina på eit kontor, eit bibliotek eller eit klasserom, vil
+            <strong>neste person som opnar Protokollsmia sjå det du skreiv</strong> — også
+            namnet og telefonnummeret til personvernombodet.</p>
+            <p>Så: er du på ei maskin du ikkje har åleine, <strong>last ned protokollen som
+            fil og slett han frå nettlesaren</strong> før du går. Det tek ti sekund, og fila
+            er uansett den du skal ta vare på.</p>
+            <p class="gd-muted">Nettlesaren sitt private vindauge er eit alternativ: der blir
+            lagringa borte av seg sjølv når du lukkar vindauget. Men då forsvinn arbeidet
+            ditt òg, så last ned fila først.</p>
+        </div>
+    </div>
+
+    <h2 class="heading2">Kva verktøyet ikkje er</h2>
+    <div class="box2">
+        <div class="privacy-body">
+            <p><strong>Protokollsmia gjev ikkje juridisk rådgjeving.</strong> Verktøyet lagar
+            eit dokument, og det forklarer kva forordninga og tilsynsstyresmaktene har sagt
+            om kvart felt. Det kan ikkje avgjere om det du skriv er rett for di verksemd, om
+            behandlingsgrunnlaget held, eller om de i det heile har lov til å behandle
+            opplysningane.</p>
+            <p><strong>Kvalitetssjekken kontrollerer forma, ikkje innhaldet.</strong> Han
+            samanliknar svara dine med feil tilsynsstyresmakter faktisk har hatt innvendingar
+            mot. Han kan ikkje sjå om eit svar er sant. Ein protokoll som går gjennom sjekken
+            utan merknader kan framleis vere feil.</p>
+            <p>Ansvaret for protokollen ligg hjå den behandlingsansvarlege. Det er heile
+            poenget med ansvarlegheitsprinsippet i artikkel 5 nr. 2.</p>
+        </div>
+    </div>
+
+    <h2 class="heading2">Kven står bak</h2>
+    <div class="box2">
+        <div class="privacy-body">
+            <p>Protokollsmia er ein del av <a href="../index.html">Vyrdepil</a>, eit
+            hobbyprosjekt laga og drifta av Kjellove Bjørge. Sida blir levert frå Microsoft
+            Azure i regionen Norway East. Som for all bruk av nett mottek vevtenaren teknisk
+            nødvendig informasjon for å levere sidene — typisk IP-adresse, tidspunkt og kva
+            side som blir henta. Det blir ikkje kopla til noko du skriv i verktøyet, og kan
+            ikkje bli det: innhaldet i protokollen forlèt aldri nettlesaren din.</p>
+            <p>Sjå <a href="../personvern.html">personvernerklæringa for Vyrdepil</a> for
+            resten av sida.</p>
+        </div>
+    </div>
+
+    <div class="gd-knapperad">
+        <a class="btn" href="index.html">← Tilbake til Protokollsmia</a>
+    </div>
+
+</main>
+</div>
+
+<script src="../js/neobrutalisme.js"></script>
+<script src="../js/vyrdepil-icons.js"></script>
+<script>
+    /* Same pinning som i main.js — sida har berre ei lys utgåve. */
+    (function () {
+        function pinn() {
+            document.body.setAttribute('data-theme', 'classic');
+            document.body.setAttribute('data-light-theme', 'classic');
+            document.body.setAttribute('data-dark-theme', 'classic');
+        }
+        pinn();
+        document.addEventListener('DOMContentLoaded', pinn);
+    })();
+</script>
+
+</body>
+</html>
